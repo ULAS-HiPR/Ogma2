@@ -899,3 +899,102 @@ fault allocations are accepted.
 - Local sibling `archive/README.md`
 - Seán's 3 September instruction to mirror the LTS active-repository/archive
   split while keeping Ogma 2 separate from the first Ogma repository.
+
+## 2026-09-03 — Workhorse role and provisional platform envelope accepted
+
+### Context
+
+The hardening report initially treated the missing final trajectory and
+environment as blockers to part selection. Seán corrected that framing. Ogma 2
+must be a workhorse flight computer for the team's competition launches. Exact
+vehicle values will not exist until each rocket is mature enough for simulation
+and instrumented testing; Rev A needs provisional values now.
+
+### Observed evidence
+
+- The public 2025 EuRoC rules define 3 km and 9 km solid, hybrid, and liquid
+  categories and permit multistage vehicles.
+- The public 2024 EuRoC Design, Test & Evaluation Guide warns that a vehicle may
+  remain on the rail for several hours.
+- No current Ogma 2 vehicle simulation or measured environment exists. The
+  numerical values below are engineering budgets, not observed vehicle loads.
+
+### Decisions
+
+- Ogma 2 is HiPR's default workhorse flight computer for ordinary competition
+  and development launches across solid, hybrid, liquid, single-stage, and
+  multistage vehicles.
+- A new rocket should normally change the typed mission profile, harness,
+  Foinse configuration, external assemblies, and qualification evidence rather
+  than force a new Ogma PCB.
+- The bounded flight to at least 100 km remains the short-duration extreme case.
+  Orbital lifetime remains out of scope.
+- The following values are locked as the provisional Rev A platform envelope:
+
+| Dimension | Provisional value |
+| --- | --- |
+| Normal mission set | 3–9 km competition flights; solid, hybrid, liquid; single-stage or multistage |
+| Extreme mission | One short-duration flight to at least 100 km followed by recovery |
+| Powered operation | 8 hours through bench/pad wait and flight |
+| Recovery reserve | A further 4 hours of reduced-duty beacon and log protection |
+| Full-rate flight record | At least 30 minutes |
+| Supported service period | 5 years |
+| Reuse | 25 inspected flight cycles; acceptance test after every flight |
+| Powered electronics temperature | −20 to +70 °C |
+| Component temperature grade | Prefer at least −40 to +85 °C |
+| Ambient-pressure survival | Sea-level pressure down to approximately 0.01 Pa; sensor validity separate |
+| Acceleration measurement | Separate ±200 g channel |
+| Board structural design case | 50 g quasi-static |
+| Angular-rate measurement | At least ±2000°/s with saturation handling |
+| Shock screening | 200 g short-duration provisional target; waveform open |
+| Vibration | Exploratory sine/random testing, replaced later by measured vehicle spectra |
+| Moisture | Closed-bay rain and splash survival; no exposed-wet-PCB requirement |
+
+### Interpretation
+
+- “Provisional” means accepted for present design use and explicitly replaceable
+  by better evidence. It does not mean optional or undefined.
+- Exact mission values block final qualification, mission thresholds, and
+  release—not initial architecture, component comparison, or schematic work.
+- The workhorse role does not reverse the deletion rule or justify generic
+  expansion. Every interface still needs a named function and fault boundary.
+- The 100 km case should select short-duration pressure, thermal, sensing, upset,
+  and evidence controls. It must not import orbital-lifetime architecture.
+
+### Consequences
+
+- MCU, sensor, storage, power, connector, and mechanical comparisons can proceed
+  against one stated envelope.
+- Battery budgeting must support eight powered hours plus four hours of reduced
+  recovery duty.
+- Logging design must distinguish long low-rate ground operation from at least
+  thirty minutes of full-rate flight evidence.
+- Part selection targets industrial temperature margin, while board-level test
+  covers the narrower accepted powered range.
+- Reuse requires cycle records, post-flight inspection, acceptance testing, and
+  retirement criteria; it is not uninspected indefinite reuse.
+- The first mature vehicle creates a mission-overlay artifact. Simulation and
+  measured environments replace affected provisional values before release.
+
+### Unknowns
+
+- First vehicle and date for the first mission-specific overlay.
+- Actual vibration power spectral density and shock waveform.
+- Quantitative reliability targets and vehicle-level hazard allocation.
+- Exact low-rate/full-rate log schedule needed to meet the energy and storage
+  budgets.
+
+### Next checkpoint
+
+Use the provisional envelope in the MCU and sensor resource matrix. Record which
+candidate passes each value, where it depends on an external sensor or power
+domain, and which later mission evidence could overturn the choice.
+
+### Evidence
+
+- [`current-system.md`](current-system.md)
+- [`Kármán-line mission hardening report`](docs/karman-line-mission-hardening-report.md)
+- [2025 EuRoC Competition Rules](https://euroc.pt/wp-content/uploads/2025/03/PTS_EDU_EuRoC_ST_001905_CR_v01-1.pdf)
+- [2024 EuRoC Design, Test & Evaluation Guide](https://euroc.pt/wp-content/uploads/2024/04/PTS_EDU_EuRoC_ST_000455_DTEG_v05.pdf)
+- Seán's 3 September acceptance of the proposed workhorse role and provisional
+  values.

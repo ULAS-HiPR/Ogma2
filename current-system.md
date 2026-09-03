@@ -2,11 +2,11 @@
 
 Updated: 2026-09-03
 Status: architecture checkpoint before schematic capture
-Scope: Ogma 2, its bounded Kármán-line mission, its power boundary with Foinse 2, and its interface to a future liquid-propulsion controller
+Scope: Ogma 2 as HiPR's workhorse competition flight computer, its bounded Kármán-line mission, its power boundary with Foinse 2, and its interface to a future liquid-propulsion controller
 
 This is the current working picture assembled from the Ogma Rev 1 evidence, the portfolio closure, the design references in this directory, the Seán/Anav discussions from 17 August–3 September 2026, and the 29 August CATS Vega/Fluctus field-integration evidence. No Ogma 2 schematic or PCB exists yet. Where the discussion moved faster than the evidence, this document says so.
 
-Ogma 2 is intended to be the complete flight-computer platform for the team's named solid, staged, liquid, and eventual space-shot missions. Ogma 3 should be a corrective refinement, not the release that finally adds an essential Ogma 2 function. This is a design target, not a present capability claim. Here, “space shot” means one bounded suborbital sortie that reaches at least 100 km near apogee, returns through descent and recovery, and preserves local evidence. It does not mean orbital insertion or unattended operation for months or years. The exact trajectory, powered duration, environment, recovery duration, and required reliability still need to be written before they can select parts or justify features.
+Ogma 2 is intended to be HiPR's workhorse flight computer: the same maintained board for ordinary competition and development launches across solid, hybrid, liquid, single-stage, and multistage vehicles, through the eventual space-shot mission. Ogma 3 should be a corrective refinement, not the release that finally adds an essential Ogma 2 function. This is a design target, not a present capability claim. Here, “space shot” means one bounded suborbital sortie that reaches at least 100 km near apogee, returns through descent and recovery, and preserves local evidence. It does not mean orbital insertion or unattended operation for months or years. Rev A uses the accepted provisional platform envelope below. Exact vehicle trajectories and environments arrive later from simulation and measurement; they replace provisional values before mission qualification but do not block initial component selection or schematic work.
 
 Status words used below:
 
@@ -18,7 +18,7 @@ Status words used below:
 
 ## The current design in one paragraph
 
-Ogma 2 is one compact, four-layer, double-sided flight-computer PCB. It has two MCUs connected over UART. The flight MCU owns sensing, estimation, flight state, local logging, three pyro channels, and two servo channels. The communications MCU owns GNSS, LoRa, telemetry buffering, and normal USB-C access. The second MCU provides timing and failure containment; it is not compute redundancy. CAN leaves the board only for named independent vehicle systems. The only current example is the liquid-propulsion controller. Ogma does not become a general power distributor. Foinse 2 is a separate, MCU-less, vehicle-specific power interface. A payload such as Mu remains separate and independently powered. The liquid-propulsion controller is a self-governing peer with local sensing, actuation, redline logic, abort authority, power protection, and logging. Electronics owns the functional integration of the complete avionics bay. The installed assembly is qualified, closed, and then left undisturbed; routine e-match replacement, configuration, readback, log extraction, and charging use deliberate external service boundaries.
+Ogma 2 is one compact, four-layer, double-sided workhorse flight-computer PCB. A change of rocket should normally change the typed mission profile, harness, Foinse configuration, and qualification evidence rather than the Ogma PCB. It has two MCUs connected over UART. The flight MCU owns sensing, estimation, flight state, local logging, three pyro channels, and two servo channels. The communications MCU owns GNSS, LoRa, telemetry buffering, and normal USB-C access. The second MCU provides timing and failure containment; it is not compute redundancy. CAN leaves the board only for named independent vehicle systems. The only current example is the liquid-propulsion controller. Ogma does not become a general power distributor. Foinse 2 is a separate, MCU-less, vehicle-specific power interface. A payload such as Mu remains separate and independently powered. The liquid-propulsion controller is a self-governing peer with local sensing, actuation, redline logic, abort authority, power protection, and logging. Electronics owns the functional integration of the complete avionics bay. The installed assembly is qualified, closed, and then left undisturbed; routine e-match replacement, configuration, readback, log extraction, and charging use deliberate external service boundaries.
 
 ## Governing rule
 
@@ -41,7 +41,9 @@ The deletion test for every proposed part, connector, board, MCU, protocol, and 
 
 If those questions do not produce a concrete answer, delete it.
 
-## Bounded Kármán-line mission
+## Workhorse platform and bounded Kármán-line mission
+
+**Decided.** Ogma 2 is the default HiPR flight-computer platform for ordinary competition and development launches. The baseline covers 3–9 km competition flights and solid, hybrid, liquid, single-stage, and multistage vehicles. This does not create a generic expansion platform: every populated interface still needs a named mission function and failure boundary.
 
 **Decided.** The Ogma 2 space-shot target is one suborbital flight: power up, wait for a bounded period, launch, survive ascent and any staging, reach at least 100 km near apogee, descend, execute recovery, land, and retain enough local data to establish what happened.
 
@@ -49,7 +51,30 @@ The baseline does not include orbital insertion, six-month or multi-year autonom
 
 **Required.** Mission duration is a first-order design input. Nanosecond transients, second-scale resets, a minutes-long near-vacuum coast, hours of pad/recovery operation, and years in orbit require different protection and qualification. Reaching the Kármán line is a geometry target; it is not itself an electronic qualification class.
 
-**Open.** Maximum pad wait, boost, coast, descent, beacon time, speed, acceleration, rotation, pressure, temperature, vibration, shock, RF, radiation, recovery, and reliability values remain unset. They block final MCU, power, sensor, storage, connector, and qualification choices.
+**Decided provisional envelope.** These are design budgets for Rev A, not predictions of a particular rocket:
+
+| Dimension | Provisional platform value |
+| --- | --- |
+| Normal mission set | 3–9 km competition flights; solid, hybrid, liquid; single-stage or multistage |
+| Extreme mission | One short-duration flight to at least 100 km followed by recovery |
+| Powered operation | 8 hours through bench/pad wait and flight |
+| Recovery reserve | A further 4 hours of reduced-duty beacon and log protection |
+| Full-rate flight record | At least 30 minutes |
+| Supported service period | 5 years, subject to inspection, maintenance, and storage controls |
+| Reuse | 25 inspected flight cycles; acceptance test after every flight |
+| Powered electronics temperature | −20 to +70 °C |
+| Component temperature grade | Prefer at least −40 to +85 °C |
+| Ambient-pressure survival | Sea-level pressure down to approximately 0.01 Pa; sensor validity is separate |
+| Acceleration measurement | Separate ±200 g channel |
+| Board structural design case | 50 g quasi-static |
+| Angular-rate measurement | At least ±2000°/s, with saturation detected and handled |
+| Shock screening | 200 g short-duration provisional target; waveform remains open |
+| Vibration | No invented qualification spectrum; begin with exploratory sine/random testing, then replace it with vehicle measurement |
+| Moisture | Closed-bay rain and splash survival; no exposed-wet-PCB requirement |
+
+These values may select architecture, part classes, sensor ranges, storage size, energy reserve, connector construction, and mechanical margins now. Exact pad wait, trajectory, boost, coast, descent, speed, rotation, temperature, vibration spectrum, shock waveform, RF environment, and recovery duration remain later mission overlays. Simulation and measured flights must replace the provisional values before final mission qualification. A change is recorded explicitly; it does not silently invalidate the platform.
+
+No numerical reliability probability is invented yet. The fault-containment and independent-recovery requirements still apply. Probability targets may be allocated when vehicle hazards, range rules, and evidence support them.
 
 The separate [`Kármán-line mission hardening report`](docs/karman-line-mission-hardening-report.md) analyses the required changes and candidates. Its technical proposals remain a design study until accepted here.
 
@@ -706,11 +731,11 @@ The comparison should score:
 
 Do not copy a board count or aesthetic. Copy only a choice whose requirement and failure behaviour match ours.
 
-## Open questions before schematic capture
+## Design questions and later qualification gates
 
 ### P0: architecture and safety
 
-1. What exact trajectory, staging, environment, range, RF, recovery, logging, and reliability requirements define “space-shot capable,” and which earlier L1/L2, IREC, EuRoC, liquid, or hopper missions must the same hardware support?
+1. Which first vehicle supplies the first mission-specific overlay, and when must its simulated and measured trajectory, staging, environment, RF, recovery, logging, and reliability values replace the provisional workhorse envelope before qualification?
 2. What is the authoritative system block diagram for standalone, solid-stack, and liquid-vehicle modes?
 3. Which physical source powers Ogma, Foinse, servos, pyros, and propulsion in each mode?
 4. Are pyro logic and energetic rails on one battery domain or genuinely galvanically separate?
@@ -849,7 +874,7 @@ The board is not ready because it boots or because every peripheral answers once
 
 ## Immediate next sequence
 
-1. Define the first missions and the exact meaning of “space-shot capable.” Do not select parts for undefined channels or environments.
+1. Use the accepted provisional workhorse envelope for Rev A architecture, component comparison, and schematic work. Open a mission-specific overlay for the first vehicle and replace provisional values with simulation and measurement before qualification.
 2. Draw the three system block diagrams: standalone Ogma, Ogma plus Foinse, and Ogma plus Foinse plus propulsion controller.
 3. Define the avionics-bay clean/dirty, maintenance, and routine-service boundaries. Mock them up at 1:1 with the real e-match leads, connectorised charge assemblies, Nano-Fit/Micro-Fit/Micro-Lock/JST GH/Gecko samples, detachable WAGO MCS MICRO 2712 and 2601 adapters, USB-C, charging lead, battery, boards, tools, vent route, and removable panel.
 4. Close the power-domain and pyro-topology questions first. They determine layout and safety boundaries.
