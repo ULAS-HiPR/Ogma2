@@ -875,6 +875,14 @@ original Ogma repository remains the Rev 1 project.
 - The reference images remain internal. Repository privacy does not resolve
   their unknown reuse rights.
 
+### Unknowns
+
+- The new repository's software, hardware, and documentation licences. The Ogma
+  Rev 1 GPL-2.0 file was deliberately not copied into the separate Ogma 2
+  project without an explicit licensing decision.
+- Creator, source URL, and publication rights for the hardware photographs and
+  CATS Configurator screenshots.
+
 ### Next checkpoint
 
 Review the initial repository pull request. Then add the first mission-envelope

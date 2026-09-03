@@ -95,3 +95,6 @@ predecessors, not the implementation repository for Ogma 2.
 The repository is private. The included reference images still have unresolved
 provenance or reuse rights and must not be published merely because they are
 present here.
+
+Repository licensing is not yet selected. Ogma Rev 1's GPL-2.0 licence was not
+copied into this separate project by assumption.
