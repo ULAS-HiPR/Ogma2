@@ -2,21 +2,21 @@
 
 Date: 2026-09-03
 
-Status: design study before schematic capture; the bounded mission, avionics-bay service boundary, and connector lifecycle are accepted, while exact connector parts and remaining proposals are not yet Ogma 2 architecture decisions
+Status: design study before schematic capture; the workhorse role, provisional platform envelope, bounded Kármán mission, avionics-bay service boundary, and connector lifecycle are accepted, while exact connector parts and remaining proposals are not yet Ogma 2 architecture decisions
 
-Scope: one suborbital flight whose apogee reaches or exceeds 100 km, followed by descent and recoverable local data
+Scope: a reusable workhorse flight computer for ordinary HiPR competition launches, with one suborbital flight to at least 100 km and recovery as its short-duration extreme case
 
 Authority: [`current-system.md`](../current-system.md) is the current architecture; only report items explicitly accepted there are architecture decisions
 
 ## The result in one page
 
-Ogma 2 should not be designed as an orbital spacecraft computer. The target is one bounded sortie: power up, wait on the pad, launch, survive ascent, reach the Kármán line near apogee, descend, deploy recovery, land, and preserve enough local data to prove what happened. It does not need to operate unattended in orbit for six months, survive years of accumulated radiation, recover from an arbitrary sequence of faults, or be reusable without inspection.
+Ogma 2 is HiPR's workhorse flight computer for ordinary solid, hybrid, liquid, single-stage, and multistage competition and development launches. Its extreme design case is one bounded sortie: power up, wait on the pad, launch, survive ascent, reach the Kármán line near apogee, descend, deploy recovery, land, and preserve enough local data to prove what happened. It does not need to operate unattended in orbit for six months, survive years of accumulated radiation, recover from an arbitrary sequence of faults, or be reusable without inspection.
 
 That boundary removes a great deal of false complexity. It does not permit an ordinary hobby flight computer with the word “space” attached to it.
 
 The changes with the highest value are:
 
-1. Write the complete trajectory, powered duration, recovery duration, temperature, pressure, acceleration, shock, vibration, RF, and reliability envelope before selecting parts.
+1. Use the accepted provisional platform envelope to select architecture and part classes now. Replace it with vehicle simulation and measured environments before final qualification; do not block schematic work waiting for a mature rocket.
 2. Select a flight MCU with actual flash and SRAM ECC, an MPU, independent watchdog support, clock and voltage monitoring, adequate timers, and a package that can be inspected. The STM32H573 is the strongest current candidate. It keeps the existing STM32 development path and provides ECC on flash and most, but not all, SRAM. Its unprotected SRAM regions and errata must be treated explicitly. It is not radiation-qualified.
 3. Keep the two-MCU split, but put the communications MCU and its radio/GNSS loads on a separately switchable and current-limited power branch. It must be possible for that entire branch to fail short, latch up, reset repeatedly, or flood UART without pulling down the flight computer.
 4. Add an independent external supervisor/windowed watchdog. Use internal watchdogs as a second layer. Reset cause, ECC events, rail minima, watchdog state, and the last valid flight state must survive reset well enough to explain it.
@@ -44,6 +44,14 @@ The governing distinction is time. A system that works for several minutes above
 
 ## Mission boundary
 
+### Workhorse role
+
+Ogma 2 is the default maintained HiPR flight computer for ordinary competition and development flights. It must support 3–9 km solid, hybrid, and liquid vehicles, including single-stage and multistage configurations, without redesigning the main PCB for each rocket. Vehicle changes should normally be carried by the typed mission profile, harness, Foinse configuration, actuator or charge assemblies, and mission-specific qualification evidence.
+
+“All competition launches” does not make Ogma a generic modular computer. A connector, interface, sensor, or software mode still needs a named function and bounded failure behaviour.
+
+The public 2025 EuRoC rules define 3 km and 9 km categories across solid, hybrid, and liquid propulsion and permit multistage vehicles. The public 2024 Design, Test & Evaluation Guide warns that a vehicle may remain on the rail for several hours. These are useful anchors for the workhorse role and powered-duration budget; annual competition rules still require a mission-specific review. Sources: [2025 EuRoC Competition Rules](https://euroc.pt/wp-content/uploads/2025/03/PTS_EDU_EuRoC_ST_001905_CR_v01-1.pdf) and [2024 EuRoC Design, Test & Evaluation Guide](https://euroc.pt/wp-content/uploads/2024/04/PTS_EDU_EuRoC_ST_000455_DTEG_v05.pdf).
+
 ### Required mission statement
 
 Ogma 2 shall support one launch in which the vehicle:
@@ -58,23 +66,32 @@ Ogma 2 shall support one launch in which the vehicle:
 
 The mission is complete when the vehicle returns and the required evidence can be recovered. Long-term operation above the atmosphere is not part of the mission.
 
-### Durations still required
+### Accepted provisional platform envelope
 
-“One short flight” is not a usable electrical requirement. Before the battery, thermal solution, watchdog policy, radiation integral, or storage size is frozen, the team must assign maxima to:
+The following values are accepted Rev A engineering budgets. They are deliberately conservative and provisional. They may select architecture and components now; they are not claims about an unsimulated vehicle.
 
-| Interval | Required value | Why it matters |
+| Dimension | Provisional platform value | Design consequence |
 | --- | --- | --- |
-| Factory storage | Open | flash retention, battery ageing, calibration interval |
-| Powered bench/configuration | Open | regulator heating, accidental arming exposure, log wear |
-| Powered pad wait | Open | battery energy, cold soak, radio duty cycle |
-| Arm-to-launch hold | Open | safe-state policy and abort handling |
-| Boost and staging | Open | high-g range, vibration, supply transients, estimator mode |
-| Coast to apogee | Open | inertial drift, GNSS/barometer invalid interval, radio link |
-| Descent to landing | Open | recovery logic, battery, link and logging duration |
-| Post-landing beacon/log protection | Open | battery reserve and automatic shutdown |
-| Maximum one-sortie powered time | Open | thermal and radiation exposure integration |
+| Normal mission set | 3–9 km; solid, hybrid, liquid; single-stage or multistage | Core board and software remain common across normal competition vehicles |
+| Extreme mission | One short-duration flight to at least 100 km followed by recovery | Near-vacuum, high-dynamic-range sensing, upset handling, and evidence retention remain in scope |
+| Powered operation | 8 hours through bench/pad wait and flight | Energy, regulator heating, logging modes, and radio duty cycle |
+| Recovery reserve | A further 4 hours of reduced-duty beacon and log protection | Battery reserve and post-landing load shedding |
+| Full-rate flight record | At least 30 minutes | Storage capacity, write rate, incident windows, and extraction time |
+| Supported service period | 5 years | Retention, calibration, battery ageing, support, and obsolescence planning |
+| Reuse | 25 inspected flight cycles; acceptance test after every flight | Cycle records, connector/service life, inspection, and retirement criteria |
+| Powered electronics temperature | −20 to +70 °C | Board-level operational thermal test |
+| Component temperature grade | Prefer at least −40 to +85 °C | Part-screening margin; not proof of installed thermal performance |
+| Ambient-pressure survival | Sea-level pressure down to approximately 0.01 Pa | Venting, thermal-vacuum function, materials, and pressure-sensitive parts; barometer validity remains separate |
+| Acceleration measurement | Separate ±200 g channel | Boost/shock evidence beyond low-g IMU range |
+| Board structural design case | 50 g quasi-static | Mounting, connector, component, and PCB mechanical margin |
+| Angular-rate measurement | At least ±2000°/s, with saturation detected and handled | Sensor selection and estimator/state-machine degraded behaviour |
+| Shock screening | 200 g short-duration target; waveform open | Early board, mount, connector, and harness screen only |
+| Vibration | Exploratory sine/random work first; measured vehicle spectrum later | Avoid a fictional PSD while still testing workmanship and resonances |
+| Moisture | Closed-bay rain and splash survival | Enclosure, service interface, vent, and contamination design; no exposed-wet-PCB requirement |
 
-The report does not silently invent these values. A provisional electrical design can carry margin around candidate values, but qualification must use an accepted mission timeline.
+Exact trajectory, speed, acceleration history, rotation, powered coast, pressure-time history, temperature-time history, vibration spectrum, shock waveform, RF environment, and recovery duration arrive later from vehicle simulation and instrumented flights. Those values replace the platform assumptions before mission qualification. They do not block initial MCU, regulator, sensor, storage, connector, and schematic work.
+
+No numerical probability of mission success is assigned provisionally. Fault containment, phase-aware recovery, safe energetic outputs, local evidence, and an independent recovery path remain requirements. Quantitative probability targets wait for the vehicle hazard allocation, range rules, and defensible evidence.
 
 ### Explicitly out of scope
 
@@ -1569,11 +1586,11 @@ Any reopening, internal re-mate, battery or board change, invasive debug access,
 
 ## Changes this would make to the current system description
 
-This table maps the report back to [`current-system.md`](../current-system.md). The bounded mission definition, avionics-bay service boundary, and connector lifecycle have been accepted into the current architecture. Exact connector parts and every other row remain proposals unless the current-system document explicitly marks them otherwise.
+This table maps the report back to [`current-system.md`](../current-system.md). The workhorse role, provisional platform envelope, bounded Kármán mission, avionics-bay service boundary, and connector lifecycle have been accepted into the current architecture. Exact connector parts and every other row remain proposals unless the current-system document explicitly marks them otherwise.
 
 | Current-system area | Required change |
 | --- | --- |
-| Scope and opening | Replace undefined “space-shot capable” with the bounded one-sortie Kármán-line mission and explicit exclusions |
+| Scope and opening | Define Ogma 2 as the common 3–9 km competition workhorse, use the provisional Rev A envelope now, treat one bounded Kármán-line sortie as the extreme case, and require later mission overlays before qualification |
 | Architecture boundary | Add an independent vehicle recovery controller as a separate power, sensor, logic, and initiator boundary; add video as a separate evidence payload |
 | Two MCUs | Keep roles; require separate current-limited/switchable communications power, independent reset, no back-power, and corrupt-link containment |
 | MCU selection | Add STM32H573 as working flight candidate and TMS570LS1227 as lockstep comparison; keep exact derivative open pending the resource/errata audit |
@@ -1651,18 +1668,18 @@ Rejected. Use six layers only if the actual layout and return paths need them.
 
 Rejected. It can hide contamination, block sensors and contacts, change thermal behaviour, and prevent useful rework.
 
-## Open questions that block schematic capture
+## Open design questions and later qualification gates
 
 ### P0: mission and safety
 
-1. Exact trajectory, maximum speed, acceleration, rotation, coast time, descent time, and total powered duration.
+1. First vehicle and the point at which its simulated and measured trajectory, speed, acceleration, rotation, coast, descent, and powered duration replace the provisional platform envelope before qualification.
 2. Accepted recovery topology, deployment events, initiators, independent controller, and range rules.
 3. Staging architecture and the exact permissives for the third pyro channel.
 4. Quantitative allowable probability of inadvertent fire, loss of recovery, loss of primary log, and loss of telemetry.
 5. Independent method and uncertainty requirement for proving at least 100 km.
 6. Battery chemistry, voltage, capacity, temperature, source impedance, location, and Foinse relationship.
-7. Mechanical vibration/shock/acoustic environment at the avionics mount.
-8. Maximum/minimum launch, pad, bay, and component temperatures; enclosure venting and pressure history.
+7. Later measured vibration/shock/acoustic environment at the avionics mount and the qualification profile derived from it; exploratory screening proceeds now.
+8. Later mission-specific launch, pad, bay, and component temperatures, enclosure venting, and pressure history; the provisional range governs Rev A.
 9. Radio frequencies, powers, licences/range approvals, antennas, and groundstation.
 
 ### P0: compute and state
@@ -1700,13 +1717,13 @@ Rejected. It can hide contamination, block sensors and contacts, change thermal 
 
 ## Immediate next sequence
 
-1. Write the one-page Kármán mission envelope and vehicle fault/hazard allocation. This is the missing input to every part decision.
+1. Translate the accepted provisional envelope into rail-energy, storage, sensor-range, temperature, pressure, and mechanical-screening budgets. Open a mission-overlay template for the first vehicle; do not wait for mature simulation before beginning Rev A.
 2. Build the H573 resource/ECC spike on a development board: linker classes, injected single/double errors, scrub, watchdog, reset evidence, boot time, and fault handlers.
 3. Draw the complete standalone and Ogma/Foinse power trees with branch fault currents and return paths. Build the input/regulator/comms-branch mule against the real battery and harness.
 4. Close the recovery and staging energetic-output fault trees before selecting MOSFETs or connectors.
 5. Put actual Nano-Fit, Micro-Fit, Micro-Lock Plus, JST GH, Gecko, WAGO MCS MICRO 2712, and WAGO 2601 samples beside the real wires, boards, batteries, antennas, camera, e-match leads, connectorised charge assemblies, removable panel, vent route, and service tools in the 1:1 avionics-bay layout. Demonstrate charge-module replacement, USB service, and charging with the flight assembly closed; verify the temporary adapter is absent; then pull, disturb, vibrate, contaminate externally, pressure-cycle, and inspect it.
-6. Simulate the accepted trajectory through the actual sensor limits. Decide how apogee is proved and how recovery state survives the pressure/GNSS dead region.
-7. Only then freeze MCU, power, sensors, storage, connector families, layer count, and schematic interfaces.
+6. Exercise the provisional 100 km case through candidate sensor limits. Decide how apogee is proved and how recovery state survives the pressure/GNSS dead region. Replace the provisional profile when the first mature vehicle simulation exists.
+7. Freeze Rev A MCU, power, sensor, storage, connector, layer-count, and schematic choices against the provisional envelope while recording the later mission evidence that could overturn each choice.
 
 ## Evidence basis
 

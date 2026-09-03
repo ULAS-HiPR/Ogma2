@@ -66,5 +66,9 @@ hardware, measurements, and tests outrank prose.
   deliberate external service boundaries.
 - “Space-shot capable” means the bounded suborbital mission defined in
   `current-system.md`, not orbital lifetime.
+- Ogma 2 is the workhorse board for ordinary HiPR competition and development
+  flights. Use the accepted provisional platform envelope for Rev A design;
+  replace it with mission-specific simulation and measured environments before
+  qualification rather than blocking schematic work now.
 - Every extra component, board, processor, connector, interface, and software
   mode needs a named function, failure boundary, and verification need.

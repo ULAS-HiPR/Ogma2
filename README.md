@@ -24,18 +24,21 @@ tests required before parts or layouts are frozen.
 
 ## Current architecture
 
-Ogma 2 is one accessible flight-computer PCB with two non-redundant MCUs. The
+Ogma 2 is HiPR's workhorse flight computer for ordinary competition and
+development launches through the bounded Kármán-line mission. It is one
+accessible flight-computer PCB with two non-redundant MCUs. The
 flight MCU owns sensing, estimation, flight state, local logging, three energetic
 channels, and two servo channels. The communications MCU owns GNSS, LoRa,
 telemetry buffering, and normal USB-facing work. Foinse 2 remains a separate
 vehicle-specific power board. External CAN exists only for named independent
 vehicle systems, currently the self-governing liquid-propulsion controller.
 
-The space-shot requirement is one bounded suborbital sortie to at least 100 km
-near apogee followed by descent, recovery, and retained local evidence. It is not
-an orbital-lifetime requirement. Exact mission envelope, parts, schematics,
-board geometry, and qualification levels remain open where the current-system
-document says so.
+The board uses one provisional platform envelope now: 3–9 km competition
+missions across solid, hybrid, liquid, single-stage, and multistage vehicles,
+with a short sortie to at least 100 km as the extreme case. It is not an
+orbital-lifetime requirement. Later vehicle simulation and measurement replace
+the provisional values before mission qualification; they do not block initial
+architecture, component comparison, or schematic work.
 
 ## Directory map
 
