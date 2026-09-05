@@ -1,6 +1,6 @@
 # Ogma, Foinse, and propulsion boundary
 
-Updated: 3 September 2026
+Updated: 5 September 2026
 
 Status: current owned architecture boundary; exact electrical interfaces remain
 open
@@ -11,6 +11,12 @@ This file carries the cross-system boundary needed to develop Ogma 2, Foinse 2,
 and the liquid-propulsion controller without merging their responsibilities.
 Controlled interface definitions and tested hardware override it where they
 conflict.
+
+Foinse 2 is MCU-less and has no firmware image. Its source/protection circuitry
+can still have electrical supply dependencies; the
+[power review](../docs/reliability-design-review.md#51-mcu-less-foinse-startup)
+and EX-02 examine those without adding a processor or selecting a new supply
+topology. This clarification does not change any system's authority.
 
 ## Authority
 
@@ -42,6 +48,29 @@ operator UI is disconnected.
 An LTS host-controlled adapter may temporarily occupy Ogma's second-node
 position before real Ogma exists. It is removed when Ogma is installed. It does
 not create a production third node or bridge the vehicle bus to GSE.
+
+## LTS implementation and recording scope
+
+The 4 September LTS working baseline combines propulsion and GSE responsibilities
+on one controller PCB and one primary MCU. CAN A retains the production
+Ogma/propulsion contract. A separate, unbridged CAN B accepts GSE requests from a
+second host adapter. Both logical partitions share the primary-MCU reset/power
+fault boundary; neither survives a whole-MCU reset by virtue of its software role.
+
+The LTS controller streams a bounded combined full-rate copy over local USB-C
+to a Linux stand PC. That PC owns the complete LTS run; the board keeps only a
+bounded pre/post-event incident package. Exact reset/power-loss retention remains
+open. This LTS choice does not change the flight propulsion local-recording
+direction or Ogma's full-rate flight evidence requirements.
+
+The LTS PCB is not required to fly unchanged. Reuse is proven circuits, software,
+interfaces and tests; later vehicle hardware is qualified against its own needs.
+No flight mission depends on the stand PC.
+
+Automatic safing on loss of the complete LTS operator path must not be defeated
+by continuing Ubuntu/CAN heartbeats. A locally expiring operator permission is
+an LTS proposal whose contract and real-Ogma test integration still need joint
+review. It does not silently impose an operator-presence requirement on flight.
 
 ## Power interface
 

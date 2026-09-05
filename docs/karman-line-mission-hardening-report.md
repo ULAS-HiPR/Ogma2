@@ -1,12 +1,20 @@
 # Ogma 2 Kármán-line mission hardening report
 
-Date: 2026-09-03
+Date: 2026-09-05
 
 Status: design study before schematic capture; the workhorse role, provisional platform envelope, bounded Kármán mission, avionics-bay service boundary, and connector lifecycle are accepted, while exact connector parts and remaining proposals are not yet Ogma 2 architecture decisions
 
 Scope: a reusable workhorse flight computer for ordinary HiPR competition launches, with one suborbital flight to at least 100 km and recovery as its short-duration extreme case
 
 Authority: [`current-system.md`](../current-system.md) is the current architecture; only report items explicitly accepted there are architecture decisions
+
+Review update, 5 September: the [reliability design review](reliability-design-review.md)
+and [execution plan](reliability-execution-plan.md) deepen this study and own the
+new review work queue. Source corrections below cover H573 SRAM geometry and
+ECC test coverage. Reset/retention, logger/watchdog interaction, and gate
+sequencing need explicit closure. References to independent recovery describe
+the study's proposed safety architecture, not a blanket per-mission decision
+already accepted by the team. Foinse remains MCU-less in every candidate.
 
 ## The result in one page
 
@@ -272,9 +280,9 @@ The part provides:
 - ECC on SRAM2 when its ECC option is enabled;
 - ECC on the first 256 KB of SRAM3 when its ECC option is enabled;
 - ECC on backup SRAM when its ECC option is enabled;
-- no ECC on SRAM1 and part of SRAM3.
+- no ECC on SRAM1; with SRAM3 ECC enabled, its upper 64 KiB is reserved for check storage and unavailable to application code.
 
-ST describes the SRAM protection at a 64-bit doubleword level: one-bit correction and two-bit detection. The production fixture must program and read back the relevant SRAM ECC option bytes. Firmware must verify the loaded diagnostic configuration. An ECC-capable bank with ECC disabled is ordinary unprotected RAM.
+Source correction, 5 September: [ST AN5342 Rev 8, table 4](https://www.st.com/resource/en/application_note/an5342-error-correction-code-ecc-management-for-internal-memories-protection-on-stm32h7-series-stmicroelectronics.pdf) describes H5 SRAM ECC on 32-bit data words. UM3150 Rev 2 table 22 contains conflicting 64-bit wording, which the earlier report followed. Use the exact-part RAM documentation and verify implementation in EX-04; do not silently generalise across H5 derivatives. H573 main RAM with SRAM2/SRAM3 ECC enabled provides 320 KiB protected and 256 KiB unprotected application space, plus separate backup SRAM. The production fixture must program and read back the relevant ECC option bytes. Firmware must verify the loaded configuration; ECC capability with ECC disabled is not protection.
 
 The linker script must therefore create named memory classes:
 
@@ -322,17 +330,17 @@ For the H573 candidate:
 
 1. Hold all energetic enables inactive in hardware.
 2. Start on the internal safe clock and establish reset cause.
-3. Initialise each used ECC SRAM word by writing it before any read. This establishes data and check bits.
+3. Follow the selected reset-class retention sequence. Initialise fresh or invalidated ECC regions before use; do not blanket-clear the flight record that a warm restart must validate and retain. Establish a known-good execution region before accessing suspect retained memory.
 4. Enable and clear ECC status in the order required by the reference and safety manuals.
 5. Install correctable and uncorrectable error handlers before general interrupts begin.
-6. Run a controlled ECC self-test on reserved words in every protected bank.
+6. Run the supported controlled ECC self-test on reserved locations. UM3150 Rev 2 RAM_SM_10 limits its documented H5 mechanism to RAM3; it identifies other protection measures for RAM2/BKPSRAM. Test software integrity separately and do not claim unsupported hardware injection coverage.
 7. Initialise stacks and critical structures in protected banks.
 8. Verify the application image and immutable configuration.
 9. Start sensors and storage in an output-safe state.
 10. Start the internal watchdog, then the external windowed watchdog only after the scheduler health path is running.
 11. Permit transition from `SAFE` only after rail, arm, configuration, sensor, and output readback pass.
 
-The exact write-before-read and retention sequence must be checked against the selected option-byte and reset configuration. No uninitialised SRAM content may be treated as valid. The applicable sequence must run after every reset, including a reset during boost or coast. Boot time is therefore a flight requirement and must be measured at minimum voltage and temperature.
+The exact write-before-read and retention sequence must be checked against the selected option-byte and reset configuration. No uninitialised SRAM content may be treated as valid. Cold/maintenance startup and bounded in-flight restart may require different diagnostic work; neither path may destroy the evidence needed by the other. Boot time is a flight requirement and must be measured across the supported supply and temperature envelope. EX-03 and EX-04 close these paths before they are relied on for recovery.
 
 ST provides fixed flash locations containing one- and two-bit error patterns for testing the flash ECC diagnostic. The startup test should verify returned data, error reporting, failing address, and interrupt/NMI path. Use the documented RAM ECC test mechanism or reserved test words for the exact silicon; do not corrupt live flight memory to prove the handler.
 
@@ -539,7 +547,7 @@ Required properties:
 - package and temperature range suitable for the assembly;
 - deterministic behaviour if its own supply ramps or chatters.
 
-The heartbeat is an aggregate health claim. The main loop should earn it after acquisition, estimation, state checks, logger progress, and deadline checks complete. A free-running timer output or “toggle in every loop” can continue while required work is dead and is therefore inadequate.
+The heartbeat is an aggregate progress claim for the accepted operating mode. Proposed correction, 5 September: acquisition, estimation, state and deadline checks must progress; a contained logger failure must enter an explicit degraded-recording mode rather than force repeated resets of a healthy flight loop. A required logger fault can still prevent pre-launch readiness. The transition and watchdog rules require EX-01/03/06 acceptance and tests. A free-running timer or a sticky task-alive flag can continue while required work is dead and is inadequate supervision.
 
 ### Internal watchdogs
 
@@ -1520,8 +1528,8 @@ At minimum, inject:
 
 | Injection | Required observed result |
 | --- | --- |
-| One bit in each ECC SRAM bank | corrected, address/status recorded, scrub removes latent error, deadlines maintained |
-| Two bits in one ECC word | uncorrectable path invoked, safe phase-aware response, fault evidence retained |
+| One-bit ECC diagnostic fault where the selected bank supports injection | correction/reporting/scrub verified, deadlines maintained; unsupported banks require separately identified evidence rather than an invented injection method |
+| Two-bit ECC diagnostic fault where supported | uncorrectable path and bounded evidence handling verified against the accepted phase policy |
 | Corrupt critical state/inverse/CRC | rejected and reconstructed or safe reset; no arbitrary transition |
 | Corrupt each configuration slot and commit marker | newest valid compatible slot selected or safe default/no-go |
 | Corrupt log record/header/address | surrounding valid records recover; no parser overrun |
@@ -1718,7 +1726,7 @@ Rejected. It can hide contamination, block sensors and contacts, change thermal 
 ## Immediate next sequence
 
 1. Translate the accepted provisional envelope into rail-energy, storage, sensor-range, temperature, pressure, and mechanical-screening budgets. Open a mission-overlay template for the first vehicle; do not wait for mature simulation before beginning Rev A.
-2. Build the H573 resource/ECC spike on a development board: linker classes, injected single/double errors, scrub, watchdog, reset evidence, boot time, and fault handlers.
+2. Execute EX-04's exact-part resource/ECC spike, comparing H563/H573 where relevant: linker classes, supported diagnostic injection, separate application-corruption tests, scrub, watchdog, retention, boot time, and bounded fault handlers.
 3. Draw the complete standalone and Ogma/Foinse power trees with branch fault currents and return paths. Build the input/regulator/comms-branch mule against the real battery and harness.
 4. Close the recovery and staging energetic-output fault trees before selecting MOSFETs or connectors.
 5. Put actual Nano-Fit, Micro-Fit, Micro-Lock Plus, JST GH, Gecko, WAGO MCS MICRO 2712, and WAGO 2601 samples beside the real wires, boards, batteries, antennas, camera, e-match leads, connectorised charge assemblies, removable panel, vent route, and service tools in the 1:1 avionics-bay layout. Demonstrate charge-module replacement, USB service, and charging with the flight assembly closed; verify the temporary adapter is absent; then pull, disturb, vibrate, contaminate externally, pressure-cycle, and inspect it.

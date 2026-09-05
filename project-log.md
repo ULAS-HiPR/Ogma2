@@ -998,3 +998,132 @@ domain, and which later mission evidence could overturn the choice.
 - [2024 EuRoC Design, Test & Evaluation Guide](https://euroc.pt/wp-content/uploads/2024/04/PTS_EDU_EuRoC_ST_000455_DTEG_v05.pdf)
 - Seán's 3 September acceptance of the proposed workhorse role and provisional
   values.
+
+## 2026-09-05 — Reconcile LTS implementation without changing flight requirements
+
+**Context:** Seán authorised document updates after the LTS engineering review.
+The Ogma description still placed separate propulsion, GSE and DAQ controllers
+on the stand, whereas LTS decisions of 3–4 September now use one unified stand
+PCB/primary MCU and no longer require that PCB to fly.
+
+**Correction:** Updated only the test-stand relationship in
+[`current-system.md`](current-system.md) and the
+[owned interface](interfaces/ogma-foinse-propulsion-boundary.md). CAN A retains
+the two-node production Ogma/propulsion boundary; separate unbridged CAN B serves
+GSE. Both LTS partitions stop on a shared primary-MCU reset. Linux remains
+outside the required local measurement/decision/action path.
+
+**Scope retained:** Ogma flight architecture, Foinse power authority, the
+self-governing vehicle propulsion peer, and full-rate local flight-recording
+requirements are unchanged. LTS incident-only local recording is a stand
+decision, not permission to remove flight evidence. Later flight hardware
+requires its own qualification and cannot depend on the stand PC.
+
+**Still proposed/open:** The LTS end-to-end expiring operator-permission scheme,
+its timeout and integration with real Ogma need joint review. No such timeout
+was adopted for autonomous flight. Exact LTS incident reset/power-loss coverage
+is also unproven.
+
+**Next checkpoint:** Review the two interface snapshots together when the CAN
+contracts and flight/stand test modes are implemented. No firmware, circuit,
+physical test, component choice, commit, push or external message resulted from
+this documentation correction.
+
+## 2026-09-05 — Reliability review made executable; source corrections recorded
+
+### Context and authority
+
+Seán requested a deeper independent review, then authorised writing the
+findings into project documentation in an executable form. This authorises the
+review, work breakdown and evidence templates. It does not accept every new
+circuit, exact part, reset policy, recovery allocation or release-gate proposal.
+
+Seán also reconfirmed that Foinse has no microcontroller after Anav asked
+whether that boundary had been understood. The power review concerns analogue
+and dedicated-function device dependencies. It adds no Foinse MCU or firmware.
+No private correspondence was imported into the repository.
+
+### Observed evidence
+
+- The repository has architecture, studies and curated predecessor evidence;
+  no Ogma 2 hardware or firmware test result was established by this work.
+- The Rev 1 closure records the unexplained aloft reset, subsequent
+  recalibration, missing voltage evidence, and valid recovered flash records.
+  It does not qualify Ogma's own energetic recovery path.
+- ST AN5342 Rev 8 and H5 RAM configuration material describe 32-bit SRAM ECC
+  words and reserved SRAM3 check storage. The earlier 64-bit wording came from
+  a conflicting statement in ST UM3150 Rev 2, not a measured Ogma result.
+- UM3150 limits its documented H5 ECC diagnostic injection method to RAM3.
+  The earlier plan for the same injection in every protected bank was not
+  supported by that source.
+- The study coupled watchdog feeding to logger progress while requiring
+  continued flight under a storage fault. It needed an explicit degraded-mode
+  policy rather than contradictory unconditional requirements.
+- An LTS reconciliation appeared in current-system, the owned interface and
+  this log during the work. Its changes were preserved; this review does not
+  reverse the unified stand-controller or stand-recording decisions.
+
+### Documentation changes
+
+- Added the indexed reliability review covering fault allocation, reset/time
+  semantics, retention/ECC interaction, MCU-less Foinse startup, protection
+  coordination, power budgets, sensor validity, physical actuation evidence,
+  storage/configuration, installed-bay behaviour and bounded radiation claims.
+- Added EX-01–EX-10 with dependencies, required roles, planned outputs,
+  controlled bench procedures, measurable closure criteria, numerical inputs
+  still needed, and a decision register. All tasks remain not started and
+  personnel unassigned.
+- Added a reusable verification record for exact configuration, instruments,
+  stimulus, limits, raw evidence, failures, interpretation and disposition.
+- Corrected the active study's SRAM geometry, unavailable-memory assumption,
+  bank-specific ECC test coverage and unsafe blanket retention initialisation
+  wording. Marked the watchdog/degraded-logger correction as proposed policy.
+- Clarified that communications failure must preserve essential local flight
+  functions; losing GNSS aiding need not leave numerical estimates unchanged.
+- Corrected the independent-recovery status leak: mission-specific need and
+  coverage remain open. No commercial backup was selected or mandated here.
+- Indexed the new work from README, docs index and current-system. Flagged the
+  mixed prototype/qualification evidence list and proposed separate G0–G3 gates
+  without waiving existing flight evidence.
+
+### Interpretation and unresolved decisions
+
+The basic single-board/two-MCU architecture remains coherent. Its main open
+reliability work is closing power containment, supported reset/restart classes,
+and the available sensing through the unaided flight interval. The accepted
+provisional workhorse envelope is unchanged and supports present bench work.
+
+Exact MCU/package, Foinse auxiliary supply topology, memory/time retention,
+degraded flight policy, output fault allocation, independent recovery and gate
+adoption remain explicit decisions. Tests in the plan are unperformed. No
+radiation susceptibility, numerical reliability probability, environmental
+qualification or flight readiness is claimed.
+
+### Next checkpoint
+
+Review EX-01's communications-loss, logger-failure, warm-reset and total-power-
+loss rows with their actual surviving capabilities. Draw EX-02's MCU-less
+Foinse source dependency and EX-03's retention classes. Use those to run the
+first externally instrumented, current-limited power interruption and restart
+on an identified development assembly with inert outputs.
+
+### Evidence
+
+- [Reliability design review](docs/reliability-design-review.md)
+- [Reliability execution plan](docs/reliability-execution-plan.md)
+- [Verification-record template](docs/templates/verification-record.md)
+- [Corrected hardening study](docs/karman-line-mission-hardening-report.md)
+- [Rev 1 flight closure](sources/project/ogma-rev1/ogma-rev1-flight-closure.md)
+- Primary manufacturer links and exact source-conflict notes are retained in
+  the review and corrected study.
+
+### Documentation verification
+
+- Checked nine changed/new Markdown files: 81 relative links and referenced
+  heading anchors resolved; code fences were balanced.
+- Verified that the pre-existing project log remains an unchanged prefix.
+- Verified preservation of all added lines from the concurrent LTS changes in
+  current-system, the owned interface and the log.
+- `git diff --check` passed. Changes remain local on
+  `docs/reliability-review-execution`; no commit, push or pull request was made
+  by this review task. No hardware/firmware test was run.

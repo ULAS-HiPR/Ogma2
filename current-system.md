@@ -1,10 +1,14 @@
 # Ogma 2 current architecture
 
-Updated: 2026-09-03
+Updated: 2026-09-05
 Status: architecture checkpoint before schematic capture
 Scope: Ogma 2 as HiPR's workhorse competition flight computer, its bounded Kármán-line mission, its power boundary with Foinse 2, and its interface to a future liquid-propulsion controller
 
 This is the current working picture assembled from the Ogma Rev 1 evidence, the portfolio closure, the design references in this directory, the Seán/Anav discussions from 17 August–3 September 2026, and the 29 August CATS Vega/Fluctus field-integration evidence. No Ogma 2 schematic or PCB exists yet. Where the discussion moved faster than the evidence, this document says so.
+
+The 5 September update reconciles only the test-stand relationship with the LTS
+decisions of 3–4 September. Ogma's flight architecture, power authority and
+full-rate flight-recording requirements are unchanged.
 
 Ogma 2 is intended to be HiPR's workhorse flight computer: the same maintained board for ordinary competition and development launches across solid, hybrid, liquid, single-stage, and multistage vehicles, through the eventual space-shot mission. Ogma 3 should be a corrective refinement, not the release that finally adds an essential Ogma 2 function. This is a design target, not a present capability claim. Here, “space shot” means one bounded suborbital sortie that reaches at least 100 km near apogee, returns through descent and recovery, and preserves local evidence. It does not mean orbital insertion or unattended operation for months or years. Rev A uses the accepted provisional platform envelope below. Exact vehicle trajectories and environments arrive later from simulation and measurement; they replace provisional values before mission qualification but do not block initial component selection or schematic work.
 
@@ -15,6 +19,13 @@ Status words used below:
 - **Working direction**: strongly favoured, but still needs a part, circuit, interface, or test decision.
 - **Open**: not settled.
 - **Rejected or superseded**: considered and removed from the baseline.
+
+A separate [5 September reliability review](docs/reliability-design-review.md)
+and [execution plan](docs/reliability-execution-plan.md) deepen the unresolved
+design and provide bounded work packages, proposed gates, and test criteria.
+Their creation is authorised; their new circuit and flight-policy proposals
+are not automatically accepted architecture. No Ogma 2 bench result is claimed.
+The existing provisional envelope and MCU-less Foinse boundary are unchanged.
 
 ## The current design in one paragraph
 
@@ -74,7 +85,7 @@ The baseline does not include orbital insertion, six-month or multi-year autonom
 
 These values may select architecture, part classes, sensor ranges, storage size, energy reserve, connector construction, and mechanical margins now. Exact pad wait, trajectory, boost, coast, descent, speed, rotation, temperature, vibration spectrum, shock waveform, RF environment, and recovery duration remain later mission overlays. Simulation and measured flights must replace the provisional values before final mission qualification. A change is recorded explicitly; it does not silently invalidate the platform.
 
-No numerical reliability probability is invented yet. The fault-containment and independent-recovery requirements still apply. Probability targets may be allocated when vehicle hazards, range rules, and evidence support them.
+No numerical reliability probability is invented yet. The fault-containment requirements still apply. Whether independent recovery is required for each mission, and the exact coverage it provides, remain open decisions; the hardening study's recommendation must not be read as an accepted blanket requirement. Probability targets may be allocated when vehicle hazards, range rules, and evidence support them.
 
 The separate [`Kármán-line mission hardening report`](docs/karman-line-mission-hardening-report.md) analyses the required changes and candidates. Its technical proposals remain a design study until accepted here.
 
@@ -115,7 +126,7 @@ Consequences of the split:
 - The flight MCU must never wait for the communications MCU.
 - Flight-to-comms traffic is bounded, fire-and-forget telemetry.
 - Comms-to-flight traffic is a request or configuration proposal. It cannot directly command a recovery action.
-- Holding the communications MCU in reset must not change the flight MCU's sensing, estimation, logging, or recovery behaviour.
+- Holding the communications MCU in reset must not interrupt locally owned flight sensing, logging, or essential flight/recovery operation. Loss of GNSS aiding may change estimator accuracy; the permitted degraded capability, uncertainty, and timing bounds must be defined and tested. Numerically identical estimates with and without aiding are not required.
 - The UART contract must be versioned, checksummed, generated from one source, and tested at both ends.
 - A third MCU for CAN cleanup, recovery, or generic expansion is rejected. Spend the board area and verification effort on sensors, power integrity, observability, and test access instead.
 
@@ -611,7 +622,7 @@ Its power must be electrically independent of Ogma's logic rail. That does not y
 - publish bounded engine state, health, key pressures, and abort status to Ogma;
 - accept only requests that its own state machine considers safe.
 
-### Functions that stay off the propulsion controller by default
+### Functions that stay off the flight propulsion controller by default
 
 - tank fill and drain;
 - purge;
@@ -628,7 +639,29 @@ Those belong to GSE, DAQ, or an independent protection layer unless a channel-by
 
 The first idea was one broad board that could become both the liquid-test-stand controller and the flight propulsion board. Discussion with Anav, Jay, David, and Dylan exposed the problem: the stand has many more sensors, valves, research channels, operator functions, and facility states than the flight article.
 
-The current direction is narrower. A reusable propulsion controller sits inside the test stand as part of the device under test. It owns the flight-relevant sensors and actuators. Separate GSE and DAQ systems handle stand-only work. Whether the exact same PCB flies, or a flight subset is later produced, remains open.
+The current LTS working route, decided on 4 September, is one unified stand
+controller PCB with one primary MCU. Propulsion and GSE remain explicit logical
+responsibilities sharing local acquisition and one output arbiter. The Linux
+stand computer handles supervision, aggregation and bulk recording; no required
+sensor-to-action path round-trips through it. Separate GSE/DAQ controller boxes
+are no longer the stand baseline.
+
+CAN A exercises the production two-node Ogma/propulsion contract. A host adapter
+temporarily occupies Ogma's position and is removed when real Ogma is installed.
+The stand controller's separate, unbridged CAN B serves GSE requests from the
+host. Both LTS software partitions stop on a shared primary-MCU reset; their
+separate names do not provide independent protection.
+
+The LTS PCB is not required to fly. A later flight propulsion board is selected
+against vehicle requirements and may reuse proven circuits, software, interfaces
+and tests. This changes the test implementation, not Ogma's vehicle authority or
+the self-governing propulsion boundary.
+
+LTS Revision A keeps a bounded local pre/post-event incident record; the stand
+PC owns the complete run. That decision does not reduce the vehicle's local
+full-rate recording direction or Ogma's flight-recording requirements. Flight
+cannot rely on a stand PC. Incident duration and reset/power-loss coverage on the
+LTS remain implementation questions, not completed qualifications.
 
 Local measurement implies local authority. If the propulsion controller reads a pressure for a safety-critical decision, it needs enough local actuator authority to perform the corresponding protective action. If a measurement exists only for research, the stand DAQ can own it.
 
@@ -691,7 +724,7 @@ Exact valve fail states, energise/de-energise policy, ignition interlocks, abort
 | Vertically stacked Ogma/Foinse mezzanine | **Superseded** | It recreates the access problem. Use a visible, independently removable physical arrangement. |
 | Windows-only or VM-dependent normal field workflow | **Rejected** | Normal configuration, verification, and log access must work directly on supported team laptops. |
 | Routine in-house placement and reflow of Ogma 2 units | **Superseded** | Factory PCBA preserves team time for review, bring-up, fixtures, measurement, and qualification. |
-| One board owns propulsion, all GSE, all DAQ, and operator UI | **Rejected** | Different timing, safety, lifecycle, I/O, and data-volume requirements. |
+| Embedded controller also owns the operator UI/host workload | **Rejected** | LTS now combines propulsion, GSE and selected acquisition on one MCU, but keeps Linux/UI outside every required real-time protection path. This is not a prohibition on that unified LTS controller. |
 | Pi or laptop as sole liquid safety authority | **Rejected** | Loss of the host or link must not remove local safe-state action. |
 | Duplicate every stand sensor | **Rejected as default** | Adds ports, leak paths, calibration, packaging, and cost without proving independent value. |
 | Maximum possible sample rate for every channel | **Rejected** | Sample rate follows physical bandwidth and the decision or research question. |
@@ -832,6 +865,13 @@ Do not copy a board count or aesthetic. Copy only a choice whose requirement and
 
 ## Required evidence before PCB release
 
+The reliability review identifies a sequencing problem in this list: complete
+operator and closed-bay proofs require representative assembled hardware.
+The [proposed G0–G3 gates](docs/reliability-execution-plan.md#proposed-release-gates)
+allocate bounded bench work, engineering-PCB release, installed qualification,
+and unit/mission release separately. Gate adoption remains a review decision;
+no flight evidence below is waived or claimed complete.
+
 1. Mission and system block diagrams for every supported mode.
 2. Sensor/channel matrix with ownership, purpose, rate, accuracy, and fault action.
 3. Actuator matrix with power source, normal state, safe state, feedback, and authority.
@@ -873,6 +913,12 @@ The board is not ready because it boots or because every peripheral answers once
 - a full field rehearsal using the exact battery, harnesses, groundstation, configuration, and binaries intended for flight.
 
 ## Immediate next sequence
+
+Use [EX-01–EX-10](docs/reliability-execution-plan.md#work-queue-and-dependencies)
+to execute the reliability review. Begin with the fault allocation, MCU-less
+Foinse power dependencies, reset/retention contract, and exact MCU resource
+spike. The sequence below remains the wider architecture checklist; it is not
+a requirement to finish every comparison before a bounded bench experiment.
 
 1. Use the accepted provisional workhorse envelope for Rev A architecture, component comparison, and schematic work. Open a mission-specific overlay for the first vehicle and replace provisional values with simulation and measurement before qualification.
 2. Draw the three system block diagrams: standalone Ogma, Ogma plus Foinse, and Ogma plus Foinse plus propulsion controller.

@@ -11,15 +11,21 @@ tests required before parts or layouts are frozen.
 
 1. [Current system](current-system.md): canonical short architecture, accepted
    decisions, open questions, and immediate sequence.
-2. [Kármán-line mission hardening report](docs/karman-line-mission-hardening-report.md):
+2. [Reliability execution plan](docs/reliability-execution-plan.md): the current
+   review work queue, dependencies, proposed release gates, bench procedures,
+   pass criteria, and decisions awaiting acceptance. Start with EX-01–EX-04.
+3. [Reliability design review](docs/reliability-design-review.md): deeper
+   power/reset/state, sensing, MCU, output, storage, and installed-system
+   analysis; source corrections and unresolved claims are explicit.
+4. [Kármán-line mission hardening report](docs/karman-line-mission-hardening-report.md):
    deep design study covering mission duration, error correction, MCU choice,
    power, isolation, interfaces, connectors, storage, sensing, packaging, and
    qualification.
-3. [Ogma, Foinse, and propulsion boundary](interfaces/ogma-foinse-propulsion-boundary.md):
+5. [Ogma, Foinse, and propulsion boundary](interfaces/ogma-foinse-propulsion-boundary.md):
    owned vehicle authority, power, and CAN boundary.
-4. [Design evidence](sources/README.md): curated CATS Vega, Fluctus, and CATS
+6. [Design evidence](sources/README.md): curated CATS Vega, Fluctus, and CATS
    Configurator references and the decision-relevant Ogma Rev 1 evidence package.
-5. [Project log](project-log.md): append-only chronology; newest entries are at
+7. [Project log](project-log.md): append-only chronology; newest entries are at
    the end.
 
 ## Current architecture
@@ -50,8 +56,14 @@ project-log.md               append-only chronology
 
 docs/
   README.md
+  reliability-execution-plan.md
+                              work packages, tests, gates, open decisions
+  reliability-design-review.md
+                              source-backed reliability closure analysis
   karman-line-mission-hardening-report.md
                               deep mission-hardening design study
+  templates/verification-record.md
+                              controlled bench/result record template
 
 interfaces/
   README.md
