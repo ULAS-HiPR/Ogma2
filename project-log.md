@@ -2558,3 +2558,35 @@ lands, C1403 selection, remaining models, existing DRC findings, switch/cable
 fault tests and installed antenna/RF/power qualification. No initiators, live
 load testing, purchases or hardware publication were performed. Next: independent
 reading and joint circuit review, then Seán's layout and Anav's firmware work.
+
+## 2026-09-08 — restore research depth to the architecture chapters
+
+Seán found the GitHub architecture chapters too sparse for the flight-computer
+team review. Expanded the overview and all eight domain chapters using the
+6 September architecture research and 7 September follow-ups, reconciled with
+the 8 September installed changes. The concise current-system remains the
+orientation; the architecture pack now carries the substantive design argument.
+
+Recovered material includes the H563/H573/lockstep/radiation-oriented comparison,
+ECC memory consequences, buck/LDO and hold-up tradeoffs, output fault boundaries,
+servo supply alternatives, Hall/shunt/IMON comparison, indication and timekeeping,
+radio/GNSS shortlists, airtime/sensitivity calculations, each sensor's range and
+timing limits, NOR capacity/commit throughput, battery-energy assumptions,
+conditional propulsion conversion and the interboard connector audit.
+
+This is evidence curation, not a new component-selection decision or live market
+survey. Dated prices stay dated; desk calculations are not measurements. The
+original sensor study checked a selected suite and meaningful architectural
+alternatives but did not exhaustively benchmark every competing sensor. That
+coverage limit is explicit. Historical SAM/E22/two-servo/coupon-first language
+does not override the installed MAX/Wio/three-servo/first-full-PCBA baseline.
+
+Manufacturer references are placed beside the claims they support; the pack
+indexes deeper records already in the umbrella. No raw research/transcript dump,
+private correspondence or child hardware was added. Checked 121 local links and
+section anchors across the pack and entrypoints; no missing targets found.
+No CAD, pin allocation, firmware, tests or qualification status changed.
+
+Next: Seán, Anav and Arnav can review the reasoning within the same GitHub reading
+path, then raise specific circuit or evidence questions rather than reconstructing
+the design rationale from old workspace reports.

@@ -61,6 +61,63 @@ Ordinary flights use the workhorse outputs after qualification. The bounded
 Kármán configuration has those energy paths physically absent/DNP; independent
 vehicle systems own recovery, actuation and full-envelope altitude proof.
 
+## How the research shaped this design
+
+The design is not justified by having more components than another flight
+computer. The earlier research kept returning to a few observed integration
+failures and the evidence that would make them diagnosable next time.
+
+| Earlier finding or constraint | Architectural consequence | Remaining cost or limit |
+| --- | --- | --- |
+| Rev 1 supply/reset cause was not established by the available record | Voltage/current evidence, reset capture, independent supervision and explicit source tests | More diagnostic circuitry does not identify a cause until data is captured correctly |
+| Shared-bus, orientation and exact-part mistakes | Separate acquisition buses, exact package/pin checks, explicit sensor identity and axis transforms | More drivers and boundaries; common mounting/environment faults remain |
+| GNSS fix/age and reconstructed altitude could be confused | Preserve source time, validity and datum; do not label a mixed-source track independent GNSS proof | Estimator and log consumers must honour those distinctions |
+| Carbon blocks the chosen onboard-antenna installation | External GNSS antenna arrangement | RF launch, coax loss and retention replace the old cable-free advantage |
+| Need a reusable computer across ordinary and liquid vehicles | Standalone Croí plus MCU-less Foinse and a bounded propulsion CAN contract | More interfaces than a dedicated recovery-only board; their failure behaviour must be tested |
+| Short suborbital exposure, not orbital lifetime | Commodity parts with explicit fault containment and mission qualification | No claim of radiation hardness or years of unattended space operation |
+
+The Rev 1 reset was not proved to be a connector, hot-plug, sensor or radiation
+fault. The earlier reviews deliberately separated candidate precursors from
+causation. That discipline is part of the design: record enough to distinguish
+a command, an electrical response, a valid measurement and an actual outcome.
+[Rev 1 lessons carried forward](../rev1-external-review-lessons.md),
+[reset and evidence contract](../../interfaces/reset-recovery-contract.md).
+
+### The real simplicity trade
+
+One processor, one regulator and a shared sensor bus would be simpler to draw.
+They would also place more failures in the same path. Every additional branch
+in this design needs a named containment or measurement job. Conversely,
+separate regulators do not make separate flight computers when their source,
+PCB and flight processor remain shared. The chapters explain both sides.
+
+The earlier model found storage to be a major priced component, while the
+additional quiet regulator was a small line item by comparison. Signal-domain
+protection was a major component-count/layout burden. Those are better places
+for an honest cost/function review than treating chip age or total part count
+as a proxy for quality. No complete current delivered BOM quote exists.
+
+Adapting an established flight computer remains a legitimate alternative. The
+dated CATS comparison did not establish that Ogma is more reliable, nor verify
+the claimed 100 km rating. Our reason to build is the combined HiPR mission,
+interfaces, service and owned control policy. Novel radio hardware earned a
+place through a concrete module comparison; novelty alone was not the argument.
+[Dated comparison](../avionics-options-review-2026-09-07.md#5-cats-compare-the-vehicle-job-not-a-chip-age-contest).
+
+### What kind of evidence is in this pack?
+
+Part ranges, package constraints and reference circuits came from manufacturer
+documentation. Storage, timing, energy and link examples are calculations with
+stated assumptions. Selection and containment arguments are engineering
+judgments. Native CAD checks demonstrate specified identity/connectivity
+properties. None of those substitutes for measurements on the assembled board.
+
+The expanded chapters recover the 6–7 September study and reconcile it with
+the 8 September installation changes. They are not a new market survey or a
+claim that every competing sensor was benchmarked. Historical selections such
+as E22, SAM, two servos and pre-order coupons remain historical; the current
+Wio, external MAX, three servos and first-full-PCBA sequence control.
+
 ## Next decision
 
 Can Seán and Anav point to every source, decision owner and unsafe failure path

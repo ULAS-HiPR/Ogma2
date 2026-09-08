@@ -27,6 +27,67 @@ would provide colours with fewer GPIOs but introduce a serial device and stale
 latched state. It is not selected. Complementary LEDs preserve both colours
 after PD10 became servo3.
 
+## The options and the concrete reasons for the choices
+
+| Question | Options explored | Chosen reasoning |
+| --- | --- | --- |
+| Local status | LCD, addressable RGB, separate LEDs | LEDs plus detailed USB/telemetry reporting avoid a glass/display interface and another serial state machine |
+| Red/green after servo3 consumed PD10 | More independent GPIO, multiplexing, complementary drive | One PD7 state drives complementary readiness through an inverter; neither colour independently proves execution |
+| Sound | Active fixed-tone buzzer or externally driven piezo | A passive transducer permits the requested startup tones; an active oscillator fixes pitch |
+| Mission time | Main oscillator alone, internal RTC/LSE, external RTC/cell | Keep internal RTC/LSE for qualified reset continuity; monotonic high-resolution time for active control; no external clock IC |
+| Development hardware | Separate exposed-GPIO evaluation board or instrumented flight board | Existing SWD, rail loops, signal pads and named zero-ohm boundaries support the first full PCBA |
+
+The piezo choice is CPT-9019S-SMT-TR, a 9 × 9 × 1.9 mm external-drive part.
+Its specified sound level applies at the stated 4 kHz excitation and distance,
+not every tune or a closed bay. Its −30 to +70 °C operating range is an explicit
+exception to the preferred wider component grade for a nonessential function.
+PD6 is a GPIO allocation, not a promised timer-channel output. Ground chirps
+must use bounded execution and stop before calibration/active flight.
+[Recorded transducer selection and drive analysis](../sensing-indication-time-review-2026-09-07.md#indication).
+
+### Timekeeping: short mission drift and reset continuity are different
+
+For a 900-second mission, 20 ppm corresponds to 18 ms and 100 ppm to 90 ms.
+Those calculations explain why an external RTC is not automatically needed.
+They are not measured oscillator bounds. Initial tolerance, temperature,
+load capacitance and ageing all contribute.
+
+The LSE investigation specifically found that a room-temperature crystal
+tolerance understated cold drift. Using the retrieved ABS07 temperature
+coefficient/turnover bounds, −20 °C could contribute about −100 ppm before
+initial tolerance and ageing. The recorded provisional LSE continuity allowance
+was therefore 200 ppm: 180 ms over 15 minutes, 5.76 s over eight hours. Active
+HSE-based timing has its own budget; do not apply the LSE number to it blindly.
+[Timing arithmetic and source qualifications](../sensing-indication-time-review-2026-09-07.md#time).
+
+The reason to retain the internal RTC/LSE is mainly knowing elapsed age across
+a supported processor reset while the backup domain stays powered. It does
+not survive complete power loss on the present VBAT connection. A plausible
+RTC value must be rejected if retention validity or epoch is unknown. UTC from
+GNSS is useful metadata; it must not step flight deadlines.
+
+### Current evidence: why INA228 moved onto Croí
+
+The original plan placed avionics and propulsion current monitors on Foinse.
+The later discussion exposed the flaw: standalone Croí should also record its
+battery-load response. Moving the avionics INA228/shunt onto the common Croí
+entry retained one measurement path and one driver family; duplicating it on
+Foinse would add little.
+
+The Rev 1 precedent was ACS71240 Hall sensing, with an analog conversion path.
+Hall sensing can avoid an external shunt and offer isolation, but the current
+boards deliberately share ground. Reusing INA228 needed no free flight ADC
+pin and covered ordinary logic draw as well as actuator increments. The eFuse
+IMON output was another lower-part-count option, but would need an ADC/front
+end and validated low-current transfer behaviour. IMON remains a bench probe.
+[Native-state and Rev 1 evidence](../sensing-indication-time-review-2026-09-07.md#why-not-simply-use-the-old-sensor-or-the-efuse-imon).
+
+The 5 mΩ shunt adds 30 mV drop and 0.18 W dissipation at 6 A, nominally. It is
+also another series failure point. It measures protected battery-load current,
+not USB, charging, upstream bias/leakage or all vehicle power. A downstream
+capacitor may supply the start of a pulse; monitor loss may hide it entirely.
+Keep request, driver state, electrical response and physical outcome distinct.
+
 ## What the indications cannot prove
 
 Green means reported readiness, not armed or launch permission. Stuck-high

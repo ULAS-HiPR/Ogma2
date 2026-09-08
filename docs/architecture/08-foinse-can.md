@@ -53,6 +53,75 @@ clamp failure and thermal/surge behaviour remain installed tests. Native
 validation is complete; see the [installed change record](../installation-change-record-2026-09-08.md).
 The external service/charging harness remains pack-specific.
 
+## Source and charging alternatives from the power study
+
+The initial sizing proposed a 2S1P, roughly 4.5 Ah avionics pack and a separate
+6S1P propulsion pack of the same provisional capacity class. These were
+engineering examples, not purchased or qualified pack assemblies. One 2S pack
+must work with standalone Croí; fitting Foinse changes source entry and
+distribution, not the basic flight-computer voltage requirement.
+
+| Choice explored | Benefit | Cost / retained boundary |
+| --- | --- | --- |
+| One common pack for everything | Fewer packs and chargers | Actuator faults/energy demand share more of the avionics source; separate operating packs selected for liquids |
+| 2S1P versus 2S2P avionics | 2S2P increases available energy | Doubles cells; start smaller only while measured endurance supports it |
+| MCU-less Foinse | Protection can start without Croí, I²C or AUX | Monitoring cannot implement arbitrary autonomous policies; none currently requires a Foinse processor |
+| Onboard multi-pack charging | Convenient service integration | Extra conversion, balancing, thermal and fault-control burden; external matched chargers selected |
+| Route independent recovery through common protection | Convenient single distribution point | Defeats the claimed power independence; keep its qualified source path separate |
+
+The original P45B cell example used minimum nominal energy and a **70% planning
+factor**, not measured cold-pack discharge data. That gave about 21.7 Wh for
+2S1P against a 19 Wh example mission. Continuous 3 W operation did not fit the
+same allowance. Pack temperature limits can also be narrower than board limits.
+Endurance closes with the assembled pack, wiring and real mode profile, not the
+cell's advertised amp-hours. No loose spring cell holder is proposed for flight.
+[Power contract](../../interfaces/power-contract.md),
+[cell datasheet used by the study](https://www.molicel.com/wp-content/uploads/INR21700P45B_1.4_Product-Data-Sheet-of-INR-21700-P45B-80109.pdf).
+
+### “24 V solenoid” does not mean direct 6S is valid
+
+The power study used a representative 24 V ±10% coil class to test the idea,
+not to select a propulsion valve. A 6S pack spans about 25.2 V full to 18 V
+at the provisional lower source bound. It starts inside that example coil's
+21.6–26.4 V band and then leaves it. More cells can violate the upper end.
+Nominal battery voltage is not actuator compatibility.
+
+| Explored conversion route | Finding |
+| --- | --- |
+| TRACO THN 30-2415WI | Convenient 9–36 V to 24 V / 30 W proof candidate; reviewed altitude/convection conditions prevented calling it flight-qualified |
+| Pololu S18V20F24 | Lower-cost nonflight experimental option; thermally dependent output capability, not a qualified flight rail |
+| TI LM5176 converter circuit | Could regulate across the 6S window without an MCU; requires magnetics/FET/compensation/thermal design for actual loads |
+| TI TPS552882 | Rejected for this job: reviewed output limit was 22 V despite a higher input rating |
+
+None is a populated Foinse 24 V stage. Raw propulsion power and its paired
+return are drawn; actual coil demand must decide whether and where conversion
+is needed. Coil suppression and recirculation belong at the local driver/load
+loop, not at a remote converter in the bay.
+[TRACO datasheet](https://www.tracopower.com/thn30wi-datasheet),
+[LM5176](https://www.ti.com/lit/ds/symlink/lm5176.pdf),
+[TPS552882](https://www.ti.com/lit/ds/symlink/tps552882.pdf).
+
+### Why the interboard connector is larger than a signal header
+
+The original Micro-Fit BMI candidate had unresolved availability, geometry and
+parallel-contact current assumptions. The Samtec MPT/MPS coplanar pair trades
+width and through-hole assembly for an inspectable single mating interface.
+One electrical contact carries the complete provisional feed; the design does
+not depend on equal sharing between nominally parallel contacts.
+
+Each electrical contact has six solder tails. The 48 holes are eight contacts,
+not 48 independently assignable pins. The drawing audit recorded a 52.63 mm
+footprint envelope and 7.39 mm nominal board-edge gap. Screw-down features
+secure each body to its PCB; they do not by themselves hold the mating halves
+together. Supports and engagement retention remain mechanical work.
+[Samtec MPT](https://www.samtec.com/products/mpt-08-01-01-l-ra-sd),
+[Samtec MPS](https://www.samtec.com/products/mps-08-01-01-l-ra-sd).
+
+Contacts 2 and 4 share board ground. If the main return opens, the auxiliary
+reference may carry unintended load current. Its copper/bonding must support
+that fault; it is not extra normal current-capacity credit. A connector's
+catalogue rating never replaces the complete return-path audit.
+
 ## Propulsion and CAN
 
 Croí carries CAN and reference only: JST GH contacts 1 H, 2 L, 3 reference.

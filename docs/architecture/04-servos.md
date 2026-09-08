@@ -34,6 +34,44 @@ conversion and fault behaviour. The current baseline uses compatible HV servos
 on the battery-derived rail. Exact actuators decide whether that remains valid;
 no mechanism is qualified by a connector or PWM waveform alone.
 
+## What the earlier alternatives would change
+
+| Option | Benefit | Tradeoff |
+| --- | --- | --- |
+| Direct MCU timer channels, selected | No extra PWM controller or command bus | Requires exact timer/pin allocation and safe start/stop behaviour |
+| PCA9685-class PWM expander | Many channels with few MCU pins | Adds I²C, another stateful device and output-disable/reset questions; unnecessary for three channels |
+| Raw 2S HV-compatible servos, selected baseline | No large servo converter; short energy path | Every actuator must tolerate full charged voltage and low-pack operation |
+| Regulated servo rail | Supports a different actuator voltage envelope | Adds conversion loss, heat, peak-current and regeneration behaviour to qualify |
+| Separate switch/protection per servo | Could contain one stalled actuator more locally | More parts and current/return paths; not what the current common rail implements |
+
+The third channel was a bounded change: PD10 became LPTIM2_CH2, the existing
+buffer's spare forward channel was used, and J6602 became ten-contact Micro-Fit.
+The supply was not tripled and its nominal 2 A limit did not become a measured
+grid-fin budget. The hardware changes establish three command interfaces;
+they do not establish simultaneous loaded performance.
+[Exact accepted revision](../connector-servo-readiness-revision-2026-09-07.md).
+
+### What must come from the mechanism rather than the board drawing
+
+An actuator choice supplies the valid voltage band, input logic threshold,
+update rate, endpoint limits, stall current and permitted transient behaviour.
+The grid-fin mechanism adds inertia, aerodynamic load, gearing and required
+position response. A no-load servo demonstration answers almost none of that.
+The first loaded tests must distinguish normal travel, stall, reconnect and
+energy returned during deceleration.
+
+The 2 A setting is a provisional protection allocation, not a desirable servo
+operating point. Raising it without checking the complete source, interboard
+contact, switch, copper and return merely moves the limiting element. A supply
+converter may become justified by the chosen actuators; it is not installed
+speculatively before that choice exists.
+
+The low-side buffer supply disappearing must not turn an MCU PWM output into
+a parasitic power feed. That is why the signal boundary and local pull-downs
+remain even though direct timers are simple. Firmware still needs a defined
+loss-of-command response and reset default; hardware alone cannot choose the
+mechanically safe fin position.
+
 ## What fails together
 
 All three servos share a switch, source and return. One stalled actuator may

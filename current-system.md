@@ -9,8 +9,8 @@ Keep the architecture already chosen. Make it understandable, apply the named
 installation changes, then review it together. Do not restart component
 selection or continue automatic PCB packing/routing.
 
-The [short architecture pack](docs/architecture/README.md) is the reading path:
-one overview, eight domain pages, reasons for the circuitry and the remaining
+The [architecture review pack](docs/architecture/README.md) is the reading path:
+one overview, eight domain chapters, research and tradeoffs behind the circuitry, and remaining
 decisions. Seán and Anav read independently, then compare notes together.
 Seán owns final PCB layout; Anav owns firmware implementation.
 

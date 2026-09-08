@@ -7,7 +7,7 @@ flight release.
 ## Read
 
 1. [Current system](current-system.md) — selected architecture, boundaries and next work.
-2. [Short architecture pack](docs/architecture/README.md) — overview and eight readable domain pages.
+2. [Architecture review pack](docs/architecture/README.md) — overview and eight chapters with research, alternatives and tradeoffs.
 3. [Firmware handoff](docs/firmware-handoff-2026-09-07.md) — detailed Anav interface; dated revisions at its top control older text.
 4. [Document index](docs/README.md) — decision records, interfaces and deeper studies.
 5. [Project log](project-log.md) — append-only history.
@@ -18,7 +18,7 @@ external power-switch connections are implemented in the checked CAD draft.
 Physical energetic arming remains separate. Readable schematics are installed;
 automatic PCB packing and routing remain paused for human review.
 
-Read the short pack separately, then review it together. Seán owns final layout;
+Read the architecture pack separately, then review it together. Seán owns final layout;
 Anav owns firmware. The model prepares the drawings, comparisons and checks.
 
 ## Hardware and repository boundary

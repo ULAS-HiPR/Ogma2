@@ -3,12 +3,12 @@
 ## Current reading path
 
 - [Current system](../current-system.md): concise controlling architecture.
-- [Architecture review pack](architecture/README.md): overview and eight domain pages.
+- [Architecture review pack](architecture/README.md): overview and eight expanded chapters with options, evidence and tradeoffs.
 - [Firmware handoff](firmware-handoff-2026-09-07.md): detailed hardware/driver contract.
 - [Hardware entrypoint](../hardware/README.md): local CAD boundary and checks.
 - [Project log](../project-log.md): dated decisions and observed results.
 
-The short pack is self-contained. Older detailed records may reference
+The architecture pack is self-contained. Older detailed records may reference
 workspace-local CAD or research; those links are not promised in a clean clone.
 Read current truth first. A dated selection or failed experiment remains history,
 not an instruction to restore it.
