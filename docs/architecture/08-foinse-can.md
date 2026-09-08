@@ -34,10 +34,24 @@ workhorse computer to each vehicle's power installation. A programmable Foinse
 MCU would add a boot/software failure path without a current control job.
 Neither alternative is selected.
 
-External power-switch connections are authorised. Exact contact arrangement,
-connector and safe default need a checked implementation. Ordinary source
-switching must not replace independent recovery power or physical energetic
-arming. The external service/charging harness remains pack-specific.
+The installed 8 September draft adds two independent source-enable
+loops: J103 avionics, J104 propulsion. Both use vertical two-contact JST GH
+`BM02B-GHS-TBT(LF)(SN)` / `GHR-02V-S`. Pin 1 is bounded 3.0 V bias; pin 2
+returns to that branch's SHDN. Close to enable; open/unplug to disable.
+One maintained two-pole switch may operate both loops, with isolated contacts;
+do not join the bias conductors or pack positives. No MCU or Croí AUX needed.
+
+Each pack feeds BAS116, two 4.7k/2010 resistors and LM4040 3.0 V bias clamped
+before the connector. Local SHDN has 22.1k pull-down and 100nF filter. OFF
+leaves pack entry, sensing and bias live: approximately 0.5 mA bias at nominal
+2S and 2.3 mA at nominal 6S, plus existing loads. Unplug packs for storage.
+
+Electronic OFF is not physical energetic or charging isolation. A shorted
+contact can force enable; semiconductor faults can defeat shutdown. Contact
+bounce can reset a latched fault. Cold startup, bounce/vibration, connector ESD,
+clamp failure and thermal/surge behaviour remain installed tests. Native
+validation is complete; see the [installed change record](../installation-change-record-2026-09-08.md).
+The external service/charging harness remains pack-specific.
 
 ## Propulsion and CAN
 

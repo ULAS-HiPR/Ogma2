@@ -2,10 +2,10 @@
 
 Native KiCad projects are local independent repositories:
 
-| Board | Project | Inspected baseline |
+| Board | Project | Installed checked draft, 8 September |
 | --- | --- | --- |
-| Croí2 | `croi2/Croi2.kicad_pro` | 43 schematic pages, 635 physical symbols, 634 PCB footprints |
-| Foinse2 | `foinse2/Foinse2.kicad_pro` | 11 pages, 101 symbols, 100 footprints |
+| Croí2 | `croi2/Croi2.kicad_pro` | 44 schematic pages, 643 physical symbols, 642 PCB footprints |
+| Foinse2 | `foinse2/Foinse2.kicad_pro` | 12 pages, 113 symbols, 112 footprints |
 
 These paths exist in the working workspace but are ignored by the umbrella.
 Neither child has a remote or registered submodule. An umbrella clone does
@@ -14,9 +14,10 @@ not include the board files. This page documents that boundary; the
 
 ## Work now
 
-Freeze automatic placement and routing. Turn the existing connectivity into
-readable wired circuits, implement the approved installation changes, then
-review architecture and drawings together.
+Automatic placement and routing remain frozen. Readable wired circuits and the
+approved installation changes are installed. Review architecture and drawings
+together. Eight new Croí and twelve new Foinse parts are staged outside the
+outlines for Seán to integrate; existing placement is preserved.
 
 Preserve symbol UUIDs, sheet-instance paths, references, footprint assignments,
 pin nets and DNP/BOM attributes. This keeps schematic cross-selection linked to
@@ -32,17 +33,16 @@ the working projects. `hardware/Ogma2/` is not the active project.
 
 - Both boards: four copper layers, 1.6 mm, unrouted. Croí 80 × 230 mm and
   Foinse 60 × 80 mm are provisional canvases.
-- Croí: 99 recorded placement cells, 68 native groups, 28 rule areas, 28 DNP.
-  567 model instances resolved at the inspected checkpoint.
-- Foinse: nine groups, 88 model instances resolved.
+- Croí: 99 historical placement cells, 68 native groups, 20 rule areas, 28 DNP.
+  572 model instances resolve. Old cell envelopes do not constrain new parts.
+- Foinse: nine groups, 100 model instances resolve.
 - Exact Nano-Fit 1053111102 footprint missing on both boards. Its drawn
   reservation is not an approved land pattern. C1403 is also a volume allocation.
-- Croí: 2,163 schematic-pin and 346 architecture checks; four ERC errors,
-  six warnings; 62 existing DRC findings.
-- Foinse: 278 pin and 91 boundary checks; zero ERC findings; 24 existing DRC
+- Croí: 2,179 schematic-pin and 381 architecture checks; four ERC errors,
+  six warnings; 61 DRC findings, previously 62.
+- Foinse: 306 pin and 117 boundary checks; zero ERC findings; 24 existing DRC
   findings. Unrouted connections are additional.
-- DRC/check counts describe the saved baseline, not new schematic-revision
-  evidence or physical qualification.
+- DRC/check counts describe the installed draft, not physical qualification.
 - R6310/R6410/R6510/R6804 and unresolved energetic-setting DNPs remain.
   Do not connect initiators.
 

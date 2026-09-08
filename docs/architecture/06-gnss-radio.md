@@ -3,15 +3,22 @@
 ## Installation change
 
 The carbon airframe makes antenna placement a system decision. External GNSS
-reception is authorised; the integrated-antenna SAM-M10Q arrangement is to be
-replaced. The inspected CAD still contains U4504 SAM-M10Q-00B. The implementation
-candidate is MAX-M10S-00B with a passive external 50 Ω antenna through vertical
-Amphenol 132134 SMA. No antenna bias or ANT_CHECK is proposed for that passive
-path. Footprint and RF ESD checks are still in progress; it is not yet installed.
+reception is implemented in the draft; the integrated-antenna SAM-M10Q is
+replaced. The checked native CAD uses U4504 `MAX-M10S-00B`, external
+passive 50 Ω antenna/coax and vertical J4501 `Amphenol 132134` SMA. D4501
+`TPD1E0B04DPYR` is the .15 pF-typical RF ESD candidate. No antenna bias or
+ANT_CHECK. Native pin/footprint checks are complete; installed RF/ESD behaviour
+is not qualified. See the [installed change record](../installation-change-record-2026-09-08.md).
 
 Keep comms USART1, PPS capture, reset and the switched GNSS domain unless a
 real pin/interface conflict is demonstrated. An external antenna does not
 improve the receiver's allowed dynamics or altitude envelope by itself.
+
+MCU pins stay PA9 TX, PA10 RX, PA0 PPS, PC5 reset and PB0 enable. MAX VCC8 and
+V_IO7 use GNSS_3V3; VIO_SEL15 and backup input6 stay open. SAFEBOOT18 stays
+unloaded. TIMEPULSE4 and SAFEBOOT18 are internally coupled through 1 kΩ:
+no MCU pull-down or other startup-low PPS load. Separate package pins do not
+remove that constraint. [u-blox datasheet, page 9](https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf).
 
 The antenna must see the sky from its actual installed location. Harness
 retention, bend radius, strain relief, feedthrough and ground environment
@@ -27,6 +34,12 @@ Protect an exposed connector appropriately and preserve a controlled-impedance
 feed and return. The proposed passive antenna needs an actual assembly and
 coax-loss budget; long cable loss is not recovered by selecting a different
 connector. If it requires an active antenna, reopen the bias/protection decision.
+
+The MAX copper land was checked against the u-blox drawing. Its stock rectangular
+paste openings still need assembler review against the manufacturer's T-shaped
+recommendation. The RF ESD land uses .3 × .5 mm pads at .7 mm pitch from TI's
+DPY drawing. A device ESD rating does not establish receiver survival on this PCB.
+Exact MAX/ESD models are not linked; do not reuse the old SAM body.
 
 Do not restore the Rev 1 antenna-check/switch network by habit. It consumed
 space and was bypassed. A diagnostic circuit must name the detectable fault,

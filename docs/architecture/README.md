@@ -24,19 +24,20 @@ Each page gives the circuit, its purpose, cost, credible alternative and the
 next evidence required. The pack can be read without local CAD or sibling
 research directories. Component references identify the inspected live draft.
 
-## Immediate work
+## Current checkpoint and review
 
 - Preserve the accepted architecture and both MCU allocations.
-- Implement the authorised external-GNSS and external power-switch changes
-  through an explicit checked delta; physical energetic arming stays separate.
-- Replace label-only schematic presentation with visible local wiring.
-- Preserve symbol-to-footprint identity and verify schematic/PCB cross-selection.
+- External GNSS and power-switch contacts are installed in the checked draft;
+  physical energetic arming stays separate.
+- Circuit sheets now explain purpose and connections with visible local wiring.
+- Symbol-to-footprint identity and pad nets pass native checks. Open both editors
+  through the same project; GUI cross-selection itself was not exercised.
 - Keep automatic PCB placement/routing frozen. Seán finishes layout; Anav writes
   firmware. Neither must reverse-engineer a different silent model revision.
 
-New installation intent is not proof that new parts are already installed.
-Exact GNSS/switch selection and release status belong in the implementation
-record. The [current system](../../current-system.md) carries the controlling
+Exact GNSS/switch selection, installed checks and open tests are in the
+[implementation record](../installation-change-record-2026-09-08.md).
+The [current system](../../current-system.md) carries the controlling
 summary; the [interfaces](../../interfaces/README.md) retain detailed boundaries.
 
 ## Reading is not requalification

@@ -14,18 +14,18 @@ one overview, eight domain pages, reasons for the circuitry and the remaining
 decisions. Seán and Anav read independently, then compare notes together.
 Seán owns final PCB layout; Anav owns firmware implementation.
 
-New authorised installation changes are **pending implementation**:
+Authorised installation changes are **implemented in the checked CAD draft**:
 
 - Move GNSS reception outside the carbon airframe. Replace the integrated-antenna
-  receiver arrangement with an external-antenna arrangement. Exact receiver,
-  antenna feed and part selection require the implementation record.
+  receiver with MAX-M10S, vertical SMA and low-capacitance RF ESD protection.
+  Passive antenna baseline; the actual antenna/coax assembly remains unqualified.
 - Provide external power-switch connections for Foinse and standalone Croí.
   Do not put the operational mechanical switch on the vibrating PCB.
 - Keep physical energetic arming separate from ordinary computer power.
   A power switch is not proof that every energetic path is safely isolated.
 
-Native CAD and its checked change record determine which changes are installed.
-Architecture intent must not be mistaken for already-drawn circuitry.
+The [installation record](docs/installation-change-record-2026-09-08.md) defines
+the exact parts, connector pins, checked scope and remaining hardware tests.
 
 ## System
 
@@ -55,7 +55,7 @@ optional monitoring cannot become boot or deadline prerequisites.
 | Pressure | Bosch BMP390 and TE MS560702BA03-50, separate buses |
 | Flight storage | MX66L2G45GMI00, 256 MiB soldered NOR |
 | Radio | Wio-LR2021 868/915 MHz, Seeed 100058045; vertical standard SMA 132134 |
-| GNSS | SAM-M10Q remains in inspected CAD; MAX-M10S-00B with external passive antenna/SMA is the implementation candidate pending checks |
+| GNSS | MAX-M10S-00B; external passive antenna via vertical SMA 132134 and TPD1E0B04DPYR RF protection; 80 km navigation limit |
 | Logic power | 2S battery; TPS2121 battery/USB selection; TPSM63603 4.0 V preregulator; three TPS7A91 3.3 V domains; no boost |
 | Supervision | TPS3808 supervisors, TPS3430 earned-heartbeat flight watchdog, LM73100 held-core input |
 | Current | Croí INA228 0x40 and 5 mΩ common battery shunt; Foinse propulsion INA228 0x41 |
@@ -71,6 +71,12 @@ otherwise. Part selection and connectivity checks are not physical qualification
 Both exclusive Croí battery entries feed the same protected path and common
 current shunt. Never attach standalone and Foinse batteries simultaneously.
 USB supplies service logic only; no charging or output-energy path through USB.
+
+External maintained contacts control Croí J103 and Foinse J103/J104. Each
+two-contact JST GH carries bounded 3 V bias and its branch's SHDN return.
+Open/unplug is electronic OFF; closed enables. Foinse-fed Croí requires a
+deliberate retained closed enable plug or its own isolated switch pole.
+OFF leaves upstream circuits live and is not physical energetic isolation.
 
 Battery logic uses fixed switching preregulation followed by low-noise LDOs.
 Flight, comms and optional loads have deliberate supply/signal boundaries.
@@ -161,20 +167,22 @@ The [fault](interfaces/flight-fault-contract.md),
 
 ## Engineering state and next sequence
 
-Inspected pre-change CAD: Croí 43 pages / 635 physical symbols / 634 footprints;
-Foinse 11 pages / 101 symbols / 100 footprints. Both are four-layer, 1.6 mm,
+Installed checked CAD: Croí 44 pages / 643 physical symbols / 642 footprints;
+Foinse 12 pages / 113 symbols / 112 footprints. Both are four-layer, 1.6 mm,
 unrouted engineering drafts. Croí's 80 × 230 mm and Foinse's 60 × 80 mm are
 provisional canvases, not final dimensions. Current schematic work must preserve
 existing PCB identity/placement; routing remains frozen for human review.
+New installation parts are staged outside the outlines: eight Croí, twelve
+Foinse. Circuit pages now explain purpose and connections with local wiring.
 
 Existing Croí ERC: four errors, six warnings; Foinse: zero.
-Existing PCB DRC: 62 / 24 findings, plus unrouted connections and missing
+Current PCB DRC: 61 / 24 findings, plus unrouted connections and missing
 Nano-Fit footprints. No exclusions were added to call either board clean.
 C1403 is an unresolved hold-up-capacitor volume allocation.
 
-1. Publish the readable documentation baseline on the review branch.
-2. Record the exact authorised GNSS and external-switch implementation.
-3. Draw connected, interpretable schematics; preserve and test PCB cross-links.
+1. Readable documentation baseline published on the review branch.
+2. GNSS and external-switch implementation recorded and installed in draft.
+3. Connected schematics installed; native identity/pad-net checks pass.
 4. Read independently, jointly review the architecture and actual circuits.
 5. Seán refines placement/routing; Anav continues firmware against explicit deltas.
 6. Review pins, footprints, ratings, inhibits and assembly before the first PCBA.

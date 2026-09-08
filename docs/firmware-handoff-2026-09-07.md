@@ -1,4 +1,29 @@
-# Hardware handoff for Anav — sensing/status revision B
+# Hardware handoff for Anav — updated 8 September
+
+## Read first: external GNSS and power-enable revision
+
+U4504 is MAX-M10S-00B with an external passive antenna, vertical SMA and RF ESD
+protection. No antenna bias, ANT_CHECK, backup cell or new GNSS I²C bus.
+MCU pins and ownership are unchanged: PA9 TX → MAX RX3; PA10 RX ← MAX TX2;
+PA0 TIM2_CH1 ← TIMEPULSE4; PC5 open-drain reset → RESET9; PB0 enable.
+Configure for the actual MAX-M10S module/firmware and verify startup/navigation
+messages on hardware. Its 80 km navigation limit does not establish Kármán
+altitude coverage. Keep loss/invalidity independent of essential flight work.
+
+TIMEPULSE4 and SAFEBOOT18 have an internal 1 kΩ connection. SAFEBOOT stays NC;
+do not configure a startup PPS pull-down or force PPS low. V_IO and VCC use
+the switched 3.3 V domain. VIO_SEL15 and V_BCKP6 stay open.
+
+External maintained contacts now control Croí battery entry and Foinse's two
+separate source branches. Open/unplug is electronic OFF, closed is enable.
+This requires no firmware and is not a commanded or sensed arming state.
+USB can still run service logic. Contact bounce can cycle power/reset latched
+eFuse faults; retain reset evidence and existing reset/output-inhibit policy.
+Do not infer physical disarm from power enable or the green readiness LED.
+
+No flight/comms GPIO allocation, bus address, servo timer or firmware ownership
+changes. The 28 DNP safeguards and unfinished physical arm assembly remain.
+[Exact circuit and harness delta](installation-change-record-2026-09-08.md).
 
 ## Latest accepted change: three servos and complementary readiness
 
@@ -203,7 +228,7 @@ spares to let comms directly control flight reset, arm or outputs.
 | Flight TIM3 CH1/2 | PC6/PC7 servo1/2 PWM | Common time base; actual servo limits remain required |
 | Flight LPTIM2 CH2 | PD10 servo3 PWM, AF3 | Separate timer; clock, waveform and reset verification required |
 | Flight ADC1/2 | Rails, continuity, output current | Protected 3.3 V-safe front ends; normal 100 Hz recorded health |
-| Comms USART1 / TIM2 CH1 | SAM-M10Q / PPS | GNSS 10 Hz target; independent PPS capture; no startup pull-down |
+| Comms USART1 / TIM2 CH1 | MAX-M10S / PPS | GNSS 10 Hz target; independent PPS capture; no startup pull-down |
 | Comms SPI1 | Wio-LR2021 868/915 MHz | Mode 0, 1 MHz initial; BUSY/reset/DIO5 IRQ; RXEN/TXEN unused; clock settings require module-specific confirmation |
 | Comms USB | Service/extraction | USB 2.0 full-speed; CDC or another maintained bulk transport |
 

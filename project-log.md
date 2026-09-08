@@ -2510,3 +2510,51 @@ Equivalent redraws are being checked in scratch before any live promotion.
 The shared preregulator remains a common failure point to discuss; no extra
 processor, display, boost converter or generic exposed I²C connector was
 authorised by the BPS comparison.
+
+## 2026-09-08 — readable CAD and installation changes installed
+
+The preceding documentation baseline was pushed as `bd3c28d` to
+`docs/reliability-review-execution`. No child hardware repository was published.
+
+Installed the checked readable schematics in both local board projects: Croí
+44 pages / 643 physical symbols / 642 footprints; Foinse 12 / 113 / 112.
+Circuit pages now explain purpose and connections and show local wiring.
+The 56-page export set was rasterised and visually checked for clipping;
+detailed circuit views were inspected during redraw. Digital zoom is needed
+on large sheets. This is not a claim of manufacturing-ready drawing polish.
+
+The explicit electrical delta is MAX-M10S external passive GNSS reception with
+vertical SMA/RF protection, and independent external maintained source-enable
+contacts on standalone Croí and Foinse's two branches. Exact parts, pins,
+limitations and tests are in the
+[installation record](docs/installation-change-record-2026-09-08.md).
+Anav's handoff and the power contract carry the same change. The PPS/SAFEBOOT
+startup constraint remains; no MCU allocation or firmware ownership changed.
+
+Native exports were rechecked after installation. Croí: 2,179 schematic pins,
+381 architecture checks, the original four ERC errors/six warnings. Foinse:
+306 pins, 117 boundary checks, zero ERC findings. Independent symbol/path/net
+checks and saved-board library/geometry checks pass. Native schematic/PCB
+parity reports only the existing unassigned Nano-Fit J101 on each board.
+GUI cross-selection itself was not exercised. Host replay tests: all 12 pass.
+
+All original PCB positions, angles, sides, UUIDs and existing copper remain.
+U4504 intentionally changes package at its previous origin. Eight Croí and
+twelve Foinse additions are staged outside the outlines, deliberately ungrouped
+for manual integration. The original groups are retained. Eight SAM-specific
+rule areas and two obsolete custom rules were retired; 20 Croí rule areas
+remain. Native DRC: Croí 61 findings, previously 62; Foinse 24 unchanged,
+plus unrouted connections. No DRC exclusions were added to disguise findings.
+
+Scratch redraw checks caught and corrected passive-orientation/connection
+mistakes before promotion. Readability and connectivity are separate checks;
+neither proves analog performance. Full pre-promotion working-file recovery
+copies and an exact changed-file/hash ledger remain in the workspace-only
+`readable-schematics-2026-09-08` study directory. Child READMEs/status pages are
+current; their earlier complete text remains in each child's history folder.
+
+Open: physical energetic arm assembly, all 28 Croí DNP safeguards, Nano-Fit
+lands, C1403 selection, remaining models, existing DRC findings, switch/cable
+fault tests and installed antenna/RF/power qualification. No initiators, live
+load testing, purchases or hardware publication were performed. Next: independent
+reading and joint circuit review, then Seán's layout and Anav's firmware work.

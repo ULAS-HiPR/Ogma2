@@ -1,8 +1,55 @@
 # Ogma 2 power contract
 
-Updated: 7 September 2026
+Updated: 8 September 2026
 Status: EX-02 and the complete architecture review accepted; circuit completion
 and hardware verification remain open.
+
+## 8 September source-enable implementation
+
+Authorised change, installed in the checked native CAD draft; see the
+[change record](../docs/installation-change-record-2026-09-08.md),
+[current system](../current-system.md) and project log. Existing battery
+limits, autonomous protection, source exclusion, MCU pins and physical arming
+requirements are unchanged.
+
+| Board / connector | Pin 1 | Pin 2 | Operation |
+| --- | --- | --- | --- |
+| Standalone Croí J103 | Bounded 3.0 V source bias | BAT_SHDN_N | Close maintained external contact to enable |
+| Foinse J103 | Avionics bounded 3.0 V bias | AV_SHDN_N | Close avionics pole to enable |
+| Foinse J104 | Propulsion bounded 3.0 V bias | PROP_SHDN_N | Close separate propulsion pole to enable |
+
+All use vertical `BM02B-GHS-TBT(LF)(SN)` JST GH and `GHR-02V-S`, with the
+actual wire-gauge-matched crimp. These carry control current only. Foinse-fed
+Croí uses a deliberate retained closed enable plug at Croí J103. One maintained
+two-pole switch can control Foinse; the two positive bias conductors remain
+separate. The thermistor connector is a different four-contact harness.
+
+Each source independently supplies BAS116 → 4.7k + 4.7k → LM4040 3.0 V
+shunt. The bias is clamped before the cable. SHDN has 22.1k to GND and 100nF.
+Open contact/unplug defaults to electronic OFF without MCU, I²C or AUX power.
+Croí R1006 and Foinse R1006/R2006 become those 22.1k pull-downs; the source
+protection MODE/UVLO/OVP/limit/slew networks are otherwise unchanged.
+
+OFF does not disconnect the pack. Entry, bias and sensing remain live; USB may
+still supply Croí service logic. Reference bias alone is approximately 0.5 mA
+at nominal 2S and 2.3 mA at nominal 6S, plus existing leakage/sensing/shutdown
+currents. These upstream currents are outside the discharge shunts. Unplug
+packs for storage. Power indication and source enable never establish disarm.
+
+This adds no physical pyro/servo energy break, independent disarm proof or
+charging exclusion. Those remain separate unresolved assemblies. A shorted
+contact forces enable; clamp-open or a semiconductor fault is not contained by
+this switch circuit. Cold/minimum-pack diode headroom, assembled thermal/surge
+response, cable ESD, open-wire leakage and retained-contact vibration/bounce
+need tests. The 100nF filter is not a debounce guarantee. SHDN cycling resets
+a latched eFuse fault and may cause repeated board resets.
+
+The 6 A Croí/avionics, roughly 3 A propulsion and 2 A shared-servo starting
+limits are unchanged, provisional and not load qualification. The new switch
+does not expand the declared battery range or permit depleted-pack boost.
+
+The sections below retain prior accepted rationale and open verification work;
+this dated implementation controls earlier unspecified-switch wording.
 
 7 September third-servo revision: Croí now has three battery-derived servo
 channels behind the existing common protected switch. The nominal shared 2 A

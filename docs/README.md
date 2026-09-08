@@ -24,6 +24,7 @@ not an instruction to restore it.
 
 | Record | Purpose |
 | --- | --- |
+| [External installation and readable schematics](installation-change-record-2026-09-08.md) | MAX-M10S external antenna, maintained enable contacts, installed CAD checks and remaining tests |
 | [Architecture acceptance](architecture-acceptance-2026-09-07.md) | Batch acceptance and first-full-PCBA testing sequence |
 | [Three servos, readiness and SMA](connector-servo-readiness-revision-2026-09-07.md) | Third timer channel, complete new servo pinout and complementary LEDs |
 | [Radio revision](radio-change-2026-09-07.md) | Wio-LR2021 replaces E22; exact signal/driver delta |

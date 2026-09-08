@@ -13,9 +13,10 @@ flight release.
 5. [Project log](project-log.md) — append-only history.
 
 The current review keeps the accepted design. External GNSS reception and
-external power-switch connections are authorised changes pending checked CAD
-implementation. Physical energetic arming remains separate. PCB packing and
-routing are paused while the schematics become readable.
+external power-switch connections are implemented in the checked CAD draft.
+[Exact changes and remaining tests](docs/installation-change-record-2026-09-08.md).
+Physical energetic arming remains separate. Readable schematics are installed;
+automatic PCB packing and routing remain paused for human review.
 
 Read the short pack separately, then review it together. Seán owns final layout;
 Anav owns firmware. The model prepares the drawings, comparisons and checks.

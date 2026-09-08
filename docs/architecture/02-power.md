@@ -38,15 +38,28 @@ Shared source, preregulator and a shorted core LDO remain common failure points.
 
 ## New external switch
 
-External power-switch connections are authorised for standalone Croí and Foinse.
-The exact circuit, connector and contact requirements await the checked change
-record. The physical switch is retained off-board, not soldered onto a board
-that sees the vehicle vibration environment.
+The installed 8 September draft adds Croí J103, a two-contact vertical JST
+GH `BM02B-GHS-TBT(LF)(SN)` with `GHR-02V-S` housing. Pin 1 supplies bounded
+3.0 V bias; pin 2 returns to `BAT_SHDN_N`. Close the maintained external
+contact to enable; open/unplug to disable. The switch carries control current,
+not the battery load. No on-board mechanical switch is added.
 
-The review must distinguish electronics enable from a physical energy break.
-A remote low-current enable could avoid a long high-current loop, but would not
-provide galvanic disconnection or energetic isolation. Do not label an
-unqualified enable contact “safe” or use it in place of pyro arming.
+Bias path: input battery → BAS116 → two 4.7k/2010 resistors → LM4040 3.0 V
+shunt, clamped before the connector. R1006 becomes a local 22.1k pull-down;
+C1006 adds 100nF at SHDN. Protection thresholds and MCU pins stay unchanged.
+Standalone uses an external switch. With Foinse, a deliberate retained Croí
+enable plug closes J103; Foinse operates its separate source loops.
+
+OFF is electronic disable, not physical isolation. Bias and pack entry remain
+live; USB can still power service logic. Bias alone draws about 0.5 mA from
+nominal 2S and is upstream of Croí's current shunt. Unplug packs for storage.
+Neither an enable contact nor a power LED proves pyro disarm.
+
+Native checks pass; installation is tracked in the current-system
+and change record. Cold/minimum-pack startup, switch retention/bounce, cable
+ESD, clamp faults and assembled thermal/surge margins still require tests.
+100nF is an edge filter, not a debounce guarantee; bouncing SHDN can restart
+the board and reset a latched protection fault.
 
 ## Remaining electrical work
 
