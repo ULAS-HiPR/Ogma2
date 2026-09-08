@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+  <title id="title">Croí to propulsion CAN harness proposal</title>
+  <desc id="desc">Functional mapping only, not a connector mating-face view. Croí J501 pin 1 CAN H and pin 2 CAN L form one twisted pair to the corresponding propulsion signals. Pin 3 is a separate ground reference. Both nodes have 120 ohm termination. No power is carried. Propulsion cavity numbering and the exact cable remain unconfirmed.</desc>
+  <rect width="1120" height="560" fill="#ffffff"/>
+  <g font-family="Arial, sans-serif" fill="#172b36">
+    <text x="32" y="40" font-size="25" font-weight="700">CAN harness — functional proposal</text>
+    <text x="32" y="69" font-size="16">500 kbit/s · two nodes · no power contact · not a mating-face drawing</text>
+    <rect x="32" y="112" width="238" height="259" rx="6" fill="#f1f5f7" stroke="#778b96"/>
+    <rect x="850" y="112" width="238" height="259" rx="6" fill="#f1f5f7" stroke="#778b96"/>
+    <text x="50" y="143" font-size="21" font-weight="700">Croí / J501</text>
+    <text x="50" y="169" font-size="15">JST GH, 3 circuits</text>
+    <text x="868" y="143" font-size="21" font-weight="700">Propulsion</text>
+    <text x="868" y="169" font-size="15">Cavity numbering: open</text>
+    <text x="106" y="214" font-size="17">1 · CAN H</text>
+    <text x="106" y="278" font-size="17">2 · CAN L</text>
+    <text x="106" y="342" font-size="17">3 · GND ref</text>
+    <text x="890" y="214" font-size="17">CAN H</text>
+    <text x="890" y="278" font-size="17">CAN L</text>
+    <text x="890" y="342" font-size="17">GND reference</text>
+    <text x="560" y="149" text-anchor="middle" font-size="18" font-weight="700">H/L stay one twisted pair</text>
+    <text x="560" y="175" text-anchor="middle" font-size="15">Nominal 120 Ω cable; conductor and insulation must fit contacts</text>
+    <g fill="none" stroke-width="3">
+      <path d="M86 230 H326 C361 230 361 294 396 294 S431 230 466 230 S501 294 536 294 S571 230 606 230 S641 294 676 294 S711 230 746 230 H1035" stroke="#0072a8"/>
+      <path d="M86 294 H326 C361 294 361 230 396 230 S431 294 466 294 S501 230 536 230 S571 294 606 294 S641 230 676 230 S711 294 746 294 H1035" stroke="#c16a14"/>
+      <path d="M252 352 H868" stroke="#62707b"/>
+      <path d="M86 230 V247 M86 278 V294 M1035 230 V247 M1035 278 V294" stroke="#172b36"/>
+      <rect x="79" y="247" width="14" height="31" fill="white" stroke="#172b36"/>
+      <rect x="1028" y="247" width="14" height="31" fill="white" stroke="#172b36"/>
+    </g>
+    <g fill="#172b36">
+      <circle cx="86" cy="230" r="4"/><circle cx="86" cy="294" r="4"/>
+      <circle cx="1035" cy="230" r="4"/><circle cx="1035" cy="294" r="4"/>
+    </g>
+    <text x="65" y="266" text-anchor="middle" font-size="13" transform="rotate(-90 65 266)">120 Ω</text>
+    <text x="1059" y="266" text-anchor="middle" font-size="13" transform="rotate(-90 1059 266)">120 Ω</text>
+    <text x="560" y="335" text-anchor="middle" font-size="15">Separate reference alongside pair — never an actuator return</text>
+    <path d="M298 214 V307 M822 214 V307" stroke="#778b96" stroke-width="5"/>
+    <path d="M298 308 V398 H384 M822 308 V398 H736" stroke="#778b96" fill="none"/>
+    <text x="560" y="404" text-anchor="middle" font-size="16">Strain relief to chassis near both connectors</text>
+    <text x="32" y="451" font-size="16">Proposed: 26 AWG stranded; JST contact accepts 26–30 AWG with 0.76–1.00 mm insulation OD.</text>
+    <text x="32" y="480" font-size="16">Keep untwisted tails about ≤10 mm where practical. Colour here identifies signals, not mandated wire colours.</text>
+    <text x="32" y="509" font-size="16">Verify cavity 1 physically and continuity electrically. Cable part, installed length and bonding need closure.</text>
+    <text x="32" y="538" font-size="14" fill="#546771">7 September 2026 · Existing pin contract; proposed harness workmanship · No fabrication release</text>
+  </g>
+</svg>

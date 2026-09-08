@@ -1,115 +1,44 @@
-# Ogma 2 flight computer
+# Ogma 2
 
-Hardware, firmware, architecture, interfaces, and qualification planning for
-HiPR's second-generation flight-computer platform.
+HiPR's workhorse flight computer: standalone Croí2, with MCU-less Foinse2 power
+distribution when the vehicle needs it. Engineering draft; no fabrication or
+flight release.
 
-No Ogma 2 schematic or PCB exists yet. This repository currently records the
-accepted architecture, the evidence behind it, the open decisions, and the
-tests required before parts or layouts are frozen.
+## Read
 
-## Start here
+1. [Current system](current-system.md) — selected architecture, boundaries and next work.
+2. [Short architecture pack](docs/architecture/README.md) — overview and eight readable domain pages.
+3. [Firmware handoff](docs/firmware-handoff-2026-09-07.md) — detailed Anav interface; dated revisions at its top control older text.
+4. [Document index](docs/README.md) — decision records, interfaces and deeper studies.
+5. [Project log](project-log.md) — append-only history.
 
-1. [Current system](current-system.md): canonical short architecture, accepted
-   decisions, open questions, and immediate sequence.
-2. [Reliability execution plan](docs/reliability-execution-plan.md): the current
-   review work queue, dependencies, proposed release gates, bench procedures,
-   pass criteria, and decisions awaiting acceptance. Start with EX-01–EX-04.
-3. [Reliability design review](docs/reliability-design-review.md): deeper
-   power/reset/state, sensing, MCU, output, storage, and installed-system
-   analysis; source corrections and unresolved claims are explicit.
-4. [Kármán-line mission hardening report](docs/karman-line-mission-hardening-report.md):
-   deep design study covering mission duration, error correction, MCU choice,
-   power, isolation, interfaces, connectors, storage, sensing, packaging, and
-   qualification.
-5. [Ogma, Foinse, and propulsion boundary](interfaces/ogma-foinse-propulsion-boundary.md):
-   owned vehicle authority, power, and CAN boundary.
-6. [Design evidence](sources/README.md): curated CATS Vega, Fluctus, and CATS
-   Configurator references and the decision-relevant Ogma Rev 1 evidence package.
-7. [Project log](project-log.md): append-only chronology; newest entries are at
-   the end.
+The current review keeps the accepted design. External GNSS reception and
+external power-switch connections are authorised changes pending checked CAD
+implementation. Physical energetic arming remains separate. PCB packing and
+routing are paused while the schematics become readable.
 
-## Current architecture
+Read the short pack separately, then review it together. Seán owns final layout;
+Anav owns firmware. The model prepares the drawings, comparisons and checks.
 
-Ogma 2 is HiPR's workhorse flight computer for ordinary competition and
-development launches through the bounded Kármán-line mission. It is one
-accessible flight-computer PCB with two non-redundant MCUs. The
-flight MCU owns sensing, estimation, flight state, local logging, three energetic
-channels, and two servo channels. The communications MCU owns GNSS, LoRa,
-telemetry buffering, and normal USB-facing work. Foinse 2 remains a separate
-vehicle-specific power board. External CAN exists only for named independent
-vehicle systems, currently the self-governing liquid-propulsion controller.
+## Hardware and repository boundary
 
-The board uses one provisional platform envelope now: 3–9 km competition
-missions across solid, hybrid, liquid, single-stage, and multistage vehicles,
-with a short sortie to at least 100 km as the extreme case. It is not an
-orbital-lifetime requirement. Later vehicle simulation and measurement replace
-the provisional values before mission qualification; they do not block initial
-architecture, component comparison, or schematic work.
+[Hardware entrypoint](hardware/README.md) explains the local Croí/Foinse projects,
+dependencies and verification. The umbrella contains architecture, interfaces,
+curated evidence and common library/tool sources. Active CAD lives in independent
+local repositories at:
 
-## Directory map
+- `hardware/croi2/` — Croi2.kicad_pro
+- `hardware/foinse2/` — Foinse2.kicad_pro
 
-```text
-AGENTS.md                    project instructions
-README.md                    reader entry point
-current-system.md            stable current architecture
-project-log.md               append-only chronology
+These child repositories are ignored, not registered submodules. A clean
+umbrella clone does **not** contain their CAD. Read the architecture pack without
+them; obtain the reviewed board projects separately for implementation.
 
-docs/
-  README.md
-  reliability-execution-plan.md
-                              work packages, tests, gates, open decisions
-  reliability-design-review.md
-                              source-backed reliability closure analysis
-  karman-line-mission-hardening-report.md
-                              deep mission-hardening design study
-  templates/verification-record.md
-                              controlled bench/result record template
+The earlier long current-system is [preserved verbatim](docs/history/README.md).
+Historical alternatives are not additional current requirements. Native CAD,
+controlled contracts and measured evidence outrank prose; discrepancies require
+a recorded correction, not silent regeneration.
 
-interfaces/
-  README.md
-  ogma-foinse-propulsion-boundary.md
-                              owned cross-system boundary
-
-sources/
-  README.md                   source authority and inclusion rule
-  project/ogma-rev1/          flight closure, requirements, plots, and checklists
-  inspiration/
-    hardware-comparison/      four current CATS/Fluctus hardware references
-    cats-configurator/        seven selected operator-interface references
-```
-
-Hardware CAD, firmware, host tooling, tests, fixtures, and controlled interface
-definitions should enter this same repository when they exist. Their live
-implementation and measured results outrank prose.
-
-## Repository boundary
-
-This repository contains the active material required to understand, design,
-review, build, and qualify Ogma 2. It excludes raw model output, duplicate
-screenshots, machine metadata, broad unsynthesised research, temporary renders,
-and superseded working files. Those remain in Seán's local sibling `archive/`
-and are not required for a clean clone.
-
-Ogma Rev 1 and its board repositories remain separate. They are evidence and
-predecessors, not the implementation repository for Ogma 2.
-
-## Collaboration workflow
-
-- `main` is reviewed current truth. Use branches and pull requests for changes.
-- Keep proposals marked as proposals until the owning team accepts them.
-- A real architecture change updates its decision surface,
-  `current-system.md`, affected interfaces or requirements, and
-  `project-log.md` together.
-- Keep observation, requirement, decision, candidate, inference, and unknown
-  distinct.
-- Do not commit credentials, private correspondence, personal data, raw model
-  runs, temporary render trees, or uncurated source dumps.
-- Controlled requirements, implementation, CAD, selected component data,
-  measurements, and qualification evidence outrank prose.
-
-The repository is private. The included reference images still have unresolved
-provenance or reuse rights and must not be published merely because they are
-present here.
-
-Repository licensing is not yet selected. Ogma Rev 1's GPL-2.0 licence was not
-copied into this separate project by assumption.
+Use review branches and bounded pull requests. Do not publish raw transcripts,
+private correspondence, generated research dumps or temporary render trees.
+No repository licence has been selected; Rev 1 remains a separate project.

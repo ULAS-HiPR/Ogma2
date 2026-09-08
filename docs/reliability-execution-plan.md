@@ -1,10 +1,24 @@
 # Ogma 2 reliability execution plan
 
-Date: 2026-09-05
+Updated: 2026-09-07
 
-Status: proposed executable work breakdown, authorised for documentation.
-No task below is complete, no person is assigned by this document, and no
-hardware test or flight policy is approved merely by inclusion here.
+Status: all rewritten EX-01–EX-10 recommended answers accepted by Seán,
+including qualifications and connector selection. The
+[acceptance record](architecture-acceptance-2026-09-07.md) controls parts,
+pin maps, current status and sequencing. The accepted
+[rewritten packages](../../architecture-review-2026-09-06/02-work-packages.md)
+replace the earlier question-first package definitions below.
+
+**Sequence amendment:** no separate mini-PCB/coupon build before ordering the
+first full PCBA. Test those blocks on the first PCBA. Retain pre-order library,
+schematic, layout, rating, physical-inhibit and assembly checks. Record unresolved
+hardware assumptions and their first-board tests; acceptance is not a claim
+that the tests passed or that a respin cannot be required.
+
+The original review's coupon-before-order arrows and closure wording are
+superseded by that amendment. Its electrical limits and required evidence are
+not deleted. G2/G3 remain qualification/release gates. No purchase, live
+energetic test or flight is authorised by this document.
 
 Purpose: take the [reliability review](reliability-design-review.md) to measured
 engineering decisions without waiting for a mature space-shot vehicle.
@@ -16,16 +30,16 @@ force. New cross-system decisions require the other owner's review.
 
 ## Start here
 
-First checkpoint: one reviewed fault allocation, one complete source/power
-dependency drawing, and one reset-retention table. Use EX-01, EX-02 and EX-03.
-In parallel with that work, prepare the exact-part resource comparison in
-EX-04 and the measurement contract in EX-05. This is a dependency plan for the
-team, not an automatic assignment or instruction to launch agents.
+Current checkpoint: accepted complete architecture and full pin maps; no Ogma 2
+schematic or hardware yet. Seán reports Anav received the firmware handoff and
+can begin coding. Prepare checked project-local libraries and complete the
+schematic/layout/PCBA review in parallel with his firmware work. Do not change
+the hardware interface silently or implement Anav's application firmware here.
 
-The first physical result should be a measured power interruption and restart
-on an identified development assembly with inert outputs, recorded by an
-independent instrument. A debugger message saying that boot succeeded is not
-the result.
+The first full PCBA is the functional-block test article. Inspect it for
+assembly errors/shorts before staged current-limited power-up with inert loads;
+then measure power transitions, reset and branch containment. Record external
+traces, not merely a debugger message that boot succeeded.
 
 Do not start by implementing every diagnostic in the hardening report, buying
 every connector family, or building the full operator application.
@@ -40,9 +54,11 @@ every connector family, or building the full operator application.
 - **Rejected/deferred:** explicit decision, reason, affected claim, and revisit
   condition. Deferment does not establish flight capability.
 
-All initial task statuses are **Not started**. Hardware, firmware, vehicle,
-mechanical, and reviewer labels below describe needed roles; names remain
-unassigned. Seán/team selects owners and accepts architecture decisions.
+EX-01–EX-10 have **accepted recommended answers and design artifacts**. No
+package is closed by that acceptance. Host checks exist; target builds,
+measurements and installed qualification remain open. Seán retains layout and
+Anav retains firmware; other role labels are not assignments. Do not infer
+implementation progress from delivery of a handoff.
 
 Create linked working documents only when their task starts. Paths listed as
 planned outputs are not claims that those files already exist. Use
@@ -51,7 +67,10 @@ Keep large raw traces outside Git under a controlled evidence location; retain
 a manifest, checksums and retrieval instructions. Keep small reproducible
 fixtures, parsers, test cases and concise results in this repository.
 
-## Proposed release gates
+## Release gates
+
+Accepted by Seán on 6 September 2026 as part of EX-01. Gate adoption does not
+mean any gate has passed.
 
 | Gate | Authorises | Evidence needed | Does not establish |
 | --- | --- | --- | --- |
@@ -60,11 +79,13 @@ fixtures, parsers, test cases and concise results in this repository.
 | G2: installed configuration qualification | Claim against a named accepted environment and mission overlay | Controlled hardware/firmware/harness/bay; performance and fault tests; environmental/RF/service evidence; reviewed residual risks | Acceptance of every produced unit or every future mission |
 | G3: unit and mission release | Use of that identified configuration on that mission | Unit acceptance, battery and service-life records, profile/readback, recovery/range review, closure manifest, field rehearsal | Uninspected reuse or a changed configuration |
 
-These gates split the existing evidence list; they do not delete its obligations.
-Formal adoption of the gate policy is an EX-01 decision. Circuit coupons and
-development-board tests can proceed through G0 while later mission values are
-open. Live energetic, propulsion, or flight operations require separate
-approved procedures and authority.
+These gates split evidence obligations. The 7 September amendment allows G1
+prototype manufacture without separate pre-order coupon results, with explicit
+unverified assumptions and a safe first-PCBA block-test plan. G1 still requires
+design inspection and an identified build; it does not grant flight capability.
+Available development hardware may support firmware work but is not a new
+mandatory board order. Live energetic, propulsion and flight operations require
+separate approved procedures and authority.
 
 ## Work queue and dependencies
 
@@ -79,21 +100,34 @@ approved procedures and authority.
 | EX-07 | Output fault analysis and inert tests | EX-01/02/03; vehicle allocation | Hardware, firmware, recovery reviewer | Channel/function fault matrix and inert evidence | G1, G2 |
 | EX-08 | Bay, harness, connectors and environmental path | EX-02/05/07 drafts | Electronics integration, mechanical/structures reviewer | 1:1 service mockup and controlled interface | G1, G2 |
 | EX-09 | UART, CAN, USB and operator workflow | EX-01/04/06 | Firmware, host tooling, propulsion interface owner | Versioned contracts and hostile-link/service tests | G1, G2 |
-| EX-10 | Integrated fault campaign and flight-readiness allocation | EX-02 through EX-09 | Integration, independent reviewers | Integrated results, residual-risk decisions, release record | G2, G3 |
+| EX-10 | Integrated fault campaign and flight-readiness allocation | EX-02 through EX-09 | Integration, independent reviewer | Integrated results, residual-risk decisions, release record | G2, G3 |
 
-Draft inputs allow iteration. G1 closure cannot rely on an unresolved input
-whose outcome would change the chosen PCB. Do not use a dependency cycle as
-an excuse to wait: fix a labelled bench assumption, build the discriminating
-test, then close or revise the assumption before release.
+Draft inputs allow iteration. For G1, distinguish an incomplete/known-invalid
+pin, rating or inhibit design from a documented physical assumption to test on
+the engineering PCBA. The latter can proceed under the amended prototype
+sequence. It must be measured and corrected before its qualified capability
+claim; a failed first-board test may require a revision.
+
+## Earlier package definitions — retained test reference
+
+The definitions below preserve the earlier questions, test ideas and closure
+criteria. Use the accepted rewritten packages for current answers and the
+7 September amendment for test-article sequencing. References below to a
+mandatory separate coupon or still-unselected MCU do not override that baseline.
 
 ## EX-01 — Fault allocation and release policy
 
 Question: which functions must survive which faults, in which phases?
 
+Policy accepted by Seán on 6 September 2026. The initial
+[flight fault contract](../interfaces/flight-fault-contract.md) records the
+accepted answers. Timing allocations, mission-specific coverage, named
+implementation owners/reviewers and verification remain open; EX-01 is not closed.
+
 Inputs: accepted architecture; Rev 1 flight closure; review sections 1–4 and 8;
 the first ordinary-flight and Kármán example mission allocations.
 
-Produce a compact contract, planned as `interfaces/flight-fault-contract.md`:
+Complete the existing compact contract with:
 
 - function and owning vehicle section;
 - phase and physical arm conditions;
@@ -104,31 +138,41 @@ Produce a compact contract, planned as `interfaces/flight-fault-contract.md`:
 - independent vehicle coverage and residual common causes;
 - test ID and reviewer.
 
-First decisions to put in front of the team:
+Accepted policy decisions:
 
-1. Which loss-of-function cases the primary Ogma must tolerate versus cases
-   allocated to independent vehicle recovery.
-2. Phase-aware logging/watchdog policy, including the transition into degraded
-   recording and the conditions that still require a reset.
-3. Separate recovery/staging policies for invalid state or lost time. No firing
-   thresholds are selected by this document.
-4. Whether the proposed G0–G3 distinction is accepted.
-5. Per-mission independent recovery, its coverage and its remaining shared
-   failures. This is still open.
+1. Contain communications and logger faults in flight; use a bounded validated
+   restart for flight-MCU reset; allocate complete flight-power loss to primary
+   unavailability and independent recovery. Unexplained faults stop initial
+   launch preparation.
+2. Essential flight progress earns watchdog feeding. A contained logger fault
+   enters supervised degraded recording, not a flight-reset loop.
+3. Any in-flight flight-MCU reset inhibits further sustainer ignition for that
+   flight. Recovery needs a validated phase-specific path; reboot alone cannot
+   authorise it. Exact thresholds and reconstruction mechanisms remain open.
+4. Adopt G0–G3 without waiving any existing flight evidence.
+5. Require appropriately independent recovery on initial flights with live
+   Ogma recovery authority and on the Kármán mission. Later ordinary-flight
+   policy requires explicit vehicle review. Exact equipment, coverage and
+   common causes remain open; primary recovery still needs qualification.
 
 Closure: each fault invoked in the first bench campaign has a finite expected
 outcome, a timing allocation or an explicit unavailable-function outcome, and
 an owner/reviewer. No generic safe-state placeholder remains on those rows.
 
-Smallest next action: complete the rows for communications loss, logger failure,
-warm watchdog reset, and complete power loss. Leave unrelated rows open.
+Smallest next action: use the accepted FF-01–FF-04 rows in EX-02's power review.
+Then allocate detection/interruption limits and actual test coverage with
+EX-03/05/07. Leave unrelated rows open.
 
 ## EX-02 — Power and MCU-less Foinse
 
 Question: can the supply start autonomously and contain the failures it claims
 to contain?
 
-Produce `interfaces/power-contract.md` when work starts. It must contain:
+Seán accepted the five EX-02 defaults on 6 September, then explicitly retained
+switching preregulation followed by a low-noise LDO instead of the model's
+direct-buck-first preference. The [power contract](../interfaces/power-contract.md)
+records the corrected decision, initial drawings and remaining work. EX-02 is
+not closed. Complete it with:
 
 - standalone, integrated, and integrated-with-propulsion diagrams;
 - MCU-less Foinse device dependencies and startup defaults;
@@ -140,9 +184,11 @@ Produce `interfaces/power-contract.md` when work starts. It must contain:
   disturbance/interruption from EX-01;
 - powered/unpowered signal paths and measures against back-power;
 - mode-by-mode 8-hour operating plus 4-hour reserve energy calculation;
-- comparison of the candidate buck/LDO chain and any justified alternatives.
+- exact implementation and validation of the accepted buck/LDO chain;
+  direct buck and VIOC remain comparison options, not automatically selected.
 
-No rail, source range, fuse, hold-up capacitor or regulator is selected here.
+The cascade is selected as architecture, not as exact parts or a proven rail.
+No source range, fuse, hold-up capacitor, regulator part or VIOC loop is selected.
 An unspecified battery is not a blocker to a current-limited emulator test;
 it is a blocker to claiming real-battery behaviour or freezing input ratings.
 
@@ -176,8 +222,8 @@ the fixture: its rise/fall time, impedance and lead inductance affect the result
 
 Pass criteria:
 
-- Foinse's basic source path starts without Ogma firmware or returned auxiliary
-  power where the dependency contract requires autonomous startup.
+- Foinse's basic source path starts and maintains its required protection without
+  Ogma firmware or returned auxiliary power, as the accepted contract requires.
 - Contained branch faults do not violate the flight rail or essential timing
   limits allocated before the run.
 - Interruptions outside hold-up cause the specified reset/output behaviour,
@@ -190,14 +236,19 @@ Stop on unexpected output activity, heating, instrument over-range, insulation
 failure, or a transient exceeding the approved component/fixture limit.
 
 Closure: one source-state drawing and measured corner-case set supports the
-chosen Rev A power topology. Foinse auxiliary supply ownership is either
-accepted or explicitly left unresolved before any dependent layout is frozen.
+chosen Rev A power topology. The retained Foinse auxiliary return must have
+device-level startup/containment evidence; if it cannot meet the contract,
+review a local-supply alternative before dependent layout is frozen.
 
 ## EX-03 — Reset, retained state and time
 
 Question: what can the computer legitimately reconstruct after each reset?
 
-Produce `interfaces/reset-recovery-contract.md` with:
+Seán accepted all five EX-03 defaults on 6 September. The
+[reset contract](../interfaces/reset-recovery-contract.md) records reset classes,
+two alternating MCU-retained checkpoints, local mission time, deliberate
+disarmed new-flight preparation and attempted versus observed action. External
+FRAM is not the default. Complete the contract with:
 
 - reset classes and actual retention domains from EX-02;
 - cold/maintenance and in-flight startup sequences;
@@ -208,6 +259,13 @@ Produce `interfaces/reset-recovery-contract.md` with:
 - allowed transitions and actuator evidence policy from EX-01/07.
 
 ### Experiment RST-01: restart with known evidence
+
+Initial host-only coverage exists in the
+[checkpoint replay](../tests/reset_replay/README.md): 12 test methods pass,
+including 420 update-cut cases across synthetic phase transitions/generation
+wrap, and 264 single-bit slot-corruption cases. A mutation removing slot
+invalidation produces 12 expected failed subcases. These are model results,
+not MCU ECC injection, firmware phase reconstruction or timing evidence.
 
 Start with a replay-driven non-actuating phase machine. It needs explicit
 inputs and output traces, not a complete flight estimator or live actuator.
@@ -253,13 +311,22 @@ pass as a complete power-loss pass.
 Question: can an exact candidate implement the minimum core with measurable
 memory, timing, reset and diagnostic behaviour?
 
+Accepted defaults, 6 September: H563VIT6/LQFP100 is the first allocation
+candidate, not the production selection. Start both roles in the same family;
+compare a smaller communications part only for a justified saving. Critical
+placement must be checked, initial scheduling/critical-memory reserve is 30%,
+clock choice requires workload/power measurement, and development provisioning
+stays reversible. The [initial resource allocation](mcu-resource-and-timing-results.md)
+contains the exact-part comparison, port reservations, memory budget and gaps.
+It is not a complete fit or hardware result.
+
 Compare H563 and H573 first unless a concrete requirement eliminates one.
 Other families remain comparisons only where a named constraint demands them.
 Development-board availability may choose the first spike; it does not select
 the production package.
 
-Produce `docs/mcu-resource-and-timing-results.md` with linked reproducible build
-inputs and these matrices:
+Complete `docs/mcu-resource-and-timing-results.md` with linked reproducible build
+inputs and these matrices; its initial source-backed draft already exists:
 
 - exact orderable part, silicon revision, reference/datasheet/errata revision;
 - every pin, peripheral, DMA path, timer and debug/boot constraint;
@@ -558,18 +625,38 @@ not block initial characterisation within known equipment/component ratings.
 | Actuator electrical and physical limits | Selected device/mechanism and approved hazard review | EX-07 |
 | Shock/vibration/thermal/pressure test profile | Defined provisional screening profile; later measured vehicle environment | EX-08, EX-10 |
 
-## Decision register to open in the first review
+## Earlier decision register — through 6 September
+
+Current selections are in the [7 September acceptance record](architecture-acceptance-2026-09-07.md).
+The table below preserves the preceding decision checkpoint; its open/candidate
+labels are not the current selection status.
 
 | ID | Decision | Current status | Evidence owner/package |
 | --- | --- | --- | --- |
-| DR-01 | Phase-aware watchdog and logger-degradation policy | Proposed; not accepted | EX-01/03/06 |
-| DR-02 | Foinse auxiliary return versus local low-power regulation | Open; Foinse remains MCU-less either way | EX-02 |
-| DR-03 | Retention supply, time source and supported reset classes | Open | EX-02/03 |
-| DR-04 | Exact flight/comms MCU, package and provisioning path | Open; H563/H573 comparison recommended | EX-04 |
+| DR-01 | Phase-aware watchdog and logger-degradation policy | Accepted by Seán, 6 September; essential progress earns heartbeat, contained logger loss enters supervised degraded operation; timing and tests open | EX-01/03/06 |
+| DR-02 | Foinse auxiliary return versus local low-power regulation | Accepted by Seán, 6 September: retain protected return; basic source/protection independent of return and Ogma software; local regulation only if reviewed device dependencies require it; tests open | EX-02 |
+| DR-03 | Retention supply, time source and supported reset classes | EX-03 defaults accepted by Seán, 6 September; separate reset classes, two-slot MCU checkpoint, local time and deliberate new-flight reset of authority; exact bank/clock/supply/timing and hardware proof open | EX-02/03/04 |
+| DR-04 | Exact flight/comms MCU, package and provisioning path | EX-04 strategy accepted by Seán, 6 September: H563VIT6/LQFP100 first candidate, H573 comparator, same-family starting point, checked ECC placement, 30% initial reserve and reversible development provisioning; production selection and target evidence open | EX-04 |
 | DR-05 | Sensor validity/error budget and full-envelope altitude proof owner | Open | EX-05 |
-| DR-06 | Independent recovery by mission and residual common failures | Open; no blanket mandate inferred | EX-01/07/10 |
+| DR-06 | Independent recovery by mission and residual common failures | Policy accepted by Seán, 6 September: required on initial flights with live Ogma recovery authority and Kármán; later ordinary-flight change needs vehicle review; exact coverage open | EX-01/07/10 |
 | DR-07 | Per-section output allocation and liquid ignition authority clarification | Open where vehicle-specific; current interface still governs | EX-01/07/09 |
-| DR-08 | G0–G3 release-gate allocation | Proposed; no existing flight evidence waived | EX-01/10 |
+| DR-08 | G0–G3 release-gate allocation | Accepted by Seán, 6 September; no existing flight evidence waived and no gate passed by policy adoption | EX-01/10 |
+| DR-09 | Post-reset staging and recovery authority | Accepted by Seán, 6 September: inhibit further sustainer ignition for that flight; recovery only from validated phase evidence; mechanisms and tests open | EX-01/03/07 |
+| DR-10 | Initial communications/logger/reset/power-loss allocation | FF-01–FF-04 accepted by Seán, 6 September; numerical limits, mission coverage and evidence open | EX-01/02/03/05/06/09/10 |
+| DR-11 | Logic regulator cascade | Accepted by Seán, 6 September correction: switching preregulator then low-noise LDO; direct buck comparison only; exact parts, intermediate voltage and VIOC open | EX-02/04/05 |
+| DR-12 | Power branches, USB service and reserve | EX-02 defaults accepted by Seán, 6 September: contain optional branches, USB service without actuator power/backfeed, bounded core hold-up and measured 8 h + 4 h budget; numerical limits/tests open | EX-02/03/07/09/10 |
+| DR-13 | Attempted action versus observed result | EX-03 distinction accepted by Seán, 6 September; no blanket replay or blanket suppression policy; mechanism-specific evidence and responses remain open | EX-03/07 |
+
+The [flight fault contract](../interfaces/flight-fault-contract.md) and
+[6 September acceptance log](../project-log.md#2026-09-06--ex-01-policy-accepted)
+record the accepted choices, rationale, limits and authority. Decisions left
+open above are not accepted merely because EX-01 policy is accepted.
+EX-02's acceptance and subsequent regulator correction are recorded in the
+[power contract](../interfaces/power-contract.md) and
+[power acceptance log](../project-log.md#2026-09-06--ex-02-accepted-preregulator-and-low-noise-ldo-retained).
+EX-03's defaults and model evidence are recorded in the
+[reset contract](../interfaces/reset-recovery-contract.md) and
+[reset acceptance log](../project-log.md#2026-09-06--ex-03-accepted-first-host-checkpoint-replay).
 
 When a decision closes, record the actual choice, approving owner, date,
 evidence, affected baseline/interface, and reason. Update current-system and

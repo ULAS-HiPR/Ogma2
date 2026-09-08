@@ -16,6 +16,33 @@ sequencing need explicit closure. References to independent recovery describe
 the study's proposed safety architecture, not a blanket per-mission decision
 already accepted by the team. Foinse remains MCU-less in every candidate.
 
+Acceptance update, 6 September: the [EX-01 flight fault contract](../interfaces/flight-fault-contract.md)
+now records accepted fault responses, phase-aware watchdog feeding, post-reset
+staging inhibit and G0–G3. Independent recovery is required for initial flights
+with live Ogma recovery authority and the Kármán mission; later ordinary-flight
+policy needs explicit vehicle review. That bounded decision supersedes the
+earlier open/proposed status for those policies, not the whole study. Exact
+coverage, timing, components, circuits and all test evidence remain open.
+
+EX-02 update, 6 September: the [power contract](../interfaces/power-contract.md)
+records accepted source independence, protected branches, USB service and
+bounded hold-up/energy defaults. Seán explicitly retained the switching
+preregulator followed by low-noise LDO, citing the earlier external review.
+Exact regulator, intermediate voltage, VIOC use and measurements remain open.
+
+EX-03 update, 6 September: accepted reset-class, checkpoint, local-time,
+new-flight preparation and action-evidence defaults are in the
+[reset contract](../interfaces/reset-recovery-contract.md). The initial host
+model tests selected semantics; it does not establish MCU retention, physical
+power/reset behaviour, clock survival or qualification.
+
+EX-04 update, 6 September: the [initial MCU allocation](mcu-resource-and-timing-results.md)
+records accepted H563VIT6-first selection strategy, critical-memory placement,
+30% initial reserve and reversible development provisioning. This supersedes
+the study's H573-leading ranking: H573 remains the direct comparator, not a
+presumed reliability upgrade. Complete resource fit and target proof remain
+open. EX-05 is the next review.
+
 ## The result in one page
 
 Ogma 2 is HiPR's workhorse flight computer for ordinary solid, hybrid, liquid, single-stage, and multistage competition and development launches. Its extreme design case is one bounded sortie: power up, wait on the pad, launch, survive ascent, reach the Kármán line near apogee, descend, deploy recovery, land, and preserve enough local data to prove what happened. It does not need to operate unattended in orbit for six months, survive years of accumulated radiation, recover from an arbitrary sequence of faults, or be reusable without inspection.
@@ -25,7 +52,7 @@ That boundary removes a great deal of false complexity. It does not permit an or
 The changes with the highest value are:
 
 1. Use the accepted provisional platform envelope to select architecture and part classes now. Replace it with vehicle simulation and measured environments before final qualification; do not block schematic work waiting for a mature rocket.
-2. Select a flight MCU with actual flash and SRAM ECC, an MPU, independent watchdog support, clock and voltage monitoring, adequate timers, and a package that can be inspected. The STM32H573 is the strongest current candidate. It keeps the existing STM32 development path and provides ECC on flash and most, but not all, SRAM. Its unprotected SRAM regions and errata must be treated explicitly. It is not radiation-qualified.
+2. Select a flight MCU with actual flash and SRAM ECC, an MPU, independent watchdog support, clock and voltage monitoring, adequate timers, and a package that can be inspected. EX-04 now starts with STM32H563VIT6 and compares H573 directly. Their unprotected SRAM regions, ECC capacity cost and errata must be treated explicitly. Neither is radiation-qualified by this study.
 3. Keep the two-MCU split, but put the communications MCU and its radio/GNSS loads on a separately switchable and current-limited power branch. It must be possible for that entire branch to fail short, latch up, reset repeatedly, or flood UART without pulling down the flight computer.
 4. Add an independent external supervisor/windowed watchdog. Use internal watchdogs as a second layer. Reset cause, ECC events, rail minima, watchdog state, and the last valid flight state must survive reset well enough to explain it.
 5. Use ECC where the MCU supplies it, and design the software around what ECC does not cover. Put flight state, stacks, estimator state, command state, and critical buffers only in ECC SRAM. Initialise ECC memory before use. Scrub by reading and rewriting. Detect and handle uncorrectable errors. Protect critical state with explicit encodings, CRCs, range checks, freshness, and reconstruction. Do not apply triple modular redundancy to the whole computer.
@@ -585,7 +612,10 @@ Write a compact record using a power-fail-safe method before verbose logging sta
 
 ### Required domain split
 
-The current provisional `VBAT -> switching preregulator near 3.8 V -> 3.3 V LDO` is not yet a space-shot power architecture. It is a candidate conversion chain.
+The accepted conversion chain is `VBAT -> switching preregulator -> low-noise
+3.3 V LDO`. The earlier approximately 3.8 V intermediate voltage remains
+provisional. This selects a topology, not a qualified power architecture;
+the complete source, branch, startup and protection behaviour still needs proof.
 
 The board should be redrawn as these functional domains:
 
@@ -668,13 +698,18 @@ Select each regulator from a written rail budget:
 - radiation/SEE data if the risk calculation requires it;
 - package inspectability, lifecycle, and manufacturer errata.
 
-Possible outcomes:
+Accepted starting point and retained comparisons:
 
-- direct efficient buck to 3.3 V for the flight digital rail;
-- buck to an intermediate rail plus a low-noise LDO only for sensors or references that prove they need it;
-- the current 3.8 V preregulator plus 3.3 V LDO if dissipation, dropout, noise, startup, and fault tests support it.
+- switching preregulator plus low-noise 3.3 V LDO is the baseline; choose the
+  intermediate voltage from actual headroom, noise and thermal requirements;
+- direct buck or sensor-only post-regulation remains a comparison that would
+  require evidence and a recorded decision to replace that baseline;
+- fixed preregulation versus a compatible VIOC-controlled pair remains open.
 
-Do not add a conversion stage because it sounds cleaner. Every regulator adds startup ordering, loop stability, thermal dissipation, parts, and another fault. Conversely, do not remove the quiet rail if measured radio/switching noise corrupts the inertial or pressure measurements.
+The [external-review note](rev1-external-review-lessons.md) records the chosen
+chain's rationale and LT3045/LT3045-1 distinction. Verify startup ordering, loop
+stability, dissipation, headroom, measurement noise and fault behaviour. A
+manufacturer's low-noise claim does not establish installed Ogma performance.
 
 ### Flight versus communications power
 
@@ -707,12 +742,14 @@ Every switch creates leakage and voltage drop. Verify sensor back-power through 
 
 The current architecture says Foinse receives a protected bounded 3.3 V return from Ogma for low-power devices. For the Kármán mission, that return cannot be the flight-core rail exposed through a connector.
 
-Working options:
+Accepted EX-02 direction: retain Ogma's protected bounded auxiliary return.
+Foinse's basic source/protection path must work without it or Ogma software.
+An auxiliary-branch fault must not move the flight rail outside its allocated
+limits. Actual switches, monitoring, discharge and current budgets remain open.
 
-1. Foinse creates its own low-power rail from VBAT. This gives the cleanest fault boundary.
-2. Ogma supplies a dedicated current-limited auxiliary branch with load switch, discharge, fault telemetry, and a current budget. A Foinse short must not move the flight rail outside tolerance.
-
-The decision belongs in the complete Ogma/Foinse power tree. Option 1 is simpler electrically if Foinse genuinely needs enough circuitry to justify a local regulator. Option 2 may use fewer parts at very low current but needs explicit containment.
+If the Foinse device dependencies cannot meet this cleanly, review local
+low-power regulation before freezing the dependent layout. It is an explicit
+fallback, not the presently selected topology. Foinse remains MCU-less.
 
 ### Pyro and servo power
 

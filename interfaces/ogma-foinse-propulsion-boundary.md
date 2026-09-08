@@ -1,9 +1,9 @@
 # Ogma, Foinse, and propulsion boundary
 
-Updated: 5 September 2026
+Updated: 7 September 2026
 
-Status: current owned architecture boundary; exact electrical interfaces remain
-open
+Status: current owned architecture boundary; Croí/Foinse implementation baseline
+accepted, propulsion load sizing and cross-project message implementation open
 
 Authority: [`../current-system.md`](../current-system.md)
 
@@ -15,8 +15,22 @@ conflict.
 Foinse 2 is MCU-less and has no firmware image. Its source/protection circuitry
 can still have electrical supply dependencies; the
 [power review](../docs/reliability-design-review.md#51-mcu-less-foinse-startup)
-and EX-02 examine those without adding a processor or selecting a new supply
-topology. This clarification does not change any system's authority.
+and [EX-02 power contract](power-contract.md) examine those without adding a
+processor. Seán accepted retaining the protected auxiliary return subject to
+autonomous source/protection operation and demonstrated fault containment.
+The [7 September acceptance](../docs/architecture-acceptance-2026-09-07.md)
+selects the Croí/Foinse parts and connectors. This does not change any system's
+authority or edit the LTS project.
+
+
+7 September sensing revision: Croí owns the common protected AV discharge shunt
+and INA228 0x40, including standalone operation; Foinse retains propulsion INA
+0x41 and ADS1115 0x48. The Samtec pinout and power authority are unchanged.
+FOINSE_RETURN_EN must also enable Croí-local monitoring without Foinse present.
+No duplicate Foinse AV shunt remains. All Croí battery load takeoffs, including
+future physical arm feeds, must follow its shunt; USB/charging/propulsion remain
+outside that measured path. Monitoring never enables autonomous protection.
+See [the revision contract](../docs/sensing-indication-time-review-2026-09-07.md).
 
 ## Authority
 
@@ -40,8 +54,12 @@ operator UI is disconnected.
   validity, and selected summaries.
 - Full-rate engine data stays in propulsion-local storage or uses a bounded
   test-only path.
-- Classical CAN versus CAN FD, bitrate, connector, cable, reference/isolation,
-  and exact messages remain open.
+- Croí selects 500 kbit/s Classical CAN with TCAN3413DRBR, fixed 120 Ω end
+  termination and JST GH: pin 1 CAN H, pin 2 CAN L, pin 3 reference. No power
+  pin. Exact messages and installed cable/bonding evidence still need joint
+  implementation. An open propulsion return must not divert actuator current
+  through the CAN reference; if bonding cannot satisfy that, review isolation
+  of the complete interface boundary before claiming containment.
 - Ogma and propulsion firmware consume one machine-readable versioned message
   contract when implementation begins.
 
@@ -81,8 +99,25 @@ review. It does not silently impose an operator-presence requirement on flight.
 - Ogma's logic rail does not power propulsion logic, sensors, or actuators.
 - Foinse may receive only the bounded protected low-power return explicitly
   accepted in the current architecture; it is not a general Ogma power bus.
-- Exact voltage ranges, source impedance, current, connector, actuation split,
-  protection, and monitoring remain open.
+- Foinse's basic source/protection path must start and remain functional without
+  that return or Ogma software. If actual devices cannot satisfy this cleanly,
+  local Foinse regulation requires a recorded review before dependent layout
+  is frozen; it is not silently selected here.
+- Croí uses one protected 2S feed, provisional 6 A aggregate, through the
+  Samtec MPS-08-01-01-L-RA-SD (Foinse) / MPT-08-01-01-L-RA-SD (Croí) pair.
+  Pins 1/2 are VBAT/return, 3/4 protected auxiliary 3.3 V/return, 5/6 local
+  monitor SCL/SDA, 7 nFAULT and 8 NC. Both ground paths must independently
+  withstand the full alternate fault return. No charger or propulsion current
+  is allocated through Croí. The coplanar assembly needs a retention bridge.
+- Foinse source protection is pack-powered TPS26630/CSD18540; INA228 and
+  ADS1115 are bounded monitoring, never boot/protection prerequisites.
+- Larger liquid use adds a separate 6S propulsion pack/domain, raw 18–25.2 V
+  planning range. Actual coil current, duty, surge suppression and need for
+  regulated 24 V remain conditional on the propulsion design. This is not a
+  frozen valve count or completed propulsion supply specification.
+- Charging uses matched external balance chargers and controlled fused service
+  wiring with physical charge/arm exclusion. Independent recovery has its own
+  qualified supply/path outside the shared Foinse fault boundary.
 
 ## Required boundary tests
 
@@ -93,6 +128,8 @@ review. It does not silently impose an operator-presence requirement on flight.
 - stale, replayed, and illegal high-level requests;
 - each source branch browned out, interrupted, shorted where safe to test, and
   restored;
+- Foinse cold start and continued basic source delivery with returned auxiliary
+  power absent, followed by controlled auxiliary-branch fault containment;
 - failure of Ogma's logic rail without unsafe propulsion output;
 - full-rate local evidence and first-fault retention through the above;
 - production Ogma/emulator interchange without adding another CAN node.

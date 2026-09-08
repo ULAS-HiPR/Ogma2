@@ -1,24 +1,53 @@
-# Ogma 2 active documents
+# Ogma 2 documents
 
-| Document | Use |
+## Current reading path
+
+- [Current system](../current-system.md): concise controlling architecture.
+- [Architecture review pack](architecture/README.md): overview and eight domain pages.
+- [Firmware handoff](firmware-handoff-2026-09-07.md): detailed hardware/driver contract.
+- [Hardware entrypoint](../hardware/README.md): local CAD boundary and checks.
+- [Project log](../project-log.md): dated decisions and observed results.
+
+The short pack is self-contained. Older detailed records may reference
+workspace-local CAD or research; those links are not promised in a clean clone.
+Read current truth first. A dated selection or failed experiment remains history,
+not an instruction to restore it.
+
+## Owned interfaces
+
+- [Flight fault contract](../interfaces/flight-fault-contract.md)
+- [Power contract](../interfaces/power-contract.md)
+- [Reset/recovery contract](../interfaces/reset-recovery-contract.md)
+- [Ogma/Foinse/propulsion boundary](../interfaces/ogma-foinse-propulsion-boundary.md)
+
+## Accepted changes and rationale
+
+| Record | Purpose |
 | --- | --- |
-| [Reliability execution plan](reliability-execution-plan.md) | Start here for the review work queue: EX-01–EX-10, dependencies, proposed G0–G3 gates, bench procedures, pass criteria and open decisions; no tests completed or owners assigned |
-| [Reliability design review](reliability-design-review.md) | Deepens the power/reset/state, measurement, MCU/ECC, actuation, storage and bay analysis; separates source corrections from proposed architecture |
-| [Kármán-line mission hardening report](karman-line-mission-hardening-report.md) | Full short-duration space-shot reliability study, candidate analysis, failure controls, and qualification plan |
-| [Verification-record template](templates/verification-record.md) | Reusable run record: exact configuration, stimulus, limits, instruments, raw evidence, result, uncertainty and decision |
+| [Architecture acceptance](architecture-acceptance-2026-09-07.md) | Batch acceptance and first-full-PCBA testing sequence |
+| [Three servos, readiness and SMA](connector-servo-readiness-revision-2026-09-07.md) | Third timer channel, complete new servo pinout and complementary LEDs |
+| [Radio revision](radio-change-2026-09-07.md) | Wio-LR2021 replaces E22; exact signal/driver delta |
+| [Sensing, indication and time](sensing-indication-time-review-2026-09-07.md) | Croí bulk-current monitor, passive piezo and internal RTC |
+| [Sensor configuration](sensor-configuration-review-2026-09-07.md) | Rates, range/validity and independent sensor branches |
+| [Rev 1 external-review lessons](rev1-external-review-lessons.md) | Preregulator/LDO and serviceable packaging rationale |
 
-Current architecture remains in [`../current-system.md`](../current-system.md).
-Chronology remains in [`../project-log.md`](../project-log.md). Controlled
-cross-system boundaries are indexed under [`../interfaces/`](../interfaces/README.md).
+## Deeper reference, not the first read
 
-The 5 September review is authorised documentation, not acceptance of every
-recommendation. Exact parts, Foinse auxiliary regulation, restart policy,
-per-mission independent recovery, and release-gate allocation remain explicit
-decisions. Foinse remains MCU-less. The accepted provisional workhorse envelope
-is unchanged. Planned output paths in the execution plan are created when their
-work packages start; they are not existing results.
+| Record | Purpose |
+| --- | --- |
+| [Reliability execution plan](reliability-execution-plan.md) | Tests, dependencies and release gates |
+| [Reliability review](reliability-design-review.md) | Power/reset/sensing/storage/output failure analysis |
+| [Kármán hardening report](karman-line-mission-hardening-report.md) | Bounded suborbital environment; not orbital lifetime |
+| [Avionics options review](avionics-options-review-2026-09-07.md) | Dated radio/GNSS/CAN/sensor comparison |
+| [Above-80-km height study](height-estimation-above-80km-2026-09-07.md) | Non-binding receiver/inertial/tracking comparison |
+| [PCB layout guide](pcb-layout-guide.md) | Layout order and local manufacturer-page references |
+| [Placement history](croi2-functional-placement-2026-09-07.md) | Provisional placement, not final routing |
+| [Library preparation](kicad-library-preparation.md) | Historical feasibility and provenance |
+| [Model gaps](model-recovery-2026-09-07.md) | Remaining bodies/footprint distinctions |
+| [MCU allocation study](mcu-resource-and-timing-results.md) | Earlier reservation rationale; current exact pins are in the handoff |
+| [Host checkpoint model](../tests/reset_replay/README.md) | Non-actuating host tests; not target reset evidence |
+| [Verification template](templates/verification-record.md) | Repeatable result record |
+| [Design review procedure](design-review-operating-procedure.md) | Recommendation-first collaboration |
+| [History](history/README.md) | Verbatim earlier current-system snapshot |
 
-Add a separate durable artifact only when it answers a recurring design,
-verification, failure, or handoff question better than the current-system
-document or project log. Raw research and generated output remain outside this
-repository.
+Keep raw transcripts and private source dumps outside this repository.

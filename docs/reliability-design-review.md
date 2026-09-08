@@ -18,7 +18,36 @@ criteria. Hardware, controlled implementation, selected-part documentation, and
 measured evidence outrank this analysis.
 
 No Ogma 2 schematic, firmware implementation, or test article was established
-by this review. All proposed tests below remain unperformed.
+by the original review. Physical tests below remain unperformed; the later
+host-model coverage is identified separately below.
+
+Acceptance update, 6 September: Seán accepted the EX-01 recommendations for
+communications/logger fault containment, bounded validated restart, primary
+unavailability after complete flight-power loss, phase-aware watchdog feeding,
+post-reset staging inhibit, independent recovery and G0–G3. The
+[flight fault contract](../interfaces/flight-fault-contract.md) supersedes the
+initial proposal status for that scope. Remaining study proposals, numerical
+limits, implementation and test results are not accepted or proved by it.
+
+Further acceptance, 6 September: EX-02's defaults are accepted in the
+[power contract](../interfaces/power-contract.md), including Seán's explicit
+retention of switching preregulation followed by a low-noise LDO. The protected
+Foinse return remains the starting choice with autonomous source/protection
+operation. Part selection, intermediate voltage, VIOC and test evidence remain
+open. The [external-review note](rev1-external-review-lessons.md) preserves why
+this cascade was chosen rather than treating it as an unexplained extra stage.
+
+EX-03 acceptance, 6 September: Seán accepted the reset-class distinction,
+two-slot MCU-retained checkpoint direction, GNSS-independent mission time,
+deliberate disarmed new-flight preparation and attempted/observed-action
+distinction. The [reset contract](../interfaces/reset-recovery-contract.md)
+records scope and the [host checkpoint model](../tests/reset_replay/README.md).
+Model tests passed; exact MCU retention, time, ECC and restart timing are not
+proved. EX-04's candidate strategy, memory placement, initial 30% reserve and
+reversible development provisioning are now accepted in the
+[initial MCU allocation](mcu-resource-and-timing-results.md). It contains a
+partial simultaneous resource reservation, not a completed fit or target timing
+result. EX-05 is the next review.
 
 ## 1. Verdict and limits
 
@@ -129,9 +158,11 @@ that expresses the actual policies and rejects contradictory combinations.
 | Loss of a non-flight power branch | Prevent readiness where that branch is mission-required | Remaining flight rail stays valid and no signal back-power defeats isolation | Rail, current, reset, and output traces during the actual fault |
 | Complete loss of the common flight supply | Inactive outputs | Primary flight computer unavailable until power returns; retained capability depends on the real retention supply | Measured power-loss classes and independent vehicle coverage |
 
-The table is proposed policy. Exact mission readiness rules and actuator
-responses require explicit acceptance. A closed test for one row does not
-close the others.
+The accepted EX-01 contract now governs communications, logger, reset and
+complete-power-loss policy. Other rows in this initial review table remain
+proposals. Exact mission readiness rules, numerical limits and actuator
+implementation still need closure. A closed test for one row does not close
+the others.
 
 ### 3.2 Watchdog supervision must understand degradation
 
@@ -201,11 +232,11 @@ not manufacture a new flight/session identity and thereby lose the old one.
 Generation counters need wrap and comparison rules. Mission configuration must
 not change underneath a retained checkpoint.
 
-### 4.3 Two startup paths are likely necessary
+### 4.3 Preparation and in-flight restart
 
-The working approach is a cold/maintenance path and a bounded in-flight restart
-path sharing reviewed low-level primitives. This is a proposal, not selected
-firmware architecture.
+EX-03 now accepts separate preparation and bounded in-flight restart semantics.
+This does not require duplicated boot code. The actual low-level primitives,
+integrity checks and timing remain implementation work on the selected MCU.
 
 The in-flight path needs to:
 
@@ -273,9 +304,10 @@ The second line must not be a prerequisite for the first unless a separately
 proved startup and maintenance path resolves that dependency. Loss of Ogma
 software must not make an otherwise healthy Foinse source path chatter.
 
-Two candidates remain: retain the protected auxiliary return with demonstrable
-containment, or give the relevant Foinse low-power circuitry local regulation.
-This review selects neither. Foinse remains MCU-less in both.
+EX-02 now retains the protected auxiliary return with autonomous source-path
+operation and demonstrable containment. Local regulation is the review fallback
+if actual device dependencies cannot satisfy that contract cleanly. Feasibility
+is not yet demonstrated. Foinse remains MCU-less in either case.
 
 ### 5.2 Complete the source-state table
 
@@ -310,7 +342,9 @@ budget; those values remain open.
 
 ### 5.4 The proposed 3.8 V to 3.3 V chain needs a reason
 
-A buck followed by an LDO is a candidate, not a universal low-noise solution.
+The buck/LDO cascade is now the accepted baseline, following Seán's
+6 September clarification of the prior external review. The approximately
+3.8 V value and exact devices remain provisional, not a universal solution.
 The available headroom must include buck tolerance/ripple/droop, LDO dropout at
 load and temperature, wiring loss, and startup. Dissipation is approximately
 `(Vin - Vout) × I`, before quiescent consumption.
@@ -319,9 +353,10 @@ LDO rejection depends on frequency, load, headroom, and the fitted capacitors.
 Compare it at the converter switching spectrum and sensitive sensor bandwidth,
 not only at a favourable low-frequency datasheet point. [ADI AN-1120](https://www.analog.com/en/resources/app-notes/an-1120.html)
 
-Measure whether the LDO buys needed measurement quality. It may remain useful
-on a named quiet sensor branch even if it is unnecessary on a digital load.
-That is a comparison to run, not an instruction to redraw the accepted chain.
+Measure the chain's actual noise and measurement performance. A direct buck
+or sensor-only post-regulator can remain a comparison if evidence justifies
+reopening the choice; neither is the default implementation. Retaining the
+chosen chain does not close headroom, thermal, transient or fault checks.
 
 ### 5.5 Hold-up is an energy budget
 
