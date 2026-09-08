@@ -1,0 +1,6 @@
+(version 1)
+
+# 2026-09-08: retired the two SAM-M10Q integrated-antenna rules with their
+# exact named areas. MAX-M10S now uses an external passive antenna.
+# Its 50-ohm RF path and continuous ground return need layout review; the
+# old patch-antenna exclusion regions are not appropriate substitutes.

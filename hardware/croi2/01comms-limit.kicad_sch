@@ -1,0 +1,1101 @@
+(kicad_sch
+  (version 20250114)
+  (generator eeschema)
+  (generator_version "9.0")
+  (uuid "ef843185-f7d6-5faa-95e8-628d874be13f")
+  (paper "User" 297 230.32)
+  (title_block
+    (title "comms / nonheld preregulator branch limit")
+    (date "2026-09-08")
+    (rev "A-DRAFT")
+    (company "HiPR")
+    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
+  (lib_symbols
+    (symbol "Device:C"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0.254))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "C"
+        (at 0.635 2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Value" "C"
+        (at 0.635 -2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Footprint" ""
+        (at 0.9652 -3.81 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Unpolarized capacitor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "cap capacitor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "C_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "C_0_1"
+        (polyline
+          (pts
+            (xy -2.032 0.762)
+            (xy 2.032 0.762))
+          (stroke
+            (width 0.508)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy -2.032 -0.762)
+            (xy 2.032 -0.762))
+          (stroke
+            (width 0.508)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "C_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 2.794)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 2.794)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no))
+    (symbol "Device:R"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "R"
+        (at 2.032 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "R"
+        (at 0 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at -1.778 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Resistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "R res resistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "R_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "R_0_1"
+        (rectangle
+          (start -1.016 -2.54)
+          (end 1.016 2.54)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "R_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no))
+    (symbol "Ogma2_Circuit:TPS2553DBVR-1_Functional"
+      (pin_names
+        (offset 0.508))
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "U"
+        (at -10.16 8.89 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Value" "TPS2553DBVR-1"
+        (at -10.16 7.620000000000001 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Footprint" "Ogma2:TPS2553DBVR-1"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps2553.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "TPS2553DBVR-1"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Low-voltage limited switches"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "transcribed and checked: TPS2553 p5; SOT-23 active-high enable; -1 latch-off; pending dimensional audit"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "TPS2553DBVR-1_Functional_0_1"
+        (rectangle
+          (start -10.16 10.16)
+          (end 10.16 -10.16)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "TPS2553DBVR-1_Functional_1_1"
+        (pin power_in line
+          (at -15.24 5.08 0)
+          (length 5.08)
+          (name "IN"
+            (effects
+              (font
+                (size 1 1))))
+          (number "1"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin power_in line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (size 1 1))))
+          (number "2"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin input line
+          (at -15.24 -5.08 0)
+          (length 5.08)
+          (name "EN"
+            (effects
+              (font
+                (size 1 1))))
+          (number "3"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin open_collector line
+          (at 15.24 -5.08 180)
+          (length 5.08)
+          (name "~{FAULT}"
+            (effects
+              (font
+                (size 1 1))))
+          (number "4"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin passive line
+          (at 5.08 -15.24 90)
+          (length 5.08)
+          (name "ILIM"
+            (effects
+              (font
+                (size 1 1))))
+          (number "5"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin power_out line
+          (at 15.24 5.08 180)
+          (length 5.08)
+          (name "OUT"
+            (effects
+              (font
+                (size 1 1))))
+          (number "6"
+            (effects
+              (font
+                (size 1 1))))))))
+  (embedded_fonts no)
+  (text "COMMS / NONHELD PREREGULATOR BRANCH LIMIT"
+    (at 15.24 15.24 0)
+    (effects
+      (font
+        (size 2.54 2.54))
+      (justify left))
+    (uuid "4dcc7eeb-0d9c-5770-85b7-a95ca3b6b3d8"))
+  (symbol
+    (lib_id "Ogma2_Circuit:TPS2553DBVR-1_Functional")
+    (at 105.41 90.17 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "d852a411-290e-5389-90b3-2a2dcfbf44ad")
+    (property "Reference" "U1501"
+      (at 105.41 77.47 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "TPS2553DBVR-1"
+      (at 105.41 80.01 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Ogma2:TPS2553DBVR-1"
+      (at 105.41 90.17 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps2553.pdf"
+      (at 105.41 90.17 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "TPS2553DBVR-1"
+      (at 105.41 90.17 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 105.41 90.17 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Low-voltage limited switches"
+      (at 105.41 90.17 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "transcribed and checked: TPS2553 p5; SOT-23 active-high enable; -1 latch-off; pending dimensional audit"
+      (at 105.41 90.17 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/4005f0aa-9fe9-5f3e-bdc9-ac5a3de142e8"
+          (reference "U1501")
+          (unit 1))))
+    (pin "1"
+      (uuid "3fb9b558-b288-5055-a21a-760aba263ae4"))
+    (pin "2"
+      (uuid "7b4bf071-7b44-5e51-8166-fc4aff49c074"))
+    (pin "3"
+      (uuid "bd13af6f-f75b-5f22-8eea-14d4e7fee681"))
+    (pin "4"
+      (uuid "3f044dc8-09b9-59bd-9428-f67e6723cc3f"))
+    (pin "5"
+      (uuid "ef0929c5-0886-5785-9f5d-ba03682e5054"))
+    (pin "6"
+      (uuid "7799771d-0e59-5182-a5c9-e9a1f5209491")))
+  (symbol
+    (lib_id "Device:R")
+    (at 154.94 85.09 90)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "8ec3d258-2243-5322-9a69-6899981efb00")
+    (property "Reference" "R1501"
+      (at 154.94 80.01 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "0R"
+      (at 154.94 82.55 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 154.94 85.09 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 154.94 85.09 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 154.94 85.09 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 154.94 85.09 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 154.94 85.09 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/4005f0aa-9fe9-5f3e-bdc9-ac5a3de142e8"
+          (reference "R1501")
+          (unit 1))))
+    (pin "1"
+      (uuid "05b33a11-9d1f-5460-b05b-ed3b55518832"))
+    (pin "2"
+      (uuid "a1b52dc3-d9a5-5baa-8e19-65380bef5598")))
+  (symbol
+    (lib_id "Device:R")
+    (at 54.61 120.65 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "ba2fa799-d9ed-5653-994f-33c650360fea")
+    (property "Reference" "R1502"
+      (at 58.42 119.38 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100k"
+      (at 58.42 121.92 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 54.61 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 54.61 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 54.61 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 54.61 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 54.61 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/4005f0aa-9fe9-5f3e-bdc9-ac5a3de142e8"
+          (reference "R1502")
+          (unit 1))))
+    (pin "1"
+      (uuid "eab31cbb-c9fc-5ded-8725-c1226e99b528"))
+    (pin "2"
+      (uuid "3e7a042e-1919-564c-8f06-d6be11981726")))
+  (symbol
+    (lib_id "Device:R")
+    (at 212.09 120.65 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "569b7a6b-47e0-5c91-8461-4235ba763902")
+    (property "Reference" "R1503"
+      (at 215.9 119.38 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "10k"
+      (at 215.9 121.92 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 212.09 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 212.09 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 212.09 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 212.09 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 212.09 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/4005f0aa-9fe9-5f3e-bdc9-ac5a3de142e8"
+          (reference "R1503")
+          (unit 1))))
+    (pin "1"
+      (uuid "badbd908-0fad-5754-9ae0-bec78cb9ffae"))
+    (pin "2"
+      (uuid "28df1f19-0bc1-54b2-a27a-85299c50c8d4")))
+  (symbol
+    (lib_id "Device:C")
+    (at 30.48 104.14 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "1daa29ca-9238-50fa-9a9f-612a2f3fe5ea")
+    (property "Reference" "C1501"
+      (at 34.29 102.87 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100n 16V X7R"
+      (at 34.29 105.41 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 30.48 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 30.48 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 30.48 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 30.48 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 30.48 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/4005f0aa-9fe9-5f3e-bdc9-ac5a3de142e8"
+          (reference "C1501")
+          (unit 1))))
+    (pin "1"
+      (uuid "f8d3e549-4d73-5ed0-a610-e168c24f3ecc"))
+    (pin "2"
+      (uuid "3305fe30-dbed-5e1d-8433-59d2e186e5c3")))
+  (symbol
+    (lib_id "Device:C")
+    (at 187.96 104.14 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "7e5e96b8-ff6f-5448-b991-16dc7fd59798")
+    (property "Reference" "C1502"
+      (at 191.77 102.87 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "1u 16V X7R"
+      (at 191.77 105.41 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 187.96 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 187.96 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 187.96 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 187.96 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 187.96 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/4005f0aa-9fe9-5f3e-bdc9-ac5a3de142e8"
+          (reference "C1502")
+          (unit 1))))
+    (pin "1"
+      (uuid "bfd1be07-9b05-54a0-ad7b-9c1ee918c4ba"))
+    (pin "2"
+      (uuid "1e66eab3-2ad6-5eb0-b643-05a8a94f9b77")))
+  (global_label "4V_PRE"
+    (shape bidirectional)
+    (at 15.24 85.09 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "6102c2dc-5b21-56ba-8fcd-b407f5615b96")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 15.24 85.09 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "COMMS_LDO_IN"
+    (shape bidirectional)
+    (at 232.41 85.09 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "60a6b964-a17c-5097-afe6-cbf19009aeb8")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 232.41 85.09 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "COMMS_BRANCH_EN"
+    (shape bidirectional)
+    (at 54.61 95.25 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "c567d035-9559-5e27-bcb4-c26100ec84fb")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 54.61 95.25 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 30.48 142.24 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "1979d673-97ca-5bde-b773-4f8c5911a3ed")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 30.48 142.24 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (symbol
+    (lib_id "Device:R")
+    (at 110.49 125.73 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "b0b6a55c-4c71-5800-9198-8b175ce9852d")
+    (property "Reference" "R1504"
+      (at 114.3 124.46 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "36.5k 1%"
+      (at 114.3 127.0 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 110.49 125.73 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 110.49 125.73 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 110.49 125.73 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 110.49 125.73 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 110.49 125.73 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/4005f0aa-9fe9-5f3e-bdc9-ac5a3de142e8"
+          (reference "R1504")
+          (unit 1))))
+    (pin "1"
+      (uuid "52e91ee8-179b-5ff6-bfa4-5cb211ed2f83"))
+    (pin "2"
+      (uuid "08ba0313-695e-5883-aa40-1d7e4ce2cdbf")))
+  (global_label "BRANCH_FAULT_N"
+    (shape bidirectional)
+    (at 143.51 154.94 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "34e07e8c-15c6-5ea4-be22-1baac6ce9188")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 143.51 154.94 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (text "Removable output link follows the latch-off switch. Local input/output bypass, enable pull-down and output bleed shown explicitly."
+    (at 15.24 177.8 0)
+    (effects
+      (font
+        (size 1.1 1.1))
+      (justify left))
+    (uuid "4642714c-3737-5aa9-9ff6-afa27365948b"))
+  (text "Current-limit resistor is a provisional selected value. Native connectivity is preserved; no first-PCBA fault test has been performed."
+    (at 15.24 185.42 0)
+    (effects
+      (font
+        (size 1.1 1.1))
+      (justify left))
+    (uuid "8e83e7c5-8464-5d21-8c6f-ea7779a43445"))
+  (global_label "COMMS_LDO_IN_ILIM"
+    (shape bidirectional)
+    (at 110.49 105.41 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "30384cd4-f314-5a00-9530-2b0452323731")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 110.49 105.41 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "COMMS_LDO_IN_PRELINK"
+    (shape bidirectional)
+    (at 120.65 85.09 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "5f3866af-fc2d-578f-8663-1290b4e3e507")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 120.65 85.09 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 15.24 85.09)
+      (xy 30.48 85.09))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "2655a9f3-c3e4-5605-82ac-a094c9604d8c"))
+  (wire
+    (pts
+      (xy 30.48 85.09)
+      (xy 30.48 100.33))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0d823b64-86e2-5d32-a94a-c5a5067e5af3"))
+  (wire
+    (pts
+      (xy 30.48 85.09)
+      (xy 90.17 85.09))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0665a022-2ee2-5889-9814-14a3f47f7886"))
+  (wire
+    (pts
+      (xy 120.65 95.25)
+      (xy 143.51 95.25))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "a20871a5-471c-504d-89b2-6c4f81a86fd4"))
+  (wire
+    (pts
+      (xy 143.51 95.25)
+      (xy 143.51 154.94))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3ca79f58-8d81-5c66-93ba-adc44e110750"))
+  (wire
+    (pts
+      (xy 54.61 95.25)
+      (xy 54.61 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "adfd341a-7b08-5c46-8e14-f9c327e60f8b"))
+  (wire
+    (pts
+      (xy 54.61 95.25)
+      (xy 90.17 95.25))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "71a84816-dca4-5ef4-84bc-ecef1be397fd"))
+  (wire
+    (pts
+      (xy 158.75 85.09)
+      (xy 187.96 85.09))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "760b809d-cd0c-5c58-a948-0a32302b6574"))
+  (wire
+    (pts
+      (xy 187.96 85.09)
+      (xy 187.96 100.33))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "4f95848e-5411-594a-a1ff-72d6f98b0dcd"))
+  (wire
+    (pts
+      (xy 187.96 85.09)
+      (xy 212.09 85.09))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "a78446de-721d-5349-8be3-be33fc85bf2e"))
+  (wire
+    (pts
+      (xy 212.09 85.09)
+      (xy 212.09 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "e6e1ac52-ccd1-5537-88ae-0833ee6a8ddc"))
+  (wire
+    (pts
+      (xy 212.09 85.09)
+      (xy 232.41 85.09))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "2c037aa3-3898-5240-9f49-2ab5928aac96"))
+  (wire
+    (pts
+      (xy 110.49 105.41)
+      (xy 110.49 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "98422c81-cf19-5e28-a4f3-0154f75b7404"))
+  (wire
+    (pts
+      (xy 120.65 85.09)
+      (xy 151.13 85.09))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "4c0de8f6-9463-543b-9b1f-fafb1fce3480"))
+  (wire
+    (pts
+      (xy 30.48 107.95)
+      (xy 30.48 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "fa5df97b-45e8-5895-9191-19334312c6b9"))
+  (wire
+    (pts
+      (xy 30.48 142.24)
+      (xy 54.61 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "cec2f90b-01b5-553b-8ebb-9c25d1b90f94"))
+  (wire
+    (pts
+      (xy 54.61 124.46)
+      (xy 54.61 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "7060591f-ba1a-5216-9f45-29b68880726a"))
+  (wire
+    (pts
+      (xy 54.61 142.24)
+      (xy 105.41 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "f67ccf94-b217-57ec-b296-f85b4addde4f"))
+  (wire
+    (pts
+      (xy 105.41 105.41)
+      (xy 105.41 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "de3d557d-c88c-51ca-aa38-9c216da57f5f"))
+  (wire
+    (pts
+      (xy 105.41 142.24)
+      (xy 110.49 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0f71dc6b-9e3d-55eb-b353-33a07061d807"))
+  (wire
+    (pts
+      (xy 110.49 129.54)
+      (xy 110.49 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "e6bcc078-bcd4-599f-809a-dba461c45c8d"))
+  (wire
+    (pts
+      (xy 110.49 142.24)
+      (xy 187.96 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "170918c5-f493-54bf-859c-14099d451d75"))
+  (wire
+    (pts
+      (xy 187.96 107.95)
+      (xy 187.96 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "a4eb3f9a-14bd-5510-b4ba-e96ae704313e"))
+  (wire
+    (pts
+      (xy 187.96 142.24)
+      (xy 212.09 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "7d0f9d2a-7efc-5c4e-8d82-9244df0a31e8"))
+  (wire
+    (pts
+      (xy 212.09 124.46)
+      (xy 212.09 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "4fca7650-f999-5506-b315-a7048b1afd40"))
+  (junction
+    (at 105.41 142.24)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "8e946311-8c1e-5946-b78e-c0b7fb28998f"))
+  (junction
+    (at 187.96 142.24)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "f82f7bda-5c9a-52c0-b29b-7ac40afa23f0"))
+  (junction
+    (at 187.96 85.09)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "cd3ab4e5-01b9-5eec-ba39-a7c7d2d3dc1d"))
+  (junction
+    (at 212.09 85.09)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "420070eb-1de9-5b84-badc-667006e1c1ec"))
+  (junction
+    (at 110.49 142.24)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "cfaa45d8-1f6a-52af-8bbe-75ca7fefa776"))
+  (junction
+    (at 30.48 85.09)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "81bac791-8ea8-593a-b747-e520b8fe484c"))
+  (junction
+    (at 54.61 142.24)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "31abf5d8-3880-5b68-bd79-4536f93da1a5"))
+  (text "What this does: Limits current into the comms branch so a fault there is less able to collapse the shared supply.\nConnects to: 01c 4 V supply and 01b comms permission -> 01comms-ldo. It latches off after a qualifying fault; restart behaviour needs testing."
+    (at 15.24 27.94 0.0)
+    (effects
+      (font
+        (size 1.4 1.4))
+      (justify left top))
+    (uuid "511c5f28-7933-57b4-a8cb-7af51ffb7eca")))

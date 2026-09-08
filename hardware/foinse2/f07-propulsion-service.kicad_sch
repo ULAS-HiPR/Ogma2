@@ -1,0 +1,259 @@
+(kicad_sch
+  (version 20250114)
+  (generator eeschema)
+  (generator_version "9.0")
+  (uuid "2059c0fa-6c32-58c4-a6d2-4b0ca9244842")
+  (paper "A3")
+  (title_block
+    (title "Named raw propulsion feed")
+    (date "2026-09-07")
+    (rev "A-DRAFT")
+    (company "HiPR")
+    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
+  (lib_symbols
+    (symbol "Connector_Generic:Conn_01x02"
+      (pin_names
+        (offset 1.016)
+        (hide yes))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "J"
+        (at 0 2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "Conn_01x02"
+        (at 0 -5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "connector"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "Connector*:*_1x??_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "Conn_01x02_1_1"
+        (rectangle
+          (start -1.27 1.27)
+          (end 1.27 -3.81)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background)))
+        (rectangle
+          (start -1.27 0.127)
+          (end 0 -0.127)
+          (stroke
+            (width 0.1524)
+            (type default))
+          (fill
+            (type none)))
+        (rectangle
+          (start -1.27 -2.413)
+          (end 0 -2.667)
+          (stroke
+            (width 0.1524)
+            (type default))
+          (fill
+            (type none)))
+        (pin passive line
+          (at -5.08 0 0)
+          (length 3.81)
+          (name "Pin_1"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at -5.08 -2.54 0)
+          (length 3.81)
+          (name "Pin_2"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no)))
+  (symbol
+    (lib_id "Connector_Generic:Conn_01x02")
+    (at 149.86 73.66 0.0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "c7dc76ec-8285-50f5-a7bd-1da78bf21c25")
+    (property "Reference" "J701"
+      (at 149.86 68.16 0.0)
+      (effects
+        (font
+          (size 0.95 0.95))))
+    (property "Value" "430450200"
+      (at 149.86 70.66 0.0)
+      (effects
+        (font
+          (size 0.95 0.95))))
+    (property "Footprint" "Connector_Molex:Molex_Micro-Fit_3.0_43045-0200_2x01_P3.00mm_Horizontal"
+      (at 83.82 66.04 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 83.82 66.04 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+      (at 83.82 66.04 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "connector"
+      (at 83.82 66.04 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "Connector*:*_1x??_*"
+      (at 83.82 66.04 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Foinse2"
+        (path "/2f684934-bc5c-5631-bbc6-8edc7ca5e585/b108e970-831d-5ab9-9cbb-391384e3b6fe"
+          (reference "J701")
+          (unit 1))))
+    (pin "1"
+      (uuid "64012634-c652-5624-8550-57cfedff7a62"))
+    (pin "2"
+      (uuid "0c9f78d7-0297-559c-bf1c-e0d7553919ad")))
+  (embedded_fonts no)
+  (text "PROPULSION CONNECTION / protected battery power to the next board"
+    (at 25.4 20.32 0.0)
+    (effects
+      (font
+        (size 2.0 2.0))
+      (justify left top))
+    (uuid "c78be369-4d12-4be6-9f32-0eaecdcbfdaa"))
+  (global_label "PROP_RAW"
+    (shape bidirectional)
+    (at 93.98 73.66 180.0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "0485a392-37cd-4276-a367-ee079cefb5a7")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 93.98 73.66 180.0)
+      (effects
+        (font
+          (size 0.9 0.9))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 93.98 76.2 180.0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "f8fcdac9-afd4-4af5-87bf-adb7b9129be2")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 93.98 76.2 180.0)
+      (effects
+        (font
+          (size 0.9 0.9))
+        (hide yes))))
+  (text "J701 Micro-Fit 430450200: pin 1 PROP_RAW, pin 2 paired GND.\nDistinct from 4-contact propulsion input. This is not a charging connector.\nThe provisional ~3 A aggregate limit does not allocate unspecified valve loads."
+    (at 25.4 101.6 0.0)
+    (effects
+      (font
+        (size 1.3 1.3))
+      (justify left top))
+    (uuid "27b36bf7-9b44-423a-9d9c-da4c0c0510ee"))
+  (text "WHAT THE PROPULSION BOARD MUST HANDLE"
+    (at 25.4 139.7 0.0)
+    (effects
+      (font
+        (size 1.7 1.7))
+      (justify left top))
+    (uuid "a867f507-12f1-4a8c-b7ee-a4de63828cc4"))
+  (text "Local regulators, valve switching, state machine, permissives and physical hazardous-energy isolation.\nNo Foinse MCU, CAN endpoint or independent-recovery supply."
+    (at 25.4 154.94 0.0)
+    (effects
+      (font
+        (size 1.3 1.3))
+      (justify left top))
+    (uuid "75e04012-0c37-44df-be8b-2dd7364ee624"))
+  (text "SERVICE AND CHARGING / choices still depend on the packs, chargers and valve coils"
+    (at 25.4 190.5 0.0)
+    (effects
+      (font
+        (size 1.7 1.7))
+      (justify left top))
+    (uuid "b14885d6-40a1-4263-a99d-7e24a89e6900"))
+  (text "Regulated 24 V actuator converter remains conditional on confirmed coil schedule.\nCharging uses external matched balance chargers and separately fused passive service harnesses.\nCharge connections join upstream of discharge protection; physical charge/arm exclusion remains required.\nNeither charging nor propulsion current passes through Croi."
+    (at 25.4 208.28 0.0)
+    (effects
+      (font
+        (size 1.2 1.2))
+      (justify left top))
+    (uuid "1cc941db-f060-4a4e-a2cc-26604d2962a5"))
+  (wire
+    (pts
+      (xy 93.98 73.66)
+      (xy 144.78 73.66))
+    (stroke
+      (width 0.0)
+      (type default))
+    (uuid "7122b11c-f35d-4eb3-ac0a-fe5eba36c701"))
+  (wire
+    (pts
+      (xy 93.98 76.2)
+      (xy 144.78 76.2))
+    (stroke
+      (width 0.0)
+      (type default))
+    (uuid "2c9e99ee-d0d7-4417-a85a-9da455f7deb2"))
+  (text "J701 sends the 6S branch to the propulsion board after protection on f02 and the current shunt on f02a.\nIt carries load power and its return. Valve decisions, local supplies and hazardous-energy isolation\nbelong to propulsion, not to Foinse. The service and charging boundary is recorded below."
+    (at 25.4 30.48 0)
+    (effects
+      (font
+        (size 1.4 1.4))
+      (justify left top))
+    (uuid "29cded47-9746-419e-a39c-8512cb63c86d")))

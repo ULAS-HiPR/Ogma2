@@ -1,0 +1,3530 @@
+{
+  "J101": {
+    "1": "VBAT_CROI_INPUT",
+    "2": "GND"
+  },
+  "J102": {
+    "1": "VBAT_CROI_INPUT",
+    "2": "GND",
+    "3": "FOINSE_AUX_3V3",
+    "4": "GND",
+    "5": "FOINSE_SCL_EXT",
+    "6": "FOINSE_SDA_EXT",
+    "7": "FOINSE_FAULT_N_EXT",
+    "8": null
+  },
+  "Q101": {
+    "1": "VBAT_CROI_INPUT",
+    "2": "VBAT_CROI_INPUT",
+    "3": "VBAT_CROI_INPUT",
+    "4": "BAT_BLOCK_GATE",
+    "5": "BAT_EFUSE_IN"
+  },
+  "Q102": {
+    "1": "BAT_BLOCK_DRV",
+    "2": "VBAT_CROI_INPUT",
+    "3": "BAT_BLOCK_GATE"
+  },
+  "U101": {
+    "1": "BAT_EFUSE_IN",
+    "2": "BAT_EFUSE_IN",
+    "3": "BAT_BLOCK_GATE",
+    "4": "BAT_BLOCK_DRV",
+    "5": "VBAT_CROI_INPUT",
+    "6": "BAT_UV_DIV",
+    "7": "BAT_OV_DIV",
+    "8": "GND",
+    "9": "BAT_SLEW",
+    "10": "BAT_ILIM",
+    "11": null,
+    "12": "BAT_SHDN_N",
+    "13": "BAT_IMON",
+    "14": "BAT_SOURCE_FAULT_N",
+    "15": "BAT_PG_DIV",
+    "16": "BAT_SOURCE_PG",
+    "17": "VBAT_SHUNT_IN",
+    "18": "VBAT_SHUNT_IN",
+    "19": null,
+    "20": null,
+    "21": null,
+    "22": null,
+    "23": null,
+    "24": null,
+    "25": "GND"
+  },
+  "R1001": {
+    "1": "VBAT_CROI_INPUT",
+    "2": "BAT_UV_DIV"
+  },
+  "R1002": {
+    "1": "BAT_UV_DIV",
+    "2": "GND"
+  },
+  "R1003": {
+    "1": "VBAT_CROI_INPUT",
+    "2": "BAT_OV_DIV"
+  },
+  "R1004": {
+    "1": "BAT_OV_DIV",
+    "2": "GND"
+  },
+  "R1005": {
+    "1": "BAT_ILIM",
+    "2": "GND"
+  },
+  "R1006": {
+    "1": "BAT_SHDN_N",
+    "2": "GND"
+  },
+  "C1001": {
+    "1": "BAT_SLEW",
+    "2": "GND"
+  },
+  "R1007": {
+    "1": "VBAT_PROTECTED",
+    "2": "BAT_PG_DIV"
+  },
+  "R1008": {
+    "1": "BAT_PG_DIV",
+    "2": "GND"
+  },
+  "R1009": {
+    "1": "BAT_IMON",
+    "2": "GND"
+  },
+  "R1010": {
+    "1": "BOOT_3V3",
+    "2": "BAT_SOURCE_PG"
+  },
+  "R1011": {
+    "1": "BAT_SOURCE_FAULT_N",
+    "2": "BRANCH_FAULT_N"
+  },
+  "C1002": {
+    "1": "VBAT_CROI_INPUT",
+    "2": "GND"
+  },
+  "C1003": {
+    "1": "VBAT_PROTECTED",
+    "2": "GND"
+  },
+  "TP1001": {
+    "1": "VBAT_CROI_INPUT"
+  },
+  "TP1002": {
+    "1": "VBAT_PROTECTED"
+  },
+  "TP1003": {
+    "1": "BAT_BLOCK_GATE"
+  },
+  "TP1004": {
+    "1": "BAT_SOURCE_PG"
+  },
+  "U1101": {
+    "1": "LOGIC_SELECTED",
+    "2": "USB_LIMITED",
+    "3": "GND",
+    "4": "MUX_OV_USB",
+    "5": "MUX_OV_BAT",
+    "6": "MUX_PR_BAT",
+    "7": "VBAT_PROTECTED",
+    "8": "LOGIC_SELECTED",
+    "9": "MUX_SOURCE_STATUS",
+    "10": "MUX_ILIM",
+    "11": "MUX_SS",
+    "12": "GND"
+  },
+  "U1102": {
+    "1": "LOGIC_SELECTED",
+    "2": "GND",
+    "3": "LOGIC_SELECTED",
+    "4": null,
+    "5": "BOOT_3V3"
+  },
+  "R1101": {
+    "1": "VBAT_PROTECTED",
+    "2": "MUX_PR_BAT"
+  },
+  "R1102": {
+    "1": "MUX_PR_BAT",
+    "2": "GND"
+  },
+  "R1103": {
+    "1": "VBAT_PROTECTED",
+    "2": "MUX_OV_BAT"
+  },
+  "R1104": {
+    "1": "MUX_OV_BAT",
+    "2": "GND"
+  },
+  "R1105": {
+    "1": "USB_LIMITED",
+    "2": "MUX_OV_USB"
+  },
+  "R1106": {
+    "1": "MUX_OV_USB",
+    "2": "GND"
+  },
+  "R1107": {
+    "1": "MUX_ILIM",
+    "2": "GND"
+  },
+  "C1101": {
+    "1": "MUX_SS",
+    "2": "GND"
+  },
+  "R1108": {
+    "1": "BOOT_3V3",
+    "2": "MUX_SOURCE_STATUS"
+  },
+  "C1102": {
+    "1": "VBAT_PROTECTED",
+    "2": "GND"
+  },
+  "C1103": {
+    "1": "USB_LIMITED",
+    "2": "GND"
+  },
+  "C1104": {
+    "1": "LOGIC_SELECTED",
+    "2": "GND"
+  },
+  "C1105": {
+    "1": "LOGIC_SELECTED",
+    "2": "GND"
+  },
+  "C1106": {
+    "1": "BOOT_3V3",
+    "2": "GND"
+  },
+  "U1201": {
+    "1": "BAT_VALID",
+    "2": "GND",
+    "3": "BAT_VALID_DIV",
+    "4": "GND",
+    "5": "BOOT_3V3",
+    "6": null
+  },
+  "U1202": {
+    "1": "USB_PRESENT",
+    "2": "GND",
+    "3": "FLIGHT_COMMS_EN",
+    "4": "COMMS_BRANCH_EN",
+    "5": "BOOT_3V3",
+    "6": "BAT_VALID"
+  },
+  "U1203": {
+    "1": "BAT_VALID",
+    "2": "GND",
+    "3": "BOOT_3V3",
+    "4": "CORE_INPUT_EN",
+    "5": "BOOT_3V3",
+    "6": "USB_CONFIG_OK"
+  },
+  "U1204": {
+    "1": "USB_PRESENT_DIV",
+    "2": "GND",
+    "3": "GND",
+    "4": "USB_PRESENT",
+    "5": "BOOT_3V3",
+    "6": "GND"
+  },
+  "R1201": {
+    "1": "VBAT_PROTECTED",
+    "2": "BAT_VALID_DIV"
+  },
+  "R1202": {
+    "1": "BAT_VALID_DIV",
+    "2": "GND"
+  },
+  "R1203": {
+    "1": "BOOT_3V3",
+    "2": "BAT_VALID"
+  },
+  "R1204": {
+    "1": "CORE_INPUT_EN",
+    "2": "GND"
+  },
+  "R1205": {
+    "1": "FLIGHT_COMMS_EN",
+    "2": "GND"
+  },
+  "R1206": {
+    "1": "USB_CONFIG_OK",
+    "2": "GND"
+  },
+  "R1207": {
+    "1": "COMMS_BRANCH_EN",
+    "2": "GND"
+  },
+  "R1208": {
+    "1": "USB_VBUS",
+    "2": "USB_PRESENT_DIV"
+  },
+  "R1209": {
+    "1": "USB_PRESENT_DIV",
+    "2": "GND"
+  },
+  "C1201": {
+    "1": "BOOT_3V3",
+    "2": "GND"
+  },
+  "C1202": {
+    "1": "BOOT_3V3",
+    "2": "GND"
+  },
+  "C1203": {
+    "1": "BOOT_3V3",
+    "2": "GND"
+  },
+  "C1204": {
+    "1": "BOOT_3V3",
+    "2": "GND"
+  },
+  "U1301": {
+    "1": "BUCK_RT",
+    "2": "LOGIC_SELECTED",
+    "11": null,
+    "20": null,
+    "21": null,
+    "22": "4V_PRE",
+    "23": "BUCK_VCC",
+    "25": "BUCK_FB",
+    "26": "BUCK_PG",
+    "3": "LOGIC_SELECTED",
+    "4": "LOGIC_SELECTED",
+    "18": "LOGIC_SELECTED",
+    "19": "LOGIC_SELECTED",
+    "5": "GND",
+    "6": "GND",
+    "16": "GND",
+    "17": "GND",
+    "24": "GND",
+    "27": "GND",
+    "28": "GND",
+    "29": "GND",
+    "7": "4V_PRE",
+    "8": "4V_PRE",
+    "9": "4V_PRE",
+    "10": "4V_PRE",
+    "12": "4V_PRE",
+    "13": "4V_PRE",
+    "14": "4V_PRE",
+    "15": "4V_PRE",
+    "30": "4V_PRE"
+  },
+  "R1301": {
+    "1": "4V_PRE",
+    "2": "BUCK_FB"
+  },
+  "R1302": {
+    "1": "BUCK_FB",
+    "2": "GND"
+  },
+  "R1303": {
+    "1": "BUCK_RT",
+    "2": "GND"
+  },
+  "R1304": {
+    "1": "BOOT_3V3",
+    "2": "BUCK_PG"
+  },
+  "C1301": {
+    "1": "BUCK_VCC",
+    "2": "GND"
+  },
+  "C1302": {
+    "1": "4V_PRE",
+    "2": "GND"
+  },
+  "C1303": {
+    "1": "LOGIC_SELECTED",
+    "2": "GND"
+  },
+  "C1304": {
+    "1": "LOGIC_SELECTED",
+    "2": "GND"
+  },
+  "C1305": {
+    "1": "4V_PRE",
+    "2": "GND"
+  },
+  "C1306": {
+    "1": "4V_PRE",
+    "2": "GND"
+  },
+  "TP1301": {
+    "1": "LOGIC_SELECTED"
+  },
+  "TP1302": {
+    "1": "4V_PRE"
+  },
+  "TP1303": {
+    "1": "BUCK_PG"
+  },
+  "U1401": {
+    "1": "CORE_INPUT_EN",
+    "2": "CORE_OV_DIV",
+    "3": "CORE_INPUT_PG",
+    "4": "CORE_PG_DIV",
+    "5": "4V_PRE",
+    "6": "CORE_HELD_4V",
+    "7": "CORE_SLEW",
+    "8": "GND",
+    "9": "CORE_IMON",
+    "10": null
+  },
+  "R1401": {
+    "1": "4V_PRE",
+    "2": "CORE_OV_DIV"
+  },
+  "R1402": {
+    "1": "CORE_OV_DIV",
+    "2": "GND"
+  },
+  "R1403": {
+    "1": "CORE_HELD_4V",
+    "2": "CORE_PG_DIV"
+  },
+  "R1404": {
+    "1": "CORE_PG_DIV",
+    "2": "GND"
+  },
+  "R1405": {
+    "1": "BOOT_3V3",
+    "2": "CORE_INPUT_PG"
+  },
+  "R1406": {
+    "1": "CORE_IMON",
+    "2": "GND"
+  },
+  "C1401": {
+    "1": "4V_PRE",
+    "2": "GND"
+  },
+  "C1402": {
+    "1": "CORE_SLEW",
+    "2": "GND"
+  },
+  "C1403": {
+    "1": "CORE_HELD_4V",
+    "2": "GND"
+  },
+  "TP1401": {
+    "1": "CORE_HELD_4V"
+  },
+  "U1501": {
+    "1": "4V_PRE",
+    "2": "GND",
+    "3": "COMMS_BRANCH_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "COMMS_LDO_IN_ILIM",
+    "6": "COMMS_LDO_IN_PRELINK"
+  },
+  "R1501": {
+    "1": "COMMS_LDO_IN_PRELINK",
+    "2": "COMMS_LDO_IN"
+  },
+  "R1502": {
+    "1": "COMMS_BRANCH_EN",
+    "2": "GND"
+  },
+  "R1503": {
+    "1": "COMMS_LDO_IN",
+    "2": "GND"
+  },
+  "C1501": {
+    "1": "4V_PRE",
+    "2": "GND"
+  },
+  "C1502": {
+    "1": "COMMS_LDO_IN",
+    "2": "GND"
+  },
+  "R1504": {
+    "1": "COMMS_LDO_IN_ILIM",
+    "2": "GND"
+  },
+  "U1601": {
+    "1": "4V_PRE",
+    "2": "GND",
+    "3": "FLIGHT_3V3",
+    "4": "BRANCH_FAULT_N",
+    "5": "OPTIONAL_LDO_IN_ILIM",
+    "6": "OPTIONAL_LDO_IN_PRELINK"
+  },
+  "R1601": {
+    "1": "OPTIONAL_LDO_IN_PRELINK",
+    "2": "OPTIONAL_LDO_IN"
+  },
+  "R1602": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "R1603": {
+    "1": "OPTIONAL_LDO_IN",
+    "2": "GND"
+  },
+  "C1601": {
+    "1": "4V_PRE",
+    "2": "GND"
+  },
+  "C1602": {
+    "1": "OPTIONAL_LDO_IN",
+    "2": "GND"
+  },
+  "R1604": {
+    "1": "OPTIONAL_LDO_IN_ILIM",
+    "2": "GND"
+  },
+  "U1701": {
+    "1": "FLIGHT_3V3_PRELINK",
+    "2": "FLIGHT_3V3_PRELINK",
+    "3": "FLIGHT_LDO_FB",
+    "4": "GND",
+    "5": "FLIGHT_LDO_PG",
+    "6": "GND",
+    "7": "CORE_HELD_4V",
+    "8": "FLIGHT_LDO_NR",
+    "9": "CORE_HELD_4V",
+    "10": "CORE_HELD_4V",
+    "11": "GND"
+  },
+  "R1701": {
+    "1": "FLIGHT_3V3_PRELINK",
+    "2": "FLIGHT_LDO_FB"
+  },
+  "R1702": {
+    "1": "FLIGHT_LDO_FB",
+    "2": "GND"
+  },
+  "C1701": {
+    "1": "FLIGHT_LDO_NR",
+    "2": "GND"
+  },
+  "C1702": {
+    "1": "FLIGHT_3V3_PRELINK",
+    "2": "FLIGHT_LDO_FB"
+  },
+  "R1703": {
+    "1": "FLIGHT_3V3",
+    "2": "FLIGHT_LDO_PG"
+  },
+  "R1704": {
+    "1": "FLIGHT_3V3_PRELINK",
+    "2": "FLIGHT_3V3"
+  },
+  "C1703": {
+    "1": "CORE_HELD_4V",
+    "2": "GND"
+  },
+  "C1704": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C1705": {
+    "1": "CORE_HELD_4V",
+    "2": "GND"
+  },
+  "C1706": {
+    "1": "FLIGHT_3V3_PRELINK",
+    "2": "GND"
+  },
+  "TP1701": {
+    "1": "FLIGHT_3V3"
+  },
+  "U1801": {
+    "1": "COMMS_3V3_PRELINK",
+    "2": "COMMS_3V3_PRELINK",
+    "3": "COMMS_LDO_FB",
+    "4": "GND",
+    "5": "COMMS_LDO_PG",
+    "6": "GND",
+    "7": "COMMS_LDO_IN",
+    "8": "COMMS_LDO_NR",
+    "9": "COMMS_LDO_IN",
+    "10": "COMMS_LDO_IN",
+    "11": "GND"
+  },
+  "R1801": {
+    "1": "COMMS_3V3_PRELINK",
+    "2": "COMMS_LDO_FB"
+  },
+  "R1802": {
+    "1": "COMMS_LDO_FB",
+    "2": "GND"
+  },
+  "C1801": {
+    "1": "COMMS_LDO_NR",
+    "2": "GND"
+  },
+  "C1802": {
+    "1": "COMMS_3V3_PRELINK",
+    "2": "COMMS_LDO_FB"
+  },
+  "R1803": {
+    "1": "COMMS_3V3",
+    "2": "COMMS_LDO_PG"
+  },
+  "R1804": {
+    "1": "COMMS_3V3_PRELINK",
+    "2": "COMMS_3V3"
+  },
+  "C1803": {
+    "1": "COMMS_LDO_IN",
+    "2": "GND"
+  },
+  "C1804": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C1805": {
+    "1": "COMMS_LDO_IN",
+    "2": "GND"
+  },
+  "C1806": {
+    "1": "COMMS_3V3_PRELINK",
+    "2": "GND"
+  },
+  "TP1801": {
+    "1": "COMMS_3V3"
+  },
+  "U1901": {
+    "1": "3V3_OPTIONAL_PRELINK",
+    "2": "3V3_OPTIONAL_PRELINK",
+    "3": "OPTIONAL_LDO_FB",
+    "4": "GND",
+    "5": "OPTIONAL_LDO_PG",
+    "6": "GND",
+    "7": "OPTIONAL_LDO_IN",
+    "8": "OPTIONAL_LDO_NR",
+    "9": "OPTIONAL_LDO_IN",
+    "10": "OPTIONAL_LDO_IN",
+    "11": "GND"
+  },
+  "R1901": {
+    "1": "3V3_OPTIONAL_PRELINK",
+    "2": "OPTIONAL_LDO_FB"
+  },
+  "R1902": {
+    "1": "OPTIONAL_LDO_FB",
+    "2": "GND"
+  },
+  "C1901": {
+    "1": "OPTIONAL_LDO_NR",
+    "2": "GND"
+  },
+  "C1902": {
+    "1": "3V3_OPTIONAL_PRELINK",
+    "2": "OPTIONAL_LDO_FB"
+  },
+  "R1903": {
+    "1": "3V3_OPTIONAL",
+    "2": "OPTIONAL_LDO_PG"
+  },
+  "R1904": {
+    "1": "3V3_OPTIONAL_PRELINK",
+    "2": "3V3_OPTIONAL"
+  },
+  "C1903": {
+    "1": "OPTIONAL_LDO_IN",
+    "2": "GND"
+  },
+  "C1904": {
+    "1": "3V3_OPTIONAL",
+    "2": "GND"
+  },
+  "C1905": {
+    "1": "OPTIONAL_LDO_IN",
+    "2": "GND"
+  },
+  "C1906": {
+    "1": "3V3_OPTIONAL_PRELINK",
+    "2": "GND"
+  },
+  "TP1901": {
+    "1": "3V3_OPTIONAL"
+  },
+  "U201": {
+    "1": "NOR_IO2",
+    "2": "TDK_DRDY",
+    "3": "HG_INT1",
+    "4": "ST_EN",
+    "5": "TDK_EN",
+    "6": "FLIGHT_3V3",
+    "7": null,
+    "8": "FLIGHT_LSE_IN",
+    "9": "FLIGHT_LSE_OUT",
+    "10": "GND",
+    "11": "FLIGHT_3V3",
+    "12": "FLIGHT_HSE_IN",
+    "13": "FLIGHT_HSE_OUT",
+    "14": "FLIGHT_NRST",
+    "15": "ADC_PYRO1_CURRENT",
+    "16": "ADC_PYRO2_CURRENT",
+    "17": "ADC_PYRO3_CURRENT",
+    "18": "ADC_PYRO1_CONTINUITY",
+    "19": "GND",
+    "20": "GND",
+    "21": "FLIGHT_VDDA",
+    "22": "FLIGHT_VDDA",
+    "23": "ADC_VEHICLE_VBAT",
+    "24": "ADC_FLIGHT_3V3",
+    "25": "ADC_PYRO_RAIL",
+    "26": "ADC_SERVO_RAIL",
+    "27": "GND",
+    "28": "FLIGHT_3V3",
+    "29": "ST_NCS",
+    "30": "ST_SCK",
+    "31": "ST_MISO",
+    "32": "ST_MOSI",
+    "33": "ADC_PYRO2_CONTINUITY",
+    "34": "ADC_PYRO3_CONTINUITY",
+    "35": "SERVO_POWER_EN",
+    "36": "CAN_POWER_EN",
+    "37": "NOR_CLK",
+    "38": "PYRO1_HS_REQUEST",
+    "39": "PYRO1_LS_SELECT",
+    "40": "PYRO2_HS_REQUEST",
+    "41": "PYRO2_LS_SELECT",
+    "42": "NOR_NCS",
+    "43": "PYRO3_HS_REQUEST",
+    "44": "PYRO3_LS_SELECT",
+    "45": "RECOVERY_PERMIT",
+    "46": "STAGING_PERMIT",
+    "47": "TE_SCL",
+    "48": "FLIGHT_VCAP",
+    "49": "GND",
+    "50": "FLIGHT_3V3",
+    "51": "TDK_NCS",
+    "52": "TDK_SCK",
+    "53": "TDK_MISO",
+    "54": "TDK_MOSI",
+    "55": "FLIGHT_TO_COMMS",
+    "56": "COMMS_TO_FLIGHT",
+    "57": "SERVO3_PWM",
+    "58": "NOR_IO0",
+    "59": "NOR_IO1",
+    "60": "NOR_IO3",
+    "61": "STAGE_INHIBIT_LATCHED",
+    "62": "NEW_FLIGHT_CLEAR_REQUEST",
+    "63": "SERVO1_PWM",
+    "64": "SERVO2_PWM",
+    "65": "RECOVERY_ARM_SENSE",
+    "66": "STAGING_ARM_SENSE",
+    "67": "HG_EN",
+    "68": "BMP_EN",
+    "69": "TE_EN",
+    "70": "NOR_EN",
+    "71": "FLIGHT_COMMS_EN",
+    "72": "FLIGHT_SWDIO",
+    "73": "FLIGHT_3V3",
+    "74": "GND",
+    "75": "FLIGHT_3V3",
+    "76": "FLIGHT_SWCLK",
+    "77": "FOINSE_RETURN_EN",
+    "78": "HG_SCK",
+    "79": "HG_MISO",
+    "80": "HG_MOSI",
+    "81": "CAN_RX",
+    "82": "CAN_TX",
+    "83": "HG_NCS",
+    "84": "NOR_RESET_REQUEST",
+    "85": "SUPERVISOR_WDI",
+    "86": "BRANCH_FAULT_N",
+    "87": "BUZZER_DRIVE",
+    "88": "FLIGHT_STATUS_LED1",
+    "89": "TE_SDA",
+    "90": "COMMS_RESET_REQUEST",
+    "91": "CAN_STB",
+    "92": "BMP_SCL",
+    "93": "BMP_SDA",
+    "94": "FLIGHT_BOOT0",
+    "95": "FOINSE_SCL",
+    "96": "FOINSE_SDA",
+    "97": "ST_DRDY",
+    "98": "FLIGHT_VCAP",
+    "99": "GND",
+    "100": "FLIGHT_3V3"
+  },
+  "C201": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C202": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C203": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C204": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C205": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C206": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C207": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C208": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C209": {
+    "1": "FLIGHT_VCAP",
+    "2": "GND"
+  },
+  "C210": {
+    "1": "FLIGHT_VCAP",
+    "2": "GND"
+  },
+  "R201": {
+    "1": "FLIGHT_3V3",
+    "2": "FLIGHT_VDDA"
+  },
+  "C211": {
+    "1": "FLIGHT_VDDA",
+    "2": "GND"
+  },
+  "C212": {
+    "1": "FLIGHT_VDDA",
+    "2": "GND"
+  },
+  "C213": {
+    "1": "FLIGHT_VDDA",
+    "2": "GND"
+  },
+  "C214": {
+    "1": "FLIGHT_VDDA",
+    "2": "GND"
+  },
+  "Y201": {
+    "1": "FLIGHT_HSE_IN",
+    "2": "GND",
+    "3": "FLIGHT_HSE_OUT",
+    "4": "GND"
+  },
+  "C215": {
+    "1": "FLIGHT_HSE_IN",
+    "2": "GND"
+  },
+  "C216": {
+    "1": "FLIGHT_HSE_OUT",
+    "2": "GND"
+  },
+  "Y202": {
+    "1": "FLIGHT_LSE_IN",
+    "2": "FLIGHT_LSE_OUT"
+  },
+  "C217": {
+    "1": "FLIGHT_LSE_IN",
+    "2": "GND"
+  },
+  "C218": {
+    "1": "FLIGHT_LSE_OUT",
+    "2": "GND"
+  },
+  "U401": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null,
+    "5": null,
+    "6": "COMMS_3V3",
+    "7": null,
+    "8": null,
+    "9": null,
+    "10": "GND",
+    "11": "COMMS_3V3",
+    "12": "COMMS_HSE_IN",
+    "13": "COMMS_HSE_OUT",
+    "14": "COMMS_NRST",
+    "15": "LORA_RESET_N",
+    "16": "LORA_BUSY",
+    "17": "LORA_DIO1",
+    "18": "LORA_RXEN",
+    "19": "GND",
+    "20": "GND",
+    "21": "COMMS_VDDA",
+    "22": "COMMS_VDDA",
+    "23": "GNSS_PPS",
+    "24": "CC_USB_CONFIG_OK",
+    "25": "CC_BAT_VALID",
+    "26": null,
+    "27": "GND",
+    "28": "COMMS_3V3",
+    "29": "LORA_NCS",
+    "30": "LORA_SCK",
+    "31": "LORA_MISO",
+    "32": "LORA_MOSI",
+    "33": "LORA_TXEN",
+    "34": "GNSS_RESET_N",
+    "35": "GNSS_EN",
+    "36": "LORA_EN",
+    "37": "USB_VBUS_PRESENT",
+    "38": null,
+    "39": null,
+    "40": null,
+    "41": null,
+    "42": null,
+    "43": null,
+    "44": null,
+    "45": null,
+    "46": null,
+    "47": null,
+    "48": "COMMS_VCAP",
+    "49": "GND",
+    "50": "COMMS_3V3",
+    "51": null,
+    "52": null,
+    "53": null,
+    "54": null,
+    "55": "CC_COMMS_TO_FLIGHT",
+    "56": "CC_FLIGHT_TO_COMMS",
+    "57": null,
+    "58": null,
+    "59": null,
+    "60": null,
+    "61": null,
+    "62": null,
+    "63": null,
+    "64": null,
+    "65": null,
+    "66": null,
+    "67": null,
+    "68": "GNSS_TX",
+    "69": "GNSS_RX",
+    "70": "USB_DM",
+    "71": "USB_DP",
+    "72": "COMMS_SWDIO",
+    "73": "COMMS_3V3",
+    "74": "GND",
+    "75": "COMMS_3V3",
+    "76": "COMMS_SWCLK",
+    "77": null,
+    "78": null,
+    "79": null,
+    "80": null,
+    "81": null,
+    "82": null,
+    "83": null,
+    "84": null,
+    "85": null,
+    "86": null,
+    "87": null,
+    "88": null,
+    "89": "COMMS_SWO",
+    "90": "COMMS_STATUS_LED",
+    "91": "CC_BRANCH_FAULT_N",
+    "92": null,
+    "93": null,
+    "94": "COMMS_BOOT0",
+    "95": null,
+    "96": null,
+    "97": null,
+    "98": "COMMS_VCAP",
+    "99": "GND",
+    "100": "COMMS_3V3"
+  },
+  "C401": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C402": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C403": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C404": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C405": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C406": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C407": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C408": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C409": {
+    "1": "COMMS_VCAP",
+    "2": "GND"
+  },
+  "C410": {
+    "1": "COMMS_VCAP",
+    "2": "GND"
+  },
+  "R401": {
+    "1": "COMMS_3V3",
+    "2": "COMMS_VDDA"
+  },
+  "C411": {
+    "1": "COMMS_VDDA",
+    "2": "GND"
+  },
+  "C412": {
+    "1": "COMMS_VDDA",
+    "2": "GND"
+  },
+  "C413": {
+    "1": "COMMS_VDDA",
+    "2": "GND"
+  },
+  "C414": {
+    "1": "COMMS_VDDA",
+    "2": "GND"
+  },
+  "Y401": {
+    "1": "COMMS_HSE_IN",
+    "2": "GND",
+    "3": "COMMS_HSE_OUT",
+    "4": "GND"
+  },
+  "C415": {
+    "1": "COMMS_HSE_IN",
+    "2": "GND"
+  },
+  "C416": {
+    "1": "COMMS_HSE_OUT",
+    "2": "GND"
+  },
+  "U3101": {
+    "1": "FLIGHT_3V3",
+    "2": "GND",
+    "3": "ST_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "FLIGHT_3V3",
+    "6": "ST_3V3_PRELINK"
+  },
+  "R3101": {
+    "1": "ST_3V3_PRELINK",
+    "2": "ST_3V3"
+  },
+  "R3102": {
+    "1": "ST_EN",
+    "2": "GND"
+  },
+  "R3103": {
+    "1": "ST_3V3",
+    "2": "GND"
+  },
+  "C3101": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C3102": {
+    "1": "ST_3V3",
+    "2": "GND"
+  },
+  "U3102": {
+    "1": "FLIGHT_3V3",
+    "2": "ST_SCK",
+    "3": "ST_MOSI",
+    "4": "ST_NCS",
+    "5": "ST_MISO",
+    "6": null,
+    "7": "GND",
+    "8": "ST_EN",
+    "9": null,
+    "10": "ST_MISO_ISO",
+    "11": "ST_NCS_ISO",
+    "12": "ST_MOSI_ISO",
+    "13": "ST_SCK_ISO",
+    "14": "ST_3V3"
+  },
+  "U3103": {
+    "1": "ST_3V3",
+    "2": "GND",
+    "3": "ST_DRDY_ISO",
+    "4": "ST_DRDY",
+    "5": "ST_EN",
+    "6": "FLIGHT_3V3"
+  },
+  "U3104": {
+    "1": "ST_MISO_ISO",
+    "2": "GND",
+    "3": "GND",
+    "4": "ST_DRDY_ISO",
+    "5": "ST_3V3",
+    "6": "GND",
+    "7": "GND",
+    "8": "ST_3V3",
+    "9": null,
+    "10": "ST_3V3",
+    "11": null,
+    "12": "ST_NCS_ISO",
+    "13": "ST_SCK_DAMP",
+    "14": "ST_MOSI_DAMP"
+  },
+  "C3103": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C3104": {
+    "1": "ST_3V3",
+    "2": "GND"
+  },
+  "C3105": {
+    "1": "ST_3V3",
+    "2": "GND"
+  },
+  "C3106": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "R3105": {
+    "1": "ST_3V3",
+    "2": "ST_NCS_ISO"
+  },
+  "R3106": {
+    "1": "FLIGHT_3V3",
+    "2": "ST_NCS"
+  },
+  "R3107": {
+    "1": "ST_SCK_ISO",
+    "2": "ST_SCK_DAMP"
+  },
+  "R3108": {
+    "1": "ST_MOSI_ISO",
+    "2": "ST_MOSI_DAMP"
+  },
+  "C3107": {
+    "1": "ST_3V3",
+    "2": "GND"
+  },
+  "C3108": {
+    "1": "ST_3V3",
+    "2": "GND"
+  },
+  "TP3101": {
+    "1": "ST_3V3"
+  },
+  "TP3102": {
+    "1": "ST_SCK_DAMP"
+  },
+  "TP3103": {
+    "1": "ST_MISO_ISO"
+  },
+  "TP3104": {
+    "1": "ST_MOSI_DAMP"
+  },
+  "TP3105": {
+    "1": "ST_NCS_ISO"
+  },
+  "TP3106": {
+    "1": "ST_DRDY_ISO"
+  },
+  "U3201": {
+    "1": "FLIGHT_3V3",
+    "2": "GND",
+    "3": "TDK_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "FLIGHT_3V3",
+    "6": "TDK_3V3_PRELINK"
+  },
+  "R3201": {
+    "1": "TDK_3V3_PRELINK",
+    "2": "TDK_3V3"
+  },
+  "R3202": {
+    "1": "TDK_EN",
+    "2": "GND"
+  },
+  "R3203": {
+    "1": "TDK_3V3",
+    "2": "GND"
+  },
+  "C3201": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C3202": {
+    "1": "TDK_3V3",
+    "2": "GND"
+  },
+  "U3202": {
+    "1": "FLIGHT_3V3",
+    "2": "TDK_SCK",
+    "3": "TDK_MOSI",
+    "4": "TDK_NCS",
+    "5": "TDK_MISO",
+    "6": null,
+    "7": "GND",
+    "8": "TDK_EN",
+    "9": null,
+    "10": "TDK_MISO_ISO",
+    "11": "TDK_NCS_ISO",
+    "12": "TDK_MOSI_ISO",
+    "13": "TDK_SCK_ISO",
+    "14": "TDK_3V3"
+  },
+  "U3203": {
+    "1": "TDK_3V3",
+    "2": "GND",
+    "3": "TDK_DRDY_ISO",
+    "4": "TDK_DRDY",
+    "5": "TDK_EN",
+    "6": "FLIGHT_3V3"
+  },
+  "U3204": {
+    "1": "TDK_MISO_ISO",
+    "2": null,
+    "3": null,
+    "4": "TDK_DRDY_ISO",
+    "5": "TDK_3V3",
+    "6": "GND",
+    "7": "GND",
+    "8": "TDK_3V3",
+    "9": null,
+    "10": null,
+    "11": null,
+    "12": "TDK_NCS_ISO",
+    "13": "TDK_SCK_DAMP",
+    "14": "TDK_MOSI_DAMP"
+  },
+  "C3203": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C3204": {
+    "1": "TDK_3V3",
+    "2": "GND"
+  },
+  "C3205": {
+    "1": "TDK_3V3",
+    "2": "GND"
+  },
+  "C3206": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "R3205": {
+    "1": "TDK_3V3",
+    "2": "TDK_NCS_ISO"
+  },
+  "R3206": {
+    "1": "FLIGHT_3V3",
+    "2": "TDK_NCS"
+  },
+  "R3207": {
+    "1": "TDK_SCK_ISO",
+    "2": "TDK_SCK_DAMP"
+  },
+  "R3208": {
+    "1": "TDK_MOSI_ISO",
+    "2": "TDK_MOSI_DAMP"
+  },
+  "C3207": {
+    "1": "TDK_3V3",
+    "2": "GND"
+  },
+  "C3208": {
+    "1": "TDK_3V3",
+    "2": "GND"
+  },
+  "C3209": {
+    "1": "TDK_3V3",
+    "2": "GND"
+  },
+  "TP3201": {
+    "1": "TDK_3V3"
+  },
+  "TP3202": {
+    "1": "TDK_SCK_DAMP"
+  },
+  "TP3203": {
+    "1": "TDK_MISO_ISO"
+  },
+  "TP3204": {
+    "1": "TDK_MOSI_DAMP"
+  },
+  "TP3205": {
+    "1": "TDK_NCS_ISO"
+  },
+  "TP3206": {
+    "1": "TDK_DRDY_ISO"
+  },
+  "U3301": {
+    "1": "FLIGHT_3V3",
+    "2": "GND",
+    "3": "HG_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "FLIGHT_3V3",
+    "6": "HG_3V3_PRELINK"
+  },
+  "R3301": {
+    "1": "HG_3V3_PRELINK",
+    "2": "HG_3V3"
+  },
+  "R3302": {
+    "1": "HG_EN",
+    "2": "GND"
+  },
+  "R3303": {
+    "1": "HG_3V3",
+    "2": "GND"
+  },
+  "C3301": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C3302": {
+    "1": "HG_3V3",
+    "2": "GND"
+  },
+  "U3302": {
+    "1": "FLIGHT_3V3",
+    "2": "HG_SCK",
+    "3": "HG_MOSI",
+    "4": "HG_NCS",
+    "5": "HG_MISO",
+    "6": null,
+    "7": "GND",
+    "8": "HG_EN",
+    "9": null,
+    "10": "HG_MISO_ISO",
+    "11": "HG_NCS_ISO",
+    "12": "HG_MOSI_ISO",
+    "13": "HG_SCK_ISO",
+    "14": "HG_3V3"
+  },
+  "U3303": {
+    "1": "HG_3V3",
+    "2": "GND",
+    "3": "HG_INT1_ISO",
+    "4": "HG_INT1",
+    "5": "HG_EN",
+    "6": "FLIGHT_3V3"
+  },
+  "U3304": {
+    "1": "HG_3V3",
+    "2": "GND",
+    "3": "HG_3V3",
+    "4": "GND",
+    "5": "GND",
+    "6": "HG_3V3",
+    "7": "HG_NCS_ISO",
+    "8": "HG_INT1_ISO",
+    "9": null,
+    "10": null,
+    "11": "GND",
+    "12": "HG_MISO_ISO",
+    "13": "HG_MOSI_DAMP",
+    "14": "HG_SCK_DAMP"
+  },
+  "C3303": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C3304": {
+    "1": "HG_3V3",
+    "2": "GND"
+  },
+  "C3305": {
+    "1": "HG_3V3",
+    "2": "GND"
+  },
+  "C3306": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "R3305": {
+    "1": "HG_3V3",
+    "2": "HG_NCS_ISO"
+  },
+  "R3306": {
+    "1": "FLIGHT_3V3",
+    "2": "HG_NCS"
+  },
+  "R3307": {
+    "1": "HG_SCK_ISO",
+    "2": "HG_SCK_DAMP"
+  },
+  "R3308": {
+    "1": "HG_MOSI_ISO",
+    "2": "HG_MOSI_DAMP"
+  },
+  "C3307": {
+    "1": "HG_3V3",
+    "2": "GND"
+  },
+  "C3308": {
+    "1": "HG_3V3",
+    "2": "GND"
+  },
+  "TP3301": {
+    "1": "HG_3V3"
+  },
+  "TP3302": {
+    "1": "HG_SCK_DAMP"
+  },
+  "TP3303": {
+    "1": "HG_MISO_ISO"
+  },
+  "TP3304": {
+    "1": "HG_MOSI_DAMP"
+  },
+  "TP3305": {
+    "1": "HG_NCS_ISO"
+  },
+  "TP3306": {
+    "1": "HG_INT1_ISO"
+  },
+  "U3401": {
+    "1": "FLIGHT_3V3",
+    "2": "GND",
+    "3": "BMP_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "FLIGHT_3V3",
+    "6": "BMP_3V3_PRELINK"
+  },
+  "R3401": {
+    "1": "BMP_3V3_PRELINK",
+    "2": "BMP_3V3"
+  },
+  "R3402": {
+    "1": "BMP_EN",
+    "2": "GND"
+  },
+  "R3403": {
+    "1": "BMP_3V3",
+    "2": "GND"
+  },
+  "C3401": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C3402": {
+    "1": "BMP_3V3",
+    "2": "GND"
+  },
+  "U3402": {
+    "7": "GND",
+    "14": "BMP_3V3",
+    "1": "BMP_EN",
+    "2": "BMP_SCL",
+    "3": "BMP_SCL_ISO",
+    "4": "BMP_EN",
+    "5": "BMP_SDA",
+    "6": "BMP_SDA_ISO",
+    "10": "GND",
+    "9": null,
+    "8": null,
+    "13": "GND",
+    "12": null,
+    "11": null
+  },
+  "U3403": {
+    "1": "BMP_3V3",
+    "2": "BMP_SCL_ISO",
+    "3": "GND",
+    "4": "BMP_SDA_ISO",
+    "5": "GND",
+    "6": "BMP_3V3",
+    "7": null,
+    "8": "GND",
+    "9": "GND",
+    "10": "BMP_3V3"
+  },
+  "R3405": {
+    "1": "BMP_3V3",
+    "2": "BMP_SCL_ISO"
+  },
+  "R3406": {
+    "1": "BMP_3V3",
+    "2": "BMP_SDA_ISO"
+  },
+  "R3407": {
+    "1": "FLIGHT_3V3",
+    "2": "BMP_SCL"
+  },
+  "R3408": {
+    "1": "FLIGHT_3V3",
+    "2": "BMP_SDA"
+  },
+  "C3403": {
+    "1": "BMP_3V3",
+    "2": "GND"
+  },
+  "C3404": {
+    "1": "BMP_3V3",
+    "2": "GND"
+  },
+  "TP3401": {
+    "1": "BMP_3V3"
+  },
+  "TP3402": {
+    "1": "BMP_SCL_ISO"
+  },
+  "TP3403": {
+    "1": "BMP_SDA_ISO"
+  },
+  "U3501": {
+    "1": "FLIGHT_3V3",
+    "2": "GND",
+    "3": "TE_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "FLIGHT_3V3",
+    "6": "TE_3V3_PRELINK"
+  },
+  "R3501": {
+    "1": "TE_3V3_PRELINK",
+    "2": "TE_3V3"
+  },
+  "R3502": {
+    "1": "TE_EN",
+    "2": "GND"
+  },
+  "R3503": {
+    "1": "TE_3V3",
+    "2": "GND"
+  },
+  "C3501": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C3502": {
+    "1": "TE_3V3",
+    "2": "GND"
+  },
+  "U3502": {
+    "7": "GND",
+    "14": "TE_3V3",
+    "1": "TE_EN",
+    "2": "TE_SCL",
+    "3": "TE_SCL_ISO",
+    "4": "TE_EN",
+    "5": "TE_SDA",
+    "6": "TE_SDA_ISO",
+    "10": "GND",
+    "9": null,
+    "8": null,
+    "13": "GND",
+    "12": null,
+    "11": null
+  },
+  "U3503": {
+    "1": "TE_3V3",
+    "2": "TE_3V3",
+    "3": "GND",
+    "4": "GND",
+    "5": "GND",
+    "6": null,
+    "7": "TE_SDA_ISO",
+    "8": "TE_SCL_ISO"
+  },
+  "R3505": {
+    "1": "TE_3V3",
+    "2": "TE_SCL_ISO"
+  },
+  "R3506": {
+    "1": "TE_3V3",
+    "2": "TE_SDA_ISO"
+  },
+  "R3507": {
+    "1": "FLIGHT_3V3",
+    "2": "TE_SCL"
+  },
+  "R3508": {
+    "1": "FLIGHT_3V3",
+    "2": "TE_SDA"
+  },
+  "C3503": {
+    "1": "TE_3V3",
+    "2": "GND"
+  },
+  "C3504": {
+    "1": "TE_3V3",
+    "2": "GND"
+  },
+  "TP3501": {
+    "1": "TE_3V3"
+  },
+  "TP3502": {
+    "1": "TE_SCL_ISO"
+  },
+  "TP3503": {
+    "1": "TE_SDA_ISO"
+  },
+  "U3601": {
+    "1": "3V3_OPTIONAL",
+    "2": "GND",
+    "3": "NOR_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "NOR_3V3_ILIM",
+    "6": "NOR_3V3_PRELINK"
+  },
+  "R3601": {
+    "1": "NOR_3V3_PRELINK",
+    "2": "NOR_3V3"
+  },
+  "R3602": {
+    "1": "NOR_EN",
+    "2": "GND"
+  },
+  "R3603": {
+    "1": "NOR_3V3",
+    "2": "GND"
+  },
+  "C3601": {
+    "1": "3V3_OPTIONAL",
+    "2": "GND"
+  },
+  "C3602": {
+    "1": "NOR_3V3",
+    "2": "GND"
+  },
+  "R3604": {
+    "1": "NOR_3V3_ILIM",
+    "2": "GND"
+  },
+  "U3602": {
+    "7": "GND",
+    "14": "NOR_3V3",
+    "1": "NOR_EN",
+    "2": "NOR_IO0",
+    "3": "NOR_IO0_ISO",
+    "4": "NOR_EN",
+    "5": "NOR_IO1",
+    "6": "NOR_IO1_ISO",
+    "10": "NOR_EN",
+    "9": "NOR_IO2",
+    "8": "NOR_IO2_ISO",
+    "13": "NOR_EN",
+    "12": "NOR_IO3",
+    "11": "NOR_IO3_ISO"
+  },
+  "U3603": {
+    "7": "GND",
+    "14": "NOR_3V3",
+    "1": "NOR_EN",
+    "2": "NOR_CLK",
+    "3": "NOR_CLK_ISO",
+    "4": "NOR_EN",
+    "5": "NOR_NCS",
+    "6": "NOR_NCS_ISO",
+    "10": "NOR_EN",
+    "9": "NOR_RESET_REQUEST",
+    "8": "NOR_RESET_N_ISO",
+    "13": "GND",
+    "12": null,
+    "11": null
+  },
+  "U3604": {
+    "1": "NOR_IO3_ISO",
+    "2": "NOR_3V3",
+    "3": "NOR_RESET_N_ISO",
+    "4": null,
+    "5": null,
+    "6": null,
+    "7": "NOR_NCS_ISO",
+    "8": "NOR_IO1_ISO",
+    "9": "NOR_IO2_ISO",
+    "10": "GND",
+    "11": null,
+    "12": null,
+    "13": null,
+    "14": null,
+    "15": "NOR_IO0_ISO",
+    "16": "NOR_CLK_DAMP"
+  },
+  "R3605": {
+    "1": "NOR_3V3",
+    "2": "NOR_NCS_ISO"
+  },
+  "R3606": {
+    "1": "NOR_3V3",
+    "2": "NOR_RESET_N_ISO"
+  },
+  "R3607": {
+    "1": "NOR_3V3",
+    "2": "NOR_IO2_ISO"
+  },
+  "R3608": {
+    "1": "NOR_3V3",
+    "2": "NOR_IO3_ISO"
+  },
+  "R3609": {
+    "1": "NOR_CLK_ISO",
+    "2": "NOR_CLK_DAMP"
+  },
+  "C3603": {
+    "1": "NOR_3V3",
+    "2": "GND"
+  },
+  "C3604": {
+    "1": "NOR_3V3",
+    "2": "GND"
+  },
+  "C3605": {
+    "1": "NOR_3V3",
+    "2": "GND"
+  },
+  "C3606": {
+    "1": "NOR_3V3",
+    "2": "GND"
+  },
+  "R3610": {
+    "1": "FLIGHT_3V3",
+    "2": "NOR_RESET_REQUEST"
+  },
+  "U2301": {
+    "1": "FLIGHT_NRST",
+    "2": "GND",
+    "3": "FLIGHT_MR_N",
+    "4": null,
+    "5": "FLIGHT_3V3",
+    "6": "FLIGHT_3V3"
+  },
+  "U2302": {
+    "1": "FLIGHT_3V3",
+    "2": "WATCHDOG_CWD",
+    "3": "GND",
+    "4": null,
+    "5": "GND",
+    "6": "GND",
+    "7": "SUPERVISOR_WDI",
+    "8": "FLIGHT_MR_N",
+    "9": null,
+    "10": "FLIGHT_3V3",
+    "11": "GND"
+  },
+  "R2310": {
+    "1": "FLIGHT_3V3",
+    "2": "WATCHDOG_CWD"
+  },
+  "R2311": {
+    "1": "SUPERVISOR_WDI",
+    "2": "GND"
+  },
+  "J2301": {
+    "1": "FLIGHT_3V3",
+    "2": "FLIGHT_SWDIO",
+    "3": "FLIGHT_NRST",
+    "4": "FLIGHT_SWCLK",
+    "5": "GND",
+    "6": null
+  },
+  "R2301": {
+    "1": "FLIGHT_3V3",
+    "2": "FLIGHT_NRST"
+  },
+  "R2302": {
+    "1": "FLIGHT_3V3",
+    "2": "FLIGHT_MR_N"
+  },
+  "R2303": {
+    "1": "FLIGHT_BOOT0",
+    "2": "GND"
+  },
+  "C2301": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C2302": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C2303": {
+    "1": "FLIGHT_NRST",
+    "2": "GND"
+  },
+  "TP2301": {
+    "1": "FLIGHT_BOOT0"
+  },
+  "TP2302": {
+    "1": "FLIGHT_NRST"
+  },
+  "TP2303": {
+    "1": "FLIGHT_3V3"
+  },
+  "TP2304": {
+    "1": "GND"
+  },
+  "U4201": {
+    "1": "COMMS_NRST",
+    "2": "GND",
+    "3": "COMMS_MR_N",
+    "4": null,
+    "5": "COMMS_3V3",
+    "6": "COMMS_3V3"
+  },
+  "J4201": {
+    "1": "COMMS_3V3",
+    "2": "COMMS_SWDIO",
+    "3": "COMMS_NRST",
+    "4": "COMMS_SWCLK",
+    "5": "GND",
+    "6": "COMMS_SWO"
+  },
+  "R4201": {
+    "1": "COMMS_3V3",
+    "2": "COMMS_NRST"
+  },
+  "R4202": {
+    "1": "COMMS_3V3",
+    "2": "COMMS_MR_N"
+  },
+  "R4203": {
+    "1": "COMMS_BOOT0",
+    "2": "GND"
+  },
+  "C4201": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C4202": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C4203": {
+    "1": "COMMS_NRST",
+    "2": "GND"
+  },
+  "TP4201": {
+    "1": "COMMS_BOOT0"
+  },
+  "TP4202": {
+    "1": "COMMS_NRST"
+  },
+  "TP4203": {
+    "1": "COMMS_3V3"
+  },
+  "TP4204": {
+    "1": "GND"
+  },
+  "U4301": {
+    "1": "CC_COMMS_TO_FLIGHT",
+    "2": "GND",
+    "3": "FLIGHT_3V3",
+    "4": "COMMS_TO_FLIGHT",
+    "5": "FLIGHT_TO_COMMS",
+    "6": "FLIGHT_3V3",
+    "7": "COMMS_3V3",
+    "8": "CC_FLIGHT_TO_COMMS"
+  },
+  "U4302": {
+    "1": "FLIGHT_3V3",
+    "2": "GND",
+    "3": "COMMS_RESET_REQUEST",
+    "4": "COMMS_MR_N",
+    "5": "FLIGHT_3V3",
+    "6": "COMMS_3V3"
+  },
+  "U4303": {
+    "1": "BOOT_3V3",
+    "2": "BAT_VALID",
+    "3": "USB_PRESENT",
+    "4": "GND",
+    "5": "USB_CONFIG_OK",
+    "6": null,
+    "7": "GND",
+    "8": "BOOT_3V3",
+    "9": null,
+    "10": "CC_USB_CONFIG_OK",
+    "11": null,
+    "12": "USB_VBUS_PRESENT",
+    "13": "CC_BAT_VALID",
+    "14": "COMMS_3V3"
+  },
+  "R4301": {
+    "1": "FLIGHT_3V3",
+    "2": "COMMS_RESET_REQUEST"
+  },
+  "R4302": {
+    "1": "FLIGHT_3V3",
+    "2": "COMMS_TO_FLIGHT"
+  },
+  "R4303": {
+    "1": "COMMS_3V3",
+    "2": "CC_FLIGHT_TO_COMMS"
+  },
+  "R4304": {
+    "1": "CC_USB_CONFIG_OK",
+    "2": "GND"
+  },
+  "C4301": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C4302": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C4303": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C4304": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C4305": {
+    "1": "BOOT_3V3",
+    "2": "GND"
+  },
+  "C4306": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "J4401": {
+    "A1": "GND",
+    "A4": "USB_VBUS",
+    "A5": "USB_CC1",
+    "A6": "USB_DP_CONN",
+    "A7": "USB_DM_CONN",
+    "A8": null,
+    "A9": "USB_VBUS",
+    "A12": "GND",
+    "B1": "GND",
+    "B4": "USB_VBUS",
+    "B5": "USB_CC2",
+    "B6": "USB_DP_CONN",
+    "B7": "USB_DM_CONN",
+    "B8": null,
+    "B9": "USB_VBUS",
+    "B12": "GND",
+    "S1": "GND"
+  },
+  "D4401": {
+    "1": "USB_DP_CONN",
+    "2": "GND",
+    "3": "USB_DM_CONN",
+    "4": "USB_DM_CONN",
+    "5": "USB_VBUS",
+    "6": "USB_DP_CONN"
+  },
+  "U4401": {
+    "1": "USB_VBUS",
+    "2": "GND",
+    "3": "USB_VBUS",
+    "4": "USB_LIMIT_FAULT_N",
+    "5": "USB_ILIM",
+    "6": "USB_LIMITED"
+  },
+  "U4402": {
+    "1": "USB_VBUS",
+    "2": "USB_ILIM",
+    "3": "GND",
+    "4": "USB_CONFIG_OK",
+    "5": "USB_VBUS"
+  },
+  "R4401": {
+    "1": "USB_CC1",
+    "2": "GND"
+  },
+  "R4402": {
+    "1": "USB_CC2",
+    "2": "GND"
+  },
+  "R4403": {
+    "1": "USB_ILIM",
+    "2": "GND"
+  },
+  "R4404": {
+    "1": "USB_CONFIG_OK",
+    "2": "GND"
+  },
+  "R4405": {
+    "1": "USB_DP",
+    "2": "USB_DP_CONN"
+  },
+  "R4406": {
+    "1": "USB_DM",
+    "2": "USB_DM_CONN"
+  },
+  "C4401": {
+    "1": "USB_VBUS",
+    "2": "GND"
+  },
+  "C4402": {
+    "1": "USB_VBUS",
+    "2": "GND"
+  },
+  "R4407": {
+    "1": "BOOT_3V3",
+    "2": "USB_LIMIT_FAULT_N"
+  },
+  "U4501": {
+    "1": "GND",
+    "2": "GND",
+    "3": "CC_BAT_VALID",
+    "4": "GNSS_POWER_EN",
+    "5": "COMMS_3V3",
+    "6": "GNSS_EN"
+  },
+  "U4502": {
+    "1": "COMMS_3V3",
+    "2": "GND",
+    "3": "GNSS_POWER_EN",
+    "4": "GNSS_SLEW",
+    "5": "GNSS_DISCHARGE",
+    "6": "GNSS_3V3"
+  },
+  "R4501": {
+    "1": "GNSS_EN",
+    "2": "GND"
+  },
+  "R4502": {
+    "1": "GNSS_POWER_EN",
+    "2": "GND"
+  },
+  "R4503": {
+    "1": "GNSS_DISCHARGE",
+    "2": "GNSS_3V3"
+  },
+  "C4501": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C4502": {
+    "1": "GNSS_SLEW",
+    "2": "GND"
+  },
+  "U4503": {
+    "7": "GND",
+    "14": "GNSS_3V3",
+    "1": "GNSS_POWER_EN",
+    "2": "GNSS_TX",
+    "3": "GNSS_TX_ISO",
+    "4": "GNSS_POWER_EN",
+    "5": "GNSS_RX",
+    "6": "GNSS_RX_ISO",
+    "10": "GNSS_POWER_EN",
+    "9": "GNSS_PPS",
+    "8": "GNSS_PPS_ISO",
+    "13": "GNSS_POWER_EN",
+    "12": "GNSS_RESET_N",
+    "11": "GNSS_RESET_N_ISO"
+  },
+  "U4504": {
+    "1": "GND",
+    "2": "GNSS_RX_ISO",
+    "3": "GNSS_TX_ISO",
+    "4": "GNSS_PPS_ISO",
+    "5": null,
+    "6": null,
+    "7": "GNSS_3V3",
+    "8": "GNSS_3V3",
+    "9": "GNSS_RESET_N_ISO",
+    "10": "GND",
+    "11": "GNSS_RF",
+    "12": "GND",
+    "13": null,
+    "14": null,
+    "15": null,
+    "16": null,
+    "17": null,
+    "18": null
+  },
+  "R4504": {
+    "1": "GNSS_3V3",
+    "2": "GNSS_RESET_N_ISO"
+  },
+  "C4503": {
+    "1": "GNSS_3V3",
+    "2": "GND"
+  },
+  "C4504": {
+    "1": "GNSS_3V3",
+    "2": "GND"
+  },
+  "C4505": {
+    "1": "GNSS_3V3",
+    "2": "GND"
+  },
+  "C4506": {
+    "1": "GNSS_3V3",
+    "2": "GND"
+  },
+  "U4601": {
+    "1": "GND",
+    "2": "GND",
+    "3": "CC_BAT_VALID",
+    "4": "LORA_POWER_EN",
+    "5": "COMMS_3V3",
+    "6": "LORA_EN"
+  },
+  "U4602": {
+    "1": "COMMS_3V3",
+    "2": "GND",
+    "3": "LORA_POWER_EN",
+    "4": "LORA_SLEW",
+    "5": "LORA_DISCHARGE",
+    "6": "LORA_3V3"
+  },
+  "R4601": {
+    "1": "LORA_EN",
+    "2": "GND"
+  },
+  "R4602": {
+    "1": "LORA_POWER_EN",
+    "2": "GND"
+  },
+  "R4603": {
+    "1": "LORA_DISCHARGE",
+    "2": "LORA_3V3"
+  },
+  "C4601": {
+    "1": "COMMS_3V3",
+    "2": "GND"
+  },
+  "C4602": {
+    "1": "LORA_SLEW",
+    "2": "GND"
+  },
+  "U4603": {
+    "7": "GND",
+    "14": "LORA_3V3",
+    "1": "LORA_POWER_EN",
+    "2": "LORA_SCK",
+    "3": "LORA_SCK_ISO",
+    "4": "LORA_POWER_EN",
+    "5": "LORA_MOSI",
+    "6": "LORA_MOSI_ISO",
+    "10": "LORA_POWER_EN",
+    "9": "LORA_NCS",
+    "8": "LORA_NCS_ISO",
+    "13": "LORA_POWER_EN",
+    "12": "LORA_MISO",
+    "11": "LORA_MISO_ISO"
+  },
+  "U4604": {
+    "7": "GND",
+    "14": "LORA_3V3",
+    "1": "LORA_POWER_EN",
+    "2": "LORA_RESET_N",
+    "3": "LORA_RESET_N_ISO",
+    "4": "LORA_POWER_EN",
+    "5": "LORA_BUSY",
+    "6": "LORA_BUSY_ISO",
+    "10": "LORA_POWER_EN",
+    "9": "LORA_DIO1",
+    "8": "LORA_DIO1_ISO",
+    "13": "GND",
+    "12": null,
+    "11": null
+  },
+  "R4604": {
+    "1": "LORA_3V3",
+    "2": "LORA_NCS_ISO"
+  },
+  "R4605": {
+    "1": "LORA_3V3",
+    "2": "LORA_RESET_N_ISO"
+  },
+  "C4603": {
+    "1": "LORA_3V3",
+    "2": "GND"
+  },
+  "C4604": {
+    "1": "LORA_3V3",
+    "2": "GND"
+  },
+  "U4606": {
+    "1": "LORA_3V3",
+    "2": "LORA_DIO1_MOD",
+    "3": "LORA_RESET_N_MOD",
+    "4": "LORA_MISO_MOD",
+    "5": "LORA_MOSI_MOD",
+    "6": "LORA_SCK_MOD",
+    "7": "LORA_NCS_MOD",
+    "8": "LORA_BUSY_MOD",
+    "9": "GND",
+    "10": "LORA_RF_SUBG",
+    "11": "GND",
+    "12": "GND",
+    "13": null,
+    "14": "GND",
+    "15": "GND",
+    "16": null,
+    "17": null,
+    "18": null,
+    "19": null,
+    "20": "GND",
+    "21": null,
+    "22": null
+  },
+  "C4611": {
+    "1": "LORA_3V3",
+    "2": "GND"
+  },
+  "C4612": {
+    "1": "LORA_3V3",
+    "2": "GND"
+  },
+  "C4613": {
+    "1": "LORA_3V3",
+    "2": "GND"
+  },
+  "TP4601": {
+    "1": "LORA_3V3"
+  },
+  "TP4602": {
+    "1": "LORA_SCK_ISO"
+  },
+  "TP4603": {
+    "1": "LORA_BUSY_ISO"
+  },
+  "TP4604": {
+    "1": "LORA_DIO1_ISO"
+  },
+  "U7001": {
+    "1": "3V3_OPTIONAL",
+    "2": "GND",
+    "3": "FOINSE_RETURN_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "FOINSE_AUX_3V3_ILIM",
+    "6": "FOINSE_AUX_3V3_PRELINK"
+  },
+  "R7001": {
+    "1": "FOINSE_AUX_3V3_PRELINK",
+    "2": "FOINSE_AUX_3V3"
+  },
+  "R7002": {
+    "1": "FOINSE_RETURN_EN",
+    "2": "GND"
+  },
+  "R7003": {
+    "1": "FOINSE_AUX_3V3",
+    "2": "GND"
+  },
+  "C7001": {
+    "1": "3V3_OPTIONAL",
+    "2": "GND"
+  },
+  "C7002": {
+    "1": "FOINSE_AUX_3V3",
+    "2": "GND"
+  },
+  "R7004": {
+    "1": "FOINSE_AUX_3V3_ILIM",
+    "2": "GND"
+  },
+  "U7002": {
+    "7": "GND",
+    "14": "FOINSE_AUX_3V3",
+    "1": "FOINSE_RETURN_EN",
+    "2": "FOINSE_SCL",
+    "3": "FOINSE_SCL_EXT",
+    "4": "FOINSE_RETURN_EN",
+    "5": "FOINSE_SDA",
+    "6": "FOINSE_SDA_EXT",
+    "10": "FOINSE_RETURN_EN",
+    "9": "BRANCH_FAULT_N",
+    "8": "FOINSE_FAULT_N_EXT",
+    "13": "GND",
+    "12": null,
+    "11": null
+  },
+  "R7005": {
+    "1": "FLIGHT_3V3",
+    "2": "FOINSE_SCL"
+  },
+  "R7006": {
+    "1": "FLIGHT_3V3",
+    "2": "FOINSE_SDA"
+  },
+  "R7007": {
+    "1": "FLIGHT_3V3",
+    "2": "BRANCH_FAULT_N"
+  },
+  "R7008": {
+    "1": "FOINSE_AUX_3V3",
+    "2": "FOINSE_FAULT_N_EXT"
+  },
+  "C7003": {
+    "1": "FOINSE_AUX_3V3",
+    "2": "GND"
+  },
+  "R8001": {
+    "1": "VBAT_PROTECTED",
+    "2": "VEHICLE_VBAT_MID"
+  },
+  "R8002": {
+    "1": "VEHICLE_VBAT_MID",
+    "2": "VEHICLE_VBAT_SCALED"
+  },
+  "R8003": {
+    "1": "VEHICLE_VBAT_SCALED",
+    "2": "GND"
+  },
+  "C8001": {
+    "1": "VEHICLE_VBAT_SCALED",
+    "2": "GND"
+  },
+  "R8004": {
+    "1": "FLIGHT_3V3",
+    "2": "FLIGHT_3V3_MID"
+  },
+  "R8005": {
+    "1": "FLIGHT_3V3_MID",
+    "2": "FLIGHT_3V3_SCALED"
+  },
+  "R8006": {
+    "1": "FLIGHT_3V3_SCALED",
+    "2": "GND"
+  },
+  "C8002": {
+    "1": "FLIGHT_3V3_SCALED",
+    "2": "GND"
+  },
+  "R8007": {
+    "1": "RECOVERY_ARMED_VBAT",
+    "2": "PYRO_RAIL_MID"
+  },
+  "R8008": {
+    "1": "PYRO_RAIL_MID",
+    "2": "PYRO_RAIL_SCALED"
+  },
+  "R8009": {
+    "1": "PYRO_RAIL_SCALED",
+    "2": "GND"
+  },
+  "C8003": {
+    "1": "PYRO_RAIL_SCALED",
+    "2": "GND"
+  },
+  "R8010": {
+    "1": "SERVO_VBAT",
+    "2": "SERVO_RAIL_MID"
+  },
+  "R8011": {
+    "1": "SERVO_RAIL_MID",
+    "2": "SERVO_RAIL_SCALED"
+  },
+  "R8012": {
+    "1": "SERVO_RAIL_SCALED",
+    "2": "GND"
+  },
+  "C8004": {
+    "1": "SERVO_RAIL_SCALED",
+    "2": "GND"
+  },
+  "U8001": {
+    "7": "GND",
+    "14": "FLIGHT_3V3",
+    "1": "FLIGHT_3V3",
+    "2": "VEHICLE_VBAT_SCALED",
+    "3": "ADC_VEHICLE_VBAT",
+    "4": "FLIGHT_3V3",
+    "5": "FLIGHT_3V3_SCALED",
+    "6": "ADC_FLIGHT_3V3",
+    "10": "FLIGHT_3V3",
+    "9": "PYRO_RAIL_SCALED",
+    "8": "ADC_PYRO_RAIL",
+    "13": "FLIGHT_3V3",
+    "12": "SERVO_RAIL_SCALED",
+    "11": "ADC_SERVO_RAIL"
+  },
+  "C8005": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "D9001": {
+    "1": "GND",
+    "2": "FLIGHT_STATUS_LED1_A"
+  },
+  "R9001": {
+    "1": "FLIGHT_STATUS_LED1",
+    "2": "FLIGHT_STATUS_LED1_A"
+  },
+  "D9101": {
+    "1": "GND",
+    "2": "FLIGHT_STATUS_LED2_A"
+  },
+  "R9101": {
+    "1": "FLIGHT_NOT_READY",
+    "2": "FLIGHT_STATUS_LED2_A"
+  },
+  "D9201": {
+    "1": "GND",
+    "2": "COMMS_STATUS_LED_A"
+  },
+  "R9201": {
+    "1": "COMMS_STATUS_LED",
+    "2": "COMMS_STATUS_LED_A"
+  },
+  "Q9001": {
+    "1": "BUZZER_GATE",
+    "2": "GND",
+    "3": "BUZZER_LOW"
+  },
+  "R9002": {
+    "1": "BUZZER_DRIVE",
+    "2": "BUZZER_GATE"
+  },
+  "R9003": {
+    "1": "BUZZER_GATE",
+    "2": "GND"
+  },
+  "BZ9001": {
+    "1": "3V3_OPTIONAL",
+    "2": "BUZZER_LOW"
+  },
+  "R9004": {
+    "1": "COMMS_3V3",
+    "2": "CC_BRANCH_FAULT_N"
+  },
+  "U6001": {
+    "1": "NEW_FLIGHT_CLEAR_REQUEST",
+    "2": "STAGE_NEW_FLIGHT_ALLOWED",
+    "3": "STAGE_INHIBIT_LATCHED",
+    "4": "GND",
+    "5": "STAGE_ELIGIBLE",
+    "6": "FLIGHT_NRST",
+    "7": "FLIGHT_3V3",
+    "8": "FLIGHT_3V3"
+  },
+  "U6002": {
+    "1": "GND",
+    "2": "GND",
+    "3": "FLIGHT_NRST",
+    "4": "STAGE_NEW_FLIGHT_ALLOWED",
+    "5": "FLIGHT_3V3",
+    "6": "STAGING_DISARM_PROOF"
+  },
+  "U6003": {
+    "1": "GND",
+    "2": "GND",
+    "3": "RECOVERY_ARM_VALID",
+    "4": "REC_PERMIT_ARM",
+    "5": "FLIGHT_3V3",
+    "6": "RECOVERY_PERMIT"
+  },
+  "U6004": {
+    "1": "GND",
+    "2": "GND",
+    "3": "FLIGHT_NRST",
+    "4": "RECOVERY_HW_PERMIT",
+    "5": "FLIGHT_3V3",
+    "6": "REC_PERMIT_ARM"
+  },
+  "U6005": {
+    "1": "GND",
+    "2": "GND",
+    "3": "STAGING_ARM_VALID",
+    "4": "STAGE_PERMIT_ARM",
+    "5": "FLIGHT_3V3",
+    "6": "STAGING_PERMIT"
+  },
+  "R6001": {
+    "1": "NEW_FLIGHT_CLEAR_REQUEST",
+    "2": "GND"
+  },
+  "R6002": {
+    "1": "STAGING_DISARM_PROOF",
+    "2": "GND"
+  },
+  "R6003": {
+    "1": "RECOVERY_PERMIT",
+    "2": "GND"
+  },
+  "R6004": {
+    "1": "STAGING_PERMIT",
+    "2": "GND"
+  },
+  "C6001": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6002": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6003": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6004": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6005": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "U6101": {
+    "1": "GND",
+    "2": "GND",
+    "3": "STAGE_ELIGIBLE",
+    "4": "STAGE_PERMIT_ELIGIBLE",
+    "5": "FLIGHT_3V3",
+    "6": "STAGE_PERMIT_ARM"
+  },
+  "U6102": {
+    "1": "GND",
+    "2": "GND",
+    "3": "FLIGHT_NRST",
+    "4": "STAGING_HW_PERMIT",
+    "5": "FLIGHT_3V3",
+    "6": "STAGE_PERMIT_ELIGIBLE"
+  },
+  "U6103": {
+    "1": "RECOVERY_ARM_VALID",
+    "2": "GND",
+    "3": "REC_ARM_DIV",
+    "4": "STAGE_ARM_DIV",
+    "5": "FLIGHT_3V3",
+    "6": "STAGE_ARM_INVALID"
+  },
+  "U6104": {
+    "1": "FLIGHT_3V3",
+    "2": "GND",
+    "3": "GND",
+    "4": "STAGING_ARM_VALID",
+    "5": "FLIGHT_3V3",
+    "6": "STAGE_ARM_INVALID"
+  },
+  "R6101": {
+    "1": "RECOVERY_ARMED_VBAT",
+    "2": "REC_ARM_DIV"
+  },
+  "R6102": {
+    "1": "REC_ARM_DIV",
+    "2": "GND"
+  },
+  "R6103": {
+    "1": "STAGING_ARMED_VBAT",
+    "2": "STAGE_ARM_DIV"
+  },
+  "R6104": {
+    "1": "STAGE_ARM_DIV",
+    "2": "GND"
+  },
+  "R6105": {
+    "1": "FLIGHT_3V3",
+    "2": "RECOVERY_ARM_VALID"
+  },
+  "R6106": {
+    "1": "FLIGHT_3V3",
+    "2": "STAGE_ARM_INVALID"
+  },
+  "R6107": {
+    "1": "RECOVERY_ARM_VALID",
+    "2": "RECOVERY_ARM_SENSE"
+  },
+  "R6108": {
+    "1": "STAGING_ARM_VALID",
+    "2": "STAGING_ARM_SENSE"
+  },
+  "C6101": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6102": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6103": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6104": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "U6301": {
+    "1": "PYRO1_HS_REQUEST",
+    "2": "GND",
+    "3": "PYRO1_TSET",
+    "4": "PYRO1_TDIV",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO1_PULSE"
+  },
+  "U6302": {
+    "1": "GND",
+    "2": "GND",
+    "3": "RECOVERY_HW_PERMIT",
+    "4": "PYRO1_HS_ENABLE",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO1_PULSE"
+  },
+  "U6303": {
+    "1": "GND",
+    "2": "GND",
+    "3": "RECOVERY_HW_PERMIT",
+    "4": "PYRO1_LS_ENABLE",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO1_LS_SELECT"
+  },
+  "U6304": {
+    "1": null,
+    "2": "GND",
+    "3": "PYRO1_HS_ENABLE",
+    "4": null,
+    "5": "OUTPUT1_HIGH",
+    "6": "OUTPUT1_HIGH",
+    "7": "OUTPUT1_HIGH",
+    "8": "PYRO1_ENERGY",
+    "9": "PYRO1_ENERGY",
+    "10": "PYRO1_ENERGY",
+    "11": null,
+    "12": "FLIGHT_3V3",
+    "13": "PYRO1_CL",
+    "14": "PYRO1_CS",
+    "15": "GND"
+  },
+  "Q6301": {
+    "1": "OUTPUT1_LOW",
+    "2": "OUTPUT1_LOW",
+    "3": "PYRO1_GATE",
+    "4": "GND",
+    "5": "OUTPUT1_LOW",
+    "6": "OUTPUT1_LOW",
+    "7": "GND",
+    "8": "OUTPUT1_LOW"
+  },
+  "R6301": {
+    "1": "PYRO1_HS_REQUEST",
+    "2": "GND"
+  },
+  "R6302": {
+    "1": "PYRO1_LS_SELECT",
+    "2": "GND"
+  },
+  "R6303": {
+    "1": "PYRO1_HS_ENABLE",
+    "2": "GND"
+  },
+  "R6304": {
+    "1": "PYRO1_LS_ENABLE",
+    "2": "PYRO1_GATE"
+  },
+  "R6305": {
+    "1": "PYRO1_GATE",
+    "2": "GND"
+  },
+  "C6301": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6302": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6303": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6304": {
+    "1": "PYRO1_ENERGY",
+    "2": "GND"
+  },
+  "R6310": {
+    "1": "RECOVERY_ARMED_VBAT",
+    "2": "PYRO1_ENERGY"
+  },
+  "R6311": {
+    "1": "PYRO1_TSET",
+    "2": "GND"
+  },
+  "R6312": {
+    "1": "FLIGHT_3V3",
+    "2": "PYRO1_TDIV"
+  },
+  "R6313": {
+    "1": "PYRO1_TDIV",
+    "2": "GND"
+  },
+  "R6314": {
+    "1": "PYRO1_CL",
+    "2": "GND"
+  },
+  "U6401": {
+    "1": "PYRO2_HS_REQUEST",
+    "2": "GND",
+    "3": "PYRO2_TSET",
+    "4": "PYRO2_TDIV",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO2_PULSE"
+  },
+  "U6402": {
+    "1": "GND",
+    "2": "GND",
+    "3": "RECOVERY_HW_PERMIT",
+    "4": "PYRO2_HS_ENABLE",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO2_PULSE"
+  },
+  "U6403": {
+    "1": "GND",
+    "2": "GND",
+    "3": "RECOVERY_HW_PERMIT",
+    "4": "PYRO2_LS_ENABLE",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO2_LS_SELECT"
+  },
+  "U6404": {
+    "1": null,
+    "2": "GND",
+    "3": "PYRO2_HS_ENABLE",
+    "4": null,
+    "5": "OUTPUT2_HIGH",
+    "6": "OUTPUT2_HIGH",
+    "7": "OUTPUT2_HIGH",
+    "8": "PYRO2_ENERGY",
+    "9": "PYRO2_ENERGY",
+    "10": "PYRO2_ENERGY",
+    "11": null,
+    "12": "FLIGHT_3V3",
+    "13": "PYRO2_CL",
+    "14": "PYRO2_CS",
+    "15": "GND"
+  },
+  "Q6401": {
+    "1": "OUTPUT2_LOW",
+    "2": "OUTPUT2_LOW",
+    "3": "PYRO2_GATE",
+    "4": "GND",
+    "5": "OUTPUT2_LOW",
+    "6": "OUTPUT2_LOW",
+    "7": "GND",
+    "8": "OUTPUT2_LOW"
+  },
+  "R6401": {
+    "1": "PYRO2_HS_REQUEST",
+    "2": "GND"
+  },
+  "R6402": {
+    "1": "PYRO2_LS_SELECT",
+    "2": "GND"
+  },
+  "R6403": {
+    "1": "PYRO2_HS_ENABLE",
+    "2": "GND"
+  },
+  "R6404": {
+    "1": "PYRO2_LS_ENABLE",
+    "2": "PYRO2_GATE"
+  },
+  "R6405": {
+    "1": "PYRO2_GATE",
+    "2": "GND"
+  },
+  "C6401": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6402": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6403": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6404": {
+    "1": "PYRO2_ENERGY",
+    "2": "GND"
+  },
+  "R6410": {
+    "1": "RECOVERY_ARMED_VBAT",
+    "2": "PYRO2_ENERGY"
+  },
+  "R6411": {
+    "1": "PYRO2_TSET",
+    "2": "GND"
+  },
+  "R6412": {
+    "1": "FLIGHT_3V3",
+    "2": "PYRO2_TDIV"
+  },
+  "R6413": {
+    "1": "PYRO2_TDIV",
+    "2": "GND"
+  },
+  "R6414": {
+    "1": "PYRO2_CL",
+    "2": "GND"
+  },
+  "U6501": {
+    "1": "PYRO3_HS_REQUEST",
+    "2": "GND",
+    "3": "PYRO3_TSET",
+    "4": "PYRO3_TDIV",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO3_PULSE"
+  },
+  "U6502": {
+    "1": "GND",
+    "2": "GND",
+    "3": "STAGING_HW_PERMIT",
+    "4": "PYRO3_HS_ENABLE",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO3_PULSE"
+  },
+  "U6503": {
+    "1": "GND",
+    "2": "GND",
+    "3": "STAGING_HW_PERMIT",
+    "4": "PYRO3_LS_ENABLE",
+    "5": "FLIGHT_3V3",
+    "6": "PYRO3_LS_SELECT"
+  },
+  "U6504": {
+    "1": null,
+    "2": "GND",
+    "3": "PYRO3_HS_ENABLE",
+    "4": null,
+    "5": "OUTPUT3_HIGH",
+    "6": "OUTPUT3_HIGH",
+    "7": "OUTPUT3_HIGH",
+    "8": "PYRO3_ENERGY",
+    "9": "PYRO3_ENERGY",
+    "10": "PYRO3_ENERGY",
+    "11": null,
+    "12": "FLIGHT_3V3",
+    "13": "PYRO3_CL",
+    "14": "PYRO3_CS",
+    "15": "GND"
+  },
+  "Q6501": {
+    "1": "OUTPUT3_LOW",
+    "2": "OUTPUT3_LOW",
+    "3": "PYRO3_GATE",
+    "4": "GND",
+    "5": "OUTPUT3_LOW",
+    "6": "OUTPUT3_LOW",
+    "7": "GND",
+    "8": "OUTPUT3_LOW"
+  },
+  "R6501": {
+    "1": "PYRO3_HS_REQUEST",
+    "2": "GND"
+  },
+  "R6502": {
+    "1": "PYRO3_LS_SELECT",
+    "2": "GND"
+  },
+  "R6503": {
+    "1": "PYRO3_HS_ENABLE",
+    "2": "GND"
+  },
+  "R6504": {
+    "1": "PYRO3_LS_ENABLE",
+    "2": "PYRO3_GATE"
+  },
+  "R6505": {
+    "1": "PYRO3_GATE",
+    "2": "GND"
+  },
+  "C6501": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6502": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6503": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6504": {
+    "1": "PYRO3_ENERGY",
+    "2": "GND"
+  },
+  "R6510": {
+    "1": "STAGING_ARMED_VBAT",
+    "2": "PYRO3_ENERGY"
+  },
+  "R6511": {
+    "1": "PYRO3_TSET",
+    "2": "GND"
+  },
+  "R6512": {
+    "1": "FLIGHT_3V3",
+    "2": "PYRO3_TDIV"
+  },
+  "R6513": {
+    "1": "PYRO3_TDIV",
+    "2": "GND"
+  },
+  "R6514": {
+    "1": "PYRO3_CL",
+    "2": "GND"
+  },
+  "J6601": {
+    "1": "OUTPUT1_HIGH",
+    "4": "OUTPUT1_LOW",
+    "2": "OUTPUT2_HIGH",
+    "5": "OUTPUT2_LOW",
+    "3": "OUTPUT3_HIGH",
+    "6": "OUTPUT3_LOW"
+  },
+  "J6602": {
+    "1": "SERVO_VBAT",
+    "2": "SERVO1_PWM_EXT",
+    "3": "GND",
+    "4": "SERVO_VBAT",
+    "5": "SERVO2_PWM_EXT",
+    "6": "GND",
+    "7": "SERVO_VBAT",
+    "8": "SERVO3_PWM_EXT",
+    "9": "GND",
+    "10": null
+  },
+  "R6601": {
+    "1": "SERVO_POWER_EN",
+    "2": "GND"
+  },
+  "R6602": {
+    "1": "SERVO1_PWM_ISO",
+    "2": "SERVO1_PWM_EXT"
+  },
+  "R6604": {
+    "1": "SERVO1_PWM_EXT",
+    "2": "GND"
+  },
+  "R6603": {
+    "1": "SERVO2_PWM_ISO",
+    "2": "SERVO2_PWM_EXT"
+  },
+  "R6605": {
+    "1": "SERVO2_PWM_EXT",
+    "2": "GND"
+  },
+  "R6711": {
+    "1": "PYRO1_CS",
+    "2": "GND"
+  },
+  "R6712": {
+    "1": "PYRO1_CS",
+    "2": "PYRO1_CS_MID"
+  },
+  "R6715": {
+    "1": "PYRO1_CS_MID",
+    "2": "PYRO1_CS_HALF"
+  },
+  "R6713": {
+    "1": "PYRO1_CS_HALF",
+    "2": "GND"
+  },
+  "C6711": {
+    "1": "PYRO1_CS_HALF",
+    "2": "GND"
+  },
+  "R6714": {
+    "1": "ADC_PYRO1_CONTINUITY",
+    "2": "GND"
+  },
+  "R6721": {
+    "1": "PYRO2_CS",
+    "2": "GND"
+  },
+  "R6722": {
+    "1": "PYRO2_CS",
+    "2": "PYRO2_CS_MID"
+  },
+  "R6725": {
+    "1": "PYRO2_CS_MID",
+    "2": "PYRO2_CS_HALF"
+  },
+  "R6723": {
+    "1": "PYRO2_CS_HALF",
+    "2": "GND"
+  },
+  "C6721": {
+    "1": "PYRO2_CS_HALF",
+    "2": "GND"
+  },
+  "R6724": {
+    "1": "ADC_PYRO2_CONTINUITY",
+    "2": "GND"
+  },
+  "R6731": {
+    "1": "PYRO3_CS",
+    "2": "GND"
+  },
+  "R6732": {
+    "1": "PYRO3_CS",
+    "2": "PYRO3_CS_MID"
+  },
+  "R6735": {
+    "1": "PYRO3_CS_MID",
+    "2": "PYRO3_CS_HALF"
+  },
+  "R6733": {
+    "1": "PYRO3_CS_HALF",
+    "2": "GND"
+  },
+  "C6731": {
+    "1": "PYRO3_CS_HALF",
+    "2": "GND"
+  },
+  "R6734": {
+    "1": "ADC_PYRO3_CONTINUITY",
+    "2": "GND"
+  },
+  "U6701": {
+    "7": "GND",
+    "14": "FLIGHT_3V3",
+    "1": "FLIGHT_3V3",
+    "2": "PYRO1_CS_HALF",
+    "3": "ADC_PYRO1_CURRENT",
+    "4": "FLIGHT_3V3",
+    "5": "PYRO2_CS_HALF",
+    "6": "ADC_PYRO2_CURRENT",
+    "10": "FLIGHT_3V3",
+    "9": "PYRO3_CS_HALF",
+    "8": "ADC_PYRO3_CURRENT",
+    "13": "GND",
+    "12": null,
+    "11": null
+  },
+  "C6701": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "U6801": {
+    "1": "GND",
+    "2": "GND",
+    "3": "FLIGHT_NRST",
+    "4": "SERVO_GATE_EN",
+    "5": "FLIGHT_3V3",
+    "6": "SERVO_POWER_EN"
+  },
+  "U6802": {
+    "1": null,
+    "2": "GND",
+    "3": "SERVO_GATE_EN",
+    "4": null,
+    "5": "SERVO_VBAT",
+    "6": "SERVO_VBAT",
+    "7": "SERVO_VBAT",
+    "8": "SERVO_ENERGY",
+    "9": "SERVO_ENERGY",
+    "10": "SERVO_ENERGY",
+    "11": null,
+    "12": "GND",
+    "13": "SERVO_CL",
+    "14": "SERVO_CS_UNUSED",
+    "15": "GND"
+  },
+  "U6803": {
+    "1": "SERVO_VBAT",
+    "2": "GND",
+    "3": "SERVO_VBAT",
+    "4": null,
+    "5": "SERVO_IO_3V3"
+  },
+  "U6804": {
+    "1": "FLIGHT_3V3",
+    "2": "SERVO1_PWM",
+    "3": "SERVO2_PWM",
+    "4": "SERVO3_PWM",
+    "5": null,
+    "6": null,
+    "7": "GND",
+    "8": "SERVO_GATE_EN",
+    "9": null,
+    "10": "GND",
+    "11": "SERVO3_PWM_ISO",
+    "12": "SERVO2_PWM_ISO",
+    "13": "SERVO1_PWM_ISO",
+    "14": "SERVO_IO_3V3"
+  },
+  "R6801": {
+    "1": "SERVO_GATE_EN",
+    "2": "GND"
+  },
+  "R6802": {
+    "1": "SERVO_CL",
+    "2": "GND"
+  },
+  "R6803": {
+    "1": "SERVO_CS_UNUSED",
+    "2": "GND"
+  },
+  "C6801": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6802": {
+    "1": "SERVO_ENERGY",
+    "2": "GND"
+  },
+  "C6803": {
+    "1": "SERVO_VBAT",
+    "2": "GND"
+  },
+  "C6804": {
+    "1": "SERVO_IO_3V3",
+    "2": "GND"
+  },
+  "C6805": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C6806": {
+    "1": "SERVO_IO_3V3",
+    "2": "GND"
+  },
+  "R6804": {
+    "1": "SERVO_ARMED_VBAT",
+    "2": "SERVO_ENERGY"
+  },
+  "R6911": {
+    "1": "3V3_OPTIONAL",
+    "2": "PYRO1_TEST_MID"
+  },
+  "R6912": {
+    "1": "PYRO1_TEST_MID",
+    "2": "OUTPUT1_HIGH"
+  },
+  "R6913": {
+    "1": "OUTPUT1_LOW",
+    "2": "PYRO1_RETURN_MID"
+  },
+  "R6914": {
+    "1": "PYRO1_RETURN_MID",
+    "2": "GND"
+  },
+  "R6915": {
+    "1": "OUTPUT1_LOW",
+    "2": "PYRO1_CONT_MID"
+  },
+  "R6916": {
+    "1": "PYRO1_CONT_SCALED",
+    "2": "GND"
+  },
+  "R6921": {
+    "1": "3V3_OPTIONAL",
+    "2": "PYRO2_TEST_MID"
+  },
+  "R6922": {
+    "1": "PYRO2_TEST_MID",
+    "2": "OUTPUT2_HIGH"
+  },
+  "R6923": {
+    "1": "OUTPUT2_LOW",
+    "2": "PYRO2_RETURN_MID"
+  },
+  "R6924": {
+    "1": "PYRO2_RETURN_MID",
+    "2": "GND"
+  },
+  "R6925": {
+    "1": "OUTPUT2_LOW",
+    "2": "PYRO2_CONT_MID"
+  },
+  "R6926": {
+    "1": "PYRO2_CONT_SCALED",
+    "2": "GND"
+  },
+  "R6931": {
+    "1": "3V3_OPTIONAL",
+    "2": "PYRO3_TEST_MID"
+  },
+  "R6932": {
+    "1": "PYRO3_TEST_MID",
+    "2": "OUTPUT3_HIGH"
+  },
+  "R6933": {
+    "1": "OUTPUT3_LOW",
+    "2": "PYRO3_RETURN_MID"
+  },
+  "R6934": {
+    "1": "PYRO3_RETURN_MID",
+    "2": "GND"
+  },
+  "R6935": {
+    "1": "OUTPUT3_LOW",
+    "2": "PYRO3_CONT_MID"
+  },
+  "R6936": {
+    "1": "PYRO3_CONT_SCALED",
+    "2": "GND"
+  },
+  "U6901": {
+    "7": "GND",
+    "14": "FLIGHT_3V3",
+    "1": "FLIGHT_3V3",
+    "2": "PYRO1_CONT_SCALED",
+    "3": "ADC_PYRO1_CONTINUITY",
+    "4": "FLIGHT_3V3",
+    "5": "PYRO2_CONT_SCALED",
+    "6": "ADC_PYRO2_CONTINUITY",
+    "10": "FLIGHT_3V3",
+    "9": "PYRO3_CONT_SCALED",
+    "8": "ADC_PYRO3_CONTINUITY",
+    "13": "GND",
+    "12": null,
+    "11": null
+  },
+  "C6901": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "R6917": {
+    "1": "PYRO1_CONT_MID",
+    "2": "PYRO1_CONT_SCALED"
+  },
+  "R6927": {
+    "1": "PYRO2_CONT_MID",
+    "2": "PYRO2_CONT_SCALED"
+  },
+  "R6937": {
+    "1": "PYRO3_CONT_MID",
+    "2": "PYRO3_CONT_SCALED"
+  },
+  "R502": {
+    "1": "CAN_ILIM",
+    "2": "GND"
+  },
+  "R503": {
+    "1": "CAN_POWER_EN",
+    "2": "GND"
+  },
+  "C501": {
+    "1": "3V3_OPTIONAL",
+    "2": "GND"
+  },
+  "C502": {
+    "1": "CAN_3V3",
+    "2": "GND"
+  },
+  "R504": {
+    "1": "FLIGHT_3V3",
+    "2": "CAN_TX"
+  },
+  "R505": {
+    "1": "FLIGHT_3V3",
+    "2": "CAN_STB"
+  },
+  "R506": {
+    "1": "FLIGHT_3V3",
+    "2": "CAN_RX"
+  },
+  "R507": {
+    "1": "CAN_3V3",
+    "2": "CAN_TX_ISO"
+  },
+  "R508": {
+    "1": "CAN_3V3",
+    "2": "CAN_STB_ISO"
+  },
+  "R509": {
+    "1": "CAN_3V3",
+    "2": "GND"
+  },
+  "C503": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "C504": {
+    "1": "CAN_3V3",
+    "2": "GND"
+  },
+  "C505": {
+    "1": "CAN_3V3",
+    "2": "GND"
+  },
+  "C506": {
+    "1": "CAN_3V3",
+    "2": "GND"
+  },
+  "U501": {
+    "1": "3V3_OPTIONAL",
+    "2": "GND",
+    "3": "CAN_POWER_EN",
+    "4": "BRANCH_FAULT_N",
+    "5": "CAN_ILIM",
+    "6": "CAN_SWITCH_OUT"
+  },
+  "U502": {
+    "1": "FLIGHT_3V3",
+    "2": "CAN_TX",
+    "3": "CAN_STB",
+    "4": "GND",
+    "5": "CAN_RX",
+    "7": "GND",
+    "8": "CAN_POWER_EN",
+    "10": "CAN_RX_ISO",
+    "12": "CAN_STB_ISO",
+    "13": "CAN_TX_ISO",
+    "14": "CAN_3V3",
+    "6": null,
+    "9": null,
+    "11": null
+  },
+  "U503": {
+    "1": "CAN_TX_ISO",
+    "2": "GND",
+    "3": "CAN_3V3",
+    "4": "CAN_RX_ISO",
+    "5": "CAN_3V3",
+    "6": "CAN_L",
+    "7": "CAN_H",
+    "8": "CAN_STB_ISO",
+    "9": "GND"
+  },
+  "J501": {
+    "1": "CAN_H",
+    "2": "CAN_L",
+    "3": "GND"
+  },
+  "D501": {
+    "1": "CAN_H",
+    "2": "CAN_L",
+    "3": "GND"
+  },
+  "R501": {
+    "1": "CAN_SWITCH_OUT",
+    "2": "CAN_3V3"
+  },
+  "R510": {
+    "1": "CAN_H",
+    "2": "CAN_L"
+  },
+  "TP501": {
+    "1": "CAN_3V3"
+  },
+  "TP502": {
+    "1": "GND"
+  },
+  "TP503": {
+    "1": "CAN_TX_ISO"
+  },
+  "TP504": {
+    "1": "CAN_RX_ISO"
+  },
+  "#FLG001": {
+    "1": "GND"
+  },
+  "#FLG002": {
+    "1": "VBAT_CROI_INPUT"
+  },
+  "#FLG003": {
+    "1": "BAT_EFUSE_IN"
+  },
+  "#FLG004": {
+    "1": "FLIGHT_3V3"
+  },
+  "#FLG005": {
+    "1": "COMMS_LDO_IN"
+  },
+  "#FLG006": {
+    "1": "COMMS_3V3"
+  },
+  "#FLG007": {
+    "1": "OPTIONAL_LDO_IN"
+  },
+  "#FLG008": {
+    "1": "3V3_OPTIONAL"
+  },
+  "#FLG009": {
+    "1": "FLIGHT_VDDA"
+  },
+  "#FLG010": {
+    "1": "COMMS_VDDA"
+  },
+  "#FLG011": {
+    "1": "ST_3V3"
+  },
+  "#FLG012": {
+    "1": "TDK_3V3"
+  },
+  "#FLG013": {
+    "1": "HG_3V3"
+  },
+  "#FLG014": {
+    "1": "BMP_3V3"
+  },
+  "#FLG015": {
+    "1": "TE_3V3"
+  },
+  "#FLG016": {
+    "1": "NOR_3V3"
+  },
+  "#FLG017": {
+    "1": "USB_VBUS"
+  },
+  "#FLG018": {
+    "1": "FOINSE_AUX_3V3"
+  },
+  "#FLG019": {
+    "1": "CAN_3V3"
+  },
+  "R7101": {
+    "1": "VBAT_SHUNT_IN",
+    "2": "VBAT_PROTECTED"
+  },
+  "U7101": {
+    "1": "GND",
+    "2": "GND",
+    "3": null,
+    "4": "FOINSE_SDA_EXT",
+    "5": "FOINSE_SCL_EXT",
+    "6": "CROI_MON_3V3",
+    "7": "GND",
+    "8": "CROI_VBUS_FILTER",
+    "9": "CROI_IN_MINUS",
+    "10": "CROI_IN_PLUS"
+  },
+  "R7102": {
+    "1": "VBAT_SHUNT_IN",
+    "2": "CROI_IN_PLUS"
+  },
+  "R7103": {
+    "1": "VBAT_PROTECTED",
+    "2": "CROI_IN_MINUS"
+  },
+  "C7101": {
+    "1": "CROI_IN_PLUS",
+    "2": "CROI_IN_MINUS"
+  },
+  "R7104": {
+    "1": "BAT_EFUSE_IN",
+    "2": "CROI_VBUS_FILTER"
+  },
+  "C7102": {
+    "1": "CROI_VBUS_FILTER",
+    "2": "GND"
+  },
+  "R7105": {
+    "1": "FOINSE_AUX_3V3",
+    "2": "CROI_MON_3V3"
+  },
+  "C7103": {
+    "1": "CROI_MON_3V3",
+    "2": "GND"
+  },
+  "#FLG7101": {
+    "1": "VBAT_PROTECTED"
+  },
+  "#FLG7102": {
+    "1": "CROI_MON_3V3"
+  },
+  "R9005": {
+    "1": "3V3_OPTIONAL",
+    "2": "BUZZER_LOW"
+  },
+  "D9002": {
+    "1": "3V3_OPTIONAL",
+    "2": "BUZZER_LOW"
+  },
+  "D9301": {
+    "1": "GND",
+    "2": "PWR_LED_A"
+  },
+  "R9301": {
+    "1": "FLIGHT_3V3",
+    "2": "PWR_LED_A"
+  },
+  "R4614": {
+    "1": "LORA_SCK_ISO",
+    "2": "LORA_SCK_MOD"
+  },
+  "R4615": {
+    "1": "LORA_MOSI_ISO",
+    "2": "LORA_MOSI_MOD"
+  },
+  "R4616": {
+    "1": "LORA_MISO_ISO",
+    "2": "LORA_MISO_MOD"
+  },
+  "R4617": {
+    "1": "LORA_NCS_ISO",
+    "2": "LORA_NCS_MOD"
+  },
+  "R4618": {
+    "1": "LORA_RESET_N_ISO",
+    "2": "LORA_RESET_N_MOD"
+  },
+  "R4619": {
+    "1": "LORA_BUSY_ISO",
+    "2": "LORA_BUSY_MOD"
+  },
+  "R4620": {
+    "1": "LORA_DIO1_ISO",
+    "2": "LORA_DIO1_MOD"
+  },
+  "R4621": {
+    "1": "LORA_3V3",
+    "2": "LORA_BUSY_MOD"
+  },
+  "J4601": {
+    "1": "LORA_RF_SUBG",
+    "2": "GND"
+  },
+  "R6606": {
+    "1": "SERVO3_PWM_ISO",
+    "2": "SERVO3_PWM_EXT"
+  },
+  "R6607": {
+    "1": "SERVO3_PWM_EXT",
+    "2": "GND"
+  },
+  "U9101": {
+    "1": null,
+    "2": "FLIGHT_STATUS_LED1",
+    "3": "GND",
+    "4": "FLIGHT_NOT_READY",
+    "5": "FLIGHT_3V3"
+  },
+  "R9102": {
+    "1": "FLIGHT_STATUS_LED1",
+    "2": "GND"
+  },
+  "C9101": {
+    "1": "FLIGHT_3V3",
+    "2": "GND"
+  },
+  "J4501": {
+    "1": "GNSS_RF",
+    "2": "GND"
+  },
+  "D4501": {
+    "1": "GNSS_RF",
+    "2": "GND"
+  },
+  "C1006": {
+    "1": "BAT_SHDN_N",
+    "2": "GND"
+  },
+  "D1002": {
+    "1": "VBAT_CROI_INPUT",
+    "2": null,
+    "3": "BAT_SW_DIODE"
+  },
+  "J103": {
+    "1": "BAT_SWITCH_3V",
+    "2": "BAT_SHDN_N"
+  },
+  "R1012": {
+    "1": "BAT_SW_DIODE",
+    "2": "BAT_SW_RMID"
+  },
+  "R1013": {
+    "1": "BAT_SW_RMID",
+    "2": "BAT_SWITCH_3V"
+  },
+  "U1002": {
+    "1": "BAT_SWITCH_3V",
+    "2": "GND",
+    "3": null
+  }
+}

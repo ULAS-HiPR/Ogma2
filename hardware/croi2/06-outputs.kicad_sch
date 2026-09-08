@@ -1,0 +1,3108 @@
+(kicad_sch
+  (version 20250114)
+  (generator eeschema)
+  (generator_version "9.0")
+  (uuid "9a8bfc18-52b7-5270-9f41-d4338a2fa908")
+  (paper "User" 420 370.84)
+  (title_block
+    (title "Output authority")
+    (date "2026-09-08")
+    (rev "A-DRAFT")
+    (company "HiPR")
+    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
+  (lib_symbols
+    (symbol "Device:C"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0.254))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "C"
+        (at 0.635 2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Value" "C"
+        (at 0.635 -2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Footprint" ""
+        (at 0.9652 -3.81 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Unpolarized capacitor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "cap capacitor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "C_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "C_0_1"
+        (polyline
+          (pts
+            (xy -2.032 0.762)
+            (xy 2.032 0.762))
+          (stroke
+            (width 0.508)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy -2.032 -0.762)
+            (xy 2.032 -0.762))
+          (stroke
+            (width 0.508)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "C_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 2.794)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 2.794)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no))
+    (symbol "Device:R"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "R"
+        (at 2.032 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "R"
+        (at 0 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at -1.778 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Resistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "R res resistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "R_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "R_0_1"
+        (rectangle
+          (start -1.016 -2.54)
+          (end 1.016 2.54)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "R_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no))
+    (symbol "Ogma2:SN74LVC1G74DCUR"
+      (pin_names
+        (offset 0.508))
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "U"
+        (at -10.16 11.43 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Value" "SN74LVC1G74DCUR"
+        (at -10.16 10.16 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (symbol "SN74LVC1G74DCUR_0_1"
+        (rectangle
+          (start -10.16 -8.89)
+          (end 10.16 8.89)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "SN74LVC1G74DCUR_1_1"
+        (pin input line
+          (at -15.24 6.35 0)
+          (length 5.08)
+          (name "CLK"
+            (effects
+              (font
+                (size 1.0 1.0))))
+          (number "1"
+            (effects
+              (font
+                (size 1.0 1.0)))))
+        (pin input line
+          (at -15.24 3.8099999999999996 0)
+          (length 5.08)
+          (name "D"
+            (effects
+              (font
+                (size 1.0 1.0))))
+          (number "2"
+            (effects
+              (font
+                (size 1.0 1.0)))))
+        (pin power_in line
+          (at -15.24 1.2699999999999996 0)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (size 1.0 1.0))))
+          (number "4"
+            (effects
+              (font
+                (size 1.0 1.0)))))
+        (pin input line
+          (at -15.24 -1.2700000000000005 0)
+          (length 5.08)
+          (name "~{CLR}"
+            (effects
+              (font
+                (size 1.0 1.0))))
+          (number "6"
+            (effects
+              (font
+                (size 1.0 1.0)))))
+        (pin input line
+          (at -15.24 -3.8100000000000005 0)
+          (length 5.08)
+          (name "~{PRE}"
+            (effects
+              (font
+                (size 1.0 1.0))))
+          (number "7"
+            (effects
+              (font
+                (size 1.0 1.0)))))
+        (pin power_in line
+          (at -15.24 -6.35 0)
+          (length 5.08)
+          (name "VCC"
+            (effects
+              (font
+                (size 1.0 1.0))))
+          (number "8"
+            (effects
+              (font
+                (size 1.0 1.0)))))
+        (pin output line
+          (at 15.24 1.27 180)
+          (length 5.08)
+          (name "~{Q}"
+            (effects
+              (font
+                (size 1.0 1.0))))
+          (number "3"
+            (effects
+              (font
+                (size 1.0 1.0)))))
+        (pin output line
+          (at 15.24 -1.27 180)
+          (length 5.08)
+          (name "Q"
+            (effects
+              (font
+                (size 1.0 1.0))))
+          (number "5"
+            (effects
+              (font
+                (size 1.0 1.0))))))
+      (property "Footprint" "Ogma2:SN74LVC1G74DCUR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "SN74LVC1G74DCUR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Staging eligibility latch"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes))))
+    (symbol "Ogma2:SN74LVC1G97DBVR"
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (symbol "SN74LVC1G97DBVR_0_1"
+        (rectangle
+          (start -7.62 7.62)
+          (end 7.62 -7.62)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "SN74LVC1G97DBVR_1_1"
+        (pin input line
+          (at -12.7 5.08 0)
+          (length 5.08)
+          (name "IN0"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "3"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin input line
+          (at -12.7 0 0)
+          (length 5.08)
+          (name "IN1"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin input line
+          (at -12.7 -5.08 0)
+          (length 5.08)
+          (name "IN2"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "6"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin power_in line
+          (at 0 12.7 270)
+          (length 5.08)
+          (name "VCC"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "5"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin power_in line
+          (at 0 -12.7 90)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin output line
+          (at 12.7 0 180)
+          (length 5.08)
+          (name "Y"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "4"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no)
+      (property "Reference" "U"
+        (at -2.54 5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "SN74LVC1G97DBVR"
+        (at 0 -5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Bootstrap logic mux OR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "SOT* SC*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes))))
+    (symbol "Ogma2_Readable_Output:Readable_U6001"
+      (pin_names
+        (offset 0.508))
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "U"
+        (at -10.16 11.43 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Value" "SN74LVC1G74DCUR"
+        (at -10.16 10.16 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Footprint" "Ogma2:SN74LVC1G74DCUR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "SN74LVC1G74DCUR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Staging eligibility latch"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "Readable_U6001_0_1"
+        (rectangle
+          (start -20.32 20.32)
+          (end 20.32 -20.32)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "Readable_U6001_1_1"
+        (pin input line
+          (at -25.4 -5.08 0)
+          (length 5.08)
+          (name "CLK"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "1"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin input line
+          (at -25.4 5.08 0)
+          (length 5.08)
+          (name "D"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "2"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 -25.4 90)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "4"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin input line
+          (at -7.62 25.4 270)
+          (length 5.08)
+          (name "~{CLR}"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "6"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin input line
+          (at 7.62 25.4 270)
+          (length 5.08)
+          (name "SUPPLY [7,8]"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "7"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 7.62 25.4 270)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes)))
+          (number "8"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes))))
+        (pin output line
+          (at 25.4 -5.08 180)
+          (length 5.08)
+          (name "~{Q}"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "3"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin output line
+          (at 25.4 5.08 180)
+          (length 5.08)
+          (name "Q"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "5"
+            (effects
+              (font
+                (size 0.9 0.9)))))))
+    (symbol "Ogma2_Readable_Output:Readable_U6002"
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (embedded_fonts no)
+      (property "Reference" "U"
+        (at -2.54 5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "SN74LVC1G97DBVR"
+        (at 0 -5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Bootstrap logic mux OR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "SOT* SC*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "Readable_U6002_0_1"
+        (rectangle
+          (start -10.16 10.16)
+          (end 10.16 -10.16)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "Readable_U6002_1_1"
+        (pin input line
+          (at -15.24 5.08 0)
+          (length 5.08)
+          (name "IN0"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "3"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin input line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "GND [1,2]"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "1"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes)))
+          (number "2"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes))))
+        (pin input line
+          (at -15.24 -5.08 0)
+          (length 5.08)
+          (name "IN2"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "6"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 15.24 270)
+          (length 5.08)
+          (name "VCC"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "5"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin output line
+          (at 15.24 0 180)
+          (length 5.08)
+          (name "Y"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "4"
+            (effects
+              (font
+                (size 0.9 0.9)))))))
+    (symbol "Ogma2_Readable_Output:Readable_U6003"
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (embedded_fonts no)
+      (property "Reference" "U"
+        (at -2.54 5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "SN74LVC1G97DBVR"
+        (at 0 -5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Bootstrap logic mux OR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "SOT* SC*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "Readable_U6003_0_1"
+        (rectangle
+          (start -10.16 10.16)
+          (end 10.16 -10.16)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "Readable_U6003_1_1"
+        (pin input line
+          (at -15.24 5.08 0)
+          (length 5.08)
+          (name "IN0"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "3"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin input line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "GND [1,2]"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "1"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes)))
+          (number "2"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes))))
+        (pin input line
+          (at -15.24 -5.08 0)
+          (length 5.08)
+          (name "IN2"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "6"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 15.24 270)
+          (length 5.08)
+          (name "VCC"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "5"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin output line
+          (at 15.24 0 180)
+          (length 5.08)
+          (name "Y"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "4"
+            (effects
+              (font
+                (size 0.9 0.9)))))))
+    (symbol "Ogma2_Readable_Output:Readable_U6004"
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (embedded_fonts no)
+      (property "Reference" "U"
+        (at -2.54 5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "SN74LVC1G97DBVR"
+        (at 0 -5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Bootstrap logic mux OR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "SOT* SC*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "Readable_U6004_0_1"
+        (rectangle
+          (start -10.16 10.16)
+          (end 10.16 -10.16)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "Readable_U6004_1_1"
+        (pin input line
+          (at -15.24 5.08 0)
+          (length 5.08)
+          (name "IN0"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "3"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin input line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "GND [1,2]"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "1"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes)))
+          (number "2"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes))))
+        (pin input line
+          (at -15.24 -5.08 0)
+          (length 5.08)
+          (name "IN2"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "6"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 15.24 270)
+          (length 5.08)
+          (name "VCC"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "5"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin output line
+          (at 15.24 0 180)
+          (length 5.08)
+          (name "Y"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "4"
+            (effects
+              (font
+                (size 0.9 0.9)))))))
+    (symbol "Ogma2_Readable_Output:Readable_U6005"
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (embedded_fonts no)
+      (property "Reference" "U"
+        (at -2.54 5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "SN74LVC1G97DBVR"
+        (at 0 -5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Bootstrap logic mux OR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "SOT* SC*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "SN74LVC1G97DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "Readable_U6005_0_1"
+        (rectangle
+          (start -10.16 10.16)
+          (end 10.16 -10.16)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "Readable_U6005_1_1"
+        (pin input line
+          (at -15.24 5.08 0)
+          (length 5.08)
+          (name "IN0"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "3"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin input line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "GND [1,2]"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "1"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 -15.24 90)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes)))
+          (number "2"
+            (effects
+              (font
+                (size 0.9 0.9))
+              (hide yes))))
+        (pin input line
+          (at -15.24 -5.08 0)
+          (length 5.08)
+          (name "IN2"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "6"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin power_in line
+          (at 0 15.24 270)
+          (length 5.08)
+          (name "VCC"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "5"
+            (effects
+              (font
+                (size 0.9 0.9)))))
+        (pin output line
+          (at 15.24 0 180)
+          (length 5.08)
+          (name "Y"
+            (effects
+              (font
+                (size 0.9 0.9))))
+          (number "4"
+            (effects
+              (font
+                (size 0.9 0.9))))))))
+  (embedded_fonts no)
+  (text "OUTPUT AUTHORITY"
+    (at 15.24 15.24 0)
+    (effects
+      (font
+        (size 2.54 2.54))
+      (justify left))
+    (uuid "363c6d1d-3bff-511d-93d7-71cd60fc4892"))
+  (text "1  NEW-FLIGHT EDGE / RESET-TO-INHIBIT LATCH"
+    (at 15.24 58.42 0)
+    (effects
+      (font
+        (size 1.4 1.4))
+      (justify left))
+    (uuid "152e9dd5-2ffc-565d-88a5-87f848cda0df"))
+  (symbol
+    (lib_id "Ogma2_Readable_Output:Readable_U6001")
+    (at 114.3 119.38 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "1ae6c011-e3ca-58d1-86b5-2d1528519474")
+    (property "Reference" "U6001"
+      (at 139.7 86.36 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "SN74LVC1G74DCUR"
+      (at 139.7 88.9 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Ogma2:SN74LVC1G74DCUR"
+      (at 114.3 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
+      (at 114.3 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "SN74LVC1G74DCUR"
+      (at 114.3 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 114.3 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Staging eligibility latch"
+      (at 114.3 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
+      (at 114.3 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "U6001")
+          (unit 1))))
+    (pin "1"
+      (uuid "9fffddd5-48ab-5ce2-b41c-c2802d270531"))
+    (pin "2"
+      (uuid "07540bb4-b92d-5230-aa4e-bd0ca8924831"))
+    (pin "4"
+      (uuid "a42abbda-6633-5d3f-a8c2-2911de149762"))
+    (pin "6"
+      (uuid "8b39c91e-cf33-5e96-948e-f1f4b5824ade"))
+    (pin "7"
+      (uuid "def863be-e560-5d45-80cf-fa35ae5ae38c"))
+    (pin "8"
+      (uuid "c7fb01f0-9705-556b-b1d9-41c455a258a2"))
+    (pin "3"
+      (uuid "74cd91e1-32da-5953-8e6d-2f7eb8056436"))
+    (pin "5"
+      (uuid "3fa6f2ff-350e-56ca-9fa1-9fc771ccea4f")))
+  (symbol
+    (lib_id "Device:C")
+    (at 162.56 81.28 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "1626e7a0-7b23-5b61-9c8c-791413c79197")
+    (property "Reference" "C6001"
+      (at 166.37 80.01 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100n 16V X7R"
+      (at 166.37 82.55 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 162.56 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 162.56 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 162.56 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 162.56 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 162.56 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "C6001")
+          (unit 1))))
+    (pin "1"
+      (uuid "04384c21-08bf-543c-8f84-750b89e0ead1"))
+    (pin "2"
+      (uuid "031e6127-9762-5d1e-84d0-61bc0a91600d")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 162.56 90.17 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "b74a0201-acda-5053-b085-679fe9a515e0")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 162.56 90.17 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (symbol
+    (lib_id "Device:R")
+    (at 63.5 149.86 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "e80d8561-6432-5174-a24a-4184393b6278")
+    (property "Reference" "R6001"
+      (at 67.31 148.59 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100k"
+      (at 67.31 151.13 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 63.5 149.86 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 63.5 149.86 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 63.5 149.86 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 63.5 149.86 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 63.5 149.86 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "R6001")
+          (unit 1))))
+    (pin "1"
+      (uuid "69258974-df8a-5dd0-b61f-bb82bcc5a0d6"))
+    (pin "2"
+      (uuid "fc7c6b58-0e64-5999-9f6b-b8008294e772")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 63.5 158.75 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "473df33b-3767-5907-825d-fefebd130358")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 63.5 158.75 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (symbol
+    (lib_id "Ogma2_Readable_Output:Readable_U6002")
+    (at 304.8 119.38 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "d00732dd-577e-519f-8ad9-ec6ce499263d")
+    (property "Reference" "U6002"
+      (at 330.2 96.52 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "SN74LVC1G97DBVR"
+      (at 330.2 99.06 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+      (at 304.8 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+      (at 304.8 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Bootstrap logic mux OR"
+      (at 304.8 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+      (at 304.8 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "SOT* SC*"
+      (at 304.8 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "SN74LVC1G97DBVR"
+      (at 304.8 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 304.8 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+      (at 304.8 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "U6002")
+          (unit 1))))
+    (pin "3"
+      (uuid "7b5b26bb-10a2-5f16-a6c7-2e2cc8ff3a74"))
+    (pin "1"
+      (uuid "b5d8d0a1-524b-5835-a876-1f9b1c1caf10"))
+    (pin "6"
+      (uuid "64404f11-f0ab-5ea7-ab2c-941a8c5db505"))
+    (pin "5"
+      (uuid "7390840d-d805-509a-b2c5-1d397e721e44"))
+    (pin "2"
+      (uuid "78654721-aacd-5bf2-88b9-c68adad7250d"))
+    (pin "4"
+      (uuid "4a7ab91a-ad6c-5446-a160-814a67c46515")))
+  (symbol
+    (lib_id "Device:C")
+    (at 330.2 106.68 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "afd58f84-5468-5760-8e85-358a87545561")
+    (property "Reference" "C6002"
+      (at 334.01 105.41 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100n 16V X7R"
+      (at 334.01 107.95 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 330.2 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 330.2 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 330.2 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 330.2 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 330.2 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "C6002")
+          (unit 1))))
+    (pin "1"
+      (uuid "68392fef-7014-54f7-8f13-877febe51640"))
+    (pin "2"
+      (uuid "4a929728-6732-5cd8-8f84-c4a56b386e58")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 330.2 115.57 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "8dc5f04b-72e1-5f8e-879c-95a421913d27")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 330.2 115.57 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (symbol
+    (lib_id "Device:R")
+    (at 269.24 144.78 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "dc2fdddb-e7c7-568b-83ed-c902f91b6d6b")
+    (property "Reference" "R6002"
+      (at 273.05 143.51 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100k"
+      (at 273.05 146.05 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 269.24 144.78 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 269.24 144.78 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 269.24 144.78 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 269.24 144.78 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 269.24 144.78 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "R6002")
+          (unit 1))))
+    (pin "1"
+      (uuid "d859194d-37f6-5863-b0d6-8c9260d4c6a7"))
+    (pin "2"
+      (uuid "1df174ed-4a45-526f-9428-3306d382918f")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 269.24 153.67 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "85542cfc-0f44-5229-9bb2-1ecc205dde16")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 269.24 153.67 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (text "D = reset released AND independent disarm proof."
+    (at 238.76 162.56 0)
+    (effects
+      (font
+        (size 1.05 1.05))
+      (justify left))
+    (uuid "b14cb4c6-060e-5c1f-b516-42dfa5bc6fe4"))
+  (text "CLOCK is the request edge. D qualifies the edge; do not gate the clock."
+    (at 30.48 182.88 0)
+    (effects
+      (font
+        (size 1.05 1.05))
+      (justify left))
+    (uuid "642f253c-992d-5d40-b908-0fcbcfaf9550"))
+  (text "2  RECOVERY REQUEST + ARM INDICATION + RESET"
+    (at 15.24 213.36 0)
+    (effects
+      (font
+        (size 1.4 1.4))
+      (justify left))
+    (uuid "5b4b65a2-472f-5e29-b7c8-65c983ae9fb0"))
+  (symbol
+    (lib_id "Ogma2_Readable_Output:Readable_U6003")
+    (at 91.44 266.7 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "48b6efce-1ec8-5d6d-82ef-a62eed1e8a3c")
+    (property "Reference" "U6003"
+      (at 116.84 243.84 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "SN74LVC1G97DBVR"
+      (at 116.84 246.38 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+      (at 91.44 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+      (at 91.44 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Bootstrap logic mux OR"
+      (at 91.44 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+      (at 91.44 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "SOT* SC*"
+      (at 91.44 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "SN74LVC1G97DBVR"
+      (at 91.44 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 91.44 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+      (at 91.44 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "U6003")
+          (unit 1))))
+    (pin "3"
+      (uuid "452ffb62-0252-57b5-99e5-a1aa43f01185"))
+    (pin "1"
+      (uuid "d35ae060-6f98-5282-8ccd-df6a5c418873"))
+    (pin "6"
+      (uuid "5eeb63ab-635e-568a-bc64-da9b9ca6e171"))
+    (pin "5"
+      (uuid "a1c78aca-6f90-5e21-bd25-77e7499f879e"))
+    (pin "2"
+      (uuid "0cdef2ad-407f-566e-af31-4988b2079d0c"))
+    (pin "4"
+      (uuid "f0b4c2cc-a667-5710-9847-ebf318c59c4f")))
+  (symbol
+    (lib_id "Device:C")
+    (at 116.84 254.0 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "dd9028a7-2782-5dea-8b7e-53082e408929")
+    (property "Reference" "C6003"
+      (at 120.65 252.73 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100n 16V X7R"
+      (at 120.65 255.27 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 116.84 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 116.84 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 116.84 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 116.84 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 116.84 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "C6003")
+          (unit 1))))
+    (pin "1"
+      (uuid "34d9b529-cc8c-5413-861a-13bde4ffbfab"))
+    (pin "2"
+      (uuid "d5787305-af2c-5850-9096-c788dab31a49")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 116.84 262.89 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "93074689-aed3-56a2-9d5a-99cef41eb70f")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 116.84 262.89 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (symbol
+    (lib_id "Device:R")
+    (at 55.88 292.1 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "54bd5ab1-8c59-5405-9b81-8b24c21ae591")
+    (property "Reference" "R6003"
+      (at 59.69 290.83 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100k"
+      (at 59.69 293.37 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 55.88 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 55.88 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 55.88 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 55.88 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 55.88 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "R6003")
+          (unit 1))))
+    (pin "1"
+      (uuid "fdae732b-4d78-5e03-ba6d-7700929590b2"))
+    (pin "2"
+      (uuid "57d62010-9faa-5854-9185-085815d25438")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 55.88 300.99 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "25413c15-0aff-5b63-8e78-3348faf418f7")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 55.88 300.99 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (symbol
+    (lib_id "Ogma2_Readable_Output:Readable_U6004")
+    (at 228.6 266.7 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "43429197-3b6a-5de0-a34d-d28b3d14c7ea")
+    (property "Reference" "U6004"
+      (at 254 243.84 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "SN74LVC1G97DBVR"
+      (at 254 246.38 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+      (at 228.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+      (at 228.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Bootstrap logic mux OR"
+      (at 228.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+      (at 228.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "SOT* SC*"
+      (at 228.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "SN74LVC1G97DBVR"
+      (at 228.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 228.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+      (at 228.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "U6004")
+          (unit 1))))
+    (pin "3"
+      (uuid "88988acd-8426-52b9-99c5-465116f9f2cf"))
+    (pin "1"
+      (uuid "9ded1ab8-9a84-56d2-8ed7-e9dd9ff3b8a7"))
+    (pin "6"
+      (uuid "987ca18f-4eed-5252-aa7f-6b24de6805f2"))
+    (pin "5"
+      (uuid "17abb064-8a22-5fe2-8e3e-acedf38587b6"))
+    (pin "2"
+      (uuid "0ceae394-fbc0-570f-883e-519f0e5def71"))
+    (pin "4"
+      (uuid "d3b19b64-843b-5a72-b011-04fc5bf5f7f2")))
+  (symbol
+    (lib_id "Device:C")
+    (at 254 254.0 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "170395dd-f24a-5178-82ce-4e3d1a79bfa6")
+    (property "Reference" "C6004"
+      (at 257.81 252.73 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100n 16V X7R"
+      (at 257.81 255.27 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 254 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 254 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 254 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 254 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 254 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "C6004")
+          (unit 1))))
+    (pin "1"
+      (uuid "50efe6fe-594b-5c81-9420-b0611dd42ae6"))
+    (pin "2"
+      (uuid "047d5f70-4518-52b0-af2f-4500b8736b47")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 254 262.89 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "fdbbf420-f8c0-5ecf-a6ef-07b83a008807")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 254 262.89 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (text "3  STAGING REQUEST + ARM INDICATION"
+    (at 292.1 213.36 0)
+    (effects
+      (font
+        (size 1.4 1.4))
+      (justify left))
+    (uuid "c6bb5f78-38cc-559e-8169-c62d2049e2e5"))
+  (symbol
+    (lib_id "Ogma2_Readable_Output:Readable_U6005")
+    (at 355.6 266.7 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "fcfa6152-007e-5dc4-96e1-447a747941f2")
+    (property "Reference" "U6005"
+      (at 381 243.84 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "SN74LVC1G97DBVR"
+      (at 381 246.38 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+      (at 355.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+      (at 355.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Bootstrap logic mux OR"
+      (at 355.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
+      (at 355.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "SOT* SC*"
+      (at 355.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "SN74LVC1G97DBVR"
+      (at 355.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 355.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+      (at 355.6 266.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "U6005")
+          (unit 1))))
+    (pin "3"
+      (uuid "3d24c4a8-d734-5682-8202-0d7d0a23f18e"))
+    (pin "1"
+      (uuid "feb02c89-6667-5f7a-921f-8ce0f0f5d0f1"))
+    (pin "6"
+      (uuid "9d4611ba-0df6-5159-b915-de3aa4115d1b"))
+    (pin "5"
+      (uuid "5fcfeb69-2880-5264-a77e-a41576df10e0"))
+    (pin "2"
+      (uuid "a3d05c0d-699e-56e9-bf40-387199d73d3c"))
+    (pin "4"
+      (uuid "cb779f79-b67b-5220-bcc1-93a00800018c")))
+  (symbol
+    (lib_id "Device:C")
+    (at 381 254.0 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "7f6cb8ec-e9c3-5ba8-9c51-3b8fc23f4ae5")
+    (property "Reference" "C6005"
+      (at 384.81 252.73 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100n 16V X7R"
+      (at 384.81 255.27 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 381 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 381 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 381 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 381 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 381 254.0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "C6005")
+          (unit 1))))
+    (pin "1"
+      (uuid "9e8f069f-eadf-5567-b41d-6f679e346c21"))
+    (pin "2"
+      (uuid "5ee8c3eb-4e74-5c52-99c4-403666819303")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 381 262.89 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "6fb07a52-a74c-50ee-ba1c-739584bd864b")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 381 262.89 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (symbol
+    (lib_id "Device:R")
+    (at 320.04 292.1 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "27d57e9f-48db-5cbc-8563-0a1f360ff8fe")
+    (property "Reference" "R6004"
+      (at 323.85 290.83 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100k"
+      (at 323.85 293.37 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 320.04 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 320.04 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 320.04 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 320.04 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 320.04 292.1 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+          (reference "R6004")
+          (unit 1))))
+    (pin "1"
+      (uuid "7e6c8ba9-44d1-534c-b427-42463711c38d"))
+    (pin "2"
+      (uuid "2c8dfe56-b47f-501a-b76d-2d54dadb72da")))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 320.04 300.99 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "0c02e138-a5c9-5352-aa4b-5f224c21b790")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 320.04 300.99 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (text "CLK is the request edge directly. Disarm qualifies D, never gates CLK. Q-bar = inhibited."
+    (at 15.24 320.04 0)
+    (effects
+      (font
+        (size 1.05 1.05))
+      (justify left))
+    (uuid "93d4a865-22c5-572f-a555-09849bafef9f"))
+  (text "Physical-arm assembly/proof-contact pinout remains OPEN, so no energy source is connected here."
+    (at 15.24 325.12 0)
+    (effects
+      (font
+        (size 1.05 1.05))
+      (justify left))
+    (uuid "5877b1c8-c376-54db-a6ea-9ee95253a742"))
+  (text "A low arm sense is not proof that the physical energy break is open."
+    (at 15.24 330.2 0)
+    (effects
+      (font
+        (size 1.05 1.05))
+      (justify left))
+    (uuid "023a1c82-d17e-5b9f-9769-7c6839027fcd"))
+  (text "All internal/debug/software reset classes must clear this latch; target NRST proof remains open."
+    (at 15.24 335.28 0)
+    (effects
+      (font
+        (size 1.05 1.05))
+      (justify left))
+    (uuid "3c43f12b-02f1-563e-b310-47d39ad3f12f"))
+  (global_label "NEW_FLIGHT_CLEAR_REQUEST"
+    (shape bidirectional)
+    (at 63.5 124.46 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "6d1a4625-daf4-59e6-a13e-3cdccfc61a57")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 63.5 124.46 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "STAGE_NEW_FLIGHT_ALLOWED"
+    (shape bidirectional)
+    (at 83.82 114.3 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "6dd51efd-68a7-5cf9-9a50-36d7bbb638b2")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 83.82 114.3 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "STAGE_NEW_FLIGHT_ALLOWED"
+    (shape bidirectional)
+    (at 325.12 119.38 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "2fc5989b-df79-57d8-93a3-fe9ad99be381")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 325.12 119.38 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 91.44 287.02 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "fdf1e260-60f5-5fd3-a4c6-57ab717be7e3")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 91.44 287.02 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 355.6 287.02 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "246dad58-8e26-52e2-8971-04286734331f")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 355.6 287.02 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 114.3 149.86 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "41b1b451-7011-5766-827f-3f89d5029b7f")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 114.3 149.86 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 304.8 139.7 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "e752dda6-7817-580b-a719-61ebbd465827")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 304.8 139.7 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 228.6 287.02 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "018dab65-4aa7-5b21-85c8-698ee186e7b2")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 228.6 287.02 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "FLIGHT_NRST"
+    (shape bidirectional)
+    (at 208.28 261.62 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "19baf892-008a-5b93-a4ce-d11c35f53a1d")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 208.28 261.62 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "FLIGHT_NRST"
+    (shape bidirectional)
+    (at 284.48 114.3 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "9c9a990f-19ff-5c12-896e-b4348c435257")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 284.48 114.3 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "FLIGHT_NRST"
+    (shape bidirectional)
+    (at 106.68 88.9 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "8eab216e-3f75-5307-bd48-63a241763f0a")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 106.68 88.9 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 355.6 241.3 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "48424b9c-1336-51d4-85ff-2b4db4a73886")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 355.6 241.3 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 228.6 241.3 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "4aa45a6b-db79-5d79-b991-55fb16dece85")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 228.6 241.3 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 304.8 93.98 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "3527b310-df8e-54fd-9f4f-abdd22d42407")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 304.8 93.98 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 91.44 241.3 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "d9f41f40-d03f-5397-b731-8ffb31ebaf56")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 91.44 241.3 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 121.92 68.58 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "a531822e-0900-5075-85df-cced3e330256")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 121.92 68.58 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "STAGE_INHIBIT_LATCHED"
+    (shape bidirectional)
+    (at 144.78 124.46 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "0e12b1a5-5d23-5888-bf1a-fc363025a2ad")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 144.78 124.46 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "STAGE_ELIGIBLE"
+    (shape bidirectional)
+    (at 144.78 114.3 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "542a5661-68c0-568a-975e-851d1b8f9b75")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 144.78 114.3 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "STAGING_DISARM_PROOF"
+    (shape bidirectional)
+    (at 269.24 124.46 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "a7cfc415-2a60-5643-911a-15a486dcb3b0")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 269.24 124.46 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "RECOVERY_ARM_VALID"
+    (shape bidirectional)
+    (at 71.12 261.62 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "fa51bbbb-372f-581b-b4d7-76a85b93f33f")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 71.12 261.62 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "RECOVERY_PERMIT"
+    (shape bidirectional)
+    (at 55.88 271.78 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "418fac6c-abfe-54a2-9904-555754821bd3")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 55.88 271.78 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "REC_PERMIT_ARM"
+    (shape bidirectional)
+    (at 106.68 266.7 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "19500467-ff9b-5e03-a303-d6222fd53f6f")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 106.68 266.7 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "RECOVERY_HW_PERMIT"
+    (shape bidirectional)
+    (at 248.92 266.7 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "0d710e3c-8419-537c-9445-96e3c8b56dab")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 248.92 266.7 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "STAGING_ARM_VALID"
+    (shape bidirectional)
+    (at 335.28 261.62 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "ff40001a-ccfb-5486-8f9f-9e8a76892a45")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 335.28 261.62 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "STAGING_PERMIT"
+    (shape bidirectional)
+    (at 320.04 271.78 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "dfb85187-e649-56aa-804c-c67a6a70d5d9")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 320.04 271.78 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (global_label "STAGE_PERMIT_ARM"
+    (shape bidirectional)
+    (at 375.92 266.7 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "d0cb73a6-268d-5336-9b26-e54ac015c807")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 375.92 266.7 0)
+      (effects
+        (font
+          (size 1 1))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 91.44 241.3)
+      (xy 91.44 251.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "c86905f1-652c-5de5-bff1-8fdd2ee6a954"))
+  (wire
+    (pts
+      (xy 91.44 241.3)
+      (xy 116.84 241.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "f28dbc9d-9e4d-5339-b644-235d6c56bd36"))
+  (wire
+    (pts
+      (xy 116.84 241.3)
+      (xy 116.84 250.19))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "d97a681f-2be5-57aa-b7d7-18c0ed59aa99"))
+  (wire
+    (pts
+      (xy 121.92 68.58)
+      (xy 121.92 93.98))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "06ee30ab-0ea4-515a-bed9-142b06e55c69"))
+  (wire
+    (pts
+      (xy 121.92 68.58)
+      (xy 162.56 68.58))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "500f51d9-908e-5bc2-8ca8-3b0148f81a0b"))
+  (wire
+    (pts
+      (xy 162.56 68.58)
+      (xy 162.56 77.47))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "68134866-bae5-57c0-8041-7dd617e40f5e"))
+  (wire
+    (pts
+      (xy 228.6 241.3)
+      (xy 228.6 251.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "ec6857ae-9eb2-58f7-9a44-9714c65190c4"))
+  (wire
+    (pts
+      (xy 228.6 241.3)
+      (xy 254 241.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3b3233f2-44e1-5a17-bb5f-ec14f0b6e130"))
+  (wire
+    (pts
+      (xy 254 241.3)
+      (xy 254 250.19))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "65348069-1e85-5834-9bbb-74572f04ab45"))
+  (wire
+    (pts
+      (xy 304.8 93.98)
+      (xy 304.8 104.14))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "c47a740f-985d-5536-a2d0-9ef0a4a9de1c"))
+  (wire
+    (pts
+      (xy 304.8 93.98)
+      (xy 330.2 93.98))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "e5228648-5054-5ac8-a1cb-9c94b8195826"))
+  (wire
+    (pts
+      (xy 330.2 93.98)
+      (xy 330.2 102.87))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "691bebed-3d5f-5b5e-abd2-de586e168258"))
+  (wire
+    (pts
+      (xy 355.6 241.3)
+      (xy 355.6 251.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3aae00e2-8e8b-5132-bbb6-8187481bac36"))
+  (wire
+    (pts
+      (xy 355.6 241.3)
+      (xy 381 241.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "c294abad-e5a9-5c3a-8e80-63b200b28370"))
+  (wire
+    (pts
+      (xy 381 241.3)
+      (xy 381 250.19))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "f6d99070-4e86-55a5-8777-865ed330ff71"))
+  (wire
+    (pts
+      (xy 106.68 88.9)
+      (xy 106.68 93.98))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "eb55bbc8-9e72-521d-b118-1aae268745f6"))
+  (wire
+    (pts
+      (xy 208.28 261.62)
+      (xy 213.36 261.62))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "8bcb8538-62f2-53cc-849d-affab33fdce6"))
+  (wire
+    (pts
+      (xy 284.48 114.3)
+      (xy 289.56 114.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0c7fa46a-1ada-53b3-b24e-2bd42efba618"))
+  (wire
+    (pts
+      (xy 55.88 295.91)
+      (xy 55.88 300.99))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "1fb6e6bb-7cbb-527a-b8da-95cfe35a4bcc"))
+  (wire
+    (pts
+      (xy 63.5 153.67)
+      (xy 63.5 158.75))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "58eb0619-0c17-5446-8456-fd295b07b942"))
+  (wire
+    (pts
+      (xy 91.44 281.94)
+      (xy 91.44 287.02))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "aff951cf-71fa-5482-893c-1462c2f000a3"))
+  (wire
+    (pts
+      (xy 114.3 144.78)
+      (xy 114.3 149.86))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "6c25414d-564b-5c79-9825-89e20f844968"))
+  (wire
+    (pts
+      (xy 116.84 257.81)
+      (xy 116.84 262.89))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "19698a4a-c40f-5b25-bbba-a88489842e06"))
+  (wire
+    (pts
+      (xy 162.56 85.09)
+      (xy 162.56 90.17))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "807f21b3-ad76-55f1-8317-582ea02637d1"))
+  (wire
+    (pts
+      (xy 228.6 281.94)
+      (xy 228.6 287.02))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "90b3464a-e242-51a6-b9e2-9293de3b092a"))
+  (wire
+    (pts
+      (xy 254 257.81)
+      (xy 254 262.89))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "9688ad80-b689-58e0-92f2-07c881910774"))
+  (wire
+    (pts
+      (xy 269.24 148.59)
+      (xy 269.24 153.67))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "ef675398-a3b1-5317-827c-0c63cb524465"))
+  (wire
+    (pts
+      (xy 304.8 134.62)
+      (xy 304.8 139.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "b983358d-2b01-5a6e-952f-733c8f5fb241"))
+  (wire
+    (pts
+      (xy 320.04 295.91)
+      (xy 320.04 300.99))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "a2462f16-adab-55a5-8084-c619ab74b688"))
+  (wire
+    (pts
+      (xy 330.2 110.49)
+      (xy 330.2 115.57))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "b62b20d5-9839-51c9-b272-b43b98f3605e"))
+  (wire
+    (pts
+      (xy 355.6 281.94)
+      (xy 355.6 287.02))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "53f7aa7f-2f69-5501-ae5a-581bedeb3180"))
+  (wire
+    (pts
+      (xy 381 257.81)
+      (xy 381 262.89))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0681ac9e-e0fe-51f5-9055-2e1140440b44"))
+  (wire
+    (pts
+      (xy 63.5 124.46)
+      (xy 63.5 146.05))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "516caec6-aace-5be9-8aa6-596e765c597b"))
+  (wire
+    (pts
+      (xy 63.5 124.46)
+      (xy 88.9 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3fd3ea18-cee3-5267-9dca-436f352e21d1"))
+  (wire
+    (pts
+      (xy 71.12 261.62)
+      (xy 76.2 261.62))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "f4bd7a74-c3d1-520d-9a98-d8b3839793dc"))
+  (wire
+    (pts
+      (xy 243.84 266.7)
+      (xy 248.92 266.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "50a9410b-fc4f-5204-95c7-66118df5ce56"))
+  (wire
+    (pts
+      (xy 55.88 271.78)
+      (xy 55.88 288.29))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "41d9d953-03a3-5905-86dd-12b4eda7ebed"))
+  (wire
+    (pts
+      (xy 55.88 271.78)
+      (xy 76.2 271.78))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "5d8a4ac0-9339-570a-9071-da128f1bbeb9"))
+  (wire
+    (pts
+      (xy 106.68 266.7)
+      (xy 165.1 266.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "dcac70b6-59e4-5a0b-a9ad-75009902ee16"))
+  (wire
+    (pts
+      (xy 165.1 266.7)
+      (xy 165.1 271.78))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "b41791e6-91b0-5054-9206-74443684da25"))
+  (wire
+    (pts
+      (xy 165.1 271.78)
+      (xy 213.36 271.78))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "7560dc7e-4703-57ed-a7a7-fcc93d8a2e88"))
+  (wire
+    (pts
+      (xy 139.7 114.3)
+      (xy 144.78 114.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "540a57d3-bf62-5f3f-9973-34f0c669d194"))
+  (wire
+    (pts
+      (xy 139.7 124.46)
+      (xy 144.78 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "9ec4ca06-c91a-55c7-b701-06fb7bbfaef3"))
+  (wire
+    (pts
+      (xy 83.82 114.3)
+      (xy 88.9 114.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "b57d1fe4-57de-5af7-99ff-7370fd440512"))
+  (wire
+    (pts
+      (xy 320.04 119.38)
+      (xy 325.12 119.38))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3c035fed-041e-5fd4-8aed-1b5b0a9b3c6a"))
+  (wire
+    (pts
+      (xy 370.84 266.7)
+      (xy 375.92 266.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "299f1d19-c942-5c6f-8284-6e0b0f101cfe"))
+  (wire
+    (pts
+      (xy 335.28 261.62)
+      (xy 340.36 261.62))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "fc625fa2-2c86-5d32-8184-6a93d580d61d"))
+  (wire
+    (pts
+      (xy 269.24 124.46)
+      (xy 269.24 140.97))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "69a0a6b0-7b0c-5ac8-b5b6-49421dbe3a4d"))
+  (wire
+    (pts
+      (xy 269.24 124.46)
+      (xy 289.56 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "6ed7a263-60b4-5bcc-8a1d-2cd4963d2fe8"))
+  (wire
+    (pts
+      (xy 320.04 271.78)
+      (xy 320.04 288.29))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "fb4f3c35-650d-5f0d-a147-f788c4b5176e"))
+  (wire
+    (pts
+      (xy 320.04 271.78)
+      (xy 340.36 271.78))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "889752c7-0c2a-53ea-b67b-f57edb273423"))
+  (text "What this does: Combines flight requests with the logic conditions that permit recovery and staging outputs.\nConnects to: Flight MCU, reset and arm/disarm indications -> 06a and the three channel sheets. This logic does not replace a physical energy disconnect."
+    (at 15.24 27.94 0.0)
+    (effects
+      (font
+        (size 1.4 1.4))
+      (justify left top))
+    (uuid "16af8c03-a3c5-56b5-8efa-1a5f13138b6d")))

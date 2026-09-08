@@ -1,0 +1,1943 @@
+(kicad_symbol_lib
+  (version 20241209)
+  (generator kicad_symbol_editor)
+  (symbol "1053111102"
+    (pin_names
+      (offset 0.508))
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "J"
+      (at -10.16 6.35 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "1053111102"
+      (at -10.16 5.08 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (symbol "1053111102_0_1"
+      (rectangle
+        (start -10.16 -3.81)
+        (end 10.16 3.81)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type background))))
+    (symbol "1053111102_1_1"
+      (pin passive line
+        (at -15.24 1.27 0)
+        (length 5.08)
+        (name "1"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "1"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 -1.27 0)
+        (length 5.08)
+        (name "2"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "2"
+          (effects
+            (font
+              (size 1.0 1.0))))))
+    (property "Footprint" ""
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.molex.com/en-us/products/part-detail/1053111102"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "1053111102"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Molex"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Vertical through-hole PCB header with solder clips"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "numbered contacts; polarity belongs to harness map; withheld: exact Nano-Fit retention-hole drawing not visually accessible"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "CSD18540Q5B"
+    (pin_names
+      (offset 0)
+      (hide yes))
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (symbol "CSD18540Q5B_0_1"
+      (polyline
+        (pts
+          (xy 0.254 1.905)
+          (xy 0.254 -1.905))
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 0.254 0)
+          (xy -2.54 0))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 0.762 2.286)
+          (xy 0.762 1.27))
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 0.762 0.508)
+          (xy 0.762 -0.508))
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 0.762 -1.27)
+          (xy 0.762 -2.286))
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 0.762 -1.778)
+          (xy 3.302 -1.778)
+          (xy 3.302 1.778)
+          (xy 0.762 1.778))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 1.016 0)
+          (xy 2.032 0.381)
+          (xy 2.032 -0.381)
+          (xy 1.016 0))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type outline)))
+      (circle
+        (center 1.651 0)
+        (radius 2.794)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 2.54 2.54)
+          (xy 2.54 1.778))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type none)))
+      (circle
+        (center 2.54 1.778)
+        (radius 0.254)
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type outline)))
+      (circle
+        (center 2.54 -1.778)
+        (radius 0.254)
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type outline)))
+      (polyline
+        (pts
+          (xy 2.54 -2.54)
+          (xy 2.54 0)
+          (xy 0.762 0))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 2.794 0.508)
+          (xy 2.921 0.381)
+          (xy 3.683 0.381)
+          (xy 3.81 0.254))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 3.302 0.381)
+          (xy 2.921 -0.254)
+          (xy 3.683 -0.254)
+          (xy 3.302 0.381))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type none))))
+    (symbol "CSD18540Q5B_1_1"
+      (pin input line
+        (at -5.08 0 0)
+        (length 5.08)
+        (name "G"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "4"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 2.54 5.08 270)
+        (length 2.54)
+        (name "D"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "5"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 2.54 -5.08 90)
+        (length 2.54)
+        (name "S"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "1"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 2.54 -5.08 90)
+        (length 2.54)
+        (hide yes)
+        (name "S"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "2"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 2.54 -5.08 90)
+        (length 2.54)
+        (hide yes)
+        (name "S"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "3"
+          (effects
+            (font
+              (size 1.27 1.27))))))
+    (embedded_fonts no)
+    (property "Reference" "Q"
+      (at 5.08 1.905 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "CSD18540Q5B"
+      (at 5.08 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Footprint" "Ogma2:CSD18540Q5B"
+      (at 5.08 -1.905 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (italic yes))
+        (justify left)
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/csd18540q5b.pdf"
+      (at 5.08 -3.81 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)
+        (hide yes)))
+    (property "Description" "Reverse-blocking external FET"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "NexFET Power MOSFET N-MOS"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "TDSON*"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "CSD18540Q5B"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "TPS26630RGER"
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "U"
+      (at -8.89 16.51 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "TPS26630RGER"
+      (at 7.62 16.51 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "Ogma2:TPS26630RGER"
+      (at 0 -31.75 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps2663.pdf"
+      (at -10.16 20.32 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Protected source branch"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "efuse protection switch"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "Texas*RGE0024H*"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (symbol "TPS26630RGER_0_1"
+      (rectangle
+        (start -10.16 15.24)
+        (end 10.16 -17.78)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type background))))
+    (symbol "TPS26630RGER_1_1"
+      (pin power_in line
+        (at -12.7 12.7 0)
+        (length 2.54)
+        (name "IN"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "1"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at -12.7 12.7 0)
+        (length 2.54)
+        (hide yes)
+        (name "IN"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "2"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin output line
+        (at -12.7 7.62 0)
+        (length 2.54)
+        (name "B_GATE"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "3"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin output line
+        (at -12.7 2.54 0)
+        (length 2.54)
+        (name "DRV"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "4"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -12.7 -2.54 0)
+        (length 2.54)
+        (name "UVLO"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "6"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -12.7 -7.62 0)
+        (length 2.54)
+        (name "OVP"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "7"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -12.7 -12.7 0)
+        (length 2.54)
+        (name "~{SHDN}"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "12"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -12.7 -15.24 0)
+        (length 2.54)
+        (name "MODE"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "11"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin no_connect line
+        (at -10.16 10.16 0)
+        (length 2.54)
+        (hide yes)
+        (name "NC"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "19"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin no_connect line
+        (at -10.16 5.08 0)
+        (length 2.54)
+        (hide yes)
+        (name "NC"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "20"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin no_connect line
+        (at -10.16 0 0)
+        (length 2.54)
+        (hide yes)
+        (name "NC"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "21"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin power_in line
+        (at 0 17.78 270)
+        (length 2.54)
+        (name "IN_SYS"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "5"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 0 -20.32 90)
+        (length 2.54)
+        (hide yes)
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "25"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin power_in line
+        (at 0 -20.32 90)
+        (length 2.54)
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "8"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin no_connect line
+        (at 10.16 10.16 180)
+        (length 2.54)
+        (hide yes)
+        (name "NC"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "22"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin no_connect line
+        (at 10.16 5.08 180)
+        (length 2.54)
+        (hide yes)
+        (name "NC"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "23"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin no_connect line
+        (at 10.16 2.54 180)
+        (length 2.54)
+        (hide yes)
+        (name "NC"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "24"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin power_out line
+        (at 12.7 12.7 180)
+        (length 2.54)
+        (name "OUT"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "17"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 12.7 12.7 180)
+        (length 2.54)
+        (hide yes)
+        (name "OUT"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "18"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at 12.7 7.62 180)
+        (length 2.54)
+        (name "PGTH"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "15"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin open_collector line
+        (at 12.7 0 180)
+        (length 2.54)
+        (name "~{FLT}"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "14"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin output line
+        (at 12.7 -2.54 180)
+        (length 2.54)
+        (name "PGOOD"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "16"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin output line
+        (at 12.7 -5.08 180)
+        (length 2.54)
+        (name "IMON"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "13"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 12.7 -12.7 180)
+        (length 2.54)
+        (name "ILIM"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "10"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 12.7 -15.24 180)
+        (length 2.54)
+        (name "dVdT"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "9"
+          (effects
+            (font
+              (size 1.27 1.27))))))
+    (embedded_fonts no)
+    (property "MPN" "TPS26630RGER"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "430450400"
+    (pin_names
+      (offset 0.508))
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "J"
+      (at -10.16 8.89 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "430450400"
+      (at -10.16 7.620000000000001 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (symbol "430450400_0_1"
+      (rectangle
+        (start -10.16 -6.35)
+        (end 10.16 6.35)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type background))))
+    (symbol "430450400_1_1"
+      (pin passive line
+        (at -15.24 3.81 0)
+        (length 5.08)
+        (name "1"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "1"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 1.27 0)
+        (length 5.08)
+        (name "2"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "2"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 -1.27 0)
+        (length 5.08)
+        (name "3"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "3"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 -3.81 0)
+        (length 5.08)
+        (name "4"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "4"
+          (effects
+            (font
+              (size 1.0 1.0))))))
+    (property "Footprint" "Ogma2:430450400"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.molex.com/en-us/products/part-detail/430450400"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "430450400"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Molex"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Right-angle through-hole four-circuit header"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "numbered physical contacts; see harness map; pending dimensional audit"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "MPS-08-01-01-L-RA-SD"
+    (pin_names
+      (offset 0.508))
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "J"
+      (at -10.16 13.969999999999999 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "MPS-08-01-01-L-RA-SD"
+      (at -10.16 12.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (symbol "MPS-08-01-01-L-RA-SD_0_1"
+      (rectangle
+        (start -10.16 -11.43)
+        (end 10.16 11.43)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type background))))
+    (symbol "MPS-08-01-01-L-RA-SD_1_1"
+      (pin passive line
+        (at -15.24 8.89 0)
+        (length 5.08)
+        (name "1"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "1"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 6.3500000000000005 0)
+        (length 5.08)
+        (name "2"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "2"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 3.8100000000000005 0)
+        (length 5.08)
+        (name "3"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "3"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 1.2700000000000005 0)
+        (length 5.08)
+        (name "4"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "4"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 -1.2699999999999996 0)
+        (length 5.08)
+        (name "5"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "5"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 -3.8099999999999987 0)
+        (length 5.08)
+        (name "6"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "6"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 -6.35 0)
+        (length 5.08)
+        (name "7"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "7"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -15.24 -8.89 0)
+        (length 5.08)
+        (name "8"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "8"
+          (effects
+            (font
+              (size 1.0 1.0))))))
+    (property "Footprint" "Ogma2:MPS-08-01-01-L-RA-SD"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.samtec.com/products/mps-08-01-01-l-ra-sd"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "MPS-08-01-01-L-RA-SD"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Samtec"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Board mate receptacle"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "numbered physical contacts; see harness map; drawing-derived: tail count, drills, pin1 direction and board-edge datum checked; body projection/mated assembly review pending"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "TCA4307DGKR"
+    (pin_names
+      (offset 0.508))
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "U"
+      (at -10.16 12.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "TCA4307DGKR"
+      (at -10.16 11.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (symbol "TCA4307DGKR_0_1"
+      (rectangle
+        (start -10.16 15.24)
+        (end 10.16 -15.24)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type background))))
+    (symbol "TCA4307DGKR_1_1"
+      (pin input line
+        (at -15.24 12.7 0.0)
+        (length 5.08)
+        (name "EN"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "1"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin bidirectional line
+        (at 15.24 5.08 180.0)
+        (length 5.08)
+        (name "SCLOUT"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "2"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin bidirectional line
+        (at -15.24 5.08 0.0)
+        (length 5.08)
+        (name "SCLIN"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "3"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin power_in line
+        (at 0.0 -20.32 90.0)
+        (length 5.08)
+        (name "GND"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "4"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin bidirectional line
+        (at -15.24 -5.08 0.0)
+        (length 5.08)
+        (name "SDAIN"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "6"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin bidirectional line
+        (at 15.24 -5.08 180.0)
+        (length 5.08)
+        (name "SDAOUT"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "7"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin power_in line
+        (at 0.0 20.32 270.0)
+        (length 5.08)
+        (name "VCC"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "8"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin open_collector line
+        (at 15.24 -12.7 180.0)
+        (length 5.08)
+        (name "READY"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "5"
+          (effects
+            (font
+              (size 1.0 1.0))))))
+    (property "Footprint" "Ogma2:TCA4307DGKR"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/product/TCA4307/part-details/TCA4307DGKR"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "TCA4307DGKR"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Foinse I2C buffer"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "transcribed and checked: TCA4307 p3; DGK8, no thermal pad; pending dimensional audit"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "INA228AIDGSR"
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (symbol "INA228AIDGSR_0_1"
+      (rectangle
+        (start 7.62 10.16)
+        (end -7.62 -10.16)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type background))))
+    (symbol "INA228AIDGSR_1_1"
+      (pin input line
+        (at -10.16 7.62 0)
+        (length 2.54)
+        (name "Vbus"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "8"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -10.16 -2.54 0)
+        (length 2.54)
+        (name "Vin+"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "10"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -10.16 -5.08 0)
+        (length 2.54)
+        (name "Vin-"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "9"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin power_in line
+        (at 0 12.7 270)
+        (length 2.54)
+        (name "VS"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "6"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin power_in line
+        (at 0 -12.7 90)
+        (length 2.54)
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "7"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at 10.16 7.62 180)
+        (length 2.54)
+        (name "A1"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "1"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at 10.16 5.08 180)
+        (length 2.54)
+        (name "A0"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "2"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin bidirectional line
+        (at 10.16 0 180)
+        (length 2.54)
+        (name "SDA"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "4"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at 10.16 -2.54 180)
+        (length 2.54)
+        (name "SCL"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "5"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin open_collector line
+        (at 10.16 -7.62 180)
+        (length 2.54)
+        (name "~{Alert}"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "3"
+          (effects
+            (font
+              (size 1.27 1.27))))))
+    (embedded_fonts no)
+    (property "Reference" "U"
+      (at -6.35 11.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "INA228AIDGSR"
+      (at 3.81 11.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "Ogma2:INA228AIDGSR"
+      (at 20.32 -11.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/ina228.pdf"
+      (at 8.89 -2.54 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Pack monitor"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "ADC I2C 20-Bit Oversampling Current Shunt"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "VSSOP*3x3mm*P0.5mm*"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "INA228AIDGSR"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "ADS1115IDGSR"
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (symbol "ADS1115IDGSR_0_1"
+      (rectangle
+        (start -7.62 10.16)
+        (end 7.62 -7.62)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type background))))
+    (symbol "ADS1115IDGSR_1_1"
+      (pin input line
+        (at -10.16 2.54 0)
+        (length 2.54)
+        (name "AIN0"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "4"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -10.16 0 0)
+        (length 2.54)
+        (name "AIN1"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "5"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -10.16 -2.54 0)
+        (length 2.54)
+        (name "AIN2"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "6"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at -10.16 -5.08 0)
+        (length 2.54)
+        (name "AIN3"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "7"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin power_in line
+        (at 0 12.7 270)
+        (length 2.54)
+        (name "VDD"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "8"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin power_in line
+        (at 0 -10.16 90)
+        (length 2.54)
+        (name "GND"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "3"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin output line
+        (at 10.16 5.08 180)
+        (length 2.54)
+        (name "ALERT/RDY"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "2"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at 10.16 0 180)
+        (length 2.54)
+        (name "SCL"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "10"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin bidirectional line
+        (at 10.16 -2.54 180)
+        (length 2.54)
+        (name "SDA"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "9"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin input line
+        (at 10.16 -5.08 180)
+        (length 2.54)
+        (name "ADDR"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "1"
+          (effects
+            (font
+              (size 1.27 1.27))))))
+    (embedded_fonts no)
+    (property "Reference" "U"
+      (at 2.54 13.97 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "ADS1115IDGSR"
+      (at 7.62 11.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "Ogma2:ADS1115IDGSR"
+      (at 0 -12.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/product/ADS1115/part-details/ADS1115IDGSR"
+      (at -1.27 -22.86 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Pack temperature and protected-rail ADC"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "16 bit 4 channel I2C ADC"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "TSSOP*3x3mm*P0.5mm*"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "ADS1115IDGSR"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "TMUX1511PWR"
+    (pin_names
+      (offset 0.508))
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "U"
+      (at -10.16 21.59 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (property "Value" "TMUX1511PWR"
+      (at -10.16 20.32 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left)))
+    (symbol "TMUX1511PWR_0_1"
+      (rectangle
+        (start -12.7 27.94)
+        (end 12.7 -27.94)
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type background))))
+    (symbol "TMUX1511PWR_1_1"
+      (pin input line
+        (at -17.78 15.24 0.0)
+        (length 5.08)
+        (name "SEL1"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "1"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -17.78 10.16 0.0)
+        (length 5.08)
+        (name "S1"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "2"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at 17.78 10.16 180.0)
+        (length 5.08)
+        (name "D1"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "3"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin input line
+        (at -17.78 2.54 0.0)
+        (length 5.08)
+        (name "SEL2"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "4"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -17.78 -2.54 0.0)
+        (length 5.08)
+        (name "S2"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "5"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at 17.78 -2.54 180.0)
+        (length 5.08)
+        (name "D2"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "6"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin power_in line
+        (at 0.0 -33.02 90.0)
+        (length 5.08)
+        (name "GND"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "7"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at 17.78 -10.16 180.0)
+        (length 5.08)
+        (name "D3"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "8"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -17.78 -10.16 0.0)
+        (length 5.08)
+        (name "S3"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "9"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin input line
+        (at -17.78 -17.78 0.0)
+        (length 5.08)
+        (name "SEL3"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "10"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at 17.78 -25.4 180.0)
+        (length 5.08)
+        (name "D4"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "11"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin passive line
+        (at -17.78 -25.4 0.0)
+        (length 5.08)
+        (name "S4"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "12"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin input line
+        (at -5.08 -33.02 90.0)
+        (length 5.08)
+        (name "SEL4"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "13"
+          (effects
+            (font
+              (size 1.0 1.0)))))
+      (pin power_in line
+        (at 0.0 33.02 270.0)
+        (length 5.08)
+        (name "VDD"
+          (effects
+            (font
+              (size 1.0 1.0))))
+        (number "14"
+          (effects
+            (font
+              (size 1.0 1.0))))))
+    (property "Footprint" "Ogma2:TMUX1511PWR"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tmux1511.pdf"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "TMUX1511PWR"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Pressure and NOR bidirectional isolation"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "transcribed and checked: TMUX1511 p3 TSSOP14 column; not UQFN16; pending dimensional audit"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol "BAS116"
+    (pin_numbers
+      (hide yes))
+    (pin_names
+      (offset 1.016)
+      (hide yes))
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "D"
+      (at 0 2.54 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "BAS116,215"
+      (at 0 -2.54 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/BAS116.pdf"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Diode"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Sim.Device" "D"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Sim.Pins" "1=K 2=A"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "diode"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (symbol "BAS116_0_1"
+      (polyline
+        (pts
+          (xy -1.27 1.27)
+          (xy -1.27 -1.27))
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 1.27 1.27)
+          (xy 1.27 -1.27)
+          (xy -1.27 0)
+          (xy 1.27 1.27))
+        (stroke
+          (width 0.254)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 1.27 0)
+          (xy -1.27 0))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type none))))
+    (symbol "BAS116_1_1"
+      (pin passive line
+        (at -3.81 0 0)
+        (length 2.54)
+        (name "K"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "3"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 3.81 0 180)
+        (length 2.54)
+        (name "A"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "1"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin no_connect line
+        (at 0.0 -5.08 90.0)
+        (length 0.0)
+        (name "NC"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "2"
+          (effects
+            (font
+              (size 1.27 1.27))))))
+    (embedded_fonts no))
+  (symbol "LM4040CEM3-3.0"
+    (pin_names
+      (offset 0.0254)
+      (hide yes))
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "U"
+      (at 0 2.54 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "LM4040CEM3-3.0/NOPB"
+      (at 0 -3.175 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+      (at 0 -5.08 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (italic yes))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/lm4040-n.pdf"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (italic yes))
+        (hide yes)))
+    (property "Description" "3.0 V shunt reference, extended temperature grade, SOT-23"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "diode device voltage reference shunt"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "SOT?23*"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (symbol "LM4040CEM3-3.0_0_1"
+      (polyline
+        (pts
+          (xy -1.27 0)
+          (xy 0 0)
+          (xy 1.27 0))
+        (stroke
+          (width 0)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy -1.27 -1.27)
+          (xy 0.635 0)
+          (xy -1.27 1.27)
+          (xy -1.27 -1.27))
+        (stroke
+          (width 0.2032)
+          (type default))
+        (fill
+          (type none)))
+      (polyline
+        (pts
+          (xy 0 -1.27)
+          (xy 0.635 -1.27)
+          (xy 0.635 1.27)
+          (xy 1.27 1.27))
+        (stroke
+          (width 0.2032)
+          (type default))
+        (fill
+          (type none))))
+    (symbol "LM4040CEM3-3.0_1_1"
+      (pin passive line
+        (at -3.81 0 0)
+        (length 2.54)
+        (name "A"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "2"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin no_connect line
+        (at -1.27 0 0)
+        (length 2.54)
+        (hide yes)
+        (name "NC"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "3"
+          (effects
+            (font
+              (size 1.27 1.27)))))
+      (pin passive line
+        (at 3.81 0 180)
+        (length 2.54)
+        (name "K"
+          (effects
+            (font
+              (size 1.27 1.27))))
+        (number "1"
+          (effects
+            (font
+              (size 1.27 1.27))))))
+    (embedded_fonts no)))

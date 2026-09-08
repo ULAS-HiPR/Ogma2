@@ -1,0 +1,356 @@
+{
+  "status": "native identity and explicit expected-net checks passed; not hardware qualification",
+  "physical_symbols": 643,
+  "footprints": 642,
+  "pcb_pads_checked": 2252,
+  "original_placements_preserved": 634,
+  "new_refs": [
+    "C1006",
+    "D1002",
+    "D4501",
+    "J103",
+    "J4501",
+    "R1012",
+    "R1013",
+    "U1002"
+  ],
+  "physical_property_changes": [
+    {
+      "ref": "U4504",
+      "field": "Value",
+      "before": "SAM-M10Q-00B",
+      "after": "MAX-M10S-00B"
+    },
+    {
+      "ref": "U4504",
+      "field": "Footprint",
+      "before": "Ogma2:SAM-M10Q-00B",
+      "after": "Ogma2_GNSS:MAX-M10S-00B"
+    },
+    {
+      "ref": "U4504",
+      "field": "MPN",
+      "before": "SAM-M10Q-00B",
+      "after": "MAX-M10S-00B"
+    },
+    {
+      "ref": "R1006",
+      "field": "Value",
+      "before": "100k",
+      "after": "22.1k 1%"
+    }
+  ],
+  "sheet_moves": [],
+  "pin_delta": [
+    {
+      "ref": "C1006",
+      "pin": "1",
+      "before": null,
+      "after": "BAT_SHDN_N",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "C1006",
+      "pin": "2",
+      "before": null,
+      "after": "GND",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "D1002",
+      "pin": "1",
+      "before": null,
+      "after": "VBAT_CROI_INPUT",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "D1002",
+      "pin": "2",
+      "before": null,
+      "after": null,
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "D1002",
+      "pin": "3",
+      "before": null,
+      "after": "BAT_SW_DIODE",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "D4501",
+      "pin": "1",
+      "before": null,
+      "after": "GNSS_RF",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "D4501",
+      "pin": "2",
+      "before": null,
+      "after": "GND",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "J103",
+      "pin": "1",
+      "before": null,
+      "after": "BAT_SWITCH_3V",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "J103",
+      "pin": "2",
+      "before": null,
+      "after": "BAT_SHDN_N",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "J4501",
+      "pin": "1",
+      "before": null,
+      "after": "GNSS_RF",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "J4501",
+      "pin": "2",
+      "before": null,
+      "after": "GND",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "R1006",
+      "pin": "1",
+      "before": "VBAT_CROI_INPUT",
+      "after": "BAT_SHDN_N",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "R1006",
+      "pin": "2",
+      "before": "BAT_SHDN_N",
+      "after": "GND",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "R1012",
+      "pin": "1",
+      "before": null,
+      "after": "BAT_SW_DIODE",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "R1012",
+      "pin": "2",
+      "before": null,
+      "after": "BAT_SW_RMID",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "R1013",
+      "pin": "1",
+      "before": null,
+      "after": "BAT_SW_RMID",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "R1013",
+      "pin": "2",
+      "before": null,
+      "after": "BAT_SWITCH_3V",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "U1002",
+      "pin": "1",
+      "before": null,
+      "after": "BAT_SWITCH_3V",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "U1002",
+      "pin": "2",
+      "before": null,
+      "after": "GND",
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "U1002",
+      "pin": "3",
+      "before": null,
+      "after": null,
+      "new_pin": true,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "11",
+      "before": "GND",
+      "after": "GNSS_RF",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "12",
+      "before": null,
+      "after": "GND",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "13",
+      "before": "GNSS_RX_ISO",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "14",
+      "before": "GNSS_TX_ISO",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "15",
+      "before": "GND",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "16",
+      "before": "GND",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "17",
+      "before": "GNSS_3V3",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "18",
+      "before": "GNSS_RESET_N_ISO",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "19",
+      "before": null,
+      "after": null,
+      "new_pin": false,
+      "removed_pin": true
+    },
+    {
+      "ref": "U4504",
+      "pin": "2",
+      "before": "GNSS_3V3",
+      "after": "GNSS_RX_ISO",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "20",
+      "before": "GND",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": true
+    },
+    {
+      "ref": "U4504",
+      "pin": "3",
+      "before": "GNSS_3V3",
+      "after": "GNSS_TX_ISO",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "4",
+      "before": "GND",
+      "after": "GNSS_PPS_ISO",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "5",
+      "before": "GND",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "6",
+      "before": "GND",
+      "after": null,
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "7",
+      "before": "GNSS_PPS_ISO",
+      "after": "GNSS_3V3",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "8",
+      "before": null,
+      "after": "GNSS_3V3",
+      "new_pin": false,
+      "removed_pin": false
+    },
+    {
+      "ref": "U4504",
+      "pin": "9",
+      "before": null,
+      "after": "GNSS_RESET_N_ISO",
+      "new_pin": false,
+      "removed_pin": false
+    }
+  ],
+  "pcb_sha256": "4399d032ca36cb1a3b080f1e0b355454998104d1a00f28914f8d14323bd02256",
+  "limits": [
+    "No GUI cross-selection event was observed by this check.",
+    "Pin-path equality supports native cross-probing; both editors must open through the same project.",
+    "No analog, RF, timing, environmental or energetic qualification is inferred."
+  ]
+}

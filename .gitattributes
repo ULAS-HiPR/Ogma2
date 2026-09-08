@@ -1,4 +1,7 @@
+# Preserve vendor CAD-model bytes and avoid enormous text diffs.
+*.step -text -diff
+*.stp -text -diff
+*.wrl -text -diff
 *.pdf binary
-*.png binary
-*.jpg binary
-*.jpeg binary
+# Existing exported CSVs may use CRLF; preserve their recorded bytes.
+*.csv -text whitespace=cr-at-eol

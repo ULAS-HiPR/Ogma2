@@ -1,16 +1,19 @@
 # Ogma 2 hardware
 
-Native KiCad projects are local independent repositories:
+Native KiCad projects are tracked directly in this monorepo:
 
 | Board | Project | Installed checked draft, 8 September |
 | --- | --- | --- |
 | Croí2 | `croi2/Croi2.kicad_pro` | 44 schematic pages, 643 physical symbols, 642 PCB footprints |
 | Foinse2 | `foinse2/Foinse2.kicad_pro` | 12 pages, 113 symbols, 112 footprints |
 
-These paths exist in the working workspace but are ignored by the umbrella.
-Neither child has a remote or registered submodule. An umbrella clone does
-not include the board files. This page documents that boundary; the
-[architecture pack](../docs/architecture/README.md) is self-contained.
+Both projects are included in a normal clone, with local symbols, footprints,
+available models and check reports. No submodule initialisation or separate
+repository is needed. Generated scratch, backups and editor caches are excluded.
+
+- [Croí reading PDF](croi2/output/pdf/Croi2-readable.pdf)
+- [Foinse reading PDF](foinse2/output/Foinse2-readable.pdf)
+- [Architecture pack](../docs/architecture/README.md)
 
 ## Work now
 

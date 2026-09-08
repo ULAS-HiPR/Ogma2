@@ -2590,3 +2590,28 @@ No CAD, pin allocation, firmware, tests or qualification status changed.
 Next: Seán, Anav and Arnav can review the reasoning within the same GitHub reading
 path, then raise specific circuit or evidence questions rather than reconstructing
 the design rationale from old workspace reports.
+
+## 2026-09-08 — track both board projects in the monorepo
+
+Seán explicitly clarified that Croí2 and Foinse2 are directories in the Ogma2
+monorepo and asked to publish the updated schematics. This supersedes the
+earlier independent-local-repository arrangement; no submodules are used.
+
+Both nested repositories had no commits or remotes. Their Git metadata was
+moved intact to a workspace-only recovery directory, not deleted. Active CAD
+stays at `hardware/croi2/` and `hardware/foinse2/`. The monorepo now includes
+their native projects, schematic sheets, PCB files, local symbol/footprint/model
+dependencies, provenance/licence files, reading PDFs and verification reports.
+Editor state, caches, backups and scratch output remain excluded.
+
+Source paths in provenance/export metadata were made workspace-relative for
+publication. Electrical CAD and vendor model bytes were not changed. The
+existing manufacturing/qualification limitations remain; publication does not
+make either board ready for PCBA or flight. Root and board instructions now
+describe the monorepo. Earlier log entries retain the old arrangement as history.
+
+A clean checkout of the staged tree resolved both local library tables and all
+160 recorded library asset hashes. Fresh KiCad netlist/ERC exports and each
+board's schematic checker passed with the existing documented ERC baseline.
+No Git submodule entries were present. Vendor model bytes are preserved and
+treated as binary for review; about 36.7 MB of files is included in this import.

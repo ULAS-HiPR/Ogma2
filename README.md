@@ -24,16 +24,15 @@ Anav owns firmware. The model prepares the drawings, comparisons and checks.
 ## Hardware and repository boundary
 
 [Hardware entrypoint](hardware/README.md) explains the local Croí/Foinse projects,
-dependencies and verification. The umbrella contains architecture, interfaces,
-curated evidence and common library/tool sources. Active CAD lives in independent
-local repositories at:
+dependencies and verification. This monorepo contains architecture, interfaces,
+curated evidence and both active CAD projects:
 
 - `hardware/croi2/` — Croi2.kicad_pro
 - `hardware/foinse2/` — Foinse2.kicad_pro
 
-These child repositories are ignored, not registered submodules. A clean
-umbrella clone does **not** contain their CAD. Read the architecture pack without
-them; obtain the reviewed board projects separately for implementation.
+Both are ordinary tracked directories, not submodules or separate repositories.
+A clean clone includes their native projects, symbols, footprints, available
+3D models, reading PDFs and check reports. Open the corresponding `.kicad_pro`.
 
 The earlier long current-system is [preserved verbatim](docs/history/README.md).
 Historical alternatives are not additional current requirements. Native CAD,

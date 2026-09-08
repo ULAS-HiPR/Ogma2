@@ -1,0 +1,28 @@
+(kicad_sch
+  (version 20250114)
+  (generator eeschema)
+  (generator_version "9.0")
+  (uuid "423d00f0-fb13-5ce2-81d7-e248560512d3")
+  (paper "A3")
+  (title_block
+    (title "AV monitor relocated to Croi")
+    (date "2026-09-07")
+    (rev "A-DRAFT")
+    (company "HiPR")
+    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
+  (lib_symbols)
+  (embedded_fonts no)
+  (text "AVIONICS CURRENT / measured on Croi, not repeated here"
+    (at 25.4 25.4 0.0)
+    (effects
+      (font
+        (size 2.5 2.5))
+      (justify left top))
+    (uuid "194e06f1-a98e-4bc0-b349-a9e9d8cb16c5"))
+  (text "Croi measures all of its battery current through R7101 and INA228 U7101 at address 0x40.\nThis works with either its standalone battery or the Foinse supply; both routes pass through that shunt.\nFoinse therefore has no duplicate avionics shunt or monitor. This page records that boundary.\nFor Foinse measurements, see the propulsion INA228 on f05 (0x41) and pack ADC on f06 (0x48)."
+    (at 25.4 53.34 0.0)
+    (effects
+      (font
+        (size 1.65 1.65))
+      (justify left top))
+    (uuid "c83c6b02-def2-4592-9f27-23a4e2976b2b")))

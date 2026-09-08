@@ -1,0 +1,410 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-08T02:52:10+0100",
+    "kicad_version": "9.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e",
+            "violations": [
+                {
+                    "description": "Label global connecté à aucun autre élément dans la schématique",
+                    "items": [
+                        {
+                            "description": "Label Global 'LORA_RXEN'",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 1.9304
+                            },
+                            "uuid": "1603712c-2fc7-5170-87e7-696ca29282fa"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "global_label_dangling"
+                },
+                {
+                    "description": "Label global connecté à aucun autre élément dans la schématique",
+                    "items": [
+                        {
+                            "description": "Label Global 'LORA_TXEN'",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 1.9558
+                            },
+                            "uuid": "6f0a47d9-57b2-5c5b-9e16-e6eadcfb023f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "global_label_dangling"
+                },
+                {
+                    "description": "Label global connecté à aucun autre élément dans la schématique",
+                    "items": [
+                        {
+                            "description": "Label Global 'SERVO_ARMED_VBAT'",
+                            "pos": {
+                                "x": 2.2479,
+                                "y": 0.8128
+                            },
+                            "uuid": "dc225468-d9c6-55f8-ad3f-545c0a7067a0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "global_label_dangling"
+                }
+            ]
+        },
+        {
+            "path": "/01-power/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1ed0d183-0300-4b05-9ff2-c54b7708c528",
+            "violations": []
+        },
+        {
+            "path": "/01a-source-mux/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/e807e997-b1fd-5faf-a756-90a492527420",
+            "violations": []
+        },
+        {
+            "path": "/01b-bootstrap/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1a1c026a-4813-53f4-ba31-05bebceed320",
+            "violations": []
+        },
+        {
+            "path": "/01c-preregulator/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/ea363f65-34cb-5ad4-85df-70fd0928e927",
+            "violations": []
+        },
+        {
+            "path": "/01d-held-core/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/43cd06f8-93aa-573c-9193-0bbb11b7a6ea",
+            "violations": []
+        },
+        {
+            "path": "/01comms-limit/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/4005f0aa-9fe9-5f3e-bdc9-ac5a3de142e8",
+            "violations": []
+        },
+        {
+            "path": "/01optional-limit/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/dc43b5d3-3ff4-5f31-8d66-13baa28d5194",
+            "violations": []
+        },
+        {
+            "path": "/01flight-ldo/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/0b3c2728-5f14-5ec0-a412-b97eb3c423f9",
+            "violations": []
+        },
+        {
+            "path": "/01comms-ldo/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/060a88b6-44d3-5064-82dd-27c8b5956035",
+            "violations": []
+        },
+        {
+            "path": "/01optional-ldo/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1a241fa4-d997-534d-b97c-07faa10f0334",
+            "violations": []
+        },
+        {
+            "path": "/02-flight-mcu/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/e4acf55e-4a49-56c8-b73a-39d4eb959161",
+            "violations": []
+        },
+        {
+            "path": "/02a-flight-support/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9036b035-7b90-5f59-9618-fda81bb1858e",
+            "violations": []
+        },
+        {
+            "path": "/04-comms-gnss-radio/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/810c2b8f-1f4d-58e8-b0cd-8d2d36c464db",
+            "violations": []
+        },
+        {
+            "path": "/04a-comms-support/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/38244ecd-4998-5eff-a0bf-3ed50a907776",
+            "violations": []
+        },
+        {
+            "path": "/03st-sensor/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/12f6be2c-cd81-5c18-a6c2-c9f149762673",
+            "violations": [
+                {
+                    "description": "Les pins de type Bidirectionnel et Power output sont connectées",
+                    "items": [
+                        {
+                            "description": "Symbol U3104 Pin 2 [GND_[2,3,6,7], Bidirectionnel, Ligne]",
+                            "pos": {
+                                "x": 2.921,
+                                "y": 2.9591
+                            },
+                            "uuid": "251173d1-477c-575d-9a5b-e09d2c0af87e"
+                        },
+                        {
+                            "description": "Symbol #FLG001 Pin 1 [Power output, Ligne]",
+                            "pos": {
+                                "x": 2.8448,
+                                "y": 2.921
+                            },
+                            "uuid": "725c78f9-eaff-5a43-b2c6-e1aecaedd15e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Les pins de type Bidirectionnel et Power output sont connectées",
+                    "items": [
+                        {
+                            "description": "Symbol U3104 Pin 3 [Bidirectionnel, Ligne]",
+                            "pos": {
+                                "x": 2.921,
+                                "y": 2.9591
+                            },
+                            "uuid": "f4743fb4-d2f8-520d-8f93-80fcb42aa1f6"
+                        },
+                        {
+                            "description": "Symbol #FLG001 Pin 1 [Power output, Ligne]",
+                            "pos": {
+                                "x": 2.8448,
+                                "y": 2.921
+                            },
+                            "uuid": "725c78f9-eaff-5a43-b2c6-e1aecaedd15e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                }
+            ]
+        },
+        {
+            "path": "/03tdk-sensor/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1c3cb4e0-bdf0-5eaf-affb-698da15565f8",
+            "violations": []
+        },
+        {
+            "path": "/03hg-sensor/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6250cd01-2174-55ab-a070-0189a132de54",
+            "violations": []
+        },
+        {
+            "path": "/03bmp-pressure/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/92bc9dab-010d-59bf-bfc3-b2b5d70f928e",
+            "violations": [
+                {
+                    "description": "Les pins de type Bidirectionnel et Power output sont connectées",
+                    "items": [
+                        {
+                            "description": "Symbol U3403 Pin 5 [Bidirectionnel, Ligne]",
+                            "pos": {
+                                "x": 2.9464,
+                                "y": 2.9083
+                            },
+                            "uuid": "9f69283e-cf1e-59f9-a6d6-460f2304b6db"
+                        },
+                        {
+                            "description": "Symbol #FLG001 Pin 1 [Power output, Ligne]",
+                            "pos": {
+                                "x": 2.8448,
+                                "y": 2.921
+                            },
+                            "uuid": "725c78f9-eaff-5a43-b2c6-e1aecaedd15e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                }
+            ]
+        },
+        {
+            "path": "/03te-pressure/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7386091d-0e3a-508b-9f12-65b13d57b48a",
+            "violations": []
+        },
+        {
+            "path": "/03-sensors-storage/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/669f2e1c-94d4-5ca0-9fcc-021ef3481cf0",
+            "violations": []
+        },
+        {
+            "path": "/02flight-reset-debug/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/a7d09d05-d25a-524e-adc9-0541be9c00f8",
+            "violations": []
+        },
+        {
+            "path": "/02comms-reset-debug/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/65009b16-2a06-50e6-b31d-005a16b07828",
+            "violations": []
+        },
+        {
+            "path": "/04b-uart-boundary/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/93047369-53ce-5085-867a-a69e5365302a",
+            "violations": []
+        },
+        {
+            "path": "/04c-usb-service/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f8781a56-e45e-518e-bfc4-17362dd1c9a6",
+            "violations": []
+        },
+        {
+            "path": "/04d GNSS / external passive antenna/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/adde216c-dc4d-51de-96fc-27a8ca7e017d",
+            "violations": []
+        },
+        {
+            "path": "/04e-radio/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/fc52b3e4-93b8-58ea-868c-269d9cada41e",
+            "violations": []
+        },
+        {
+            "path": "/04f-radio-module/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c",
+            "violations": []
+        },
+        {
+            "path": "/07-foinse-aux/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/12a12419-15be-5ff2-a25d-c0588244ed8e",
+            "violations": []
+        },
+        {
+            "path": "/08-rail-diagnostics/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/31e6d5d2-a64d-53ba-a4be-d13bcade6903",
+            "violations": []
+        },
+        {
+            "path": "/09-indicators/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/19f2a247-3d06-5066-a7d5-68c74944b77e",
+            "violations": []
+        },
+        {
+            "path": "/06-outputs/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5",
+            "violations": []
+        },
+        {
+            "path": "/06a-arm-boundary/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac",
+            "violations": []
+        },
+        {
+            "path": "/06pyro1/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/e5662528-ca84-5cac-95a1-6e33854fa653",
+            "violations": [
+                {
+                    "description": "Pin entrée de puissance pilotée par aucune pin sortie de puissance",
+                    "items": [
+                        {
+                            "description": "Symbol U6304 Pin 8 [VS_[8,9,10], Power input, Ligne]",
+                            "pos": {
+                                "x": 1.27,
+                                "y": 2.8702
+                            },
+                            "uuid": "439f6324-6945-51bc-b9a5-dff649e72978"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        },
+        {
+            "path": "/06pyro2/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb",
+            "violations": [
+                {
+                    "description": "Pin entrée de puissance pilotée par aucune pin sortie de puissance",
+                    "items": [
+                        {
+                            "description": "Symbol U6404 Pin 8 [VS_[8,9,10], Power input, Ligne]",
+                            "pos": {
+                                "x": 1.27,
+                                "y": 2.8702
+                            },
+                            "uuid": "f192dfd5-d61e-5431-b915-ca633be0c8de"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        },
+        {
+            "path": "/06pyro3/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c",
+            "violations": [
+                {
+                    "description": "Pin entrée de puissance pilotée par aucune pin sortie de puissance",
+                    "items": [
+                        {
+                            "description": "Symbol U6504 Pin 8 [VS_[8,9,10], Power input, Ligne]",
+                            "pos": {
+                                "x": 1.27,
+                                "y": 2.8702
+                            },
+                            "uuid": "162db068-7acc-59a4-9736-abc97224a2d5"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        },
+        {
+            "path": "/06b-output-harness/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2",
+            "violations": []
+        },
+        {
+            "path": "/06c-output-diagnostics/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/dc2c631c-09a5-538b-a3b7-e495109f3f23",
+            "violations": []
+        },
+        {
+            "path": "/06d-servo-power/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/004862ed-8fd8-54df-824a-a46ff8ec255a",
+            "violations": [
+                {
+                    "description": "Pin entrée de puissance pilotée par aucune pin sortie de puissance",
+                    "items": [
+                        {
+                            "description": "Symbol U6802 Pin 8 [VS_[8,9,10], Power input, Ligne]",
+                            "pos": {
+                                "x": 2.9464,
+                                "y": 1.0668
+                            },
+                            "uuid": "479675c1-9acf-5d69-8f93-25b22df69947"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        },
+        {
+            "path": "/06e-continuity/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4",
+            "violations": []
+        },
+        {
+            "path": "/06f-continuity-isolation/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/931ab1c7-8837-5fe9-9728-701d7e55f5fa",
+            "violations": []
+        },
+        {
+            "path": "/05-can/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b5ed7167-bc4d-5c34-91fe-eb8111c7a144",
+            "violations": []
+        },
+        {
+            "path": "/07a-battery-monitor/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/31a99147-d947-5c47-8362-7267ddf58920",
+            "violations": []
+        },
+        {
+            "path": "/44-master-enable/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/62096935-b4a4-4c50-8b7f-1c9b0c843f73",
+            "violations": []
+        }
+    ],
+    "source": "Croi2.kicad_sch"
+}

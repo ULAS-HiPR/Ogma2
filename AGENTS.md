@@ -47,6 +47,11 @@ hardware, measurements, and tests outrank prose.
 
 ## Current architecture rules
 
+- Ogma2 is one monorepo. Active CAD is tracked directly in `hardware/croi2/`
+  and `hardware/foinse2/`, not nested repositories or submodules. Read each
+  board's README, AGENTS, schematic status and native reports before editing.
+  Keep board dependencies local and never regenerate over manual CAD edits.
+
 - Ogma 2 is one serviceable main PCB. Do not reintroduce a component-obscuring
   board stack or speculative internal modules.
 - The two MCUs separate flight-critical timing from communications work. They

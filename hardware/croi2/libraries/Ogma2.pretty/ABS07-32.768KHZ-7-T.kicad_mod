@@ -1,0 +1,44 @@
+(footprint "ABS07-32.768KHZ-7-T"
+  (version 20241229)
+  (generator ogma2_library_builder)
+  (layer "F.Cu")
+  (descr "ABS07 drawing 2022-08-10 p4: 1.1x1.9 lands, 1.4mm inside gap. Nonpolar.")
+  (attr smd)
+  (fp_text reference "REF**"
+    (at 0 -2.25)
+    (layer "F.SilkS")
+    (effects
+      (font
+        (size 1 1)
+        (thickness 0.15))))
+  (fp_text value "Abracon_ABS07"
+    (at 0 2.25)
+    (layer "F.Fab")
+    (effects
+      (font
+        (size 1 1)
+        (thickness 0.15))))
+  (fp_rect
+    (start -1.6 -0.75)
+    (end 1.6 0.75)
+    (stroke
+      (width 0.1)
+      (type default))
+    (fill none)
+    (layer "F.Fab"))
+  (fp_rect
+    (start -2.05 -1.2)
+    (end 2.05 1.2)
+    (stroke
+      (width 0.05)
+      (type default))
+    (fill none)
+    (layer "F.CrtYd"))
+  (pad "1" smd rect
+    (at -1.25 0)
+    (size 1.1 1.9)
+    (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "2" smd rect
+    (at 1.25 0)
+    (size 1.1 1.9)
+    (layers "F.Cu" "F.Paste" "F.Mask")))
