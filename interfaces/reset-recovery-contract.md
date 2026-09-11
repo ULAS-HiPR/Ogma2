@@ -1,5 +1,11 @@
 # Ogma 2 reset, retained state and time contract
 
+**11 September review hold:** this contract's electrical and safety obligations
+are unchanged. The [joint-review record](../docs/architecture/2026-09-10-session-review.md)
+identifies proposed changes; none is implemented or accepted here. Earlier
+instructions below to proceed with schematics are superseded by Seán's explicit
+hold: no schematic/PCB changes until the final stack is authorized.
+
 Updated: 7 September 2026
 Status: EX-03 defaults accepted by Seán. Initial host model exists; MCU-specific
 implementation, timing, power/retention evidence and qualification remain open.

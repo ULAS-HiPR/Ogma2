@@ -1,119 +1,87 @@
-# 5. Service, status and time
+# 5. What the operator can know
 
-## What is fitted
+**Retained:** USB service, independent debug access and simple local indication.
+**Working direction:** verify running firmware/configuration without a fragile
+on-board display. **Open:** the final indication set and physical-arm evidence.
 
-Both MCUs have independent TC2030-NL-compatible debug patterns, reset access,
-boot probes, supply test points and local clocks. Debug reference voltage is
-sense-only, not a programmer power input. J4401 USB-C belongs to the comms MCU.
+## Five questions, not one green light
 
-Flight PD7 drives complementary red/green through U9101 SN74LVC1G04.
-Low/reset with valid flight power means red/not ready; high means green/profile
-checks passed. Comms amber, hardware PWR LED and BZ9001 piezo are separate.
+At a launch, people are distracted and the hardware may already be enclosed.
+The interface must help distinguish states that are easy to conflate.
 
-The piezo is CPT-9019S-SMT-TR, externally driven through Q9001 from PD6.
-It can produce ground-service tones. It is not a fixed-tone active buzzer.
-Flight retains an internal RTC with LSE; acquisition and deadlines use a
-higher-resolution monotonic timer. There is no external RTC or backup cell.
+```mermaid
+flowchart TB
+  Rail["Supply measurement"] --> Power["Is this domain powered?"]
+  Readback["Device identity, build and configuration readback"] --> Correct["Is the intended software/configuration running?"]
+  Progress["Fresh execution and peer responses"] --> Health["Is the system making valid progress?"]
+  Physical["Independent physical-arm evidence"] --> Armed["Is output energy available?"]
+  Diagnostic["Bounded continuity diagnostic"] --> Connected["Is this external circuit connected?"]
+```
 
-## Why keep this set
+A voltage light answers the first question, not all five. A stale green light
+may remain on after execution fails. Continuity does not establish arming,
+correct load identity or physical operation.
 
-USB covers normal configuration and log extraction. SWD remains necessary for
-breakpoints, recovery and independent processor access. Flat signal pads and
-insulated Keystone rail loops provide measurements without package-pin surgery.
-Zero-ohm links make named blocks isolatable; they are not arbitrary fuse links.
+## Make firmware identity observable
 
-The simple LEDs and sounder avoid a display bus and fragile LCD. A NeoPixel
-would provide colours with fewer GPIOs but introduce a serial device and stale
-latched state. It is not selected. Complementary LEDs preserve both colours
-after PD10 became servo3.
+The group discussed an OLED, seven-segment display and existing USB tools.
+The useful requirement is **knowing what is actually running**, not fitting a
+screen. Fragility and the existing groundstation-display experience weigh
+against adding one solely for version information.
 
-## The options and the concrete reasons for the choices
+**Recommendation:** have the configurator read back board identity, running
+build, profile and configuration, and verify the outcome of an update. “File
+sent successfully” is not the same result. Keep a detailed service view and a
+small understandable local indication set.
 
-| Question | Options explored | Chosen reasoning |
+USB belongs to the communications processor in the current allocation.
+Independent **SWD** debug access remains available to each processor for
+breakpoints and recovery when ordinary service fails. The connector's signal
+contacts and mechanical alignment holes are different things; calling it
+JTAG in conversation does not change the interface.
+
+## The indicator options we raised
+
+| Proposed indication | Useful meaning | Question before selecting it |
 | --- | --- | --- |
-| Local status | LCD, addressable RGB, separate LEDs | LEDs plus detailed USB/telemetry reporting avoid a glass/display interface and another serial state machine |
-| Red/green after servo3 consumed PD10 | More independent GPIO, multiplexing, complementary drive | One PD7 state drives complementary readiness through an inverter; neither colour independently proves execution |
-| Sound | Active fixed-tone buzzer or externally driven piezo | A passive transducer permits the requested startup tones; an active oscillator fixes pitch |
-| Mission time | Main oscillator alone, internal RTC/LSE, external RTC/cell | Keep internal RTC/LSE for qualified reset continuity; monotonic high-resolution time for active control; no external clock IC |
-| Development hardware | Separate exposed-GPIO evaluation board or instrumented flight board | Existing SWD, rail loops, signal pads and named zero-ohm boundaries support the first full PCBA |
+| RGB health/readiness | Concise operating or fault state | Which states, reset defaults and GPIO/driver cost? |
+| Independent arm indication | Physical output-energy state without depending solely on firmware | What is actually sensed, including broken wiring? |
+| Separate flight/comms power lights | Identify which supplies exist | Are they visible and useful in the installed bay? |
+| Per-channel continuity | Find a missing external connection | Can diagnostic energy remain safe in all relevant faults? |
+| CAN activity | Notice traffic and possible intermittent wiring | How is activity made visible without implying healthy communication? |
+| Required-peer health | Confirm fresh useful responses | What makes a response valid and when does it expire? |
 
-The piezo choice is CPT-9019S-SMT-TR, a 9 × 9 × 1.9 mm external-drive part.
-Its specified sound level applies at the stated 4 kHz excitation and distance,
-not every tune or a closed bay. Its −30 to +70 °C operating range is an explicit
-exception to the preferred wider component grade for a nonessential function.
-PD6 is a GPIO allocation, not a promised timer-channel output. Ground chirps
-must use bounded execution and stop before calibration/active flight.
-[Recorded transducer selection and drive analysis](../sensing-indication-time-review-2026-09-07.md#indication).
+CAN activity and peer health are different observations. Traffic from the wrong
+device can blink an activity light; intermittent packets can look continuous
+to a human. An activity display helps diagnosis, but cannot measure a high-rate
+loss percentage by eye.
 
-### Timekeeping: short mission drift and reset continuity are different
+The existing draft has complementary red/green readiness, separate comms/power
+indication and a piezo. None of the proposals has replaced it yet. Do not add
+every suggested light: agree the operator questions and use the smallest
+adequate interface. The current flight pin allocation has no free general
+GPIO to spend casually.
 
-For a 900-second mission, 20 ppm corresponds to 18 ms and 100 ppm to 90 ms.
-Those calculations explain why an external RTC is not automatically needed.
-They are not measured oscillator bounds. Initial tolerance, temperature,
-load capacitance and ageing all contribute.
+## Sound and time
 
-The LSE investigation specifically found that a room-temperature crystal
-tolerance understated cold drift. Using the retrieved ABS07 temperature
-coefficient/turnover bounds, −20 °C could contribute about −100 ppm before
-initial tolerance and ageing. The recorded provisional LSE continuity allowance
-was therefore 200 ppm: 180 ms over 15 minutes, 5.76 s over eight hours. Active
-HSE-based timing has its own budget; do not apply the LSE number to it blindly.
-[Timing arithmetic and source qualifications](../sensing-indication-time-review-2026-09-07.md#time).
+A passive piezo can make selectable startup tones. It must be silent before
+calibration/active flight so its vibration and execution work do not interfere.
+A closed bay may also make it difficult to hear; test the actual installation.
 
-The reason to retain the internal RTC/LSE is mainly knowing elapsed age across
-a supported processor reset while the backup domain stays powered. It does
-not survive complete power loss on the present VBAT connection. A plausible
-RTC value must be rejected if retention validity or epoch is unknown. UTC from
-GNSS is useful metadata; it must not step flight deadlines.
+The internal real-time clock helps establish elapsed time across supported
+resets while its supply survives. It is not a backup battery. Active deadlines
+use a higher-resolution monotonic timer: a clock that does not jump when GNSS
+wall-clock time is corrected.
 
-### Current evidence: why INA228 moved onto Croí
+For scale, 20 parts per million of clock error gives 18 ms over fifteen minutes.
+Cold drift can be larger than room-temperature tolerance. Retention validity,
+temperature and elapsed-time accuracy all need testing; a plausible displayed
+time is not proof of continuity.
 
-The original plan placed avionics and propulsion current monitors on Foinse.
-The later discussion exposed the flaw: standalone Croí should also record its
-battery-load response. Moving the avionics INA228/shunt onto the common Croí
-entry retained one measurement path and one driver family; duplicating it on
-Foinse would add little.
+## Next pass through this chapter
 
-The Rev 1 precedent was ACS71240 Hall sensing, with an analog conversion path.
-Hall sensing can avoid an external shunt and offer isolation, but the current
-boards deliberately share ground. Reusing INA228 needed no free flight ADC
-pin and covered ordinary logic draw as well as actuator increments. The eFuse
-IMON output was another lower-part-count option, but would need an ADC/front
-end and validated low-current transfer behaviour. IMON remains a bench probe.
-[Native-state and Rev 1 evidence](../sensing-indication-time-review-2026-09-07.md#why-not-simply-use-the-old-sensor-or-the-efuse-imon).
+Describe the normal operator sequence and what each indication can honestly
+claim. Review stale, reset and unpowered states, USB-only operation and failed
+communications. Keep physical arm evidence separate from software readiness.
 
-The 5 mΩ shunt adds 30 mV drop and 0.18 W dissipation at 6 A, nominally. It is
-also another series failure point. It measures protected battery-load current,
-not USB, charging, upstream bias/leakage or all vehicle power. A downstream
-capacitor may supply the start of a pulse; monitor loss may hide it entirely.
-Keep request, driver state, electrical response and physical outcome distinct.
-
-## What the indications cannot prove
-
-Green means reported readiness, not armed or launch permission. Stuck-high
-firmware can leave stale green. PWR indicates voltage, not correct execution.
-No LED or buzzer replaces physical arm-state evidence or a detailed fault log.
-
-Mute the piezo before calibration and flight; it must not contaminate inertial
-measurements or delay required work. Audible operation inside the closed bay,
-at temperature and low pressure is unproved.
-
-HSE drift and RTC retention are separate questions. Internal RTC/LSE avoids
-another IC, but loss of its supply loses retention. GNSS UTC must never step
-control deadlines or be required for boot. Reset timestamps need valid age and
-epoch, not a plausible-looking wall clock.
-
-## Next review
-
-Draw supervisor/watchdog → reset → staging-clear relationships visibly.
-Keep reference/clock capacitors beside their actual schematic nodes rather
-than in a passive inventory grid.
-
-Verify USB-only identification/configuration/extraction, disconnected or stalled
-comms, silent reset defaults, each readiness transition, SWD recovery and all
-claimed clock/reset classes. Normal field service must work with the bay
-closed; invasive debug or internal harness changes invalidate flight-ready closure.
-
-Evidence: [status/time revision](../sensing-indication-time-review-2026-09-07.md),
-[readiness revision](../connector-servo-readiness-revision-2026-09-07.md),
-[reset contract](../../interfaces/reset-recovery-contract.md).
+[Next: GNSS and radio](06-gnss-radio.md) · [Detailed indication, debug and clock evidence](implementation-reference/05-service-status-time.md)

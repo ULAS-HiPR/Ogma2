@@ -2,8 +2,10 @@
 
 ## Current reading path
 
+- [Architecture review pack](architecture/README.md): the next session's complete nine-chapter walkthrough, mechanism diagrams and open decisions.
 - [Current system](../current-system.md): concise controlling architecture.
-- [Architecture review pack](architecture/README.md): overview and eight expanded chapters with options, evidence and tradeoffs.
+- [Implementation reference](architecture/implementation-reference/README.md): preserved detailed part comparisons and calculations; optional lookup.
+- [10 September joint review](architecture/2026-09-10-session-review.md): supporting source-backed extraction, not required first reading.
 - [Firmware handoff](firmware-handoff-2026-09-07.md): detailed hardware/driver contract.
 - [Hardware entrypoint](../hardware/README.md): local CAD boundary and checks.
 - [Project log](../project-log.md): dated decisions and observed results.

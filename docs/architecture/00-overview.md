@@ -1,129 +1,113 @@
-# 0. What we are building
+# 0. The whole system
 
-Ogma 2 is the computer we maintain for ordinary HiPR launches, then qualify for
-specific harder missions. Croí2 works alone. Foinse2 adds vehicle power
-distribution without adding a processor or another flight-state machine.
+**Retained:** a standalone flight computer, optional vehicle power companion and
+independent engine controller. **Open:** the final output, processor, power and
+external-actuation allocation. No schematic or PCB changes until the final
+stack is authorized.
 
-The useful difference is integration with our vehicles: three energetic
-channels, three servo channels, measured power, dissimilar sensors, a bounded
-propulsion link and serviceable wiring. A newer chip is useful only when it
-improves one of those jobs.
+## What we are making
 
-## Power and information
+Ogma is a reusable flight-computer system for HiPR vehicles. **Burrito** is the
+core: it senses motion, estimates the flight state, records what happened and
+handles its assigned recovery and actuator functions. It also communicates
+with the ground. It must work without the other two boards.
 
-```text
-Standalone 2S OR Foinse protected 2S
-                 │
-       Croí protection + current shunt
-          ┌──────┴───────────┐
-       logic rails      physical output-energy breaks
-          │                  │
-  flight MCU U201       3 energetic + 3 servo channels
-    │   │    │
- sensors NOR vehicle CAN ─────── propulsion controller
-    │
- bounded UART
-    │
- comms MCU U401 ─── GNSS / radio / USB
+**Churro** adds vehicle-specific power distribution. **Fajita** controls the
+engine using its own measurements and local safety decisions. These are working
+names for Croí2, Foinse2 and the separate propulsion controller respectively;
+the existing CAD names have not changed.
 
-Foinse: separate 6S pack ── protected paired power ── propulsion
-        Croí auxiliary 3.3 V ── monitoring only
+Rev 1 divided the computer across several boards. That brought duplicated
+functions, version coordination and extra connections. The new direction wraps
+the core functions together without forcing every vehicle's power and engine
+requirements onto the same PCB.
+
+## Who owns what?
+
+```mermaid
+flowchart TB
+  subgraph Core["Burrito — standalone core"]
+    Sensors["Motion and pressure sensors"] --> Flight["Flight processor<br/>estimate, mission state, recovery, local outputs"]
+    Flight --> Log["Full-rate local recording"]
+    Flight <-->|"Bounded internal link"| Comms["Communications processor<br/>GNSS, radio, USB"]
+  end
+  Comms <-->|"Radio"| Ground["Groundstation<br/>live view and partial recording"]
+  Flight <-->|"Existing CAN coordination"| Engine["Fajita<br/>local engine sensing, limits and actuation"]
+  Flight -.->|"Open: command or state interface"| Remote["Possible remote actuator controller"]
+  Power["Churro<br/>vehicle power distribution"] -->|"Power, not flight decisions"| Core
+  Power -->|"Separate protected power branch"| Engine
+  Payload["Independent experimental payload"]
 ```
 
-The drawing shows responsibilities, not a finished power or arm schematic.
-USB service does not power the outputs. Only one Croí battery source may be
-connected. Propulsion owns local valves, redlines and abort; CAN carries
-coordination rather than a remote substitute for its control loop.
+This is a responsibility map, not a wiring diagram. The dashed connection is
+a proposal. Churro does not need a flight-state machine. A payload does not gain
+control authority because it flies in the same rocket.
 
-## What is already accepted
+Fajita must enforce engine limits locally. Burrito requests an allowed state
+transition; it does not remotely switch individual engine valves through CAN.
+The remote fin/canard question remains open: reusing Burrito's estimate and
+closing a loop locally have different costs. Chapter 4 explains both.
 
-Two role-separated H563 MCUs; separate flight/comms/optional power domains;
-five flight sensors; fixed local NOR; three energetic and three servo channels;
-MCU-less Foinse; keyed connectors; independent debug; first-full-PCBA testing.
-The current review is not permission to silently remove these choices.
+## What happens when something fails?
 
-The carbon airframe changes the GNSS installation: reception must move outside
-it. External power-switch connections are also authorised. Exact implementation
-remains separate from these requirements. Computer power and energetic arming
-must remain distinguishable electrically and to the operator.
+The two processors separate variable communications work from time-critical
+flight work. They share a PCB and upstream power: this is **not redundant
+recovery**.
 
-## What the split buys, and what it does not
-
-Comms can reset without taking essential flight work with it. A failed optional
-device should be isolated locally; a failed peripheral must not stall the
-scheduler. These are testable containment claims.
-
-Both MCUs still share a board and upstream power path. The flight processor,
-core conversion, installation, software defects and common environment remain
-common failure points. Two MCUs are not two independent recovery systems.
-
-Ordinary flights use the workhorse outputs after qualification. The bounded
-Kármán configuration has those energy paths physically absent/DNP; independent
-vehicle systems own recovery, actuation and full-envelope altitude proof.
-
-## How the research shaped this design
-
-The design is not justified by having more components than another flight
-computer. The earlier research kept returning to a few observed integration
-failures and the evidence that would make them diagnosable next time.
-
-| Earlier finding or constraint | Architectural consequence | Remaining cost or limit |
+| Failure | Intended behaviour | Limit |
 | --- | --- | --- |
-| Rev 1 supply/reset cause was not established by the available record | Voltage/current evidence, reset capture, independent supervision and explicit source tests | More diagnostic circuitry does not identify a cause until data is captured correctly |
-| Shared-bus, orientation and exact-part mistakes | Separate acquisition buses, exact package/pin checks, explicit sensor identity and axis transforms | More drivers and boundaries; common mounting/environment faults remain |
-| GNSS fix/age and reconstructed altitude could be confused | Preserve source time, validity and datum; do not label a mixed-source track independent GNSS proof | Estimator and log consumers must honour those distinctions |
-| Carbon blocks the chosen onboard-antenna installation | External GNSS antenna arrangement | RF launch, coax loss and retention replace the old cable-free advantage |
-| Need a reusable computer across ordinary and liquid vehicles | Standalone Croí plus MCU-less Foinse and a bounded propulsion CAN contract | More interfaces than a dedicated recovery-only board; their failure behaviour must be tested |
-| Short suborbital exposure, not orbital lifetime | Commodity parts with explicit fault containment and mission qualification | No claim of radiation hardness or years of unattended space operation |
+| Communications stops | Essential local flight work continues | GNSS aiding and radio may be lost |
+| Bulk recording fails after launch | Flight work continues with explicit missing evidence | No claim that the full record survives |
+| Flight processor resets | Validate retained state and flight phase before any permitted recovery continuation | Further sustainer ignition remains inhibited |
+| Whole core loses power | Primary core functions are unavailable | Independent vehicle recovery must cover its allocated hazards |
 
-The Rev 1 reset was not proved to be a connector, hot-plug, sensor or radiation
-fault. The earlier reviews deliberately separated candidate precursors from
-causation. That discipline is part of the design: record enough to distinguish
-a command, an electrical response, a valid measurement and an actual outcome.
-[Rev 1 lessons carried forward](../rev1-external-review-lessons.md),
-[reset and evidence contract](../../interfaces/reset-recovery-contract.md).
+Before launch, an unexplained fault stops preparation. A failure tolerated
+during flight is not automatically acceptable on the pad.
 
-### The real simplicity trade
+## Ordinary flight versus a space-shot recorder
 
-One processor, one regulator and a shared sensor bus would be simpler to draw.
-They would also place more failures in the same path. Every additional branch
-in this design needs a named containment or measurement job. Conversely,
-separate regulators do not make separate flight computers when their source,
-PCB and flight processor remain shared. The chapters explain both sides.
+Our primary job is ordinary competition and development flights, broadly the
+existing 3–9 km planning envelope. These still need mission-specific loads,
+simulation and qualification.
 
-The earlier model found storage to be a major priced component, while the
-additional quiet regulator was a small line item by comparison. Signal-domain
-protection was a major component-count/layout burden. Those are better places
-for an honest cost/function review than treating chip age or total part count
-as a proxy for quality. No complete current delivered BOM quote exists.
+The separate bounded 100 km concept is a recorder configuration with its
+energetic and servo energy paths physically unpowered. Independent vehicle
+systems provide recovery and full-envelope altitude evidence. The current GNSS
+receiver does not prove 100 km apogee. Nothing here claims orbital lifetime.
 
-Adapting an established flight computer remains a legitimate alternative. The
-dated CATS comparison did not establish that Ogma is more reliable, nor verify
-the claimed 100 km rating. Our reason to build is the combined HiPR mission,
-interfaces, service and owned control policy. Novel radio hardware earned a
-place through a concrete module comparison; novelty alone was not the argument.
-[Dated comparison](../avionics-options-review-2026-09-07.md#5-cats-compare-the-vehicle-job-not-a-chip-age-contest).
+The existing planning envelope also includes eight hours operating, four hours
+reduced-duty recovery and thirty minutes of full-rate recording. These are
+requirements/budgets to test, not measured endurance. They must remain visible
+when reducing cost, memory or power.
 
-### What kind of evidence is in this pack?
+Other provisional budgets are five years of service, 25 inspected flights,
+powered operation from −20 to +70 °C, 50 g quasi-static loading and a 200 g
+shock target whose waveform is unresolved. The actual vibration spectrum
+still needs vehicle evidence. Closed-bay splash protection is not permission
+for a wet exposed board. Pressure survival and useful pressure measurement
+are different requirements. None of these numbers is a qualified result.
 
-Part ranges, package constraints and reference circuits came from manufacturer
-documentation. Storage, timing, energy and link examples are calculations with
-stated assumptions. Selection and containment arguments are engineering
-judgments. Native CAD checks demonstrate specified identity/connectivity
-properties. None of those substitutes for measurements on the assembled board.
+## How it fits in a rocket
 
-The expanded chapters recover the 6–7 September study and reconcile it with
-the 8 September installation changes. They are not a new market survey or a
-claim that every competing sensor was benchmarked. Historical selections such
-as E22, SAM, two servos and pre-order coupons remain historical; the current
-Wio, external MAX, three servos and first-full-PCBA sequence control.
+Use a serviceable supported assembly, retained wiring and keyed locking
+connectors. Do not return to a tower that obscures components. Routine
+configuration, log extraction and charging need deliberate external access;
+opening or disturbing an integrated bay can require repeating readiness checks.
 
-## Next decision
+A custom L1 vehicle and repeated launches could provide useful development
+flights. Available volume, recovery clearance, mass, mounting and permission
+still need agreement. Bring-up, fault tests and installed qualification do not
+disappear once a PCB goes to fabrication.
 
-Can Seán and Anav point to every source, decision owner and unsafe failure path
-on the drawings? If not, improve the drawing or resolve that boundary before
-packing the PCB. Keep the previous routing study separate.
+The food names and possible food illustrations make this a shared project.
+Artwork, board colour and spiciness markings can wait; they do not decide the
+electrical stack.
 
-Evidence: [current system](../../current-system.md),
-[accepted baseline](../architecture-acceptance-2026-09-07.md),
-[vehicle boundary](../../interfaces/ogma-foinse-propulsion-boundary.md).
+## Next pass through this chapter
+
+Confirm the overall division, then carry unresolved details into their chapters.
+We should be able to explain the whole vehicle without knowing any component
+reference numbers. If a proposed feature has no vehicle job, failure boundary
+or useful experiment, ask why it belongs.
+
+[Next: processors](01-mcus.md) · [Detailed implementation reference](implementation-reference/00-overview.md)

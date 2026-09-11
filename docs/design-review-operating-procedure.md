@@ -49,7 +49,25 @@ Where a missing value prevents a safe or meaningful decision, identify the
 specific missing evidence and propose how to obtain it. Do not pass the entire
 requirements problem back to Seán.
 
-## 3. Review one coherent section at a time
+## 3. Match the review to the requested pass
+
+**11 September: whole-system sessions are the current mode.** Start at the
+architecture overview and pass through every chapter together. Pause for the
+team's responses within each chapter, but do not turn an unresolved question
+into a requirement to finish that subsystem before seeing the rest.
+
+After each session, rewrite the same reading pack. Preserve accepted choices
+and their reasons; explain terms where confusion arose; redraw misleading
+ownership or mechanism diagrams; retain competing arguments and the evidence
+needed to resolve them. Improve the delivery as well as the technical content.
+Appending review notes above unchanged confusing prose is not sufficient.
+
+Keep component designators and exact allocation tables in linked implementation
+references. Main chapters must remain understandable without opening CAD.
+The next session revisits the whole architecture, with settled material clear
+and unresolved decisions visible in context. Record history separately.
+
+For a specifically bounded, single-section review, use the following mode:
 
 Present the proposed answers conversationally, then leave room for the team's
 response. Do not advance through the whole design review before that response
@@ -118,6 +136,20 @@ the exact saved procedure or agreed text without silently rewriting it. Do not
 automatically ingest it into Stream or Connective Tissue.
 
 ## Current application
+
+**11 September amendment:** the joint 10 September review reopened requirements
+and system allocation. Preserve the existing CAD; no schematic/PCB work until
+Seán explicitly authorizes the final stack. The earlier sequence below is
+history, not permission to continue it. See the
+[complete session record](architecture/2026-09-10-session-review.md).
+
+The review exposed a presentation failure: part references and specialist
+terms appeared before the function was understood. Start each section with
+the vehicle job, a mechanism/ownership diagram, its failure boundary and a
+concrete example. Then give alternatives, costs, component evidence and the
+next discriminating check. Define staging, one-shot, bootstrap, ECC and datum
+where used. Do not treat an unread or deferred section as accepted. Retain the
+deep research as supporting material, not an obstacle to joining the review.
 
 Seán requested a batch architecture review, then accepted the complete result
 on 7 September, including qualifications and the selected connectors. The

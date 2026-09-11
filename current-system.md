@@ -1,17 +1,32 @@
 # Ogma 2 current architecture
 
-Updated: 8 September 2026
-Status: accepted architecture; engineering CAD under review, not fabrication or flight release.
+Updated: 11 September 2026
+Status: requirements and architecture reopened in joint review. Existing CAD
+preserved; no schematic/PCB work until Seán authorizes the final stack.
 
 ## Direction now
 
-Keep the architecture already chosen. Make it understandable, apply the named
-installation changes, then review it together. Do not restart component
-selection or continue automatic PCB packing/routing.
+Preserve the 8 September implementation as a reference, not an instruction to
+finish it unchanged. The 10 September session with Seán, Anav and Arnav reopened
+local output count, remote actuation/control allocation, CAN topology, MCU
+selection by role, power-domain purpose and operator indication. Proposals have
+not replaced the installed interface contracts. No final stack was authorized.
+
+Start with the [architecture reading pack](docs/architecture/README.md) for the
+next joint session. Read the whole pack each pass; questions and misunderstandings
+feed back into its explanations and diagrams. The
+[joint-review record](docs/architecture/2026-09-10-session-review.md) preserves
+supporting observations, alternatives and source evidence. The system/part tables
+below describe the preserved draft unless explicitly stated otherwise.
+
+Working names: **Burrito = Croí2 core**, **Churro = Foinse2 power companion**,
+**Fajita = separate propulsion controller**. Ogma remains the family name for
+now. File, net and CAD names are unchanged.
 
 The [architecture review pack](docs/architecture/README.md) is the reading path:
 one overview, eight domain chapters, research and tradeoffs behind the circuitry, and remaining
-decisions. Seán and Anav read independently, then compare notes together.
+decisions. Explain the mechanism and its purpose before the component list;
+review it together rather than treating unread sections as accepted.
 Seán owns final PCB layout; Anav owns firmware implementation.
 
 Authorised installation changes are **implemented in the checked CAD draft**:
@@ -28,6 +43,35 @@ The [installation record](docs/installation-change-record-2026-09-08.md) defines
 the exact parts, connector pins, checked scope and remaining hardware tests.
 
 ## System
+
+### Open review deltas — not implemented
+
+- Keep standalone core operation and timing/fault separation; two MCUs remain
+  a shared-board architecture, not independent recovery.
+- Reassess three local servo channels against actual vehicle functions.
+  Compare central control with a remote output node against autonomous local
+  actuation. No loop-rate/latency result settles that choice yet.
+- Linear CAN trunk/short drops and additional named peers were proposed.
+  Existing two-node 500 kbit/s Classical CAN remains the unchanged contract;
+  no CAN FD, new termination or third endpoint is approved.
+- Compare MCU resources by role before retaining or replacing both H563s.
+  No replacement, RTOS policy or new pin allocation is selected.
+- Explain every power rail and startup dependency before considering deletion.
+  Common battery-current sensing remains useful on standalone Burrito.
+  Churro regulation/BMS/charging scope still needs actual load requirements.
+- Separate operator questions: logic powered, firmware/configuration verified,
+  healthy/fresh peers, physical output arm and channel continuity. RGB, rail,
+  continuity and CAN LEDs are candidates, not an approved set.
+- Shared servo/energetic physical enable is a working direction only. The
+  energetic mechanism review was deferred; existing inhibits and DNPs stay.
+- Add pre-trigger logging requirements and distinguish interrupted writes,
+  physical damage and a lost vehicle. Durations and survival claims remain open.
+- Keep experimental expansion on a separately scoped payload carrier rather
+  than silently enlarging the flight core. No carrier hardware is selected.
+
+All previous implementation/ordering sequences are subordinate to the explicit
+final-stack authorization gate. This documentation pass does not change a
+cross-system electrical contract, release hardware or authorize live testing.
 
 Croí2 is the standalone workhorse flight-computer PCB. Foinse2 is a separate,
 MCU-less power companion for larger vehicles. Their Samtec connection is
@@ -123,7 +167,8 @@ The child board's current pin CSVs control, not older shared-library copies.
 ## Mission envelope
 
 These are provisional design budgets, replaced by vehicle simulation and
-measurement before mission qualification. They do not block schematic work.
+measurement before mission qualification. They do not override the current
+explicit hold on schematic and PCB work.
 
 | Item | Provisional baseline |
 | --- | --- |
@@ -170,8 +215,9 @@ The [fault](interfaces/flight-fault-contract.md),
 Installed checked CAD: Croí 44 pages / 643 physical symbols / 642 footprints;
 Foinse 12 pages / 113 symbols / 112 footprints. Both are four-layer, 1.6 mm,
 unrouted engineering drafts. Croí's 80 × 230 mm and Foinse's 60 × 80 mm are
-provisional canvases, not final dimensions. Current schematic work must preserve
-existing PCB identity/placement; routing remains frozen for human review.
+provisional canvases, not final dimensions. These are the previous checked
+snapshot, not checks rerun for the 11 September documentation update. All
+schematic and PCB work remains frozen until final-stack authorization.
 New installation parts are staged outside the outlines: eight Croí, twelve
 Foinse. Circuit pages now explain purpose and connections with local wiring.
 
@@ -183,8 +229,11 @@ C1403 is an unresolved hold-up-capacitor volume allocation.
 1. Readable documentation baseline published on the review branch.
 2. GNSS and external-switch implementation recorded and installed in draft.
 3. Connected schematics installed; native identity/pad-net checks pass.
-4. Read independently, jointly review the architecture and actual circuits.
-5. Seán refines placement/routing; Anav continues firmware against explicit deltas.
+4. Review the 10 September deltas and actual mechanisms together. Resolve
+   function/output allocation, remote control/CAN, processor roles, power,
+   indication and logging requirements with explicit dispositions.
+5. Obtain Seán's final-stack authorization before any schematic/PCB changes.
+   Then reconcile affected interfaces and firmware assumptions before layout.
 6. Review pins, footprints, ratings, inhibits and assembly before the first PCBA.
 7. Test functional blocks on that first full PCBA using inert loads.
    No separate pre-order mini-PCB/coupon gate. Installed qualification follows.

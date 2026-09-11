@@ -2615,3 +2615,69 @@ A clean checkout of the staged tree resolved both local library tables and all
 board's schematic checker passed with the existing documented ERC baseline.
 No Git submodule entries were present. Vendor model bytes are preserved and
 treated as binary for review; about 36.7 MB of files is included in this import.
+
+## 2026-09-11 — extract the 10 September joint architecture sessions
+
+Seán requested a complete ten-hour Stream read and maximal extraction of the
+Ogma2 discussions, explicitly prohibiting schematic/PCB changes until the
+final stack is authorized. Read the naming discussions and both complete
+technical recordings with Seán, Anav and Arnav. Created the
+[source-backed session review](docs/architecture/2026-09-10-session-review.md)
+with recording timestamps, source locators, observations, changing positions,
+clarifications, candidate learning projects and unresolved review gates.
+
+Recorded Burrito/Croí2, Churro/Foinse2 and Fajita/propulsion as working spoken
+names. No CAD/file/net renaming. Reopened requirements include local servo
+count, central versus autonomous remote actuation, CAN trunk/peers/termination,
+MCU sizing by role, optional-rail purpose, operator indications and pre-trigger
+logging. Existing hardware and interface contracts remain the preserved draft,
+not final-stack approval. The energetic mechanism discussion was deferred,
+not accepted; existing inhibits, DNPs and qualification limits remain.
+
+Updated current-system, entrypoints, every architecture chapter and the review
+procedure to expose the new review state and explain jobs/mechanisms before
+part inventories. Added responsibility, power and recording diagrams. Retained
+the earlier detailed research and dated implementation facts. Distinguished
+reported ground-recording capability from verified implementation, current
+draw from physical outcome, and interrupted-write recovery from mechanical
+crash survival. Captured the separate experimental payload-carrier direction
+without enlarging the flight core or assigning new people to flight-critical work.
+
+No schematic, PCB, firmware or controlled electrical contract was changed.
+No fabrication, energetic testing, flight, purchase, commit or publication was
+authorized by this pass. The pre-existing AGENTS.md edit is unrelated and
+preserved. Validation of the documentation is recorded in the task handoff;
+the earlier CAD/ERC/DRC results were not rerun or represented as new results.
+
+Documentation checks: whitespace/diff check passed; 170 current/new local links
+and anchors resolved across the 20 touched documentation files. No hardware
+diff. A wider history scan found four pre-existing broken links under
+`hardware/Ogma2/`; historical entries were left untouched rather than rewritten.
+
+## 2026-09-11 — rebuild the reading pack for iterative whole-system sessions
+
+Seán clarified that extraction and annotations were insufficient: the next
+session must read the improved whole architecture, with earlier confusion
+resolved in the text and diagrams themselves. Rewrote all nine main chapters
+around functions, mechanisms, ownership, failure boundaries, retained choices
+and unresolved alternatives. Removed component designators from the main
+reading text. Preserved complete earlier chapters, calculations and detailed
+part references in the linked implementation-reference directory.
+
+The pack now starts at its overview, not the session extraction. Updated the
+entrypoints and review procedure: read the whole system, capture discussion,
+rewrite the affected explanation and diagram, reconcile the whole pack, repeat.
+The operating procedure distinguishes this mode from a bounded single-section
+review. No technical proposal became accepted merely through this rewrite.
+
+Checks: all 14 Mermaid diagrams rendered in a local browser preview; inspected
+the power and remote-actuation comparison layouts, then improved the latter
+to stack the alternatives readably. Checked 266 resolving local Markdown links
+across changed/new documents; the same four pre-existing historical broken
+links remain. Main chapters contain no component designators. Diff whitespace
+checks pass. No hardware or firmware edits; pre-existing AGENTS.md changes
+preserved. No commit or push.
+
+Next checkpoint: begin the next joint session at chapter 0 and work through
+chapter 8. Capture both architecture decisions and presentation failures for
+the next revision. Final-stack authorization remains required before CAD work.

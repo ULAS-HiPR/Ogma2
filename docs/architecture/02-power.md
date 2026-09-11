@@ -1,153 +1,135 @@
-# 2. Croí power
+# 2. Power from the source to every load
 
-## Circuit
+**Retained:** standalone battery operation, USB-only servicing without output
+energy, and separation of essential from nonessential faults. **Open:** whether
+every present rail earns its place, hold-up sizing and actual load budgets.
 
-```text
-exclusive Nano-Fit J101 / Samtec J102 battery input
-  → reverse protection + TPS26630 U101
-  → 5 mΩ R7101 shunt → protected battery loads
+## Follow the energy
 
-protected battery ─┐
-USB service limit ─┴→ TPS2121 U1101 → TPSM63603 U1301, 4.0 V
-                                         ├→ held flight input → TPS7A91
-                                         ├→ limited comms input → TPS7A91
-                                         └→ limited optional input → TPS7A91
+Burrito accepts either its own battery or Churro's protected battery feed, not
+both together. USB is an alternative source for servicing the electronics. It
+must neither charge the battery nor power the energetic or servo loads.
+
+```mermaid
+flowchart TD
+  B["One 2S input<br/>standalone OR Churro"] --> P["Input protection"]
+  P --> M["Common battery-current measurement"]
+  M --> E["Physical output-energy boundary"]
+  E --> Y["Energetic output paths"]
+  E --> S["Servo supply path"]
+  M --> X["Battery / USB source selection"]
+  U["Current-limited USB service"] --> X
+  X --> K["Shared buck converter<br/>4 V intermediate supply"]
+  K --> H["Reverse-isolated hold-up branch"]
+  H --> F["Flight 3.3 V regulator"]
+  F --> FL["Flight processor and essential sensing"]
+  K --> C["Limited communications branch"]
+  C --> CR["Communications 3.3 V regulator"]
+  CR --> CL["Comms processor, GNSS and radio branches"]
+  K --> O["Limited optional branch"]
+  O --> OR["Optional 3.3 V regulator"]
+  OR --> OL["Bulk logging and bounded AUX loads"]
+  OL --> CM["Churro monitoring"]
+  U -.-> BB["Startup bias"]
+  BB -.-> X
 ```
 
-U1102 supplies bootstrap bias. LM73100 U1401 isolates the held flight input.
-C1403 is an unresolved capacitor volume allowance, not a qualified 1000 µF part.
-Battery output energy takes off after the common shunt and through separately
-defined physical arm paths; it does not come from the 3.3 V logic rails.
+Solid arrows show functional energy flow. Dashed arrows show the USB startup
+dependency being broken; this is not a complete bias schematic. The output
+grouping is an architectural boundary, not a finalized common arm switch.
+Churro monitoring is a load; it must not be required for Churro to start
+supplying power.
 
-U7101 INA228 measures common battery current. PA0 reads protected battery voltage.
-Its INA voltage measurement is before the eFuse, so the two voltage readings
-must remain separately named. USB current is outside the battery measurement.
+This shows the **preserved three-rail design**, not approval to keep every
+part. Actual signal back-power and return paths also need inspection; they
+cannot all be inferred from this functional picture.
 
-## Why this topology
+## What each mechanism is doing
 
-The preregulator handles the battery voltage efficiently; the LDOs provide the
-accepted quiet-rail approach and separate fault domains. That cascade follows
-the Rev 1 review and Seán's explicit choice. A direct-buck design is a real
-alternative, not the current baseline. No boost is added merely to run a
-depleted pack further down.
+A **buck converter** efficiently reduces the battery voltage. A **linear
+post-regulator**, or LDO, then makes the selected quiet 3.3 V supply. Separate
+branches let us try to contain a failed nonessential load rather than letting
+it pull the entire computer down.
 
-Limits and powered-off signal boundaries aim to stop a shorted optional device
-from removing flight power. They add parts and dropout and require partial-rail
-testing. A low-noise regulator does not excuse poor return paths or layout.
-Shared source, preregulator and a shorted core LDO remain common failure points.
+A **current limiter** bounds current into a fault. **Reverse blocking** prevents
+energy flowing back toward a collapsed source. A **hold-up capacitor** stores
+a small amount of energy locally. None does all three jobs.
 
-## Options explored and why this one survived
+The common converter and essential regulator remain common failure points.
+A capacitor cannot fix a permanent short. Turning a sensor's supply off is
+also insufficient if a driven signal pin powers it through another path.
 
-| Option | Useful gain | What decided the trade |
+## Why does the optional rail exist?
+
+The earlier explanation made this look like an unexplained extra regulator.
+Its intended loads include bulk logging and the bounded auxiliary/monitoring
+path. A short there should not remove essential flight power.
+
+Three alternatives deserve a real comparison:
+
+| Choice | Benefit | Cost |
 | --- | --- | --- |
-| Linear regulation directly from 2S | Few switching components | At useful load it spends the battery-to-3.3 V drop as heat. Rev 1 also exposed mechanically unsuitable large packages |
-| Discrete buck | Potential recurring-cost and footprint optimisation | More responsibility for magnetics, hot-loop layout and EMI. Not proved cheaper as a complete first-board implementation |
-| Integrated buck module followed by quiet LDOs | Concentrates switching integration and retains the accepted low-noise approach | Extra cost, LDO heat and a shared preregulator failure point; selected with those costs visible |
-| Low-noise LDO with VIOC-controlled preregulator | Can regulate LDO headroom and reduce dissipation | Adds a control loop and compatibility/stability work. Investigated after the Rev 1 advice, not selected |
-| Logic buck-boost | Could extend operation into a lower source-voltage region | No named valid 2S operating condition required it. Extra conversion complexity is not a substitute for battery acceptance |
-| Separate converter per MCU | Removes one shared conversion dependency | More magnetics, area, emissions and start/fault interactions. Current board retains the common-source risk |
+| Retain the separate rail | Explicit nonessential load boundary | Regulator, limiting, isolation, area and losses |
+| Move its loads onto an existing rail with local protection | Could remove a regulator | Must recover equivalent fault containment and startup behaviour |
+| Remove an unnecessary load | Removes its complete support burden | Only valid if the function is genuinely unnecessary |
 
-The Rev 1 reviewer recommended integrated switchers and a genuinely low-noise
-post-regulator, with LT3045 as an example. The requirement retained was the
-topology and noise concern, not an obligation to fit that exact example part.
-LT3045-1 is the VIOC variant; confusing it with the ordinary LT3045 would create
-a false implementation assumption. [Recorded external-review lessons](../rev1-external-review-lessons.md),
-[power contract and VIOC distinction](../../interfaces/power-contract.md).
+**Recommendation:** trace the actual loads and fault paths before removing the
+rail. “Optional” describes mission priority, not proof that nothing uses it.
+Keep the distinction between the supply domain and each individually switched
+device branch.
 
-### Why 4.0 V, and what the module rating does not mean
+## The startup question we got stuck on
 
-The earlier 3.8 V placeholder became 4.0 V to leave more margin for protection
-drop, load transients and the held-core path before the 3.3 V LDO. At 200 mA,
-that extra 0.2 V costs about 40 mW; at 600 mA, 120 mW. It is a measurable
-headroom-versus-heat choice, not free reliability.
+On USB alone, firmware must run to negotiate/configure service power. But
+firmware cannot run until the power path starts. A small startup bias supply
+lets the source-control circuitry begin without waiting for that firmware.
+That is the relevant meaning here of “bootstrap bias.”
 
-TPSM63603 contains its inductor but still needs its prescribed input/output
-capacitors, feedback, switching-frequency choice, thermal copper and hot-loop
-placement. The original desk check distinguished its 3 V running-input figure
-from its 3.95 V startup requirement. It cannot be treated as a universal
-low-voltage source simply because one line of the table says 3 V.
-[TI module datasheet](https://www.ti.com/lit/ds/symlink/tpsm63603.pdf).
+It is different from the bootstrap capacitor used by some high-side MOSFET
+drivers. It is also different from the battery-powered bias for the external
+enable switch. Naming those jobs explicitly is more useful than a generic
+definition of bootstrap.
 
-TPS7A91 provides the selected quiet post-regulation. The dropout specification
-applies at stated current/temperature conditions; actual minimum headroom must
-include switch resistance, trace drop, converter tolerance and transient dips.
-Three regulators separate flight, comms and optional loads. Removing the third
-saves its support circuit but changes the logger/AUX fault boundary.
-[TI LDO datasheet](https://www.ti.com/lit/ds/symlink/tps7a91.pdf).
+## What the numbers mean
 
-### Hold-up and current limiting solve different faults
+A 2S lithium-ion pack is approximately 7.4 V nominal and 8.4 V fully charged;
+actual acceptable operating limits follow the pack and protection design.
 
-LM73100 blocks held-core energy from flowing back into a collapsed upstream
-rail. A branch current limiter is not automatically a sufficiently fast reverse
-blocker. C1403 is still a volume allocation, not a selected capacitor or proved
-hold-up time. Effective capacitance, ESR, voltage headroom and actual load
-determine the interval. A capacitor does not fix a permanent core short.
+At first order, a linear regulator's efficiency is output voltage divided by
+input voltage. Going from 4 V to 3.3 V gives 82.5% before quiescent losses.
+Overall battery efficiency also includes the buck and protection paths.
+Dropping the intermediate voltage saves heat but reduces tolerance for dips,
+switch losses and regulator headroom.
 
-The TPS2553 **-1 latch-off** variants bound optional/sensor fault current.
-Selecting an auto-retry variant changes repeated-fault behaviour. Likewise,
-powered-off signal isolation is necessary alongside supply switching: a live
-data pin can bypass the supposedly disabled supply. These boundaries add
-component count because they address different current paths.
-[LM73100](https://www.ti.com/lit/ds/symlink/lm73100.pdf),
-[TPS2553](https://www.ti.com/lit/ds/symlink/tps2553.pdf).
+The existing estimate delivers about 1.98 W to the three 3.3 V domains. Its
+assumed conversion losses put converter input around 2.67–2.82 W before other
+losses. This is not a measured board current or guaranteed maximum.
 
-### The power arithmetic is a budget, not a measurement
+The separate endurance example totals 19 Wh across operating, recovery and
+event modes. A continuous 3 W load does not fit the same eight-hour allocation.
+Peak-current limits, average demand and usable battery energy are different
+quantities.
 
-The 6 September model allocated 200 mA at 3.3 V to held flight/sensors,
-300 mA to comms/GNSS/radio, and 100 mA to optional loads. That totals 1.98 W
-delivered. Ideal 4.0-to-3.3 V LDO loss adds 0.42 W; with assumed 85–90% buck
-efficiency, about 2.67–2.82 W enters the converter before other losses.
-Roughly 3 W was therefore a useful initial active test point, not a peak rating.
+The proposed large hold-up capacitor is still an allowance. Its effective
+capacitance, voltage headroom, resistance and actual load determine whether it
+buys a useful interruption interval. Do not describe it as a power-loss backup.
 
-The endurance estimate used a different quantity: 2 W average over eight hours,
-0.5 W for four recovery hours and 1 Wh of events, totalling 19 Wh. A continuous
-3 W workload fails that estimate. Measure duty cycle and source current rather
-than adding peak limits as if they were normal consumption. Camera and
-propulsion loads are not hidden inside this logic budget.
+## Measure where it remains useful
 
-USB-only startup is another mode again. Comms must enumerate before requesting
-configured current; flight permission cannot be required to start that process.
-The bootstrap bias and source-selection logic resolve that circular dependency.
-On a valid battery, comms cannot withdraw essential flight power. USB neither
-charges the pack nor supplies the output-energy rails.
+Keep the common battery-current measurement on Burrito so standalone flights
+have it too. Churro can measure its separate propulsion branch. Duplicating
+the same avionics measurement on both boards adds little.
 
-## New external switch
+The measurement has costs: voltage drop, dissipation and another series
+element. It excludes USB, charging and upstream bias current. A current pulse
+is evidence of an electrical response, not proof that a servo moved or an
+initiator worked.
 
-The installed 8 September draft adds Croí J103, a two-contact vertical JST
-GH `BM02B-GHS-TBT(LF)(SN)` with `GHR-02V-S` housing. Pin 1 supplies bounded
-3.0 V bias; pin 2 returns to `BAT_SHDN_N`. Close the maintained external
-contact to enable; open/unplug to disable. The switch carries control current,
-not the battery load. No on-board mechanical switch is added.
+## Next pass through this chapter
 
-Bias path: input battery → BAS116 → two 4.7k/2010 resistors → LM4040 3.0 V
-shunt, clamped before the connector. R1006 becomes a local 22.1k pull-down;
-C1006 adds 100nF at SHDN. Protection thresholds and MCU pins stay unchanged.
-Standalone uses an external switch. With Foinse, a deliberate retained Croí
-enable plug closes J103; Foinse operates its separate source loops.
+Follow battery and USB startup through to each load, then follow a shorted
+logger or communications branch. Is essential flight power actually retained?
+Review minimum-source startup, transients, source backfeed, branch selectivity
+and useful hold-up with measured loads. Keep charging and arming separate.
 
-OFF is electronic disable, not physical isolation. Bias and pack entry remain
-live; USB can still power service logic. Bias alone draws about 0.5 mA from
-nominal 2S and is upstream of Croí's current shunt. Unplug packs for storage.
-Neither an enable contact nor a power LED proves pyro disarm.
-
-Native checks pass; installation is tracked in the current-system
-and change record. Cold/minimum-pack startup, switch retention/bounce, cable
-ESD, clamp faults and assembled thermal/surge margins still require tests.
-100nF is an edge filter, not a debounce guarantee; bouncing SHDN can restart
-the board and reset a latched protection fault.
-
-## Remaining electrical work
-
-Existing nominal battery thresholds are approximately 6.63 V start / 6.20 V
-stop, 8.99 V overvoltage and 6 A limiting; tolerances and load margins matter.
-The general 6 V planning envelope does not prove operation down to 6 V.
-
-Verify minimum-USB-VBUS regulation, startup/inrush, source exclusion/backfeed,
-hold-up effective capacitance, LDO shutdown/reverse voltage, fault selectivity
-with pack fuses, and external-switch open/short/bounce behaviour. The battery
-connector footprint and real C1403 remain pre-order closure items.
-Test on the first complete PCBA with current-limited supplies.
-
-Evidence: [power contract](../../interfaces/power-contract.md),
-[Rev 1 power rationale](../rev1-external-review-lessons.md),
-[sensing revision](../sensing-indication-time-review-2026-09-07.md).
+[Next: energetic outputs](03-energetic-outputs.md) · [Detailed power calculations and circuits](implementation-reference/02-power.md) · [Power contract](../../interfaces/power-contract.md)

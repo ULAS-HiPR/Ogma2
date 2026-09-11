@@ -1,128 +1,116 @@
-# 1. MCUs and execution
+# 1. Processors, timing and restarting
 
-## Circuit
+**Retained:** separate flight and communications responsibilities; flight owns
+vehicle CAN and recovery authority. **Open:** exact processor choice per role
+and firmware scheduling approach.
 
-U201 and U401 are STM32H563VIT6, non-SMPS LQFP100. U201 owns acquisition,
-estimation, mission state, NOR recording, three energetic outputs, three servo
-commands and CAN. U401 owns GNSS, radio and normal USB service.
+## Why two processors?
 
-The UART crosses U4301 TXU0202 with distinct supplies. Reset/source-status
-crossings are separate. Flight may request a comms reset; comms has no direct
-flight-reset, arm or energetic authority. Each MCU has its own oscillator,
-decoupling, supervised reset and SWD access.
+Radio handling, USB transfers and GNSS parsing can take variable amounts of
+time. The flight processor must not miss a measurement or decision deadline
+because the other processor is busy servicing a laptop.
 
-Initial operating budgets: 128 MHz CPU, 1 kHz essential schedule and 200 Hz
-estimation/policy. Essential execution/blocking initially gets 700 µs of each
-millisecond, leaving 300 µs reserve. These are allocations, not measurements.
+```mermaid
+flowchart LR
+  S["Sensors"] --> F["Flight processor<br/>bounded acquisition and decisions"]
+  F --> N["Local recording<br/>bounded transactions"]
+  F --> O["Permitted local outputs"]
+  F <-->|"CAN"| E["Engine peer"]
+  F <-->|"Bounded messages"| C["Communications processor"]
+  C <--> U["USB service"]
+  C <--> G["GNSS receiver"]
+  C <--> R["Radio"]
+  F -.->|"May request comms restart"| C
+```
 
-## Why keep this
+The dotted arrow is a reset-request relationship, not another data bus.
+Communications has no reciprocal authority to reset flight or arm its outputs.
+The intended test is simple to state: hold communications in reset and show
+that the essential flight functions still work.
 
-Radio stacks, GNSS parsing and USB transfers have variable latency. Separating
-them allows a simpler bounded flight loop and independent comms recovery.
-Using the same MCU reduces toolchain, spare-part and bring-up differences.
-It does not provide dissimilar-computer redundancy.
+There are limits. Both processors share the board, upstream conversion and
+installation. Two chips do not protect against all common power, mechanical
+or software mistakes.
 
-A single larger MCU could save its neighbour's support circuitry, but it would
-need demonstrated timing and fault separation inside one processor. A smaller
-comms MCU could save cost/area, but adds another maintained target. Neither
-alternative is selected for this pass.
+## Do both jobs need the same chip?
 
-## What the earlier MCU comparison actually found
+The existing draft uses two STM32H563 devices. Using the same part simplifies
+tools, spare parts and bring-up. The meeting correctly reopened whether the
+communications role needs the same resources.
 
-The hardening study initially led with H573. The accepted resource work then
-used H563VIT6 first, keeping H573 as the direct comparator. That sequence matters:
-the old table is research history, not an instruction to replace the installed
-H563. Selection followed the required peripherals, memory placement, package
-and support burden rather than maximum headline clock speed.
-
-| Researched option | What it offers | Tradeoff and disposition |
+| Approach | Gain | Cost / evidence needed |
 | --- | --- | --- |
-| H563VIT6, current | STM32 toolchain, inspectable LQFP100, required peripheral allocation and partly ECC-protected memory | No core lockstep; unequal RAM protection; tight flight pin budget. Exact allocation passed desk/native checks, not target timing qualification |
-| H573 | Closely related M33 safety/resource comparator; initial study leader | Also lacks lockstep and has unprotected RAM regions. No recorded mission benefit justified changing the accepted H563 allocation |
-| TI TMS570LS1227 | Lockstep R4F cores, ECC, BIST and error-signalling hardware | Larger 144-pin package, separate 1.2 V core rail, different tools and smaller memory budget. Reopen if a demonstrated core-fault requirement earns that burden |
-| NXP S32K3 family | Automotive safety architecture, ECC and lockstep options | Exact derivative selection, new tools and safety framework were not closed. Family capability is not a selected board |
-| SAMRH71 / VA41630 / TMS570LC4357-SEP class | Radiation-oriented devices and supporting evidence | Cost, procurement, package/rail and integration burden aimed at a different mission class. No quantified short-sortie need justified them |
+| Keep identical processors | One maintained target and familiar tools | May spend unnecessary area and cost on communications |
+| Smaller communications processor | Potential area/cost saving | Check real USB, radio, GNSS, buffering and debug needs; maintain another target |
+| One processor for everything | Removes a processor and support circuitry | Must demonstrate timing and fault separation inside one device |
 
-Source trail: [dated hardening comparison](../karman-line-mission-hardening-report.md#candidate-comparison),
-[accepted EX-04 resource work](../reliability-execution-plan.md),
-[ST exact H563 datasheet](https://www.st.com/resource/en/datasheet/stm32h563vi.pdf),
-[TI TMS570LS1227](https://www.ti.com/lit/ds/symlink/tms570ls1227.pdf).
+**Recommendation for comparison, not a part decision:** retain the two-role
+split while checking resources separately for each role. Start with actual
+peripherals, pins, memory and workload. A smaller package is useful only if it
+fits those needs. Fewer pins alone do not establish greater reliability.
 
-The comparison is not a measured failure-rate ranking. Automotive safety
-features do not establish radiation qualification, and commodity parts do not
-become space-qualified because they have ECC. The mission is a short sortie
-and return, not years in orbit. The installed power, software and recovery
-architecture still decide what a fault does to the vehicle.
+The current flight allocation is full. New LEDs, outputs or interfaces cannot
+be allocated to imaginary spare pins. The detailed pin map is supporting
+evidence, not material we should have to read aloud.
 
-### ECC means a memory map, not a checkbox
+## What makes the execution predictable?
 
-The exact-device study allocated the H563 memory as follows. These are planned
-uses; the actual linker and option-byte configuration must enforce them.
+The draft budgets a 1 kHz essential schedule and 200 Hz estimation/policy at
+128 MHz. A 700 microsecond essential-work allowance leaves 300 microseconds of
+each millisecond reserved. These are **unmeasured allocations**, not proof the
+code fits.
 
-| Region | Available role with the studied ECC configuration | Consequence |
+An RTOS schedules tasks; bare-metal firmware schedules work without that layer.
+Neither is automatically faster or safer. Anav's architecture needs to show
+which work runs when, how long it can block, and how failed peripherals are
+abandoned without stalling flight.
+
+The watchdog is an independent timer that can force a reset if required
+execution stops progressing. It should be fed because essential tasks actually
+completed, not merely because an interrupt still runs. Losing a nonessential
+logger after launch must not create an endless reset cycle.
+
+## Three kinds of memory
+
+| Memory | What it does | What not to assume |
 | --- | --- | --- |
-| SRAM1, 256 KiB | No ECC; disposable logger/USB staging | Never the sole authoritative estimator or flight-state copy |
-| SRAM2, 64 KiB | ECC-protected critical stacks/control | Include interrupt nesting and bank-specific headroom |
-| SRAM3, 256 KiB usable with ECC | Protected acquisition/estimator buffers | Upper 64 KiB of the physical bank is consumed by ECC storage, not application capacity |
-| Backup SRAM, 4 KiB | Protected checkpoint slots if configured and powered | Two slots share supply and writer; not independent recovery |
+| Program memory | Holds executable firmware | Correct storage does not make the program correct |
+| Working RAM | Holds current estimates, buffers and execution state | Contents need not survive power loss |
+| External nonvolatile NOR | Holds the flight record | A write interrupted by power loss may be incomplete |
 
-The initial protected-RAM spending cap was 223 KiB, preserving roughly 30%
-reserve across the 320 KiB main protected capacity, with per-bank limits too.
-DMA accessibility, ownership and cache behaviour need explicit checks. A map
-file checker should fail a build that puts critical state in disposable RAM.
-[ST RAM configuration training](https://www.st.com/content/ccc/resource/training/technical/product_training/group1/9d/5c/38/7e/32/71/41/e0/STM32H5-RAM-configuration-RAMCFG/files/stm32h5-ram-configuration-ramcfg.pdf/jcr:content/translations/en.stm32h5-ram-configuration-ramcfg.pdf).
+ECC is error-correcting coding for specified memory regions and error patterns.
+It does not correct arbitrary software decisions or make a processor
+radiation-qualified. The existing device has both protected and unprotected
+RAM regions; placement of critical state and buffers must follow that map.
+Two retained checkpoint copies help with interrupted updates, not loss of
+their common supply or a writer corrupting both.
 
-ECC corrects specified memory errors; it does not stop software writing the
-wrong valid value, repair a failed clock or independently validate a control
-decision. The H5 study also found that a corrected read is not automatically
-written back. Scrubbing needs controlled read/correct/rewrite ownership so it
-does not overwrite a concurrent DMA update. Supported diagnostic injection
-coverage and ordinary software corruption tests must remain separately named.
-[ST safety manual](https://www.st.com/resource/en/user_manual/um3150-stm32h5-series-safety-manual-stmicroelectronics.pdf).
+## Reset is not a new flight
 
-### Package and timing evidence
+```mermaid
+flowchart TD
+  R["Flight processor restarts"] --> D["Keep output inhibits<br/>capture reset cause"]
+  D --> V{"Trustworthy retained identity,<br/>time and state?"}
+  V -->|"No"| U["Primary continuation unavailable<br/>independent recovery allocation applies"]
+  V -->|"Yes"| P["Validate current measurements and phase"]
+  P --> C["Only the permitted phase-specific recovery path"]
+  D --> I["Further sustainer ignition inhibited<br/>for this flight"]
+```
 
-The pin audit used the non-SMPS LQFP100 table, not the family feature list.
-PB11 and PE1 are not bonded on this variant. Both VCAP pads, supplies, ADC
-channels, alternate functions and interrupt numbers were checked. The flight
-allocation had no spare general GPIO; the later third servo reclaimed PD10,
-and complementary readiness retained red/green with PD7. A larger LQFP144
-remains a real fallback if a necessary boundary cannot fit, not the current part.
+“Staging” here means igniting a subsequent rocket stage. It does not mean boot
+calibration. An in-flight reset must not declare the rocket stationary,
+recalibrate its launch height or replay every event. Recovery continuation and
+sustainer ignition have different hazards.
 
-Three SPI buses let the IMUs and high-g part transfer independently. The
-960/1000/800 Hz streams are still asynchronous. DMA removes CPU copying, not
-all bus contention or scheduling work. The 128 MHz / 700 µs essential-budget
-choice was a resource allocation; no measured worst-case runtime supports it
-yet. Use the [current handoff](../firmware-handoff-2026-09-07.md) for clocks,
-DMA requests and final physical pins, rather than an old research CSV.
+A surviving clock does not prove that the estimate survived. A valid checksum
+does not prove that its timestamp is recent. Complete power loss is different
+from a processor-only reset with valid supplies.
 
-## Failure handling
+## Next pass through this chapter
 
-The flight loop never waits indefinitely for UART, NOR, GNSS or optional I²C.
-Frames need bounded size, integrity, sequence and age. Dropping telemetry is
-preferable to missing a required flight deadline.
+Can everyone explain why the two roles exist and what each failure loses?
+Then compare the processor resources and scheduling options. Close the choice
+with compiled allocations and measured timing, including unavailable peripherals
+and communications held in reset—not a headline clock speed.
 
-The external flight watchdog is fed only after required tasks progress.
-Comms failure does not justify resetting flight. Following an in-flight flight
-reset, staging is inhibited; recovery needs validated phase/time/state.
-Neither reset nor restored power is evidence that a new flight has begun.
-
-Critical memory placement must follow the H563 ECC/retention regions actually
-configured by the firmware. Two checkpoint slots do not survive loss of their
-common supply and do not protect against a common corrupt writer.
-
-## Freeze and review
-
-Keep all existing physical pads. The approved exception already installed is
-PD10/pad57: servo3 on LPTIM2_CH2 AF3. PD7/pad88 controls complementary readiness.
-No free flight GPIO should be invented. External GNSS must retain the existing
-logical UART/PPS/reset boundary unless a concrete conflict is reviewed.
-
-Anav owns the scheduler, HAL/driver structure and firmware implementation.
-Next evidence: compiled clock/peripheral allocation, measured worst-case timing,
-comms-held-reset test, corrupted/flooded UART, reset-class retention and staging
-inhibit checks on the first PCBA.
-
-Evidence: [firmware handoff](../firmware-handoff-2026-09-07.md),
-[fault contract](../../interfaces/flight-fault-contract.md),
-[reset contract](../../interfaces/reset-recovery-contract.md).
+[Next: power](02-power.md) · [Detailed devices, memory and timing evidence](implementation-reference/01-mcus.md) · [Reset contract](../../interfaces/reset-recovery-contract.md)

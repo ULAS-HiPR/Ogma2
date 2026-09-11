@@ -1,5 +1,11 @@
 # Ogma 2 flight fault contract
 
+**11 September review hold:** this contract's electrical and safety obligations
+are unchanged. The [joint-review record](../docs/architecture/2026-09-10-session-review.md)
+identifies proposed changes; none is implemented or accepted here. Earlier
+instructions below to proceed with schematics are superseded by Seán's explicit
+hold: no schematic/PCB changes until the final stack is authorized.
+
 Updated: 7 September 2026
 Status: EX-01 policy accepted by Seán; timing allocation, implementation and
 verification remain open. This is not a completed qualification contract.

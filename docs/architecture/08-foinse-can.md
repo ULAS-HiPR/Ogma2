@@ -1,153 +1,146 @@
-# 8. Foinse and the vehicle boundary
+# 8. Churro, Fajita and the vehicle outside Burrito
 
-## Power companion, not another computer
+**Retained:** autonomous source protection, engine-local safety and standalone
+Burrito. **Open:** actuator supply needs, future CAN peers and pad-service
+implementation. Experimental payload expansion is separately scoped.
 
-Foinse2 has separate 2S avionics and 6S propulsion inputs. Their positives never
-join. TPS26630/CSD18540 source protection starts from its own pack; Croí's
-software, I²C and auxiliary supply are not required.
+## Why Churro is separate
 
-Foinse sends protected 2S to Croí through the coplanar Samtec pair.
-Croí returns limited auxiliary 3.3 V for monitoring only. INA228 U5001 measures
-propulsion discharge; ADS1115 U6001 reads temperature/voltage. Croí owns the
-avionics current monitor, including standalone operation. No duplicate AV shunt,
-Foinse MCU or CAN endpoint is needed.
+Different vehicles need different battery branches, current capability and
+possibly regulated actuator supplies. Keeping those decisions on a power
+companion avoids redesigning the complete flight computer every time a
+vehicle changes.
 
-| Samtec contact | Function |
-| --- | --- |
-| 1 / 2 | Protected 2S to Croí / return |
-| 3 / 4 | Croí protected auxiliary 3.3 V / return |
-| 5 / 6 | Monitor SCL / SDA |
-| 7 / 8 | Aggregated fault / NC |
+Churro's existing design has no processor. Source protection starts from its
+own battery, without Burrito booting or answering a message. Returned low-power
+supply and monitoring are conveniences, not permission to start delivering power.
 
-Both return contacts must individually withstand the full alternative current.
-TCA4307 bus recovery does not make monitoring mandatory for source protection.
+```mermaid
+flowchart TB
+  AV["2S avionics pack"] --> AP["Autonomous avionics protection"]
+  AP --> B["Burrito input"]
+  PP["Separate 6S propulsion pack"] --> PR["Autonomous propulsion protection"]
+  PR --> F["Fajita input<br/>local conversion and engine control"]
+  B -->|"Bounded low-power return"| M["Churro monitoring"]
+  M -->|"Measurements / faults"| B
+  C["Matched external chargers"] -.->|"Controlled service paths<br/>not through Burrito logic"| AV
+  C -.->|"Separate pack-specific path"| PP
+```
 
-## Why separate this board
+The two pack positives never join. The diagram does not define charge wiring
+or prove return-path isolation. The existing interboard connection carries
+power, bounded auxiliary power, monitoring and fault signals; it is not a
+general expansion bus.
 
-Battery interfaces, high-current paths and propulsion loads change with the
-vehicle. Keeping those on Foinse preserves standalone Croí and keeps most
-actuator energy away from its logic. The price is connectors, harnesses,
-supports and another analog protection board to qualify.
+A broken main return must not make actuator current flow through a small
+signal-reference wire. Connector retention and complete return paths matter
+as much as the supply's advertised rating.
 
-One integrated power/flight board would remove the interconnect but bind the
-workhorse computer to each vehicle's power installation. A programmable Foinse
-MCU would add a boot/software failure path without a current control job.
-Neither alternative is selected.
+## A nominal voltage is not a load specification
 
-The installed 8 September draft adds two independent source-enable
-loops: J103 avionics, J104 propulsion. Both use vertical two-contact JST GH
-`BM02B-GHS-TBT(LF)(SN)` / `GHR-02V-S`. Pin 1 is bounded 3.0 V bias; pin 2
-returns to that branch's SHDN. Close to enable; open/unplug to disable.
-One maintained two-pole switch may operate both loops, with isolated contacts;
-do not join the bias conductors or pack positives. No MCU or Croí AUX needed.
+A nominal 24 V valve is not automatically compatible with a 6S pack across its
+full discharge range. Likewise, a servo's stall current may dominate a branch
+even when average demand looks small.
 
-Each pack feeds BAS116, two 4.7k/2010 resistors and LM4040 3.0 V bias clamped
-before the connector. Local SHDN has 22.1k pull-down and 100nF filter. OFF
-leaves pack entry, sensing and bias live: approximately 0.5 mA bias at nominal
-2S and 2.3 mA at nominal 6S, plus existing loads. Unplug packs for storage.
+**Recommendation:** keep regulation conditional on actual selected loads.
+Compare voltage range, simultaneous/stall demand, duty cycle, returned energy
+and temperature before choosing a converter. Churro's flexibility is useful;
+speculative regulation for unknown loads is not.
 
-Electronic OFF is not physical energetic or charging isolation. A shorted
-contact can force enable; semiconductor faults can defeat shutdown. Contact
-bounce can reset a latched fault. Cold startup, bounce/vibration, connector ESD,
-clamp failure and thermal/surge behaviour remain installed tests. Native
-validation is complete; see the [installed change record](../installation-change-record-2026-09-08.md).
-The external service/charging harness remains pack-specific.
+A battery-management system, source protection and charging each have different
+jobs. No BMS was selected for Burrito. Define what the pack supplies, what
+Churro protects and what the external charger does rather than saying one board
+“handles the battery.”
 
-## Source and charging alternatives from the power study
+## CAN: preserved connection versus proposed network
 
-The initial sizing proposed a 2S1P, roughly 4.5 Ah avionics pack and a separate
-6S1P propulsion pack of the same provisional capacity class. These were
-engineering examples, not purchased or qualified pack assemblies. One 2S pack
-must work with standalone Croí; fitting Foinse changes source entry and
-distribution, not the basic flight-computer voltage requirement.
+The current contract uses 500 kbit/s Classical CAN between Burrito and Fajita,
+with fixed termination at the ends. The flight processor owns Burrito's CAN.
 
-| Choice explored | Benefit | Cost / retained boundary |
-| --- | --- | --- |
-| One common pack for everything | Fewer packs and chargers | Actuator faults/energy demand share more of the avionics source; separate operating packs selected for liquids |
-| 2S1P versus 2S2P avionics | 2S2P increases available energy | Doubles cells; start smaller only while measured endurance supports it |
-| MCU-less Foinse | Protection can start without Croí, I²C or AUX | Monitoring cannot implement arbitrary autonomous policies; none currently requires a Foinse processor |
-| Onboard multi-pack charging | Convenient service integration | Extra conversion, balancing, thermal and fault-control burden; external matched chargers selected |
-| Route independent recovery through common protection | Convenient single distribution point | Defeats the claimed power independence; keep its qualified source path separate |
+```mermaid
+flowchart LR
+  B["Burrito<br/>terminated end"] <-->|"Existing two-node CAN"| F["Fajita<br/>terminated end"]
+```
 
-The original P45B cell example used minimum nominal energy and a **70% planning
-factor**, not measured cold-pack discharge data. That gave about 21.7 Wh for
-2S1P against a 19 Wh example mission. Continuous 3 W operation did not fit the
-same allowance. Pack temperature limits can also be narrower than board limits.
-Endurance closes with the assembled pack, wiring and real mode profile, not the
-cell's advertised amp-hours. No loose spring cell holder is proposed for flight.
-[Power contract](../../interfaces/power-contract.md),
-[cell datasheet used by the study](https://www.molicel.com/wp-content/uploads/INR21700P45B_1.4_Product-Data-Sheet-of-INR-21700-P45B-80109.pdf).
+The meeting proposed a trunk with short drops so a board is not responsible for
+passing the harness through to its neighbour:
 
-### “24 V solenoid” does not mean direct 6S is valid
+```mermaid
+flowchart LR
+  L["End termination"] --- T1["Trunk"]
+  T1 --- T2["Trunk"]
+  T2 --- T3["Trunk"]
+  T3 --- R["End termination"]
+  T1 --- B["Short drop<br/>Burrito"]
+  T2 --- F["Short drop<br/>Fajita"]
+  T3 -.-> A["Possible short drop<br/>remote actuation"]
+```
 
-The power study used a representative 24 V ±10% coil class to test the idea,
-not to select a propulsion valve. A 6S pack spans about 25.2 V full to 18 V
-at the provisional lower source bound. It starts inside that example coil's
-21.6–26.4 V band and then leaves it. More cells can violate the upper end.
-Nominal battery voltage is not actuator compatibility.
+This second diagram is a **candidate physical layout**, not permission to add
+a third node. Termination location, removable-node behaviour, cable/stub lengths,
+bus workload and transceiver compatibility need a reviewed contract. Selectable
+termination was discussed; it is not installed.
 
-| Explored conversion route | Finding |
-| --- | --- |
-| TRACO THN 30-2415WI | Convenient 9–36 V to 24 V / 30 W proof candidate; reviewed altitude/convection conditions prevented calling it flight-qualified |
-| Pololu S18V20F24 | Lower-cost nonflight experimental option; thermally dependent output capability, not a qualified flight rail |
-| TI LM5176 converter circuit | Could regulate across the 6S window without an MCU; requires magnetics/FET/compensation/thermal design for actual loads |
-| TI TPS552882 | Rejected for this job: reviewed output limit was 22 V despite a higher input rating |
+CAN uses differential signalling to tolerate some common-mode disturbance
+within device limits. It is not defined by the positive/negative voltages used
+as an informal explanation in the room. CAN FD and Classical CAN also cannot
+share assumed headline rates; bits per second are not bytes per second.
 
-None is a populated Foinse 24 V stage. Raw propulsion power and its paired
-return are drawn; actual coil demand must decide whether and where conversion
-is needed. Coil suppression and recirculation belong at the local driver/load
-loop, not at a remote converter in the bay.
-[TRACO datasheet](https://www.tracopower.com/thn30wi-datasheet),
-[LM5176](https://www.ti.com/lit/ds/symlink/lm5176.pdf),
-[TPS552882](https://www.ti.com/lit/ds/symlink/tps552882.pdf).
+A valid checksum detects certain transmission errors. It does not prove a
+command is current, appropriate or from the intended peer. Messages need
+identity, sequence, age and permitted-state checks.
 
-### Why the interboard connector is larger than a signal header
+On the test stand, an adapter can temporarily occupy Burrito's position.
+Adding a new vehicle peer must also reconcile that emulator arrangement.
+The stand's GSE link is not silently bridged into the vehicle bus.
 
-The original Micro-Fit BMI candidate had unresolved availability, geometry and
-parallel-contact current assumptions. The Samtec MPT/MPS coplanar pair trades
-width and through-hole assembly for an inspectable single mating interface.
-One electrical contact carries the complete provisional feed; the design does
-not depend on equal sharing between nominally parallel contacts.
+## Pad power and keeping a GNSS fix
 
-Each electrical contact has six solder tails. The 48 holes are eight contacts,
-not 48 independently assignable pins. The drawing audit recorded a 52.63 mm
-footprint envelope and 7.39 mm nominal board-edge gap. Screw-down features
-secure each body to its PCB; they do not by themselves hold the mating halves
-together. Supports and engagement retention remain mechanical work.
-[Samtec MPT](https://www.samtec.com/products/mpt-08-01-01-l-ra-sd),
-[Samtec MPS](https://www.samtec.com/products/mps-08-01-01-l-ra-sd).
+The useful aim is to prepare/service the vehicle and acquire GNSS without
+prematurely enabling output energy. Keep three distinct actions:
 
-Contacts 2 and 4 share board ground. If the main return opens, the auxiliary
-reference may carry unintended load current. Its copper/bonding must support
-that fault; it is not extra normal current-capacity credit. A connector's
-catalogue rating never replaces the complete return-path audit.
+1. Supply or enable logic power.
+2. Charge through an approved pack-specific service path.
+3. Deliberately enable the permitted output-energy domains.
 
-## Propulsion and CAN
+Removing a service plug is not automatic arming. The existing maintained
+electronic-enable connection is open = OFF, closed = ON; OFF still leaves
+upstream circuitry live. It is not physical battery isolation or proof of
+energetic disarm.
 
-Croí carries CAN and reference only: JST GH contacts 1 H, 2 L, 3 reference.
-Use twisted H/L conductors up to the connector, with a short untwisted breakout.
-The connector does not need to twist the contacts internally.
+The proposed common servo/energetic enable still needs the chapter 3 review.
+On-rail charging is a useful investigation, not an approved circuit or a
+reason to improvise battery wiring.
 
-TCAN3413, 500 kbit/s Classical CAN and fixed 120 Ω ends serve the two-node
-Ogma/propulsion line. No star, powered bus or speculative expander.
-The controller owns local engine sensing, permissives, valves, redlines and
-abort. It must act safely if Ogma, CAN or the operator disappears.
+## A place for experiments that is not the flight core
 
-Foinse supplies paired propulsion power independently of Croí logic.
-An open power return must not divert actuator current into CAN reference.
-Common ground and signal protection do not prove isolation.
+The mikroBUS discussion led toward a **separate generic payload carrier**:
+a small processor, suitable power, programming access, mounting and interfaces
+for a named experiment. Storage or independent radio can be added when the
+experiment needs them.
 
-## Remaining choices
+The current eight-contact power-board connection does not become a 16-contact
+mikroBUS interface by analogy. Desired module pinouts need checking; do not
+assume standardized Quad-SPI support.
 
-The present raw 6S branch is roughly 3 A nominal; it is not a frozen solenoid
-budget. Coil count/current/duty, clamps and whether regulated 24 V is needed
-remain propulsion inputs. External matched balance chargers use protected,
-segregated service wiring; no onboard charger or invented balance pinout.
+Useful first projects include a small MCU/power board, a music/buzzer experiment,
+a payload carrier, an inert remote-actuator demonstrator or a scoped pad-service
+study. They can develop real owners without quietly making newcomers
+responsible for flight safety.
 
-Next tests: autonomous startup with AUX absent, bounded monitor-bus faults,
-source short/brownout selectivity, actual return faults, CAN loss/bus-off and
-peer resets. Do not expand this review into designing unspecified valves.
+The department can grow payload concepts toward nearer vehicle flights and
+later programmes. That organizational aim does not add a REXUS commitment to
+this computer or assign all integration work to Seán.
 
-Evidence: [vehicle boundary](../../interfaces/ogma-foinse-propulsion-boundary.md),
-[power contract](../../interfaces/power-contract.md),
-[sensing revision](../sensing-indication-time-review-2026-09-07.md).
+## Next pass through this chapter—and back to the whole system
+
+Check whether the complete vehicle still makes sense with the choices discussed
+in every preceding chapter. What must be local, what must be independent, and
+what can remain a separately owned experiment?
+
+Record each actual agreement in the relevant chapter and current-system.
+Carry unresolved questions forward beside their mechanism. Then read the
+**whole improved pack again** next session. Authorization to implement the
+final stack is a separate explicit step.
+
+[Back to overview](00-overview.md) · [Detailed power/interconnect evidence](implementation-reference/08-foinse-can.md) · [Vehicle contract](../../interfaces/ogma-foinse-propulsion-boundary.md)

@@ -1,95 +1,98 @@
-# 4. Three servo channels
+# 4. Local servos and remote control
 
-## Circuit
+**Preserved draft:** three local command channels sharing a battery-derived
+servo supply. **Open:** how many are needed, where remote loops run and which
+actuators/power envelope the vehicles actually require.
 
-PC6/PC7 drive servo 1/2 from TIM3. PD10 drives servo 3 from LPTIM2_CH2 AF3.
-The existing TXU0304 U6804 carries three PWM signals across the powered-off
-boundary. Series resistors and output pull-downs complete the external signals.
+## Start with the mechanism
 
-U6802 TPS1H100 switches their common raw battery-derived supply. U6803 TPS709
-powers only the servo-side signal buffer; it is not a servo regulator.
-R6804 remains the DNP energy link.
+A servo command expresses a requested position. The mechanism determines the
+required speed, torque, travel, update rate and safe response to failure. The
+board cannot infer those from a three-pin connector.
 
-J6602 is Micro-Fit 430451000. This completely replaces the old eight-contact
-harness pinout:
+The draft uses direct timer-generated PWM signals: repeated pulses whose width
+encodes the command. A signal buffer handles the powered/unpowered boundary;
+otherwise a live control pin may feed energy into an unpowered output domain.
+The buffer is not a servo power regulator.
 
-| Servo | Power | PWM | Ground |
-| --- | --- | --- | --- |
-| 1 | 1 | 2 | 3 |
-| 2 | 4 | 5 | 6 |
-| 3 | 7 | 8 | 9 |
+All three current channels share protection and supply. One stalled servo may
+affect the others. The provisional 2 A group limit is not a qualification for
+three loaded grid fins.
 
-Contact 10 is NC. The common nominal 2 A limit is provisional, not a
-three-grid-fin load qualification.
+## Which outputs belong near Burrito?
 
-## Why direct timers
+The meeting questioned the third local channel. Two local functions seemed
+plausible, but no final inventory was agreed. List each function, its position
+in the rocket and its load before retaining or removing a channel.
 
-Three independent commanded outputs do not need a PCA9685. MCU timers remove
-an extra bus device, driver and output-enable dependency. The downside is
-explicit timer allocation and waveform validation. Servo3 uses a different
-timer: do not assume it starts in phase with channels 1/2.
+A distant fin or canard assembly could use a local output controller instead
+of long PWM wiring or a second entire flight computer. That opens a separate
+question: who computes the command?
 
-A separate regulated servo rail could support lower-voltage actuators, but adds
-conversion and fault behaviour. The current baseline uses compatible HV servos
-on the battery-derived rail. Exact actuators decide whether that remains valid;
-no mechanism is qualified by a connector or PWM waveform alone.
+## The two arguments from the room
 
-## What the earlier alternatives would change
+```mermaid
+flowchart TB
+  subgraph Central["Option A — central estimate and control"]
+    direction LR
+    CS["Burrito sensors"] --> CE["Burrito estimate and controller"]
+    CE -->|"CAN command"| CO["Remote command receiver / output generator"]
+    CO --> CA["Actuator"]
+  end
+  subgraph Local["Option B — autonomous local control"]
+    direction LR
+    LS["Local sensors"] --> LE["Local estimate and controller"]
+    LE --> LA["Actuator"]
+    BM["Burrito mission coordination"] -->|"Bounded request"| LE
+  end
+  Central ~~~ Local
+```
 
-| Option | Benefit | Tradeoff |
+These are candidate allocations, not an approved additional CAN node.
+
+**Anav's argument:** Burrito already computes an estimate. Reusing it avoids
+duplicate sensors and another estimator. A remote processor can turn commands
+into outputs and handle missing messages.
+
+**Seán's argument:** local sensing/control reduces dependence on CAN timing
+and keeps optional control work away from the essential flight schedule.
+
+| Question | Central route | Autonomous local route |
 | --- | --- | --- |
-| Direct MCU timer channels, selected | No extra PWM controller or command bus | Requires exact timer/pin allocation and safe start/stop behaviour |
-| PCA9685-class PWM expander | Many channels with few MCU pins | Adds I²C, another stateful device and output-disable/reset questions; unnecessary for three channels |
-| Raw 2S HV-compatible servos, selected baseline | No large servo converter; short energy path | Every actuator must tolerate full charged voltage and low-pack operation |
-| Regulated servo rail | Supports a different actuator voltage envelope | Adds conversion loss, heat, peak-current and regeneration behaviour to qualify |
-| Separate switch/protection per servo | Could contain one stalled actuator more locally | More parts and current/return paths; not what the current common rail implements |
+| What crosses the bus? | Time-sensitive actuator commands | Higher-level coordination, subject to the chosen design |
+| What is duplicated? | Less sensing/estimation | Local sensing, calibration and possibly estimation |
+| What must be bounded? | End-to-end age, jitter, traffic and central execution | Local execution plus validity of coordination |
+| What happens on link loss? | Defined local command-loss response | Defined autonomous behaviour within its own limits |
 
-The third channel was a bounded change: PD10 became LPTIM2_CH2, the existing
-buffer's spare forward channel was used, and J6602 became ten-contact Micro-Fit.
-The supply was not tripled and its nominal 2 A limit did not become a measured
-grid-fin budget. The hardware changes establish three command interfaces;
-they do not establish simultaneous loaded performance.
-[Exact accepted revision](../connector-servo-readiness-revision-2026-09-07.md).
+Neither argument wins without the actual task. “CAN is too slow” was not
+demonstrated. “The estimate already exists” does not establish that its age
+and content suit the actuator. A third possibility—central estimation with a
+local controller consuming state—is worth comparing if it changes the trade;
+it is an added review suggestion, not a decision from the meeting.
 
-### What must come from the mechanism rather than the board drawing
+Returning to neutral on silence was suggested. Neutral is not universally safe
+for every mechanism and flight phase. “Optional” also does not mean an actuator
+cannot destabilise the vehicle.
 
-An actuator choice supplies the valid voltage band, input logic threshold,
-update rate, endpoint limits, stall current and permitted transient behaviour.
-The grid-fin mechanism adds inertia, aerodynamic load, gearing and required
-position response. A no-load servo demonstration answers almost none of that.
-The first loaded tests must distinguish normal travel, stall, reconnect and
-energy returned during deceleration.
+## Power follows the selected actuator
 
-The 2 A setting is a provisional protection allocation, not a desirable servo
-operating point. Raising it without checking the complete source, interboard
-contact, switch, copper and return merely moves the limiting element. A supply
-converter may become justified by the chosen actuators; it is not installed
-speculatively before that choice exists.
+The existing local supply assumes compatible high-voltage servos on raw 2S.
+A regulated supply could support other actuators, but needs conversion,
+thermal, peak/stall and returned-energy checks. Vehicle-specific regulation
+may belong on Churro; no voltage or converter was selected.
 
-The low-side buffer supply disappearing must not turn an MCU PWM output into
-a parasitic power feed. That is why the signal boundary and local pull-downs
-remain even though direct timers are simple. Firmware still needs a defined
-loss-of-command response and reset default; hardware alone cannot choose the
-mechanically safe fin position.
+A command, a current increase and a measured angle are different evidence.
+Loaded tests need travel, stall, reconnect, reset and deceleration behaviour,
+not just a servo moving freely on a desk.
 
-## What fails together
+## Next pass through this chapter
 
-All three servos share a switch, source and return. One stalled actuator may
-limit or collapse the common rail. The buffer boundary must prevent powered
-PWM from feeding an unpowered servo rail. Motor regeneration and cable
-transients can also move energy toward the board.
+Bring the proposed vehicle functions into this comparison. For each, establish
+required update rate, maximum command/state age and jitter, sensing needs and
+safe behaviour on reset, jam, link loss and power loss.
 
-A PWM command records intent. Bulk current records electrical response.
-Neither establishes actual fin angle or successful deployment. Add witnessed
-position/end-state evidence when the mechanism's qualification claim needs it.
+Then compare the allocations using a bounded timing calculation or inert
+demonstrator. Only afterwards decide local channel count and the required
+network. Keep all existing servo energy links unpopulated meanwhile.
 
-## Next review
-
-Choose the actual voltage range, peak/stall currents, permitted PWM voltage,
-endpoints, update rate, safe position and loss-of-command response. Decide the
-physical servo-energy break in the installed arm assembly. Verify switch
-limiting, reset/off defaults, regeneration clamp and all three loaded channels.
-Do not populate R6804 just to make an early demo move.
-
-Evidence: [third-servo revision](../connector-servo-readiness-revision-2026-09-07.md),
-[firmware handoff](../firmware-handoff-2026-09-07.md).
+[Next: service and status](05-service-status-time.md) · [Detailed current output implementation](implementation-reference/04-servos.md)

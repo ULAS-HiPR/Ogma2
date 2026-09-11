@@ -4,6 +4,12 @@ HiPR's workhorse flight computer: standalone Croí2, with MCU-less Foinse2 power
 distribution when the vehicle needs it. Engineering draft; no fabrication or
 flight release.
 
+**11 September review hold:** requirements and architecture are in flux after
+the joint session. No schematic or PCB changes until Seán authorizes the final
+stack. [Complete session extraction](docs/architecture/2026-09-10-session-review.md).
+Working names: Burrito (Croí2), Churro (Foinse2), Fajita (propulsion controller).
+Existing CAD/file names and cross-system contracts have not changed.
+
 ## Read
 
 1. [Current system](current-system.md) — selected architecture, boundaries and next work.
@@ -12,13 +18,16 @@ flight release.
 4. [Document index](docs/README.md) — decision records, interfaces and deeper studies.
 5. [Project log](project-log.md) — append-only history.
 
-The current review keeps the accepted design. External GNSS reception and
+The existing CAD preserves the previously accepted design. External GNSS reception and
 external power-switch connections are implemented in the checked CAD draft.
 [Exact changes and remaining tests](docs/installation-change-record-2026-09-08.md).
 Physical energetic arming remains separate. Readable schematics are installed;
-automatic PCB packing and routing remain paused for human review.
+all schematic and PCB implementation remains paused pending final-stack approval.
 
-Read the architecture pack separately, then review it together. Seán owns final layout;
+For the next session, start at the architecture pack's overview and review all
+nine chapters together. Each session's questions must improve that same text
+and its diagrams; the extraction record is optional supporting evidence.
+Seán owns final layout;
 Anav owns firmware. The model prepares the drawings, comparisons and checks.
 
 ## Hardware and repository boundary
