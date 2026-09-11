@@ -2681,3 +2681,72 @@ preserved. No commit or push.
 Next checkpoint: begin the next joint session at chapter 0 and work through
 chapter 8. Capture both architecture decisions and presentation failures for
 the next revision. Final-stack authorization remains required before CAD work.
+
+## 2026-09-11 — investigate MCU pin pressure rather than defer the question
+
+Seán requested the actual resource investigation and visible allocations in
+the MCU chapter. Exported a fresh KiCad XML netlist without changing CAD;
+checked all 200 allocated physical pads against their CSV logical-to-physical
+net mappings. All passed. Added a read-only audit utility, grouped source-backed
+tables and two inline Mermaid allocation diagrams.
+
+Flight uses 79 of 80 port pads, with PC13 deliberately quiet; the other 20 pads
+serve supply/reference/core-capacitor/reset/boot functions. Comms has 27
+externally connected port pads, two labelled-but-unused legacy radio pins,
+two unfitted LSE reservations, one quiet reservation and 48 other unused ports.
+The initial “29 connected” reading counted the legacy radio labels; inspecting
+their single-node nets corrected that distinction before final documentation.
+
+Recommendation, not acceptance: compare H563 LQFP64 for comms, retaining the
+same peripheral choices except USART3 TX/RX moves to PC10/PC11. Desk-checked
+package availability and AF mapping against ST's tables. A smaller H503-class
+device raises a concrete RAM/service-buffer question. Price, actual power,
+target firmware fit and timing remain unmeasured. No target firmware build was
+found in this repo; no synthetic empty build substituted for the actual work.
+
+The [audit](docs/mcu-pin-capacity-audit-2026-09-11.md) records counts, port groups,
+candidate mapping, savings and remaining checks. The main reading chapter now
+explains why sensor isolation and output supervision consume so many pins.
+No pin CSV, schematic, PCB or firmware was edited. No commit or push in this pass.
+
+Validation: all 16 reading-pack Mermaid diagrams render; inspected both new
+allocation diagrams locally. The read-only audit passes all 200 pads and rejects
+an intentionally mismatched mapping in an in-memory negative test. Local links
+and diff whitespace checks pass.
+
+## 2026-09-11 — power, recording and CAN desk analysis
+
+Seán authorized the three follow-on analyses after the MCU audit. Updated the
+same reading chapters rather than leaving the findings solely in an appendix.
+The [supporting audit](docs/power-recording-can-audit-2026-09-11.md) and read-only
+budget script preserve inputs, calculations, source status and limits.
+
+Observed in the unchanged schematic/netlist: optional power also feeds CAN,
+the sounder and DNP continuity-test paths. The prior simplified picture omitted
+these. Local current monitoring shares AUX. NOR/CAN are not on held flight
+power; processor hold-up cannot establish emergency-flush capability.
+
+Calculated: 800 µF effective, 204 mA and an assumed 0.25 V usable fall gives
+0.98 ms; actual margins remain unmeasured. At 96,672 B/s, 128 KiB is 1.356 s,
+not the older ~1.38 s. After the existing mission budget and 64 MiB reserve,
+20,738,816 bytes remain, roughly 214.5 full-rate seconds. Single-lane NOR
+transfer is not ruled out by the simplified program/transfer budget.
+
+Recommendations only: retain the optional rail; use continuous full-rate
+prelaunch recording with a proposed ten-second lead-in and bounded pad duration;
+compare central control first for a 100–200 Hz remote-actuator scenario. CAN
+traffic tables explicitly assume message counts/background traffic. No average
+occupancy is presented as a latency proof or accepted actuator requirement.
+
+Checks: arithmetic assertions pass; 66 local links resolve; all 16 Mermaid
+diagrams render, with revised power/recording drawings inspected locally.
+Main chapters retain no component designators. Diff whitespace passes. Croí
+schematic and PCB hashes match their checked native snapshot. Macronix direct
+PDF retrieval failed; indexed manufacturer timing text matched the prior study,
+and that evidence limitation is recorded. No hardware, firmware or interface
+contract edits; existing AGENTS.md changes preserved. No commit or push.
+
+Next checkpoint: review these recommendations during the next whole-pack pass.
+Actuator age/jitter and message inventory, actual load/hold-up measurements and
+implemented recording format remain the discriminating evidence. Final-stack
+authorization remains a separate gate.

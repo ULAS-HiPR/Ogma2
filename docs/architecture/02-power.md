@@ -28,7 +28,8 @@ flowchart TD
   CR --> CL["Comms processor, GNSS and radio branches"]
   K --> O["Limited optional branch"]
   O --> OR["Optional 3.3 V regulator"]
-  OR --> OL["Bulk logging and bounded AUX loads"]
+  OR --> OL["Limited branches: logging, CAN and AUX"]
+  OR --> DI["Sounder and proposed continuity-test feeds"]
   OL --> CM["Churro monitoring"]
   U -.-> BB["Startup bias"]
   BB -.-> X
@@ -62,8 +63,20 @@ also insufficient if a driven signal pin powers it through another path.
 ## Why does the optional rail exist?
 
 The earlier explanation made this look like an unexplained extra regulator.
-Its intended loads include bulk logging and the bounded auxiliary/monitoring
-path. A short there should not remove essential flight power.
+The schematic audit found more than logging and AUX:
+
+| Actual load | Local boundary | Consequence if the optional rail disappears |
+| --- | --- | --- |
+| NOR and its interface switches | Separate switched/current-limited branch | Bulk recording stops |
+| CAN transceiver and external-side translator | Separate switched/current-limited branch | Engine coordination and any future actuator messages stop |
+| Local battery monitor and Churro monitoring return | Shared switched/current-limited AUX branch | Current/auxiliary evidence disappears, including standalone current monitoring |
+| Piezo sounder and its discharge resistor | Direct rail connection through the sounder driver | Audible indication disappears |
+| Three proposed continuity-test feeds | Unpopulated limiting paths; not operating loads | No continuity-test source; these remain unapproved and DNP |
+
+The last two are not behind the three individual branch switches. A short on
+the shared rail can remove every function in this table. Flight is intended to
+continue, but that is degraded operation: local logging and engine communication
+can disappear together. Physical fault containment still needs testing.
 
 Three alternatives deserve a real comparison:
 
@@ -73,10 +86,19 @@ Three alternatives deserve a real comparison:
 | Move its loads onto an existing rail with local protection | Could remove a regulator | Must recover equivalent fault containment and startup behaviour |
 | Remove an unnecessary load | Removes its complete support burden | Only valid if the function is genuinely unnecessary |
 
-**Recommendation:** trace the actual loads and fault paths before removing the
-rail. “Optional” describes mission priority, not proof that nothing uses it.
-Keep the distinction between the supply domain and each individually switched
-device branch.
+**Recommendation:** retain the optional rail for the next review. Moving its
+loads to held flight power weakens the central fault boundary. Moving them to
+comms power makes logging and CAN depend on a rail which flight may deliberately
+switch off to recover communications. Keeping equivalent independent control
+and protection on a merged supply could work, but saves less than simply deleting
+the regulator suggests. The downside of retaining it is area, components and a
+shared failure point for the loads above; no measured efficiency saving supports
+removing it yet.
+
+The 100 mA normal-use allocation and approximately 0.5 A upstream limit are
+different budgets. Three branch limits cannot simply be summed and assumed
+selective. Trace a short through the branch, optional limiter and common buck;
+flight must remain valid until the fault clears or the defined reset occurs.
 
 ## The startup question we got stuck on
 
@@ -110,9 +132,30 @@ event modes. A continuous 3 W load does not fit the same eight-hour allocation.
 Peak-current limits, average demand and usable battery energy are different
 quantities.
 
-The proposed large hold-up capacitor is still an allowance. Its effective
-capacitance, voltage headroom, resistance and actual load determine whether it
-buys a useful interruption interval. Do not describe it as a power-loss backup.
+### What the hold-up capacitor actually buys
+
+For a capacitor feeding an LDO, a useful first-order calculation is
+`time = effective capacitance × usable voltage fall / input current`.
+With the existing 800 µF effective-capacitance and 204 mA load assumptions:
+
+| Usable voltage fall, after headroom and losses | Calculated interval |
+| --- | --- |
+| 0.10 V | 0.39 ms |
+| 0.25 V | 0.98 ms |
+| 0.50 V | 1.96 ms |
+
+These are sensitivity cases, not verified voltage margins. A 10 ms interval
+at 0.25 V would require about **8,160 µF effective**, before further allowance.
+The present capacitor is a brief-dip provision, not protection from a loose
+battery connector. Exact capacitance, ESR, leakage, regulator dropout, reset
+threshold and installed load remain to be established.
+
+**Crucially, the capacitor holds up flight power, not NOR or CAN.** The processor
+remaining alive does not guarantee a last log write or a final bus message.
+Use continuous committed recording and explicit reset/gap evidence; do not make
+an emergency flush depend on this capacitor.
+
+[Calculation and traced circuit evidence](../power-recording-can-audit-2026-09-11.md).
 
 ## Measure where it remains useful
 

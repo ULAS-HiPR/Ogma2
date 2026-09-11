@@ -56,6 +56,9 @@ the exact parts, connector pins, checked scope and remaining hardware tests.
   no CAN FD, new termination or third endpoint is approved.
 - Compare MCU resources by role before retaining or replacing both H563s.
   No replacement, RTOS policy or new pin allocation is selected.
+  The [11 September pin audit](docs/mcu-pin-capacity-audit-2026-09-11.md)
+  finds flight pin-full but comms with substantial unused I/O. H563 LQFP64
+  is a desk-mapped comms candidate, requiring two UART port changes; not approved.
 - Explain every power rail and startup dependency before considering deletion.
   Common battery-current sensing remains useful on standalone Burrito.
   Churro regulation/BMS/charging scope still needs actual load requirements.
@@ -68,6 +71,13 @@ the exact parts, connector pins, checked scope and remaining hardware tests.
   physical damage and a lost vehicle. Durations and survival claims remain open.
 - Keep experimental expansion on a separately scoped payload carrier rather
   than silently enlarging the flight core. No carrier hardware is selected.
+
+The [11 September power/recording/CAN desk audit](docs/power-recording-can-audit-2026-09-11.md)
+adds calculations to the reading pack. Optional power also supplies CAN and
+the sounder; held flight power does not hold up NOR. The current 128 KiB staging
+budget represents about 1.36 s at 96,672 B/s. Continuous prelaunch recording and
+central remote-actuation control are review recommendations, not new requirements.
+Candidate bus utilisation is calculated; actuator latency and fault tests remain.
 
 All previous implementation/ordering sequences are subordinate to the explicit
 final-stack authorization gate. This documentation pass does not change a

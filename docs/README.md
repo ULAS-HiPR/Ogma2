@@ -36,6 +36,12 @@ not an instruction to restore it.
 
 ## Deeper reference, not the first read
 
+- [MCU pin-capacity audit](mcu-pin-capacity-audit-2026-09-11.md): fresh 200-pad
+  connectivity check, complete allocation and smaller comms-package comparison.
+- [Power, recording and CAN audit](power-recording-can-audit-2026-09-11.md):
+  traced optional loads, hold-up sensitivity, history/storage budgets and
+  candidate actuation traffic. Recommendations, not accepted changes.
+
 | Record | Purpose |
 | --- | --- |
 | [Reliability execution plan](reliability-execution-plan.md) | Tests, dependencies and release gates |

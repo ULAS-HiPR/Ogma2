@@ -46,29 +46,56 @@ event and its actual aftermath.
 
 ```mermaid
 flowchart TD
-  S["Timestamped sensor, power and event streams"] --> B["Rolling pre-event history"]
-  B --> T{"Defined preservation trigger"}
-  T -->|"Not yet"| B
-  T -->|"Triggered"| H["Preserve preceding history"]
-  H --> L["Continue post-event recording"]
-  L --> C["Committed nonvolatile blocks<br/>sequence, time, integrity, explicit gaps"]
+  P["Storage checked<br/>begin bounded prelaunch recording"] --> S["Timestamped sensor and power streams"]
+  S --> B["Bounded writer queue<br/>existing staging allocation"]
+  E["Launch, fault and phase markers"] --> B
+  B --> C["Continuous committed NOR blocks<br/>before and after the event"]
+  C --> H["Recover history around each marker<br/>reject incomplete tail; report gaps"]
   S --> R["Reduced radio copy"]
   R --> G["Ground log<br/>separate partial evidence"]
 ```
 
-This is proposed behaviour, not implemented firmware. A rolling buffer replaces
-its oldest history while waiting. Once an event is detected, preserve the
-lead-up and continue with the aftermath. That can expose a pad/ignition
-transient which launch-triggered recording alone would miss.
+This is the recommended behaviour, not implemented firmware. Recording begins
+before the event; the event adds a marker rather than starting the recorder.
+That can expose a pad/ignition transient which launch-triggered recording alone
+would miss. A RAM ring which replaces its oldest history until a trigger is an
+alternative, but the capacity calculation below shows its limit.
 
 Define its start condition, trigger, time window, repeated-trigger behaviour,
 reset/abort handling and relationship to normal pad recording. “100 samples”
 is not a duration specification: at 1 kHz it is only 100 ms.
 
-**Recommendation:** calculate the window in seconds for each stream using the
-existing record budget and available memory. Decide what must survive a reset
-versus complete power loss before selecting a storage strategy. RAM alone
-does not retain the pre-event history after its power disappears.
+### The buffer arithmetic
+
+The current aggregate allocation is **96,672 B/s**, including the current-monitor
+records and existing framing allowance. Using that whole rate conservatively:
+
+| RAM reserved exclusively for history | Maximum history before metadata/headroom |
+| --- | --- |
+| 32 KiB | 0.339 s |
+| 64 KiB | 0.678 s |
+| 96 KiB | 1.017 s |
+| 128 KiB | 1.356 s |
+
+The existing 128 KiB is **log staging**, not spare memory promised to a second
+history buffer. Five seconds needs 483,360 bytes; ten needs 966,720 bytes.
+Neither fits the current staging allocation. Do not consume critical stacks or
+protected control-state memory to make this table fit.
+
+**Recommendation:** start full-rate append-only NOR recording shortly before
+arming, after storage/readiness checks. Preserve at least a proposed **10 seconds
+before launch**, marking launch and faults in the same continuous record rather
+than starting recording at the event. This is a candidate requirement for review,
+not implemented behaviour. Its cost is pad storage and a defined readiness start;
+it avoids holding a long history only in volatile RAM. Keep the existing staging
+buffer available for flash stalls. Do not introduce in-flight circular erasing.
+
+If the experiment specifically needs a RAM-only trigger window, a candidate
+96 KiB history / 32 KiB writer split gives roughly one second of history and
+0.339 seconds of empty-queue stall headroom. It is an alternative, not additional
+memory. Pending data consumes that headroom; preserving a window cannot stop
+new acquisition. Both strategies need reset/abort and repeated-trigger semantics.
+Neither RAM nor the held flight rail guarantees recording after complete power loss.
 
 ## Three different meanings of a black box
 
@@ -101,6 +128,31 @@ the entire device before resuming essential flight work.
 The draft budget is about 96.7 kB/s and uses 256 MiB of NOR. Thirty-minute
 recording, pad/recovery data, metadata and reserve must fit together. These are
 calculations awaiting measured write throughput, not a finalized record format.
+
+### Storage and write margin
+
+Thirty minutes at the current rate uses **174,009,600 bytes**. The existing
+mission allocation, including its pad/recovery/metadata allowance, is
+**180,587,776 bytes**. After retaining 64 MiB untouched in a 256 MiB device,
+**20,738,816 bytes remain**: about 214.5 seconds of additional full-rate data.
+That is only 3.6 extra minutes, not hours of full-rate pad waiting. A new 10-second
+lead-in costs 966,720 bytes if it was not already included. Cap the full-rate
+prelaunch interval, mark aborted attempts and reprepare safely if necessary.
+
+Sixteen 256-byte data pages plus one footer take 25.5 ms at the researched
+1.5 ms maximum page-program time. Adding only data transfer at 16 MHz gives
+about **157 kB/s with four lanes**, or **148 kB/s with one lane**, before commands,
+polling, scheduling and verification overhead. Against 96.7 kB/s this leaves
+roughly 38.5% or 34.7% of that simplified service capacity unused. It is a desk
+budget, not a demonstrated recorder. The exact device revision and implemented
+commit format must still be checked.
+
+The useful surprise: single-lane SPI is not ruled out by this arithmetic, so
+the two-pin saving raised in the MCU chapter deserves a measured comparison.
+No pin or interface change is selected. A separate commit operation per data
+page still falls below demand at the same worst-case program time.
+
+[Reproducible calculations, assumptions and evidence](../power-recording-can-audit-2026-09-11.md).
 
 If recording fails after launch, end transactions within a bound and preserve
 essential flight operation. Before launch, unexplained logger failure stops

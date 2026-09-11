@@ -94,6 +94,18 @@ On the test stand, an adapter can temporarily occupy Burrito's position.
 Adding a new vehicle peer must also reconcile that emulator arrangement.
 The stand's GSE link is not silently bridged into the vehicle bus.
 
+The [remote-actuation chapter](04-servos.md#what-the-can-arithmetic-says-already)
+now quantifies candidate traffic. A third node is not inherently a bandwidth
+problem; message sizes, rates, priorities and failure behaviour decide it.
+Do not send full-rate logs over this link: even ignoring application overhead,
+96.7 kB/s exceeds its 62.5 kB/s raw bit-to-byte ceiling.
+
+The transceiver is powered from Burrito's optional rail, alongside logging and
+AUX branches. A rail-level failure therefore removes CAN and local bulk evidence
+together. An autonomous remote controller can retain its local loop if its own
+power and sensing survive; a central-command receiver needs its defined stale
+command response. Neither arrangement makes the shared bus fault-free.
+
 ## Pad power and keeping a GNSS fix
 
 The useful aim is to prepare/service the vehicle and acquire GNSS without

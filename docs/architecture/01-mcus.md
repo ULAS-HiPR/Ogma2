@@ -49,9 +49,124 @@ split while checking resources separately for each role. Start with actual
 peripherals, pins, memory and workload. A smaller package is useful only if it
 fits those needs. Fewer pins alone do not establish greater reliability.
 
-The current flight allocation is full. New LEDs, outputs or interfaces cannot
-be allocated to imaginary spare pins. The detailed pin map is supporting
-evidence, not material we should have to read aloud.
+## Where the pins actually went
+
+The 11 September audit checked both 100-pad allocations against a fresh
+schematic netlist. **Flight is pin-full in this draft; comms is not.**
+This says nothing about CPU utilisation.
+
+| Of each package's 100 pads | Flight | Comms |
+| --- | ---: | ---: |
+| Supply, ground, reference, core-capacitor, reset and boot pads | 20 | 20 |
+| Connected port pins, including clocks/debug | 79 | 27 |
+| Labelled but unused radio reservations | 0 | 2 |
+| Unfitted low-speed crystal reservations | 0 | 2 |
+| Quiet PC13 reservation | 1 | 1 |
+| Other unallocated port pins | 0 | 48 |
+| **Total** | **100** | **100** |
+
+The two comms radio reservations are remnants of the earlier radio interface:
+their nets contain only the MCU pin. They are not driving the current module.
+The low-speed comms crystal pins are also unconnected in the schematic.
+These are possible reclamations, not changes made by this audit.
+
+### Flight allocation
+
+Each branch below is a **pin budget**, not a data or power connection.
+Counts include peripheral signals, chip selects, enables and diagnostics.
+
+```mermaid
+flowchart LR
+  F["Flight MCU<br/>100 physical pads"] --> S["Sensors: 24<br/>3 SPI buses: 12<br/>3 data-ready inputs: 3<br/>5 supply enables: 5<br/>2 pressure I2C buses: 4"]
+  F --> E["Energetic channels: 19<br/>6 request/select lines<br/>2 permits + 2 latch controls<br/>2 arm inputs<br/>6 current/continuity ADC inputs<br/>1 output-rail ADC input"]
+  F --> N["Recording: 8<br/>Quad-SPI: 6<br/>Enable + reset: 2"]
+  F --> V["Servos: 5<br/>3 PWM + power enable<br/>1 supply ADC"]
+  F --> C["External CAN: 4<br/>RX + TX + power enable + standby"]
+  F --> L["Comms boundary: 4<br/>UART TX/RX + power enable + reset"]
+  F --> A["Auxiliary monitoring: 3<br/>I2C pair + domain enable"]
+  F --> H["Other monitoring/status: 6<br/>Battery + logic ADC: 2<br/>Watchdog + fault input: 2<br/>Buzzer + readiness: 2"]
+  F --> D["Clocks/debug: 6<br/>HSE pair + LSE pair + SWD pair"]
+  F --> R["Quiet reserve: 1<br/>PC13"]
+  F --> P["Dedicated support pads: 20<br/>Supplies, returns, references,<br/>core capacitors, reset and boot"]
+```
+
+**The big consumers are sensors and output supervision: 48 pins together.**
+Three energetic channels alone use 19, not three. Each independently switched
+sensor adds supply control and often a data-ready line on top of its bus.
+This is the cost of the current observability and fault-containment choices,
+not proof that every choice is necessary.
+
+The early 6 September study reserved only 40 flight port pins and explicitly
+left diagnostics and protection controls unallocated. That preliminary count
+is not the current design. The later complete allocation consumes 79.
+
+### Communications allocation
+
+```mermaid
+flowchart LR
+  C["Comms MCU<br/>100 physical pads"] --> R["Radio: 8 connected<br/>SPI: 4<br/>Reset + BUSY + IRQ + power enable: 4"]
+  C --> G["GNSS: 5<br/>UART pair + PPS + reset + power enable"]
+  C --> U["USB/source status: 5<br/>USB pair + VBUS present<br/>Configuration valid + battery valid"]
+  C --> F["Flight link: 2<br/>UART TX/RX"]
+  C --> H["Health/status: 2<br/>Fault input + status LED"]
+  C --> D["Clock/debug: 5<br/>HSE pair + SWD pair + trace output"]
+  C --> L["Unused reservations: 5<br/>Old radio RXEN/TXEN: 2<br/>Unfitted LSE: 2<br/>Quiet PC13: 1"]
+  C --> N["Other unallocated port pins: 48"]
+  C --> P["Dedicated support pads: 20<br/>Supplies, returns, references,<br/>core capacitors, reset and boot"]
+```
+
+Port-by-port allocation, including actual pad numbers and net names, is in the
+[pin audit](../mcu-pin-capacity-audit-2026-09-11.md). The diagrams deliberately
+group by job so the reason for each allocation is visible.
+
+## The investigation result
+
+**Keep the flight part for now; compare a smaller package of the same H563 for
+comms before changing MCU families.** That recommendation follows the actual
+asymmetry above, rather than assuming both roles need identical packages.
+
+The H563 LQFP64 candidate keeps the same processor and memory class in a smaller
+package. The current comms signals can be mapped at the desk-check level:
+keep the existing functional port choices except move the flight-link UART
+from PD8/PD9 to PC10/PC11, both USART3 AF7. Those current pins are unallocated
+on comms. The exact candidate allocation is in the audit.
+This is a proposal, not a drop-in footprint or an approved remap.
+[ST package and alternate-function tables](https://www.st.com/resource/en/datasheet/stm32h563vi.pdf).
+
+A genuinely smaller device such as H503 also has USB, but its 32 KiB main RAM
+makes the current 32 KiB service-block contract an immediate design question.
+Streaming may avoid buffering a whole block; that would need an explicit
+implementation, not an assumed fit. Start with package reduction unless a
+measured cost/power benefit justifies tighter memory and another target.
+[ST H503 datasheet](https://www.st.com/resource/en/datasheet/stm32h503cb.pdf).
+
+For flight, reclaim pins by reviewing functions, not weakening protection merely
+to make a count fit:
+
+- Removing an unnecessary third local PWM would recover **one** pin.
+- SPI rather than quad-SPI recording could recover **two**, but needs throughput
+  and NOR-mode validation.
+- Sharing sensor buses could recover pins, at the cost of shared fault and timing
+  dependencies. It is not a free simplification.
+- Comms can own noncritical display work, but moving flight-owned authority to
+  exploit spare comms pins would contradict the intended failure boundary.
+
+These savings are alternatives, not additive approved changes. PC13 remains
+reserved; spare comms pins cannot be used as flight-local pins without a new
+interface and dependency.
+
+### What can be settled without hardware?
+
+The pin count, proposed package mapping and resource budget can be investigated
+now; this audit does that. Firmware size, stack usage, execution time and actual
+power need a build or measurement. No Ogma2 target firmware build is present in
+this repository, so there is no evidence yet that either CPU is compute-full
+or that a slower part meets the deadlines.
+
+The draft reserves 11 DMA channels for flight and six for comms, but a reservation
+is not a tested request/arbitration configuration. The H563 same-peripheral
+package change avoids inventing a new DMA architecture; it still needs target
+configuration and bring-up.
 
 ## What makes the execution predictable?
 

@@ -74,6 +74,46 @@ Returning to neutral on silence was suggested. Neutral is not universally safe
 for every mechanism and flight phase. “Optional” also does not mean an actuator
 cannot destabilise the vehicle.
 
+### What the CAN arithmetic says already
+
+At the existing 500 kbit/s, budget **0.270 ms per full eight-byte standard-ID
+frame**, including conservative stuffing/intermission allowance. Assume, solely
+for comparison, 100 other frames/s for engine/health traffic. This is not an
+observed traffic rate or an allocated message contract.
+
+| Update rate | 2 frames/update | 4 frames/update | 6 frames/update |
+| --- | --- | --- | --- |
+| 100 Hz | 8.1% | 13.5% | 18.9% |
+| 200 Hz | 13.5% | 24.3% | 35.1% |
+| 500 Hz | 29.7% | 56.7% | 83.7% |
+| 1 kHz | 56.7% | 110.7%: impossible | 164.7%: impossible |
+
+Columns count all new traffic, both directions. Two frames might be one compact
+command plus one status message. More channels, timestamps, validity and state
+vectors may require more frames. A 32-byte state vector needs at least four
+frames, or six if two bytes per frame are reserved for fragment/sequence fields;
+feedback would be extra. Fragmented state must be reassembled coherently.
+
+This makes **central control a credible starting comparison at 100–200 Hz**.
+It does not justify a second sensor/estimator set merely by saying CAN is slow.
+Autonomous local control becomes more attractive when a demonstrated fast loop,
+local sensing requirement or link-independent behaviour justifies the added work.
+The hybrid may send more data than central actuator commands, not less.
+
+Wire time is only part of command age. One already-transmitting frame can add
+another 0.270 ms; higher-priority messages, software queues and errors add more.
+A 200 Hz estimator can already be nearly 5 ms old before that bus wait begins.
+Sensor/filter age and actuator update timing also count. No end-to-end deadline
+has been proved from average bus utilisation.
+
+**Recommendation:** use central estimate/control as the first inert comparison,
+retaining a local stale-command response. Reverse that recommendation if the
+mechanism requires a faster/local loop or cannot tolerate the measured age.
+Select nothing until the actuator's allowable age/jitter, flight-phase response
+and actual message inventory are known. Full calculation assumptions and
+[latency cases](../power-recording-can-audit-2026-09-11.md#can-traffic-and-latency)
+are available for the next session.
+
 ## Power follows the selected actuator
 
 The existing local supply assumes compatible high-voltage servos on raw 2S.
