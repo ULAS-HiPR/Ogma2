@@ -1,5 +1,15 @@
 # Ogma 2: recommendation-first design review
 
+## Cumulative coverage, added 14 September
+
+Mark explanation comprehension separately from design disposition and physical
+verification. Retain understood explanations, briefly revisit changed assumptions,
+and continue unread sections next session. Never count skipped chapters as
+accepted. Rewrite confusing text in place and preserve dated review evidence.
+For each unresolved feature bring a reasoned default, concrete alternative and
+smallest distinguishing test. A proposed owner needs explicit acceptance;
+participation alone does not assign integration responsibility.
+
 Date: 6 September 2026
 Status: active collaboration procedure. Technical recommendations still require acceptance.
 

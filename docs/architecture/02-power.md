@@ -1,5 +1,28 @@
 # 2. Power from the source to every load
 
+**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#2-power-alternatives-and-input-boundary) supplies recommendations and supporting comparisons for this chapter.
+
+## 13 September review: compare rail allocations
+
+The rail choice remains open. A concrete two-rail candidate puts NOR/CAN/AUX
+on individually protected branches of a continuously available non-flight rail,
+and moves communications recovery downstream. Cycling that whole rail would
+otherwise also remove logging and vehicle communication. Compare the necessary
+switches, fault selectivity, startup behavior, losses and area against three
+regulators; no measured saving is established. “Optional” does not mean
+mission-irrelevant when CAN serves remote actuators.
+
+Specify the accepted minimum and maximum core input, not just 7.4 V nominal.
+Narrow 2S input with Churro adapting other packs is a candidate, not a new
+voltage contract. Reverse-polarity protection concerns a backwards source;
+reverse-current blocking concerns backfeed. Neither is physical arming.
+The ordered source, regulator and load diagrams below now expose those
+functions separately; their electrical performance still needs verification.
+
+USB startup bias enables startup; it does not itself select negotiated current.
+Usable hold-up voltage fall is starting capacitor voltage minus the minimum LDO
+input needed for valid flight power, including dropout and path losses.
+
 **Retained:** standalone battery operation, USB-only servicing without output
 energy, and separation of essential from nonessential faults. **Open:** whether
 every present rail earns its place, hold-up sizing and actual load budgets.
@@ -10,40 +33,94 @@ Burrito accepts either its own battery or Churro's protected battery feed, not
 both together. USB is an alternative source for servicing the electronics. It
 must neither charge the battery nor power the energetic or servo loads.
 
+The paths below replace the abstract branch boxes, following the preserved
+netlist. Read the source path first, then the three regulator paths, then their
+loads. A box is an actual series function; a capacitor is a side connection,
+not something the supply current passes through in series. These are supply
+paths, not every feedback resistor or signal connection.
+
+### Source entry and selection
+
 ```mermaid
 flowchart TD
-  B["One 2S input<br/>standalone OR Churro"] --> P["Input protection"]
-  P --> M["Common battery-current measurement"]
-  M --> E["Physical output-energy boundary"]
-  E --> Y["Energetic output paths"]
-  E --> S["Servo supply path"]
-  M --> X["Battery / USB source selection"]
-  U["Current-limited USB service"] --> X
-  X --> K["Shared buck converter<br/>4 V intermediate supply"]
-  K --> H["Reverse-isolated hold-up branch"]
-  H --> F["Flight 3.3 V regulator"]
-  F --> FL["Flight processor and essential sensing"]
-  K --> C["Limited communications branch"]
-  C --> CR["Communications 3.3 V regulator"]
-  CR --> CL["Comms processor, GNSS and radio branches"]
-  K --> O["Limited optional branch"]
-  O --> OR["Optional 3.3 V regulator"]
-  OR --> OL["Limited branches: logging, CAN and AUX"]
-  OR --> DI["Sounder and proposed continuity-test feeds"]
-  OL --> CM["Churro monitoring"]
-  U -.-> BB["Startup bias"]
-  BB -.-> X
+  B["One battery input: standalone OR Churro"] --> Q["Reverse-protection / blocking MOSFET<br/>controlled by battery eFuse"]
+  Q --> E["Battery eFuse<br/>current limit, voltage thresholds, enable"]
+  E --> SH["5 milliohm current-measurement shunt"]
+  SH --> VB["Protected battery node"]
+  VB --> MX["Battery / USB power mux<br/>source selection and reverse-current control"]
+  USB["USB VBUS"] --> UL["USB current limiter"]
+  UL --> MX
+  MX --> LS["Selected logic supply"]
+  LS --> BU["Buck converter: 4 V output"]
+  LS --> BO["Startup-bias LDO: 3.3 V"]
+  BO -.-> CT["Startup / source-control logic"]
+  VB --> AR["Separate physical output-arm paths<br/>assembly remains unresolved"]
+  AR --> OUT["Output-energy circuits<br/>existing energy links remain DNP"]
 ```
 
-Solid arrows show functional energy flow. Dashed arrows show the USB startup
-dependency being broken; this is not a complete bias schematic. The output
-grouping is an architectural boundary, not a finalized common arm switch.
-Churro monitoring is a load; it must not be required for Churro to start
-supplying power.
+USB has no supply arrow to the output-arm paths. Startup bias is derived from
+the **selected logic supply**, not a second USB-only source. It lets the control
+logic start before firmware is available. The external ordinary power-enable
+contact controls battery electronic shutdown; it is not the physical arm path.
+Reverse polarity means a backwards battery; reverse current means energy
+flowing back toward an upstream source. Neither means optical isolation.
 
-This shows the **preserved three-rail design**, not approval to keep every
-part. Actual signal back-power and return paths also need inspection; they
-cannot all be inferred from this functional picture.
+### From the common 4 V supply to each 3.3 V rail
+
+```mermaid
+flowchart TD
+  K["Common 4 V buck output"] --> RB["Flight reverse-current blocker"]
+  RB --> H["Held flight input node"]
+  H --- CAP["Hold-up capacitor to ground<br/>part selection unresolved"]
+  H --> FL["Flight LDO: 3.3 V"]
+  K --> CL["Comms branch current limiter<br/>latch-off; controlled enable"]
+  CL --> CR["Comms LDO: 3.3 V"]
+  K --> OL["Optional branch current limiter<br/>latch-off; flight-rail enable"]
+  OL --> OR["Optional LDO: 3.3 V"]
+```
+
+The flight input has a dedicated reverse blocker. The other two branches have
+explicit current limiters before their LDOs. Those functions must not disappear
+inside a box named “limited branch.” There is no separate pre-LDO branch limiter
+shown on flight. Regulator internal protection is not a claim of selective
+isolation between these branches.
+
+### What each rail actually supplies
+
+```mermaid
+flowchart TD
+  F["Flight 3.3 V"] --> FM["Flight MCU, supervisor, watchdog<br/>and flight-side control/interface logic"]
+  F --> SL["Five separate sensor current limiters"]
+  SL --> SS["Each limited output feeds its sensor<br/>and sensor-side signal interface"]
+  C["Comms 3.3 V"] --> CM["Comms MCU, supervisor<br/>and comms-side interface logic"]
+  C --> GS["GNSS load switch"]
+  GS --> GN["GNSS receiver and its signal interface"]
+  C --> RS["Radio load switch"]
+  RS --> RA["Radio and its signal interfaces"]
+  O["Optional 3.3 V"] --> NL["NOR current limiter"]
+  NL --> NOR["Flash and flash-side signal switches"]
+  O --> CAL["CAN current limiter"]
+  CAL --> CAN["CAN transceiver and bus-side translator"]
+  O --> AL["AUX current limiter"]
+  AL --> AUX["Local battery monitor<br/>and Churro monitoring supply"]
+  O --> BZ["Sounder / driver network<br/>no separate branch limiter"]
+  O -.-> CO["Continuity-test injection feeds<br/>DNP; not operating loads"]
+```
+
+GNSS/radio use load switches; they are not labelled as individual current
+limiters. CAN power here means powering the transceiver electronics, not sending
+vehicle power along CAN data wires. AUX supplies monitoring circuitry; Churro
+supplies main power in the opposite direction. Sensor/data interfaces are shown
+because turning off a supply alone does not prove that signals cannot back-power
+it. Exact signal paths remain in the schematic.
+
+**Trace evidence:** [preserved netlist](../../hardware/croi2/output/full-netlist.xml):
+Q101/U101 → R7101 → U1101; USB U4401 → U1101; U1101 → U1301 and U1102;
+U1401/C1403/U1701 flight path; U1501/U1801 comms path; U1601/U1901 optional
+path. Downstream: U3101–U3501 sensor limiters, U4502/U4602 load switches,
+U3601 NOR, U501 CAN, U7001 AUX. Zero-ohm links, local decoupling and feedback
+parts are omitted from the drawings, not claimed absent. Physical arm assembly,
+continuity DNPs and fault-selectivity verification remain unresolved.
 
 ## What each mechanism is doing
 
@@ -86,7 +163,8 @@ Three alternatives deserve a real comparison:
 | Move its loads onto an existing rail with local protection | Could remove a regulator | Must recover equivalent fault containment and startup behaviour |
 | Remove an unnecessary load | Removes its complete support burden | Only valid if the function is genuinely unnecessary |
 
-**Recommendation:** retain the optional rail for the next review. Moving its
+**11 September recommendation, challenged on 13 September:** retain the optional
+rail for comparison in the next review. Moving its
 loads to held flight power weakens the central fault boundary. Moving them to
 comms power makes logging and CAN depend on a rail which flight may deliberately
 switch off to recover communications. Keeping equivalent independent control

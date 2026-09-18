@@ -1,5 +1,30 @@
 # 5. What the operator can know
 
+**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#5-indicators-and-operator-sequence) supplies recommendations and supporting comparisons for this chapter.
+
+## 13 September review: diagnostic inventory first
+
+Test/flight distinction and USB identity/configuration readback were supported.
+Build the full inventory before reducing it to a few indicators. An I2C RGB
+driver is a candidate, not a selected component.
+
+| Candidate information | Source / drive path | What it establishes |
+| --- | --- | --- |
+| Source and rail power | Direct electrical indication where provided | Voltage at that point, not firmware health |
+| Boot and essential progress | Firmware heartbeat/status | Reported progress; define reset/off appearance |
+| Build, profile, test mode, config readback | Firmware via USB; optional summary lamp | Loaded/reported configuration, not independent correctness |
+| Sensor validity and calibration | Acquisition diagnostics via USB | Reported data status; not physical calibration proof |
+| Storage ready, failures and gaps | Recording firmware via USB | Recorder state and detected errors |
+| GNSS/radio health | Comms reports with age | Local reported state; stale reports must be visible |
+| CAN peers, age and errors | Flight bus diagnostics | Observed peer traffic and freshness |
+| Physical arm and continuity | Actual sense paths; hardware indication where justified | Separate electrical conditions, not successful actuation |
+| Reset/recovery history | Reset cause and retained records | Available evidence, subject to power-loss retention |
+
+For each final lamp identify hardware versus firmware drive, connection, reset
+behavior and cost. Start with separate power/arm meaning and a firmware health
+summary; keep detail in USB. This is a candidate reduction, not a wiring change.
+Do not advertise per-servo current telemetry that the draft does not contain.
+
 **Retained:** USB service, independent debug access and simple local indication.
 **Working direction:** verify running firmware/configuration without a fragile
 on-board display. **Open:** the final indication set and physical-arm evidence.

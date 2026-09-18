@@ -2750,3 +2750,90 @@ Next checkpoint: review these recommendations during the next whole-pack pass.
 Actuator age/jitter and message inventory, actual load/hold-up measurements and
 implemented recording format remain the discriminating evidence. Final-stack
 authorization remains a separate gate.
+
+
+## 14 September 2026 — integrate 13 September architecture review
+
+Fetched origin successfully using a clean shell and fast-forward checked
+`docs/reliability-review-execution`; local and remote both at
+`695b6779faa45ee62949164e82c375551da11e83`. No incoming changes were missing.
+Seán authorized documentation updates after remote retrieval.
+
+Added the [13 September source-backed review](docs/architecture/2026-09-13-session-review.md)
+from preparation, both complete meeting recordings, the drive reflection and
+subsequent corrections to the earlier model response. Preserved source roles,
+recording times, decision status and the distinction between interest and
+accepted work ownership. No raw personal transcript was copied into the repo.
+
+Updated the reading pack, current-system, review procedure and indexes. Recorded
+two local servo channels and CAN FD as review directions while preserving CAD
+and electrical definitions. Corrected pin-role explanations, rail alternatives,
+hold-up terminology and diagnostic inventory. Marked chapters 6–8 unreached.
+Added interface reconciliation notices without changing electrical contracts.
+
+Validation: relative file targets resolve and Markdown fences balance across
+changed documentation; diff whitespace checked. Existing Mermaid bodies are
+unchanged, so no new diagram render was required. No hardware or firmware test
+was run: those files were not changed. Existing AGENTS.md edits preserved.
+No commit or push. Next checkpoint: resolve open choices and complete chapters
+6–8 before final-stack authorization and CAD/interface reconciliation.
+
+
+## 18 September 2026 — correct incomplete meeting extraction
+
+Seán identified that the prior integration missed explicit meeting requests and
+requested Luna crawls of the full meeting and subsequent reflections. Completed
+independent crawls of A, B (including adjacent LTS), preparation and reflections;
+reconciled transcript guesses against existing pin/netlist evidence. Added the
+[full change ledger](docs/architecture/2026-09-18-meeting-change-ledger.md), with
+chronological findings and completed/partial/open deliverables. The previous
+summary captured themes but did not complete the requested transformations.
+
+Concrete correction: B 00:07 requested actual ordered protection elements.
+Replaced chapter 2's abstract power diagram with source-entry, regulator and
+load paths traced through the preserved netlist. Corrected startup-bias source,
+made load switches distinct from current limiters, and showed the hold-up
+capacitor as a side connection. Clarified servo back-power and local recording;
+marked the narrow MCU recommendation challenged and removed the stale claim
+that the energetic review was deferred. Added an evidenced understanding marker.
+
+Validation: all three new Mermaid diagrams parse. Browser rendering was not
+completed because the expected browser executable was unavailable; no visual
+render claim is made. Relative file targets and Markdown fences checked in edited docs and new log
+entries; `git diff --check` passed. A pre-existing historical log link to
+`hardware/Ogma2/schematic-status.md` is broken and remains outside this edit. Hardware, firmware and existing AGENTS.md edits were
+not changed. No commit or push. Outstanding research, external requirements,
+operator-indicator mapping and physical tests remain explicitly open in the
+ledger rather than being counted as completed by summarization.
+
+## 18 September 2026 — remaining desk investigations for next design review
+
+Seán requested remaining investigations before the next afternoon review and
+asked to conserve usage. Reused retrieved meeting evidence and pin/netlist audits;
+batched manufacturer research without additional agents.
+
+Added [review investigations](docs/architecture/2026-09-18-review-investigations.md)
+and linked the answers from each relevant chapter, indexes and the change ledger.
+Includes MCU shortlist and selection rationale, per-function pin justification,
+PC13 erratum, rail alternatives, source thresholds versus proposed operating
+acceptance points, bounded comms logging, RSSI direction, GNSS limits, proposed FD
+traffic/timing envelope, servo power example, partial-power behavior, indicator
+connections, reset examples and a discriminating test matrix.
+
+Material new evidence: manufacturer MAX-M10S specification includes ≤4 g and
+500 m/s limits as well as 80 km; low altitude alone does not qualify boost aiding.
+ST ES0565 confirms PC13/LSE crystal limitation on LQFP. TI TXU0304 supports the
+stated powered-off boundary under specified conditions. Recommendations remain
+proposals; no part, pin, bus rate, supply or output-circuit change was implemented.
+
+Checked FD planning arithmetic (13.3%, 29.2%, 55.7% for declared scenarios),
+logging-capacity subtraction, hold-up and stall-capacitance arithmetic. Checked
+74 relative file targets in current-system/architecture documents, balanced
+Markdown fences and diff whitespace. No physical tests claimed. Manufacturer
+price table lacked comparable quotes; U575 direct page retrieval failed, so its
+headline shortlist data uses the official indexed summary. New-family AF maps,
+actual actuator/peer inputs and bench validation remain open and named.
+
+Next review: use the decision table, resolve mission/interface assumptions,
+assign accepted owners for external inputs/tests, then continue chapters 6–8.
+Existing AGENTS edits and all CAD/firmware preserved. No commit or push.

@@ -1,5 +1,12 @@
 # Ogma 2 documents
 
+**Start next review here:** [Investigated answers and decision table](architecture/2026-09-18-review-investigations.md).
+
+[18 September full-meeting change audit](architecture/2026-09-18-meeting-change-ledger.md) — requested changes, misses and completion status.
+
+Latest: [13 September architecture review and learnings](architecture/2026-09-13-session-review.md).
+Two local servos and CAN FD are review directions; CAD remains preserved.
+
 ## Current reading path
 
 - [Architecture review pack](architecture/README.md): the next session's complete nine-chapter walkthrough, mechanism diagrams and open decisions.

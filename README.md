@@ -1,13 +1,20 @@
 # Ogma 2
 
+**Start next review here:** [Investigated answers and decision table](docs/architecture/2026-09-18-review-investigations.md).
+
+[18 September full-meeting change audit](docs/architecture/2026-09-18-meeting-change-ledger.md) — requested changes, misses and completion status.
+
+Latest: [13 September architecture review and learnings](docs/architecture/2026-09-13-session-review.md).
+Two local servos and CAN FD are review directions; CAD remains preserved.
+
 HiPR's workhorse flight computer: standalone Croí2, with MCU-less Foinse2 power
 distribution when the vehicle needs it. Engineering draft; no fabrication or
 flight release.
 
-**11 September review hold:** requirements and architecture are in flux after
+**14 September review hold:** requirements and architecture are in flux after
 the joint session. No schematic or PCB changes until Seán authorizes the final
 stack. [Complete session extraction](docs/architecture/2026-09-10-session-review.md).
-Working names: Burrito (Croí2), Churro (Foinse2), Fajita (propulsion controller).
+Canonical names confirmed 13 September: Burrito (Croí2), Churro (Foinse2), Fajita (propulsion controller).
 Existing CAD/file names and cross-system contracts have not changed.
 
 ## Read

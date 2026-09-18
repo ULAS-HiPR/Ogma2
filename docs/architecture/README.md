@@ -1,13 +1,16 @@
 # Ogma 2 architecture — the next whole-system pass
 
-Updated 11 September 2026. Requirements and architecture are open for review.
+**Start next review here:** [Investigated answers and decision table](2026-09-18-review-investigations.md).
+
+Updated 14 September 2026. Requirements and architecture are open for review.
 **No schematic, PCB or firmware changes are authorized by this pack.**
 Existing CAD and electrical contracts remain the preserved draft until Seán
 explicitly authorizes the final stack.
 
-Start at [0. The whole system](00-overview.md). Read through all nine chapters
-together each session. Settled parts should become easier to pass over; the
-places that caused confusion should now explain themselves.
+Start at [0. The whole system](00-overview.md). Briefly revisit understood sections, focus on changed assumptions, then continue
+through unread chapters. On 13 September, chapters 0–5 were discussed; 6–8
+were not reached. Comprehension is not design acceptance. See the
+[latest review and learnings](2026-09-13-session-review.md).
 
 ## Reading order
 
@@ -24,10 +27,15 @@ places that caused confusion should now explain themselves.
 | 8 | [Power companion and vehicle boundary](08-foinse-can.md) | Pack protection, charging, CAN peers and payload expansion |
 
 Burrito means the core/Croí2, Churro the power companion/Foinse2, and Fajita the
-separate propulsion controller. These are working spoken names; CAD and net
+separate propulsion controller. These are canonical names confirmed on 13 September; CAD and net
 names have not changed.
 
 ## How to read the status
+
+Italic review notes mark a specifically evidenced explanation as understood;
+they do not approve its implementation. Unmarked text is not silently accepted.
+The [18 September exhaustive change ledger](2026-09-18-meeting-change-ledger.md)
+tracks requested work separately from whether its wording was summarized.
 
 - **Retained:** existing requirement or boundary carried into this review.
   Not a claim of measured performance or flight qualification.

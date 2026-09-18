@@ -1,8 +1,24 @@
 # 3. Energetic outputs: permission, energy and evidence
 
-**Retained safety policy:** physical isolation, bounded output duration and
-different recovery/sustainer reset behaviour. **Not closed:** the group deferred
-the mechanism review. The existing three-channel circuit is not newly approved.
+**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#6-energetic-complexity-and-reset-decision-analysis) supplies recommendations and supporting comparisons for this chapter.
+
+## 13 September review: necessity remains challenged
+
+The room challenged whether each mechanism earns its cost. For each, present the
+named fault, consequence, simpler alternative and inert validation. Explaining
+what a one-shot does does not establish that this system requires one. Nominal
+load burnout also does not establish safe behavior under every fault.
+
+Keep physical permission, command issuance, termination and post-reset behavior
+separate. No retry policy was decided. Proposed simplification is not approval
+to remove the preserved protection. Space-shot recording is a separate mission
+configuration, not justification for every workhorse output.
+
+**Preserved contract:** physical isolation, bounded output duration and different
+recovery/sustainer reset behaviour. **Challenged on 13 September:** the need for
+independent pulse timing and the amount of monitoring. The mechanism review
+happened; it did not close these questions. The existing circuit is not newly
+approved. Its controls remain until the design decision is reconciled.
 
 ## What is an energetic output?
 

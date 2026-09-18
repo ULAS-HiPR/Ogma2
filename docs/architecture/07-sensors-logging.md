@@ -1,5 +1,11 @@
 # 7. Measurements and a record we can recover
 
+**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#3-comms-evidence-gnss-and-radio) supplies recommendations and supporting comparisons for this chapter.
+
+**13 September coverage:** this chapter was not reached. Related remarks are
+recorded in the [session review](2026-09-13-session-review.md); they do not
+establish acceptance of this chapter.
+
 **Retained:** dissimilar sensing, bounded device failures and full-rate local
 recording. **Working direction:** retain pre-event history. **Open:** its exact
 duration/trigger, damage survivability and measured recording performance.

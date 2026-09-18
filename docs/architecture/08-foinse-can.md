@@ -1,5 +1,11 @@
 # 8. Churro, Fajita and the vehicle outside Burrito
 
+**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) supplies recommendations and supporting comparisons for this chapter.
+
+**13 September coverage:** this chapter was not reached. Related remarks are
+recorded in the [session review](2026-09-13-session-review.md); they do not
+establish acceptance of this chapter.
+
 **Retained:** autonomous source protection, engine-local safety and standalone
 Burrito. **Open:** actuator supply needs, future CAN peers and pad-service
 implementation. Experimental payload expansion is separately scoped.

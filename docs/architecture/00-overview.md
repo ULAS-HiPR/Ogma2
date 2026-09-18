@@ -7,14 +7,15 @@ stack is authorized.
 
 ## What we are making
 
-Ogma is a reusable flight-computer system for HiPR vehicles. **Burrito** is the
+Ogma is a flight-computer system intended to be recovered, serviced and flown
+again on HiPR vehicles; “reusable” describes that intention, not qualification. **Burrito** is the
 core: it senses motion, estimates the flight state, records what happened and
 handles its assigned recovery and actuator functions. It also communicates
 with the ground. It must work without the other two boards.
 
 **Churro** adds vehicle-specific power distribution. **Fajita** controls the
-engine using its own measurements and local safety decisions. These are working
-names for Croí2, Foinse2 and the separate propulsion controller respectively;
+engine using its own measurements and local safety decisions. These are canonical
+names, confirmed on 13 September, for Croí2, Foinse2 and the separate propulsion controller respectively;
 the existing CAD names have not changed.
 
 Rev 1 divided the computer across several boards. That brought duplicated

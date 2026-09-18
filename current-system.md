@@ -1,6 +1,21 @@
 # Ogma 2 current architecture
 
-Updated: 11 September 2026
+**18 September desk follow-through:** [next-review recommendations](docs/architecture/2026-09-18-review-investigations.md).
+No hardware selection is changed. MAX-M10S review must account for documented
+4 g dynamics and 500 m/s velocity limits as well as 80 km altitude; navigation
+qualification is open across the actual flight envelope.
+
+## Latest review disposition — 13 September
+
+[Full learning and evidence record](docs/architecture/2026-09-13-session-review.md).
+Chapters 0–5 were discussed; 6–8 remain unread in this pass. Two local servo
+channels and CAN FD are review directions; the preserved CAD/contracts still
+have three channels and Classical CAN. MCU selection, rail allocation, input
+range, energetic simplification and indicator hardware remain open. No final
+stack or hardware implementation was authorized. Understanding an explanation
+is separate from accepting its design.
+
+Updated: 18 September 2026
 Status: requirements and architecture reopened in joint review. Existing CAD
 preserved; no schematic/PCB work until Seán authorizes the final stack.
 
@@ -13,13 +28,13 @@ selection by role, power-domain purpose and operator indication. Proposals have
 not replaced the installed interface contracts. No final stack was authorized.
 
 Start with the [architecture reading pack](docs/architecture/README.md) for the
-next joint session. Read the whole pack each pass; questions and misunderstandings
-feed back into its explanations and diagrams. The
+next joint session. Briefly revisit understood sections, focus on changed assumptions, and continue
+through unread chapters; questions feed back into explanations and diagrams. The
 [joint-review record](docs/architecture/2026-09-10-session-review.md) preserves
 supporting observations, alternatives and source evidence. The system/part tables
 below describe the preserved draft unless explicitly stated otherwise.
 
-Working names: **Burrito = Croí2 core**, **Churro = Foinse2 power companion**,
+Canonical names confirmed 13 September: **Burrito = Croí2 core**, **Churro = Foinse2 power companion**,
 **Fajita = separate propulsion controller**. Ogma remains the family name for
 now. File, net and CAD names are unchanged.
 
@@ -48,12 +63,13 @@ the exact parts, connector pins, checked scope and remaining hardware tests.
 
 - Keep standalone core operation and timing/fault separation; two MCUs remain
   a shared-board architecture, not independent recovery.
-- Reassess three local servo channels against actual vehicle functions.
+- Reconcile the agreed two-local-servo target against the preserved three-channel CAD.
   Compare central control with a remote output node against autonomous local
   actuation. No loop-rate/latency result settles that choice yet.
 - Linear CAN trunk/short drops and additional named peers were proposed.
   Existing two-node 500 kbit/s Classical CAN remains the unchanged contract;
-  no CAN FD, new termination or third endpoint is approved.
+  CAN FD is now the review direction, but rates, termination and additional
+  endpoints are not authorized for implementation.
 - Compare MCU resources by role before retaining or replacing both H563s.
   No replacement, RTOS policy or new pin allocation is selected.
   The [11 September pin audit](docs/mcu-pin-capacity-audit-2026-09-11.md)
@@ -66,7 +82,8 @@ the exact parts, connector pins, checked scope and remaining hardware tests.
   healthy/fresh peers, physical output arm and channel continuity. RGB, rail,
   continuity and CAN LEDs are candidates, not an approved set.
 - Shared servo/energetic physical enable is a working direction only. The
-  energetic mechanism review was deferred; existing inhibits and DNPs stay.
+  energetic mechanisms were challenged on 13 September; removal is not
+  approved, and existing inhibits and DNPs stay pending resolution.
 - Add pre-trigger logging requirements and distinguish interrupted writes,
   physical damage and a lost vehicle. Durations and survival claims remain open.
 - Keep experimental expansion on a separately scoped payload carrier rather

@@ -1,5 +1,11 @@
 # 6. Position and the radio link
 
+**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#3-comms-evidence-gnss-and-radio) supplies recommendations and supporting comparisons for this chapter.
+
+**13 September coverage:** this chapter was not reached. Related remarks are
+recorded in the [session review](2026-09-13-session-review.md); they do not
+establish acceptance of this chapter.
+
 **Retained:** external GNSS reception for the carbon airframe, communications
 owned by its processor, full-rate evidence recorded locally. **Open:** installed
 antenna performance, actual link settings and full-envelope altitude evidence.
@@ -42,7 +48,10 @@ GNSS height, pressure-derived altitude and height above the launch point are
 not automatically the same quantity. A mixed-source estimate must not be
 presented as independent GNSS proof.
 
-The current MAX-M10S receiver's documented altitude envelope stops at 80 km.
+The current MAX-M10S specifies ≤4 g dynamics, 500 m/s velocity and 80 km
+altitude under its stated airborne-platform conditions. Boost can exceed the
+dynamics/speed envelope before reaching 80 km; the altitude limit alone is
+not sufficient qualification. See the linked investigation's manufacturer source.
 An external antenna, more constellations or a faster message rate does not
 remove that limit. The discussion about speed/altitude restrictions did not
 select a workaround or a replacement receiver.

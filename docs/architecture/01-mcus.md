@@ -1,10 +1,34 @@
 # 1. Processors, timing and restarting
 
+**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale) supplies recommendations and supporting comparisons for this chapter.
+
+## 13 September review: explanation corrections
+
+The two-processor rationale was understood; processor selection remains open.
+The pin audit counts connections, not justified requirements or CPU load.
+For every enable/sense pin, identify its trigger, failure benefit, fixed-state
+alternative and discriminating test.
+
+Pressure sensors use I2C1/I2C2; Churro monitoring uses I2C4. The six energetic
+ADC inputs are three current and three continuity inputs, not servo feedback.
+The six request/select outputs serve three energetic channels. Arm sense observes
+physical permission. OCTOSPI1 uses four data wires in this draft. DRDY announces
+a sample; it is not an extra bus. An aggregate fault line cannot identify its
+source. External/internal watchdogs and complete power removal test different
+failures; reserved DMA channels do not establish concurrent timing.
+
+Broaden the MCU comparison by memory, peripherals, routing, execution budget and
+software burden. Exact LSE/PC13 restrictions need device-specific errata evidence.
+A full mock firmware exercise was discussed, not agreed.
+
 **Retained:** separate flight and communications responsibilities; flight owns
 vehicle CAN and recovery authority. **Open:** exact processor choice per role
 and firmware scheduling approach.
 
 ## Why two processors?
+
+*Reviewed 13 September, A 08:58–09:12: rationale understood. Brief revisit only
+unless the responsibility split changes; this does not approve an MCU part.*
 
 Radio handling, USB transfers and GNSS parsing can take variable amounts of
 time. The flight processor must not miss a measurement or decision deadline
@@ -22,6 +46,11 @@ flowchart LR
   C <--> R["Radio"]
   F -.->|"May request comms restart"| C
 ```
+
+“Local recording” means writing the flight record to board-mounted NOR flash.
+“Bounded transactions” means the acquisition loop cannot wait indefinitely for
+a flash operation: it needs a deadline and a defined error/degraded response.
+The final firmware must establish that deadline; the label alone proves nothing.
 
 The dotted arrow is a reset-request relationship, not another data bus.
 Communications has no reciprocal authority to reset flight or arm its outputs.
@@ -119,11 +148,14 @@ Port-by-port allocation, including actual pad numbers and net names, is in the
 [pin audit](../mcu-pin-capacity-audit-2026-09-11.md). The diagrams deliberately
 group by job so the reason for each allocation is visible.
 
-## The investigation result
+## The 11 September result — comparison scope reopened on 13 September
 
-**Keep the flight part for now; compare a smaller package of the same H563 for
-comms before changing MCU families.** That recommendation follows the actual
-asymmetry above, rather than assuming both roles need identical packages.
+The earlier recommendation was to keep flight H563 and investigate a smaller
+H563 package for comms. **The meeting requested a broader candidate table; the
+two examples below do not fulfil that request.** Reuse of tools is one comparison
+criterion, not a reason to exclude other parts before comparing resources.
+The actual shortlist, prices/availability and role-specific resource fit remain
+open research work; no new part has been selected.
 
 The H563 LQFP64 candidate keeps the same processor and memory class in a smaller
 package. The current comms signals can be mapped at the desk-check level:

@@ -1,5 +1,12 @@
 # Ogma 2 power contract
 
+**14 September review reconciliation notice:** the
+[13 September record](../docs/architecture/2026-09-13-session-review.md) records
+a two-local-servo target and CAN FD direction. Input range, rail allocation,
+peer compatibility and timing still need resolution. Electrical definitions
+below remain the preserved draft; these review directions do not silently
+change connector assignments, voltage limits, bus rates or installed hardware.
+
 **11 September review hold:** this contract's electrical and safety obligations
 are unchanged. The [joint-review record](../docs/architecture/2026-09-10-session-review.md)
 identifies proposed changes; none is implemented or accepted here. Earlier

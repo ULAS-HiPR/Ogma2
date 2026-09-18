@@ -1,7 +1,23 @@
 # 4. Local servos and remote control
 
+**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) supplies recommendations and supporting comparisons for this chapter.
+
+## 13 September review direction
+
+**Two local servo channels were agreed.** The preserved CAD still has three;
+final-stack reconciliation is pending. Central estimation/control is favored
+for remote actuators, with CAN FD as the communication direction. Neither bus
+rates nor mechanism requirements are settled. A remote node still needs PWM,
+command validation and defined stale-command behavior.
+
+Trace sample/filter delay → estimator → queue → CAN → remote scheduling → PWM
+update → mechanical response. Occupancy is not maximum latency. Obtain canard
+loop rate, tolerable command age/jitter, sensing and mechanism requirements;
+a volunteered contact is not evidence of a sent request or reply. Simultaneous
+current and stall duration remain unknown; capacitance cannot settle them.
+
 **Preserved draft:** three local command channels sharing a battery-derived
-servo supply. **Open:** how many are needed, where remote loops run and which
+servo supply. **Review target:** two local channels. **Open:** where remote loops run and which
 actuators/power envelope the vehicles actually require.
 
 ## Start with the mechanism
@@ -11,9 +27,12 @@ required speed, torque, travel, update rate and safe response to failure. The
 board cannot infer those from a three-pin connector.
 
 The draft uses direct timer-generated PWM signals: repeated pulses whose width
-encodes the command. A signal buffer handles the powered/unpowered boundary;
-otherwise a live control pin may feed energy into an unpowered output domain.
-The buffer is not a servo power regulator.
+encodes the command. Suppose the flight MCU is on while servo power is off.
+A high PWM signal can otherwise inject current into the unpowered electronics
+through their input circuitry. The signal buffer separates that signal boundary;
+its powered-off behavior must be checked with servo power absent. It does not
+regulate the motor supply. That is the concrete reason for the buffer, not a
+generic claim that adding a buffer makes the system safe.
 
 All three current channels share protection and supply. One stalled servo may
 affect the others. The provisional 2 A group limit is not a qualification for
@@ -21,8 +40,8 @@ three loaded grid fins.
 
 ## Which outputs belong near Burrito?
 
-The meeting questioned the third local channel. Two local functions seemed
-plausible, but no final inventory was agreed. List each function, its position
+The 10 September meeting questioned the third local channel. On 13 September,
+the team agreed a two-channel target; the exact mechanism envelope remains open. List each function, its position
 in the rocket and its load before retaining or removing a channel.
 
 A distant fin or canard assembly could use a local output controller instead
@@ -74,7 +93,7 @@ Returning to neutral on silence was suggested. Neutral is not universally safe
 for every mechanism and flight phase. “Optional” also does not mean an actuator
 cannot destabilise the vehicle.
 
-### What the CAN arithmetic says already
+### Classical CAN comparison baseline — not the selected FD budget
 
 At the existing 500 kbit/s, budget **0.270 ms per full eight-byte standard-ID
 frame**, including conservative stuffing/intermission allowance. Assume, solely
