@@ -1,11 +1,10 @@
 # Ogma 2
 
-**Start next review here:** [Investigated answers and decision table](docs/architecture/2026-09-18-review-investigations.md).
+**Start here:** [Connected component proposal](docs/architecture/00-overview.md) · [Block index](docs/architecture/README.md).
 
-[18 September full-meeting change audit](docs/architecture/2026-09-18-meeting-change-ledger.md) — requested changes, misses and completion status.
-
-Latest: [13 September architecture review and learnings](docs/architecture/2026-09-13-session-review.md).
-Two local servos and CAN FD are review directions; CAD remains preserved.
+19 September: named parts, connected power/data paths and short reasons. Proposed
+two-rail power, smaller comms package and two local servo interfaces are distinct
+from the preserved CAD. [Current status](current-system.md).
 
 HiPR's workhorse flight computer: standalone Croí2, with MCU-less Foinse2 power
 distribution when the vehicle needs it. Engineering draft; no fabrication or
@@ -20,7 +19,7 @@ Existing CAD/file names and cross-system contracts have not changed.
 ## Read
 
 1. [Current system](current-system.md) — selected architecture, boundaries and next work.
-2. [Architecture review pack](docs/architecture/README.md) — overview and eight chapters with research, alternatives and tradeoffs.
+2. [Component proposal](docs/architecture/README.md) — connected overview and focused block drawings; research linked underneath.
 3. [Firmware handoff](docs/firmware-handoff-2026-09-07.md) — detailed Anav interface; dated revisions at its top control older text.
 4. [Document index](docs/README.md) — decision records, interfaces and deeper studies.
 5. [Project log](project-log.md) — append-only history.
@@ -31,11 +30,10 @@ external power-switch connections are implemented in the checked CAD draft.
 Physical energetic arming remains separate. Readable schematics are installed;
 all schematic and PCB implementation remains paused pending final-stack approval.
 
-For the next session, start at the architecture pack's overview and review all
-nine chapters together. Each session's questions must improve that same text
-and its diagrams; the extraction record is optional supporting evidence.
-Seán owns final layout;
-Anav owns firmware. The model prepares the drawings, comparisons and checks.
+Use the connected drawing during discussion; follow the block being questioned.
+Resolve a concrete selection or connection instead of assigning another full-pack
+read. Seán owns final layout; Anav owns firmware. The model prepares and checks
+the proposed implementation and supporting evidence.
 
 ## Hardware and repository boundary
 

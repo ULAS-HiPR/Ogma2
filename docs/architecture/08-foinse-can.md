@@ -1,164 +1,98 @@
-# 8. Churro, Fajita and the vehicle outside Burrito
+# Churro power and the vehicle link
 
-**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) supplies recommendations and supporting comparisons for this chapter.
+**19 September · proposal · retain the MCU-less power companion.**
 
-**13 September coverage:** this chapter was not reached. Related remarks are
-recorded in the [session review](2026-09-13-session-review.md); they do not
-establish acceptance of this chapter.
+## Justification and deeper detail
 
-**Retained:** autonomous source protection, engine-local safety and standalone
-Burrito. **Open:** actuator supply needs, future CAN peers and pad-service
-implementation. Experimental payload expansion is separately scoped.
+| Question | Follow through | Source status |
+| --- | --- | --- |
+| Why this power companion? | [Churro component rationale](implementation-reference/08-foinse-can.md) | Preserved circuit and selection research |
+| Where does the FD budget come from? | [CAN FD and end-to-end timing investigation](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) | Proposed traffic assumptions; not the active peer contract |
+| What is the active vehicle interface? | [Controlled Ogma/Foinse/propulsion boundary](../../interfaces/ogma-foinse-propulsion-boundary.md) | Preserved contract until joint revision |
 
-## Why Churro is separate
-
-Different vehicles need different battery branches, current capability and
-possibly regulated actuator supplies. Keeping those decisions on a power
-companion avoids redesigning the complete flight computer every time a
-vehicle changes.
-
-Churro's existing design has no processor. Source protection starts from its
-own battery, without Burrito booting or answering a message. Returned low-power
-supply and monitoring are conveniences, not permission to start delivering power.
+## Source and monitoring connections
 
 ```mermaid
 flowchart TB
-  AV["2S avionics pack"] --> AP["Autonomous avionics protection"]
-  AP --> B["Burrito input"]
-  PP["Separate 6S propulsion pack"] --> PR["Autonomous propulsion protection"]
-  PR --> F["Fajita input<br/>local conversion and engine control"]
-  B -->|"Bounded low-power return"| M["Churro monitoring"]
-  M -->|"Measurements / faults"| B
-  C["Matched external chargers"] -.->|"Controlled service paths<br/>not through Burrito logic"| AV
-  C -.->|"Separate pack-specific path"| PP
+  AV["2S avionics pack"] --> AP["TPS26630RGER + CSD18540Q5B
+Churro avionics protection"]
+  AP --> J["Samtec MPS / MPT 8-contact pair
+protected battery + return"]
+  J --> B["Burrito source input
+standalone connector absent"]
+  PR["Separate 6S propulsion pack"] --> PP["TPS26630RGER + CSD18540Q5B
+Churro propulsion protection"]
+  PP --> P["Paired propulsion power / return
+Fajita owns local conversion and control"]
+  B -->|"limited AUX 3.3 V"| M["INA228AIDGSR · 0x41
+ADS1115IDGSR · 0x48"]
+  M <-->|"TCA4307DGKR · I2C recovery"| B
 ```
 
-The two pack positives never join. The diagram does not define charge wiring
-or prove return-path isolation. The existing interboard connection carries
-power, bounded auxiliary power, monitoring and fault signals; it is not a
-general expansion bus.
+The two pack positives never join. Each protection circuit starts from its own
+pack; AUX and I²C only support monitoring. Burrito's INA228 at 0x40 measures
+avionics current, including standalone use; do not duplicate it on Churro.
 
-A broken main return must not make actuator current flow through a small
-signal-reference wire. Connector retention and complete return paths matter
-as much as the supply's advertised rating.
+| Part / interface | Reason / allocation |
+| --- | --- |
+| TPS26630RGER + CSD18540Q5B, each source | Autonomous source protection; existing design |
+| MPT-08-01-01-L-RA-SD / MPS-08-01-01-L-RA-SD | One inspectable coplanar interface; independent mechanical support |
+| INA228AIDGSR | Propulsion discharge measurement; no claim of valve motion |
+| ADS1115IDGSR | Two temperatures + two voltages |
+| TCA4307DGKR | Recover/isolate a stuck monitor bus; not a power-start prerequisite |
+| Existing JST GH external enable loops | Close to enable; open to electronic OFF; no load current through switch |
+| External pack-matched balance chargers | No onboard charger, BMS or speculative 24 V converter added |
 
-## A nominal voltage is not a load specification
+Samtec contacts: **1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA,
+7 fault, 8 NC**. Each ground path must tolerate the alternative fault return;
+CAN reference must not become the propulsion power return.
 
-A nominal 24 V valve is not automatically compatible with a 6S pack across its
-full discharge range. Likewise, a servo's stall current may dominate a branch
-even when average demand looks small.
+A nominal 24 V coil does not establish direct 6S compatibility. Keep the
+propulsion supply output defined by the actual load requirements; no converter
+part is justified until those exist.
 
-**Recommendation:** keep regulation conditional on actual selected loads.
-Compare voltage range, simultaneous/stall demand, duty cycle, returned energy
-and temperature before choosing a converter. Churro's flexibility is useful;
-speculative regulation for unknown loads is not.
+## Vehicle CAN
 
-A battery-management system, source protection and charging each have different
-jobs. No BMS was selected for Burrito. Define what the pack supplies, what
-Churro protects and what the external charger does rather than saying one board
-“handles the battery.”
-
-## CAN: preserved connection versus proposed network
-
-The current contract uses 500 kbit/s Classical CAN between Burrito and Fajita,
-with fixed termination at the ends. The flight processor owns Burrito's CAN.
+Retain **TCAN3413DRBR**, through **TXU0304PWR**, on flight FDCAN
+PD1 TX / PD0 RX; PB5 standby, PB1 branch enable.
 
 ```mermaid
 flowchart LR
-  B["Burrito<br/>terminated end"] <-->|"Existing two-node CAN"| F["Fajita<br/>terminated end"]
+  F["Flight H563
+FDCAN"] <-->|"TX / RX · powered-off boundary"| X["TXU0304PWR"]
+  X <--> T["TCAN3413DRBR
+3.3 V transceiver"]
+  T <--> J["J501 · JST GH
+1 H / 2 L / 3 reference"]
+  J <--> H["Linear twisted-pair trunk
+120 ohm at each end"]
+  H <--> P["Fajita · independent local control"]
+  H -.-> A["Proposed short drop
+remote actuator node"]
 ```
 
-The meeting proposed a trunk with short drops so a board is not responsible for
-passing the harness through to its neighbour:
+**Propose 500 kbit/s arbitration, 2 Mbit/s FD data, 11-bit IDs.** Existing contract
+remains 500 kbit/s Classical CAN with two nodes until peers agree and are updated.
+TCAN3413 supports FD; transceiver capability alone does not qualify the harness.
+No extra node is installed by this drawing.
 
-```mermaid
-flowchart LR
-  L["End termination"] --- T1["Trunk"]
-  T1 --- T2["Trunk"]
-  T2 --- T3["Trunk"]
-  T3 --- R["End termination"]
-  T1 --- B["Short drop<br/>Burrito"]
-  T2 --- F["Short drop<br/>Fajita"]
-  T3 -.-> A["Possible short drop<br/>remote actuation"]
-```
+| Traffic assumption for one remote actuator | Payload / rate |
+| --- | --- |
+| Command + returned status | 16 B each, 200 Hz each |
+| Aggregate health | 8 B, 20 frames/s |
+| Fajita/background reservation | 8 B, 100 frames/s; placeholder pending peer agreement |
+| Bulk service during active control | None |
 
-This second diagram is a **candidate physical layout**, not permission to add
-a third node. Termination location, removable-node behaviour, cable/stub lengths,
-bus workload and transceiver compatibility need a reviewed contract. Selectable
-termination was discussed; it is not installed.
+Earlier conservative airtime model gives **13.3% utilisation**. One already-started
+64 B frame plus the command takes ~0.77 ms before software/errors/PWM. This
+supports evaluating central control; it does not prove an end-to-end deadline.
+Command sequence/age and local expiry behavior remain mandatory design inputs.
 
-CAN uses differential signalling to tolerate some common-mode disturbance
-within device limits. It is not defined by the positive/negative voltages used
-as an informal explanation in the room. CAN FD and Classical CAN also cannot
-share assumed headline rates; bits per second are not bytes per second.
+**Next check:** peer FD support, agreed traffic/command-age contract and actual
+longest harness. Churro separately needs source/AUX-absent startup and return-path
+checks. Vehicle-specific motors, coils and charging remain outside this core proposal.
 
-A valid checksum detects certain transmission errors. It does not prove a
-command is current, appropriate or from the intended peer. Messages need
-identity, sequence, age and permitted-state checks.
-
-On the test stand, an adapter can temporarily occupy Burrito's position.
-Adding a new vehicle peer must also reconcile that emulator arrangement.
-The stand's GSE link is not silently bridged into the vehicle bus.
-
-The [remote-actuation chapter](04-servos.md#what-the-can-arithmetic-says-already)
-now quantifies candidate traffic. A third node is not inherently a bandwidth
-problem; message sizes, rates, priorities and failure behaviour decide it.
-Do not send full-rate logs over this link: even ignoring application overhead,
-96.7 kB/s exceeds its 62.5 kB/s raw bit-to-byte ceiling.
-
-The transceiver is powered from Burrito's optional rail, alongside logging and
-AUX branches. A rail-level failure therefore removes CAN and local bulk evidence
-together. An autonomous remote controller can retain its local loop if its own
-power and sensing survive; a central-command receiver needs its defined stale
-command response. Neither arrangement makes the shared bus fault-free.
-
-## Pad power and keeping a GNSS fix
-
-The useful aim is to prepare/service the vehicle and acquire GNSS without
-prematurely enabling output energy. Keep three distinct actions:
-
-1. Supply or enable logic power.
-2. Charge through an approved pack-specific service path.
-3. Deliberately enable the permitted output-energy domains.
-
-Removing a service plug is not automatic arming. The existing maintained
-electronic-enable connection is open = OFF, closed = ON; OFF still leaves
-upstream circuitry live. It is not physical battery isolation or proof of
-energetic disarm.
-
-The proposed common servo/energetic enable still needs the chapter 3 review.
-On-rail charging is a useful investigation, not an approved circuit or a
-reason to improvise battery wiring.
-
-## A place for experiments that is not the flight core
-
-The mikroBUS discussion led toward a **separate generic payload carrier**:
-a small processor, suitable power, programming access, mounting and interfaces
-for a named experiment. Storage or independent radio can be added when the
-experiment needs them.
-
-The current eight-contact power-board connection does not become a 16-contact
-mikroBUS interface by analogy. Desired module pinouts need checking; do not
-assume standardized Quad-SPI support.
-
-Useful first projects include a small MCU/power board, a music/buzzer experiment,
-a payload carrier, an inert remote-actuator demonstrator or a scoped pad-service
-study. They can develop real owners without quietly making newcomers
-responsible for flight safety.
-
-The department can grow payload concepts toward nearer vehicle flights and
-later programmes. That organizational aim does not add a REXUS commitment to
-this computer or assign all integration work to Seán.
-
-## Next pass through this chapter—and back to the whole system
-
-Check whether the complete vehicle still makes sense with the choices discussed
-in every preceding chapter. What must be local, what must be independent, and
-what can remain a separately owned experiment?
-
-Record each actual agreement in the relevant chapter and current-system.
-Carry unresolved questions forward beside their mechanism. Then read the
-**whole improved pack again** next session. Authorization to implement the
-final stack is a separate explicit step.
-
-[Back to overview](00-overview.md) · [Detailed power/interconnect evidence](implementation-reference/08-foinse-can.md) · [Vehicle contract](../../interfaces/ogma-foinse-propulsion-boundary.md)
+Sources: [existing Foinse implementation](implementation-reference/08-foinse-can.md),
+[TI TCAN3413](https://www.ti.com/product/TCAN3413),
+[FD budget](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation),
+[controlled vehicle interface](../../interfaces/ogma-foinse-propulsion-boundary.md).

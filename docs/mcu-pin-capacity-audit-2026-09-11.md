@@ -1,5 +1,10 @@
 # MCU pin-capacity audit and package comparison
 
+**Current recommendation:** [processor review](architecture/01-mcus.md).
+This dated audit describes the preserved allocation. The current proposal adds
+a complete 64-pad comms map and streamed service buffering; the whole-32-KiB
+buffer discussion below is historical, not a present H503 exclusion.
+
 Date: 11 September 2026. Status: read-only desk investigation of the preserved
 draft. No processor choice, pin remap, schematic edit or firmware change approved.
 

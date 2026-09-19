@@ -1,112 +1,99 @@
-# 5. What the operator can know
+# Service and status
 
-**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#5-indicators-and-operator-sequence) supplies recommendations and supporting comparisons for this chapter.
+**19 September · proposal · retain the existing simple hardware.**
 
-## 13 September review: diagnostic inventory first
+Use **USB readback for detail**, separate power and firmware lamps for local
+status. No display, RGB controller or extra flight GPIO allocation.
 
-Test/flight distinction and USB identity/configuration readback were supported.
-Build the full inventory before reducing it to a few indicators. An I2C RGB
-driver is a candidate, not a selected component.
+## Justification and deeper detail
 
-| Candidate information | Source / drive path | What it establishes |
+| Question | Follow through | Source status |
 | --- | --- | --- |
-| Source and rail power | Direct electrical indication where provided | Voltage at that point, not firmware health |
-| Boot and essential progress | Firmware heartbeat/status | Reported progress; define reset/off appearance |
-| Build, profile, test mode, config readback | Firmware via USB; optional summary lamp | Loaded/reported configuration, not independent correctness |
-| Sensor validity and calibration | Acquisition diagnostics via USB | Reported data status; not physical calibration proof |
-| Storage ready, failures and gaps | Recording firmware via USB | Recorder state and detected errors |
-| GNSS/radio health | Comms reports with age | Local reported state; stale reports must be visible |
-| CAN peers, age and errors | Flight bus diagnostics | Observed peer traffic and freshness |
-| Physical arm and continuity | Actual sense paths; hardware indication where justified | Separate electrical conditions, not successful actuation |
-| Reset/recovery history | Reset cause and retained records | Available evidence, subject to power-loss retention |
-
-For each final lamp identify hardware versus firmware drive, connection, reset
-behavior and cost. Start with separate power/arm meaning and a firmware health
-summary; keep detail in USB. This is a candidate reduction, not a wiring change.
-Do not advertise per-servo current telemetry that the draft does not contain.
-
-**Retained:** USB service, independent debug access and simple local indication.
-**Working direction:** verify running firmware/configuration without a fragile
-on-board display. **Open:** the final indication set and physical-arm evidence.
-
-## Five questions, not one green light
-
-At a launch, people are distracted and the hardware may already be enclosed.
-The interface must help distinguish states that are easy to conflate.
+| Why these indicators and clocks? | [Service alternatives and timekeeping rationale](implementation-reference/05-service-status-time.md#the-options-and-the-concrete-reasons-for-the-choices) | Earlier component research |
+| Which signals drive each indication? | [Indicator wiring and operator sequence](2026-09-18-review-investigations.md#5-indicators-and-operator-sequence) | Detailed inventory; current recommendation below |
 
 ```mermaid
-flowchart TB
-  Rail["Supply measurement"] --> Power["Is this domain powered?"]
-  Readback["Device identity, build and configuration readback"] --> Correct["Is the intended software/configuration running?"]
-  Progress["Fresh execution and peer responses"] --> Health["Is the system making valid progress?"]
-  Physical["Independent physical-arm evidence"] --> Armed["Is output energy available?"]
-  Diagnostic["Bounded continuity diagnostic"] --> Connected["Is this external circuit connected?"]
+flowchart LR
+  PC["Laptop
+read / write / reboot / read back"] <-->|"USB FS"| J["USB4105-GF-A
+J4401"]
+  J <-->|"PA11 DM / PA12 DP"| C["Comms H563RIT6
+identity / GNSS / radio / USB"]
+  C <-->|"bounded UART"| F["Flight H563VIT6
+config / sensors / logger / CAN"]
+  F -->|"PD7"| L["SN74LVC1G04DBVR
+complementary red / green"]
+  C -->|"PB4"| A["Amber comms lamp"]
+  P["FLIGHT_3V3"] --> H["D9301 + R9301
+hardware power lamp"]
+  F -->|"PD6 / Q9001"| B["CPT-9019S-SMT-TR
+ground-service sounder"]
 ```
 
-A voltage light answers the first question, not all five. A stale green light
-may remain on after execution fails. Continuity does not establish arming,
-correct load identity or physical operation.
-
-## Make firmware identity observable
-
-The group discussed an OLED, seven-segment display and existing USB tools.
-The useful requirement is **knowing what is actually running**, not fitting a
-screen. Fragility and the existing groundstation-display experience weigh
-against adding one solely for version information.
-
-**Recommendation:** have the configurator read back board identity, running
-build, profile and configuration, and verify the outcome of an update. “File
-sent successfully” is not the same result. Keep a detailed service view and a
-small understandable local indication set.
-
-USB belongs to the communications processor in the current allocation.
-Independent **SWD** debug access remains available to each processor for
-breakpoints and recovery when ordinary service fails. The connector's signal
-contacts and mechanical alignment holes are different things; calling it
-JTAG in conversation does not change the interface.
-
-## The indicator options we raised
-
-| Proposed indication | Useful meaning | Question before selecting it |
+| Hardware | Why keep it | What it does not prove |
 | --- | --- | --- |
-| RGB health/readiness | Concise operating or fault state | Which states, reset defaults and GPIO/driver cost? |
-| Independent arm indication | Physical output-energy state without depending solely on firmware | What is actually sensed, including broken wiring? |
-| Separate flight/comms power lights | Identify which supplies exist | Are they visible and useful in the installed bay? |
-| Per-channel continuity | Find a missing external connection | Can diagnostic energy remain safe in all relevant faults? |
-| CAN activity | Notice traffic and possible intermittent wiring | How is activity made visible without implying healthy communication? |
-| Required-peer health | Confirm fresh useful responses | What makes a response valid and when does it expire? |
+| USB4105-GF-A | One service connection for configuration and logs | Successful transfer ≠ running the intended build |
+| Two TC2030-NL debug patterns | Recover/debug each MCU independently of USB firmware | VTref is sense-only, not programmer power |
+| Red/green + SN74LVC1G04DBVR | Existing one-pin flight readiness indication | Frozen green cannot prove continued execution |
+| Comms amber | Distinguish comms execution/status | Does not establish flight readiness |
+| Flight PWR lamp | Rail has energy without firmware | Does not establish correct voltage or disarm |
+| CPT-9019S-SMT-TR | Passive piezo permits startup tones | Keep silent before calibration/active flight |
+| ECS-160-10-36Q-ES-TR, each MCU | Existing 16 MHz HSE timing source | Clock accuracy still depends on installation |
+| ABS07-32.768KHZ-7-T, flight only | RTC continuity while its supply survives | No backup cell; full power loss loses retention |
 
-CAN activity and peer health are different observations. Traffic from the wrong
-device can blink an activity light; intermittent packets can look continuous
-to a human. An activity display helps diagnosis, but cannot measure a high-rate
-loss percentage by eye.
+## What the operator can actually observe
 
-The existing draft has complementary red/green readiness, separate comms/power
-indication and a piezo. None of the proposals has replaced it yet. Do not add
-every suggested light: agree the operator questions and use the smallest
-adequate interface. The current flight pin allocation has no free general
-GPIO to spend casually.
+| Question | Display / connection | Off, reset or stale behavior |
+| --- | --- | --- |
+| Is flight logic powered? | D9301 + resistor from FLIGHT_3V3; hardware-driven | Dark is ambiguous: no supply, failed lamp or obstructed view |
+| Is firmware reporting readiness? | Flight PD7 → SN74LVC1G04 complementary red/green | Static state cannot prove progress; confirm reset appearance on board |
+| Is comms running? | Comms PB4 → amber | Firmware-owned; off/frozen cannot distinguish every fault |
+| Correct board/build/profile? | USB readback from both processors | Missing flight reply displayed unknown; never reuse prior session values |
+| Are acquisition and recording progressing? | USB sample age, errors, committed sequence and drops | Show stalled age/sequence explicitly |
+| Is the expected CAN peer healthy? | USB peer identity, heartbeat age, sequence loss, error counters | Bus activity alone is insufficient; no new CAN lamp selected |
+| What is the physical arm state? | Requires independent assembly evidence | Existing lamp set does not answer it; unfinished hardware function |
+| Are output diagnostics valid? | Separate USB diagnostic fields with validity/age | Unavailable remains unknown; not inferred from firmware readiness |
 
-## Sound and time
+**Recommended indication set:** retain the existing three lamp functions and
+USB detail. Reject an extra RGB controller for now: no added operator question
+requires it, and a driver/bus would be another dependency. Physical arm indication
+still requires separate hardware work; no allocation is hidden in the RGB decision.
 
-A passive piezo can make selectable startup tones. It must be silent before
-calibration/active flight so its vibration and execution work do not interfere.
-A closed bay may also make it difficult to hear; test the actual installation.
+Ground-service sequence: power → read both identities/builds/config → check live
+measurement and recorder progress → check required peer freshness. After an
+update, reboot and repeat readback; an acknowledged file transfer is insufficient.
+This sequence covers electronics service, not physical output arming.
 
-The internal real-time clock helps establish elapsed time across supported
-resets while its supply survives. It is not a backup battery. Active deadlines
-use a higher-resolution monotonic timer: a clock that does not jump when GNSS
-wall-clock time is corrected.
+## USB view to implement
 
-For scale, 20 parts per million of clock error gives 18 ms over fifteen minutes.
-Cold drift can be larger than room-temperature tolerance. Retention validity,
-temperature and elapsed-time accuracy all need testing; a plausible displayed
-time is not proof of continuity.
+| Group | Return these fields |
+| --- | --- |
+| Identity | Board ID; both running build IDs; profile; config checksum; explicit test/flight mode |
+| Measurements | Sensor ID/calibration ID; freshness; clipping/errors; voltage/current with age |
+| Recorder | Prepared capacity; committed sequence; drops/gaps; reset epoch |
+| Vehicle link | Expected peer identity; age; sequence loss; bus-off/error counters |
+| GNSS / radio | Solution time/validity; packet direction/sequence; receiver RSSI/SNR; mode |
+| Output diagnostics | Separate physical-arm evidence and valid channel diagnostic status; unavailable = unknown |
 
-## Next pass through this chapter
+A timed-out flight response becomes **unknown**, even if comms remains healthy.
+Read back both running builds/configurations after reboot. Keep service queue
+sizes bounded; log download never blocks acquisition.
 
-Describe the normal operator sequence and what each indication can honestly
-claim. Review stale, reset and unpowered states, USB-only operation and failed
-communications. Keep physical arm evidence separate from software readiness.
+## Reset and time
 
-[Next: GNSS and radio](06-gnss-radio.md) · [Detailed indication, debug and clock evidence](implementation-reference/05-service-status-time.md)
+Retain TPS3808G33DBVR supervisors on both MCUs and TPS3430WDRCR on flight.
+Feed the external watchdog only after essential acquisition/estimation/policy
+makes progress. Radio and bulk recording do not become unconditional feed gates.
+
+Use monotonic time for samples/deadlines. GNSS wall-clock correction must not
+move active deadlines. Preserve reset cause, time-validity and session identity.
+A comms reset must not restart the flight state machine.
+
+**Next check:** USB-only boot, stale flight response, failed update/readback,
+comms reset during logging, and reset lamp appearance in the installed bay.
+
+Sources: [indicator wiring and detailed inventory](2026-09-18-review-investigations.md#5-indicators-and-operator-sequence),
+[existing service hardware](implementation-reference/05-service-status-time.md),
+[reset contract](../../interfaces/reset-recovery-contract.md).
+
+See [connectors and physical arming](09-connectors-arming.md) for the FC battery-enable plug, separate unresolved output-arm assembly and complete connector inventory.

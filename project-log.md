@@ -2837,3 +2837,99 @@ actual actuator/peer inputs and bench validation remain open and named.
 Next review: use the decision table, resolve mission/interface assumptions,
 assign accepted owners for external inputs/tests, then continue chapters 6–8.
 Existing AGENTS edits and all CAD/firmware preserved. No commit or push.
+
+
+## 19 September 2026 — connected component proposal for joint review
+
+Seán authorized turning the latest architecture review into a concrete, concise
+component proposal. Reworked the existing architecture index and nine chapters
+in place: connected diagrams, exact retained/proposed parts, short reasons,
+alternatives and named remaining checks. Updated entry points and review
+procedure; marked the earlier three-rail recommendation superseded by this
+proposal. These recommendations are not accepted architecture or CAD changes.
+
+Proposed H563VIT6 flight / H563RIT6 comms, with a complete 64-pad comms map;
+two 3.3 V LDO domains with the independently switched comms branch downstream;
+two local servo interfaces; continuous prepared recording and streamed service
+transfer; a bounded CAN FD proposal and first radio interoperability settings.
+Retained the existing sensor and recorder parts. Selected a specific hold-up
+capacitor candidate with explicit footprint/environment checks still outstanding.
+
+Native-netlist tracing corrected an important detail: the comms enable gate is
+a battery-dependent selector, not a simple OR. Battery operation retains flight
+control even with USB connected; USB-only service forces comms power on. Checked
+that the 64-pin MCU internally bonds VDDUSB to VDD. Numerical checks cover
+current-limit selectivity, the downstream switch's DC voltage budget, LDO loss,
+hold-up, logging capacity and ideal service-download time. Static budgets do not
+prove fault-transient behavior or physical qualification.
+
+Validation: manufacturer-source and native-netlist review; all 11 Mermaid
+diagrams rendered in the local browser, with overview and power layouts visually
+inspected. Added reproducible source-enable, pin-map and budget checks in
+`docs/calculations/component-proposal-checks.py`; they pass. Checked edited
+Markdown file targets, fences and diff whitespace. The pre-existing broken
+historical log link remains outside this change.
+
+Remaining: the recovery/staging output implementation is unresolved; actual
+actuator, antenna/harness and vehicle peer inputs still constrain final choices.
+Board layout, dynamic power/fault behavior, throughput and environmental
+qualification require implementation and measurement. CAD, firmware, installed
+interface contracts and pre-existing AGENTS.md edits preserved. No commit/push.
+
+
+## 19 September 2026 — connector and arming review restored
+
+Seán identified missing explicit treatment of FC and energetic short-to-arm
+connections. Added a dedicated connector inventory and operator-boundary diagram,
+linked from the review index, overview, power, output, status and servo pages.
+Native netlist and power contract confirm J103 is a maintained electronic battery
+enable, with USB service possible when open. The physical output-arm assembly
+remains unresolved; neither arm-sense inputs nor J6601 define that assembly.
+No new energetic wiring or jumper assignment introduced.
+
+Flagged that the proposed six-contact servo connector matches the output-harness
+family/contact count: mis-mating prevention must precede acceptance. CAD and
+interface contracts unchanged. Markdown links/fences and diff whitespace checked.
+
+
+## 19 September 2026 — review-surface and reasoning correction
+
+Seán rejected another partial documentation fix and requested a full pass against
+the actual meeting criticisms. Replaced the overview with one review surface
+containing source and branch power drawings, signal map, connector inventory,
+operating states and consequential choices. Supporting chapters retain pin maps,
+calculations and sources. No new summary/report added to the reading path.
+
+Corrected recommendations: withdrew the six-contact servo-harness substitution;
+retain ten-contact 430451000 with two used groups. Restored remote control split
+to undecided pending mechanism timing. Replaced generic power-reliability claims
+with one/two/three-rail consequences for named faults, acknowledging the absence
+of comparative failure-rate evidence. Corrected monitoring I2C3 label to I2C4
+from the flight pin CSV. Comms cycling preserves already-enabled NOR/CAN branches.
+
+Brought MCU workload/headroom/alternatives and control-pin purposes, receiver-owned
+RSSI in both directions, shared-versus-independent comms-recording consequences,
+and operator indication/readback into the active chapters. Existing understood
+material remains available; no new team acceptance/comprehension is inferred.
+
+Output circuitry and physical energetic arming remain incomplete; this revision
+does not claim to have designed that assembly. Actuator/peer/antenna inputs and
+physical validation remain distinct from completed desk checks.
+
+Validation: source/pin and arithmetic checks; current Markdown target/anchor and
+whitespace checks. Browser render checks recorded below after final inspection.
+CAD, firmware, installed contracts and existing AGENTS edits untouched. No push.
+
+Final validation: all 14 diagram instances render across 11 preview pages;
+overview source-path layout visually inspected. 141 current file/anchor references
+pass, as do proposal arithmetic/pin checks and diff whitespace.
+
+
+## 19 September 2026 — visible justification links
+
+Added opening question-to-source maps to MCU, power, servo, service, RF, sensor,
+vehicle-link and connector chapters. MCU package and control-pin arguments also
+link directly to the relevant audit sections beside the claims. Links distinguish
+current proposals/calculations from dated rationale; the older MCU audit now
+links back and flags its superseded whole-block buffering assumption. No new
+technical selections. Local file/anchor validation and diff checks pass.

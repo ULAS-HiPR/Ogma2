@@ -3,9 +3,14 @@
 18 September 2026. Desk investigation of the remaining meeting questions.
 Recommendations below are for review; existing CAD and electrical contracts
 remain unchanged. Bench results, canard requirements and purchased-part prices
-are not invented. Start here, then finish chapters 6–8 together.
+are not invented. Use as dated supporting evidence, not the next review agenda.
 
-## Decisions to make in the room
+**19 September supersession:** use the [connected proposal](00-overview.md).
+Its two-rail recommendation replaces this report's three-rail default; the
+H563RIT6 now has a complete proposed package map; service buffering is streamed.
+The old rail/MCU advice below is retained as dated history, not current guidance.
+
+## Earlier recommendations
 
 | Question | Recommended starting answer | What could change it |
 | --- | --- | --- |

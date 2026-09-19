@@ -1,11 +1,28 @@
 # Ogma 2 current architecture
 
-**18 September desk follow-through:** [next-review recommendations](docs/architecture/2026-09-18-review-investigations.md).
-No hardware selection is changed. MAX-M10S review must account for documented
-4 g dynamics and 500 m/s velocity limits as well as 80 km altitude; navigation
-qualification is open across the actual flight envelope.
+## 19 September — concrete proposal for the next design pass
 
-## Latest review disposition — 13 September
+Start with the [connected component proposal](docs/architecture/00-overview.md),
+then the [block index](docs/architecture/README.md). The 18 September meeting
+requested actual parts/connections and concise justification; repeated document
+walkthroughs are no longer the default review method.
+
+| Proposed change | Reason / implementation boundary |
+| --- | --- |
+| H563VIT6 flight / H563RIT6 comms | Preserve flight interfaces; smaller comms package with complete proposed 64-pad map |
+| Two LDO domains: flight + service | Remove one LDO; move independent comms limiter downstream; show shared buck and changed common faults |
+| Two local servo interfaces | PC6/PC7 retained; PD10 released; retain ten-contact connector with two populated servo groups; load-specific supply still open |
+| Stream USB log chunks | Buffer size follows transport, not an arbitrary whole-block RAM requirement |
+| Retain sensors, NOR, GNSS/radio and simple service hardware | Existing named functions remain; source limits and checks sit beside each block |
+
+These recommendations are **not accepted hardware changes**. Existing CAD,
+controlled electrical interfaces and the implementation hold remain. The status
+and tables below describe that preserved draft. New recommendations supersede
+the corresponding advice in the earlier investigation, not installed truth.
+MAX-M10S qualification must cover its 4 g / 500 m/s / 80 km limits.
+
+
+## Preserved review disposition — 13 September
 
 [Full learning and evidence record](docs/architecture/2026-09-13-session-review.md).
 Chapters 0–5 were discussed; 6–8 remain unread in this pass. Two local servo
@@ -15,7 +32,7 @@ range, energetic simplification and indicator hardware remain open. No final
 stack or hardware implementation was authorized. Understanding an explanation
 is separate from accepting its design.
 
-Updated: 18 September 2026
+Updated: 19 September 2026
 Status: requirements and architecture reopened in joint review. Existing CAD
 preserved; no schematic/PCB work until Seán authorizes the final stack.
 
@@ -27,9 +44,8 @@ local output count, remote actuation/control allocation, CAN topology, MCU
 selection by role, power-domain purpose and operator indication. Proposals have
 not replaced the installed interface contracts. No final stack was authorized.
 
-Start with the [architecture reading pack](docs/architecture/README.md) for the
-next joint session. Briefly revisit understood sections, focus on changed assumptions, and continue
-through unread chapters; questions feed back into explanations and diagrams. The
+Start with the [connected proposal](docs/architecture/00-overview.md). Trace the
+actual block and resolve its selection, connection or missing input. The
 [joint-review record](docs/architecture/2026-09-10-session-review.md) preserves
 supporting observations, alternatives and source evidence. The system/part tables
 below describe the preserved draft unless explicitly stated otherwise.
@@ -38,10 +54,9 @@ Canonical names confirmed 13 September: **Burrito = Croí2 core**, **Churro = Fo
 **Fajita = separate propulsion controller**. Ogma remains the family name for
 now. File, net and CAD names are unchanged.
 
-The [architecture review pack](docs/architecture/README.md) is the reading path:
-one overview, eight domain chapters, research and tradeoffs behind the circuitry, and remaining
-decisions. Explain the mechanism and its purpose before the component list;
-review it together rather than treating unread sections as accepted.
+The [component proposal](docs/architecture/README.md) is the review surface:
+named parts and interfaces on the drawings, concise reasons alongside them,
+research below. Reading or understanding a proposal does not accept it.
 Seán owns final PCB layout; Anav owns firmware implementation.
 
 Authorised installation changes are **implemented in the checked CAD draft**:
@@ -104,7 +119,7 @@ Croí2 is the standalone workhorse flight-computer PCB. Foinse2 is a separate,
 MCU-less power companion for larger vehicles. Their Samtec connection is
 coplanar; supports carry the mechanical loads. Neither board conceals the other.
 
-| Owner | Responsibility |
+| Owner | Preserved CAD responsibility |
 | --- | --- |
 | Flight MCU U201 | Acquisition, estimation, mission state, local recording, three energetic channels, three servo commands and vehicle CAN |
 | Comms MCU U401 | GNSS, radio, telemetry buffering and USB service |
@@ -116,7 +131,7 @@ The two MCUs separate timing and failure domains. They are not redundant flight
 computers. Flight must continue with comms held in reset; radio, GNSS, USB and
 optional monitoring cannot become boot or deadline prerequisites.
 
-## Selected hardware
+## Preserved CAD hardware
 
 | Block | Current selection |
 | --- | --- |
@@ -154,7 +169,7 @@ Flight, comms and optional loads have deliberate supply/signal boundaries.
 A failed optional peripheral must not back-power or clamp the essential domain.
 Common source, preregulator, board and flight-MCU faults remain.
 
-Croí's three energetic channels and three servos use battery-derived energy,
+In the preserved CAD, Croí's three energetic channels and three servos use battery-derived energy,
 not the 3.3 V logic rail. Servo power has a common provisional 2 A switch limit;
 this is not a validated grid-fin load allocation. Actual servos must tolerate
 the source voltage and meet PWM, peak/stall-current and regeneration limits.
@@ -256,9 +271,8 @@ C1403 is an unresolved hold-up-capacitor volume allocation.
 1. Readable documentation baseline published on the review branch.
 2. GNSS and external-switch implementation recorded and installed in draft.
 3. Connected schematics installed; native identity/pad-net checks pass.
-4. Review the 10 September deltas and actual mechanisms together. Resolve
-   function/output allocation, remote control/CAN, processor roles, power,
-   indication and logging requirements with explicit dispositions.
+4. Review the connected 19 September proposal. Resolve the processor/power
+   changes and actual interfaces; identify the remaining load-specific boundaries.
 5. Obtain Seán's final-stack authorization before any schematic/PCB changes.
    Then reconcile affected interfaces and firmware assumptions before layout.
 6. Review pins, footprints, ratings, inhibits and assembly before the first PCBA.

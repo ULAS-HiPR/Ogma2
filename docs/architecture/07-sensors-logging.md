@@ -1,175 +1,118 @@
-# 7. Measurements and a record we can recover
+# Sensors and the flight record
 
-**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#3-comms-evidence-gnss-and-radio) supplies recommendations and supporting comparisons for this chapter.
+**19 September · proposal · retain the five sensors and 256 MiB NOR.**
 
-**13 September coverage:** this chapter was not reached. Related remarks are
-recorded in the [session review](2026-09-13-session-review.md); they do not
-establish acceptance of this chapter.
+## Justification and deeper detail
 
-**Retained:** dissimilar sensing, bounded device failures and full-rate local
-recording. **Working direction:** retain pre-event history. **Open:** its exact
-duration/trigger, damage survivability and measured recording performance.
-
-## Why these measurements?
-
-| Measurement | Existing choice | Job and limit |
+| Question | Follow through | Source status |
 | --- | --- | --- |
-| Two low-g accelerometers/gyroscopes | LSM6DSV16X and ICM-42688-P | Fine motion/rotation observations from different implementations; shared mounting and environment remain |
-| High-g acceleration | ADXL375 | Preserve boost data when low-g channels clip; it is not a precision coast substitute |
-| Two pressure measurements | BMP390 and MS5607 | Compare independent devices; a shared blocked vent can defeat both |
-| Common battery current and voltage | Core input measurement | Diagnose electrical events, not prove mechanical outcomes |
-
-Two disagreeing sensors do not automatically identify which is right. Use
-status, freshness, saturation and consistency with other evidence. Different
-manufacturers reduce some shared implementation risks but not a bad mounting
-transform or a shared pressure path.
-
-The starting streams run at different rates: approximately 960/1000 Hz for
-the two IMUs, 800 Hz for high-g and target 50 Hz compensated pressure. Their
-timestamps must remain independent. A nominal 200 g sensor has a specified
-minimum range of 180 g; do not hide clipping behind the nominal label.
-
-Pressure accuracy and useful range also differ. Both pressure devices' ordinary
-full-accuracy ranges approach their limit near the upper workhorse envelope.
-An extended conversion range is not the same accuracy guarantee.
-
-## What Rev 1 taught us
-
-Check exact device identity, package, orientation and axis transforms. Isolate
-bus faults as well as supply faults. Keep pressure ports clear of coating and
-adhesive; avoid placing inertial sensors where board flex, magnetics, actuator
-currents or the sounder dominate the measurement.
-
-Coast means low specific force, not low vehicle speed. An accelerometer in
-ballistic flight is not simply a gravity-direction sensor. Reducing its range
-can improve digital resolution without necessarily fixing bias or vibration.
-
-The earlier reset around recovery still has no established cause. Preserve
-enough synchronized evidence to distinguish supply trouble, reset, a requested
-event and its actual aftermath.
-
-## Keep the run-up, not just the event
-
-```mermaid
-flowchart TD
-  P["Storage checked<br/>begin bounded prelaunch recording"] --> S["Timestamped sensor and power streams"]
-  S --> B["Bounded writer queue<br/>existing staging allocation"]
-  E["Launch, fault and phase markers"] --> B
-  B --> C["Continuous committed NOR blocks<br/>before and after the event"]
-  C --> H["Recover history around each marker<br/>reject incomplete tail; report gaps"]
-  S --> R["Reduced radio copy"]
-  R --> G["Ground log<br/>separate partial evidence"]
-```
-
-This is the recommended behaviour, not implemented firmware. Recording begins
-before the event; the event adds a marker rather than starting the recorder.
-That can expose a pad/ignition transient which launch-triggered recording alone
-would miss. A RAM ring which replaces its oldest history until a trigger is an
-alternative, but the capacity calculation below shows its limit.
-
-Define its start condition, trigger, time window, repeated-trigger behaviour,
-reset/abort handling and relationship to normal pad recording. “100 samples”
-is not a duration specification: at 1 kHz it is only 100 ms.
-
-### The buffer arithmetic
-
-The current aggregate allocation is **96,672 B/s**, including the current-monitor
-records and existing framing allowance. Using that whole rate conservatively:
-
-| RAM reserved exclusively for history | Maximum history before metadata/headroom |
-| --- | --- |
-| 32 KiB | 0.339 s |
-| 64 KiB | 0.678 s |
-| 96 KiB | 1.017 s |
-| 128 KiB | 1.356 s |
-
-The existing 128 KiB is **log staging**, not spare memory promised to a second
-history buffer. Five seconds needs 483,360 bytes; ten needs 966,720 bytes.
-Neither fits the current staging allocation. Do not consume critical stacks or
-protected control-state memory to make this table fit.
-
-**Recommendation:** start full-rate append-only NOR recording shortly before
-arming, after storage/readiness checks. Preserve at least a proposed **10 seconds
-before launch**, marking launch and faults in the same continuous record rather
-than starting recording at the event. This is a candidate requirement for review,
-not implemented behaviour. Its cost is pad storage and a defined readiness start;
-it avoids holding a long history only in volatile RAM. Keep the existing staging
-buffer available for flash stalls. Do not introduce in-flight circular erasing.
-
-If the experiment specifically needs a RAM-only trigger window, a candidate
-96 KiB history / 32 KiB writer split gives roughly one second of history and
-0.339 seconds of empty-queue stall headroom. It is an alternative, not additional
-memory. Pending data consumes that headroom; preserving a window cannot stop
-new acquisition. Both strategies need reset/abort and repeated-trigger semantics.
-Neither RAM nor the held flight rail guarantees recording after complete power loss.
-
-## Three different meanings of a black box
-
-| Failure | Desired evidence | What remains unproved |
-| --- | --- | --- |
-| Power stops during a write | Earlier committed records remain readable; incomplete tail is rejected | Actual device interruption behaviour and bounded restart |
-| The PCB is damaged | Surviving storage can be extracted or read | Mechanical damage case, placement and recovery method |
-| The vehicle is lost | Ground receiver retains what it received | Link gaps, host flush behaviour and record completeness |
-
-Soldered flash avoids a removable-media socket; it is not automatically a
-crash-survivable recorder. Seán reported recording in the Mac application and
-Arnav reported Cyberdeck recording. Those capabilities need inspection before
-assuming equivalent formats, timestamps or durability.
-
-## Make committed data distinguishable from a partial write
+| Why these five sensors? | [Device-by-device selection rationale](implementation-reference/07-sensors-logging.md#the-selection-reasoning-device-by-device) | Ranges, alternatives and manufacturer sources |
+| Why NOR rather than SD? | [Capacity and medium comparison](implementation-reference/07-sensors-logging.md#why-256-mib-nor-rather-than-smaller-flash-or-sd) | Earlier storage research |
+| What supports rates and capacity? | [Power, recording and CAN audit](../power-recording-can-audit-2026-09-11.md); [current proposal calculations](../calculations/component-proposal-checks.py) | Baseline ledger plus current additions |
 
 ```mermaid
 flowchart LR
-  A["Collect bounded record block"] --> W["Write data pages"]
-  W --> F["Write completion footer"]
-  F --> V["Block can be validated during recovery"]
-  W -.->|"Power interruption"| I["Incomplete block: reject<br/>retain earlier valid blocks"]
+  ST["LSM6DSV16XTR
+960 Hz · low-g / gyro"] -->|"SPI1 + DRDY"| F["Flight H563VIT6"]
+  TD["ICM-42688-P
+1 kHz · low-g / gyro"] -->|"SPI2 + DRDY"| F
+  HG["ADXL375BCCZ
+800 Hz · high-g"] -->|"SPI3 + INT1"| F
+  BP["BMP390
+50 Hz target"] -->|"I2C1"| F
+  TE["MS560702BA03-50
+50 Hz compensated target"] -->|"I2C2"| F
+  F --> Q["128 KiB writer staging
+existing allocation"]
+  Q -->|"quad SPI · grouped commits"| N["MX66L2G45GMI00
+256 MiB NOR"]
+  C["Comms diagnostics
+proposed cap 1 KiB/s"] --> F
+  F -->|"reduced telemetry"| C
 ```
 
-The existing research proposes grouped pages with a completion footer. Writing
-a separate commit for every page would reduce worst-case throughput below the
-draft logging demand. Pre-erase while disarmed; never wait for an erase or scan
-the entire device before resuming essential flight work.
+Rates are design allocations, not measured delivery. Each stream has its own
+sample timestamp, axis transform, validity and clipping state.
 
-The draft budget is about 96.7 kB/s and uses 256 MiB of NOR. Thirty-minute
-recording, pad/recovery data, metadata and reserve must fit together. These are
-calculations awaiting measured write throughput, not a finalized record format.
+| Part / bus | Why this part remains | Useful bound |
+| --- | --- | --- |
+| LSM6DSV16XTR / SPI1 | Low-g acceleration and higher-range gyro | ±16 g; up to ±4000°/s with required configuration |
+| ICM-42688-P / SPI2 | Dissimilar second implementation | ±16 g, ±2000°/s; above that only ST may remain valid |
+| ADXL375BCCZ / SPI3 | Preserve acceleration when both IMUs clip | Nominal ±200 g; specified minimum ±180 g |
+| BMP390 / I2C1 | Compact lower-flight pressure measurement | 300–1250 hPa specified range |
+| MS560702BA03-50 / I2C2 | Independent pressure conversion/compensation | 300–1100 mbar full-accuracy region; extended conversion range is not equal accuracy |
+| MX66L2G45GMI00 / quad SPI | Capacity without removable-media socket | 2 Gbit = 256 MiB; program stalls still need buffering |
 
-### Storage and write margin
+Diversity costs five drivers and more interfaces. It buys range and independent
+observations, not a two-sensor vote that identifies truth. Shared mounting,
+upstream power and blocked pressure vent remain common faults.
 
-Thirty minutes at the current rate uses **174,009,600 bytes**. The existing
-mission allocation, including its pad/recovery/metadata allowance, is
-**180,587,776 bytes**. After retaining 64 MiB untouched in a 256 MiB device,
-**20,738,816 bytes remain**: about 214.5 seconds of additional full-rate data.
-That is only 3.6 extra minutes, not hours of full-rate pad waiting. A new 10-second
-lead-in costs 966,720 bytes if it was not already included. Cap the full-rate
-prelaunch interval, mark aborted attempts and reprepare safely if necessary.
+## Power and signal boundaries
 
-Sixteen 256-byte data pages plus one footer take 25.5 ms at the researched
-1.5 ms maximum page-program time. Adding only data transfer at 16 MHz gives
-about **157 kB/s with four lanes**, or **148 kB/s with one lane**, before commands,
-polling, scheduling and verification overhead. Against 96.7 kB/s this leaves
-roughly 38.5% or 34.7% of that simplified service capacity unused. It is a desk
-budget, not a demonstrated recorder. The exact device revision and implemented
-commit format must still be checked.
+```mermaid
+flowchart LR
+  F["FLIGHT_3V3"] --> L["TPS2553DBVR-1
+one per sensor · U3101–U3501"]
+  L --> S["Sensor supply
+and sensor-side interface supply"]
+  M["Flight MCU signals"] <-->|"SPI: TXU0304 + TXU0101
+I2C: TMUX1511"| S
+  P["SERVICE_3V3 proposal"] --> NL["TPS2553DBVR-1 · U3601"]
+  NL --> N["NOR supply + TMUX1511 boundaries"]
+```
 
-The useful surprise: single-lane SPI is not ruled out by this arithmetic, so
-the two-pin saving raised in the MCU chapter deserves a measured comparison.
-No pin or interface change is selected. A separate commit operation per data
-page still falls below demand at the same worst-case program time.
+Retain individually controlled sensor enables: a latch-off branch needs an
+explicit restart path. Power switching alone cannot stop signal back-power.
+Retries are bounded; persistent faults stay disabled.
 
-[Reproducible calculations, assumptions and evidence](../power-recording-can-audit-2026-09-11.md).
+Exact flight buses: ST PA5/6/7; TDK PB13/14/15; ADXL PC10/11/12;
+BMP PB6/7; TE PB10/PB3. NOR: PB2 clock, PE11 select,
+PD11 IO0, PD12 IO1, **PE2 IO2**, PD13 IO3. Control/interrupts remain in the
+[pin CSV](../../hardware/croi2/libraries/inputs/flight-pinout.csv).
 
-If recording fails after launch, end transactions within a bound and preserve
-essential flight operation. Before launch, unexplained logger failure stops
-preparation. Never let a logging error create a flight reset loop.
+## Recording
 
-## Next pass through this chapter
+**Recommend continuous prepared recording with event markers.** Retain at least
+a proposed ten seconds before launch; use low-rate pad logging outside the
+bounded full-rate window. No separate comms flash: forward bounded diagnostics
+to the existing recorder, with source/time/reset identity and drop counters.
 
-Agree the useful pre-event time and trigger semantics, and what each survival
-claim actually covers. Test interrupted writes at different stages, full and
-corrupt storage, timestamps, clipping, axis transforms and stuck devices.
-Preserve explicit data gaps rather than producing an apparently continuous
-but misleading plot.
+| Failure | Shared flight NOR proposal | Extra comms flash would change |
+| --- | --- | --- |
+| Radio link lost | Keep comms evidence over internal UART | No essential gain for this case |
+| Comms resets | Flight records gap/reset; unsent tail lost | Can retain earlier local commits |
+| Flight MCU/UART fails | New comms evidence cannot be stored | Independent comms recording while its supply survives |
+| Whole board power loss | Prior commits retained; tail uncertain | Still shares power loss |
 
-[Next: vehicle power and expansion](08-foinse-can.md) · [Detailed sensor and NOR evidence](implementation-reference/07-sensors-logging.md)
+**Choice:** accept the flight/UART dependency for diagnostics and reuse NOR.
+Add separate comms storage only for an explicit requirement to record through
+that failure; it costs driver, pins, supply, format and readout work.
+
+| Budget | Calculated result |
+| --- | --- |
+| Existing aggregate record rate | 96,672 B/s |
+| 128 KiB writer staging | 1.356 s at that rate; not spare pre-trigger RAM |
+| Thirty minutes of samples | 174,009,600 B |
+| Existing mission ledger incl. allowances | 180,587,776 B |
+| Capacity minus that ledger and 64 MiB reserve | 20,738,816 B |
+| Additional 1 KiB/s diagnostics for 30 min + 10 s lead-in at full combined rate | 2,820,160 B |
+| Remaining unallocated capacity after those additions | 17,918,656 B |
+
+The ten-second line is conservatively additional; don't count it twice when
+implementing the final record ledger. Full-rate pad recording cannot run for
+hours. Prepared-space exhaustion must be visible before flight.
+
+Proposed commit unit: sixteen 256-byte data pages, then one footer page.
+At the researched 1.5 ms maximum page-program value, programming alone takes
+25.5 ms per 4 KiB payload. Earlier quad-transfer arithmetic gives ~157 kB/s
+before software overhead. **Exact device timing and measured sustained verified
+throughput still control acceptance.** Pre-erase disarmed; reject torn tails;
+never let an erase or logger fault stall essential flight work.
+
+**Next check:** concurrent acquisition/write stress, interrupted writes,
+address-boundary readback, sensor orientation/clipping/freshness and bus faults.
+Hold-up protects flight execution only; it does not guarantee a final NOR commit.
+
+Sources: [device datasheets and configuration rationale](implementation-reference/07-sensors-logging.md),
+[storage arithmetic](../power-recording-can-audit-2026-09-11.md),
+[configuration review](../sensor-configuration-review-2026-09-07.md).

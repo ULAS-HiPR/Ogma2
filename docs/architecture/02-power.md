@@ -1,256 +1,194 @@
-# 2. Power from the source to every load
+# Power — two regulated domains
 
-**Next-review answers:** [18 September investigation](2026-09-18-review-investigations.md#2-power-alternatives-and-input-boundary) supplies recommendations and supporting comparisons for this chapter.
+**19 September · recommended proposal · CAD still has three LDO rails.**
 
-## 13 September review: compare rail allocations
+Keep the shared **TPSM63603 4 V buck**. Use **TPS7A91 ×2** for flight and
+service. Put the independently enabled comms branch **after** the service LDO.
+Comms power cycling then leaves recording/CAN/AUX enabled.
 
-The rail choice remains open. A concrete two-rail candidate puts NOR/CAN/AUX
-on individually protected branches of a continuously available non-flight rail,
-and moves communications recovery downstream. Cycling that whole rail would
-otherwise also remove logging and vehicle communication. Compare the necessary
-switches, fault selectivity, startup behavior, losses and area against three
-regulators; no measured saving is established. “Optional” does not mean
-mission-irrelevant when CAN serves remote actuators.
+## Justification and deeper detail
 
-Specify the accepted minimum and maximum core input, not just 7.4 V nominal.
-Narrow 2S input with Churro adapting other packs is a candidate, not a new
-voltage contract. Reverse-polarity protection concerns a backwards source;
-reverse-current blocking concerns backfeed. Neither is physical arming.
-The ordered source, regulator and load diagrams below now expose those
-functions separately; their electrical performance still needs verification.
-
-USB startup bias enables startup; it does not itself select negotiated current.
-Usable hold-up voltage fall is starting capacitor voltage minus the minimum LDO
-input needed for valid flight power, including dropout and path losses.
-
-**Retained:** standalone battery operation, USB-only servicing without output
-energy, and separation of essential from nonessential faults. **Open:** whether
-every present rail earns its place, hold-up sizing and actual load budgets.
-
-## Follow the energy
-
-Burrito accepts either its own battery or Churro's protected battery feed, not
-both together. USB is an alternative source for servicing the electronics. It
-must neither charge the battery nor power the energetic or servo loads.
-
-The paths below replace the abstract branch boxes, following the preserved
-netlist. Read the source path first, then the three regulator paths, then their
-loads. A box is an actual series function; a capacitor is a side connection,
-not something the supply current passes through in series. These are supply
-paths, not every feedback resistor or signal connection.
-
-### Source entry and selection
-
-```mermaid
-flowchart TD
-  B["One battery input: standalone OR Churro"] --> Q["Reverse-protection / blocking MOSFET<br/>controlled by battery eFuse"]
-  Q --> E["Battery eFuse<br/>current limit, voltage thresholds, enable"]
-  E --> SH["5 milliohm current-measurement shunt"]
-  SH --> VB["Protected battery node"]
-  VB --> MX["Battery / USB power mux<br/>source selection and reverse-current control"]
-  USB["USB VBUS"] --> UL["USB current limiter"]
-  UL --> MX
-  MX --> LS["Selected logic supply"]
-  LS --> BU["Buck converter: 4 V output"]
-  LS --> BO["Startup-bias LDO: 3.3 V"]
-  BO -.-> CT["Startup / source-control logic"]
-  VB --> AR["Separate physical output-arm paths<br/>assembly remains unresolved"]
-  AR --> OUT["Output-energy circuits<br/>existing energy links remain DNP"]
-```
-
-USB has no supply arrow to the output-arm paths. Startup bias is derived from
-the **selected logic supply**, not a second USB-only source. It lets the control
-logic start before firmware is available. The external ordinary power-enable
-contact controls battery electronic shutdown; it is not the physical arm path.
-Reverse polarity means a backwards battery; reverse current means energy
-flowing back toward an upstream source. Neither means optical isolation.
-
-### From the common 4 V supply to each 3.3 V rail
-
-```mermaid
-flowchart TD
-  K["Common 4 V buck output"] --> RB["Flight reverse-current blocker"]
-  RB --> H["Held flight input node"]
-  H --- CAP["Hold-up capacitor to ground<br/>part selection unresolved"]
-  H --> FL["Flight LDO: 3.3 V"]
-  K --> CL["Comms branch current limiter<br/>latch-off; controlled enable"]
-  CL --> CR["Comms LDO: 3.3 V"]
-  K --> OL["Optional branch current limiter<br/>latch-off; flight-rail enable"]
-  OL --> OR["Optional LDO: 3.3 V"]
-```
-
-The flight input has a dedicated reverse blocker. The other two branches have
-explicit current limiters before their LDOs. Those functions must not disappear
-inside a box named “limited branch.” There is no separate pre-LDO branch limiter
-shown on flight. Regulator internal protection is not a claim of selective
-isolation between these branches.
-
-### What each rail actually supplies
-
-```mermaid
-flowchart TD
-  F["Flight 3.3 V"] --> FM["Flight MCU, supervisor, watchdog<br/>and flight-side control/interface logic"]
-  F --> SL["Five separate sensor current limiters"]
-  SL --> SS["Each limited output feeds its sensor<br/>and sensor-side signal interface"]
-  C["Comms 3.3 V"] --> CM["Comms MCU, supervisor<br/>and comms-side interface logic"]
-  C --> GS["GNSS load switch"]
-  GS --> GN["GNSS receiver and its signal interface"]
-  C --> RS["Radio load switch"]
-  RS --> RA["Radio and its signal interfaces"]
-  O["Optional 3.3 V"] --> NL["NOR current limiter"]
-  NL --> NOR["Flash and flash-side signal switches"]
-  O --> CAL["CAN current limiter"]
-  CAL --> CAN["CAN transceiver and bus-side translator"]
-  O --> AL["AUX current limiter"]
-  AL --> AUX["Local battery monitor<br/>and Churro monitoring supply"]
-  O --> BZ["Sounder / driver network<br/>no separate branch limiter"]
-  O -.-> CO["Continuity-test injection feeds<br/>DNP; not operating loads"]
-```
-
-GNSS/radio use load switches; they are not labelled as individual current
-limiters. CAN power here means powering the transceiver electronics, not sending
-vehicle power along CAN data wires. AUX supplies monitoring circuitry; Churro
-supplies main power in the opposite direction. Sensor/data interfaces are shown
-because turning off a supply alone does not prove that signals cannot back-power
-it. Exact signal paths remain in the schematic.
-
-**Trace evidence:** [preserved netlist](../../hardware/croi2/output/full-netlist.xml):
-Q101/U101 → R7101 → U1101; USB U4401 → U1101; U1101 → U1301 and U1102;
-U1401/C1403/U1701 flight path; U1501/U1801 comms path; U1601/U1901 optional
-path. Downstream: U3101–U3501 sensor limiters, U4502/U4602 load switches,
-U3601 NOR, U501 CAN, U7001 AUX. Zero-ohm links, local decoupling and feedback
-parts are omitted from the drawings, not claimed absent. Physical arm assembly,
-continuity DNPs and fault-selectivity verification remain unresolved.
-
-## What each mechanism is doing
-
-A **buck converter** efficiently reduces the battery voltage. A **linear
-post-regulator**, or LDO, then makes the selected quiet 3.3 V supply. Separate
-branches let us try to contain a failed nonessential load rather than letting
-it pull the entire computer down.
-
-A **current limiter** bounds current into a fault. **Reverse blocking** prevents
-energy flowing back toward a collapsed source. A **hold-up capacitor** stores
-a small amount of energy locally. None does all three jobs.
-
-The common converter and essential regulator remain common failure points.
-A capacitor cannot fix a permanent short. Turning a sensor's supply off is
-also insufficient if a driven signal pin powers it through another path.
-
-## Why does the optional rail exist?
-
-The earlier explanation made this look like an unexplained extra regulator.
-The schematic audit found more than logging and AUX:
-
-| Actual load | Local boundary | Consequence if the optional rail disappears |
+| Question | Follow through | Source status |
 | --- | --- | --- |
-| NOR and its interface switches | Separate switched/current-limited branch | Bulk recording stops |
-| CAN transceiver and external-side translator | Separate switched/current-limited branch | Engine coordination and any future actuator messages stop |
-| Local battery monitor and Churro monitoring return | Shared switched/current-limited AUX branch | Current/auxiliary evidence disappears, including standalone current monitoring |
-| Piezo sounder and its discharge resistor | Direct rail connection through the sounder driver | Audible indication disappears |
-| Three proposed continuity-test feeds | Unpopulated limiting paths; not operating loads | No continuity-test source; these remain unapproved and DNP |
+| Why the buck, LDOs and hold-up? | [Component alternatives and conversion rationale](implementation-reference/02-power.md#options-explored-and-why-this-one-survived) | Historical three-rail topology; current two-rail choice is justified below |
+| How are the numbers obtained? | [Reproducible limits, voltage-drop and hold-up checks](../calculations/component-proposal-checks.py) | Current proposal arithmetic |
+| How does the enable plug behave? | [Installed source-enable contract](../../interfaces/power-contract.md#8-september-source-enable-implementation) | Preserved electrical definition |
 
-The last two are not behind the three individual branch switches. A short on
-the shared rail can remove every function in this table. Flight is intended to
-continue, but that is degraded operation: local logging and engine communication
-can disappear together. Physical fault containment still needs testing.
+## Source entry — retain the existing path
 
-Three alternatives deserve a real comparison:
+```mermaid
+flowchart LR
+  B["ONE 2S source
+J101 standalone OR J102 Churro"] --> Q["CSD18540Q5B · Q101
+reverse-polarity FET
+TPS26630RGER · U101 protection"]
+  Q --> V["R7101 · 5 milliohm shunt
+VEHICLE_VBAT"]
+  V --> M["TPS2121RUXR · U1101
+battery / USB source mux"]
+  EN["J103 · maintained enable contact"] -.->|"electronic enable"| Q
+  U["USB VBUS"] --> UL["TPS2553DBVR-1 · U4401
+USB current permission"]
+  UL --> M
+  M --> K["TPSM63603RDHR · U1301
+common 4.0 V converter"]
+  M --> BS["TPS70933DBVR · U1102
+BOOT_3V3 for startup logic"]
+  V --> O["Separate output-energy boundary
+existing DNP links remain"]
+```
 
-| Choice | Benefit | Cost |
-| --- | --- | --- |
-| Retain the separate rail | Explicit nonessential load boundary | Regulator, limiting, isolation, area and losses |
-| Move its loads onto an existing rail with local protection | Could remove a regulator | Must recover equivalent fault containment and startup behaviour |
-| Remove an unnecessary load | Removes its complete support burden | Only valid if the function is genuinely unnecessary |
+USB powers logic only; no charging or output-energy path. J103's maintained
+contact controls electronic source enable, not physical battery isolation.
+Use the existing 2S boundary: 8.4 V maximum normal charge; nominal protection
+thresholds ~6.63 V start / 6.20 V stop / 8.99 V overvoltage. Threshold tolerances
+and sag determine actual operating limits; “2S” does not promise 6 V startup.
 
-**11 September recommendation, challenged on 13 September:** retain the optional
-rail for comparison in the next review. Moving its
-loads to held flight power weakens the central fault boundary. Moving them to
-comms power makes logging and CAN depend on a rail which flight may deliberately
-switch off to recover communications. Keeping equivalent independent control
-and protection on a merged supply could work, but saves less than simply deleting
-the regulator suggests. The downside of retaining it is area, components and a
-shared failure point for the loads above; no measured efficiency saving supports
-removing it yet.
+## Regulator and load connections — proposed
 
-The 100 mA normal-use allocation and approximately 0.5 A upstream limit are
-different budgets. Three branch limits cannot simply be summed and assumed
-selective. Trace a short through the branch, optional limiter and common buck;
-flight must remain valid until the fault clears or the defined reset occurs.
+```mermaid
+flowchart TB
+  K["Common 4.0 V
+TPSM63603 U1301"] --> H["LM73100RPWR · U1401
+reverse-current blocking"]
+  H --> HI["Held flight input"]
+  HI --- CAP["C1403 to GND · proposal
+PCW0J102MCO1GS · 1000 uF / 6.3 V"]
+  HI --> F["TPS7A9101DSKR · U1701
+FLIGHT_3V3"]
+  F --> FM["Flight MCU / supervision
+five locally limited sensor branches"]
+  K --> AL["TPS2553DBVR-1 · U1501
+aggregate service limit
+enabled from BOOT_3V3"]
+  AL --> S["TPS7A9101DSKR · U1801
+SERVICE_3V3"]
+  S --> CL["TPS2553DBVR-1 · relocated U1601
+independent COMMS_BRANCH_EN"]
+  CL --> C["COMMS_3V3
+MCU / supervisor / interface logic"]
+  C --> SW["TPS22918 ×2
+GNSS / radio load switches"]
+  S --> NL["TPS2553DBVR-1 · U3601"]
+  NL --> N["NOR + its signal boundary"]
+  S --> CA["TPS2553DBVR-1 · U501"]
+  CA --> CN["CAN transceiver + signal boundary"]
+  S --> AU["TPS2553DBVR-1 · U7001"]
+  AU --> A["Burrito INA228
+Churro monitoring AUX"]
+  S --> Z["Sounder driver
+no separate limiter"]
+```
 
-## The startup question we got stuck on
+Capacitor is connected to ground at the held node, not in series. Common ground
+and signal-side protection remain; these arrows show supply paths only.
+Unpopulated diagnostic feeds remain DNP, outside operating load budgets.
 
-On USB alone, firmware must run to negotiate/configure service power. But
-firmware cannot run until the power path starts. A small startup bias supply
-lets the source-control circuitry begin without waiting for that firmware.
-That is the relevant meaning here of “bootstrap bias.”
+## Why two rather than one or three
 
-It is different from the bootstrap capacitor used by some high-side MOSFET
-drivers. It is also different from the battery-powered bias for the external
-enable switch. Naming those jobs explicitly is more useful than a generic
-definition of bootstrap.
+**Recommend two as a fault-containment choice, not a demonstrated reliability
+improvement.** The retained requirement is flight execution through a failed
+comms branch. Separate current limiting does most of the work for a downstream
+short; a second LDO additionally separates the two regulated output nodes.
 
-## What the numbers mean
+| Concrete event | One LDO + local limits | Two LDOs + local limits | Third LDO adds |
+| --- | --- | --- | --- |
+| Radio/GNSS load short | Comms limiter can contain it if selectivity/droop pass | Same mechanism; second LDO alone does not clear it | Little for this fault |
+| Service LDO output short to ground | Shared 3.3 V collapses | U1501 limits the service input demand; flight survival depends on common-buck droop | Logger/CAN can remain on a separate service rail |
+| Intentional comms power cycle | Possible with downstream switch | U1601 cycles comms while NOR/CAN/AUX remain supplied | Not needed for this operation |
+| Flight LDO or common buck/source fails | Flight lost | Flight lost | No independent flight supply |
+| Service LDO passes excessive input voltage | Shared loads exposed | Service loads exposed; current limiting is not overvoltage isolation | Smaller exposed load group, subject to exact fault path |
 
-A 2S lithium-ion pack is approximately 7.4 V nominal and 8.4 V fully charged;
-actual acceptable operating limits follow the pack and protection design.
+The two-rail proposal accepts loss of **comms + recording + CAN + monitoring**
+from a shared service-LDO failure. These services matter to the mission; calling
+them “optional” hid this consequence. Essential flight execution has a separate
+rail, but some missions also require surviving CAN control or telemetry.
 
-At first order, a linear regulator's efficiency is output voltage divided by
-input voltage. Going from 4 V to 3.3 V gives 82.5% before quiescent losses.
-Overall battery efficiency also includes the buck and protection paths.
-Dropping the intermediate voltage saves heat but reduces tolerance for dips,
-switch losses and regulator headroom.
-
-The existing estimate delivers about 1.98 W to the three 3.3 V domains. Its
-assumed conversion losses put converter input around 2.67–2.82 W before other
-losses. This is not a measured board current or guaranteed maximum.
-
-The separate endurance example totals 19 Wh across operating, recovery and
-event modes. A continuous 3 W load does not fit the same eight-hour allocation.
-Peak-current limits, average demand and usable battery energy are different
-quantities.
-
-### What the hold-up capacitor actually buys
-
-For a capacitor feeding an LDO, a useful first-order calculation is
-`time = effective capacitance × usable voltage fall / input current`.
-With the existing 800 µF effective-capacitance and 204 mA load assumptions:
-
-| Usable voltage fall, after headroom and losses | Calculated interval |
+| Selection | Actual trade |
 | --- | --- |
-| 0.10 V | 0.39 ms |
-| 0.25 V | 0.98 ms |
-| 0.50 V | 1.96 ms |
+| One | Remove another LDO/support set; accept a shared regulated-output failure. Still needs local load switches and USB sequencing |
+| **Two** | Retain separate flight supply; remove U1901/support; relocate U1601. No reduction in the ~0.42 W ideal LDO conversion loss |
+| Three | Retain separate comms and recorder/CAN regulation; more placement, startup and verification work |
 
-These are sensitivity cases, not verified voltage margins. A 10 ms interval
-at 0.25 V would require about **8,160 µF effective**, before further allowance.
-The present capacitor is a brief-dip provision, not protection from a loose
-battery connector. Exact capacitance, ESR, leakage, regulator dropout, reset
-threshold and installed load remain to be established.
+No failure-rate evidence establishes which gives the highest overall reliability.
+The reason for recommending two is preserving the specified flight/service fault
+boundary with fewer regulators than the draft. **Choose one instead if the team
+accepts the common regulated-output loss.** Choose three if recorder/CAN survival
+through a comms-regulator fault is a requirement. Those are the actual decisions.
 
-**Crucially, the capacitor holds up flight power, not NOR or CAN.** The processor
-remaining alive does not guarantee a last log write or a final bus message.
-Use continuous committed recording and explicit reset/gap evidence; do not make
-an emergency flush depend on this capacitor.
+All options share source, mux, buck, ground and PCB. Local limiters failing short,
+common return damage and regulator overvoltage need their own fault assessment.
 
-[Calculation and traced circuit evidence](../power-recording-can-audit-2026-09-11.md).
+## Exact delta and startup
 
-## Measure where it remains useful
+- Reuse U1501 before U1801 as aggregate service limiter; EN from BOOT_3V3.
+- Reuse U1601 **after U1801** as comms limiter, controlled by existing U1202.
+- Remove U1901 and its LDO support network. Do not join old regulator outputs.
+- Keep U1202's existing mux: `COMMS_BRANCH_EN = BAT_VALID ? FLIGHT_COMMS_EN : USB_PRESENT`.
+- Keep `CORE_INPUT_EN = BAT_VALID OR USB_CONFIG_OK` and the existing comms reset boundary.
+- With a valid battery, flight controls comms power even with USB attached. USB-only holds comms on for service; use its reset path instead of claiming flight-controlled power cycling in that mode.
+- NOR/CAN/AUX enables remain flight-owned and default off. GNSS/radio stay off before USB current permission. Sounder stays silent.
 
-Keep the common battery-current measurement on Burrito so standalone flights
-have it too. Churro can measure its separate propulsion branch. Duplicating
-the same avionics measurement on both boards adds little.
+| Source state | Bootstrap / service | Flight / other branches |
+| --- | --- | --- |
+| Valid battery | Starts autonomously; flight can then enable comms | BAT_VALID starts flight independently of comms |
+| USB before configuration | Comms starts for enumeration within the permitted current budget | Flight/NOR/CAN/AUX/GNSS/radio off |
+| USB configured | Existing permitted current setting applies | Flight may start; explicitly sequence only service loads required |
+| Battery + USB | Existing mux priority/backfeed behavior retained | Comms cannot withdraw flight power while BAT_VALID is true |
 
-The measurement has costs: voltage drop, dissipation and another series
-element. It excludes USB, charging and upstream bias current. A current pulse
-is evidence of an electrical response, not proof that a servo moved or an
-initiator worked.
+Charging service-LDO/comms capacitance still consumes USB startup current.
+The 100 mA preconfiguration / 500 mA configured assumptions in the existing
+service design require measured compliance; no USB-PD source is assumed.
 
-## Next pass through this chapter
+## Initial electrical budget
 
-Follow battery and USB startup through to each load, then follow a shorted
-logger or communications branch. Is essential flight power actually retained?
-Review minimum-source startup, transients, source backfeed, branch selectivity
-and useful hold-up with measured loads. Keep charging and arming separate.
+| Item | Proposed value / reason |
+| --- | --- |
+| Existing load allocations | Flight 200 mA; comms 300 mA; other service 100 mA at 3.3 V |
+| Aggregate service U1501 | 32.4 kΩ, 1% ILIM: TI Table 2 gives 729.1–882.1 mA |
+| Comms U1601 | 66.5 kΩ, 1% ILIM: TI Table 2 gives 351.2–448.7 mA |
+| Static comms-short allocation | 448.7 mA + 100 mA other = 548.7 mA, below aggregate minimum before quiescent/inrush allowances |
+| Service LDO | 1 A part; 400 mA normal allocation, ~0.28 W at 4→3.3 V before path-drop effects |
+| Both LDOs | ~0.42 W combined at 600 mA; removing a rail does not remove this conversion loss |
+| Hold-up illustration | 800 µF effective × 0.25 V / 204 mA = 0.98 ms; flight only |
 
-[Next: energetic outputs](03-energetic-outputs.md) · [Detailed power calculations and circuits](implementation-reference/02-power.md) · [Power contract](../../interfaces/power-contract.md)
+These are component-derived starting values, not measured peak load or trip
+selectivity. TPS2553-1 limits current before its 5–10 ms overcurrent latch-off
+delay; flight hold-up alone cannot bridge that delay. The common buck must
+remain valid under the limited fault. Check dynamic droop and each other local
+branch's maximum limit plus simultaneous healthy loads against the aggregate.
+At the aggregate maximum, a service short can demand ~3.53 W from the 4 V node
+before latch-off. Buck rating alone does not establish its transient response.
+An aggregate service latch-off loses all services until source/enable cycling.
+
+The relocated comms switch drops up to ~61 mV at 448.7 mA using TI's 135 mΩ
+DBV on-resistance bound. With a 1%-low 3.3 V LDO this leaves ~3.21 V before
+trace/transient allowances, above the H563 USB minimum of 3.0 V. This is a DC
+budget, not a transient pass. The LDO's ideal conversion efficiency is 82.5%.
+
+TPS7A91 requires at least 10 µF input/output per its datasheet; retain effective
+capacitance after bias/temperature derating and verify the actual selected parts.
+Its 1 A rating is not an allocated load.
+
+**C1403 proposal: Nichicon PCW0J102MCO1GS**, 1000 µF / 6.3 V, 8 mm diameter ×
+10 mm body length, 14 mΩ maximum ESR at 20 °C / 100 kHz. A −20% capacitance
+allowance gives 800 µF before other environmental effects; 204 mA produces an
+illustrative 2.9 mV ESR step. Allow its 1.89 mA rated maximum leakage in the
+budget. This replaces an unspecified volume allowance with a concrete candidate.
+Check the manufacturer's land pattern, retained 10 mm-class clearance,
+mechanical support and 4 V overshoot; no installed fit or vibration rating is
+claimed. No 10 ms outage claim is made.
+[Nichicon rating table](https://www.nichicon.co.jp/_assets/images/products/catalog/corporate/digital/sh_pcw_pca.pdf).
+
+**Next check:** minimum-source and USB-only startup, comms cycling with continuous
+NOR/CAN operation, controlled branch faults, and measured flight-rail droop.
+Reject the simplification if those boundaries cannot be met economically.
+
+Sources: [preserved connected netlist](../../hardware/croi2/output/full-netlist.xml),
+[TI SN74LVC1G97 truth table](https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf),
+[TI TPS2553 datasheet](https://www.ti.com/lit/ds/symlink/tps2553.pdf) Table 2,
+[TI TPS7A91 datasheet](https://www.ti.com/lit/ds/symlink/tps7a91.pdf),
+[existing power rationale](implementation-reference/02-power.md),
+[controlled power contract](../../interfaces/power-contract.md).
+
+See [connectors and physical arming](09-connectors-arming.md) for the FC battery-enable plug, separate unresolved output-arm assembly and complete connector inventory.
