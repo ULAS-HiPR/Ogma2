@@ -1,6 +1,6 @@
 # Connectors and physical arming
 
-**19 September · installed connector inventory; unresolved arm assembly explicit.**
+**22 September · installed connector inventory; unresolved arm assembly explicit.**
 
 Two distinct operator functions: **enable computer battery power**, then
 **separately establish the physical output-arm state**. Neither a powered FC nor
@@ -10,6 +10,7 @@ software readiness proves output energy is isolated or armed.
 
 | Question | Follow through | Source status |
 | --- | --- | --- |
+| Which assembly decisions are now proposed? | [Source variants, mates, exact Nano-Fit drawing and retained leads](justifications/interfaces-and-installation.md#source-variants-and-harness-construction) | Current capture/placement baseline; physical output-arm block excluded |
 | Where is FC enable defined? | [Source-enable contract](../../interfaces/power-contract.md#8-september-source-enable-implementation) | Installed connector/contact behavior |
 | Why these connector families? | [Connector and service revision](../connector-servo-readiness-revision-2026-09-07.md#connectors) | Preserved parts/harness rationale; output-arm assembly remains incomplete |
 
@@ -90,3 +91,27 @@ Evidence: [native netlist](../../hardware/croi2/output/full-netlist.xml),
 [connector revision](../connector-servo-readiness-revision-2026-09-07.md),
 [meeting extraction](2026-09-18-meeting-change-ledger.md),
 [output boundary](03-energetic-outputs.md).
+
+## Schematic handoff
+
+**Burrito's board-side inventory is defined; the complete vehicle harness is not.**
+Churro also requires J101 (2S), J201 (6S), J103/J104 (source enables), J301
+(board pair), J601 (temperature probes) and J701 (protected propulsion output).
+The [Churro chapter](08-foinse-can.md#churro-circuit-inventory) now inventories
+these together with their actual source roles.
+
+Two sources cannot be made mutually exclusive by a note beside two populated
+connectors. Recommend an assembly variant: standalone J101 or Churro-fed J102,
+with the unused source connection physically unavailable. Preserve power-pin
+assignments. The exact [Nano-Fit drawing is located](justifications/interfaces-and-installation.md#source-variants-and-harness-construction);
+create and independently check that footprint during capture. A rectangular
+reservation is not a land pattern. Codex owns this library/placement work after
+the green light; Seán owns routing.
+
+SMA GNSS/radio and the repeated two-contact GH enable connectors remain
+misconnection cases despite the ten-contact servo fix. Resolve them with
+installation access, physical differentiation where necessary, retained leads
+and cavity-numbered harness drawings. A label alone is not proof against every
+credible cross-connection. Include ground-return faults and USB attached in the
+installed assembly review. Physical output-arm wiring remains outside this
+completed connector inventory.

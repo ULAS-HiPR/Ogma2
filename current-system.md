@@ -1,26 +1,36 @@
 # Ogma 2 current architecture
 
-## 19 September — concrete proposal for the next design pass
+## 22 September — proposed capture baseline
 
-Start with the [connected component proposal](docs/architecture/00-overview.md),
-then the [block index](docs/architecture/README.md). The 18 September meeting
-requested actual parts/connections and concise justification; repeated document
-walkthroughs are no longer the default review method.
+The [capture specification](docs/architecture/schematic-capture-spec.md) now
+provides exact deltas against native CAD at `9a8c2a2`. After Seán's future green
+light, **Codex captures the schematics and places components; Seán routes**.
+Anav retains firmware ownership. This instruction defines the intended handoff;
+it is not current implementation authorization.
 
-| Proposed change | Reason / implementation boundary |
+| Proposed choice | Reason / defined consequence |
 | --- | --- |
-| H563VIT6 flight / H563RIT6 comms | Preserve flight interfaces; smaller comms package with complete proposed 64-pad map |
-| Two LDO domains: flight + service | Remove one LDO; move independent comms limiter downstream; show shared buck and changed common faults |
-| Two local servo interfaces | PC6/PC7 retained; PD10 released; retain ten-contact connector with two populated servo groups; load-specific supply still open |
-| Stream USB log chunks | Buffer size follows transport, not an arbitrary whole-block RAM requirement |
-| Retain sensors, NOR, GNSS/radio and simple service hardware | Existing named functions remain; source limits and checks sit beside each block |
+| H563VIT6 flight / H563RIT6 comms | Complete 100/64-pad maps; PD10 becomes SERVICE_POWER_EN |
+| Retain three TPS7A91 domains, all 3.352 V | Comms-regulator faults do not also lose recording/CAN; services get separate bounded restart |
+| 200/300/200 mA flight/comms/services | Explicit allocations and local-limit coordination; restricted USB modes |
+| Reference 2S 8 Ah, ≥30 Wh usable | Conservative 8 h + 4 h logic energy; actuator energy additional |
+| Churro protected raw 2S/6S, AV 3 A / PROP 2 A continuous envelope | Exact source-fuse assembly and probe/reference/cable-protection proposal; no new MCU/charger/converter |
+| Two raw-2S, 3.3 V local PWM interfaces | 1.5 A combined normal motor allocation; retain ten-contact connector, no remote actuator node |
+| 192 MiB recording region, 15 data pages + footer per sector | Explicit format, preparation, capacity and ≥125 kB/s measured-throughput target |
+| Source population variants, exact Nano-Fit drawing, passive RF reference assembly | Defined capture/placement work and later installation checks |
 
-These recommendations are **not accepted hardware changes**. Existing CAD,
-controlled electrical interfaces and the implementation hold remain. The status
-and tables below describe that preserved draft. New recommendations supersede
-the corresponding advice in the earlier investigation, not installed truth.
-MAX-M10S qualification must cover its 4 g / 500 m/s / 80 km limits.
+[Justifications](docs/architecture/justifications/README.md) distinguish chosen
+recommendations from measurements and accepted requirements. The three-domain
+proposal supersedes the 19 September two-LDO candidate and the earlier same-day
+audit's shared-service/source-cycle proposal. Its topology was never installed.
+The [earlier audit](docs/architecture/2026-09-22-schematic-readiness.md) remains
+source-backed history, including fresh native-netlist parity.
 
+Energetic-output/physical-arm design remains incomplete and excluded; existing
+DNP safeguards remain. The rest of this file describes **preserved CAD and
+historical review disposition**, not the new proposal's implementation status.
+No final-stack acceptance, CAD change, peer-contract revision or hardware test
+is implied by the completed documentation synthesis.
 
 ## Preserved review disposition — 13 September
 
@@ -32,7 +42,7 @@ range, energetic simplification and indicator hardware remain open. No final
 stack or hardware implementation was authorized. Understanding an explanation
 is separate from accepting its design.
 
-Updated: 19 September 2026
+Updated: 22 September 2026
 Status: requirements and architecture reopened in joint review. Existing CAD
 preserved; no schematic/PCB work until Seán authorizes the final stack.
 
@@ -57,7 +67,8 @@ now. File, net and CAD names are unchanged.
 The [component proposal](docs/architecture/README.md) is the review surface:
 named parts and interfaces on the drawings, concise reasons alongside them,
 research below. Reading or understanding a proposal does not accept it.
-Seán owns final PCB layout; Anav owns firmware implementation.
+After the green light, Codex captures schematics and places components; Seán
+routes. Anav owns firmware implementation.
 
 Authorised installation changes are **implemented in the checked CAD draft**:
 
@@ -74,7 +85,7 @@ the exact parts, connector pins, checked scope and remaining hardware tests.
 
 ## System
 
-### Open review deltas — not implemented
+### Historical review deltas — superseded by the proposal above, CAD not changed
 
 - Keep standalone core operation and timing/fault separation; two MCUs remain
   a shared-board architecture, not independent recovery.

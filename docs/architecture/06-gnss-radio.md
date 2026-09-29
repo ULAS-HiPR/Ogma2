@@ -1,11 +1,12 @@
 # GNSS and radio
 
-**19 September · proposal · retain MAX-M10S and Wio-LR2021.**
+**22 September · proposal · retain MAX-M10S and Wio-LR2021.**
 
 ## Justification and deeper detail
 
 | Question | Follow through | Source status |
 | --- | --- | --- |
+| What can we actually connect for bring-up? | [Passive antenna and matched Wio reference assembly](justifications/interfaces-and-installation.md#rf-reference-assembly) | Concrete commissioning choice; vehicle mount/link still to qualify |
 | Why MAX-M10S? | [GNSS shortlist and external-antenna rationale](implementation-reference/06-gnss-radio.md#the-gnss-shortlist-and-why-the-answer-changed) | Earlier research and manufacturer links |
 | Why Wio-LR2021? | [Radio options and link tradeoffs](implementation-reference/06-gnss-radio.md#radio-options-cost-and-link-tradeoffs) | Earlier research; receiver compatibility still needs testing |
 | Where does packet airtime come from? | [Airtime calculation](../calculations/avionics-options-estimates.py) | Reproducible estimate, not measured link performance |
@@ -13,7 +14,7 @@
 ```mermaid
 flowchart LR
   GA["External passive GNSS antenna
-assembly / cable still to select"] --> GS["Amphenol 132134 SMA
+TFX125.B reference test assembly"] --> GS["Amphenol 132134 SMA
 TPD1E0B04DPYR shunt ESD"]
   GS --> G["MAX-M10S-00B
 U4504"]
@@ -78,8 +79,8 @@ margin from the installed antenna and range test; keep full-rate data in NOR.
 The historic net `LORA_DIO1` reaches **module DIO5**. RXEN/TXEN reservations are
 unused. Do not port an SX1262 driver by changing the device name.
 
-**Next check:** identify the actual ground receiver/firmware; exchange the test
-packet; measure TX current and reset recovery. Then measure installed reception,
+**Next check:** exchange the test packet with a matched Wio-LR2021 reference
+peer; then test actual groundstation compatibility, TX current and reset recovery. Then measure installed reception,
 GNSS solution age/reacquisition and antenna losses. Neither antenna assembly
 has a justified exact part selection yet.
 
@@ -87,3 +88,24 @@ Sources: [u-blox MAX-M10S datasheet](https://content.u-blox.com/sites/default/fi
 [Wio datasheet](https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf),
 [RF installation and alternatives](implementation-reference/06-gnss-radio.md),
 [airtime calculation](../calculations/avionics-options-estimates.py).
+
+## Schematic handoff
+
+**Retain board RF parts, passive antenna topology and interfaces.** Use the
+[reference test assembly](justifications/interfaces-and-installation.md#rf-reference-assembly)
+for first-board checks. It closes the bench interface; it does not promise the
+large reference antennas fit a vehicle. Vehicle coax/access/retention and RF
+performance are installation qualification, with the same 50 Ω/passive boundary.
+No active-antenna bias circuit is added speculatively.
+
+Sequence GNSS startup before high-power radio work. The MAX-M10S datasheet asks
+the source to accommodate up to 100 mA startup inrush; tracking averages cannot
+size the shared comms limit. The proposed 300 mA comms allocation must include
+processor, interfaces and radio peaks. If that budget fails, revise the branch
+budget and its upstream selectivity together; do not only enlarge one limiter.
+
+Across boost/high altitude, GNSS and pressure can be unavailable simultaneously.
+The retained parts are still useful for pad, lower-flight and recovery records.
+Full-envelope navigation requires the separately validated inertial/mission
+solution; neither two barometers nor external GNSS placement supplies that proof.
+Comms-held-reset flight testing must also remove GNSS/PPS input.

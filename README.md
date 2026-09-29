@@ -2,8 +2,8 @@
 
 **Start here:** [Connected component proposal](docs/architecture/00-overview.md) · [Block index](docs/architecture/README.md).
 
-19 September: named parts, connected power/data paths and short reasons. Proposed
-two-rail power, smaller comms package and two local servo interfaces are distinct
+22 September: named parts, connected power/data paths and short reasons. Proposed
+three-domain power/recovery, smaller comms package and two bounded local interfaces are distinct
 from the preserved CAD. [Current status](current-system.md).
 
 HiPR's workhorse flight computer: standalone Croí2, with MCU-less Foinse2 power
@@ -32,8 +32,10 @@ all schematic and PCB implementation remains paused pending final-stack approval
 
 Use the connected drawing during discussion; follow the block being questioned.
 Resolve a concrete selection or connection instead of assigning another full-pack
-read. Seán owns final layout; Anav owns firmware. The model prepares and checks
-the proposed implementation and supporting evidence.
+read. The [capture specification](docs/architecture/schematic-capture-spec.md)
+defines the handoff: after Seán's green light, Codex captures schematics and
+places components; Seán routes. Anav owns firmware. [Justifications](docs/architecture/justifications/README.md)
+are linked directly from each block.
 
 ## Hardware and repository boundary
 

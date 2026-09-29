@@ -1,6 +1,6 @@
 # Ogma 2 — component review
 
-**19 September · proposed design for review. CAD/contracts remain the preserved
+**22 September · schematic-readiness review. CAD/contracts remain the preserved
 implementation.** Burrito = Croí2; Churro = Foinse2; Fajita = propulsion controller.
 
 This page contains the source path, regulated branches, signal connections,
@@ -11,6 +11,43 @@ that omission prevents calling this a complete hardware design.
 [Power](#power-from-source-to-load) · [Signals](#signals-and-processors) ·
 [Connections](#external-connections) · [Operation](#power-and-service-states) ·
 [Choices](#choices-to-settle)
+
+## Can this become schematics?
+
+**The ordinary electronics now have a proposed capture baseline.** The complete
+platform still excludes the unfinished energetic-output/physical-arm block.
+The [capture specification](schematic-capture-spec.md) defines exact deltas and
+the handoff: **Codex captures and places; Seán routes, after his green light**.
+[Justifications](justifications/README.md) are linked beside the choices.
+
+| Section | Proposed baseline | Later evidence |
+| --- | --- | --- |
+| [01 Processors](01-mcus.md) | H563 100/64-pin pair, complete proposed maps | Package/library checks; concurrent firmware build |
+| [02 Power](02-power.md) | Three LDOs, 3.352 V; independent comms/services, PD10 service restart; 2S 8 Ah reference | Startup, fault selectivity, usable energy and thermal measurements |
+| [03 Outputs](03-energetic-outputs.md) | **Incomplete/excluded; DNPs preserved** | Responsible output/physical-arm design and validation |
+| [04 Servos](04-servos.md) | Two raw-2S, 3.3 V PWM interfaces, combined 1.5 A allocation; no remote node | Actual mechanism must fit the bounded interface |
+| [05 Service](05-service-status-time.md) | Restricted USB modes; connected/fresh evidence only | Reset, update, stale-state and current tests |
+| [06 RF/GNSS](06-gnss-radio.md) | Retained parts; passive GNSS and matched Wio test peer | Installed antenna/link and GNSS-envelope validation |
+| [07 Recording](07-sensors-logging.md) | 192 MiB region; sector-aligned commits; explicit preparation and byte budget | Concurrent sustained throughput and power-cut recovery |
+| [08 Churro](08-foinse-can.md) | Exact probes/bias/protection; source fuses and 3 A AV / 2 A PROP envelope | Source/thermal/lead-fault and measurement accuracy tests |
+| [09 Connectors](09-connectors-arming.md) | Source population variants; exact Nano-Fit drawing; retained mating inventory | Footprint/fit and installed harness restraint checks |
+
+## Whole-system consequences
+
+| Failure / operating case | What remains | What is lost or cannot be assumed |
+| --- | --- | --- |
+| Comms MCU, branch or regulator failure | Flight, sensors and separately regulated NOR/CAN/AUX | GNSS, radio and USB; common buck must sustain the limited fault |
+| Service regulator / aggregate limiter lost | Flight, sensors and comms | NOR, CAN, monitoring and sounder; PD10 permits bounded restart |
+| Flight MCU reset | Comms may remain powered; prior commits | Fresh flight state; flight-owned enables return to defaults |
+| Brief source dip inside measured hold-up | Flight computation may continue | Continuous NOR/CAN/GNSS or a final flash flush |
+| Source/ground/common buck failure | Only independently supplied external systems | Three LDOs and two MCUs are not redundant computers |
+| AUX absent | Churro source protection | Measurements; released fault line is not proof of health |
+
+The revised recommendation keeps the third LDO because a comms-supply fault
+should leave the flight record and CAN available. It also makes services
+restartable without rebooting flight. These are explicit fault boundaries,
+not claims of measured reliability. A missing physical-arm design remains a
+design gap; throughput/thermal/installed-fit validation remain later evidence.
 
 ## Power from source to load
 
@@ -50,67 +87,50 @@ battery entry; opening it commands that entry off. USB can still power logic.
 The connector carries control current; upstream battery circuitry remains live.
 On Churro-fed builds, retain the closed Croí enable plug and switch at Churro.
 
-### The shared buck and both regulated branches
+### The shared buck and three regulated branches
 
 ```mermaid
 flowchart TB
-  K["Common 4.0 V
-TPSM63603 U1301"] --> H["LM73100RPWR · U1401
+  K["Common 4.0 V · TPSM63603 U1301"] --> H["LM73100 U1401
 reverse-current blocking"]
   H --> HI["Held flight input"]
-  HI --- CAP["C1403 to GND · proposal
+  HI --- CAP["C1403 to GND
 PCW0J102MCO1GS · 1000 uF / 6.3 V"]
-  HI --> F["TPS7A9101DSKR · U1701
-FLIGHT_3V3"]
+  HI --> F["TPS7A91 U1701
+FLIGHT_3V3 · 3.352 V"]
   F --> FM["Flight MCU / supervision
-five locally limited sensor branches"]
-  K --> AL["TPS2553DBVR-1 · U1501
-aggregate service limit
-enabled from BOOT_3V3"]
-  AL --> S["TPS7A9101DSKR · U1801
-SERVICE_3V3"]
-  S --> CL["TPS2553DBVR-1 · relocated U1601
-independent COMMS_BRANCH_EN"]
-  CL --> C["COMMS_3V3
-MCU / supervisor / interface logic"]
-  C --> SW["TPS22918 ×2
-GNSS / radio load switches"]
-  S --> NL["TPS2553DBVR-1 · U3601"]
-  NL --> N["NOR + its signal boundary"]
-  S --> CA["TPS2553DBVR-1 · U501"]
-  CA --> CN["CAN transceiver + signal boundary"]
-  S --> AU["TPS2553DBVR-1 · U7001"]
-  AU --> A["Burrito INA228
-Churro monitoring AUX"]
-  S --> Z["Sounder driver
-no separate limiter"]
+five locally limited sensors"]
+  K --> CL["TPS2553-1 U1501
+COMMS_BRANCH_EN · 66.5k"]
+  CL --> C["TPS7A91 U1801
+COMMS_3V3 · 3.352 V"]
+  C --> CM["Comms MCU / USB
+separately switched GNSS + radio"]
+  K --> SL["TPS2553-1 U1601
+SERVICE_POWER_EN · 49.9k"]
+  EN["Flight PD10
+enable / recovery"] -.-> SL
+  SL --> S["TPS7A91 U1901
+3V3_OPTIONAL · 3.352 V
+services"]
+  S --> NL["TPS2553-1 U3601"]
+  NL --> N["NOR + signal boundary"]
+  S --> CA["TPS2553-1 U501"]
+  CA --> CN["CAN + signal boundary"]
+  S --> AU["TPS2553-1 U7001"]
+  AU --> M["Burrito INA228 / Churro AUX"]
+  S --> Z["Sounder driver"]
 ```
 
-| Part / branch | Why it exists | Cost or limit |
-| --- | --- | --- |
-| Q101 + U101 | Reverse-polarity protection and protected battery entry | Still one upstream source path |
-| U1101 + U4401 | Battery/USB selection and USB-current control | USB enumeration constrains startup loads |
-| U1301 | One 4 V conversion stage | Shared failure point for both LDO branches |
-| U1401 + C1403 | Prevent flight capacitor discharging back into a collapsing upstream node | ~0.98 ms illustrative hold-up; not a loose-battery ride-through |
-| U1701 | Flight MCU, supervisors, sensors | Its own failure still loses flight |
-| U1501 + U1801 | Separately limited and regulated service group | Group failure loses comms, NOR, CAN and monitoring |
-| U1601 downstream | Cycle/limit comms without switching NOR or CAN off | USB-only operation forces comms on for enumeration |
-| Individual sensor/NOR/CAN/AUX limits | Bound a device-branch fault and allow deliberate restart | Selectivity and signal back-power must be checked |
-| GNSS/radio TPS22918 switches | Restart individual peripherals | No individual current limit; share comms limit |
+**Three TPS7A91s remain:** flight, comms, services. No U1601 relocation or U1901
+deletion. All set points become 3.352 V; switches precede the LDOs. R1504 66.5 kΩ
+limits comms to 351–449 mA; R1604 49.9 kΩ limits services to 470–588 mA.
+PD10 becomes SERVICE_POWER_EN with an off-default pulldown.
 
-**Why two rails?** One rail can also contain an ordinary load short with local
-limiters. The second LDO additionally separates the regulated flight and service
-nodes. Recommend that separation to preserve flight execution through a service
-supply fault; accept losing the services together. This is a chosen fault
-boundary, not evidence of higher overall reliability. Three rails add continued
-NOR/CAN operation through a comms-LDO fault; that requirement has not earned the
-extra regulator. All versions still share the buck, source, ground and board.
-
-**Budget:** 200 mA flight + 300 mA comms + 100 mA other service. U1501:
-32.4 kΩ → 729–882 mA; U1601: 66.5 kΩ → 351–449 mA. A limited comms short
-plus 100 mA services is below U1501's minimum. The ~1 ms hold-up does not bridge
-the 5–10 ms latch-off delay: the common buck must sustain the limited fault.
-[Full fault comparison, startup and calculations](02-power.md).
+Allocate 200/300/200 mA flight/comms/services. USB uses restricted modes.
+Reference source: 2S 8 Ah, ≥30 Wh usable for the stated logic endurance budget;
+actuator energy additional. [Exact connections and calculations](02-power.md),
+[fault/alternative justification](justifications/power-domains.md).
 
 ## Signals and processors
 
@@ -142,28 +162,27 @@ vehicle interface"]
 implementation unresolved"]
   T <-->|"CAN trunk"| P["Fajita
 local engine control"]
-  T -.-> A["Possible remote
-actuator node"]
   F <-->|"I2C4 / fault"| M["INA228 · Burrito
 INA228 + ADS1115 · Churro"]
 ```
 
 | Choice | Work it performs | Reason / conceded limit |
 | --- | --- | --- |
-| Flight STM32H563VIT6, 100 pins | 3 sensor SPI + 2 pressure I²C; NOR; CAN; timing/local interfaces | Existing dense map fits; removing servo3 frees one pin |
+| Flight STM32H563VIT6, 100 pins | 3 sensor SPI + 2 pressure I²C; NOR; CAN; timing/local interfaces | Existing dense map fits; servo3 pin becomes service enable |
 | Comms STM32H563RIT6, 64 pins | 2 UARTs, radio SPI, PPS, USB, enables/status | Complete map; same software family. 640 KiB is headroom, not a measured need |
 | Separate MCUs | Keep USB/radio work outside flight scheduling | Shared power/PCB; no independent recovery |
 | Two low-g IMUs + ADXL375 | Dissimilar observations plus high-g record | Two agreeing sensors do not establish truth; both low-g channels can clip |
 | BMP390 + MS5607 | Pressure record through separate interfaces | Range/vent limitations; not full-envelope altitude evidence |
 | MX66L2G45GMI00 NOR | 256 MiB local record, flight-owned | Comms recording depends on flight MCU and UART |
-| MAX-M10S + Wio-LR2021 | Position/time and external telemetry | GNSS ≤4 g / 500 m/s / 80 km; ground radio compatibility still to verify |
+| MAX-M10S + Wio-LR2021 | Position/time and external telemetry | GNSS ≤4 g / 500 m/s / 80 km; matched Wio reference peer; installed link to verify |
 | TCAN3413 + TXU0304 | External vehicle bus with powered-off signal boundary | FD requires peer agreement; remote-control timing depends on mechanism |
-| TXU0304 servo interface | Two direct timer PWM outputs; prevent signal back-power when supply is off | Actual servo chooses voltage/current/update rate |
+| TXU0304 servo interface | Two direct timer PWM outputs; prevent signal back-power when supply is off | Raw-2S, 3.3 V PWM, 1.5 A combined allocation; mechanism must fit |
 
-Flight recording: 96,672 B/s, 128 KiB staging; proposed comms diagnostics ≤1 KiB/s.
-Continuous prepared record + ten-second lead-in/event markers. After thirty-minute
-ledger, additions and 64 MiB reserve: **17,918,656 B unallocated**. No second comms
-flash: accept missing new comms records if flight/UART fails.
+Flight recording: 96,672 B/s plus ≤1 KiB/s comms diagnostics; 128 KiB staging.
+Fifteen data pages + one footer per 4 KiB sector, within a 192 MiB prepared region.
+Conservatively charging footers again leaves **5,689,344 B** beyond the mission
+ledger and 64 MiB reserve. No second comms flash; flight/UART loss loses new
+comms records. [Format, preparation and throughput contract](justifications/recording-and-service.md).
 
 Service: two 4 KiB payload buffers and backpressure; no requirement to hold a
 whole log or 32 KiB block. At 2 Mbaud, full NOR download takes **at least 22.4 min**.
@@ -184,7 +203,7 @@ vehicle measures ground transmissions. Log direction, sequence and receiver.
 | Servos J6602 | **Retain 430451000 + 430251000**, ten contacts | Two groups used; avoid six-contact substitution matching J6601 |
 | CAN J501 | Three-contact JST GH | H / L / reference; no power contact |
 | USB J4401 | USB4105-GF-A | Comms service + logic supply |
-| GNSS J4501 / radio J4601 | Amphenol 132134 SMA each | Different labelled antenna paths; antenna assemblies unselected |
+| GNSS J4501 / radio J4601 | Amphenol 132134 SMA each | Passive GNSS / sub-GHz; reference test assembly selected, vehicle installation to qualify |
 | Flight/comms debug | TC2030-NL-FP ×2 | Independent access if USB firmware fails |
 
 Two-servo harness: contacts 1/2/3 = PWR1/PWM1/GND1; 4/5/6 = PWR2/PWM2/GND2;
@@ -198,7 +217,7 @@ Two-servo harness: contacts 1/2/3 = PWR1/PWM1/GND1; 4/5/6 = PWR2/PWM2/GND2;
 | Battery, FC enable open, no USB | Entry commanded off; upstream circuitry still live |
 | Battery enabled | Flight starts independently; flight controls comms enable |
 | USB only, before configuration | Comms enumerates; flight/sensors/NOR/CAN/GNSS/radio off; startup current must fit allowance |
-| USB configured | Start required service loads within allowed current; read both MCU identities/builds/config |
+| USB configured | Restricted readback/download mode; no assumption that the full battery-mode load fits |
 | Battery + USB | Battery-valid logic preserves flight control of comms |
 | Comms reset / branch cycle | Flight task continues; already-enabled NOR/CAN remain supplied; record reset/gap |
 | Flight reply stale while USB works | Show unknown/stale flight state; a responsive comms MCU is insufficient |
@@ -210,29 +229,15 @@ An independent physical-arm indication is **not implemented by those lamps**.
 
 ## Choices to settle
 
-| Question | Recommendation / present answer | Evidence that could change it |
+| Decision | Recommended answer | Boundary that must be recorded |
 | --- | --- | --- |
-| One, two or three LDOs? | Two; preserve separate flight node, share services | Accepting shared regulated-output loss permits one; required recorder/CAN survival through comms-LDO failure favors three |
-| Smaller comms processor? | H563RIT6 for family reuse and mapped package | Comparable cost/power or measured workload justifies another family |
-| Two servos, new connector? | Two channels; retain ten-contact housing | A documented packaging constraint, not channel count alone |
-| Remote controller split? | Keep central/local/hybrid alternatives open | Mechanism feedback, maximum command age/jitter and loss-of-link behavior |
-| Extra comms flash? | No; forward diagnostics to NOR | Requirement to record while flight/UART is failed |
-| Physical output-arm assembly? | Incomplete; no selected assembly or implementation claim | Separate responsible design review; this pack has not closed it |
+| D1 — Core parts and fault domains | H563 100/64; three 3.352 V LDOs; PD10 service restart | [Power justification](justifications/power-domains.md); comms and service regulator faults separated |
+| D2 — Source and Churro | 2S 8 Ah reference, ≥30 Wh usable logic energy; exact NTC/reference/protection and fuse assembly | [Churro justification](justifications/churro-monitoring.md); limits and assumptions stated |
+| D3 — Local interfaces / CAN | Two raw-2S PWM interfaces, 1.5 A total; no remote node; existing Classical CAN commissioning | [Interface justification](justifications/interfaces-and-installation.md); FD migration coordinated with peer |
+| D4 — Energetic outputs / physical arm | Keep unfinished block explicitly excluded | Separate design closure; no invented assembly or changed DNPs |
+| D5 — Record / service / installation | Sector-aligned NOR, bounded USB, source variants, passive RF reference assembly | [Recording](justifications/recording-and-service.md), [placement handoff](schematic-capture-spec.md#what-green-for-capture-must-mean) |
 
-**External inputs:** actuator/mechanism data; actual ground-receiver firmware and
-antenna installation; CAN peers/harness/allowed command age. **Hardware evidence:**
-startup current, dynamic fault droop, concurrent firmware load, sustained recording
-and installed signal behavior. Those measurements are distinct from desk research.
-
-## Supporting detail
-
-[MCU map and alternatives](01-mcus.md) · [Power calculations](02-power.md) ·
-[Output status](03-energetic-outputs.md) · [Servo interface](04-servos.md) ·
-[Status/time](05-service-status-time.md) · [GNSS/radio](06-gnss-radio.md) ·
-[Sensor/recording budgets](07-sensors-logging.md) · [Churro/CAN](08-foinse-can.md) ·
-[Connector inventory](09-connectors-arming.md).
-
-Source roles: current part/net evidence from the preserved CAD and linked
-manufacturer documents; presentation requirements from the 13 and 18 September
-reviews. Proposed values remain labelled. Earlier understood material is retained
-as reference; no new section is marked understood or accepted on the team's behalf.
+Accept or amend each decision once, then authorize the corresponding schematic
+scope. The excluded output block need not stop implementing the
+agreed processor, sensor and service sections. Manufacturing and mission release
+remain separate gates, with actual physical evidence.

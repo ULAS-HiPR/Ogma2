@@ -1,11 +1,12 @@
 # Sensors and the flight record
 
-**19 September · proposal · retain the five sensors and 256 MiB NOR.**
+**22 September · proposal · retain the five sensors and 256 MiB NOR.**
 
 ## Justification and deeper detail
 
 | Question | Follow through | Source status |
 | --- | --- | --- |
+| What is the actual commit/preparation contract? | [Sector-aligned format and capacity justification](justifications/recording-and-service.md) | Current 15-page + footer proposal supersedes the 16-page candidate |
 | Why these five sensors? | [Device-by-device selection rationale](implementation-reference/07-sensors-logging.md#the-selection-reasoning-device-by-device) | Ranges, alternatives and manufacturer sources |
 | Why NOR rather than SD? | [Capacity and medium comparison](implementation-reference/07-sensors-logging.md#why-256-mib-nor-rather-than-smaller-flash-or-sd) | Earlier storage research |
 | What supports rates and capacity? | [Power, recording and CAN audit](../power-recording-can-audit-2026-09-11.md); [current proposal calculations](../calculations/component-proposal-checks.py) | Baseline ledger plus current additions |
@@ -57,7 +58,7 @@ one per sensor · U3101–U3501"]
 and sensor-side interface supply"]
   M["Flight MCU signals"] <-->|"SPI: TXU0304 + TXU0101
 I2C: TMUX1511"| S
-  P["SERVICE_3V3 proposal"] --> NL["TPS2553DBVR-1 · U3601"]
+  P["3V3_OPTIONAL · services"] --> NL["TPS2553DBVR-1 · U3601"]
   NL --> N["NOR supply + TMUX1511 boundaries"]
 ```
 
@@ -68,7 +69,7 @@ Retries are bounded; persistent faults stay disabled.
 Exact flight buses: ST PA5/6/7; TDK PB13/14/15; ADXL PC10/11/12;
 BMP PB6/7; TE PB10/PB3. NOR: PB2 clock, PE11 select,
 PD11 IO0, PD12 IO1, **PE2 IO2**, PD13 IO3. Control/interrupts remain in the
-[pin CSV](../../hardware/croi2/libraries/inputs/flight-pinout.csv).
+[proposed pin CSV](proposed-flight-pinout.csv).
 
 ## Recording
 
@@ -90,29 +91,44 @@ that failure; it costs driver, pins, supply, format and readout work.
 
 | Budget | Calculated result |
 | --- | --- |
-| Existing aggregate record rate | 96,672 B/s |
-| 128 KiB writer staging | 1.356 s at that rate; not spare pre-trigger RAM |
-| Thirty minutes of samples | 174,009,600 B |
-| Existing mission ledger incl. allowances | 180,587,776 B |
-| Capacity minus that ledger and 64 MiB reserve | 20,738,816 B |
-| Additional 1 KiB/s diagnostics for 30 min + 10 s lead-in at full combined rate | 2,820,160 B |
-| Remaining unallocated capacity after those additions | 17,918,656 B |
+| Samples / additional diagnostics | 96,672 B/s / ≤1024 B/s |
+| 128 KiB writer staging at combined rate | 1.342 s when empty |
+| Revised mission ledger, including diagnostics and ten-second lead-in | 183,407,936 B |
+| Conservative sector-rounded storage, charging footer overhead again | **195,637,248 B** |
+| Spare in 192 MiB recording region | **5,689,344 B**; final 64 MiB remains reserved |
 
-The ten-second line is conservatively additional; don't count it twice when
-implementing the final record ledger. Full-rate pad recording cannot run for
-hours. Prepared-space exhaustion must be visible before flight.
+**Commit unit: 15 data pages + one footer = one 4 KiB erase sector.** Program
+footer last; accept only valid CRC/length/epoch/sequence, discard torn tails.
+This replaces the 16-page candidate that crossed erase boundaries. Full footer
+layout, timestamp/identity rules and byte accounting are in the
+[recording specification](justifications/recording-and-service.md#use-one-erase-sector-per-commit).
 
-Proposed commit unit: sixteen 256-byte data pages, then one footer page.
-At the researched 1.5 ms maximum page-program value, programming alone takes
-25.5 ms per 4 KiB payload. Earlier quad-transfer arithmetic gives ~157 kB/s
-before software overhead. **Exact device timing and measured sustained verified
-throughput still control acceptance.** Pre-erase disarmed; reject torn tails;
-never let an erase or logger fault stall essential flight work.
+Pre-erase/blank-check only in explicit ground service. Preparing all 192 MiB
+with 64 KiB erases can take **102.4 minutes at the published maximum**, plus
+verification. It cannot be a hidden boot prerequisite. No erase while acquiring;
+reserve a full mission window before claiming recorder-ready. Waiting/aborted
+attempts consume space. Full-rate pad logging for hours does not fit.
 
-**Next check:** concurrent acquisition/write stress, interrupted writes,
-address-boundary readback, sensor orientation/clipping/freshness and bus faults.
-Hold-up protects flight execution only; it does not guarantee a final NOR commit.
+Proposed measured useful throughput target: **≥125 kB/s**, concurrently with
+acquisition and CRC/commit work. The 1.5 ms maximum program-time calculation gives
+160 kB/s before overhead; that is a desk bound, not a passed performance test.
+[Source revisions and limitations](justifications/recording-and-service.md#evidence).
 
-Sources: [device datasheets and configuration rationale](implementation-reference/07-sensors-logging.md),
-[storage arithmetic](../power-recording-can-audit-2026-09-11.md),
-[configuration review](../sensor-configuration-review-2026-09-07.md).
+## Schematic handoff
+
+Retain sensor/NOR hardware and individual enables/boundaries. Sensor ILIM tied
+to IN intentionally selects 50–100 mA limits; it is not a missing resistor.
+Local trips have bounded restart and cannot stall essential flight work. The
+separate comms regulator now preserves NOR supply through a comms-LDO fault;
+a service-regulator fault still removes it. Hold-up protects flight execution,
+not a final flash commit.
+
+Sensor mounting/axis transforms, venting and thermal placement follow the
+[placement handoff](justifications/interfaces-and-installation.md#placement-handoff).
+Firmware ranges/rates must account for conversion/filter delay, clipping and
+freshness. Both low-g and both pressure channels can become unusable together;
+component diversity is not full-envelope coverage.
+
+Sources: [device/configuration rationale](implementation-reference/07-sensors-logging.md),
+[retained configuration review](../sensor-configuration-review-2026-09-07.md),
+[current format/calculation sources](justifications/recording-and-service.md).

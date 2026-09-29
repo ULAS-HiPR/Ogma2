@@ -1,6 +1,6 @@
 # Recovery and staging — unresolved output block
 
-**19 September · preserved authority boundary; no new output circuit selected.**
+**22 September · preserved authority boundary; no new output circuit selected.**
 
 The latest meeting correctly identified that the documents had not delivered a
 resolved implementation here. A clearer drawing does not close that gap.
@@ -33,3 +33,25 @@ assessed without pretending it is complete.
 [Reset contract](../../interfaces/reset-recovery-contract.md)
 
 See [connectors and physical arming](09-connectors-arming.md) for the FC battery-enable plug, separate unresolved output-arm assembly and complete connector inventory.
+
+## What exists and what is missing
+
+**There is an existing three-channel draft, not an absent feature. It is not a
+finished operational output subsystem.** The preserved design includes command,
+termination, sensing and interface provisions, plus deliberate unpopulated
+safeguards. The architecture proposal has not closed their suitability as one
+installed assembly. Connectivity checks do not establish functional safety.
+
+| Required review result | Present evidence / missing closure |
+| --- | --- |
+| Approved output requirements | Recovery and staging roles distinguished; load-specific requirements are not closed |
+| Complete physical isolation/arming assembly | Computer enable defined; output arm assembly and independent state evidence unresolved |
+| Fault and reset behavior for the assembled system | Existing contracts state intent; implementation evidence and responsible review incomplete |
+| Diagnostic meaning | Electrical observations do not prove physical actuation; diagnostic validity remains a separate requirement |
+| Verification and release | DNP safeguards retained; no qualification or operational release |
+
+This is a **design blocker**, not merely a request to test an otherwise selected
+circuit. A qualified responsible engineer must close the output requirements,
+assembly and safety case. This audit supplies no firing-circuit design, new
+component/value selection or arming wiring. The incomplete subsystem cannot be
+counted as accepted because the rest of the review pack is ready.

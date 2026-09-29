@@ -1,6 +1,6 @@
 # Processor pair
 
-**19 September · proposal · existing CAD has two H563VIT6 parts.**
+**22 September · proposal · existing CAD has two H563VIT6 parts.**
 
 Use **STM32H563VIT6, LQFP100, for flight** and **STM32H563RIT6, LQFP64,
 for comms**. Keep the H563 software family; remove unused comms package pins.
@@ -10,6 +10,7 @@ This is a resource/implementation choice, not a claim of lowest price or power.
 
 | Question | Follow through | Source status |
 | --- | --- | --- |
+| How does this become capture/placement? | [Exact delta and responsibility](schematic-capture-spec.md), [proposed flight map](proposed-flight-pinout.csv) | PD10 service recovery is the sole functional flight allocation change; net names match native circuits |
 | Why these packages? | [Pin-capacity audit: flight allocation and package comparison](../mcu-pin-capacity-audit-2026-09-11.md) | 11 September audit of preserved CAD |
 | What alternatives were considered? | [MCU family comparison and manufacturer sources](2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale) | 18 September research; old whole-block RAM objection superseded by streaming |
 | Why two processors? | [Workload separation and single-MCU alternative](implementation-reference/01-mcus.md#why-keep-this) | Earlier design rationale; current part/package choice is on this page |
@@ -40,7 +41,7 @@ Evidence: [complete flight allocation](../mcu-pin-capacity-audit-2026-09-11.md#f
 
 | Role | Actual requirement | Selection reason |
 | --- | --- | --- |
-| Flight | Three sensor SPI buses, two pressure I²C buses, monitor I²C4, quad NOR, CAN, UART, timing and local interfaces | Existing LQFP100 map fits; independent interfaces consume pins. Removing servo3 frees only PD10 |
+| Flight | Three sensor SPI buses, two pressure I²C buses, monitor I²C4, quad NOR, CAN, UART, timing and local interfaces | Existing LQFP100 map fits; independent interfaces consume pins. Removing servo3 reallocates PD10 to service recovery |
 | Comms | Radio SPI, two UARTs, PPS, USB FS, enables/reset, status, HSE and SWD | All active functions fit LQFP64; same memory/peripheral family avoids a second driver/DMA target |
 | Separation | Flight continues with comms held in reset | Keep USB/radio parsing and service stalls off the flight execution schedule |
 
@@ -94,9 +95,16 @@ ST DS14258 Rev 6 package/AF tables. It is separate from the installed pin CSV.
 
 LQFP64 has **no external VDDUSB pad**; don't copy the LQFP100 supply pin list.
 VDDUSB is internally tied to VDD: keep COMMS_3V3 within **3.0–3.6 V for USB**.
-Allow for the downstream limiter drop, tolerance and transients. Unused
+Comms regulation follows its input limiter; verify LDO headroom, tolerance and transients. Unused
 PC3/PC4 radio reservations need no external connection. Comms LSE stays DNP.
 Flight PC13 remains quiet because of the LSE erratum.
+
+The CSV `net` column is an electrical identifier, not a functional abbreviation.
+Comms PC10/PC11 use **CC_COMMS_TO_FLIGHT / CC_FLIGHT_TO_COMMS**, retaining
+U4301; PA1/PA2/PB5 likewise retain their **CC_** status nodes. Analog supplies
+retain **COMMS_VDDA / FLIGHT_VDDA**. Flight ADC inputs retain their **ADC_**
+front-end nodes, never the raw measured supply. `NC` means individually
+unconnected. [Exact boundary instructions](schematic-capture-spec.md#burrito-capture-delta).
 
 ## Why the extra control pins remain
 
@@ -117,7 +125,7 @@ Flight PC13 remains quiet because of the LSE erratum.
 | USB VBUS/config/battery-valid | Startup current/source sequencing | Must preserve enumeration before enabling larger loads |
 | SWD/reset/clock/supply | Independent service and device operation | Supply/VCAP pads are not spare GPIO |
 
-Exact ports/pads: [flight map](../../hardware/croi2/libraries/inputs/flight-pinout.csv)
+Exact ports/pads: [proposed flight map](proposed-flight-pinout.csv)
 and [proposed comms map](proposed-comms-pinout.csv). Output-control allocations
 remain in the separate unresolved output block; spare-pin pressure does not
 resolve that design.
@@ -139,3 +147,19 @@ Sources: [ST H563 datasheet](https://www.st.com/resource/en/datasheet/stm32h563r
 (Figure 5, Tables 14–16), [ST hardware guide AN5711](https://www.st.com/resource/en/application_note/an5711-getting-started-with-stm32h5-mcu-hardware-development-stmicroelectronics.pdf), [ST errata](https://www.st.com/resource/en/errata_sheet/es0565-stm32h562xx563xx573xx-device-errata-stmicroelectronics.pdf),
 [existing pin audit](../mcu-pin-capacity-audit-2026-09-11.md),
 [installed flight map](../../hardware/croi2/libraries/inputs/flight-pinout.csv).
+
+## Schematic handoff
+
+**Defined enough after accepting the package pair.** Translate the complete
+64-pad CSV, not a scaled copy of the 100-pin symbol. Comms VCAP pads 30/62 each
+need their specified local 2.2 µF; check every supply, VREF/VDDA, reset, BOOT,
+HSE and debug connection against AN5711 and the package table. Keep the existing
+powered-off UART/reset/bootstrap boundaries. Spare GPIO does not justify
+removing recovery controls or silently adding a mission function.
+
+Firmware fit is a validation task, not a reason to defer the package choice
+indefinitely. Reserve RAM by region/owner, initialise ECC-covered memory and
+bound DMA queue ownership before the concurrent acquisition/service build.
+The acceptance condition is flight progress with comms reset, silent, flooding
+or sending malformed input; GNSS and USB must not be hidden prerequisites.
+See [system dependency audit](2026-09-22-schematic-readiness.md#dependency-closure).

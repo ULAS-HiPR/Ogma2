@@ -1,15 +1,18 @@
 # Two local servo interfaces
 
-**19 September · proposal · CAD still has three channels.**
+**22 September · proposal · CAD still has three channels.**
 
 Use **PC6/PC7, TIM3**, through the existing **TXU0304PWR** powered-off signal
 boundary. Two channels match the review direction; no PWM expander is needed.
-Release PD10 from the third channel. This does not yet select an actuator.
+Reallocate PD10 from the third channel to service power enable. Select a raw-2S,
+3.3 V PWM interface with a combined 1.5 A motor allocation; compatible actuators
+are an installation choice within that envelope.
 
 ## Justification and deeper detail
 
 | Question | Follow through | Source status |
 | --- | --- | --- |
+| What is the actual capture baseline? | [Bounded PWM/power interface and local-control decision](justifications/interfaces-and-installation.md#two-local-pwm-interfaces-no-speculative-remote-node) | Current recommendation; electrical interface chosen, mechanism qualification separate |
 | Why direct PWM and a buffer? | [Timer choice and interface alternatives](implementation-reference/04-servos.md#why-direct-timers) | Earlier circuit reasoning; current target is two channels |
 | What determines remote control and supply? | [CAN FD, latency and stall investigation](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) | Numerical examples; control split remains open |
 | Which harness is retained? | [Connector revision and mating parts](../connector-servo-readiness-revision-2026-09-07.md#j6602-servo-harness-new-ten-contact-connector) | Preserved three-channel harness; current two-group proposal below |
@@ -35,7 +38,7 @@ U6802 · common switch / limit"]
 | Commands | Direct TIM3 PWM | Two channels already mapped; no extra controller or bus |
 | Signal boundary | Retain TXU0304PWR | Limits parasitic powering with either domain off; verify ramps |
 | Connector | Retain 430451000, ten-contact Micro-Fit | Existing harness; different contact count from J6601; no new connector family |
-| Power switching | Retain TPS1H100BQPWPRQ1 as candidate | Existing common current-limited branch; rating/settings depend on actual motors |
+| Power switching | Retain TPS1H100BQPWPRQ1, R6802 1.24 kΩ 1% | ~1.989 A nominal limit; 1.5 A combined normal allocation |
 | Buffer supply | Retain TPS70933DBVR | Powers logic interface only; **does not regulate motor power** |
 
 **Two-channel harness proposal:** retain J6602 430451000 and mating
@@ -50,38 +53,40 @@ mis-mating opportunity and another harness change.
 
 ## Supply decision
 
-Start with raw 2S **only for an actuator specified across the actual source
-range, including 8.4 V fully charged**. Otherwise select regulation from the
-actuator's voltage, simultaneous stall current, duty and regeneration behavior.
-The current common 2 A allocation is not a demonstrated two-servo capacity.
+**Raw 2S, through the existing common switch; no new regulator.** Compatible
+actuators must accept the installed source range including 8.4 V fully charged
+and 3.3 V command levels. Combined normal motor allocation: **1.5 A**.
+R6802 1.24 kΩ 1% sets ~1.989 A nominal limit; the source-derived overload bounds
+and their limitations are in the [justification](justifications/interfaces-and-installation.md#two-local-pwm-interfaces-no-speculative-remote-node).
+R6804 stays DNP. No motor power or shared energetic-enable arrangement is enabled.
 
-**Missing input:** actuator part + mechanism load/response. This alone prevents
-closing the supply and PWM rate; it does not prevent allocating the two interfaces.
-The existing R6804 energy link remains DNP.
+One fault can remove both motor channels. A different voltage, higher stall/start
+current or unacceptable shared failure needs a separate interface revision.
+Do not enlarge the limiter to accommodate an unspecified load. Qualification
+measures the chosen mechanism's current, regeneration, response and temperature.
+That does not prevent capturing this bounded electrical interface.
 
 ## Remote actuation
 
-For comparison, use central estimation/control on Burrito with a remote node
-generating local outputs and enforcing command expiry. **Do not select the
-control split yet:** the meeting explicitly held it pending actuator timing.
+**Baseline: two local PWM outputs; no new remote actuator node.** Fajita keeps
+its independent local control. A future remote mechanism must justify its own
+feedback location and command-age/expiry contract. The earlier 200 Hz / 13.3%
+CAN example remains a comparison, not a requirement to add that node.
 
-| Split | When it earns its cost | What must be known |
-| --- | --- | --- |
-| Central computation, remote output | One estimator/controller; remote node converts requests to outputs | End-to-end age and jitter fit the mechanism |
-| Autonomous local loop | Fast local feedback or useful operation through link loss | Local sensor, controller and safe loss-of-link behavior |
-| Central target, local inner loop | Vehicle controller supplies targets; local loop handles fast mechanics | Which state/loop lives where and how targets expire |
+PC6/PC7 share TIM3's period. The mechanism profile supplies compatible pulse
+limits/rate. Bring up signals on an inert receiver/load; an arbitrary middle
+pulse is not an established safe position. End-to-end timing includes sensing,
+computation, queueing, PWM phase and mechanical response, not just CAN wire time.
 
-Count acquisition → estimate → queue → CAN arbitration/frame → remote task →
-PWM phase → actuator motion. Wire time alone cannot select the architecture.
+## Schematic handoff
 
-Use the [proposed CAN budget](08-foinse-can.md#vehicle-can) to assess the link.
-The prior 200 Hz command/status example uses about 13.3% of the proposed FD bus;
-that is a workload example, not an actuator requirement. PWM update phase and
-mechanics can dominate wire time. A neutral position is not universally safe.
+Keep J6602 430451000 and housing 430251000; contacts 1/2/3 and 4/5/6 are
+PWR/PWM/GND. Remove R6606/R6607 and the channel-3 branches to J6602.7/.8/.9;
+leave contacts 7–10 unconnected. Tie U6804.4 (A3) to GND and leave U6804.11
+(B3Y) NC; retain the existing unused fourth-channel terminations. The first two
+channels retain powered-off boundaries and off defaults. PD10 becomes
+SERVICE_POWER_EN in the [proposed map](proposed-flight-pinout.csv).
 
-**Next check:** actual actuator voltage, stall/load, update rate and allowed
-command age; then loaded current and partial-power waveforms on the first PCBA.
-
-Sources: [existing servo circuit](implementation-reference/04-servos.md),
-[TI TXU0304](https://www.ti.com/lit/ds/symlink/txu0304.pdf),
-[earlier timing analysis](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation).
+This closes the board interface. It does not select or qualify a vehicle
+mechanism. Preserve the energy-link DNP and the separate unresolved output-arm
+boundary. [Capture delta](schematic-capture-spec.md#burrito-capture-delta).

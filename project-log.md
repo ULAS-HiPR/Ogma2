@@ -2933,3 +2933,204 @@ link directly to the relevant audit sections beside the claims. Links distinguis
 current proposals/calculations from dated rationale; the older MCU audit now
 links back and flags its superseded whole-block buffering assumption. No new
 technical selections. Local file/anchor validation and diff checks pass.
+
+
+## 22 September 2026 — whole-system schematic-readiness audit
+
+Seán requested a comprehensive pass intended to make the next review a closing
+architecture review: test every section against schematic handoff, with special
+attention to energetic outputs, Churro and whole-system dependencies. Fetched
+`docs/reliability-review-execution`; HEAD and remote were both `9a8c2a2` at audit
+start. No team acceptance or final-stack authorization inferred.
+
+Updated every active chapter with handoff status and closure requirements. The
+overview now joins those statuses, named failure consequences and five closing
+decisions. Added linked supporting evidence in
+`docs/architecture/2026-09-22-schematic-readiness.md`; it is optional supporting
+material, not another sequential reading assignment.
+
+Concrete changes:
+
+- Included LDO/divider/leakage/switch corners and supervisor release hysteresis.
+  Proposed 31.9 kΩ / 10 kΩ service divider, both 0.1%, for 3.352 V: calculated
+  comms release margin at 300 mA improves from 20.5 to 75.8 mV before further
+  wiring/transient loss. Flight remains 3.296 V. Added a proposed 50 mV loss
+  allocation; neither load allocation nor dynamic margin is measured.
+- Separated USB bootstrap/readback budgets from battery operation. Native
+  preconfiguration limit is 50–100 mA; configured range about 387–491 mA.
+  The full 2.4 W allocation would need about 649 mA in the stated USB example.
+  Defined restricted proposed load modes, startup/inrush and permission withdrawal.
+- Audited every local limiter against aggregate service protection. Conservative
+  NOR-fault allocation leaves only about 23 mA against aggregate minimum. Made
+  source-cycle-only aggregate recovery and simultaneous loss of comms/NOR/CAN/
+  monitoring explicit. Separate regulators still share the upstream converter.
+- Expanded Churro's actual two-source circuitry, protections, monitoring and
+  connectors. Distinguished autonomous protection from AUX-powered telemetry;
+  identified series-protection, common-return, pack/fuse/load and NTC-lead gaps.
+- Bounded recording-format/footer overhead and combined-rate staging duration.
+  Conservative spare beyond the 64 MiB reserve is 6,452,736 bytes; the larger
+  17,918,656-byte figure requires footers to fit the original framing allowance.
+- Separated directly observable rail/status signals from unavailable or inferred
+  state; added package, clock/reset, service, RF and installed-harness handoffs.
+- Distinguished the existing three-channel output draft from a completed
+  operational subsystem. Output requirements, physical arm assembly and responsible
+  engineering assessment remain a design blocker. Preserved DNP safeguards;
+  supplied no firing-circuit design, component values or arming wiring.
+
+Validation: fresh native KiCad exports match all tracked pin/net assignments and
+reference/value/footprint tuples for both boards (Burrito 2,179 pins / 643
+components; Churro 306 / 113). All 44 Burrito schematic hashes match the saved
+check report. Updated component/pin/calculation checks pass; 188 current Markdown
+file/heading references and fences pass; all 14 diagrams render across 11 preview
+pages. Overview and revised voltage-margin table visually inspected. Diff
+whitespace passes. Existing ERC/DRC counts are dated evidence, not rerun results.
+
+Remaining: D1–D5 acceptance; actual output/actuator/source/installed-interface
+inputs; implementation, layout and first-full-PCBA measurements. Full Macronix
+PDF retrieval remained unsuccessful; indexed primary timing evidence stays
+labelled as such. CAD, firmware and controlled interfaces unchanged. Pre-existing
+AGENTS.md changes preserved. No commit or push.
+
+## 22 September 2026 — concrete capture baseline and placement handoff
+
+Seán asked the model to synthesize the remaining choices, with justification,
+rather than return another list of team research tasks. He clarified the target:
+after his future green light, Codex captures schematics and places components;
+Seán routes. Anav retains firmware implementation. That division of work is now
+explicit in the capture specification, current-system and review procedure.
+It does not lift the present CAD hold.
+
+Added `docs/architecture/schematic-capture-spec.md`, a proposed flight pin map
+and a discoverable justification index with power, Churro, recording/service and
+interface/installation rationale. Reconciled all active chapters and drawings.
+Preserved the earlier same-day audit with an explicit supersession notice.
+
+Recommendations and their reasons:
+
+- Retain three LDOs. The two-rail candidate shared a comms-regulator fault with
+  loss of logging/CAN, contrary to the useful FF-01 boundary. Keep U1501/U1601
+  upstream of their original regulators; use 66.5 kΩ / 49.9 kΩ limits respectively.
+  Reallocate only flight PD10 to SERVICE_POWER_EN, including the off-default
+  pulldown; give service recovery a bounded, sequenced restart.
+- Set all three TPS7A91 dividers to 31.9 kΩ / 10 kΩ, 0.1%, nominal 3.352 V.
+  Calculated 3.310–3.394 V corners leave ~116 mV static supervisor release margin,
+  ~66 mV after the proposed 50 mV healthy-loss allowance. Upstream switch drop
+  belongs in LDO input-headroom analysis, not another output-voltage subtraction.
+- Allocate 200/300/200 mA flight/comms/services. The documented conservative
+  logic endurance calculation gives 29.69 Wh for 8 h + 4 h. Propose a 2S 8 Ah
+  reference source with ≥30 Wh usable; usable fraction, efficiency and recovery
+  load are explicit assumptions. Actuator energy is additional. USB retains
+  distinct restricted bootstrap/configured/suspend behavior.
+- Define Churro's AV 3 A / PROP 2 A continuous interface envelope and exact
+  source-fuse/holder assembly. Select Vishay probes, REF3325 bias, ADG7421F
+  protected external leads, connector TVS, filters and diagnostic windows.
+  These are proposed electrical boundaries, not qualified pack/thermal/fault
+  results. Protection remains autonomous and monitor loss remains observable.
+- Keep two bounded raw-2S, 3.3 V PWM interfaces, 1.5 A combined normal allocation;
+  retain local control, add no remote actuator node. Keep existing Classical CAN
+  commissioning while documenting a coordinated FD migration separately.
+- Replace the cross-sector NOR commit candidate with 15 data pages plus one
+  footer per 4 KiB sector. Define footer/CRC/epoch, recording region, preparation
+  and throughput target. Conservative storage leaves 5,689,344 bytes within the
+  192 MiB region; its last 64 MiB remains reserved. Worst-case block-erase
+  preparation is 102.4 minutes plus verification, explicitly outside flight boot.
+- Define exclusive source population variants, retained harness controls, passive
+  RF reference test assemblies and placement delivery criteria. Located the exact
+  Molex 1053111102 sales drawing; footprint construction is now an assigned
+  implementation task, not an unanswered request for the team to find the source.
+
+Evidence: native netlists checked for divider values, limiter EN connectivity,
+existing ADC filter nodes and unused 6200-series references. Primary TI, ADI,
+Vishay, Molex, Littelfuse and Taoglas documents support the new choices; sources
+are linked beside the rationale. The complete manufacturer-authored Macronix
+Rev 1.0 mirror was inspected, while the exact Rev 1.1 source remains limited to
+indexed manufacturer text; that distinction is explicit. No bench result is
+inferred from component ratings or desk calculations.
+
+Validation: proposal calculation script passes, including both complete MCU maps
+and the single changed flight pad, rail/limiter/energy corners, storage/CRC and
+probe-transfer checks. All 266 relative file/anchor references across 22 active
+or supporting pages pass. Seventeen preview pages render, with all 15 diagrams
+valid; updated three-domain power and Churro temperature drawings visually
+inspected. Diff whitespace passes. Native CAD, frozen hardware pin CSVs, firmware
+and controlled interfaces remain unchanged; no new ERC/DRC or hardware run.
+Pre-existing AGENTS.md edits preserved. No commit or push.
+
+Remaining boundary: the energetic-output/physical-arm design is incomplete and
+excluded; DNP safeguards remain and no firing-circuit design or arming wiring
+was supplied. Ordinary electronics choices now have a concrete proposal for
+acceptance. Later physical qualification, owning-peer agreement and routing/
+manufacturing release remain distinct from authorizing capture and placement.
+
+## 22 September 2026 — capture-specification sanity check
+
+Seán requested one sanity pass. Corrected documentation and checks; no capture
+or placement was authorized or performed.
+
+Found a material weakness in the previous map validation: it checked allocation
+and CSV structure but retained functional shorthand from the frozen input CSVs.
+That shorthand was not an exact electrical net list. Following it literally
+could bypass partial-power boundaries or connect ADC pins to raw measured rails.
+Corrected both proposed maps against the native Burrito netlist:
+
+- Comms UART retains CC_COMMS_TO_FLIGHT / CC_FLIGHT_TO_COMMS at U4301;
+  USB configuration, battery-valid and fault reporting retain their CC_ nodes.
+- Flight ADC pins retain the actual ADC_ front-end nodes. Both processors retain
+  their separate VDDA, clock, debug and status nets. Unused pads use NC as an
+  instruction, never a shared electrical net.
+- Only flight PD10 changes functional allocation; the comms UART migrates from
+  PD8/PD9 to PC10/PC11 with the package change. Other corrected names preserve
+  existing connectivity. Frozen hardware CSVs remain unchanged.
+
+Extended the calculation checker to compare every proposed MCU connection to
+native electrical nodes, including the migration and combined analog-supply
+pads. The earlier log's successful map check must not be read as proof that its
+old net-name aliases were safe to use directly for capture.
+
+Other corrections:
+
+- ADG7421FBCPZ-RL7 package is CP-10-16, not CP-10-17. Verified the official ADI
+  Rev 0 ordering guide and outline, p. 30; ten signal-pin assignments unchanged.
+- REF3325 input C6201 becomes 1 µF, matching TI REF33 Rev I §8.1/§8.4 bypass
+  guidance. Output C6202 remains 1 µF. Both capture and rationale tables agree.
+- Made third-servo removal explicit: remove R6606/R6607, disconnect the third
+  connector group, ground unused U6804 A3 and leave B3Y unconnected. Other
+  terminations and DNP safeguards remain as before.
+- The proposed 100 ms service-off interval is a bench starting value, not proof
+  of peripheral reset. Released timing requires measured discharge and restart.
+- Logger extraction preserves valid sectors after gaps; restart cannot trust a
+  lost RAM cursor or overwrite data speculatively. Cursor recovery is bounded
+  background work; flight proceeds with recording unavailable until safe.
+
+Validation: all 164 proposed MCU pads pass native-node comparison; the existing
+rail, limiter, energy, recording and probe calculations pass. All 267 relative
+file/heading references across 22 pages pass. Regenerated 17 preview pages;
+inspected revised capture, MCU and Churro pages, including MCU diagram rendering.
+Whitespace checks pass. Native CAD, firmware and controlled interfaces unchanged;
+no new ERC/DRC or bench result. Pre-existing AGENTS.md changes preserved. No commit
+or push. The separate incomplete energetic-output/physical-arm scope remains
+excluded; this pass does not grant a full-platform capture green light.
+
+## 29 September 2026 — private review-branch publication
+
+Seán authorized pushing the latest documentation to the existing private review
+branch for the departmental introduction. Repository visibility and access remain
+unchanged; he will grant access individually. This is publication of a proposed
+review baseline, not acceptance of its architecture or authorization to change CAD.
+
+Included the 22 September readiness audit, concrete capture specification,
+justifications, corrected proposed MCU maps, numerical checks and reconciled
+reading entrypoints. Preserve the pre-existing AGENTS.md working-tree edit outside
+this documentation commit. No hardware, firmware or controlled interfaces changed.
+
+Pre-push checks: all 164 proposed MCU pads agree with native electrical nodes;
+rail, current, energy, recording and probe calculations pass; all 267 active
+file/heading links pass. Four broken links in older log entries already existed
+at the parent commit and are retained as history. Their former hardware/Ogma2
+paths refer to files now under hardware/croi2; no new active-document link uses
+those old locations. No credentials, raw transcripts, private correspondence,
+temporary previews or machine paths were found in the intended changes.
+
+The branch-relative docs/architecture/00-overview.md remains the intended QR
+entrypoint. Access requires permission to the private repository. Energetic-output
+and physical-arm design remains incomplete and excluded from the capture proposal.

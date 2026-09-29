@@ -1,6 +1,6 @@
 # Ogma 2 — component design proposal
 
-19 September 2026. **Prepared for joint review; CAD and installed contracts unchanged.**
+22 September 2026. **Prepared for joint review; CAD and installed contracts unchanged.**
 
 Open **[the component review](00-overview.md)**. Power, signals, connectors,
 operating states and the consequential choices are together there. Use the linked
@@ -18,9 +18,14 @@ chapters for a questioned calculation, component or pin; no sequential reread.
 | [Churro/CAN](08-foinse-can.md) | Source ownership, vehicle timing and peer boundary |
 | [Connectors](09-connectors-arming.md) | Inventory and FC-enable versus physical-arm distinction |
 
-The main unresolved implementation is physical output arming/output circuitry.
-Desk budgets and component choices are not physical validation. Current CAD and
-controlled contracts are preserved until implementation is authorized.
+The [capture specification](schematic-capture-spec.md) is the implementation
+handoff: exact baseline/deltas, references, pin maps, operating constraints and
+acceptance checks. The [justification index](justifications/README.md) makes each
+choice traceable. After Seán's green light, **Codex captures and places; Seán routes**.
+
+Ordinary electronics now have concrete recommendations. Physical output arming/
+output circuitry remains an excluded design blocker. Installed measurements and
+qualification are later gates; CAD and controlled contracts remain preserved.
 
 ## Evidence
 

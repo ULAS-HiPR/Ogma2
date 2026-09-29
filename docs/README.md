@@ -1,9 +1,12 @@
 # Ogma 2 documents
 
 **Start here:** [Connected component proposal](architecture/00-overview.md).
-19 September proposal; existing CAD and electrical contracts remain preserved.
+22 September schematic-readiness proposal; existing CAD and electrical contracts remain preserved.
 
 ## Current reading path
+
+- [Capture specification](architecture/schematic-capture-spec.md): exact proposed changes; Codex captures/places after green light, Seán routes.
+- [Justification index](architecture/justifications/README.md): power/recovery, Churro, storage, interface and installation decisions.
 
 - [Component proposal](architecture/README.md): block drawings, selected recommendations, short reasons and specific remaining checks.
 - [Current system](../current-system.md): concise controlling architecture.

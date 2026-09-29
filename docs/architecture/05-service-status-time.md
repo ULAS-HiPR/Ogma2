@@ -1,6 +1,6 @@
 # Service and status
 
-**19 September · proposal · retain the existing simple hardware.**
+**22 September · proposal · retain the existing simple hardware.**
 
 Use **USB readback for detail**, separate power and firmware lamps for local
 status. No display, RGB controller or extra flight GPIO allocation.
@@ -9,6 +9,7 @@ status. No display, RGB controller or extra flight GPIO allocation.
 
 | Question | Follow through | Source status |
 | --- | --- | --- |
+| What are recovery/readout rules? | [Recording and service contract](justifications/recording-and-service.md), [power recovery](justifications/power-domains.md#exact-capture-delta) | Current bounded proposal |
 | Why these indicators and clocks? | [Service alternatives and timekeeping rationale](implementation-reference/05-service-status-time.md#the-options-and-the-concrete-reasons-for-the-choices) | Earlier component research |
 | Which signals drive each indication? | [Indicator wiring and operator sequence](2026-09-18-review-investigations.md#5-indicators-and-operator-sequence) | Detailed inventory; current recommendation below |
 
@@ -97,3 +98,29 @@ Sources: [indicator wiring and detailed inventory](2026-09-18-review-investigati
 [reset contract](../../interfaces/reset-recovery-contract.md).
 
 See [connectors and physical arming](09-connectors-arming.md) for the FC battery-enable plug, separate unresolved output-arm assembly and complete connector inventory.
+
+## Schematic handoff
+
+**Retain the hardware, with a restricted USB startup/service profile.** The
+existing fixed supervisor delay is 20 ms nominal (12–28 ms with CT open). The
+flight watchdog's 40 ms earned-heartbeat proposal belongs to the existing
+[firmware/reset handoff](../firmware-handoff-2026-09-07.md); it does not permit
+blocking boot on NOR scans, GNSS lock, peer discovery or USB. Those initialise
+as bounded background work with explicit unavailable states.
+
+Readback must report evidence actually connected. `BRANCH_FAULT_N` is a wired
+aggregate, not branch identity. Buck, core-input and LDO PG nodes presently do
+not reach a flight GPIO. Neither a high aggregate fault wire nor a responsive
+USB MCU proves every supply healthy. Show the available battery/ADC/INA data
+with age; do not fabricate a measured service-rail voltage or individual PG bit.
+
+GNSS PPS enters **comms**, not flight. Preserve comms epoch, PPS capture time,
+GNSS validity, flight receive time and the uncertainty of the cross-MCU time
+mapping. UART receive time is not a nanosecond GNSS timestamp. Both MCUs' VBAT
+pins use their logic supplies; no independent backup cell exists. Clock/backup
+retention across reset and across total power loss are different claims.
+
+A two-MCU update must read back both running builds and compatible protocol/
+configuration versions after reboot. Interrupted update, incompatible peer or
+stale config is visible; it must not silently retain a previous “ready” view.
+See [USB budget and source-loss transition](02-power.md#usb-is-a-separate-load-mode).

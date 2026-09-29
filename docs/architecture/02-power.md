@@ -1,18 +1,19 @@
-# Power — two regulated domains
+# Power — three regulated domains
 
-**19 September · recommended proposal · CAD still has three LDO rails.**
+**22 September · proposed capture baseline · CAD unchanged.**
 
-Keep the shared **TPSM63603 4 V buck**. Use **TPS7A91 ×2** for flight and
-service. Put the independently enabled comms branch **after** the service LDO.
-Comms power cycling then leaves recording/CAN/AUX enabled.
+Keep **TPSM63603 4 V → TPS7A91 ×3: flight, comms, services**. A comms-regulator
+fault must not also remove logging/CAN. Give services their own flight-controlled
+restart. This supersedes the two-LDO candidate.
 
 ## Justification and deeper detail
 
-| Question | Follow through | Source status |
-| --- | --- | --- |
-| Why the buck, LDOs and hold-up? | [Component alternatives and conversion rationale](implementation-reference/02-power.md#options-explored-and-why-this-one-survived) | Historical three-rail topology; current two-rail choice is justified below |
-| How are the numbers obtained? | [Reproducible limits, voltage-drop and hold-up checks](../calculations/component-proposal-checks.py) | Current proposal arithmetic |
-| How does the enable plug behave? | [Installed source-enable contract](../../interfaces/power-contract.md#8-september-source-enable-implementation) | Preserved electrical definition |
+| Question | Follow through |
+| --- | --- |
+| Why three rather than one or two? | [Fault comparison and alternatives](justifications/power-domains.md#decision-and-reason) |
+| Exactly what changes? | [Reference/net delta](justifications/power-domains.md#exact-capture-delta), [capture specification](schematic-capture-spec.md) |
+| Voltage, limits and energy? | [Calculations and load allocations](justifications/power-domains.md#voltage-and-headroom), [reproducible checks](../calculations/component-proposal-checks.py) |
+| Why these converter/regulator parts? | [Component research](implementation-reference/02-power.md#options-explored-and-why-this-one-survived) |
 
 ## Source entry — retain the existing path
 
@@ -48,147 +49,138 @@ and sag determine actual operating limits; “2S” does not promise 6 V startup
 
 ```mermaid
 flowchart TB
-  K["Common 4.0 V
-TPSM63603 U1301"] --> H["LM73100RPWR · U1401
+  K["Common 4.0 V · TPSM63603 U1301"] --> H["LM73100 U1401
 reverse-current blocking"]
   H --> HI["Held flight input"]
-  HI --- CAP["C1403 to GND · proposal
+  HI --- CAP["C1403 to GND
 PCW0J102MCO1GS · 1000 uF / 6.3 V"]
-  HI --> F["TPS7A9101DSKR · U1701
-FLIGHT_3V3"]
+  HI --> F["TPS7A91 U1701
+FLIGHT_3V3 · 3.352 V"]
   F --> FM["Flight MCU / supervision
-five locally limited sensor branches"]
-  K --> AL["TPS2553DBVR-1 · U1501
-aggregate service limit
-enabled from BOOT_3V3"]
-  AL --> S["TPS7A9101DSKR · U1801
-SERVICE_3V3"]
-  S --> CL["TPS2553DBVR-1 · relocated U1601
-independent COMMS_BRANCH_EN"]
-  CL --> C["COMMS_3V3
-MCU / supervisor / interface logic"]
-  C --> SW["TPS22918 ×2
-GNSS / radio load switches"]
-  S --> NL["TPS2553DBVR-1 · U3601"]
-  NL --> N["NOR + its signal boundary"]
-  S --> CA["TPS2553DBVR-1 · U501"]
-  CA --> CN["CAN transceiver + signal boundary"]
-  S --> AU["TPS2553DBVR-1 · U7001"]
-  AU --> A["Burrito INA228
-Churro monitoring AUX"]
-  S --> Z["Sounder driver
-no separate limiter"]
+five locally limited sensors"]
+  K --> CL["TPS2553-1 U1501
+COMMS_BRANCH_EN · 66.5k"]
+  CL --> C["TPS7A91 U1801
+COMMS_3V3 · 3.352 V"]
+  C --> CM["Comms MCU / USB
+separately switched GNSS + radio"]
+  K --> SL["TPS2553-1 U1601
+SERVICE_POWER_EN · 49.9k"]
+  EN["Flight PD10
+enable / recovery"] -.-> SL
+  SL --> S["TPS7A91 U1901
+3V3_OPTIONAL · 3.352 V
+services"]
+  S --> NL["TPS2553-1 U3601"]
+  NL --> N["NOR + signal boundary"]
+  S --> CA["TPS2553-1 U501"]
+  CA --> CN["CAN + signal boundary"]
+  S --> AU["TPS2553-1 U7001"]
+  AU --> M["Burrito INA228 / Churro AUX"]
+  S --> Z["Sounder driver"]
 ```
 
-Capacitor is connected to ground at the held node, not in series. Common ground
-and signal-side protection remain; these arrows show supply paths only.
-Unpopulated diagnostic feeds remain DNP, outside operating load budgets.
+Solid arrows carry power; dashed arrows control enable. Common ground; capacitor
+to ground, not in series. Retain all partial-power signal boundaries and DNPs.
+U1501/U1601 stay **upstream of their respective LDOs**. No regulator is removed.
+Human-facing “services” keeps the existing net identifier `3V3_OPTIONAL`.
 
-## Why two rather than one or three
+## Why three rather than one or two
 
-**Recommend two as a fault-containment choice, not a demonstrated reliability
-improvement.** The retained requirement is flight execution through a failed
-comms branch. Separate current limiting does most of the work for a downstream
-short; a second LDO additionally separates the two regulated output nodes.
-
-| Concrete event | One LDO + local limits | Two LDOs + local limits | Third LDO adds |
-| --- | --- | --- | --- |
-| Radio/GNSS load short | Comms limiter can contain it if selectivity/droop pass | Same mechanism; second LDO alone does not clear it | Little for this fault |
-| Service LDO output short to ground | Shared 3.3 V collapses | U1501 limits the service input demand; flight survival depends on common-buck droop | Logger/CAN can remain on a separate service rail |
-| Intentional comms power cycle | Possible with downstream switch | U1601 cycles comms while NOR/CAN/AUX remain supplied | Not needed for this operation |
-| Flight LDO or common buck/source fails | Flight lost | Flight lost | No independent flight supply |
-| Service LDO passes excessive input voltage | Shared loads exposed | Service loads exposed; current limiting is not overvoltage isolation | Smaller exposed load group, subject to exact fault path |
-
-The two-rail proposal accepts loss of **comms + recording + CAN + monitoring**
-from a shared service-LDO failure. These services matter to the mission; calling
-them “optional” hid this consequence. Essential flight execution has a separate
-rail, but some missions also require surviving CAN control or telemetry.
-
-| Selection | Actual trade |
-| --- | --- |
-| One | Remove another LDO/support set; accept a shared regulated-output failure. Still needs local load switches and USB sequencing |
-| **Two** | Retain separate flight supply; remove U1901/support; relocate U1601. No reduction in the ~0.42 W ideal LDO conversion loss |
-| Three | Retain separate comms and recorder/CAN regulation; more placement, startup and verification work |
-
-No failure-rate evidence establishes which gives the highest overall reliability.
-The reason for recommending two is preserving the specified flight/service fault
-boundary with fewer regulators than the draft. **Choose one instead if the team
-accepts the common regulated-output loss.** Choose three if recorder/CAN survival
-through a comms-regulator fault is a requirement. Those are the actual decisions.
-
-All options share source, mux, buck, ground and PCB. Local limiters failing short,
-common return damage and regulator overvoltage need their own fault assessment.
+The third regulator separates a comms-LDO fault from NOR/CAN. That supports
+[FF-01](../../interfaces/flight-fault-contract.md) and makes the extra regulator
+worth retaining. Local limiters contain downstream shorts but cannot make two
+loads on one regulator survive that regulator's output collapse independently.
+All domains still share battery/mux/buck/ground/PCB; no independent flight
+computer or quantitative reliability claim follows. Regulator pass-through
+failure also needs overvoltage assessment; a current limiter is not an OVP.
 
 ## Exact delta and startup
 
-- Reuse U1501 before U1801 as aggregate service limiter; EN from BOOT_3V3.
-- Reuse U1601 **after U1801** as comms limiter, controlled by existing U1202.
-- Remove U1901 and its LDO support network. Do not join old regulator outputs.
-- Keep U1202's existing mux: `COMMS_BRANCH_EN = BAT_VALID ? FLIGHT_COMMS_EN : USB_PRESENT`.
-- Keep `CORE_INPUT_EN = BAT_VALID OR USB_CONFIG_OK` and the existing comms reset boundary.
-- With a valid battery, flight controls comms power even with USB attached. USB-only holds comms on for service; use its reset path instead of claiming flight-controlled power cycling in that mode.
-- NOR/CAN/AUX enables remain flight-owned and default off. GNSS/radio stay off before USB current permission. Sounder stays silent.
+- Keep U1501 → U1801 comms. R1504 = **66.5 kΩ 1%**.
+- Keep U1601 → U1901 services. R1604 = **49.9 kΩ 1%**.
+- U1601 EN (pin 3) and R1602 top move from FLIGHT_3V3 to **SERVICE_POWER_EN**, flight PD10 pad 57. R1602 remains 100 kΩ to GND; default off.
+- R1701/R1801/R1901 = **31.9 kΩ 0.1%**, all lower resistors 10 kΩ 0.1% retained. All three rails nominal **3.352 V**.
+- Retain `COMMS_BRANCH_EN = BAT_VALID ? FLIGHT_COMMS_EN : USB_PRESENT` and `CORE_INPUT_EN = BAT_VALID OR USB_CONFIG_OK`.
+- Retain C1403 candidate **PCW0J102MCO1GS**, 1000 µF/6.3 V; exact footprint/clearance during capture.
 
-| Source state | Bootstrap / service | Flight / other branches |
-| --- | --- | --- |
-| Valid battery | Starts autonomously; flight can then enable comms | BAT_VALID starts flight independently of comms |
-| USB before configuration | Comms starts for enumeration within the permitted current budget | Flight/NOR/CAN/AUX/GNSS/radio off |
-| USB configured | Existing permitted current setting applies | Flight may start; explicitly sequence only service loads required |
-| Battery + USB | Existing mux priority/backfeed behavior retained | Comms cannot withdraw flight power while BAT_VALID is true |
+Flight starts without comms and enables services after essential startup.
+NOR/CAN/AUX remain individually enabled and default off. Battery mode permits
+comms branch cycling; USB-only holds comms on for enumeration, so use reset there.
+An initial **100 ms service-off interval, one sequenced restart**, then unavailable
+for that power session is the proposed recovery policy. The 100 ms is a bench
+starting point, not a guaranteed reset: set the released interval from measured
+discharge below peripheral reset thresholds and restart. Active-mission restart
+must respect the peer-loss contract. Never reset flight
+just to repair services. [Full restart consequences](justifications/power-domains.md#exact-capture-delta).
 
-Charging service-LDO/comms capacitance still consumes USB startup current.
-The 100 mA preconfiguration / 500 mA configured assumptions in the existing
-service design require measured compliance; no USB-PD source is assumed.
+## Voltage margin, including reset release
 
-## Initial electrical budget
-
-| Item | Proposed value / reason |
+| Calculated bound | Proposal |
 | --- | --- |
-| Existing load allocations | Flight 200 mA; comms 300 mA; other service 100 mA at 3.3 V |
-| Aggregate service U1501 | 32.4 kΩ, 1% ILIM: TI Table 2 gives 729.1–882.1 mA |
-| Comms U1601 | 66.5 kΩ, 1% ILIM: TI Table 2 gives 351.2–448.7 mA |
-| Static comms-short allocation | 448.7 mA + 100 mA other = 548.7 mA, below aggregate minimum before quiescent/inrush allowances |
-| Service LDO | 1 A part; 400 mA normal allocation, ~0.28 W at 4→3.3 V before path-drop effects |
-| Both LDOs | ~0.42 W combined at 600 mA; removing a rail does not remove this conversion loss |
-| Hold-up illustration | 800 µF effective × 0.25 V / 204 mA = 0.98 ms; flight only |
+| All LDO nominal / tolerance corners | 3.352 V / **3.310–3.394 V** |
+| Conservative TPS3808G33 release upper bound | **3.194 V** |
+| Static margin / remaining after 50 mV PCB/transient allocation | **116 / 66 mV** |
+| Continuous flight / comms / services allocation | **200 / 300 / 200 mA** |
+| Common 4 V power / ideal LDO dissipation | **2.8 W / 0.454 W** before quiescent/path corrections |
 
-These are component-derived starting values, not measured peak load or trip
-selectivity. TPS2553-1 limits current before its 5–10 ms overcurrent latch-off
-delay; flight hold-up alone cannot bridge that delay. The common buck must
-remain valid under the limited fault. Check dynamic droop and each other local
-branch's maximum limit plus simultaneous healthy loads against the aggregate.
-At the aggregate maximum, a service short can demand ~3.53 W from the 4 V node
-before latch-off. Buck rating alone does not establish its transient response.
-An aggregate service latch-off loses all services until source/enable cycling.
+The switches drop voltage at LDO **inputs**. Check headroom; do not subtract
+that drop again from a regulated output. Effective input/output capacitance must
+remain ≥10 µF after derating. All selected rail consumers must tolerate the upper
+corner and measured overshoot. Sensor rails now follow the raised flight setting.
 
-The relocated comms switch drops up to ~61 mV at 448.7 mA using TI's 135 mΩ
-DBV on-resistance bound. With a 1%-low 3.3 V LDO this leaves ~3.21 V before
-trace/transient allowances, above the H563 USB minimum of 3.0 V. This is a DC
-budget, not a transient pass. The LDO's ideal conversion efficiency is 82.5%.
+Hold-up remains flight-only. The old 800 µF × 0.25 V / 204 mA ≈0.98 ms is an
+illustration; actual usable drop must be recalculated at the new set point and
+measured headroom. It does not bridge TPS2553's 5–10 ms latch delay or guarantee
+NOR flush. The common buck must sustain limited faults without resetting flight.
+[Component sources and assumptions](justifications/power-domains.md#voltage-and-headroom).
 
-TPS7A91 requires at least 10 µF input/output per its datasheet; retain effective
-capacitance after bias/temperature derating and verify the actual selected parts.
-Its 1 A rating is not an allocated load.
+## USB is a separate load mode
 
-**C1403 proposal: Nichicon PCW0J102MCO1GS**, 1000 µF / 6.3 V, 8 mm diameter ×
-10 mm body length, 14 mΩ maximum ESR at 20 °C / 100 kHz. A −20% capacitance
-allowance gives 800 µF before other environmental effects; 204 mA produces an
-illustrative 2.9 mV ESR step. Allow its 1.89 mA rated maximum leakage in the
-budget. This replaces an unspecified volume allowance with a concrete candidate.
-Check the manufacturer's land pattern, retained 10 mm-class clearance,
-mechanical support and 4 V overshoot; no installed fit or vibration rating is
-claimed. No 10 ms outage claim is made.
-[Nichicon rating table](https://www.nichicon.co.jp/_assets/images/products/catalog/corporate/digital/sh_pcw_pca.pdf).
+Retain U4402's preconfiguration ILIM-to-IN connection: supported **50–100 mA**
+limit. Configured R4403 60.4 kΩ 1% gives **387–491 mA**. The 700 mA full 4 V
+allocation needs ~**757 mA VBUS** at illustrative 4.35 V/85% before overhead;
+it cannot run on the retained USB path.
 
-**Next check:** minimum-source and USB-only startup, comms cycling with continuous
-NOR/CAN operation, controlled branch faults, and measured flight-rail droop.
-Reject the simplification if those boundaries cannot be met economically.
+| Mode | Required operating ceiling |
+| --- | --- |
+| Bootstrap | ≤35 mA measured VBUS steady; reduced-clock comms/USB only; all peripherals/flight/services off |
+| Configured download | ≤300 mA VBUS; reduced-clock MCUs + NOR; RF/GNSS/CAN/sounder off; other measurements on demand |
+| Battery-enabled operation | Full domain allocations, with sequenced GNSS startup and RF peaks |
+| Reset/deconfiguration | Withdraw configured permission and shed loads |
+| Suspend | Separate USB-compliant low-power state; 35 mA bootstrap is not a suspend allowance |
 
-Sources: [preserved connected netlist](../../hardware/croi2/output/full-netlist.xml),
-[TI SN74LVC1G97 truth table](https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf),
-[TI TPS2553 datasheet](https://www.ti.com/lit/ds/symlink/tps2553.pdf) Table 2,
-[TI TPS7A91 datasheet](https://www.ti.com/lit/ds/symlink/tps7a91.pdf),
-[existing power rationale](implementation-reference/02-power.md),
-[controlled power contract](../../interfaces/power-contract.md).
+Measure inrush as well as steady load. No USB-PD or charging assumption. Battery
+removal while USB remains must trigger restricted service behavior; seamless
+full-flight operation from USB is not promised.
 
-See [connectors and physical arming](09-connectors-arming.md) for the FC battery-enable plug, separate unresolved output-arm assembly and complete connector inventory.
+## Every local limiter and the aggregate
+
+| Branch | Setting | Calculated limit | Recovery |
+| --- | --- | --- | --- |
+| Sensors U3101–U3501 | ILIM tied IN, retained | 50–100 mA each | Flight branch enable |
+| NOR U3601 | R3604 100 kΩ | 232–306 mA | Flight branch enable |
+| CAN U501 | R502 210 kΩ | 109–152 mA | Flight branch enable |
+| AUX U7001 | R7004 210 kΩ | 109–152 mA | Flight branch enable |
+| Comms U1501 | R1504 66.5 kΩ | 351–449 mA | Flight in battery mode |
+| Services U1601 | R1604 49.9 kΩ | 470–588 mA | PD10, bounded restart |
+
+NOR fault maximum + 135 mA remaining services ≈441 mA, below 470 mA aggregate
+minimum. Simultaneous comms/service input limits + 200 mA flight ≈1.237 A;
+that is a static source bound, not proven transient selectivity. Healthy mode
+allocations and every local fault case are in the [load ledger](justifications/power-domains.md#loads-and-limiter-coordination).
+
+## Endurance and schematic handoff
+
+Reference **2S 8 Ah**, with **≥30 Wh usable** at installed temperature/load/UVLO.
+Eight hours at the conservative active allocation plus four hours at the proposed
+recovery allocation require **29.69 Wh**, including assumed conversion losses and
+0.10 W overhead. Actuator energy is additional. The 65% nameplate-to-usable
+allowance is an assumption to validate, not a battery test.
+
+This supplies a concrete source interface without making a pack purchase or
+claiming a tested SKU. [Energy calculation](justifications/power-domains.md#usb-and-endurance-choices).
+After acceptance, capture the explicit delta and verify native connectivity/ERC;
+then measure first-PCBA startup, droop, fault recovery, noise, temperature and
+mode energy. [Connectors](09-connectors-arming.md) owns source variants and the
+separate unresolved physical-arm boundary.

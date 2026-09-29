@@ -1,6 +1,6 @@
 # Ogma 2: recommendation-first design review
 
-Updated 19 September 2026. The model prepares the concrete proposal; the team
+Updated 22 September 2026. The model prepares the concrete proposal; the team
 accepts or changes it. CAD and electrical contracts change only within the
 explicitly authorised implementation scope.
 
@@ -27,6 +27,30 @@ Use provisional values where defensible; label their basis. Keep observed,
 calculated, proposed, accepted and verified distinct. An exact part selection
 is not a claim of qualification. Missing actuator data may block its power
 stage without blocking unrelated processor or sensor work.
+
+## Closing this pass
+
+Use the overview's readiness table and D1–D5 decisions. For each affected block:
+can a schematic author connect the exact part, support network, power, controls,
+returns and external interface without inventing a requirement? Accept or amend
+that concrete proposal. Record any missing external input with its required
+closure; do not call it a future measurement.
+
+Keep subsequent implementation evidence separate: schematic/library parity and
+ERC, then layout/assembly release, then first-PCBA measurements. A measured
+throughput or thermal result cannot exist before hardware; a missing actuator
+voltage or arm assembly cannot be deferred as though it were only a test.
+The optional [audit evidence](architecture/2026-09-22-schematic-readiness.md)
+supports challenged details. No new whole-pack reading assignment.
+
+## Capture handoff
+
+The [capture specification](architecture/schematic-capture-spec.md) must be
+executable: exact retained baseline, explicit part/value/net deltas, complete
+pin maps and linked justification. After Seán's green light, Codex captures
+schematics, verifies libraries/connectivity/ERC and places components. Seán
+reviews placement and routes; Anav owns firmware. Do not silently turn this
+future division of work into present authorization or manufacturing release.
 
 ## Acceptance and work
 
