@@ -1,164 +1,143 @@
-# Processor pair
+# 01 Processors
 
-**22 September · proposal · existing CAD has two H563VIT6 parts.**
+Two STM32H563s: **H563VIT6 (LQFP100) for flight**, **H563RIT6 (LQFP64) for
+comms**. Two processors is decided ([D-6.12](../../decisions.md)); the comms
+package is proposed (D1). The CAD still has two H563VIT6.
 
-Use **STM32H563VIT6, LQFP100, for flight** and **STM32H563RIT6, LQFP64,
-for comms**. Keep the H563 software family; remove unused comms package pins.
-This is a resource/implementation choice, not a claim of lowest price or power.
-
-## Justification and deeper detail
-
-| Question | Follow through | Source status |
-| --- | --- | --- |
-| How does this become capture/placement? | [Exact delta and responsibility](schematic-capture-spec.md), [proposed flight map](proposed-flight-pinout.csv) | PD10 service recovery is the sole functional flight allocation change; net names match native circuits |
-| Why these packages? | [Pin-capacity audit: flight allocation and package comparison](../archive/mcu-pin-capacity-audit-2026-09-11.md) | 11 September audit of preserved CAD |
-| What alternatives were considered? | [MCU family comparison and manufacturer sources](../archive/architecture/2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale) | 18 September research; old whole-block RAM objection superseded by streaming |
-| Why two processors? | [Workload separation and single-MCU alternative](../archive/architecture/implementation-reference/01-mcus.md#why-keep-this) | Earlier design rationale; current part/package choice is on this page |
-| Does the smaller package actually fit? | [Complete proposed 64-pad map](proposed-comms-pinout.csv) | Current proposal; every pad allocated |
-| What supports memory/DMA claims? | [DMA, memory and execution evidence](../archive/mcu-pin-capacity-audit-2026-09-11.md#dma-memory-and-execution-scope) | Reservations and budgets; no measured firmware occupancy |
+Both are Arm Cortex-M33 with a single-precision FPU, 2 MiB flash and 640 KiB
+RAM. Firmware builds with `-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard`
+whichever comms package is fitted.
 
 ```mermaid
 flowchart LR
-  S["Five independent sensor interfaces"] --> F["Flight · H563VIT6
-1 kHz acquisition schedule
-200 Hz estimate / policy budget"]
-  F <--> N["Quad-SPI NOR
-128 KiB writer staging"]
-  F <--> V["CAN / local interfaces"]
-  F <-->|"USART3 · 2 Mbaud 8N1
-TXU0202 powered-off boundary"| C["Comms · H563RIT6
-bounded event loop / DMA queues"]
-  C <--> U["USB FS
-streamed service transfers"]
-  C <--> G["GNSS UART / PPS"]
-  C <--> R["Radio SPI / BUSY / IRQ"]
-  F -.->|"existing reset + power enable"| C
+  S["5 sensors
+3 SPI + 2 I²C"] --> F["Flight · H563VIT6
+1 kHz acquisition
+200 Hz estimation and policy"]
+  F <-->|"quad SPI"| N["NOR 256 MiB
+128 KiB staging in RAM"]
+  F <-->|"FDCAN"| V["CAN to Fajita"]
+  F -->|"TIM3 PWM"| P["2 servo outputs"]
+  F -->|"PYRO1/2_FIRE"| O["Recovery outputs"]
+  F <-->|"USART3 · 2 Mbaud
+TXU0202 boundary"| C["Comms · H563RIT6
+event loop and DMA queues"]
+  C <--> U["USB FS service"]
+  C <--> G["GNSS UART + PPS"]
+  C <--> R["Radio SPI + BUSY/IRQ"]
+  F -.->|"reset and power enable"| C
 ```
 
-## Why these two
+## Why two, and why these
 
-Evidence: [complete flight allocation](../archive/mcu-pin-capacity-audit-2026-09-11.md#flight-complete-grouped-allocation) · [64-pin package comparison](../archive/mcu-pin-capacity-audit-2026-09-11.md#first-comparison-h563-in-lqfp64-for-comms).
-
-| Role | Actual requirement | Selection reason |
+| Role | What it must do | Why this part |
 | --- | --- | --- |
-| Flight | Three sensor SPI buses, two pressure I²C buses, monitor I²C4, quad NOR, CAN, UART, timing and local interfaces | Existing LQFP100 map fits; independent interfaces consume pins. Removing servo3 reallocates PD10 to service recovery |
-| Comms | Radio SPI, two UARTs, PPS, USB FS, enables/reset, status, HSE and SWD | All active functions fit LQFP64; same memory/peripheral family avoids a second driver/DMA target |
-| Separation | Flight continues with comms held in reset | Keep USB/radio parsing and service stalls off the flight execution schedule |
+| Flight | Three sensor SPI buses, two pressure I²C buses, monitor I²C4, quad NOR, CAN, UART, timing, outputs, servos | The existing LQFP100 map fits; independent buses use the pins |
+| Comms | Radio SPI, two UARTs, PPS, USB, enables and resets, status, HSE, SWD | Every function fits LQFP64; same family, so one driver and DMA target |
+| Split | Flight keeps flying with comms held in reset | USB, radio and GNSS parsing and service stalls stay off the flight schedule |
 
-Both selected H563 variants provide the same 2 MiB flash / 640 KiB RAM class.
-That capacity is headroom, not a comms requirement. No measured CPU load or
-compiled firmware memory budget exists yet. Retain the initial 128 MHz flight
-operating budget; don't confuse the device's maximum clock with required speed.
+The H563 is chosen for one software target with headroom, not for lowest cost
+or power. No measured CPU load or memory budget exists yet. The flight budget
+stays at 128 MHz; the part's maximum clock is not a requirement.
 
-A smaller H503 or G474 could run this comms job with suitable firmware. Their
-benefit is unquantified here; selecting one now adds a second target and pin/DMA
-validation. Revisit if a real price/power constraint or measured resource budget
-makes that worthwhile. **32 KiB service blocks do not justify the H563 by themselves.**
-
-## What actually determines the choice
-
-| Resource | Flight allocation / evidence | Comms allocation / evidence |
+| Resource | Flight | Comms |
 | --- | --- | --- |
-| Acquisition | 3 SPI + 2 I²C sensor buses; 1 kHz scheduler target | GNSS UART/PPS, radio SPI, flight UART, USB |
-| DMA | 11 reserved streams: 6 SPI + 2 ADC + 2 UART + NOR | 6 reserved: 4 UART + 2 SPI; request routing still to build-test |
-| RAM | 128 KiB recorder staging already allocated | Proposed 8 KiB service payload buffers; parsers, queues and stacks need measurement |
-| CPU | 200 Hz estimate/policy target; 128 MHz operating budget | No benchmark establishes a required clock |
-| Package | Dense existing LQFP100 allocation | Complete LQFP64 map below |
+| Acquisition | 3 SPI + 2 I²C sensor buses, 1 kHz schedule | GNSS UART/PPS, radio SPI, flight UART, USB |
+| DMA | 11 streams: 6 SPI, 2 ADC, 2 UART, NOR | 6 streams: 4 UART, 2 SPI; request routing to build-test |
+| RAM | 128 KiB recorder staging | 8 KiB service buffers proposed; parsers, queues and stacks to measure |
+| CPU | 200 Hz estimation/policy, 128 MHz budget | No benchmark sets a clock |
 
-The H563 choice is **integration convenience with headroom**. It is not derived
-from a measured 640 KiB requirement. A board can be designed around that deliberate
-overspecification; a cost/power optimisation claim would need actual measurements.
-
-| Alternative | Relevant comparison | Present disposition |
+| Comms alternative | Comparison | Position |
 | --- | --- | --- |
-| Existing H563VIT6 for comms | Same software, no pin migration, larger package | Lowest change effort; keep if package reduction has little layout value |
-| **H563RIT6** | Same resources/family, 64 pins, mapped | Proposed package reduction |
-| G474RE | 512 KiB flash; 128 KiB RAM split across memory regions | Plausible smaller resource target; new family/AF/DMA work, no comparable quote |
-| H503 | 128 KiB flash; 32 KiB main RAM | Streaming removes the old whole-block objection; firmware fit unproven |
+| H563VIT6 (in CAD) | Same software, no pin migration, bigger package | Keep if the smaller package buys little layout |
+| **H563RIT6** | Same resources, 64 pins, fully mapped | Proposed |
+| G474RE | 512 KiB flash, 128 KiB RAM in several regions | New family and DMA work; no quote |
+| H503 | 128 KiB flash, 32 KiB RAM | Streaming removes the old 32 KiB-buffer objection; fit unproven |
 
-Published alternative resources: [manufacturer-linked comparison](../archive/architecture/2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale).
-The old H503 rejection based on a mandatory 32 KiB buffer no longer applies.
+Revisit a smaller comms part only for a real cost or power constraint or a
+measured resource budget. Sources: [pin audit](../archive/mcu-pin-capacity-audit-2026-09-11.md),
+[MCU comparison](../archive/architecture/2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale),
+[earlier two-MCU rationale](../archive/architecture/implementation-reference/01-mcus.md#why-keep-this).
 
-## Complete comms package proposal
+## Comms LQFP64 map
 
-[64-pin proposed allocation](proposed-comms-pinout.csv), checked against
-ST DS14258 Rev 6 package/AF tables. It is separate from the installed pin CSV.
+[Full 64-pad allocation](proposed-comms-pinout.csv), checked against ST DS14258 Rev 6.
 
-| Function | Proposed LQFP64 pads / ports | Change |
+| Function | Pads / ports | Change from CAD |
 | --- | --- | --- |
-| Flight UART | 51 PC10 TX / 52 PC11 RX, USART3 AF7 | Replaces comms PD8/PD9; flight end unchanged |
-| GNSS | 42 PA9 TX / 43 PA10 RX; 14 PA0 PPS; 25 PC5 reset; 26 PB0 enable | Same ports |
-| Radio | 20–23 PA4–PA7 SPI/select; 8 PC0 reset, 9 PC1 BUSY, 10 PC2 IRQ, 27 PB1 enable | Same active ports |
-| USB | 44 PA11 DM / 45 PA12 DP; 28 PB2 VBUS sense | Same ports; package-specific supply connection |
-| Source/config status | 15 PA1 / 16 PA2 | Same ports; bootstrap boundary retained |
-| Debug / clock | 46 PA13, 49 PA14, optional 55 PB3; HSE 5 PH0 / 6 PH1 | Same functions |
+| Flight UART | 51 PC10 TX, 52 PC11 RX, USART3 AF7 | Moves from PD8/PD9; flight end unchanged |
+| GNSS | 42 PA9 TX, 43 PA10 RX; 14 PA0 PPS; 25 PC5 reset; 26 PB0 enable | Same ports |
+| Radio | 20–23 PA4–PA7 SPI; 8 PC0 reset, 9 PC1 BUSY, 10 PC2 IRQ, 27 PB1 enable | Same ports |
+| USB | 44 PA11 DM, 45 PA12 DP; 28 PB2 VBUS sense | Same ports |
+| Source/config status | 15 PA1, 16 PA2 | Same ports |
+| Debug / clock | 46 PA13, 49 PA14, optional 55 PB3; HSE 5 PH0, 6 PH1 | Same |
 
-LQFP64 has **no external VDDUSB pad**; don't copy the LQFP100 supply pin list.
-VDDUSB is internally tied to VDD: keep COMMS_3V3 within **3.0–3.6 V for USB**.
-Comms regulation follows its input limiter; verify LDO headroom, tolerance and transients. Unused
-PC3/PC4 radio reservations need no external connection. Comms LSE stays DNP.
-Flight PC13 remains quiet because of the LSE erratum.
+- LQFP64 has no VDDUSB pad; VDDUSB is tied to VDD inside, so COMMS_3V3 must
+  stay within 3.0–3.6 V for USB.
+- VCAP pads 30 and 62 each need 2.2 µF.
+- PC3/PC4 radio reservations need no connection. Comms LSE stays DNP.
+- Flight PC13 stays quiet (LSE erratum).
+- The CSV `net` column is the electrical net name: comms PC10/PC11 use
+  `CC_COMMS_TO_FLIGHT`/`CC_FLIGHT_TO_COMMS` through U4301; PA1/PA2/PB5 keep their
+  `CC_` nodes; analog supplies keep `COMMS_VDDA`/`FLIGHT_VDDA`; ADC inputs keep
+  their `ADC_` front-end nodes. `NC` means unconnected, never a shared net.
 
-The CSV `net` column is an electrical identifier, not a functional abbreviation.
-Comms PC10/PC11 use **CC_COMMS_TO_FLIGHT / CC_FLIGHT_TO_COMMS**, retaining
-U4301; PA1/PA2/PB5 likewise retain their **CC_** status nodes. Analog supplies
-retain **COMMS_VDDA / FLIGHT_VDDA**. Flight ADC inputs retain their **ADC_**
-front-end nodes, never the raw measured supply. `NC` means individually
-unconnected. [Exact boundary instructions](schematic-capture-spec.md#burrito-capture-delta).
+## Flight pins
 
-## Why the extra control pins remain
+The [flight map](proposed-flight-pinout.csv) holds the 22 September nets. The
+6 October decisions change these pads (detail in the
+[capture delta](schematic-capture-spec.md#burrito-changes)):
 
-[Detailed net-by-net rationale and deletion alternatives](../archive/architecture/2026-09-18-review-investigations.md#every-allocation-has-a-job-and-a-deletion-alternative) (dated supporting research).
-
-| Function | Concrete job | Deleting/tieing it changes |
+| Pad | Port | Now |
 | --- | --- | --- |
-| Sensor DRDY/INT | Timestamp availability rather than completion of a later poll | Sampling/timestamp jitter must be bounded by polling |
-| NOR enable / reset | Power-fault recovery / device reset are different operations | Reset alone cannot clear every supply latch |
-| Comms enable / reset | Whole branch recovery / restart only its processor | Power cycling also restarts GNSS/radio; USB-only uses reset |
-| CAN enable / standby | Recover supply / keep a powered transceiver quiet | Tying active changes startup and fault behavior |
-| Monitor AUX enable | Supplies local INA228 and Churro monitoring | Also loses standalone battery-current readings when off |
-| Battery / rail ADC | Observe downstream supply; use VREFINT for absolute rail measurement | Same-supply ADC reference alone is ratiometric |
-| Watchdog feed | Evidence of completed essential work | Unconditional timer toggling can hide stalled firmware |
-| GNSS PPS / reset / enable | Time edge / receiver reset / supply restart | UART arrival time cannot replace PPS precision |
-| Radio BUSY / IRQ / reset / enable | Command readiness / events / device or supply recovery | Polling and reduced recovery need separate justification |
-| USB VBUS/config/battery-valid | Startup current/source sequencing | Must preserve enumeration before enabling larger loads |
-| SWD/reset/clock/supply | Independent service and device operation | Supply/VCAP pads are not spare GPIO |
+| 4 | PE5 | `FC_POWER_HOLD` |
+| 38 / 40 | PE7 / PE9 | `PYRO1_FIRE` / `PYRO2_FIRE`, straight to the TPS1H100s |
+| 43 | PE12 | `PYRO3_FIRE`, staging channel DNP |
+| 5, 67, 68, 69 | PE6, PA8, PA9, PA10 | Spare (sensor enables removed) |
+| 39, 41, 44, 45 | PE8, PE10, PE13, PE14 | Spare (low-side selects and permit removed) |
+| 57 | PD10 | `SERVICE_POWER_EN` (22 Sep) |
 
-Exact ports/pads: [proposed flight map](proposed-flight-pinout.csv)
-and [proposed comms map](proposed-comms-pinout.csv). The 6 October decisions free PE6, PA8, PA9, PA10, PE8, PE10,
-PE13 and PE14, and use PE5 for `FC_POWER_HOLD`; see the
-[capture delta](schematic-capture-spec.md#burrito-capture-delta).
+## Why the remaining control pins stay
 
-## Bounded firmware proposal
+| Pins | Job | Without it |
+| --- | --- | --- |
+| Sensor DRDY/INT | Timestamp when a sample is ready | Polling jitter |
+| NOR enable / reset | Clear a supply fault / reset the device | Reset can't clear a tripped supply |
+| Comms enable / reset | Restart the whole branch / just the processor | Power cycle also restarts GNSS and radio |
+| CAN enable / standby | Recover the supply / keep the transceiver quiet | Startup and fault behaviour change |
+| Monitor AUX enable | Powers Croí INA228 and Churro monitoring | Lose battery-current readings |
+| Battery and rail ADC | Watch supplies against VREFINT | Same-supply reference is only ratiometric |
+| Watchdog feed | Proof the essential loop ran | A timer toggle hides a stalled loop |
+| GNSS PPS / reset / enable | Time edge / receiver reset / supply restart | UART timing can't replace PPS |
+| Radio BUSY / IRQ / reset / enable | Readiness / events / recovery | Polling and weaker recovery |
+| USB VBUS / config / battery-valid | Source sequencing | Comms branch logic loses its inputs |
+| SWD, reset, clock, supplies | Service and operation | Supply and VCAP pads are not GPIO |
 
-- Flight: DMA acquisition; timestamp/validate; scheduled estimate/policy; bounded logger service. No busy-wait for sensors, flash, radio or peer replies.
-- Comms: bounded event loop with DMA queues. No RTOS required initially; choose one only for a demonstrated software need.
-- Routine UART: existing 2 Mbaud, 8N1; 20 kB/s telemetry cap. Add proposed comms diagnostics ≤1 KiB/s.
-- Service: start with 4 KiB chunks, two 4 KiB payload buffers, sequence/CRC and credit/backpressure. Endpoint/driver queues and stacks need their own budget. No whole-log or whole-32-KiB-block RAM requirement.
-- At 2 Mbaud, ideal UART payload ceiling is 200 kB/s. A full 256 MiB takes **at least 22.4 minutes**, before overhead. An 8 Mbaud disarmed-only mode can be developed later; ~680 kB/s remains a target, not demonstrated performance.
+## Firmware starting point
 
-**Next check:** native symbol/netlist migration for the accepted package, then a
-minimal concurrent USB/GNSS/radio/UART build measuring memory, stalls and reset
-recovery. This can precede complete mission firmware. No new pin map is silently
-installed into CAD by this proposal.
+- Flight: DMA acquisition, timestamp and validate, scheduled estimation and
+  policy, bounded logger service. No busy-waits on sensors, flash, radio or peers.
+- Comms: event loop with DMA queues. No RTOS until a real need shows up.
+- Inter-MCU UART: 2 Mbaud 8N1, 20 kB/s telemetry cap, comms diagnostics ≤1 KiB/s.
+- Service transfers: 4 KiB chunks, two 4 KiB buffers, sequence/CRC, credit-based
+  backpressure. No whole-log buffer.
+- At 2 Mbaud the payload ceiling is 200 kB/s, so a full 256 MiB download takes
+  at least 22.4 minutes. An 8 Mbaud disarmed mode (~680 kB/s) is a later target.
+- Pass condition: flight keeps progressing with comms reset, silent, flooding or
+  sending garbage. GNSS and USB are never hidden prerequisites.
+
+First check after capture: a minimal build running USB, GNSS, radio and the
+UART together, measuring memory, stalls and reset recovery. Reserve RAM by
+owner, initialise ECC memory and bound DMA queue ownership before it.
+
+## Capture notes
+
+Draw the LQFP64 symbol from the 64-pad CSV, not a cut-down 100-pin symbol.
+Check every supply, VREF/VDDA, reset, BOOT, HSE and debug pin against AN5711.
+Keep the powered-off UART, reset and bootstrap boundaries.
 
 Sources: [ST H563 datasheet](https://www.st.com/resource/en/datasheet/stm32h563ri.pdf)
-(Figure 5, Tables 14–16), [ST hardware guide AN5711](https://www.st.com/resource/en/application_note/an5711-getting-started-with-stm32h5-mcu-hardware-development-stmicroelectronics.pdf), [ST errata](https://www.st.com/resource/en/errata_sheet/es0565-stm32h562xx563xx573xx-device-errata-stmicroelectronics.pdf),
-[existing pin audit](../archive/mcu-pin-capacity-audit-2026-09-11.md),
-[installed flight map](../../hardware/croi2/libraries/inputs/flight-pinout.csv).
-
-## Schematic handoff
-
-**Defined enough after accepting the package pair.** Translate the complete
-64-pad CSV, not a scaled copy of the 100-pin symbol. Comms VCAP pads 30/62 each
-need their specified local 2.2 µF; check every supply, VREF/VDDA, reset, BOOT,
-HSE and debug connection against AN5711 and the package table. Keep the existing
-powered-off UART/reset/bootstrap boundaries. Spare GPIO does not justify
-removing recovery controls or silently adding a mission function.
-
-Firmware fit is a validation task, not a reason to defer the package choice
-indefinitely. Reserve RAM by region/owner, initialise ECC-covered memory and
-bound DMA queue ownership before the concurrent acquisition/service build.
-The acceptance condition is flight progress with comms reset, silent, flooding
-or sending malformed input; GNSS and USB must not be hidden prerequisites.
-See [system dependency audit](../archive/architecture/2026-09-22-schematic-readiness.md#dependency-closure).
+(Figure 5, Tables 14–16) · [AN5711](https://www.st.com/resource/en/application_note/an5711-getting-started-with-stm32h5-mcu-hardware-development-stmicroelectronics.pdf) ·
+[ES0565 errata](https://www.st.com/resource/en/errata_sheet/es0565-stm32h562xx563xx573xx-device-errata-stmicroelectronics.pdf) ·
+[installed flight map](../../hardware/croi2/libraries/inputs/flight-pinout.csv) ·
+[dependency audit](../archive/architecture/2026-09-22-schematic-readiness.md#dependency-closure)

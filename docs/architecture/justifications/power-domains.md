@@ -1,139 +1,156 @@
-# Power domains, recovery and energy — recommendation
+# Power domains, restart and energy
 
-22 September 2026. **Proposed capture baseline; supersedes the earlier two-LDO
-candidate.** CAD remains unchanged. [Power chapter](../02-power.md).
+Proposed capture baseline, 22 September 2026, updated for D-6.5 and D-6.8. It
+replaces the earlier two-regulator idea. CAD is unchanged. See the
+[power chapter](../02-power.md).
 
-## Decision and reason
+## Decision
 
-**Keep three TPS7A91 regulators: flight, comms, services.** One shared 4 V
-TPSM63603 supplies them. Comms regulation belongs inside the comms fault boundary;
-logging and CAN belong outside it. This directly supports the retained
-[FF-01 behavior](../../../interfaces/flight-fault-contract.md): communications
-failure must leave local sensing and recording available. It also avoids making
-an otherwise healthy vehicle peer unreachable through a comms-regulator fault.
+**Keep three TPS7A91 regulators: flight, comms and services.** One TPSM63603
+buck at 4 V feeds all three.
 
-The earlier two-rail candidate contained downstream comms shorts but merged the
-regulator-failure and aggregate-latch consequences. Recovering the merged group
-would reboot USB/RF while also interrupting storage and CAN. A third LDO and its
-support parts buy a named useful boundary; no quantitative reliability gain is
-claimed. Keep the existing topology instead of implementing that merge.
+Why three: comms regulation belongs inside the comms fault boundary, and
+logging and CAN belong outside it. That is what
+[FF-01](../../../interfaces/flight-fault-contract.md) needs: a comms failure
+must leave sensing and recording running. It also means a comms regulator fault
+can't make an otherwise healthy vehicle unreachable over CAN.
 
-| Fault | Proposed three-domain result | Residual common dependency |
+The earlier two-rail version contained comms shorts but put the regulator
+failure and the group latch-off on the same side as storage and CAN. Recovering
+that group would reboot USB and radio and interrupt storage and CAN at the same
+time. A third regulator and its parts buy a named, useful boundary. No
+reliability number is claimed for it.
+
+| Fault | Result with three domains | Still shared |
 | --- | --- | --- |
-| Comms MCU/GNSS/radio short | U1501 limits/latches; flight can cycle the comms branch in battery mode | Common buck must withstand the limited load |
-| Comms LDO output short | Comms lost; independently regulated services remain available | U1501 and common-buck transient behavior |
-| Service device short | Its local limiter acts; unaffected service branches stay available if selectivity holds | Service LDO/input limiter |
-| Service LDO/input trip | Flight and comms survive; flight can restart services using PD10 | Lost NOR tail and CAN/monitor outage are explicit |
-| Flight LDO/common source failure | Flight unavailable | Three domains are not three independent computers |
-| Regulator input-to-output failure | Its output group may be overvolted | Current limiting is not overvoltage isolation |
+| Short on comms MCU, GNSS or radio | U1501 limits and latches. Flight can cycle the comms branch on battery | The common buck must ride through the limited load |
+| Comms regulator output short | Comms lost; services keep their own regulator | U1501 and common-buck transients |
+| Short on one service device | Its local limiter acts; other service branches stay up if selectivity holds | Service regulator and input limiter |
+| Service regulator or input trip | Flight and comms survive; flight can restart services with PD10 | NOR tail and CAN / monitoring outage, stated openly |
+| Flight regulator or common source fails | Flight is down | Three domains are not three independent computers |
+| A regulator fails input-to-output | Its output group may see over-voltage | Current limiting does not stop over-voltage |
 
-One LDO was rejected because it shares every regulated-output failure. Two were
-rejected because a comms-regulator fault then loses logging/CAN. A separate buck
-per domain adds magnetics and source interactions without creating independent
-recovery; retain the common converter for this revision.
+Rejected: one regulator, because every output failure is shared. Two
+regulators, because a comms regulator fault then takes logging and CAN. A buck
+per domain, because it adds magnetics and source interactions without giving
+independent recovery. Keep the common buck for this revision.
 
-## Exact capture delta
+## Capture changes
 
-| Reference / net | Capture instruction |
+| Reference or net | Instruction |
 | --- | --- |
-| U1701/U1801/U1901 | Retain TPS7A9101DSKR ×3, their input/output caps, NR/SS and PG networks |
-| U1501 | Keep **before U1801**; IN=4V_PRE, OUT=COMMS_LDO_IN via existing link, EN=COMMS_BRANCH_EN |
-| R1504 | Change 36.5 kΩ to **66.5 kΩ, 1%**; calculated limit 351–449 mA |
-| U1601 | Keep **before U1901**; IN=4V_PRE, OUT=OPTIONAL_LDO_IN via existing link |
-| U1601 EN (pin 3) / R1602 | Disconnect EN and the top of its 100 kΩ pulldown from FLIGHT_3V3; connect both to new **SERVICE_POWER_EN** |
-| Flight PD10, pad 57 | GPIO SERVICE_POWER_EN, reset/off default low; replaces deleted servo3 PWM only |
-| R1701/R1801/R1901 | **31.9 kΩ, 0.1%**, each; lower resistors remain 10 kΩ, 0.1% → 3.352 V nominal on all three domains |
-| R1604 | Change 56.2 kΩ to **49.9 kΩ, 1%**; calculated limit 470–588 mA |
-| 3V3_OPTIONAL | Keep the net identifier during capture; use “services” in human-facing labels. It powers NOR/CAN/AUX/sounder, not comms |
-| Local enables/boundaries | Retain NOR/CAN/AUX limits and partial-power signal isolation; sensors direct from FLIGHT_3V3 (D-6.6) |
-| Source logic | Core enable from 4V_PRE presence (D-6.5); keep battery-priority comms enable |
+| U1701 / U1801 / U1901 | Keep TPS7A9101DSKR ×3 with their input and output caps, NR/SS and PG networks |
+| U1501 | Keep **before U1801**. IN = `4V_PRE`, OUT = `COMMS_LDO_IN` through the existing link, EN = `COMMS_BRANCH_EN` |
+| R1504 | 36.5 kΩ → **66.5 kΩ 1%**; calculated limit 351–449 mA |
+| U1601 | Keep **before U1901**. IN = `4V_PRE`, OUT = `OPTIONAL_LDO_IN` through the existing link |
+| U1601 EN (pin 3) / R1602 | Move EN and the top of its 100 kΩ pull-down from `FLIGHT_3V3` to the new **`SERVICE_POWER_EN`** |
+| Flight PD10, pad 57 | GPIO `SERVICE_POWER_EN`, low at reset and power-off. It only replaces the deleted servo 3 PWM |
+| R1701 / R1801 / R1901 | **31.9 kΩ 0.1%** each; lower legs stay 10 kΩ 0.1% → 3.352 V nominal on all three |
+| R1604 | 56.2 kΩ → **49.9 kΩ 1%**; calculated limit 470–588 mA |
+| `3V3_OPTIONAL` | Keep the net name for capture; call it "services" on labels. It feeds NOR, CAN, AUX and the sounder, not comms |
+| Local limits and boundaries | Keep NOR, CAN and AUX limits and their partial-power signal isolation. Sensors run straight from `FLIGHT_3V3` (D-6.6) |
+| Source logic | Core enabled by `4V_PRE` presence (D-6.5); keep the battery-priority comms enable |
 
-PD10 is the only new flight allocation. No output-authority or arm-sense pin is
-reused. The proposed flight CSV records this delta; original frozen input CSVs
-are unchanged until capture is authorized.
+PD10 is the only new flight pin. No output or arm-sense pin is reused. The
+proposed flight CSV records this; the frozen input CSVs stay as they are until
+capture is approved.
 
-**Restart behavior:** service supply starts off; flight enables it after basic
-clock/GPIO/watchdog setup. On a service fault, disable local service loads, bring
-SERVICE_POWER_EN low for an initial 100 ms service-recovery interval, then permit
-one restart with loads sequenced. **100 ms is an initial bench setting, not proof
-of a power reset.** Measure every affected rail below its peripheral reset
-threshold for the required interval, then measure restart. Set the released
-off-time from those results; it may need to increase. Until demonstrated, do
-not claim successful power-cycle recovery. A repeated fault latches the group unavailable for that power
-session. Do not reset flight to repair it. In an active mission, restart only
-when the mission's peer-loss contract permits the resulting outage; otherwise
-remain explicitly degraded. This is a bounded recovery capability, not an
-unconditional automatic retry loop or a command to an actuator.
+## Service restart
+
+- Services start off. Flight turns them on after basic clock, GPIO and watchdog
+  setup.
+- On a service fault: switch off local service loads, hold `SERVICE_POWER_EN`
+  low for 100 ms to start with, then allow **one** restart with loads sequenced.
+- 100 ms is a starting bench value, not proof that the rail resets. Measure every
+  affected rail below its peripherals' reset threshold for long enough, then
+  measure the restart. Set the off-time from those results; it may need to be
+  longer. Until that is shown, don't claim power-cycle recovery works.
+- A second fault latches the group off for that power session. Never reset
+  flight to fix it.
+- In a mission, restart only if the mission's peer-loss contract accepts the
+  outage. Otherwise stay degraded and say so.
+- This is a bounded recovery step. It is not an endless auto-retry and it never
+  commands an actuator.
 
 ## Voltage and headroom
 
-The relocated downstream comms switch is removed from the proposal. Raising the
-three LDO set points to 3.352 V gives common divider values and supervisor margin:
-±1% LDO accuracy, ±0.1% resistors and ±100 nA feedback current give **3.310–3.394 V**.
-Conservative TPS3808G33 release bound is **3.194 V** including threshold tolerance
-and hysteresis. Static margin is **116 mV**, before PCB/ripple/transients. Allocate
-50 mV for those healthy-operation effects; approximately 66 mV remains.
+The earlier relocated comms switch is dropped. Setting all three regulators to
+3.352 V gives one divider value and supervisor margin:
 
-Selected MCU, five sensors, NOR, GNSS, CAN and 3.3 V logic stay within their
-3.6 V operating ceilings; Wio allows 3.7 V. This does not allow startup overshoot
-past those ceilings. Reference/analog ratios and rail measurements use the actual
-set point. Preserve effective ≥10 µF at each TPS7A91 input/output after ceramic
-bias derating. At 300 mA a 135 mΩ upstream switch loses ~41 mV **at the LDO input**;
-check regulation against that input, not by subtracting it again from the output.
+- ±1% regulator, ±0.1% resistors, ±100 nA feedback current → **3.310–3.394 V**.
+- TPS3808G33 worst-case release, with threshold tolerance and hysteresis:
+  **3.194 V**.
+- Static margin **116 mV** before PCB drops, ripple and transients. Allow 50 mV
+  for those in healthy running; about 66 mV is left.
 
-Retain C1403 **PCW0J102MCO1GS**, 1000 µF/6.3 V, on the held flight input after
-LM73100. The old 0.98 ms example remains an illustration using 800 µF effective,
-0.25 V usable drop and 204 mA; recalculate actual usable drop with the new output
-set point and measured regulator headroom. No guaranteed final flash flush.
+The MCU, five sensors, NOR, GNSS, CAN and 3.3 V logic all stay under their 3.6 V
+limits; the Wio allows 3.7 V. Startup overshoot must still not pass those limits.
+Use the actual set point for reference and analog ratios and for rail
+measurements. Keep ≥10 µF effective at each TPS7A91 input and output after DC-bias
+derating. At 300 mA a 135 mΩ upstream switch drops about 41 mV **at the regulator
+input**; check regulation against that input, and don't subtract it again from
+the output.
+
+Keep C1403 **PCW0J102MCO1GS**, 1000 µF / 6.3 V, on the held flight input after
+the LM73100. The old 0.98 ms figure is only an example (800 µF effective,
+0.25 V usable drop, 204 mA). Recalculate the usable drop with the new set point
+and measured regulator headroom. A final flash flush is not guaranteed.
 
 ## Loads and limiter coordination
 
-These are **design allocations**, not a claim to have measured or summed every
-worst-case device current. Firmware/clock/mode choices must fit them.
+These are **allocations** that firmware, clocks and modes must fit. They are not
+measured or summed worst-case currents.
 
-| Domain | Continuous design ceiling | Allocation within ceiling |
+| Domain | Ceiling | Split |
 | --- | --- | --- |
-| Flight | 200 mA | MCU/support 150; sensors/boundaries 35; margin 15 |
-| Comms | 300 mA | MCU/support 100; RF 150; tracking GNSS 35; margin 15 |
-| Services | 200 mA | NOR write/boundary 65; CAN/boundary 80; AUX 25; sounder/support/margin 30 |
+| Flight | 200 mA | MCU and support 150; sensors 35; margin 15 |
+| Comms | 300 mA | MCU and support 100; RF 150; GNSS tracking 35; margin 15 |
+| Services | 200 mA | NOR writing 65; CAN 80; AUX 25; sounder, support and margin 30 |
 
-GNSS startup has a separate 100 mA allowance: start it with RF off. High-speed NOR
-read can exceed the 65 mA writing allocation; USB download disables CAN/sounder
-and uses the total-domain ceiling. No inference that average radio consumption
-covers transmit peaks. The 700 mA sum allocates **2.8 W at 4 V** before upstream
-losses; ideal LDO dissipation is ~0.454 W before switch drops.
+- GNSS startup gets a separate 100 mA allowance: start it with RF off.
+- Fast NOR reads can exceed the 65 mA writing allowance. USB download switches
+  off CAN and the sounder and uses the whole domain ceiling.
+- Average radio current says nothing about transmit peaks.
+- 700 mA total is **2.8 W at 4 V** before upstream losses. Ideal regulator
+  dissipation is about 0.454 W before switch drops.
 
-For selectivity, use a NOR fault at its 306 mA maximum plus **135 mA** of healthy
-services: ~441 mA versus service-input minimum 470 mA. CAN/AUX fault scenarios
-must replace that branch's healthy allocation rather than blindly adding the
-entire group again. An aggregate trip is still recoverable and does not remove
-comms. Even simultaneous comms/service input limits plus 200 mA flight are about
-**1.237 A** at the common converter; its 3 A nameplate is not a transient test.
+Selectivity check: a NOR fault at its 306 mA maximum plus **135 mA** of healthy
+services is about 441 mA, under the service input limiter's 470 mA minimum. For
+a CAN or AUX fault, swap that branch's healthy allocation for the fault current;
+don't add the whole group twice. A group trip is still recoverable and doesn't
+take comms. Even with comms and service limiters both at their limits plus
+200 mA for flight, the common buck sees about **1.237 A**. Its 3 A rating is not
+a transient test.
 
-## USB and endurance choices
+## USB and endurance
 
-Superseded 6 October (D-6.5): U4402 removed; U4401 limits at 387–491 mA from
-attach and USB-only starts the flight core and comms at reduced clock. Configured download: ≤300 mA VBUS, only reduced-clock flight/comms and NOR;
-no CAN/RF/GNSS/sounder. Sequence optional health measurements. Battery presence
-permits normal operation; USB alone never implies full-load operation. Suspend is not supported.
+USB (D-6.5, 6 October): U4402 is removed. U4401 limits at 387–491 mA from
+attach. USB alone starts the flight core and comms at reduced clock. During a
+configured download: ≤300 mA from VBUS, only reduced-clock flight and comms plus
+NOR; no CAN, RF, GNSS or sounder. Run optional health measurements one after
+another. Battery presence allows normal running; USB alone never means full
+load. USB suspend is not supported.
 
-**Kármán overlay (D-6.8): size the reference AV pack around 2S, 8 Ah nominal.** The workhorse pack comes from measured loads. Required usable energy is
-at least **30 Wh at the installed temperature/load/UVLO**, not nameplate capacity.
-Conservative budget: 8 h at 2.8 W/85% conversion plus 0.10 W upstream overhead,
-then 4 h at 0.4 W/75% plus that overhead = **29.69 Wh**. 7.4 V × 8 Ah × a
-provisional 65% usable-energy allowance gives 38.48 Wh. This allowance is a design
-assumption to validate, not a cold/age guarantee. Actuator/output energy is extra
-and cannot consume this logic/recovery allocation without recomputing it.
+**Kármán overlay (D-6.8): the reference AV pack is 2S, 8 Ah nominal.** The
+workhorse pack is sized from measured loads instead.
 
-Reference pack envelope does not require a particular SKU or brand for capture:
-2S lithium chemistry, 8.4 V maximum charge, connector/polarity and the ≥30 Wh
-usable requirement are the electrical interface. A smaller pack may support a
-shorter declared mission; it does not meet 8 h + 4 h by implication. No purchase
-or pack construction is authorized by this recommendation.
+- The overlay needs at least **30 Wh usable** at the installed temperature, load
+  and UVLO, not nameplate.
+- Budget: 8 h at 2.8 W through 85% conversion plus 0.10 W upstream overhead,
+  then 4 h at 0.4 W through 75% plus the same overhead = **29.69 Wh**.
+- 7.4 V × 8 Ah × a provisional 65% usable allowance = 38.48 Wh. That 65% is an
+  assumption to test, not a cold or ageing guarantee.
+- Actuator and output energy is extra. It can't come out of this logic and
+  recovery budget without redoing the sum.
 
-Sources: [preserved netlist](../../../hardware/croi2/output/full-netlist.xml),
+The pack interface is electrical, not a brand or SKU: 2S lithium, 8.4 V maximum
+charge, connector and polarity, and ≥30 Wh usable. A smaller pack can fly a
+shorter declared mission; it doesn't meet 8 h + 4 h by default. Nothing here
+approves buying or building a pack.
+
+Sources: [netlist](../../../hardware/croi2/output/full-netlist.xml),
 [TPS2553](https://www.ti.com/lit/ds/symlink/tps2553.pdf),
 [TPS7A91](https://www.ti.com/lit/ds/symlink/tps7a91.pdf),
 [TPS3808](https://www.ti.com/lit/ds/symlink/tps3808.pdf),
-[accepted platform envelope](../../archive/karman-line-mission-hardening-report.md#accepted-provisional-platform-envelope),
-[reproducible calculations](../../calculations/component-proposal-checks.py).
+[platform envelope](../../archive/karman-line-mission-hardening-report.md#accepted-provisional-platform-envelope),
+[calculations](../../calculations/component-proposal-checks.py).

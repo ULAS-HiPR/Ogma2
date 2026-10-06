@@ -1,135 +1,105 @@
-# Sensors and the flight record
+# 07 Sensors and recording
 
-**22 September · proposal, amended by [D-6.6, D-6.9](../../decisions.md) · retain the five sensors and 256 MiB NOR.**
-
-## Justification and deeper detail
-
-| Question | Follow through | Source status |
-| --- | --- | --- |
-| What is the actual commit/preparation contract? | [Sector-aligned format and capacity justification](justifications/recording-and-service.md) | Current 15-page + footer proposal supersedes the 16-page candidate |
-| Why these five sensors? | [Device-by-device selection rationale](../archive/architecture/implementation-reference/07-sensors-logging.md#the-selection-reasoning-device-by-device) | Ranges, alternatives and manufacturer sources |
-| Why NOR rather than SD? | [Capacity and medium comparison](../archive/architecture/implementation-reference/07-sensors-logging.md#why-256-mib-nor-rather-than-smaller-flash-or-sd) | Earlier storage research |
-| What supports rates and capacity? | [Power, recording and CAN audit](../archive/power-recording-can-audit-2026-09-11.md); [current proposal calculations](../calculations/component-proposal-checks.py) | Baseline ledger plus current additions |
+Five sensors on their own buses, powered straight from FLIGHT_3V3, and a
+256 MiB NOR flash owned by the flight MCU. Full-rate recording starts at launch
+detect, with a RAM pre-trigger ([D-6.6, D-6.9](../../decisions.md)).
 
 ```mermaid
-flowchart LR
-  ST["LSM6DSV16XTR
-960 Hz · low-g / gyro"] -->|"SPI1 + DRDY"| F["Flight H563VIT6"]
+flowchart TB
+  P["FLIGHT_3V3 · a 0 Ω link per sensor, R3101–R3501"] --> ST & TD & HG & BP & TE
+  ST["LSM6DSV16X
+960 Hz · low-g + gyro"] -->|"SPI1 + DRDY"| F["Flight MCU"]
   TD["ICM-42688-P
-1 kHz · low-g / gyro"] -->|"SPI2 + DRDY"| F
-  HG["ADXL375BCCZ
+1 kHz · low-g + gyro"] -->|"SPI2 + DRDY"| F
+  HG["ADXL375
 800 Hz · high-g"] -->|"SPI3 + INT1"| F
   BP["BMP390
-50 Hz target"] -->|"I2C1"| F
-  TE["MS560702BA03-50
-50 Hz compensated target"] -->|"I2C2"| F
-  F --> Q["128 KiB writer staging
-existing allocation"]
-  Q -->|"quad SPI · grouped commits"| N["MX66L2G45GMI00
-256 MiB NOR"]
+50 Hz"] -->|"I²C1"| F
+  TE["MS5607
+50 Hz"] -->|"I²C2"| F
   C["Comms diagnostics
-proposed cap 1 KiB/s"] --> F
-  F -->|"reduced telemetry"| C
+≤1 KiB/s"] --> F
+  F --> Q["128 KiB staging in RAM"]
+  Q -->|"quad SPI · sector commits"| N["MX66L2G45G
+256 MiB NOR"]
 ```
 
-Rates are design allocations, not measured delivery. Each stream has its own
-sample timestamp, axis transform, validity and clipping state.
+Rates are allocations, not measurements. Every stream keeps its own timestamp,
+axis transform, validity and clipping flag.
 
-| Part / bus | Why this part remains | Useful bound |
+| Part / bus | Why | Limit |
 | --- | --- | --- |
-| LSM6DSV16XTR / SPI1 | Low-g acceleration and higher-range gyro | ±16 g; up to ±4000°/s with required configuration |
-| ICM-42688-P / SPI2 | Dissimilar second implementation | ±16 g, ±2000°/s; above that only ST may remain valid |
-| ADXL375BCCZ / SPI3 | Preserve acceleration when both IMUs clip | Nominal ±200 g; specified minimum ±180 g |
-| BMP390 / I2C1 | Compact lower-flight pressure measurement | 300–1250 hPa specified range |
-| MS560702BA03-50 / I2C2 | Independent pressure conversion/compensation | 300–1100 mbar full-accuracy region; extended conversion range is not equal accuracy |
-| MX66L2G45GMI00 / quad SPI | Capacity without removable-media socket | 2 Gbit = 256 MiB; program stalls still need buffering |
+| LSM6DSV16XTR / SPI1 | Low-g and high-range gyro | ±16 g; up to ±4000°/s configured |
+| ICM-42688-P / SPI2 | A second, different implementation | ±16 g, ±2000°/s; above that only the ST stays valid |
+| ADXL375BCCZ / SPI3 | Acceleration when both IMUs clip | ±200 g nominal, ±180 g minimum |
+| BMP390 / I²C1 | Compact pressure for lower flight | 300–1250 hPa; at 9 km (≈308 hPa) it's at its floor |
+| MS560702BA03-50 / I²C2 | Independent pressure conversion | Best accuracy 300–1100 mbar; extended range is less accurate |
+| MX66L2G45GMI00 / quad SPI | Capacity without a removable card | 256 MiB; program stalls need the RAM buffer |
 
-Diversity costs five drivers and more interfaces. It buys range and independent
-observations, not a two-sensor vote that identifies truth. Shared mounting,
-upstream power and blocked pressure vent remain common faults.
+Two of each sensor type gives range and independent observations, not a vote
+that finds the truth. Shared mounting, power and a blocked vent stay common faults.
 
-## Power and signal boundaries
+**Power (D-6.6):** no per-sensor switches or isolators. They guarded a rare
+sensor short or latch-up with 13 ICs, each one a new way to lose a sensor.
+Firmware recovers a hung I²C bus by clocking SCL and resets a sensor with its
+soft-reset command. The NOR keeps its own limiter (U3601) and boundaries.
 
-```mermaid
-flowchart LR
-  F["FLIGHT_3V3"] -->|"0 Ω link per sensor
-R3101–R3501"| S["Five sensors"]
-  M["Flight MCU signals"] <-->|"SPI with 22 Ω damping
-I2C pulled up to FLIGHT_3V3"| S
-  P["3V3_OPTIONAL · services"] --> NL["TPS2553DBVR-1 · U3601"]
-  NL --> N["NOR supply + TMUX1511 boundaries"]
-```
-
-Sensors run directly from FLIGHT_3V3 (D-6.6). No per-sensor switches or
-isolators: they guarded a rare sensor short or latch-up with 13 ICs, each a new
-way to lose a sensor. Firmware recovers a hung I²C bus by clocking SCL and
-resets a misbehaving sensor with its soft-reset command.
-
-Exact flight buses: ST PA5/6/7; TDK PB13/14/15; ADXL PC10/11/12;
-BMP PB6/7; TE PB10/PB3. NOR: PB2 clock, PE11 select,
-PD11 IO0, PD12 IO1, **PE2 IO2**, PD13 IO3. Control/interrupts remain in the
-[proposed pin CSV](proposed-flight-pinout.csv).
+**Pins:** ST PA5/PA6/PA7; TDK PB13/PB14/PB15; ADXL PC10/PC11/PC12; BMP PB6/PB7;
+TE PB10/PB3. NOR: PB2 clock, PE11 select, PD11 IO0, PD12 IO1, PE2 IO2, PD13 IO3.
+Interrupts: [flight pin map](proposed-flight-pinout.csv).
 
 ## Recording
 
-**Full rate from launch detect, with a RAM pre-trigger (D-6.9).** Log at low
-rate on the pad. Keep about 1 s of full-rate samples, or about 10 s decimated,
-in a RAM ring and commit it at launch detect. Continue full rate to LANDED plus
-a configured tail. No separate comms flash: forward bounded diagnostics
-to the existing recorder, with source/time/reset identity and drop counters.
+- On the pad: log at low rate.
+- Keep about 1 s of full-rate samples, or about 10 s decimated, in a RAM ring;
+  commit it at launch detect.
+- Full rate from launch detect to LANDED plus a configured tail.
+- Erase ahead of the write pointer is allowed until launch detect, never after.
+- Comms diagnostics go to the same NOR over the UART, with source, time, reset
+  identity and drop counters. No second flash on comms.
 
-| Failure | Shared flight NOR proposal | Extra comms flash would change |
+| If this fails | Shared NOR | A comms flash would add |
 | --- | --- | --- |
-| Radio link lost | Keep comms evidence over internal UART | No essential gain for this case |
-| Comms resets | Flight records gap/reset; unsent tail lost | Can retain earlier local commits |
-| Flight MCU/UART fails | New comms evidence cannot be stored | Independent comms recording while its supply survives |
-| Whole board power loss | Prior commits retained; tail uncertain | Still shares power loss |
+| Radio link | Comms evidence still reaches NOR over the UART | Nothing |
+| Comms resets | Flight records the gap; unsent tail lost | Earlier comms commits |
+| Flight MCU or UART | New comms evidence can't be stored | Comms recording while its supply lasts |
+| Whole board power | Earlier commits kept; tail uncertain | Nothing; same power |
 
-**Choice:** accept the flight/UART dependency for diagnostics and reuse NOR.
-Add separate comms storage only for an explicit requirement to record through
-that failure; it costs driver, pins, supply, format and readout work.
+Add a comms flash only for a real need to record through a flight-MCU failure.
 
-| Budget | Calculated result |
+**Format:** one commit = 15 data pages + 1 footer = one 4 KiB erase sector.
+Program the footer last; accept only a valid CRC, length, epoch and sequence;
+drop torn tails. [Footer and identity rules](justifications/recording-and-service.md#use-one-erase-sector-per-commit).
+
+| Budget (calculated) | Value |
 | --- | --- |
-| Samples / additional diagnostics | 96,672 B/s / ≤1024 B/s |
-| 128 KiB writer staging at combined rate | 1.342 s when empty |
-| Revised mission ledger, including diagnostics and ten-second lead-in | 183,407,936 B |
-| Conservative sector-rounded storage, charging footer overhead again | **195,637,248 B** |
-| Spare in 192 MiB recording region | **5,689,344 B**; final 64 MiB remains reserved |
+| Sensor data / diagnostics | 96,672 B/s / ≤1,024 B/s |
+| 128 KiB staging at that rate | 1.342 s |
+| Kármán mission ledger with 10 s lead-in | 183,407,936 B |
+| Sector-rounded, footers charged again | 195,637,248 B |
+| Spare in the 192 MiB region | 5,689,344 B; last 64 MiB reserved |
+| Throughput target, measured with acquisition running | ≥125 kB/s (desk bound 160 kB/s at 1.5 ms per page) |
 
-**Commit unit: 15 data pages + one footer = one 4 KiB erase sector.** Program
-footer last; accept only valid CRC/length/epoch/sequence, discard torn tails.
-This replaces the 16-page candidate that crossed erase boundaries. Full footer
-layout, timestamp/identity rules and byte accounting are in the
-[recording specification](justifications/recording-and-service.md#use-one-erase-sector-per-commit).
+The 192 MiB window and 30-minute full-rate figure are the Kármán overlay
+(D-6.8); the workhorse window comes from the vehicle's flight time. Preparing
+all 192 MiB with 64 KiB erases can take 102.4 minutes at the datasheet maximum:
+a service job, never a boot step. Report recorder-ready only with a full
+mission window erased.
 
-Erase ahead of the write pointer is allowed until launch detect and never
-after. Full preparation of 192 MiB with 64 KiB erases can take **102.4 minutes
-at the published maximum**; it is a service operation, never a boot
-prerequisite. Report recorder-ready only with a full mission window erased. The
-192 MiB window and the 30-minute full-rate figure belong to the Kármán overlay
-(D-6.8); the workhorse window comes from the vehicle's flight time.
+## Capture and placement
 
-Proposed measured useful throughput target: **≥125 kB/s**, concurrently with
-acquisition and CRC/commit work. The 1.5 ms maximum program-time calculation gives
-160 kB/s before overhead; that is a desk bound, not a passed performance test.
-[Source revisions and limitations](justifications/recording-and-service.md#evidence).
+Keep the sensors and NOR; remove the per-sensor switches and isolators in the
+[capture delta](schematic-capture-spec.md#burrito-changes). The comms
+regulator split keeps NOR powered through a comms-LDO fault; a services fault
+still drops it. Hold-up protects flight execution, not a last flash commit.
 
-## Schematic handoff
+Mounting, axis transforms, venting and thermal placement:
+[placement notes](justifications/interfaces-and-installation.md#placement-handoff).
+Both low-g and both pressure channels can be unusable at once; diversity isn't
+full-envelope coverage.
 
-Retain the sensors and NOR hardware; remove the per-sensor switches and
-isolators listed in the [capture delta](schematic-capture-spec.md#burrito-capture-delta).
-NOR keeps its limiter and boundaries. The
-separate comms regulator now preserves NOR supply through a comms-LDO fault;
-a service-regulator fault still removes it. Hold-up protects flight execution,
-not a final flash commit.
-
-Sensor mounting/axis transforms, venting and thermal placement follow the
-[placement handoff](justifications/interfaces-and-installation.md#placement-handoff).
-Firmware ranges/rates must account for conversion/filter delay, clipping and
-freshness. Both low-g and both pressure channels can become unusable together;
-component diversity is not full-envelope coverage.
-
-Sources: [device/configuration rationale](../archive/architecture/implementation-reference/07-sensors-logging.md),
-[retained configuration review](../archive/sensor-configuration-review-2026-09-07.md),
-[current format/calculation sources](justifications/recording-and-service.md).
+Sources: [sensor selection](../archive/architecture/implementation-reference/07-sensors-logging.md) ·
+[NOR versus SD](../archive/architecture/implementation-reference/07-sensors-logging.md#why-256-mib-nor-rather-than-smaller-flash-or-sd) ·
+[configuration review](../archive/sensor-configuration-review-2026-09-07.md) ·
+[recording audit](../archive/power-recording-can-audit-2026-09-11.md) ·
+[proposal checks](../calculations/component-proposal-checks.py)

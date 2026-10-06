@@ -7,23 +7,25 @@ physical arm switch. The igniter return goes to ground. Staging stays
 unpopulated until a multistage flight is scheduled.
 
 ```mermaid
-flowchart LR
+flowchart TB
   B["Battery side · ENERGY_TAP
 before U101's switch"] --> F["F6101 pyro fuse
 ≈4 A fast-acting"]
-  F --> J["J6101 · Micro-Fit 2-contact
+  F --> J["J6101 · 2-contact, keyed apart from J701
 to external arm switch"]
   J --> A["RECOVERY_ARMED_VBAT"]
+  A -.-> S["R6101/R6102 → U6103
+RECOVERY_ARM_SENSE (PC8)"]
   A --> L["R6310 / R6410 links
 DNP until values close"]
   L --> H1["U6304 TPS1H100 · ≈2.0 A limit
 IN = PYRO1_FIRE (PE7)"]
   L --> H2["U6404 TPS1H100 · ≈2.0 A limit
 IN = PYRO2_FIRE (PE9)"]
-  H1 --> O1["J6601.1 → igniter → J6601.4 → GND"]
-  H2 --> O2["J6601.2 → igniter → J6601.5 → GND"]
-  A -.-> S["R6101/R6102 → U6103
-RECOVERY_ARM_SENSE (PC8)"]
+  H1 --> O1["J6601.1 → igniter
+→ J6601.4 → GND"]
+  H2 --> O2["J6601.2 → igniter
+→ J6601.5 → GND"]
 ```
 
 Logic power never feeds these outputs. A fault on an output can blow its fuse
@@ -82,6 +84,6 @@ multistage flight is scheduled; the reset inhibit in the
 - Short an output during a timed pulse: FLIGHT_3V3 and U101 stay up; the switch limits.
 - Measure continuity current against the igniter's no-fire figure.
 
-[Capture delta](schematic-capture-spec.md#burrito-capture-delta) ·
+[Capture delta](schematic-capture-spec.md#burrito-changes) ·
 [Connectors and arming](09-connectors-arming.md) ·
 [Earlier circuit record](../archive/architecture/implementation-reference/03-energetic-outputs.md)

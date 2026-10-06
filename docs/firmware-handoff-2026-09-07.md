@@ -20,9 +20,11 @@ the inspected review branch; this document does not prove driver completion.
 
 ## 6 October changes that affect firmware
 
+- Two processors, decided (D-6.12): flight and comms, two firmware images. Flight
+  must complete the mission with comms held in reset.
 - Both MCUs are STM32H563: Cortex-M33 with single-precision FPU. Build flags
   `-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard` hold for either comms package.
-- Flight pins ([capture delta](architecture/schematic-capture-spec.md#burrito-capture-delta)):
+- Flight pins ([capture delta](architecture/schematic-capture-spec.md#burrito-changes)):
   PE5 → `FC_POWER_HOLD` (assert at launch detect, release after LANDED);
   PE7/PE9 → `PYRO1_FIRE`/`PYRO2_FIRE` straight to the TPS1H100s; PE6, PA8, PA9,
   PA10, PE8, PE10, PE13, PE14 spare; PD14/PD15 staging latch DNP.

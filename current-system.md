@@ -20,8 +20,9 @@ Start with the [system tour](docs/architecture/system-tour.md).
 
 ## Rules that constrain the design
 
-- Two MCUs separate timing from communications; they are not redundant. The
-  flight MCU must complete the mission with the comms MCU held in reset.
+- Two processors, decided (D-6.12): flight and comms. They separate timing from
+  communications; they are not redundant. The flight MCU must complete the
+  mission with the comms MCU held in reset.
 - Only the flight MCU commands recovery and staging outputs. Radio, USB and CAN
   cannot.
 - Pyro energy passes an external physical arm switch (J6101). Pyro and servo
@@ -59,7 +60,7 @@ enables. Charging uses external balance chargers.
 
 | Block | Selection |
 | --- | --- |
-| MCUs | STM32H563VIT6 flight; comms H563VIT6 in CAD, H563RIT6 proposed (D1) |
+| MCUs | Two, decided (D-6.12). STM32H563VIT6 flight; comms H563VIT6 in CAD, H563RIT6 proposed (D1) |
 | Low-g IMUs | ST LSM6DSV16XTR, TDK ICM-42688-P |
 | High-g | ADI ADXL375BCCZ, ±200 g nominal |
 | Pressure | Bosch BMP390, TE MS560702BA03-50, separate buses |
@@ -77,7 +78,7 @@ enables. Charging uses external balance chargers.
 | --- | --- |
 | Croí ↔ Foinse | Samtec MPT/MPS-08-01-01-L-RA-SD: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault, 8 `CROI_POWER_HOLD` |
 | Standalone 2S | Molex Nano-Fit 1053111102; footprint still to draw |
-| Pyro arm J6101 | Micro-Fit 430450200, to the external arm switch |
+| Pyro arm J6101 | 2-contact, to the external arm switch. Must not mate Churro J701 (Micro-Fit 430450200, raw PROP) or the GH enable loops; part chosen at capture |
 | Outputs J6601 | Micro-Fit 430450600: 1/2 high sides, 4/5 returns, 3/6 unwired |
 | Servos J6602 | Micro-Fit 430451000: PWR/PWM/GND on 1/2/3 and 4/5/6 |
 | CAN J501 | JST GH: 1 CAN H, 2 CAN L, 3 reference; no power |

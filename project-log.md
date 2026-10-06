@@ -3210,3 +3210,28 @@ snapshot and older log entries keep their original paths. README, the docs
 index and the chapter index now start at the system tour and `decisions.md`.
 The old budget script moved to `docs/archive/tools/`. No content in archived
 files changed beyond link paths.
+
+
+## 6 October 2026 — two processors decided; live docs rewritten for reading
+
+Seán decided to keep two processors, flight and comms (D-6.12). Recorded in
+`decisions.md`, `current-system.md`, the processor chapter and the firmware
+handoff; the "one MCU or two" open question is closed.
+
+Found and fixed an error from the earlier 6 October commit: J6101, the pyro arm
+connector, had been specified as Micro-Fit 430450200, the same part as Churro
+J701 (raw 6S PROP output). A crossed harness could then put propulsion voltage on
+the pyro rail. J6101 is now a 2-contact connector that must not mate J701 or the
+GH enable loops, part chosen at capture; added to D-6.1's checks and the open
+arm-switch row.
+
+Rewrote the live architecture chapters, system tour, capture specification,
+justifications, the four interface contracts and the hardware README in plain
+language. Facts, numbers and decisions are unchanged except where a decided row
+superseded older text (power-contract numbers table, servo count, 192 MiB window
+now the Kármán overlay). Every Mermaid diagram rendered with mermaid-cli
+(17 diagrams); long left-to-right chains were turned top-to-bottom so they stay
+legible at page width. The boundary contract changed wording only; authority
+and content are unchanged. Link and anchor checks
+clean; proposal checks, reset replay (12 tests), MCU pin audit and both board
+checkers pass. CAD unchanged.

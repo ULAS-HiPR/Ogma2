@@ -1,305 +1,298 @@
 # Ogma 2 power contract
 
-**Status (6 Oct 2026):** controlling contract. Electrical details describe the
-8 September CAD; decided changes are in [decisions.md](../decisions.md) and the
-[capture delta](../docs/architecture/schematic-capture-spec.md). Capture waits
-for Seán's go-ahead.
+**Status, 6 October 2026: controlling contract.** Electrical detail describes
+the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and
+the [capture specification](../docs/architecture/schematic-capture-spec.md).
+Capture waits for Seán's go-ahead. No hardware has run, no part has been bought
+and nothing is released for flight.
 
-## 8 September source-enable implementation
-
-Authorised change, installed in the checked native CAD draft; see the
-[change record](../docs/archive/installation-change-record-2026-09-08.md),
-[current system](../current-system.md) and project log. Existing battery
-limits, autonomous protection, source exclusion, MCU pins and physical arming
-requirements are unchanged.
-
-| Board / connector | Pin 1 | Pin 2 | Operation |
-| --- | --- | --- | --- |
-| Standalone Croí J103 | Bounded 3.0 V source bias | BAT_SHDN_N | Close maintained external contact to enable |
-| Foinse J103 | Avionics bounded 3.0 V bias | AV_SHDN_N | Close avionics pole to enable |
-| Foinse J104 | Propulsion bounded 3.0 V bias | PROP_SHDN_N | Close separate propulsion pole to enable |
-
-All use vertical `BM02B-GHS-TBT(LF)(SN)` JST GH and `GHR-02V-S`, with the
-actual wire-gauge-matched crimp. These carry control current only. Foinse-fed
-Croí uses a deliberate retained closed enable plug at Croí J103. One maintained
-two-pole switch can control Foinse; the two positive bias conductors remain
-separate. The thermistor connector is a different four-contact harness.
-
-Each source independently supplies BAS116 → 4.7k + 4.7k → LM4040 3.0 V
-shunt. The bias is clamped before the cable. SHDN has 22.1k to GND and 100nF.
-Open contact/unplug defaults to electronic OFF without MCU, I²C or AUX power.
-Croí R1006 and Foinse R1006/R2006 become those 22.1k pull-downs; the source
-protection MODE/UVLO/OVP/limit/slew networks are otherwise unchanged.
-
-OFF does not disconnect the pack. Entry, bias and sensing remain live; USB may
-still supply Croí service logic. Reference bias alone is approximately 0.5 mA
-at nominal 2S and 2.3 mA at nominal 6S, plus existing leakage/sensing/shutdown
-currents. These upstream currents are outside the discharge shunts. Unplug
-packs for storage. Power indication and source enable never establish disarm.
-
-The source enable is not an energy break. Pyro energy is broken by the J6101
-arm switch (D-6.1); charging exclusion remains a separate assembly. A shorted
-contact forces enable; clamp-open or a semiconductor fault is not contained by
-this switch circuit. Cold/minimum-pack diode headroom, assembled thermal/surge
-response, cable ESD, open-wire leakage and retained-contact vibration/bounce
-need tests. The 100nF filter is not a debounce guarantee. SHDN cycling resets
-a latched eFuse fault and may cause repeated board resets. From 6 October
-(D-6.3) firmware holds SHDN high in flight through `FC_POWER_HOLD` (Croí
-directly, Churro AV over Samtec pin 8), and U101/U1001 auto-retry.
-
-The 6 A Croí/avionics, roughly 3 A propulsion and 2 A shared-servo starting
-limits are unchanged, provisional and not load qualification. The new switch
-does not expand the declared battery range or permit depleted-pack boost.
-
-The sections below retain prior accepted rationale and open verification work;
-this dated implementation controls earlier unspecified-switch wording.
-
-7 September third-servo revision: Croí now has three battery-derived servo
-channels behind the existing common protected switch. The nominal shared 2 A
-starting limit is unchanged and is not proof of three-servo/grid-fin capacity.
-Selected actuator voltage, simultaneous/stall demand, regeneration and upstream
-protection selectivity must close before the existing DNP energy link is released.
-No Foinse power-boundary change is implied. See the
-[accepted revision](../docs/archive/connector-servo-readiness-revision-2026-09-07.md).
-
-
-7 September sensing revision: Croí owns the common protected AV discharge shunt
-and INA228 0x40, including standalone operation; Foinse retains propulsion INA
-0x41 and ADS1115 0x48. The Samtec pinout and power authority are unchanged.
-FOINSE_RETURN_EN must also enable Croí-local monitoring without Foinse present.
-No duplicate Foinse AV shunt remains. Croí logic takeoffs follow its shunt. Pyro and
-servo energy leave before U101 through their own fuses and bypass it (D-6.1);
-per-channel current comes from the TPS1H100 sense. USB/charging/propulsion remain
-outside the measured path. Monitoring never enables autonomous protection.
-See [the revision contract](../docs/archive/sensing-indication-time-review-2026-09-07.md).
-
-## Accepted implementation update — 7 September
-
-The [batch acceptance](../docs/archive/architecture-acceptance-2026-09-07.md) and its
-linked integrated review supersede the earlier candidate/open wording below.
-Use 2S, TPS2121 battery/USB logic-source selection, TPSM63603RDHR at 4.0 V,
-three TPS7A9101DSKR 3.3 V domains and a TPS70933 bootstrap supply. No logic boost
-or VIOC loop is selected. LM73100 precedes the held core-LDO input; the
-core-LDO input/output short remains explicitly uncontained. Hold-up is about
-1 ms at the estimated 204 mA and effective 800 µF, not an outage UPS or a test.
-
-USB enters the logic source mux only, with pre-enumeration/configured current
-limits and battery-independent bootstrap as detailed in the accepted review.
-It never powers the energetic/servo source or charges the battery. Battery
-validity keeps essential power independent of the comms processor.
-
-Foinse uses autonomous TPS26630/CSD18540 source protection, a protected
-auxiliary monitor return, INA228 and ADS1115 monitoring. One protected Croí
-feed has a provisional 6 A aggregate ceiling. Liquid propulsion has a separate
-6S pack/domain, not a load added to Croí's logic rail. External matched balance
-chargers provide charging; physical charge/arm exclusion remains required.
-Each Samtec ground path must tolerate the full 6 A alternate fault return.
-
-All detailed branch limits, energy estimates and rail-sequencing qualifications
-in the accepted power appendix remain. Separate power coupons are no longer
-a pre-order requirement: run the defined bounded tests on the first full PCBA.
-The sections below retain earlier rationale and test requirements; they do not
-reopen selected parts or restore the old approximately 3.8 V placeholder.
-
-Authority: [current system](../current-system.md),
+This is a contract, not a finished schematic or a qualification result. See
+also the [current system](../current-system.md), the
 [flight fault contract](flight-fault-contract.md) and the
-[Ogma/Foinse/propulsion boundary](ogma-foinse-propulsion-boundary.md).
-This is an initial contract, not a completed schematic or qualification result.
+[Ogma / Foinse / propulsion boundary](ogma-foinse-propulsion-boundary.md).
+
+## The power chain
+
+Accepted 7 September ([batch acceptance](../docs/archive/architecture-acceptance-2026-09-07.md)),
+amended 6 October:
+
+- 2S source → TPS2121 battery/USB selection for logic → TPSM63603RDHR buck at
+  4.0 V → three TPS7A9101DSKR regulators (flight, comms, services) at 3.352 V
+  proposed. A TPS70933 bootstrap supply. No logic boost and no VIOC loop.
+- The LM73100 sits in front of the held flight-core regulator input. A short
+  from that regulator's input to output is not contained, and that's stated
+  openly.
+- Hold-up: C1403 1000 µF gives about 2 ms. It covers brief dips, not outages,
+  and it isn't a test result. (The 7 September figure was about 1 ms at 204 mA
+  and 800 µF effective.)
+- USB enters the logic mux only. U4401 limits it to 387–491 mA from attach
+  (D-6.5). USB never powers pyro or servo energy and never charges the battery.
+- Battery validity keeps essential power independent of the comms processor.
+- Pyro and servo energy leave before U101, each through its own fuse, and
+  bypass it (D-6.1). Pyro energy then passes the J6101 arm switch.
+
+Foinse (Churro):
+
+- Autonomous TPS26630 / CSD18540 source protection, a protected auxiliary
+  monitor return, INA228 and ADS1115 monitoring.
+- One protected Croí feed with a provisional 6 A aggregate ceiling.
+- Liquid propulsion has its own 6S pack and domain. It is not a load on Croí's
+  logic rail.
+- External matched balance chargers do the charging. Physical charge/arm
+  exclusion is still required.
+- Each Samtec ground path must carry the full 6 A as an alternate fault return.
+
+All branch limits, energy estimates and rail-sequencing requirements in the
+accepted power appendix stand. Separate power coupons before ordering are no
+longer required: run the bounded tests on the first full PCBA. Nothing here
+reopens the selected parts or brings back the old ≈3.8 V intermediate.
 
 ## Accepted decisions
 
-1. Foinse's protected source path starts and continues basic power delivery
-   without Ogma software or returned 3.3 V. Retain the protected return for
-   bounded low-power devices. If their actual dependencies cannot meet this
-   cleanly, bring back local Foinse regulation for review; do not hide a circular
-   startup or protection dependency. Foinse has no MCU or firmware.
-2. Communications/RF, bulk storage and the Foinse auxiliary return have bounded
-   electrical branches. Their declared faults must not remove essential flight
-   power or execution. This includes signal back-power and bus clamps, not only
-   current limiting. One regulator per chip is not required.
-3. Retain switching preregulator followed by a low-noise LDO as the baseline
-   logic conversion chain. Direct-buck logic power is a comparison/revisit
-   option, not the default. The earlier approximately 3.8 V intermediate value
-   is provisional; exact voltage follows headroom, noise and thermal evidence.
-4. Support USB-only configuration, readback and log extraction without any USB
-   path capable of powering pyro or servo loads. Battery plus USB must not
-   backfeed or unintentionally charge either source. Charging remains within
-   Foinse's explicitly designed service path; standalone battery servicing must
-   not introduce an implicit Ogma charger.
-5. Allocate core hold-up to bounded brief interruptions, not indefinite
-   continued flight after a broken source connection. No additional battery or
-   large supercapacitor is selected by default. Budget measured modes against
-   8 hours operating plus 4 hours reduced-duty recovery. Longer outages use
-   EX-01's restart or primary-unavailable policy.
+1. **Foinse powers up without Ogma.** Its protected source path starts and keeps
+   delivering basic power without Ogma software or the returned 3.3 V. The
+   protected return stays for bounded low-power devices. If their real
+   dependencies can't meet this cleanly, bring back local Foinse regulation for
+   review rather than hiding a circular startup or protection dependency. Foinse
+   has no MCU or firmware.
+2. **Bounded branches.** Comms and RF, bulk storage and the Foinse auxiliary
+   return each have a bounded electrical branch. Their declared faults must not
+   remove essential flight power or execution. That covers signal back-power and
+   bus clamps, not just current limits. One regulator per chip is not required.
+3. **Buck then LDO.** A switching preregulator followed by a low-noise LDO is the
+   baseline. Direct-buck logic power is a comparison option, not the default.
+   The exact intermediate voltage follows headroom, noise and thermal evidence.
+4. **USB is service only.** USB alone supports configuration, readback and log
+   download, with no USB path able to power pyro or servo loads. Battery plus USB
+   must not backfeed or charge either source. Charging stays in Foinse's designed
+   service path; standalone servicing must not add an implicit Ogma charger.
+5. **Hold-up is for brief dips.** Core hold-up covers short interruptions, not
+   flying on after a broken source connection. No extra battery or large
+   supercapacitor by default. Longer outages follow EX-01's restart or
+   primary-unavailable policy. Endurance: the workhorse is sized from measured
+   loads and the vehicle timeline; 8 h operating plus 4 h reduced-duty recovery
+   is the Kármán overlay (D-6.8).
 
-Servo/pyro power and return paths stay outside the logic supply path. An accepted
-branch-containment requirement is not proof that a particular shared regulator,
-fuse, switch or battery protection can satisfy it. The common source, core
-conversion chain and PCB remain common failure points.
+Servo and pyro power and returns stay out of the logic supply path. Accepting a
+containment requirement doesn't prove a given regulator, fuse, switch or battery
+protection meets it. The common source, the core conversion chain and the PCB
+remain common failure points.
+
+## Source enables (J103 and J104)
+
+Installed in the 8 September native CAD
+([change record](../docs/archive/installation-change-record-2026-09-08.md)).
+Battery limits, autonomous protection, source exclusion, MCU pins and physical
+arming requirements are unchanged by it.
+
+| Board / connector | Pin 1 | Pin 2 | Operation |
+| --- | --- | --- | --- |
+| Standalone Croí J103 | Bounded 3.0 V source bias | `BAT_SHDN_N` | Close a maintained external contact to enable |
+| Foinse J103 | Avionics bounded 3.0 V bias | `AV_SHDN_N` | Close the avionics pole to enable |
+| Foinse J104 | Propulsion bounded 3.0 V bias | `PROP_SHDN_N` | Close the separate propulsion pole to enable |
+
+**Hardware.** Vertical JST GH `BM02B-GHS-TBT(LF)(SN)` with `GHR-02V-S` and a
+crimp matched to the real wire gauge. Control current only. A Foinse-fed Croí
+uses a deliberate retained closed plug in Croí J103. One maintained two-pole
+switch can run Foinse; the two positive bias wires stay separate. The thermistor
+connector is a different four-contact harness.
+
+**Circuit.** Each source feeds its own BAS116 → 4.7 k + 4.7 k → LM4040 3.0 V
+shunt, so the bias is clamped before the cable. SHDN has 22.1 k to GND and
+100 nF. An open contact or unplugged lead means OFF, with no MCU, I²C or AUX
+power needed. Croí R1006 and Foinse R1006 / R2006 become those 22.1 k
+pull-downs. The MODE, UVLO, OVP, limit and slew networks are otherwise unchanged.
+
+**What OFF means.**
+
+- OFF does not disconnect the pack. Entry, bias and sensing stay live, and USB
+  can still run Croí service logic.
+- Bias alone draws about 0.5 mA at nominal 2S and 2.3 mA at nominal 6S, plus
+  existing leakage, sensing and shutdown currents. These are upstream of the
+  discharge shunts, so they aren't measured. Unplug packs for storage.
+- Power indication and the source enable never prove the vehicle is disarmed.
+
+**What it isn't.** The source enable is not an energy break. Pyro energy is
+broken by the J6101 arm switch (D-6.1); charging exclusion is a separate
+assembly. A shorted contact forces enable. A contact stuck open or a
+semiconductor fault isn't contained by this circuit.
+
+**Still to test.** Diode headroom with a cold or minimum pack; assembled thermal
+and surge response; cable ESD; open-wire leakage; retained-contact vibration and
+bounce. The 100 nF filter doesn't guarantee debounce.
+
+**Enable hold (D-6.3).** Cycling SHDN resets a latched eFuse fault and can cause
+repeated board resets. So from 6 October, firmware holds SHDN high in flight
+through `FC_POWER_HOLD`: Croí directly, Churro AV over Samtec pin 8. U101 and
+U1001 auto-retry.
+
+**Limits.** The 6 A Croí / avionics, ≈3 A propulsion and 2 A shared-servo
+starting limits are unchanged, provisional and not load-qualified. The switch
+doesn't widen the declared battery range or allow a depleted-pack boost.
+
+## Servos and current sensing
+
+**Servos.** The 7 September revision added a third servo channel; D3 removes it
+(PD10 becomes service power enable), leaving two. Servo energy now comes from
+`ENERGY_TAP` through F6801 with R6804 fitted and ≥220 µF local bulk (D-6.1,
+D-6.7). The nominal shared 2 A limit doesn't prove capacity for any particular
+servo or grid-fin load. Actuator voltage, simultaneous and stall demand,
+regeneration and upstream selectivity still need closing on the bench. No Foinse
+power-boundary change follows. History:
+[servo revision](../docs/archive/connector-servo-readiness-revision-2026-09-07.md).
+
+**Current sensing** (7 September, [revision](../docs/archive/sensing-indication-time-review-2026-09-07.md)):
+
+- Croí owns the protected AV discharge shunt and INA228 0x40, standalone too.
+  Foinse keeps propulsion INA228 0x41 and ADS1115 0x48.
+- Power authority is unchanged. The Samtec pinout is unchanged except pin 8,
+  now `CROI_POWER_HOLD`.
+- `FOINSE_RETURN_EN` must also enable Croí-local monitoring when Foinse isn't
+  there.
+- No duplicate Foinse AV shunt. Croí logic takeoffs come after its shunt.
+- Pyro and servo energy leave before U101 and bypass the shunt (D-6.1).
+  Per-channel current comes from the TPS1H100 sense outputs.
+- USB, charging and propulsion are outside the measured path.
+- Monitoring never enables autonomous protection.
 
 ## Source dependencies
 
-These are functional drawings. Every arrow requires a reviewed voltage/current,
-return path, startup default and fault definition before schematic release.
-They do not select connector pins, isolation devices or a regulator count.
+Functional view, not a pin or part choice. Every arrow still needs a reviewed
+voltage and current, return path, startup default and fault definition before
+schematic release.
 
-### Standalone
-
-```text
-Local battery -> protected Ogma input -> switching preregulator -> low-noise LDO
-                                          -> supervised logic and bounded branches
-Local battery -> defined actuator power/arm paths -> pyro and servo loads
-USB -> reverse-isolated service source path -> required service logic only
+```mermaid
+flowchart TB
+  SA["Standalone 2S
+J101"] --> Q["Q101 reverse blocking"]
+  CH["Churro AV
+autonomous protection"] -->|"J102 Samtec"| Q
+  Q --> TAP(("ENERGY_TAP"))
+  TAP --> U101["U101 eFuse"] --> LOGIC["Buck → three LDOs
+Ogma logic"]
+  TAP -->|"own fuses"| OUT["Pyro, via J6101 arm
+and servo"]
+  USB["USB-C"] -->|"logic mux only"| LOGIC
+  LOGIC -.->|"protected 3.3 V return
+not needed to start"| CL["Churro low-power
+devices"]
+  LOGIC <-->|"CAN, two nodes"| FJ["Fajita
+self-governing"]
+  CP["Churro PROP
+6S, own pack"] --> FJ
 ```
 
-The exact point at which USB joins the logic supply remains open. It must work
-at the permitted USB voltage/current limits and battery states. It cannot feed
-back into the battery or actuator source paths through conversion or signals.
+Rules the drawing implies:
 
-### Integrated with Foinse
-
-```text
-Vehicle battery -> Foinse autonomous protection/distribution -> Ogma VBAT
-Ogma VBAT -> switching preregulator -> low-noise LDO -> supervised logic
-Ogma regulated supply -> protected 3.3 V auxiliary branch -> Foinse low-power devices
-Foinse -> named actuator source paths and paired returns -> selected loads
-USB -> reverse-isolated service source path -> required Ogma service logic only
-```
-
-The returned auxiliary supply is never a prerequisite for the first line.
-Foinse's source/protection defaults must remain correct with that return absent,
-shorted within the declared containment case, or sequencing late. Essential
-protection devices need their own valid autonomous bias path.
-
-### Integrated with propulsion
-
-```text
-Vehicle battery -> Foinse autonomous protected distribution
-                    +-> Ogma branch -> Ogma conversion and bounded branches
-                    +-> propulsion branch -> propulsion-local logic/actuator power
-Ogma protected 3.3 V return -> bounded Foinse low-power devices only
-Ogma <-> narrow two-node CAN <-> self-governing propulsion controller
-```
-
-Propulsion is not powered from Ogma logic. Its existing local authority remains
-unchanged. Shared-battery protection, return impedance and ground faults still
-need analysis; separate branch names do not prove independence. These drawings
-do not change the LTS implementation or assign another project's work.
+- USB joins only the logic supply. It must work across the permitted USB voltage
+  and current and every battery state, and must not feed back into the battery
+  or actuator paths through conversion or signals.
+- The returned auxiliary supply is never needed to start. Foinse source and
+  protection defaults must stay correct with that return absent, shorted within
+  the declared containment case, or late. Essential protection devices need
+  their own autonomous bias.
+- Propulsion is never powered from Ogma logic, and its local authority is
+  unchanged. Shared-battery protection, return impedance and ground faults still
+  need analysis; separate branch names don't prove independence.
+- This contract doesn't change the LTS implementation or assign another
+  project's work.
 
 ## Branch contract
 
-| Domain | Required behaviour | Numbers and implementation still needed |
+| Domain | Required behaviour | Still needed |
 | --- | --- | --- |
-| Flight core and minimum recovery sensing | Valid supply and supervised essential execution; acknowledged primary loss if the common/core supply fails beyond the accepted envelope | Current modes, rail-valid window, supervisor tolerance, transient/restart budget |
-| Communications/RF | Contain declared overload/short; bounded safe restart if possible; persistent failure disabled without a flight reset | Startup/transmit current, limit tolerance, disconnect/retry bounds, discharge and signal isolation |
-| Bulk storage | Electrical or protocol failure permits degraded flight operation under FF-02 | Program/erase peaks, isolation, bus ownership, timeout and remaining evidence path |
-| Foinse 3.3 V return | Bounded load and fault energy; return loss does not remove basic source delivery | Actual devices, current budget, isolation, signal/pull-up paths and autonomous defaults |
-| Pyro and servo power | No USB or logic-rail energy source; deliberate high-current routes and paired returns | Selected loads, battery/rail ratings, physical arm paths, peak/stall/pulse currents and transient limits |
+| Flight core and minimum recovery sensing | Valid supply and supervised essential execution. If the common or core supply fails beyond the accepted envelope, primary loss is acknowledged | Current modes, rail-valid window, supervisor tolerance, transient and restart budget |
+| Comms and RF | Contain declared overload or short; bounded safe restart if possible; persistent failure disabled without resetting flight | Startup and transmit current, limit tolerance, disconnect and retry bounds, discharge, signal isolation |
+| Bulk storage | An electrical or protocol failure leaves degraded flight running (FF-02) | Program and erase peaks, isolation, bus ownership, timeout, remaining evidence path |
+| Foinse 3.3 V return | Bounded load and fault energy; losing it doesn't stop basic source delivery | Actual devices, current budget, isolation, signal and pull-up paths, autonomous defaults |
+| Pyro and servo power | No USB or logic-rail source; deliberate high-current routes with paired returns | Selected loads, battery and rail ratings, arm path, peak, stall and pulse currents, transient limits |
 
-Protection must be selective: a contained branch fault must not trigger the
-upstream battery/protection disconnect or sag the shared conversion chain
-beyond the flight limit before that branch isolates. Hold-up energy must not
-discharge into the failed branch. Check both power and signal paths in all
-powered/unpowered combinations.
+Protection must be selective. A contained branch fault must not trip the upstream
+battery protection or sag the shared chain past the flight limit before the
+branch isolates. Hold-up energy must not drain into the failed branch. Check
+power and signal paths in every powered and unpowered combination.
 
-## Source-state table
+## Source states
 
-| Connection/state | Accepted behaviour | Closure needed |
+| State | Behaviour | Still needed |
 | --- | --- | --- |
-| No source | No powered operation; output defaults remain defined | Discharge, retained-domain state and output bias |
-| Standalone battery only | Autonomous start into the appropriate validated mode | Battery envelope, inrush, input protection and startup |
-| Foinse source only | Same Ogma logic chain; source path independent of returned auxiliary power | Device dependency drawing and absent-return test |
-| USB only | Configuration/readback/log extraction; no actuator power from USB | USB budget, power-entry point, rail sequencing and backfeed tests |
-| One vehicle source plus USB | Supported servicing without source contention, backfeed or unintended charging | Priority/ORing mechanism and attach/remove tests |
-| Integrated charging service | Only through the controlled Foinse service path | Charger/source combinations, allowed operating mode, isolation and operator procedure |
-| Standalone battery and Foinse feed together | Not authorised by this contract; physically exclude or explicitly review/protect before permitting | Exact connector/source arrangement |
-| Source removed or interrupted | Continue only within proven hold-up; otherwise defined reset/unavailable outcome | Interruption envelope and EX-03 retention classes |
-| Auxiliary or communications rail absent while interfaces remain connected | No damaging injection, half-powered operation or defeated isolation | Exact pin limits, pull-ups, discharge and bus ownership |
+| No source | Nothing powered; output defaults stay defined | Discharge, retained-domain state, output bias |
+| Standalone battery only | Starts on its own into the right validated mode | Battery envelope, inrush, input protection, startup |
+| Foinse source only | Same Ogma logic chain; source path doesn't depend on the returned auxiliary power | Device dependency drawing; absent-return test |
+| USB only | Configuration, readback, log download. No actuator power from USB | USB budget, entry point, rail sequencing, backfeed tests |
+| One vehicle source plus USB | Servicing works with no contention, backfeed or unintended charging | Priority / ORing mechanism; attach and remove tests |
+| Integrated charging service | Only through the controlled Foinse service path | Charger and source combinations, allowed mode, isolation, operator procedure |
+| Standalone battery and Foinse together | Not allowed. Physically exclude it, or review and protect it explicitly first | Exact connector and source arrangement |
+| Source removed or interrupted | Carry on only within proven hold-up; otherwise a defined reset or unavailable outcome | Interruption envelope; EX-03 retention classes |
+| Auxiliary or comms rail off while its interfaces stay connected | No damaging injection, half-powered running or defeated isolation | Exact pin limits, pull-ups, discharge, bus ownership |
 
-Source priority and charging combinations are not silently selected by this
-table. No live energetic or charging operation is authorised by policy adoption.
+This table doesn't quietly choose source priority or charging combinations.
+Adopting a policy doesn't authorise any live energetic or charging operation.
 
-## Regulator selection and evidence
+## Regulator evidence
 
-The retained chain came from the Rev 1 external review supplied again by Seán
-on 6 September. The rationale is efficient preregulation followed by a genuinely
-low-noise post-regulator, with mechanically suitable packaging. Its provenance
-and the associated packaging feedback are recorded in the
-[external-review note](../docs/archive/rev1-external-review-lessons.md).
+The buck-then-LDO chain came from the Rev 1 external review, which Seán passed
+on again on 6 September: efficient preregulation, then a genuinely low-noise
+post-regulator, in packages that suit the board. Provenance and packaging
+feedback: [external-review note](../docs/archive/rev1-external-review-lessons.md).
 
-Shortlist integrated switching modules and compact integrated-switching IC
-solutions; distinguish a module with an internal inductor from a converter IC
-that still needs an external inductor and critical layout. TI, ADI and MPS are
-comparison sources, not selected vendors or guaranteed EMI performance.
+Considered and not selected: the LT3045-1 with VIOC (the LDO steering its
+upstream converter to hold headroom). Plain LT3045 has no VIOC; the -1 variant
+is rated 500 mA and its documented VIOC differential starts at 1 V, so a
+3.8 V → 3.3 V chain couldn't assume it. That limit is specific to that part.
+Sources: [ADI variant table](https://www.analog.com/en/products/lt3045-1.html),
+[VIOC guidance](https://www.analog.com/en/resources/technical-articles/voltage-input-output-control-linear-regulators-part-1.html),
+[LT3045-1 datasheet pp. 23–24](https://www.analog.com/media/en/technical-documentation/data-sheets/30451fa.pdf).
 
-LT3045 is a low-noise LDO candidate. **LT3045-1** is the variant with VIOC;
-ordinary LT3045 has no VIOC. The family is not selected for Ogma's total load.
-The LT3045-1's rated output is 500 mA; the branch budget must establish whether
-that is appropriate. [ADI product and variant table](https://www.analog.com/en/products/lt3045-1.html)
+Measurements the chosen chain still needs: intrinsic noise and rejection at the
+frequencies that matter, separate from DC regulation; load steps; branch faults;
+startup and restart; thermal behaviour; and sensor performance with the radio at
+its busiest. Keeping an LDO doesn't waive any of these.
 
-VIOC lets the LDO control its upstream converter to maintain input/output
-headroom. It is a candidate, not an accepted extra control loop. Pairing,
-startup, compensation and feedback-fault behaviour need review; ADI documents
-compatibility restrictions. A fixed preregulator plus LDO remains a valid
-implementation of the accepted architecture.
-[ADI VIOC guidance](https://www.analog.com/en/resources/technical-articles/voltage-input-output-control-linear-regulators-part-1.html)
+## Numbers
 
-For LT3045-1, the datasheet's documented VIOC differential starts at 1 V. Thus
-a nominal 3.8 V to 3.3 V chain cannot be assumed compatible with that VIOC
-configuration. This is a part-specific constraint, not a universal minimum for
-all buck/LDO chains. Do not select 4.3 V or any other value without the full
-tolerance, ripple, droop, startup and thermal calculation.
-[LT3045-1 datasheet, pp. 23–24](https://www.analog.com/media/en/technical-documentation/data-sheets/30451fa.pdf)
-
-Measure intrinsic noise and rejection at relevant frequencies separately from
-simple DC regulation. Also measure load steps, branch faults, startup/restart,
-thermal behaviour and sensor performance with maximum relevant radio activity.
-Retaining the LDO does not waive any of these checks.
-
-## Initial numerical budget
-
-| Quantity | Current allocation | Next evidence |
+| Quantity | Now | Next evidence |
 | --- | --- | --- |
-| Logic output | Nominal 3.3 V baseline; tolerances not allocated | Exact MCU/sensor/storage operating limits |
-| Intermediate output | Approximately 3.8 V historical placeholder, not frozen | Selected LDO headroom/PSRR and preregulator worst-case output |
-| Input voltage/source impedance | Open | Candidate pack, protection, harness and USB service envelope |
-| Continuous/startup/peak branch currents | Open; no measured Ogma 2 values | Exact-part estimates followed by branch measurements |
-| Operating duration | 8 h | Measured mode/duty schedule and conversion losses |
-| Reduced-duty recovery | Further 4 h | Beacon, retained state, log protection and quiescent currents |
-| Flight-core hold-up duration | Open; bounded brief-interruption objective | EX-01/03 interruption allocation and measured core load |
-| Temperature | Accepted powered envelope −20 to +70 °C | Junction/PCB thermal model, then installed measurements |
+| Logic output | 3.352 V nominal proposed; 3.310–3.394 V calculated corners ([power domains](../docs/architecture/justifications/power-domains.md)) | Exact MCU, sensor and storage limits on the built board |
+| Intermediate | TPSM63603 at 4.0 V | Measured LDO headroom and PSRR; buck worst-case output |
+| Input and source impedance | 2S; envelope still open | Chosen pack, protection, harness, USB service envelope |
+| Continuous, startup and peak branch currents | Allocations only; nothing measured on Ogma 2 | Exact-part estimates, then branch measurements |
+| Operating duration | Workhorse from measured loads (D-6.8); Kármán overlay 8 h | Measured mode and duty schedule, conversion losses |
+| Reduced-duty recovery | Kármán overlay: a further 4 h | Beacon, retained state, log protection, quiescent currents |
+| Flight-core hold-up | ≈2 ms with C1403 1000 µF | EX-01/03 interruption allocation; measured core load |
+| Temperature | Powered −20 to +70 °C accepted | Junction and PCB thermal model, then installed measurements |
 
-At battery level, calculate `E_required = sum(P_battery,mode × time_mode)` for
-the complete 8 h + 4 h sequence. Include conversion/protection loss, quiescent
-current and event loads once, without double counting. Available pack energy
-must reflect temperature, age, source droop and protection cutoff; nominal
-amp-hours alone do not close the budget.
+**Energy.** At the battery, `E_required = sum(P_battery,mode × time_mode)` over
+the whole mission sequence. Count conversion and protection loss, quiescent
+current and event loads once each. Usable pack energy must allow for
+temperature, age, droop and protection cutoff; nominal amp-hours alone don't
+close the budget.
 
-For initial hold-up sizing use usable capacitor energy,
-`0.5 × C × (V_start² − V_min²)`, against the load energy over the allocated
-interruption. Include conversion efficiency, effective capacitance at voltage
-and temperature, ESR, isolation loss and all attached loads. No numerical
-capacity or flight endurance is claimed here.
+**Hold-up.** Usable capacitor energy is `0.5 × C × (V_start² − V_min²)`; compare
+it with load energy over the allowed interruption. Count conversion efficiency,
+effective capacitance at voltage and temperature, ESR, isolation loss and every
+attached load. No capacity or flight endurance is claimed here.
 
-## First experiment and closure
+## First test and closure
 
-Use [PWR-01](../docs/archive/reliability-execution-plan.md#experiment-pwr-01-source-transition-and-branch-containment)
-on identified blocks of the first full PCBA with current-limited supplies and
-inert loads. A separate pre-order coupon is not required. Begin with
-cold startup with the Foinse return absent, then controlled optional-branch
-faults and source transitions. Capture input, core rail, faulted branch, reset
-and an essential-loop marker on an external common timebase.
+Run [PWR-01](../docs/archive/reliability-execution-plan.md#experiment-pwr-01-source-transition-and-branch-containment)
+on blocks of the first full PCBA with current-limited supplies and inert loads.
+No separate pre-order coupon.
 
-Before applying a fault, identify the real parts and fixture, normal load,
-instrument ratings, numerical stimulus/stop limits and claimed pass limits.
-An emulator characterises that emulator and harness; it is not a real-pack pass.
-No unknown battery hard-short, energetic load or unbounded fault injection.
+1. Cold start with the Foinse return absent.
+2. Controlled faults on optional branches.
+3. Source transitions.
 
-EX-02 closes only with the actual source-state drawing, numerical budgets,
-selected topology, owner/reviewer and measured corner cases. The protected
-Foinse return is the accepted starting choice; exact device feasibility remains
-to be checked with its owner. No hardware run, part purchase or flight release
-has occurred. EX-03's [reset contract](reset-recovery-contract.md) is now
-accepted at policy level; its host-model results do not establish hardware
-retention. Proceed with library/schematic implementation under the accepted
-batch baseline, followed by the first-PCBA tests.
+Capture input, core rail, the faulted branch, reset and an essential-loop marker
+on one external timebase. Before any fault, write down the real parts and
+fixture, normal load, instrument ratings, numerical stimulus and stop limits,
+and pass limits. An emulator test characterises the emulator and harness, not a
+real pack. No unknown battery hard short, no energetic load, no unbounded fault.
+
+EX-02 closes only with the real source-state drawing, numerical budgets, the
+selected topology, an owner and reviewer, and measured corner cases. The
+protected Foinse return is the accepted starting point; device feasibility still
+needs checking with its owner. EX-03's [reset contract](reset-recovery-contract.md)
+is accepted at policy level; its host-model results don't prove hardware
+retention. Next: libraries and schematic under the accepted baseline, then the
+first-PCBA tests.

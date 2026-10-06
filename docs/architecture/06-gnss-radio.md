@@ -1,111 +1,84 @@
-# GNSS and radio
+# 06 GNSS and radio
 
-**22 September · proposal · retain MAX-M10S and Wio-LR2021.**
-
-## Justification and deeper detail
-
-| Question | Follow through | Source status |
-| --- | --- | --- |
-| What can we actually connect for bring-up? | [Passive antenna and matched Wio reference assembly](justifications/interfaces-and-installation.md#rf-reference-assembly) | Concrete commissioning choice; vehicle mount/link still to qualify |
-| Why MAX-M10S? | [GNSS shortlist and external-antenna rationale](../archive/architecture/implementation-reference/06-gnss-radio.md#the-gnss-shortlist-and-why-the-answer-changed) | Earlier research and manufacturer links |
-| Why Wio-LR2021? | [Radio options and link tradeoffs](../archive/architecture/implementation-reference/06-gnss-radio.md#radio-options-cost-and-link-tradeoffs) | Earlier research; receiver compatibility still needs testing |
-| Where does packet airtime come from? | [Airtime calculation](../calculations/avionics-options-estimates.py) | Reproducible estimate, not measured link performance |
+Keep the MAX-M10S GNSS receiver with an external passive antenna, and the
+Wio-LR2021 sub-GHz radio. Both hang off the comms MCU, so neither can stall
+flight. The radio link to the ground station is unproven: test it before ordering.
 
 ```mermaid
-flowchart LR
+flowchart TB
+  P["COMMS_3V3"] --> SW["2 × TPS22918
+GNSS / radio switches"]
   GA["External passive GNSS antenna
-TFX125.B reference test assembly"] --> GS["Amphenol 132134 SMA
-TPD1E0B04DPYR shunt ESD"]
-  GS --> G["MAX-M10S-00B
-U4504"]
-  G <-->|"USART1 · PA9 / PA10
-PPS PA0 · reset PC5"| C["Comms H563RIT6"]
-  C <-->|"SPI1 · PA4–PA7
-BUSY PC1 · DIO5 to PC2
-reset PC0"| R["Wio-LR2021
-Seeed 100058045"]
-  R --> S["Amphenol 132134 SMA
-sub-GHz RF only"]
-  S --> RA["Vehicle radio antenna
-installed link still to qualify"]
-  P["COMMS_3V3"] --> SW["TPS22918DBVR ×2
-GNSS / radio load switches"]
+TFX125.B for bench tests"] --> GS["J4501 SMA 132134
+TPD1E0B04 ESD shunt"]
+  GS --> G["U4504 MAX-M10S"]
   SW --> G
   SW --> R
+  G <-->|"USART1 PA9/PA10
+PPS PA0 · reset PC5"| C["Comms MCU"]
+  C <-->|"SPI1 PA4–PA7
+BUSY PC1 · DIO5 → PC2 · reset PC0"| R["U4606 Wio-LR2021
+Seeed 100058045"]
+  R --> S["J4601 SMA 132134"] --> RA["Radio antenna
+installed link untested"]
 ```
 
-ESD device is a shunt at the RF input, not a series RF amplifier. Existing
-TMUX1511 signal boundaries remain; the drawing omits their individual channels.
-
-| Selected part | Reason | Limitation that changes use |
+| Part | Why | Limit that matters |
 | --- | --- | --- |
-| MAX-M10S-00B | Soldered receiver; antenna can sit outside carbon airframe | ≤4 g dynamics, 500 m/s velocity, 80 km altitude documented envelope |
-| 132134 vertical SMA, both RF ports | Existing inspectable external antenna connection | Connector choice does not select antenna, cable loss or retention |
-| TPD1E0B04DPYR | Low-capacitance GNSS input ESD part | Installed RF/ESD performance remains unmeasured |
-| Wio-LR2021 868/915 module, 100058045 | Integrated RF frontend; existing selected module | Needs LR2021 driver and ground-receiver compatibility |
-| TPS22918DBVR load switches | Independently restart receiver/radio | **Not individual current limiters**; upstream comms limiter bounds aggregate fault |
+| MAX-M10S-00B | Soldered receiver; antenna can sit outside the carbon airframe | ≤4 g, 500 m/s, 80 km documented envelope |
+| Amphenol 132134 SMA, both ports | Inspectable external connection | Says nothing about antenna, cable loss or retention; both ports identical, so they can be swapped |
+| TPD1E0B04DPYR | Low-capacitance ESD shunt at the GNSS input | RF and ESD performance unmeasured |
+| Wio-LR2021, 868/915 MHz | Integrated RF front end | Needs an LR2021 driver and a compatible ground receiver |
+| TPS22918 ×2 | Restart GNSS or radio separately | Not current limiters; the comms limiter bounds a fault |
 
-**GNSS use:** retain raw observations, validity, solution age and altitude datum.
-No full-boost or above-80-km aiding claim. External reception cannot fix the
-receiver's operating limits. Invalid or stale GNSS must not block flight work.
+GNSS keeps raw observations, validity, solution age and altitude datum. It
+never triggers a flight event and never blocks flight work. Keep MAX
+TIMEPULSE free of a startup pull-down: it shares the SAFEBOOT function.
 
-Keep MAX TIMEPULSE free of a startup pull-down: it is internally coupled to
-SAFEBOOT. Backup/VIO_SEL wiring follows the existing checked installation.
+The old net `LORA_DIO1` reaches module DIO5. The RXEN/TXEN nets are E22
+leftovers and unused. The LR2021 needs a new driver, not a renamed SX1262 one.
 
-## Which end measures link quality?
+## Who measures the link
 
-| Packet direction | Receiver owns RSSI/SNR | How the record obtains it |
+| Direction | Receiver owns RSSI/SNR | How it's recorded |
 | --- | --- | --- |
-| Vehicle → ground | Groundstation | Ground log; return a sequence-tagged report if vehicle needs it |
-| Ground → vehicle | Wio receiver | Comms record → flight NOR with packet sequence/time |
+| Vehicle → ground | Ground station | Ground log; sequence-tagged report back if the vehicle needs it |
+| Ground → vehicle | Wio | Comms → flight NOR, with packet sequence and time |
 
-A transmitted packet supplies no measurement of its reception. Keep receiver
-identity and packet direction with each metric. Missing reports are missing
-evidence, not zero signal strength. Packet sequence gaps distinguish losses
-from a link that merely shows activity.
+A transmitter can't measure its own reception. Keep receiver identity and
+direction with every metric; a missing report is missing evidence, not zero
+signal. Sequence gaps show losses that "activity" hides.
 
-## First radio interoperability configuration
+## First link test
 
-Propose ordinary LoRa: **SF7, 125 kHz, coding 4/5, explicit header, CRC, eight-symbol
-preamble; 64-byte test packet at 1 Hz**. Use the agreed band/channel and permitted
-power of the actual ground receiver; verify with a controlled RF test setup.
-No flight frequency/power or regulatory permission is selected here.
+Plain LoRa: SF7, 125 kHz, coding 4/5, explicit header, CRC, 8-symbol preamble,
+64-byte packet at 1 Hz. Airtime is 118.016 ms per packet (calculated), so this
+packet can't run at 10 Hz. It's a bench interoperability profile, not a flight
+profile: band, channel, power and permission follow the actual ground receiver
+and a controlled RF setup. Keep full-rate data in NOR.
 
-Calculated airtime is **118.016 ms/packet**. This is a short-range interoperability
-profile, not a long-range flight profile or permission for continuous over-air use.
-It also shows why this packet cannot run at 10 Hz. Choose flight cadence/link
-margin from the installed antenna and range test; keep full-rate data in NOR.
+1. Exchange the test packet with a second Wio-LR2021.
+2. Then with the real ground station; measure TX current and reset recovery.
+3. Then installed reception, GNSS solution age and reacquisition, antenna losses.
 
-The historic net `LORA_DIO1` reaches **module DIO5**. RXEN/TXEN reservations are
-unused. Do not port an SX1262 driver by changing the device name.
+Neither antenna assembly has a final part yet.
 
-**Next check:** exchange the test packet with a matched Wio-LR2021 reference
-peer; then test actual groundstation compatibility, TX current and reset recovery. Then measure installed reception,
-GNSS solution age/reacquisition and antenna losses. Neither antenna assembly
-has a justified exact part selection yet.
+## Capture and power
 
-Sources: [u-blox MAX-M10S datasheet](https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf),
-[Wio datasheet](https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf),
-[RF installation and alternatives](../archive/architecture/implementation-reference/06-gnss-radio.md),
-[airtime calculation](../calculations/avionics-options-estimates.py).
-
-## Schematic handoff
-
-**Retain board RF parts, passive antenna topology and interfaces.** Use the
+Keep the board RF parts, passive antenna topology and interfaces; the
 [reference test assembly](justifications/interfaces-and-installation.md#rf-reference-assembly)
-for first-board checks. It closes the bench interface; it does not promise the
-large reference antennas fit a vehicle. Vehicle coax/access/retention and RF
-performance are installation qualification, with the same 50 Ω/passive boundary.
-No active-antenna bias circuit is added speculatively.
+covers first-board checks, not vehicle fit. No active-antenna bias circuit.
 
-Sequence GNSS startup before high-power radio work. The MAX-M10S datasheet asks
-the source to accommodate up to 100 mA startup inrush; tracking averages cannot
-size the shared comms limit. The proposed 300 mA comms allocation must include
-processor, interfaces and radio peaks. If that budget fails, revise the branch
-budget and its upstream selectivity together; do not only enlarge one limiter.
+Start GNSS before high-power radio work. The MAX-M10S can draw up to 100 mA at
+startup; the 300 mA comms allocation must cover the processor, interfaces and
+radio peaks. If it doesn't, revise the branch budget and its upstream limit
+together.
 
-Across boost/high altitude, GNSS and pressure can be unavailable simultaneously.
-The retained parts are still useful for pad, lower-flight and recovery records.
-Full-envelope navigation requires the separately validated inertial/mission
-solution; neither two barometers nor external GNSS placement supplies that proof.
-Comms-held-reset flight testing must also remove GNSS/PPS input.
+In boost and at altitude, GNSS and pressure can both be unavailable. Full
+navigation needs the validated inertial solution. Comms-held-in-reset flight
+tests also remove GNSS and PPS.
+
+Sources: [MAX-M10S datasheet](https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf) ·
+[Wio datasheet](https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf) ·
+[RF alternatives](../archive/architecture/implementation-reference/06-gnss-radio.md) ·
+[airtime calculation](../calculations/avionics-options-estimates.py)
