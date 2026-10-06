@@ -21,7 +21,7 @@
 The Ebyte manual is retained with the accepted review at
 `../../../architecture-review-2026-09-06/sources/manufacturer/Ebyte-E22-M-Series-User-Manual-v1.2.pdf`.
 Part/source URLs and pin tables for all remaining parts are in
-[manifest.json](manifest.json) and the authored definitions.
+[source-manifest.json](source-manifest.json) and the authored definitions.
 
 ## Pin traps preserved in exact-part symbols
 

@@ -3134,3 +3134,49 @@ temporary previews or machine paths were found in the intended changes.
 The branch-relative docs/architecture/00-overview.md remains the intended QR
 entrypoint. Access requires permission to the private repository. Energetic-output
 and physical-arm design remains incomplete and excluded from the capture proposal.
+
+
+## 30 September 2026 — full-repository sanity pass and illustrated system tour
+
+Seán requested a full sanity audit and a digestible picture of the boards, power/
+data topology and connector families. He reported Anav's proposed shared low-side
+switch with one high-side switch per energetic output, explicitly as a
+recommendation. Recorded it as reported/unreviewed/unaccepted; no primary design
+note was inspected. Existing DNP safeguards and unresolved arm assembly remain.
+
+Fetched remote state. Review branch HEAD f18141e equals origin; main remains the
+older f81e6a6 baseline. Inspected the full tracked tree, controlling documents,
+interfaces, both native CAD projects, local dependencies and verification tools.
+Added docs/architecture/system-tour.md and 2026-09-30-repository-sanity.md, indexed
+from the current entrypoints. The tour separates September 22 proposals from
+September 8 CAD, includes source-backed manufacturer connector images and makes
+external Fajita/groundstation/recovery ownership explicit. Clarified the dated
+firmware handoff and its nonportable historical research references.
+
+Fixed the obsolete Foinse check_schematic_full.py copied-MCU body by delegating
+to the canonical MCU-less checker while preserving native pin helpers/CLI. Both
+entrypoints now return the same 113 components, 306 pins and 117 assertions;
+negative merged-branch detection remains. Corrected two active manifest links.
+Labelled the older budget tool's September 11 scenarios as historical rather
+than silently changing their ledger.
+
+Fresh KiCad 9.0.6 netlist/ERC/DRC exports were written to temporary audit paths,
+not tracked evidence. Ref/pin/net maps equal saved native outputs. Croí: 643
+components, 2,179 pins, 381 assertions, 28 DNP preserved; ERC four errors/six
+warnings, DRC 61 violations plus 499 unconnected items and missing J101. Foinse:
+113 components, 306 pins, 117 assertions, zero ERC; DRC 24 violations plus 262
+unconnected items and missing J101. Fresh DRC categories match saved reports.
+Both board identity/pad/geometry checks complete, including in-memory negative
+mate-disconnection tests; headless wx emitted an initialization diagnostic, so
+no interactive GUI validation is claimed. All 160 manifest-hashed dependency
+files match and are tracked. All 12 tracked Python scripts parse; current
+proposal checks pass 164 MCU pads and desk budgets; 12 host replay tests pass.
+None is target or hardware qualification.
+
+Material outstanding work: incomplete output/physical-arm design; absent exact
+Nano-Fit footprints on both boards; Burrito USB board/library geometry mismatch;
+native ERC/DRC/routing/manufacturing review; physical capacitor/source/harness
+assembly; target firmware and measured source/USB/recording/RF/peer/mission tests.
+CAD, frozen pin maps, controlled contracts and saved native reports unchanged.
+Pre-existing AGENTS.md changes preserved. This pass grants no capture/placement,
+manufacture or flight authorization; no commit or push.

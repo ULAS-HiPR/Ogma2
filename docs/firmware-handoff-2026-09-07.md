@@ -1,5 +1,23 @@
 # Hardware handoff for Anav — updated 8 September
 
+## 30 September status — preserved CAD, newer proposal
+
+This handoff describes the **8 September implementation**, including two
+LQFP100 MCUs and three servo channels. It remains the interface reference for
+that CAD; it is not the latest proposed capture baseline. The
+[22 September capture specification](architecture/schematic-capture-spec.md)
+proposes a 64-pad comms MCU, two local PWM interfaces and a separately controlled
+services supply. Those changes have not been implemented or accepted. The
+[system tour](architecture/system-tour.md) compares the two states.
+
+The historical DMA/component/rationale links below point outside this clone.
+They are supporting workspace evidence, not portable current authority. Use the
+repository's [processor chapter](architecture/01-mcus.md),
+[sensor/recording chapter](architecture/07-sensors-logging.md),
+[GNSS/radio chapter](architecture/06-gnss-radio.md) and linked native/proposed
+pin tables for current review. No target firmware implementation is present on
+the inspected review branch; this document does not prove driver completion.
+
 ## Read first: external GNSS and power-enable revision
 
 U4504 is MAX-M10S-00B with an external passive antenna, vertical SMA and RF ESD

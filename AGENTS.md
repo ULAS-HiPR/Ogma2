@@ -34,6 +34,14 @@ hardware, measurements, and tests outrank prose.
 
 ## Collaboration rules
 
+- Use the [recommendation-first design-review procedure](docs/design-review-operating-procedure.md)
+  when reviewing a section or open design question. Bring a recommended answer,
+  rationale, downside, material alternative, uncertainty and smallest validation
+  step. Review one coherent section at a time unless Seán asks for a batch.
+  Agreement with the method does not accept its technical examples.
+- Coordinate overlapping work with other tasks. Nominate one writer for shared
+  Git staging, commits and pushes; inspect the full staged scope before committing.
+
 - `main` is reviewed current truth. Use branches and pull requests.
 - Keep pull requests bounded. Do not mix an electrical decision, prose cleanup,
   and unrelated source import.
