@@ -1,6 +1,6 @@
 # Power — three regulated domains
 
-**22 September · proposed capture baseline · CAD unchanged.**
+**22 September · proposed capture baseline, amended by [D-6.1, D-6.3–D-6.5, D-6.8](../../decisions.md) on 6 October · CAD unchanged.**
 
 Keep **TPSM63603 4 V → TPS7A91 ×3: flight, comms, services**. A comms-regulator
 fault must not also remove logging/CAN. Give services their own flight-controlled
@@ -13,7 +13,7 @@ restart. This supersedes the two-LDO candidate.
 | Why three rather than one or two? | [Fault comparison and alternatives](justifications/power-domains.md#decision-and-reason) |
 | Exactly what changes? | [Reference/net delta](justifications/power-domains.md#exact-capture-delta), [capture specification](schematic-capture-spec.md) |
 | Voltage, limits and energy? | [Calculations and load allocations](justifications/power-domains.md#voltage-and-headroom), [reproducible checks](../calculations/component-proposal-checks.py) |
-| Why these converter/regulator parts? | [Component research](implementation-reference/02-power.md#options-explored-and-why-this-one-survived) |
+| Why these converter/regulator parts? | [Component research](../archive/architecture/implementation-reference/02-power.md#options-explored-and-why-this-one-survived) |
 
 ## Source entry — retain the existing path
 
@@ -35,12 +35,17 @@ USB current permission"]
 common 4.0 V converter"]
   M --> BS["TPS70933DBVR · U1102
 BOOT_3V3 for startup logic"]
-  V --> O["Separate output-energy boundary
-existing DNP links remain"]
+  Q --> O["ENERGY_TAP before U101's switch
+own fuses: pyro via arm, servo direct"]
 ```
 
 USB powers logic only; no charging or output-energy path. J103's maintained
 contact controls electronic source enable, not physical battery isolation.
+After launch detect, flight PE5 (`FC_POWER_HOLD`) holds `BAT_SHDN_N` and, over
+Samtec pin 8, Churro's `AV_SHDN_N` high, so a broken enable wire or plug can't
+switch the computer off in flight. U101 and Churro U1001 auto-retry after an
+over-current instead of latching off. Pyro and servo energy leave before U101's
+switch through their own fuses, so an output fault can't pull down logic power.
 Use the existing 2S boundary: 8.4 V maximum normal charge; nominal protection
 thresholds ~6.63 V start / 6.20 V stop / 8.99 V overvoltage. Threshold tolerances
 and sag determine actual operating limits; “2S” does not promise 6 V startup.
@@ -101,7 +106,7 @@ failure also needs overvoltage assessment; a current limiter is not an OVP.
 - Keep U1601 → U1901 services. R1604 = **49.9 kΩ 1%**.
 - U1601 EN (pin 3) and R1602 top move from FLIGHT_3V3 to **SERVICE_POWER_EN**, flight PD10 pad 57. R1602 remains 100 kΩ to GND; default off.
 - R1701/R1801/R1901 = **31.9 kΩ 0.1%**, all lower resistors 10 kΩ 0.1% retained. All three rails nominal **3.352 V**.
-- Retain `COMMS_BRANCH_EN = BAT_VALID ? FLIGHT_COMMS_EN : USB_PRESENT` and `CORE_INPUT_EN = BAT_VALID OR USB_CONFIG_OK`.
+- Retain `COMMS_BRANCH_EN = BAT_VALID ? FLIGHT_COMMS_EN : USB_PRESENT`. Remove U1203: the flight-core input (U1401) is enabled whenever 4V_PRE is up, from battery or USB (D-6.5).
 - Retain C1403 candidate **PCW0J102MCO1GS**, 1000 µF/6.3 V; exact footprint/clearance during capture.
 
 Flight starts without comms and enables services after essential startup.
@@ -129,26 +134,27 @@ that drop again from a regulated output. Effective input/output capacitance must
 remain ≥10 µF after derating. All selected rail consumers must tolerate the upper
 corner and measured overshoot. Sensor rails now follow the raised flight setting.
 
-Hold-up remains flight-only. The old 800 µF × 0.25 V / 204 mA ≈0.98 ms is an
-illustration; actual usable drop must be recalculated at the new set point and
-measured headroom. It does not bridge TPS2553's 5–10 ms latch delay or guarantee
+Hold-up remains flight-only: 1000 µF from 4.0 V down to about 3.55 V at 200 mA
+bridges about 2 ms; measure it. The flight MCU's backup domain gets its own
+Schottky and 100 µF on VBAT so checkpoints and the RTC outlive a longer dip (D-6.4). It does not bridge TPS2553's 5–10 ms latch delay or guarantee
 NOR flush. The common buck must sustain limited faults without resetting flight.
 [Component sources and assumptions](justifications/power-domains.md#voltage-and-headroom).
 
 ## USB is a separate load mode
 
-Retain U4402's preconfiguration ILIM-to-IN connection: supported **50–100 mA**
-limit. Configured R4403 60.4 kΩ 1% gives **387–491 mA**. The 700 mA full 4 V
+Remove U4402: R4403 60.4 kΩ 1% sets **387–491 mA** from attach (D-6.5). Drawing
+more than 100 mA before enumeration breaks USB 2.0 rules; strict hosts may
+need a powered hub. The 700 mA full 4 V
 allocation needs ~**757 mA VBUS** at illustrative 4.35 V/85% before overhead;
 it cannot run on the retained USB path.
 
 | Mode | Required operating ceiling |
 | --- | --- |
-| Bootstrap | ≤35 mA measured VBUS steady; reduced-clock comms/USB only; all peripherals/flight/services off |
+| USB attach | Flight core and comms at reduced clock; services, RF, GNSS, CAN and sounder off; must start inside 387 mA |
 | Configured download | ≤300 mA VBUS; reduced-clock MCUs + NOR; RF/GNSS/CAN/sounder off; other measurements on demand |
 | Battery-enabled operation | Full domain allocations, with sequenced GNSS startup and RF peaks |
 | Reset/deconfiguration | Withdraw configured permission and shed loads |
-| Suspend | Separate USB-compliant low-power state; 35 mA bootstrap is not a suspend allowance |
+| Suspend | Not supported; the board keeps drawing its attach current |
 
 Measure inrush as well as steady load. No USB-PD or charging assumption. Battery
 removal while USB remains must trigger restricted service behavior; seamless
@@ -158,7 +164,6 @@ full-flight operation from USB is not promised.
 
 | Branch | Setting | Calculated limit | Recovery |
 | --- | --- | --- | --- |
-| Sensors U3101–U3501 | ILIM tied IN, retained | 50–100 mA each | Flight branch enable |
 | NOR U3601 | R3604 100 kΩ | 232–306 mA | Flight branch enable |
 | CAN U501 | R502 210 kΩ | 109–152 mA | Flight branch enable |
 | AUX U7001 | R7004 210 kΩ | 109–152 mA | Flight branch enable |
@@ -172,7 +177,8 @@ allocations and every local fault case are in the [load ledger](justifications/p
 
 ## Endurance and schematic handoff
 
-Reference **2S 8 Ah**, with **≥30 Wh usable** at installed temperature/load/UVLO.
+**Workhorse:** size the pack from measured first-PCBA loads and the vehicle's
+pad and flight timeline (D-6.8). **Kármán overlay:** reference **2S 8 Ah**, with **≥30 Wh usable** at installed temperature/load/UVLO.
 Eight hours at the conservative active allocation plus four hours at the proposed
 recovery allocation require **29.69 Wh**, including assumed conversion losses and
 0.10 W overhead. Actuator energy is additional. The 65% nameplate-to-usable
@@ -183,4 +189,4 @@ claiming a tested SKU. [Energy calculation](justifications/power-domains.md#usb-
 After acceptance, capture the explicit delta and verify native connectivity/ERC;
 then measure first-PCBA startup, droop, fault recovery, noise, temperature and
 mode energy. [Connectors](09-connectors-arming.md) owns source variants and the
-separate unresolved physical-arm boundary.
+arm connector.

@@ -21,8 +21,9 @@ they do not guarantee the exact onset of limiting near a normal load. A motor
 requiring more current or a different voltage needs a separate power-interface
 revision. The board does not promise two arbitrary servos at simultaneous stall.
 
-R6804 remains DNP. No motor energy or shared energetic-arm arrangement is enabled
-by this recommendation. One motor fault can remove the common motor branch.
+From 6 October (D-6.1, D-6.7) servo energy comes from `ENERGY_TAP` through its
+own fuse, R6804 is fitted and SERVO_VBAT gets ≥220 µF; servos are not behind the
+pyro arm. One motor fault can remove the common motor branch.
 Motor regeneration, stall/startup and temperature require installed-load tests;
 the switch is not a regulated or universally regeneration-tolerant motor supply.
 This bounded interface permits schematic capture without inventing a mechanism.
@@ -34,7 +35,7 @@ and loss behavior become a separate peer contract; the 200 Hz traffic example
 does not silently establish that architecture.
 
 Source: [TI TPS1H100-Q1 Rev D](https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf),
-§6.5 including accuracy footnotes and §7.3; [existing interface rationale](../implementation-reference/04-servos.md).
+§6.5 including accuracy footnotes and §7.3; [existing interface rationale](../../archive/architecture/implementation-reference/04-servos.md).
 
 ## CAN: capture hardware now, migrate both peers together
 
@@ -71,7 +72,7 @@ PCB view**, all holes, tolerances, keying and pin-one; independently check it ag
 the drawing and a 1:1 print. Do not substitute the different 105309 family.
 The existing empty reservation is not an acceptable final footprint.
 
-Keep existing [Micro-Fit/GH mating inventory](../../connector-servo-readiness-revision-2026-09-07.md#connectors).
+Keep existing [Micro-Fit/GH mating inventory](../../archive/connector-servo-readiness-revision-2026-09-07.md#connectors).
 Servo housing 430251000: 1/2/3 PWR/PWM/GND, 4/5/6 PWR/PWM/GND; 7–10 unwired.
 Temperature housing GHR-04V-S: AV/GND/PROP/GND. Every drawing states whether it
 shows the board, mating face or wire-entry view. Contact selection follows actual

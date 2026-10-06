@@ -11,11 +11,11 @@ This is a resource/implementation choice, not a claim of lowest price or power.
 | Question | Follow through | Source status |
 | --- | --- | --- |
 | How does this become capture/placement? | [Exact delta and responsibility](schematic-capture-spec.md), [proposed flight map](proposed-flight-pinout.csv) | PD10 service recovery is the sole functional flight allocation change; net names match native circuits |
-| Why these packages? | [Pin-capacity audit: flight allocation and package comparison](../mcu-pin-capacity-audit-2026-09-11.md) | 11 September audit of preserved CAD |
-| What alternatives were considered? | [MCU family comparison and manufacturer sources](2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale) | 18 September research; old whole-block RAM objection superseded by streaming |
-| Why two processors? | [Workload separation and single-MCU alternative](implementation-reference/01-mcus.md#why-keep-this) | Earlier design rationale; current part/package choice is on this page |
+| Why these packages? | [Pin-capacity audit: flight allocation and package comparison](../archive/mcu-pin-capacity-audit-2026-09-11.md) | 11 September audit of preserved CAD |
+| What alternatives were considered? | [MCU family comparison and manufacturer sources](../archive/architecture/2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale) | 18 September research; old whole-block RAM objection superseded by streaming |
+| Why two processors? | [Workload separation and single-MCU alternative](../archive/architecture/implementation-reference/01-mcus.md#why-keep-this) | Earlier design rationale; current part/package choice is on this page |
 | Does the smaller package actually fit? | [Complete proposed 64-pad map](proposed-comms-pinout.csv) | Current proposal; every pad allocated |
-| What supports memory/DMA claims? | [DMA, memory and execution evidence](../mcu-pin-capacity-audit-2026-09-11.md#dma-memory-and-execution-scope) | Reservations and budgets; no measured firmware occupancy |
+| What supports memory/DMA claims? | [DMA, memory and execution evidence](../archive/mcu-pin-capacity-audit-2026-09-11.md#dma-memory-and-execution-scope) | Reservations and budgets; no measured firmware occupancy |
 
 ```mermaid
 flowchart LR
@@ -37,7 +37,7 @@ streamed service transfers"]
 
 ## Why these two
 
-Evidence: [complete flight allocation](../mcu-pin-capacity-audit-2026-09-11.md#flight-complete-grouped-allocation) · [64-pin package comparison](../mcu-pin-capacity-audit-2026-09-11.md#first-comparison-h563-in-lqfp64-for-comms).
+Evidence: [complete flight allocation](../archive/mcu-pin-capacity-audit-2026-09-11.md#flight-complete-grouped-allocation) · [64-pin package comparison](../archive/mcu-pin-capacity-audit-2026-09-11.md#first-comparison-h563-in-lqfp64-for-comms).
 
 | Role | Actual requirement | Selection reason |
 | --- | --- | --- |
@@ -76,7 +76,7 @@ overspecification; a cost/power optimisation claim would need actual measurement
 | G474RE | 512 KiB flash; 128 KiB RAM split across memory regions | Plausible smaller resource target; new family/AF/DMA work, no comparable quote |
 | H503 | 128 KiB flash; 32 KiB main RAM | Streaming removes the old whole-block objection; firmware fit unproven |
 
-Published alternative resources: [manufacturer-linked comparison](2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale).
+Published alternative resources: [manufacturer-linked comparison](../archive/architecture/2026-09-18-review-investigations.md#1-mcu-comparison-and-pin-rationale).
 The old H503 rejection based on a mandatory 32 KiB buffer no longer applies.
 
 ## Complete comms package proposal
@@ -108,11 +108,10 @@ unconnected. [Exact boundary instructions](schematic-capture-spec.md#burrito-cap
 
 ## Why the extra control pins remain
 
-[Detailed net-by-net rationale and deletion alternatives](2026-09-18-review-investigations.md#every-allocation-has-a-job-and-a-deletion-alternative) (dated supporting research).
+[Detailed net-by-net rationale and deletion alternatives](../archive/architecture/2026-09-18-review-investigations.md#every-allocation-has-a-job-and-a-deletion-alternative) (dated supporting research).
 
 | Function | Concrete job | Deleting/tieing it changes |
 | --- | --- | --- |
-| Five sensor enables | Clear a latched branch fault; restart one sensor | Permanent loss after latch-off if tied on |
 | Sensor DRDY/INT | Timestamp availability rather than completion of a later poll | Sampling/timestamp jitter must be bounded by polling |
 | NOR enable / reset | Power-fault recovery / device reset are different operations | Reset alone cannot clear every supply latch |
 | Comms enable / reset | Whole branch recovery / restart only its processor | Power cycling also restarts GNSS/radio; USB-only uses reset |
@@ -126,9 +125,9 @@ unconnected. [Exact boundary instructions](schematic-capture-spec.md#burrito-cap
 | SWD/reset/clock/supply | Independent service and device operation | Supply/VCAP pads are not spare GPIO |
 
 Exact ports/pads: [proposed flight map](proposed-flight-pinout.csv)
-and [proposed comms map](proposed-comms-pinout.csv). Output-control allocations
-remain in the separate unresolved output block; spare-pin pressure does not
-resolve that design.
+and [proposed comms map](proposed-comms-pinout.csv). The 6 October decisions free PE6, PA8, PA9, PA10, PE8, PE10,
+PE13 and PE14, and use PE5 for `FC_POWER_HOLD`; see the
+[capture delta](schematic-capture-spec.md#burrito-capture-delta).
 
 ## Bounded firmware proposal
 
@@ -145,7 +144,7 @@ installed into CAD by this proposal.
 
 Sources: [ST H563 datasheet](https://www.st.com/resource/en/datasheet/stm32h563ri.pdf)
 (Figure 5, Tables 14–16), [ST hardware guide AN5711](https://www.st.com/resource/en/application_note/an5711-getting-started-with-stm32h5-mcu-hardware-development-stmicroelectronics.pdf), [ST errata](https://www.st.com/resource/en/errata_sheet/es0565-stm32h562xx563xx573xx-device-errata-stmicroelectronics.pdf),
-[existing pin audit](../mcu-pin-capacity-audit-2026-09-11.md),
+[existing pin audit](../archive/mcu-pin-capacity-audit-2026-09-11.md),
 [installed flight map](../../hardware/croi2/libraries/inputs/flight-pinout.csv).
 
 ## Schematic handoff
@@ -162,4 +161,4 @@ indefinitely. Reserve RAM by region/owner, initialise ECC-covered memory and
 bound DMA queue ownership before the concurrent acquisition/service build.
 The acceptance condition is flight progress with comms reset, silent, flooding
 or sending malformed input; GNSS and USB must not be hidden prerequisites.
-See [system dependency audit](2026-09-22-schematic-readiness.md#dependency-closure).
+See [system dependency audit](../archive/architecture/2026-09-22-schematic-readiness.md#dependency-closure).

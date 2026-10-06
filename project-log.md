@@ -3180,3 +3180,22 @@ assembly; target firmware and measured source/USB/recording/RF/peer/mission test
 CAD, frozen pin maps, controlled contracts and saved native reports unchanged.
 Pre-existing AGENTS.md changes preserved. This pass grants no capture/placement,
 manufacture or flight authorization; no commit or push.
+
+
+## 6 October 2026 — flight-loss fixes decided; capture specification amended
+
+Seán decided D-6.1–D-6.10 after a review of over- and under-protection
+(`decisions.md`). Pyro and servo energy now tap the battery side before U101
+through their own fuses; pyro passes an external arm switch (J6101). Recovery
+outputs are current-limited TPS1H100 high sides (≈2.0 A); one-shots, low-side
+switches and permit gates are removed; staging is DNP. Firmware holds the
+battery enable on in flight (Croí, and Churro AV over Samtec pin 8); U101 and
+U1001 auto-retry. Flight VBAT gets its own hold-up. Sensors run directly from
+FLIGHT_3V3; the USB-compliance gate on core power is removed. The 100 km sortie
+becomes an overlay. Recording starts full rate at launch detect.
+
+Evidence: netlist values checked against TI TPS26630, TPS1H100-Q1, TPS2121 and
+TPS3700 data sheets; Rev 1 closure (unexplained aloft reset, intermittent
+battery connector). Not checked: H563 VBAT-mode current, TPS26630 behaviour of
+Q101 under faults, servo regeneration in practice. Added a draft recovery-logic
+chapter for Anav's review. CAD unchanged; the proposal pin CSVs keep 22 Sep nets.

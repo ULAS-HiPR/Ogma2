@@ -46,8 +46,12 @@ the working projects. `hardware/Ogma2/` is not the active project.
 - Foinse: 306 pin and 117 boundary checks; zero ERC findings; 24 existing DRC
   findings. Unrouted connections are additional.
 - DRC/check counts describe the installed draft, not physical qualification.
-- R6310/R6410/R6510/R6804 and unresolved energetic-setting DNPs remain.
-  Do not connect initiators.
+- R6310/R6410/R6510 and the energetic-setting DNPs remain; R6804 is fitted at
+  capture (D-6.1). Do not connect initiators.
+- A fresh KiCad 9.0.6 re-check on 30 September matched these counts; detail in
+  the [archived audit](../docs/archive/architecture/2026-09-30-repository-sanity.md).
+- Decided changes for capture: [decisions](../decisions.md) and the
+  [capture specification](../docs/architecture/schematic-capture-spec.md).
 
 Each child carries its used symbols, assigned footprints and available models
 under local libraries, with provenance. Missing exact models are documented;

@@ -2,12 +2,13 @@
 
 ## Read order
 
-1. `current-system.md`
-2. The relevant interface under `interfaces/`
-3. `docs/karman-line-mission-hardening-report.md` when mission or reliability
-   consequences matter
+1. `decisions.md`
+2. `current-system.md`
+3. The relevant interface under `interfaces/` and chapter under `docs/architecture/`
 4. `project-log.md`, newest entries last
 5. The specific source, implementation, CAD, or test evidence needed
+
+`docs/archive/` holds superseded reviews and studies: evidence, not instructions.
 
 The controlled requirements, implementation, CAD, selected component data,
 hardware, measurements, and tests outrank prose.
@@ -18,9 +19,9 @@ hardware, measurements, and tests outrank prose.
   orient work while retaining every decision that constrains the design.
 - `project-log.md` is append-only. Correct an old conclusion with a new dated
   entry; do not rewrite history.
-- `docs/karman-line-mission-hardening-report.md` is the deep design study. A
-  proposal in that report becomes architecture only when explicitly accepted in
-  `current-system.md` and logged.
+- `decisions.md` records every decision with its status. A proposal anywhere,
+  including the archived studies, becomes architecture only when it appears there
+  as Decided and `current-system.md` reflects it.
 - `interfaces/` owns cross-system contracts. A real boundary change must also be
   reconciled with the other owning project.
 - Historical or generated material stays outside this repository unless a named
@@ -45,8 +46,8 @@ hardware, measurements, and tests outrank prose.
 - `main` is reviewed current truth. Use branches and pull requests.
 - Keep pull requests bounded. Do not mix an electrical decision, prose cleanup,
   and unrelated source import.
-- Architecture changes update `current-system.md`, the affected interface or
-  requirement, and append `project-log.md` in the same pull request.
+- Architecture changes update `decisions.md`, `current-system.md`, the affected
+  interface or chapter, and append `project-log.md` in the same pull request.
 - Never commit credentials, private correspondence, personal data, raw model
   output, temporary rendering trees, or machine metadata.
 - Reference images with unresolved reuse rights may remain in this private

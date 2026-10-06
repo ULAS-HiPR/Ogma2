@@ -1,10 +1,9 @@
 # Ogma 2 flight fault contract
 
-**11 September review hold:** this contract's electrical and safety obligations
-are unchanged. The [joint-review record](../docs/architecture/2026-09-10-session-review.md)
-identifies proposed changes; none is implemented or accepted here. Earlier
-instructions below to proceed with schematics are superseded by Seán's explicit
-hold: no schematic/PCB changes until the final stack is authorized.
+**Status (6 Oct 2026):** controlling contract. Electrical details describe the
+8 September CAD; decided changes are in [decisions.md](../decisions.md) and the
+[capture delta](../docs/architecture/schematic-capture-spec.md). Capture waits
+for Seán's go-ahead.
 
 Updated: 7 September 2026
 Status: EX-01 policy accepted by Seán; timing allocation, implementation and
@@ -18,7 +17,7 @@ proposal in the wider reliability study.
 ## Subsequent accepted implementation — 7 September
 
 Seán accepted the complete integrated review with its qualifications; see the
-[decision record](../docs/architecture-acceptance-2026-09-07.md). It supplies
+[decision record](../docs/archive/architecture-acceptance-2026-09-07.md). It supplies
 initial timing allocations, not measured passes: 100 ms valid-supply software
 reset, 400 ms from watchdog assertion and 550 ms from last earned heartbeat
 through recovery. The watchdog has its own 170–230 ms reset assertion.
@@ -28,7 +27,8 @@ Profiles cannot put sustainer ignition on a recovery channel to bypass the
 post-reset veto. Stage eligibility uses a supervised asynchronous clear and
 hardware disarm qualification on the latch data input, with a raw deliberate
 new-flight request on the clock. Reset propagation and inert traces still need
-proof. Firmware and a valid checkpoint cannot silently defeat physical inhibits.
+proof. Rev A populates channels 1/2 only; channel 3 and the stage latch stay DNP
+until a multistage flight is scheduled (D-6.2). Firmware and a valid checkpoint cannot silently defeat physical inhibits.
 
 The Kármán population has physically unpowered/DNP energetic and servo sections.
 It therefore has no primary recovery-actuation claim; the vehicle separately
@@ -96,8 +96,9 @@ windows and coordination with external supervision remain EX-03/04 work.
 - A reset or error flag alone never authorises deployment. Insufficient
   evidence does not become permission to fire; the declared gap requires
   independent recovery coverage.
-- Existing physical arming, output-off reset defaults, finite one-shot pulses
-  and separate recovery/staging permissives remain in force.
+- The physical arm in the pyro feed, output-off reset defaults, firmware-bounded
+  pulses with a per-channel switch current limit, and the staging inhibit remain
+  in force (D-6.1, D-6.2).
 
 Accepted cost: a recoverable processor reset may end the staging objective.
 Exact reconstruction logic, interruption budgets, actuator-event evidence and
@@ -123,7 +124,7 @@ A conventional barometric backup is not presumed valid near 100 km.
 
 ## Release policy
 
-Adopt [G0–G3](../docs/reliability-execution-plan.md#release-gates): inert bench
+Adopt [G0–G3](../docs/archive/reliability-execution-plan.md#release-gates): inert bench
 work, engineering-PCB order, installed-configuration qualification, then unit
 and mission release. Each gate needs its own evidence and approval. No existing
 flight obligation is waived. Policy acceptance does not authorise a purchase,
@@ -138,7 +139,7 @@ For each exercised row, add the actual phase/arm conditions, detection method
 and coverage limit, numerical response/interruption budget and rationale,
 supported reset/retention class, mission-specific independent coverage, named
 owner/reviewer and linked test result. Use the EX-01 closure criteria in the
-[execution plan](../docs/reliability-execution-plan.md#ex-01--fault-allocation-and-release-policy).
+[execution plan](../docs/archive/reliability-execution-plan.md#ex-01--fault-allocation-and-release-policy).
 
 Do not invent millisecond limits before the dependent power, sensing and restart
 work supports them. Characterisation can proceed within known fixture and

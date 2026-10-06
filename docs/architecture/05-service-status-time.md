@@ -10,8 +10,8 @@ status. No display, RGB controller or extra flight GPIO allocation.
 | Question | Follow through | Source status |
 | --- | --- | --- |
 | What are recovery/readout rules? | [Recording and service contract](justifications/recording-and-service.md), [power recovery](justifications/power-domains.md#exact-capture-delta) | Current bounded proposal |
-| Why these indicators and clocks? | [Service alternatives and timekeeping rationale](implementation-reference/05-service-status-time.md#the-options-and-the-concrete-reasons-for-the-choices) | Earlier component research |
-| Which signals drive each indication? | [Indicator wiring and operator sequence](2026-09-18-review-investigations.md#5-indicators-and-operator-sequence) | Detailed inventory; current recommendation below |
+| Why these indicators and clocks? | [Service alternatives and timekeeping rationale](../archive/architecture/implementation-reference/05-service-status-time.md#the-options-and-the-concrete-reasons-for-the-choices) | Earlier component research |
+| Which signals drive each indication? | [Indicator wiring and operator sequence](../archive/architecture/2026-09-18-review-investigations.md#5-indicators-and-operator-sequence) | Detailed inventory; current recommendation below |
 
 ```mermaid
 flowchart LR
@@ -40,7 +40,7 @@ ground-service sounder"]
 | Flight PWR lamp | Rail has energy without firmware | Does not establish correct voltage or disarm |
 | CPT-9019S-SMT-TR | Passive piezo permits startup tones | Keep silent before calibration/active flight |
 | ECS-160-10-36Q-ES-TR, each MCU | Existing 16 MHz HSE timing source | Clock accuracy still depends on installation |
-| ABS07-32.768KHZ-7-T, flight only | RTC continuity while its supply survives | No backup cell; full power loss loses retention |
+| ABS07-32.768KHZ-7-T, flight only | RTC continuity while VBAT survives | No backup cell; VBAT's 100 µF bridges a dip, not total power loss (D-6.4) |
 
 ## What the operator can actually observe
 
@@ -93,11 +93,11 @@ A comms reset must not restart the flight state machine.
 **Next check:** USB-only boot, stale flight response, failed update/readback,
 comms reset during logging, and reset lamp appearance in the installed bay.
 
-Sources: [indicator wiring and detailed inventory](2026-09-18-review-investigations.md#5-indicators-and-operator-sequence),
-[existing service hardware](implementation-reference/05-service-status-time.md),
+Sources: [indicator wiring and detailed inventory](../archive/architecture/2026-09-18-review-investigations.md#5-indicators-and-operator-sequence),
+[existing service hardware](../archive/architecture/implementation-reference/05-service-status-time.md),
 [reset contract](../../interfaces/reset-recovery-contract.md).
 
-See [connectors and physical arming](09-connectors-arming.md) for the FC battery-enable plug, separate unresolved output-arm assembly and complete connector inventory.
+See [connectors and physical arming](09-connectors-arming.md) for the FC battery-enable plug, the pyro arm connection and the complete connector inventory.
 
 ## Schematic handoff
 
@@ -116,8 +116,8 @@ with age; do not fabricate a measured service-rail voltage or individual PG bit.
 
 GNSS PPS enters **comms**, not flight. Preserve comms epoch, PPS capture time,
 GNSS validity, flight receive time and the uncertainty of the cross-MCU time
-mapping. UART receive time is not a nanosecond GNSS timestamp. Both MCUs' VBAT
-pins use their logic supplies; no independent backup cell exists. Clock/backup
+mapping. UART receive time is not a nanosecond GNSS timestamp. Comms VBAT uses its logic supply;
+flight VBAT has a Schottky and 100 µF hold-up (D-6.4), and no backup cell. Clock/backup
 retention across reset and across total power loss are different claims.
 
 A two-MCU update must read back both running builds and compatible protocol/

@@ -1,22 +1,10 @@
 # Ogma, Foinse, and propulsion boundary
 
-**14 September review reconciliation notice:** the
-[13 September record](../docs/architecture/2026-09-13-session-review.md) records
-a two-local-servo target and CAN FD direction. Input range, rail allocation,
-peer compatibility and timing still need resolution. Electrical definitions
-below remain the preserved draft; these review directions do not silently
-change connector assignments, voltage limits, bus rates or installed hardware.
-
-**11 September review hold:** this contract's electrical and safety obligations
-are unchanged. The [joint-review record](../docs/architecture/2026-09-10-session-review.md)
-identifies proposed changes; none is implemented or accepted here. Earlier
-instructions below to proceed with schematics are superseded by Seán's explicit
-hold: no schematic/PCB changes until the final stack is authorized.
-
-Updated: 7 September 2026
-
-Status: current owned architecture boundary; Croí/Foinse implementation baseline
-accepted, propulsion load sizing and cross-project message implementation open
+**Status (6 Oct 2026):** controlling contract. Electrical details describe the
+8 September CAD; decided changes are in [decisions.md](../decisions.md) and the
+[capture delta](../docs/architecture/schematic-capture-spec.md). Capture waits
+for Seán's go-ahead. The LTS copy in
+`lts-controls/interfaces/` points here; if they differ, this file wins.
 
 Authority: [`../current-system.md`](../current-system.md)
 
@@ -27,11 +15,11 @@ conflict.
 
 Foinse 2 is MCU-less and has no firmware image. Its source/protection circuitry
 can still have electrical supply dependencies; the
-[power review](../docs/reliability-design-review.md#51-mcu-less-foinse-startup)
+[power review](../docs/archive/reliability-design-review.md#51-mcu-less-foinse-startup)
 and [EX-02 power contract](power-contract.md) examine those without adding a
 processor. Seán accepted retaining the protected auxiliary return subject to
 autonomous source/protection operation and demonstrated fault containment.
-The [7 September acceptance](../docs/architecture-acceptance-2026-09-07.md)
+The [7 September acceptance](../docs/archive/architecture-acceptance-2026-09-07.md)
 selects the Croí/Foinse parts and connectors. This does not change any system's
 authority or edit the LTS project.
 
@@ -40,10 +28,11 @@ authority or edit the LTS project.
 and INA228 0x40, including standalone operation; Foinse retains propulsion INA
 0x41 and ADS1115 0x48. The Samtec pinout and power authority are unchanged.
 FOINSE_RETURN_EN must also enable Croí-local monitoring without Foinse present.
-No duplicate Foinse AV shunt remains. All Croí battery load takeoffs, including
-future physical arm feeds, must follow its shunt; USB/charging/propulsion remain
-outside that measured path. Monitoring never enables autonomous protection.
-See [the revision contract](../docs/sensing-indication-time-review-2026-09-07.md).
+No duplicate Foinse AV shunt remains. Croí logic takeoffs follow its shunt. Pyro and
+servo energy leave before U101 through their own fuses and bypass it (D-6.1);
+per-channel current comes from the TPS1H100 sense. USB/charging/propulsion remain
+outside the measured path. Monitoring never enables autonomous protection.
+See [the revision contract](../docs/archive/sensing-indication-time-review-2026-09-07.md).
 
 ## Authority
 
@@ -51,7 +40,7 @@ See [the revision contract](../docs/sensing-indication-time-review-2026-09-07.md
 | --- | --- | --- |
 | Ogma 2 | Vehicle mission state, high-level engine requests, bounded propulsion summaries, recovery, and staged-flight energetic authority | Engine redlines, main-engine actuation, GSE, or propulsion power distribution |
 | Propulsion controller | Engine-critical acquisition, local state/redlines, main-engine valves, ignition, local abort, and local full-rate evidence | General GSE sequencing, research-only stand DAQ, or vehicle recovery |
-| Foinse 2 | Vehicle source entry, protection, charging functions, and vehicle-specific power distribution | Flight state, propulsion state, redlines, or command decisions |
+| Foinse 2 | Vehicle source entry, protection and vehicle-specific power distribution. No onboard charging | Flight state, propulsion state, redlines, or command decisions |
 
 The propulsion controller is a self-governing peer. It must perform its defined
 local safe response while Ogma is reset, CAN is absent or corrupt, and the
@@ -119,7 +108,7 @@ review. It does not silently impose an operator-presence requirement on flight.
 - Croí uses one protected 2S feed, provisional 6 A aggregate, through the
   Samtec MPS-08-01-01-L-RA-SD (Foinse) / MPT-08-01-01-L-RA-SD (Croí) pair.
   Pins 1/2 are VBAT/return, 3/4 protected auxiliary 3.3 V/return, 5/6 local
-  monitor SCL/SDA, 7 nFAULT and 8 NC. Both ground paths must independently
+  monitor SCL/SDA, 7 nFAULT and 8 `CROI_POWER_HOLD` (D-6.3). Both ground paths must independently
   withstand the full alternate fault return. No charger or propulsion current
   is allocated through Croí. The coplanar assembly needs a retention bridge.
 - Foinse source protection is pack-powered TPS26630/CSD18540; INA228 and
@@ -145,7 +134,11 @@ review. It does not silently impose an operator-presence requirement on flight.
   power absent, followed by controlled auxiliary-branch fault containment;
 - failure of Ogma's logic rail without unsafe propulsion output;
 - full-rate local evidence and first-fault retention through the above;
-- production Ogma/emulator interchange without adding another CAN node.
+- production Ogma/emulator interchange without adding another CAN node;
+- Ogma held in reset with propulsion active.
+
+Specify retained evidence separately for host loss, MCU reset and total power
+loss. These are tests to perform, not existing qualification results.
 
 ## Change rule
 

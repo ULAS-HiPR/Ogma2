@@ -1,26 +1,14 @@
 # Ogma 2 power contract
 
-**14 September review reconciliation notice:** the
-[13 September record](../docs/architecture/2026-09-13-session-review.md) records
-a two-local-servo target and CAN FD direction. Input range, rail allocation,
-peer compatibility and timing still need resolution. Electrical definitions
-below remain the preserved draft; these review directions do not silently
-change connector assignments, voltage limits, bus rates or installed hardware.
-
-**11 September review hold:** this contract's electrical and safety obligations
-are unchanged. The [joint-review record](../docs/architecture/2026-09-10-session-review.md)
-identifies proposed changes; none is implemented or accepted here. Earlier
-instructions below to proceed with schematics are superseded by Seán's explicit
-hold: no schematic/PCB changes until the final stack is authorized.
-
-Updated: 8 September 2026
-Status: EX-02 and the complete architecture review accepted; circuit completion
-and hardware verification remain open.
+**Status (6 Oct 2026):** controlling contract. Electrical details describe the
+8 September CAD; decided changes are in [decisions.md](../decisions.md) and the
+[capture delta](../docs/architecture/schematic-capture-spec.md). Capture waits
+for Seán's go-ahead.
 
 ## 8 September source-enable implementation
 
 Authorised change, installed in the checked native CAD draft; see the
-[change record](../docs/installation-change-record-2026-09-08.md),
+[change record](../docs/archive/installation-change-record-2026-09-08.md),
 [current system](../current-system.md) and project log. Existing battery
 limits, autonomous protection, source exclusion, MCU pins and physical arming
 requirements are unchanged.
@@ -49,13 +37,15 @@ at nominal 2S and 2.3 mA at nominal 6S, plus existing leakage/sensing/shutdown
 currents. These upstream currents are outside the discharge shunts. Unplug
 packs for storage. Power indication and source enable never establish disarm.
 
-This adds no physical pyro/servo energy break, independent disarm proof or
-charging exclusion. Those remain separate unresolved assemblies. A shorted
+The source enable is not an energy break. Pyro energy is broken by the J6101
+arm switch (D-6.1); charging exclusion remains a separate assembly. A shorted
 contact forces enable; clamp-open or a semiconductor fault is not contained by
 this switch circuit. Cold/minimum-pack diode headroom, assembled thermal/surge
 response, cable ESD, open-wire leakage and retained-contact vibration/bounce
 need tests. The 100nF filter is not a debounce guarantee. SHDN cycling resets
-a latched eFuse fault and may cause repeated board resets.
+a latched eFuse fault and may cause repeated board resets. From 6 October
+(D-6.3) firmware holds SHDN high in flight through `FC_POWER_HOLD` (Croí
+directly, Churro AV over Samtec pin 8), and U101/U1001 auto-retry.
 
 The 6 A Croí/avionics, roughly 3 A propulsion and 2 A shared-servo starting
 limits are unchanged, provisional and not load qualification. The new switch
@@ -70,21 +60,22 @@ starting limit is unchanged and is not proof of three-servo/grid-fin capacity.
 Selected actuator voltage, simultaneous/stall demand, regeneration and upstream
 protection selectivity must close before the existing DNP energy link is released.
 No Foinse power-boundary change is implied. See the
-[accepted revision](../docs/connector-servo-readiness-revision-2026-09-07.md).
+[accepted revision](../docs/archive/connector-servo-readiness-revision-2026-09-07.md).
 
 
 7 September sensing revision: Croí owns the common protected AV discharge shunt
 and INA228 0x40, including standalone operation; Foinse retains propulsion INA
 0x41 and ADS1115 0x48. The Samtec pinout and power authority are unchanged.
 FOINSE_RETURN_EN must also enable Croí-local monitoring without Foinse present.
-No duplicate Foinse AV shunt remains. All Croí battery load takeoffs, including
-future physical arm feeds, must follow its shunt; USB/charging/propulsion remain
-outside that measured path. Monitoring never enables autonomous protection.
-See [the revision contract](../docs/sensing-indication-time-review-2026-09-07.md).
+No duplicate Foinse AV shunt remains. Croí logic takeoffs follow its shunt. Pyro and
+servo energy leave before U101 through their own fuses and bypass it (D-6.1);
+per-channel current comes from the TPS1H100 sense. USB/charging/propulsion remain
+outside the measured path. Monitoring never enables autonomous protection.
+See [the revision contract](../docs/archive/sensing-indication-time-review-2026-09-07.md).
 
 ## Accepted implementation update — 7 September
 
-The [batch acceptance](../docs/architecture-acceptance-2026-09-07.md) and its
+The [batch acceptance](../docs/archive/architecture-acceptance-2026-09-07.md) and its
 linked integrated review supersede the earlier candidate/open wording below.
 Use 2S, TPS2121 battery/USB logic-source selection, TPSM63603RDHR at 4.0 V,
 three TPS7A9101DSKR 3.3 V domains and a TPS70933 bootstrap supply. No logic boost
@@ -234,7 +225,7 @@ The retained chain came from the Rev 1 external review supplied again by Seán
 on 6 September. The rationale is efficient preregulation followed by a genuinely
 low-noise post-regulator, with mechanically suitable packaging. Its provenance
 and the associated packaging feedback are recorded in the
-[external-review note](../docs/rev1-external-review-lessons.md).
+[external-review note](../docs/archive/rev1-external-review-lessons.md).
 
 Shortlist integrated switching modules and compact integrated-switching IC
 solutions; distinguish a module with an internal inductor from a converter IC
@@ -292,7 +283,7 @@ capacity or flight endurance is claimed here.
 
 ## First experiment and closure
 
-Use [PWR-01](../docs/reliability-execution-plan.md#experiment-pwr-01-source-transition-and-branch-containment)
+Use [PWR-01](../docs/archive/reliability-execution-plan.md#experiment-pwr-01-source-transition-and-branch-containment)
 on identified blocks of the first full PCBA with current-limited supplies and
 inert loads. A separate pre-order coupon is not required. Begin with
 cold startup with the Foinse return absent, then controlled optional-branch

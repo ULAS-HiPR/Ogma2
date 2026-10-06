@@ -18,6 +18,22 @@ repository's [processor chapter](architecture/01-mcus.md),
 pin tables for current review. No target firmware implementation is present on
 the inspected review branch; this document does not prove driver completion.
 
+## 6 October changes that affect firmware
+
+- Both MCUs are STM32H563: Cortex-M33 with single-precision FPU. Build flags
+  `-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard` hold for either comms package.
+- Flight pins ([capture delta](architecture/schematic-capture-spec.md#burrito-capture-delta)):
+  PE5 → `FC_POWER_HOLD` (assert at launch detect, release after LANDED);
+  PE7/PE9 → `PYRO1_FIRE`/`PYRO2_FIRE` straight to the TPS1H100s; PE6, PA8, PA9,
+  PA10, PE8, PE10, PE13, PE14 spare; PD14/PD15 staging latch DNP.
+- Sensors have no power enables: recover I²C by clocking SCL, sensors by soft reset.
+- No one-shots: firmware bounds every firing pulse and fires one channel at a time.
+- Enable the backup regulator so backup SRAM survives on VBAT's hold-up.
+- Recording: full rate from launch detect with a RAM pre-trigger; erase-ahead
+  only before launch detect.
+- Event logic draft for your review: [recovery logic](architecture/10-recovery-logic.md).
+- Decisions: [decisions.md](../decisions.md).
+
 ## Read first: external GNSS and power-enable revision
 
 U4504 is MAX-M10S-00B with an external passive antenna, vertical SMA and RF ESD
@@ -41,7 +57,7 @@ Do not infer physical disarm from power enable or the green readiness LED.
 
 No flight/comms GPIO allocation, bus address, servo timer or firmware ownership
 changes. The 28 DNP safeguards and unfinished physical arm assembly remain.
-[Exact circuit and harness delta](installation-change-record-2026-09-08.md).
+[Exact circuit and harness delta](archive/installation-change-record-2026-09-08.md).
 
 ## Latest accepted change: three servos and complementary readiness
 
@@ -62,7 +78,7 @@ R6804 DNP remain; shared nominal 2A is provisional, not grid-fin qualification.
 J6602 = 430451000, NEW ten-contact pinout: servo1 PWR/PWM/GND = 1/2/3;
 servo2 = 4/5/6; servo3 = 7/8/9; pin10 NC. Old eight-contact harness is obsolete.
 Radio J4601 = standard vertical SMA 132134; radio GPIO/driver contract unchanged.
-USB unchanged. [Full change and tests](connector-servo-readiness-revision-2026-09-07.md).
+USB unchanged. [Full change and tests](archive/connector-servo-readiness-revision-2026-09-07.md).
 
 
 7 September 2026. Self-contained paste-to-Claude handoff. Supersedes the
@@ -198,10 +214,10 @@ exact revision/startup configuration still needs driver-source confirmation.
 Only sub-GHz RF is connected. No high-band TX. Bounded failures and reset
 reinitialisation stay in comms; firmware implementation remains Anav's.
 
-The [complete radio contract](radio-change-2026-09-07.md) supplies the exact
+The [complete radio contract](archive/radio-change-2026-09-07.md) supplies the exact
 22-contact map, hardware delta and remaining checks. It supersedes older
 radio rows in historical research files. The accepted
-[sensor checklist](sensor-configuration-review-2026-09-07.md) adds no sensor
+[sensor checklist](archive/sensor-configuration-review-2026-09-07.md) adds no sensor
 or physical pin change.
 
 The following consolidates the earlier handoff with superseded wording updated.
@@ -221,7 +237,7 @@ Use these machine-readable hardware inputs:
   [comms physical pads](../hardware/croi2/libraries/inputs/comms-pinout.csv).
 - [DMA allocation](../../architecture-review-2026-09-06/research/dma-allocation.csv).
 - [Selected sensors/NOR](../../architecture-review-2026-09-06/research/sensors-rf-selected-components.csv)
-  (its E22 row is superseded); [current radio map](radio-change-2026-09-07.md).
+  (its E22 row is superseded); [current radio map](archive/radio-change-2026-09-07.md).
 - [MCU rationale, addresses and manufacturer evidence](../../architecture-review-2026-09-06/research/mcu-and-pinout.md).
 
 They contain 100 physical pads per MCU, including supplies. Flight has no free

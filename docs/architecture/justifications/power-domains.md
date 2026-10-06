@@ -45,8 +45,8 @@ recovery; retain the common converter for this revision.
 | R1701/R1801/R1901 | **31.9 kΩ, 0.1%**, each; lower resistors remain 10 kΩ, 0.1% → 3.352 V nominal on all three domains |
 | R1604 | Change 56.2 kΩ to **49.9 kΩ, 1%**; calculated limit 470–588 mA |
 | 3V3_OPTIONAL | Keep the net identifier during capture; use “services” in human-facing labels. It powers NOR/CAN/AUX/sounder, not comms |
-| Local enables/boundaries | Retain sensor/NOR/CAN/AUX limits and partial-power signal isolation |
-| Source logic | Preserve BAT_VALID/USB_CONFIG_OK core enable and battery-priority comms enable |
+| Local enables/boundaries | Retain NOR/CAN/AUX limits and partial-power signal isolation; sensors direct from FLIGHT_3V3 (D-6.6) |
+| Source logic | Core enable from 4V_PRE presence (D-6.5); keep battery-priority comms enable |
 
 PD10 is the only new flight allocation. No output-authority or arm-sense pin is
 reused. The proposed flight CSV records this delta; original frozen input CSVs
@@ -112,15 +112,12 @@ comms. Even simultaneous comms/service input limits plus 200 mA flight are about
 
 ## USB and endurance choices
 
-Retain U4401/U4402 and the original two-level current-permission circuit. USB-only
-bootstrap: ≤35 mA measured VBUS steady, reduced-clock comms/USB, all peripherals
-off. Configured download: ≤300 mA VBUS, only reduced-clock flight/comms and NOR;
+Superseded 6 October (D-6.5): U4402 removed; U4401 limits at 387–491 mA from
+attach and USB-only starts the flight core and comms at reduced clock. Configured download: ≤300 mA VBUS, only reduced-clock flight/comms and NOR;
 no CAN/RF/GNSS/sounder. Sequence optional health measurements. Battery presence
-permits normal operation; USB alone never implies full-load operation. Reset,
-suspend and deconfiguration withdraw load permission; suspend needs its own
-compliant low-power state, not merely the 35 mA bootstrap state.
+permits normal operation; USB alone never implies full-load operation. Suspend is not supported.
 
-**Size the reference AV pack around 2S, 8 Ah nominal.** Required usable energy is
+**Kármán overlay (D-6.8): size the reference AV pack around 2S, 8 Ah nominal.** The workhorse pack comes from measured loads. Required usable energy is
 at least **30 Wh at the installed temperature/load/UVLO**, not nameplate capacity.
 Conservative budget: 8 h at 2.8 W/85% conversion plus 0.10 W upstream overhead,
 then 4 h at 0.4 W/75% plus that overhead = **29.69 Wh**. 7.4 V × 8 Ah × a
@@ -138,5 +135,5 @@ Sources: [preserved netlist](../../../hardware/croi2/output/full-netlist.xml),
 [TPS2553](https://www.ti.com/lit/ds/symlink/tps2553.pdf),
 [TPS7A91](https://www.ti.com/lit/ds/symlink/tps7a91.pdf),
 [TPS3808](https://www.ti.com/lit/ds/symlink/tps3808.pdf),
-[accepted platform envelope](../../karman-line-mission-hardening-report.md#accepted-provisional-platform-envelope),
+[accepted platform envelope](../../archive/karman-line-mission-hardening-report.md#accepted-provisional-platform-envelope),
 [reproducible calculations](../../calculations/component-proposal-checks.py).

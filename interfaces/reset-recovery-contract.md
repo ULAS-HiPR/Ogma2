@@ -1,10 +1,9 @@
 # Ogma 2 reset, retained state and time contract
 
-**11 September review hold:** this contract's electrical and safety obligations
-are unchanged. The [joint-review record](../docs/architecture/2026-09-10-session-review.md)
-identifies proposed changes; none is implemented or accepted here. Earlier
-instructions below to proceed with schematics are superseded by Seán's explicit
-hold: no schematic/PCB changes until the final stack is authorized.
+**Status (6 Oct 2026):** controlling contract. Electrical details describe the
+8 September CAD; decided changes are in [decisions.md](../decisions.md) and the
+[capture delta](../docs/architecture/schematic-capture-spec.md). Capture waits
+for Seán's go-ahead.
 
 Updated: 7 September 2026
 Status: EX-03 defaults accepted by Seán. Initial host model exists; MCU-specific
@@ -14,10 +13,11 @@ Authority: [current system](../current-system.md),
 [flight fault contract](flight-fault-contract.md) and [power contract](power-contract.md).
 Seán accepted all five EX-03 recommendations before requesting the next review.
 
-The subsequent [batch acceptance](../docs/architecture-acceptance-2026-09-07.md)
+The subsequent [batch acceptance](../docs/archive/architecture-acceptance-2026-09-07.md)
 selects STM32H563VIT6 for both roles. Flight uses the H563 backup domain for two
-1 KiB checkpoint slots, with VBAT tied to held flight 3.3 V; there is no
-independent backup source. An LSE/RTC provides the proposed retained time base.
+1 KiB checkpoint slots. VBAT is fed from flight 3.3 V through a Schottky with
+100 µF of its own (D-6.4), so retention outlives a short supply dip; there is
+still no backup cell. An LSE/RTC provides the proposed retained time base.
 No retained state/time survives loss of its actual supply by assumption.
 SRAM2/3 ECC placement, reset-aware initialisation and checkpoint-port evidence
 remain required; host-model passes are not hardware proof.
@@ -123,7 +123,7 @@ hardware survival or flight-readiness claim follows from passing it.
 
 ## Closure and next checkpoint
 
-Use [RST-01](../docs/reliability-execution-plan.md#experiment-rst-01-restart-with-known-evidence)
+Use [RST-01](../docs/archive/reliability-execution-plan.md#experiment-rst-01-restart-with-known-evidence)
 to extend the model onto the selected device. Declare per-phase interruption,
 state-age and uncertainty limits before claiming a pass. Measure reset release,
 first essential execution, first valid sample/state and optional-service return

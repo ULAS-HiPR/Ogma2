@@ -1,15 +1,15 @@
 # Sensors and the flight record
 
-**22 September · proposal · retain the five sensors and 256 MiB NOR.**
+**22 September · proposal, amended by [D-6.6, D-6.9](../../decisions.md) · retain the five sensors and 256 MiB NOR.**
 
 ## Justification and deeper detail
 
 | Question | Follow through | Source status |
 | --- | --- | --- |
 | What is the actual commit/preparation contract? | [Sector-aligned format and capacity justification](justifications/recording-and-service.md) | Current 15-page + footer proposal supersedes the 16-page candidate |
-| Why these five sensors? | [Device-by-device selection rationale](implementation-reference/07-sensors-logging.md#the-selection-reasoning-device-by-device) | Ranges, alternatives and manufacturer sources |
-| Why NOR rather than SD? | [Capacity and medium comparison](implementation-reference/07-sensors-logging.md#why-256-mib-nor-rather-than-smaller-flash-or-sd) | Earlier storage research |
-| What supports rates and capacity? | [Power, recording and CAN audit](../power-recording-can-audit-2026-09-11.md); [current proposal calculations](../calculations/component-proposal-checks.py) | Baseline ledger plus current additions |
+| Why these five sensors? | [Device-by-device selection rationale](../archive/architecture/implementation-reference/07-sensors-logging.md#the-selection-reasoning-device-by-device) | Ranges, alternatives and manufacturer sources |
+| Why NOR rather than SD? | [Capacity and medium comparison](../archive/architecture/implementation-reference/07-sensors-logging.md#why-256-mib-nor-rather-than-smaller-flash-or-sd) | Earlier storage research |
+| What supports rates and capacity? | [Power, recording and CAN audit](../archive/power-recording-can-audit-2026-09-11.md); [current proposal calculations](../calculations/component-proposal-checks.py) | Baseline ledger plus current additions |
 
 ```mermaid
 flowchart LR
@@ -52,19 +52,18 @@ upstream power and blocked pressure vent remain common faults.
 
 ```mermaid
 flowchart LR
-  F["FLIGHT_3V3"] --> L["TPS2553DBVR-1
-one per sensor · U3101–U3501"]
-  L --> S["Sensor supply
-and sensor-side interface supply"]
-  M["Flight MCU signals"] <-->|"SPI: TXU0304 + TXU0101
-I2C: TMUX1511"| S
+  F["FLIGHT_3V3"] -->|"0 Ω link per sensor
+R3101–R3501"| S["Five sensors"]
+  M["Flight MCU signals"] <-->|"SPI with 22 Ω damping
+I2C pulled up to FLIGHT_3V3"| S
   P["3V3_OPTIONAL · services"] --> NL["TPS2553DBVR-1 · U3601"]
   NL --> N["NOR supply + TMUX1511 boundaries"]
 ```
 
-Retain individually controlled sensor enables: a latch-off branch needs an
-explicit restart path. Power switching alone cannot stop signal back-power.
-Retries are bounded; persistent faults stay disabled.
+Sensors run directly from FLIGHT_3V3 (D-6.6). No per-sensor switches or
+isolators: they guarded a rare sensor short or latch-up with 13 ICs, each a new
+way to lose a sensor. Firmware recovers a hung I²C bus by clocking SCL and
+resets a misbehaving sensor with its soft-reset command.
 
 Exact flight buses: ST PA5/6/7; TDK PB13/14/15; ADXL PC10/11/12;
 BMP PB6/7; TE PB10/PB3. NOR: PB2 clock, PE11 select,
@@ -73,9 +72,10 @@ PD11 IO0, PD12 IO1, **PE2 IO2**, PD13 IO3. Control/interrupts remain in the
 
 ## Recording
 
-**Recommend continuous prepared recording with event markers.** Retain at least
-a proposed ten seconds before launch; use low-rate pad logging outside the
-bounded full-rate window. No separate comms flash: forward bounded diagnostics
+**Full rate from launch detect, with a RAM pre-trigger (D-6.9).** Log at low
+rate on the pad. Keep about 1 s of full-rate samples, or about 10 s decimated,
+in a RAM ring and commit it at launch detect. Continue full rate to LANDED plus
+a configured tail. No separate comms flash: forward bounded diagnostics
 to the existing recorder, with source/time/reset identity and drop counters.
 
 | Failure | Shared flight NOR proposal | Extra comms flash would change |
@@ -103,11 +103,12 @@ This replaces the 16-page candidate that crossed erase boundaries. Full footer
 layout, timestamp/identity rules and byte accounting are in the
 [recording specification](justifications/recording-and-service.md#use-one-erase-sector-per-commit).
 
-Pre-erase/blank-check only in explicit ground service. Preparing all 192 MiB
-with 64 KiB erases can take **102.4 minutes at the published maximum**, plus
-verification. It cannot be a hidden boot prerequisite. No erase while acquiring;
-reserve a full mission window before claiming recorder-ready. Waiting/aborted
-attempts consume space. Full-rate pad logging for hours does not fit.
+Erase ahead of the write pointer is allowed until launch detect and never
+after. Full preparation of 192 MiB with 64 KiB erases can take **102.4 minutes
+at the published maximum**; it is a service operation, never a boot
+prerequisite. Report recorder-ready only with a full mission window erased. The
+192 MiB window and the 30-minute full-rate figure belong to the Kármán overlay
+(D-6.8); the workhorse window comes from the vehicle's flight time.
 
 Proposed measured useful throughput target: **≥125 kB/s**, concurrently with
 acquisition and CRC/commit work. The 1.5 ms maximum program-time calculation gives
@@ -116,9 +117,9 @@ acquisition and CRC/commit work. The 1.5 ms maximum program-time calculation giv
 
 ## Schematic handoff
 
-Retain sensor/NOR hardware and individual enables/boundaries. Sensor ILIM tied
-to IN intentionally selects 50–100 mA limits; it is not a missing resistor.
-Local trips have bounded restart and cannot stall essential flight work. The
+Retain the sensors and NOR hardware; remove the per-sensor switches and
+isolators listed in the [capture delta](schematic-capture-spec.md#burrito-capture-delta).
+NOR keeps its limiter and boundaries. The
 separate comms regulator now preserves NOR supply through a comms-LDO fault;
 a service-regulator fault still removes it. Hold-up protects flight execution,
 not a final flash commit.
@@ -129,6 +130,6 @@ Firmware ranges/rates must account for conversion/filter delay, clipping and
 freshness. Both low-g and both pressure channels can become unusable together;
 component diversity is not full-envelope coverage.
 
-Sources: [device/configuration rationale](implementation-reference/07-sensors-logging.md),
-[retained configuration review](../sensor-configuration-review-2026-09-07.md),
+Sources: [device/configuration rationale](../archive/architecture/implementation-reference/07-sensors-logging.md),
+[retained configuration review](../archive/sensor-configuration-review-2026-09-07.md),
 [current format/calculation sources](justifications/recording-and-service.md).

@@ -1,6 +1,6 @@
 # Two local servo interfaces
 
-**22 September · proposal · CAD still has three channels.**
+**22 September · proposal, servo feed amended by [D-6.1, D-6.7](../../decisions.md) · CAD still has three channels.**
 
 Use **PC6/PC7, TIM3**, through the existing **TXU0304PWR** powered-off signal
 boundary. Two channels match the review direction; no PWM expander is needed.
@@ -13,9 +13,9 @@ are an installation choice within that envelope.
 | Question | Follow through | Source status |
 | --- | --- | --- |
 | What is the actual capture baseline? | [Bounded PWM/power interface and local-control decision](justifications/interfaces-and-installation.md#two-local-pwm-interfaces-no-speculative-remote-node) | Current recommendation; electrical interface chosen, mechanism qualification separate |
-| Why direct PWM and a buffer? | [Timer choice and interface alternatives](implementation-reference/04-servos.md#why-direct-timers) | Earlier circuit reasoning; current target is two channels |
-| What determines remote control and supply? | [CAN FD, latency and stall investigation](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) | Numerical examples; control split remains open |
-| Which harness is retained? | [Connector revision and mating parts](../connector-servo-readiness-revision-2026-09-07.md#j6602-servo-harness-new-ten-contact-connector) | Preserved three-channel harness; current two-group proposal below |
+| Why direct PWM and a buffer? | [Timer choice and interface alternatives](../archive/architecture/implementation-reference/04-servos.md#why-direct-timers) | Earlier circuit reasoning; current target is two channels |
+| What determines remote control and supply? | [CAN FD, latency and stall investigation](../archive/architecture/2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) | Numerical examples; control split remains open |
+| Which harness is retained? | [Connector revision and mating parts](../archive/connector-servo-readiness-revision-2026-09-07.md#j6602-servo-harness-new-ten-contact-connector) | Preserved three-channel harness; current two-group proposal below |
 
 ```mermaid
 flowchart LR
@@ -24,8 +24,8 @@ PC6 / PC7 · TIM3"] -->|"two PWM signals"| B["TXU0304PWR
 U6804 · partial-power boundary"]
   B -->|"PWM1 / PWM2"| J["Retain J6602
 Molex 430451000 · 10 contacts"]
-  V["Battery-derived servo supply
-physical enable boundary"] --> W["TPS1H100BQPWPRQ1
+  V["ENERGY_TAP → F6801 servo fuse
+not behind the pyro arm"] --> W["TPS1H100BQPWPRQ1
 U6802 · common switch / limit"]
   W -->|"servo energy"| J
   W --> L["TPS70933DBVR · U6803
@@ -58,7 +58,11 @@ actuators must accept the installed source range including 8.4 V fully charged
 and 3.3 V command levels. Combined normal motor allocation: **1.5 A**.
 R6802 1.24 kΩ 1% sets ~1.989 A nominal limit; the source-derived overload bounds
 and their limitations are in the [justification](justifications/interfaces-and-installation.md#two-local-pwm-interfaces-no-speculative-remote-node).
-R6804 stays DNP. No motor power or shared energetic-enable arrangement is enabled.
+Servo energy now comes from `ENERGY_TAP`, before U101's switch, through its own
+≈4 A fuse F6801; R6804 is fitted. It is not behind the pyro arm, so servos can
+be checked on the pad with the outputs safe. Add ≥220 µF on SERVO_VBAT at J6602:
+regeneration returns to the battery through the fuse instead of into the logic
+input (D-6.7).
 
 One fault can remove both motor channels. A different voltage, higher stall/start
 current or unacceptable shared failure needs a separate interface revision.
@@ -88,5 +92,5 @@ channels retain powered-off boundaries and off defaults. PD10 becomes
 SERVICE_POWER_EN in the [proposed map](proposed-flight-pinout.csv).
 
 This closes the board interface. It does not select or qualify a vehicle
-mechanism. Preserve the energy-link DNP and the separate unresolved output-arm
-boundary. [Capture delta](schematic-capture-spec.md#burrito-capture-delta).
+mechanism. Back-drive the chosen servo on the bench and scope the battery side
+before flight. [Capture delta](schematic-capture-spec.md#burrito-capture-delta).

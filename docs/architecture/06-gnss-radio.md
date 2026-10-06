@@ -7,8 +7,8 @@
 | Question | Follow through | Source status |
 | --- | --- | --- |
 | What can we actually connect for bring-up? | [Passive antenna and matched Wio reference assembly](justifications/interfaces-and-installation.md#rf-reference-assembly) | Concrete commissioning choice; vehicle mount/link still to qualify |
-| Why MAX-M10S? | [GNSS shortlist and external-antenna rationale](implementation-reference/06-gnss-radio.md#the-gnss-shortlist-and-why-the-answer-changed) | Earlier research and manufacturer links |
-| Why Wio-LR2021? | [Radio options and link tradeoffs](implementation-reference/06-gnss-radio.md#radio-options-cost-and-link-tradeoffs) | Earlier research; receiver compatibility still needs testing |
+| Why MAX-M10S? | [GNSS shortlist and external-antenna rationale](../archive/architecture/implementation-reference/06-gnss-radio.md#the-gnss-shortlist-and-why-the-answer-changed) | Earlier research and manufacturer links |
+| Why Wio-LR2021? | [Radio options and link tradeoffs](../archive/architecture/implementation-reference/06-gnss-radio.md#radio-options-cost-and-link-tradeoffs) | Earlier research; receiver compatibility still needs testing |
 | Where does packet airtime come from? | [Airtime calculation](../calculations/avionics-options-estimates.py) | Reproducible estimate, not measured link performance |
 
 ```mermaid
@@ -86,7 +86,7 @@ has a justified exact part selection yet.
 
 Sources: [u-blox MAX-M10S datasheet](https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf),
 [Wio datasheet](https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf),
-[RF installation and alternatives](implementation-reference/06-gnss-radio.md),
+[RF installation and alternatives](../archive/architecture/implementation-reference/06-gnss-radio.md),
 [airtime calculation](../calculations/avionics-options-estimates.py).
 
 ## Schematic handoff

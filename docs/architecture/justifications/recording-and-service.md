@@ -77,7 +77,8 @@ attempts and damaged/skipped sectors must all fit the remaining region. Reserve
 the next full mission window before reporting recorder-ready. Full-rate logging
 for hours is outside this budget. Use a rolling ten-second RAM history only if
 another explicit RAM allocation exists; the writer queue is not that history.
-The baseline instead continuously writes prepared space with event markers.
+Superseded 6 October (D-6.9): full rate from launch detect with a RAM
+pre-trigger; erase-ahead allowed until launch detect.
 
 Prepare while disarmed, after explicit extraction/discard of old data. Use
 64 KiB block erases within the recording region, blank-check before use and
@@ -116,7 +117,7 @@ responses remain visible; a responsive comms MCU cannot assert flight readiness.
 
 - [Macronix Rev 1.1 manufacturer PDF](https://www.macronix.com/Lists/Datasheet/Attachments/8959/MX66L2G45G%2C%203V%2C%202Gb%2C%20v1.1.pdf): indexed manufacturer timing table supports 1.5 ms page, 400 ms sector, 2 s 64 KiB erase and 300 s chip maxima. Full Rev 1.1 download was unavailable in this pass.
 - [Manufacturer-authored Rev 1.0 PDF mirror inspected](https://static6.arrow.com/aropdfconversion/5e45eabe6084505d7e235405c4b6448828ec4498/mx66l2g45g203v202gb20v1.0.pdf): full command/timing context; its ordering list is BGA, so it is not claimed as the exact fitted SOP ordering revision.
-- [Existing recording budget](../../power-recording-can-audit-2026-09-11.md), [current reproducible checks](../../calculations/component-proposal-checks.py).
+- [Existing recording budget](../../archive/power-recording-can-audit-2026-09-11.md), [current reproducible checks](../../calculations/component-proposal-checks.py).
 
 The exact ordering/revision source and driver operation remain capture/bring-up
 checks. Existing geometry/pin mapping is retained; no timing figure constitutes

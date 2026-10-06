@@ -7,8 +7,8 @@
 | Question | Follow through | Source status |
 | --- | --- | --- |
 | What closes the unfinished Churro inputs? | [Exact probes, bias reference, cable protection, source envelope and fuses](justifications/churro-monitoring.md) | Current capture proposal, not installed/qualified hardware |
-| Why this power companion? | [Churro component rationale](implementation-reference/08-foinse-can.md) | Preserved circuit and selection research |
-| Where does the FD budget come from? | [CAN FD and end-to-end timing investigation](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) | Proposed traffic assumptions; not the active peer contract |
+| Why this power companion? | [Churro component rationale](../archive/architecture/implementation-reference/08-foinse-can.md) | Preserved circuit and selection research |
+| Where does the FD budget come from? | [CAN FD and end-to-end timing investigation](../archive/architecture/2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation) | Proposed traffic assumptions; not the active peer contract |
 | What is the active vehicle interface? | [Controlled Ogma/Foinse/propulsion boundary](../../interfaces/ogma-foinse-propulsion-boundary.md) | Preserved contract until joint revision |
 
 ## Source and monitoring connections
@@ -41,11 +41,11 @@ avionics current, including standalone use; do not duplicate it on Churro.
 | INA228AIDGSR | Propulsion discharge measurement; no claim of valve motion |
 | ADS1115IDGSR | Two temperatures + two voltages |
 | TCA4307DGKR | Recover/isolate a stuck monitor bus; not a power-start prerequisite |
-| Existing JST GH external enable loops | Close to enable; open to electronic OFF; no load current through switch |
+| Existing JST GH external enable loops | Close to enable; open to electronic OFF; no load current through switch. In flight, Burrito holds AV on over Samtec pin 8 (D-6.3) |
 | External pack-matched balance chargers | No onboard charger, BMS or speculative 24 V converter added |
 
 Samtec contacts: **1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA,
-7 fault, 8 NC**. Each ground path must tolerate the alternative fault return;
+7 fault, 8 `CROI_POWER_HOLD`** (D-6.3). Each ground path must tolerate the alternative fault return;
 CAN reference must not become the propulsion power return.
 
 A nominal 24 V coil does not establish direct 6S compatibility. Keep the
@@ -114,9 +114,9 @@ Command sequence/age and local expiry behavior remain mandatory design inputs.
 longest harness. Churro separately needs source/AUX-absent startup and return-path
 checks. Vehicle-specific motors, coils and charging remain outside this core proposal.
 
-Sources: [existing Foinse implementation](implementation-reference/08-foinse-can.md),
+Sources: [existing Foinse implementation](../archive/architecture/implementation-reference/08-foinse-can.md),
 [TI TCAN3413](https://www.ti.com/product/TCAN3413),
-[FD budget](2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation),
+[FD budget](../archive/architecture/2026-09-18-review-investigations.md#4-can-fd-and-servo-investigation),
 [controlled vehicle interface](../../interfaces/ogma-foinse-propulsion-boundary.md).
 
 ## Churro circuit inventory
@@ -130,7 +130,7 @@ onboard charger, cell-balancing BMS or regulated 24 V output.
 | --- | --- | --- |
 | AV entry | J101 1053111102; U1001 TPS26630 + CSD18540 reverse blocker | Proposed 2S 8 Ah / ≥30 Wh usable; 3 A continuous assembly ceiling and 5 A source fuse; verify thermal/energy |
 | Propulsion entry | J201 430450400; U2001 TPS26630 + CSD18540 | Protected raw 6S; proposed 2 A continuous ceiling and 5 A source fuse; load/thermal qualification |
-| AV thresholds | Nominal start/stop 6.63/6.20 V, OVP 8.99 V; 3 kΩ ILIM (~6 A) | Tolerance, sag and simultaneous downstream demand; 6 A is not a qualified connector/wire rating |
+| AV thresholds | Nominal start/stop 6.63/6.20 V, OVP 8.99 V; 3 kΩ ILIM (~6 A); MODE to GND for auto-retry (D-6.3) | Tolerance, sag and simultaneous downstream demand; 6 A is not a qualified connector/wire rating |
 | PROP thresholds | Nominal start/stop 19.92/18.63 V, OVP 27.0 V; 6.04 kΩ ILIM (~2.98 A) | Coil/controller input range and inrush; raw 6S is not regulated 24 V |
 | Source slew/transients | 22 nF dV/dt, SMBJ12A / SMBJ28A starting TVS parts | Fuse/TVS/eFuse coordination with actual source energy and cable transients |
 | Source enable | J103 AV / J104 PROP, two-contact JST GH; each self-biased from its own source | External maintained-control assembly, retention and correct identification |
