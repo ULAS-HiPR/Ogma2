@@ -30,4 +30,4 @@ board-library-manifest.json. Recovery evidence is in the sibling scratch
 directory `model-recovery-2026-09-07` outside the umbrella repository.
 
 Full remaining model/footprint register:
-[model recovery report](../../../docs/model-recovery-2026-09-07.md).
+[model recovery report](../../../docs/archive/model-recovery-2026-09-07.md).

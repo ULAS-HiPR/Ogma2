@@ -35,7 +35,7 @@ share the simulated retention domain; neither is independent vehicle recovery.
 
 Hardware porting must establish those assumptions or change the implementation.
 Use the [reset contract](../../interfaces/reset-recovery-contract.md) and
-[RST-01](../../docs/reliability-execution-plan.md#experiment-rst-01-restart-with-known-evidence)
+[RST-01](../../docs/archive/reliability-execution-plan.md#experiment-rst-01-restart-with-known-evidence)
 for the wider campaign. Keep numerical pass limits explicit before a hardware
 run. A host-model pass does not close EX-03.
 

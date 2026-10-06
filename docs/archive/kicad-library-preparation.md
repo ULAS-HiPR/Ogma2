@@ -3,7 +3,7 @@
 7 September 2026. Project-local draft libraries now exist: **46 PCB symbols,
 45 assigned footprints, 27 parts with resolved local 3D models**. The exact
 Nano-Fit footprint remains unassigned and final drawing/assembly audits remain open.
-See [library usage and current status](../hardware/README.md),
+See [library usage and current status](../../hardware/README.md),
 [per-part checks](../hardware/libraries/inventory.csv) and
 [remaining work](../hardware/libraries/review-notes.md).
 

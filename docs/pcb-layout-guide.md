@@ -15,7 +15,7 @@ the old groups have moved. The 80 mm target is reached only as a provisional
 placement outline; routing, plugged-connector access and vehicle fit are open.
 No new rule areas or copper polygons were added. The existing 28 rule areas
 moved with their owning circuits. The earlier insulated test points remain. Use the
-[placement notes](croi2-functional-placement-2026-09-07.md) for this pass. The
+[placement notes](archive/croi2-functional-placement-2026-09-07.md) for this pass. The
 separate [cluster catalogue](../../cluster-layout-2026-09-07/START-HERE.md)
 remains available for circuit-by-circuit source notes and close-ups.
 The fourteen parts labelled REV-B are intended for the first engineering PCBA,
@@ -26,7 +26,7 @@ not deferred to a second manufacturing revision. Foinse is unchanged by this stu
 - [Croí project](../hardware/croi2/Croi2.kicad_pro).
 - [Foinse project](../hardware/foinse2/Foinse2.kicad_pro).
 - [Manufacturer page index](../../layout-reference-2026-09-07/DATASHEET-PAGES.md).
-- [Power sensing, indicators and RTC decision](sensing-indication-time-review-2026-09-07.md).
+- [Power sensing, indicators and RTC decision](archive/sensing-indication-time-review-2026-09-07.md).
 - [Updated firmware handoff for Anav](firmware-handoff-2026-09-07.md).
 
 The reference folder contains shortened original PDFs named for components.
@@ -340,7 +340,7 @@ corridor beneath RF while allowing continuous ground. Do not create a copper
 void under the module. Existing rule areas require a final check against this
 new footprint and actual route; their unchanged presence does not qualify RF.
 See [Seeed's host layout guide](https://wiki.seeedstudio.com/wio_lr2021_pcb_design_guide/)
-and the [integration record](radio-change-2026-09-07.md). The official Wio STEP
+and the [integration record](archive/radio-change-2026-09-07.md). The official Wio STEP
 is not yet aligned/linked; its missing 3D body does not make this space available.
 
 CAN U503 sits by J501 with protection and fixed end termination placed so cable
@@ -357,7 +357,7 @@ volume and through-hole legs on both faces. The exact STEP remains missing.
 Readiness revision: keep U9101 and C9101 together, C9101 at supply pin 5/GND;
 R9102 pulls the PD7 control low. Keep both red/green LEDs visible. PD10 is now
 servo 3, not the red LED. J6602 is ten-contact 430451000; its complete new
-pinout is in the [revision](connector-servo-readiness-revision-2026-09-07.md).
+pinout is in the [revision](archive/connector-servo-readiness-revision-2026-09-07.md).
 R6602/R6603 moved locally to clear the larger header; route all three PWM
 series resistors at the buffer boundary. USB-C placement remains untouched.
 

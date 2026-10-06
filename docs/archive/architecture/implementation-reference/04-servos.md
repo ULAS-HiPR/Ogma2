@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 4. Servo outputs and remote actuation
 
@@ -118,4 +118,4 @@ limiting, reset/off defaults, regeneration clamp and all three loaded channels.
 Do not populate R6804 just to make an early demo move.
 
 Evidence: [third-servo revision](../../connector-servo-readiness-revision-2026-09-07.md),
-[firmware handoff](../../firmware-handoff-2026-09-07.md).
+[firmware handoff](../../../firmware-handoff-2026-09-07.md).

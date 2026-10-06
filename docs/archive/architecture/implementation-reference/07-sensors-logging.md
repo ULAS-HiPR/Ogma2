@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 7. Sensors and local recording
 
@@ -257,5 +257,5 @@ Logging failure may degrade evidence after launch; it must not create a flight
 reset loop. Keep current monitoring explicitly separate from mechanical proof.
 
 Evidence: [sensor configuration](../../sensor-configuration-review-2026-09-07.md),
-[firmware handoff](../../firmware-handoff-2026-09-07.md),
-[fault contract](../../../interfaces/flight-fault-contract.md).
+[firmware handoff](../../../firmware-handoff-2026-09-07.md),
+[fault contract](../../../../interfaces/flight-fault-contract.md).

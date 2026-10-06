@@ -6,7 +6,7 @@ This is its supporting evidence, not another required sequential reading pack.
 
 ## Later synthesis supersedes the recommendations below
 
-The same-day [capture specification](schematic-capture-spec.md) closes ordinary
+The same-day [capture specification](../../architecture/schematic-capture-spec.md) closes ordinary
 electronics choices with three regulators, PD10 service recovery, revised domain
 allocations, aligned NOR sectors and defined Churro probe/source interfaces.
 This audit preserves the earlier findings and two-rail calculations as history;
@@ -32,15 +32,15 @@ blocks whose engineering suitability remains provisional.
 
 | Finding | Evidence / consequence | Action now in the chapter |
 | --- | --- | --- |
-| The comms voltage calculation ignored reset-release hysteresis and divider tolerance | Original divider + switch leaves only about 20.5 mV at 300 mA above the conservative supervisor release bound, before layout/transients | [Power](02-power.md#voltage-margin-including-reset-release): propose 31.9 kΩ / 10 kΩ service divider, 3.352 V; calculated margin ~75.8 mV; 50 mV additional loss allocation |
-| USB permission was conflated with available local current | U4401's preconfiguration limit can start at 50 mA; configured R4403 gives ~387–491 mA; full-load example requires ~649 mA | [Power](02-power.md#usb-is-a-separate-load-mode): restricted bootstrap and readback modes; inrush and deconfiguration handling |
+| The comms voltage calculation ignored reset-release hysteresis and divider tolerance | Original divider + switch leaves only about 20.5 mV at 300 mA above the conservative supervisor release bound, before layout/transients | [Power](../../architecture/02-power.md#voltage-margin-including-reset-release): propose 31.9 kΩ / 10 kΩ service divider, 3.352 V; calculated margin ~75.8 mV; 50 mV additional loss allocation |
+| USB permission was conflated with available local current | U4401's preconfiguration limit can start at 50 mA; configured R4403 gives ~387–491 mA; full-load example requires ~649 mA | [Power](../../architecture/02-power.md#usb-is-a-separate-load-mode): restricted bootstrap and readback modes; inrush and deconfiguration handling |
 | The new aggregate limiter has no flight-owned restart | U1501 EN proposed tied to BOOT_3V3; latched fault removes every service | Explicit source-cycle recovery and D1 acceptance, rather than implying a comms reset repairs it |
 | Selectivity checked only for a comms fault | NOR's retained 100 kΩ limit can reach ~306 mA | Full local-limiter table; conservative NOR-fault example ~706 mA against ~729 mA aggregate minimum |
 | Mission energy and schematic current were different budgets | 600 mA at 4 V is 2.4 W; eight hours is 19.2 Wh before upstream losses/reserve | Separate 8 h + 4 h energy closure from instantaneous rail ratings |
-| Readback asked for evidence the MCU cannot directly observe | Buck/core-input/LDO PG nodes do not reach flight GPIO; fault net aggregates sources | [Service](05-service-status-time.md#schematic-handoff): measured, inferred and unavailable states separated |
-| Recording slack depended on undefined encoding | 20% allowance included framing/commit; exact packed format not frozen | [Recording](07-sensors-logging.md#schematic-handoff): footer constraint and conservative 6,452,736-byte spare bound; combined-rate queue duration corrected |
-| Churro's concise page concealed implementation and unfinished interfaces | Two protected source circuits, monitoring, returned AUX and seven named connector roles already exist | [Churro](08-foinse-can.md#churro-circuit-inventory): inventory, source cascade, ground-return and monitoring-loss consequences |
-| Outputs were described as unresolved without distinguishing draft from absence | Existing three-channel draft and DNP safeguards; physical arm assembly and output requirements unfinished | [Output status](03-energetic-outputs.md#what-exists-and-what-is-missing): explicit design blocker, separate responsible review |
+| Readback asked for evidence the MCU cannot directly observe | Buck/core-input/LDO PG nodes do not reach flight GPIO; fault net aggregates sources | [Service](../../architecture/05-service-status-time.md#schematic-handoff): measured, inferred and unavailable states separated |
+| Recording slack depended on undefined encoding | 20% allowance included framing/commit; exact packed format not frozen | [Recording](../../architecture/07-sensors-logging.md#schematic-handoff): footer constraint and conservative 6,452,736-byte spare bound; combined-rate queue duration corrected |
+| Churro's concise page concealed implementation and unfinished interfaces | Two protected source circuits, monitoring, returned AUX and seven named connector roles already exist | [Churro](../../architecture/08-foinse-can.md#churro-circuit-inventory): inventory, source cascade, ground-return and monitoring-loss consequences |
+| Outputs were described as unresolved without distinguishing draft from absence | Existing three-channel draft and DNP safeguards; physical arm assembly and output requirements unfinished | [Output status](../../architecture/03-energetic-outputs.md#what-exists-and-what-is-missing): explicit design blocker, separate responsible review |
 
 Two suspected wiring omissions were **not defects**: sensor ILIM tied to IN
 selects the manufacturer's low-current mode; TPSM63603 CBOOT/RBOOT may be left
@@ -96,7 +96,7 @@ assembly. This audit does not grant operational release.
 
 ## Reproduction and remaining evidence limits
 
-Run [component-proposal-checks.py](../calculations/component-proposal-checks.py)
+Run [component-proposal-checks.py](../../calculations/component-proposal-checks.py)
 for current-limit equations, voltage corners, source truth table, pin-map
 structure, capacity and energy arithmetic. Results depend on explicitly stated
 load and efficiency assumptions; they do not simulate transients or firmware.

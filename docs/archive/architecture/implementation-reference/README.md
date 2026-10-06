@@ -4,7 +4,7 @@ Preserved before the 11 September whole-pack rewrite. These snapshots retain
 the earlier component designators, calculations, part comparisons and source
 links. They describe a dated draft, not final-stack acceptance.
 
-Use the [current reading pack](../README.md) for joint review. If an older
+Use the [current reading pack](../../../architecture/README.md) for joint review. If an older
 recommendation conflicts with its explicit review status or a controlled
 interface, do not silently restore the older design.
 
@@ -21,9 +21,9 @@ interface, do not silently restore the older design.
 | [Foinse/CAN](08-foinse-can.md) | Packs, interfaces and power-boundary detail |
 
 Exact current allocations remain in the
-[firmware handoff](../../firmware-handoff-2026-09-07.md) and
-[interface contracts](../../../interfaces/README.md). Their dated amendments
-control older text. The [document index](../../README.md) links the original
+[firmware handoff](../../../firmware-handoff-2026-09-07.md) and
+[interface contracts](../../../../interfaces/README.md). Their dated amendments
+control older text. The [document index](../../../README.md) links the original
 research and implementation records.
 
 Manufacturer sources in these snapshots support their dated research. They

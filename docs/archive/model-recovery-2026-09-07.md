@@ -4,7 +4,7 @@ Status: partial recovery, not a complete library or mechanical release.
 
 Follow-up: five more Croí instances now have checked third-party package CAD:
 U1101 TPS2121, U1401 LM73100, and Q6301/Q6401/Q6501 CSD17318Q2.
-[Sources, dimensions, transformations and rejected downloads](../hardware/croi2/libraries/model-recovery-easyeda-2026-09-07.md).
+[Sources, dimensions, transformations and rejected downloads](../../hardware/croi2/libraries/model-recovery-easyeda-2026-09-07.md).
 Croí now resolves 567 models; Foinse remains 88. No placement/electrical change.
 
 ## What this pass recovered

@@ -3199,3 +3199,14 @@ TPS3700 data sheets; Rev 1 closure (unexplained aloft reset, intermittent
 battery connector). Not checked: H563 VBAT-mode current, TPS26630 behaviour of
 Q101 under faults, servo regeneration in practice. Added a draft recovery-logic
 chapter for Anav's review. CAD unchanged; the proposal pin CSVs keep 22 Sep nets.
+
+
+## 6 October 2026 — documents archived; one entry path
+
+Moved superseded reviews, audits, studies, dated decision records,
+implementation reference and the earlier current-system snapshot to
+`docs/archive/`, with an index. Live links were updated; the verbatim history
+snapshot and older log entries keep their original paths. README, the docs
+index and the chapter index now start at the system tour and `decisions.md`.
+The old budget script moved to `docs/archive/tools/`. No content in archived
+files changed beyond link paths.

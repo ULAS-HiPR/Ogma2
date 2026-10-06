@@ -18,7 +18,7 @@ power continuity and the evidence supporting the estimate are likely to dominate
 this navigation decision. There is no reason here to require radiation-hardened
 GNSS, an atomic clock or a premium inertial unit on every competition Croí.
 
-The [accepted system](../current-system.md) already puts Kármán recovery,
+The [accepted system](../../current-system.md) already puts Kármán recovery,
 actuation and full-envelope altitude proof at vehicle level. Ordinary Croí has
 unpowered/DNP outputs in that configuration. This study preserves that boundary.
 
@@ -256,7 +256,7 @@ No accuracy specification, receiver purchase or extra PCB has been authorised.
 
 ## Calculation status
 
-[Reproducible arithmetic](calculations/avionics-options-estimates.py) was executed
+[Reproducible arithmetic](../calculations/avionics-options-estimates.py) was executed
 with Python 3. It checks the coast against its energy solution and a halved
 integration step. It excludes Earth rotation/oblateness, atmosphere, vehicle
 dynamics, sensor models and actual receiver behaviour. Its sub-millimetre

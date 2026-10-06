@@ -23,9 +23,9 @@ energetic test or flight is authorised by this document.
 Purpose: take the [reliability review](reliability-design-review.md) to measured
 engineering decisions without waiting for a mature space-shot vehicle.
 
-Baseline: [current system](../current-system.md), including its accepted
+Baseline: [current system](../../current-system.md), including its accepted
 provisional envelope and MCU-less Foinse. The
-[owned interface](../interfaces/ogma-foinse-propulsion-boundary.md) remains in
+[owned interface](../../interfaces/ogma-foinse-propulsion-boundary.md) remains in
 force. New cross-system decisions require the other owner's review.
 
 ## Start here
@@ -62,7 +62,7 @@ implementation progress from delivery of a handoff.
 
 Create linked working documents only when their task starts. Paths listed as
 planned outputs are not claims that those files already exist. Use
-[the verification-record template](templates/verification-record.md) for runs.
+[the verification-record template](../templates/verification-record.md) for runs.
 Keep large raw traces outside Git under a controlled evidence location; retain
 a manifest, checksums and retrieval instructions. Keep small reproducible
 fixtures, parsers, test cases and concise results in this repository.
@@ -120,7 +120,7 @@ mandatory separate coupon or still-unselected MCU do not override that baseline.
 Question: which functions must survive which faults, in which phases?
 
 Policy accepted by Seán on 6 September 2026. The initial
-[flight fault contract](../interfaces/flight-fault-contract.md) records the
+[flight fault contract](../../interfaces/flight-fault-contract.md) records the
 accepted answers. Timing allocations, mission-specific coverage, named
 implementation owners/reviewers and verification remain open; EX-01 is not closed.
 
@@ -170,7 +170,7 @@ to contain?
 
 Seán accepted the five EX-02 defaults on 6 September, then explicitly retained
 switching preregulation followed by a low-noise LDO instead of the model's
-direct-buck-first preference. The [power contract](../interfaces/power-contract.md)
+direct-buck-first preference. The [power contract](../../interfaces/power-contract.md)
 records the corrected decision, initial drawings and remaining work. EX-02 is
 not closed. Complete it with:
 
@@ -245,7 +245,7 @@ review a local-supply alternative before dependent layout is frozen.
 Question: what can the computer legitimately reconstruct after each reset?
 
 Seán accepted all five EX-03 defaults on 6 September. The
-[reset contract](../interfaces/reset-recovery-contract.md) records reset classes,
+[reset contract](../../interfaces/reset-recovery-contract.md) records reset classes,
 two alternating MCU-retained checkpoints, local mission time, deliberate
 disarmed new-flight preparation and attempted versus observed action. External
 FRAM is not the default. Complete the contract with:
@@ -261,7 +261,7 @@ FRAM is not the default. Complete the contract with:
 ### Experiment RST-01: restart with known evidence
 
 Initial host-only coverage exists in the
-[checkpoint replay](../tests/reset_replay/README.md): 12 test methods pass,
+[checkpoint replay](../../tests/reset_replay/README.md): 12 test methods pass,
 including 420 update-cut cases across synthetic phase transitions/generation
 wrap, and 264 single-bit slot-corruption cases. A mutation removing slot
 invalidation produces 12 expected failed subcases. These are model results,
@@ -647,16 +647,16 @@ labels are not the current selection status.
 | DR-12 | Power branches, USB service and reserve | EX-02 defaults accepted by Seán, 6 September: contain optional branches, USB service without actuator power/backfeed, bounded core hold-up and measured 8 h + 4 h budget; numerical limits/tests open | EX-02/03/07/09/10 |
 | DR-13 | Attempted action versus observed result | EX-03 distinction accepted by Seán, 6 September; no blanket replay or blanket suppression policy; mechanism-specific evidence and responses remain open | EX-03/07 |
 
-The [flight fault contract](../interfaces/flight-fault-contract.md) and
-[6 September acceptance log](../project-log.md#2026-09-06--ex-01-policy-accepted)
+The [flight fault contract](../../interfaces/flight-fault-contract.md) and
+[6 September acceptance log](../../project-log.md#2026-09-06--ex-01-policy-accepted)
 record the accepted choices, rationale, limits and authority. Decisions left
 open above are not accepted merely because EX-01 policy is accepted.
 EX-02's acceptance and subsequent regulator correction are recorded in the
-[power contract](../interfaces/power-contract.md) and
-[power acceptance log](../project-log.md#2026-09-06--ex-02-accepted-preregulator-and-low-noise-ldo-retained).
+[power contract](../../interfaces/power-contract.md) and
+[power acceptance log](../../project-log.md#2026-09-06--ex-02-accepted-preregulator-and-low-noise-ldo-retained).
 EX-03's defaults and model evidence are recorded in the
-[reset contract](../interfaces/reset-recovery-contract.md) and
-[reset acceptance log](../project-log.md#2026-09-06--ex-03-accepted-first-host-checkpoint-replay).
+[reset contract](../../interfaces/reset-recovery-contract.md) and
+[reset acceptance log](../../project-log.md#2026-09-06--ex-03-accepted-first-host-checkpoint-replay).
 
 When a decision closes, record the actual choice, approving owner, date,
 evidence, affected baseline/interface, and reason. Update current-system and

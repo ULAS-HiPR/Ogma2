@@ -1,41 +1,23 @@
-# Ogma 2 — component design proposal
+# Ogma 2 block chapters
 
-22 September 2026. **Prepared for joint review; CAD and installed contracts unchanged.**
+6 October 2026. Each chapter states the decided or proposed design for one
+block. [Decisions](../../decisions.md) say which is which.
 
-Open **[the component review](00-overview.md)**. Power, signals, connectors,
-operating states and the consequential choices are together there. Use the linked
-chapters for a questioned calculation, component or pin; no sequential reread.
-
-| Detail | Contents |
+| Chapter | Contents |
 | --- | --- |
-| [Processors](01-mcus.md) | Workloads, alternatives, exact comms package map |
-| [Power](02-power.md) | Source path, enables, fault comparison, limits/hold-up |
-| [Output status](03-energetic-outputs.md) | Explicitly incomplete implementation |
-| [Servos](04-servos.md) | Two channels, retained ten-contact 430451000, actuator/control dependencies |
-| [Service](05-service-status-time.md) | Indication, readback, reset/time |
-| [GNSS/radio](06-gnss-radio.md) | Receiver limits, link directions, interoperability profile |
-| [Sensors/recording](07-sensors-logging.md) | Interfaces, rates, storage and comms-record trade |
-| [Churro/CAN](08-foinse-can.md) | Source ownership, vehicle timing and peer boundary |
-| [Connectors](09-connectors-arming.md) | Inventory and FC-enable versus physical-arm distinction |
+| [System tour](system-tour.md) | Whole system, power and data, connector photos |
+| [01 Processors](01-mcus.md) | Flight and comms MCUs, pin maps |
+| [02 Power](02-power.md) | Source path, domains, enable hold, USB, hold-up |
+| [03 Outputs](03-energetic-outputs.md) | Recovery outputs, arm, staging |
+| [04 Servos](04-servos.md) | Two PWM interfaces and their feed |
+| [05 Service](05-service-status-time.md) | Indication, USB readback, time |
+| [06 GNSS and radio](06-gnss-radio.md) | Receiver limits, radio, reference assembly |
+| [07 Sensors and recording](07-sensors-logging.md) | Sensors, NOR format, recording trigger |
+| [08 Churro and CAN](08-foinse-can.md) | Power board and vehicle link |
+| [09 Connectors](09-connectors-arming.md) | Inventory, FC enable, arm connector |
+| [10 Recovery logic](10-recovery-logic.md) | Events, lockouts, after-reset behaviour (draft) |
+| [Capture specification](schematic-capture-spec.md) | Exact deltas against native CAD |
+| [Justifications](justifications/README.md) | Reasons and calculations |
 
-The [capture specification](schematic-capture-spec.md) is the implementation
-handoff: exact baseline/deltas, references, pin maps, operating constraints and
-acceptance checks. The [justification index](justifications/README.md) makes each
-choice traceable. After Seán's green light, **Codex captures and places; Seán routes**.
-
-Ordinary electronics now have concrete recommendations. Physical output arming/
-output circuitry remains an excluded design blocker. Installed measurements and
-qualification are later gates; CAD and controlled contracts remain preserved.
-
-## Evidence
-
-- [Reproducible proposal checks](../calculations/component-proposal-checks.py) — source-enable truth table, comms pin map and numerical budgets.
-- [Current system / preserved implementation](../../current-system.md).
-- [Detailed component research](implementation-reference/README.md).
-- [Pin audit](../mcu-pin-capacity-audit-2026-09-11.md), [power / storage / CAN calculations](../power-recording-can-audit-2026-09-11.md).
-- [18 September earlier investigation](2026-09-18-review-investigations.md) — superseded recommendations are marked at its top.
-- Historical reviews: [10 September](2026-09-10-session-review.md), [13 September](2026-09-13-session-review.md), [extraction audit](2026-09-18-meeting-change-ledger.md).
-
-Source for this change: 18 September, 19:26 architecture meeting and subsequent
-technical reflection; 19 September instruction to prepare a concrete proposal.
-Raw recordings and private correspondence are not reproduced here.
+Proposed pin maps: [flight](proposed-flight-pinout.csv), [comms](proposed-comms-pinout.csv)
+(22 September nets; the capture specification lists the 6 October pad changes).

@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 1. MCUs and execution
 
@@ -118,7 +118,7 @@ Three SPI buses let the IMUs and high-g part transfer independently. The
 960/1000/800 Hz streams are still asynchronous. DMA removes CPU copying, not
 all bus contention or scheduling work. The 128 MHz / 700 µs essential-budget
 choice was a resource allocation; no measured worst-case runtime supports it
-yet. Use the [current handoff](../../firmware-handoff-2026-09-07.md) for clocks,
+yet. Use the [current handoff](../../../firmware-handoff-2026-09-07.md) for clocks,
 DMA requests and final physical pins, rather than an old research CSV.
 
 ## Failure handling
@@ -148,6 +148,6 @@ Next evidence: compiled clock/peripheral allocation, measured worst-case timing,
 comms-held-reset test, corrupted/flooded UART, reset-class retention and staging
 inhibit checks on the first PCBA.
 
-Evidence: [firmware handoff](../../firmware-handoff-2026-09-07.md),
-[fault contract](../../../interfaces/flight-fault-contract.md),
-[reset contract](../../../interfaces/reset-recovery-contract.md).
+Evidence: [firmware handoff](../../../firmware-handoff-2026-09-07.md),
+[fault contract](../../../../interfaces/flight-fault-contract.md),
+[reset contract](../../../../interfaces/reset-recovery-contract.md).

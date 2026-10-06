@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 3. Energetic outputs
 
@@ -139,6 +139,6 @@ path visibly in the schematic, with diagnostic branches shown as branches.
 Then test defaults, reset classes, wrong-channel faults and pulse behaviour
 with inert loads. Keep the Kármán recorder population physically unpowered.
 
-Evidence: [fault contract](../../../interfaces/flight-fault-contract.md),
-[power contract](../../../interfaces/power-contract.md),
+Evidence: [fault contract](../../../../interfaces/flight-fault-contract.md),
+[power contract](../../../../interfaces/power-contract.md),
 [accepted baseline](../../architecture-acceptance-2026-09-07.md).

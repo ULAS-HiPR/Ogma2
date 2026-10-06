@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 2. Croí power
 
@@ -90,7 +90,7 @@ post-regulator, with LT3045 as an example. The requirement retained was the
 topology and noise concern, not an obligation to fit that exact example part.
 LT3045-1 is the VIOC variant; confusing it with the ordinary LT3045 would create
 a false implementation assumption. [Recorded external-review lessons](../../rev1-external-review-lessons.md),
-[power contract and VIOC distinction](../../../interfaces/power-contract.md).
+[power contract and VIOC distinction](../../../../interfaces/power-contract.md).
 
 ### Why 4.0 V, and what the module rating does not mean
 
@@ -186,6 +186,6 @@ with pack fuses, and external-switch open/short/bounce behaviour. The battery
 connector footprint and real C1403 remain pre-order closure items.
 Test on the first complete PCBA with current-limited supplies.
 
-Evidence: [power contract](../../../interfaces/power-contract.md),
+Evidence: [power contract](../../../../interfaces/power-contract.md),
 [Rev 1 power rationale](../../rev1-external-review-lessons.md),
 [sensing revision](../../sensing-indication-time-review-2026-09-07.md).

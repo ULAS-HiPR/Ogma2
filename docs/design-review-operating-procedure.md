@@ -6,7 +6,7 @@ explicitly authorised implementation scope.
 
 ## Current method
 
-Start with the [connected component proposal](architecture/00-overview.md).
+Start with the [connected component proposal](archive/architecture/00-overview.md).
 Use the drawing during conversation. Follow the block being questioned; a
 complete reread of every chapter is not a prerequisite.
 
@@ -40,7 +40,7 @@ Keep subsequent implementation evidence separate: schematic/library parity and
 ERC, then layout/assembly release, then first-PCBA measurements. A measured
 throughput or thermal result cannot exist before hardware; a missing actuator
 voltage or arm assembly cannot be deferred as though it were only a test.
-The optional [audit evidence](architecture/2026-09-22-schematic-readiness.md)
+The optional [audit evidence](archive/architecture/2026-09-22-schematic-readiness.md)
 supports challenged details. No new whole-pack reading assignment.
 
 ## Capture handoff
@@ -77,9 +77,9 @@ review commentary. The root README must point to that proposal.
 - Nominate one writer for shared staging/commit/push; inspect the complete scope.
 - Raw transcripts and private correspondence stay outside the repository.
 
-Historical decisions: [7 September acceptance](architecture-acceptance-2026-09-07.md),
-[10 September reopening](architecture/2026-09-10-session-review.md),
-[13 September review](architecture/2026-09-13-session-review.md).
+Historical decisions: [7 September acceptance](archive/architecture-acceptance-2026-09-07.md),
+[10 September reopening](archive/architecture/2026-09-10-session-review.md),
+[13 September review](archive/architecture/2026-09-13-session-review.md).
 The 19 September method follows the latest meeting's request for exact parts,
 connected diagrams and concise justification. It supersedes the former
 whole-pack reading procedure; it does not accept the proposal's technical choices.

@@ -16,21 +16,21 @@ that omission prevents calling this a complete hardware design.
 
 **The ordinary electronics now have a proposed capture baseline.** The complete
 platform still excludes the unfinished energetic-output/physical-arm block.
-The [capture specification](schematic-capture-spec.md) defines exact deltas and
+The [capture specification](../../architecture/schematic-capture-spec.md) defines exact deltas and
 the handoff: **Codex captures and places; Seán routes, after his green light**.
-[Justifications](justifications/README.md) are linked beside the choices.
+[Justifications](../../architecture/justifications/README.md) are linked beside the choices.
 
 | Section | Proposed baseline | Later evidence |
 | --- | --- | --- |
-| [01 Processors](01-mcus.md) | H563 100/64-pin pair, complete proposed maps | Package/library checks; concurrent firmware build |
-| [02 Power](02-power.md) | Three LDOs, 3.352 V; independent comms/services, PD10 service restart; 2S 8 Ah reference | Startup, fault selectivity, usable energy and thermal measurements |
-| [03 Outputs](03-energetic-outputs.md) | **Incomplete/excluded; DNPs preserved** | Responsible output/physical-arm design and validation |
-| [04 Servos](04-servos.md) | Two raw-2S, 3.3 V PWM interfaces, combined 1.5 A allocation; no remote node | Actual mechanism must fit the bounded interface |
-| [05 Service](05-service-status-time.md) | Restricted USB modes; connected/fresh evidence only | Reset, update, stale-state and current tests |
-| [06 RF/GNSS](06-gnss-radio.md) | Retained parts; passive GNSS and matched Wio test peer | Installed antenna/link and GNSS-envelope validation |
-| [07 Recording](07-sensors-logging.md) | 192 MiB region; sector-aligned commits; explicit preparation and byte budget | Concurrent sustained throughput and power-cut recovery |
-| [08 Churro](08-foinse-can.md) | Exact probes/bias/protection; source fuses and 3 A AV / 2 A PROP envelope | Source/thermal/lead-fault and measurement accuracy tests |
-| [09 Connectors](09-connectors-arming.md) | Source population variants; exact Nano-Fit drawing; retained mating inventory | Footprint/fit and installed harness restraint checks |
+| [01 Processors](../../architecture/01-mcus.md) | H563 100/64-pin pair, complete proposed maps | Package/library checks; concurrent firmware build |
+| [02 Power](../../architecture/02-power.md) | Three LDOs, 3.352 V; independent comms/services, PD10 service restart; 2S 8 Ah reference | Startup, fault selectivity, usable energy and thermal measurements |
+| [03 Outputs](../../architecture/03-energetic-outputs.md) | **Incomplete/excluded; DNPs preserved** | Responsible output/physical-arm design and validation |
+| [04 Servos](../../architecture/04-servos.md) | Two raw-2S, 3.3 V PWM interfaces, combined 1.5 A allocation; no remote node | Actual mechanism must fit the bounded interface |
+| [05 Service](../../architecture/05-service-status-time.md) | Restricted USB modes; connected/fresh evidence only | Reset, update, stale-state and current tests |
+| [06 RF/GNSS](../../architecture/06-gnss-radio.md) | Retained parts; passive GNSS and matched Wio test peer | Installed antenna/link and GNSS-envelope validation |
+| [07 Recording](../../architecture/07-sensors-logging.md) | 192 MiB region; sector-aligned commits; explicit preparation and byte budget | Concurrent sustained throughput and power-cut recovery |
+| [08 Churro](../../architecture/08-foinse-can.md) | Exact probes/bias/protection; source fuses and 3 A AV / 2 A PROP envelope | Source/thermal/lead-fault and measurement accuracy tests |
+| [09 Connectors](../../architecture/09-connectors-arming.md) | Source population variants; exact Nano-Fit drawing; retained mating inventory | Footprint/fit and installed harness restraint checks |
 
 ## Whole-system consequences
 
@@ -129,8 +129,8 @@ PD10 becomes SERVICE_POWER_EN with an off-default pulldown.
 
 Allocate 200/300/200 mA flight/comms/services. USB uses restricted modes.
 Reference source: 2S 8 Ah, ≥30 Wh usable for the stated logic endurance budget;
-actuator energy additional. [Exact connections and calculations](02-power.md),
-[fault/alternative justification](justifications/power-domains.md).
+actuator energy additional. [Exact connections and calculations](../../architecture/02-power.md),
+[fault/alternative justification](../../architecture/justifications/power-domains.md).
 
 ## Signals and processors
 
@@ -182,7 +182,7 @@ Flight recording: 96,672 B/s plus ≤1 KiB/s comms diagnostics; 128 KiB staging.
 Fifteen data pages + one footer per 4 KiB sector, within a 192 MiB prepared region.
 Conservatively charging footers again leaves **5,689,344 B** beyond the mission
 ledger and 64 MiB reserve. No second comms flash; flight/UART loss loses new
-comms records. [Format, preparation and throughput contract](justifications/recording-and-service.md).
+comms records. [Format, preparation and throughput contract](../../architecture/justifications/recording-and-service.md).
 
 Service: two 4 KiB payload buffers and backpressure; no requirement to hold a
 whole log or 32 KiB block. At 2 Mbaud, full NOR download takes **at least 22.4 min**.
@@ -208,7 +208,7 @@ vehicle measures ground transmissions. Log direction, sequence and receiver.
 
 Two-servo harness: contacts 1/2/3 = PWR1/PWM1/GND1; 4/5/6 = PWR2/PWM2/GND2;
 7–10 unwired in the proposal. Existing third-channel CAD remains until revision.
-[Connector details and evidence](09-connectors-arming.md).
+[Connector details and evidence](../../architecture/09-connectors-arming.md).
 
 ## Power and service states
 
@@ -231,11 +231,11 @@ An independent physical-arm indication is **not implemented by those lamps**.
 
 | Decision | Recommended answer | Boundary that must be recorded |
 | --- | --- | --- |
-| D1 — Core parts and fault domains | H563 100/64; three 3.352 V LDOs; PD10 service restart | [Power justification](justifications/power-domains.md); comms and service regulator faults separated |
-| D2 — Source and Churro | 2S 8 Ah reference, ≥30 Wh usable logic energy; exact NTC/reference/protection and fuse assembly | [Churro justification](justifications/churro-monitoring.md); limits and assumptions stated |
-| D3 — Local interfaces / CAN | Two raw-2S PWM interfaces, 1.5 A total; no remote node; existing Classical CAN commissioning | [Interface justification](justifications/interfaces-and-installation.md); FD migration coordinated with peer |
+| D1 — Core parts and fault domains | H563 100/64; three 3.352 V LDOs; PD10 service restart | [Power justification](../../architecture/justifications/power-domains.md); comms and service regulator faults separated |
+| D2 — Source and Churro | 2S 8 Ah reference, ≥30 Wh usable logic energy; exact NTC/reference/protection and fuse assembly | [Churro justification](../../architecture/justifications/churro-monitoring.md); limits and assumptions stated |
+| D3 — Local interfaces / CAN | Two raw-2S PWM interfaces, 1.5 A total; no remote node; existing Classical CAN commissioning | [Interface justification](../../architecture/justifications/interfaces-and-installation.md); FD migration coordinated with peer |
 | D4 — Energetic outputs / physical arm | Keep unfinished block explicitly excluded | Separate design closure; no invented assembly or changed DNPs |
-| D5 — Record / service / installation | Sector-aligned NOR, bounded USB, source variants, passive RF reference assembly | [Recording](justifications/recording-and-service.md), [placement handoff](schematic-capture-spec.md#what-green-for-capture-must-mean) |
+| D5 — Record / service / installation | Sector-aligned NOR, bounded USB, source variants, passive RF reference assembly | [Recording](../../architecture/justifications/recording-and-service.md), [placement handoff](../../architecture/schematic-capture-spec.md#what-green-for-capture-must-mean) |
 
 Accept or amend each decision once, then authorize the corresponding schematic
 scope. The excluded output block need not stop implementing the

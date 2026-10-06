@@ -10,7 +10,7 @@ Purpose: identify failures that can overturn the architecture, turn broad
 reliability requirements into bounded contracts, and define what must be proved
 before those contracts can be relied on.
 
-Authority: [current system](../current-system.md) remains the accepted prose
+Authority: [current system](../../current-system.md) remains the accepted prose
 baseline. This review supplements and corrects specific claims in the
 [hardening study](karman-line-mission-hardening-report.md). The
 [execution plan](reliability-execution-plan.md) owns task status and closure
@@ -25,12 +25,12 @@ Acceptance update, 6 September: Seán accepted the EX-01 recommendations for
 communications/logger fault containment, bounded validated restart, primary
 unavailability after complete flight-power loss, phase-aware watchdog feeding,
 post-reset staging inhibit, independent recovery and G0–G3. The
-[flight fault contract](../interfaces/flight-fault-contract.md) supersedes the
+[flight fault contract](../../interfaces/flight-fault-contract.md) supersedes the
 initial proposal status for that scope. Remaining study proposals, numerical
 limits, implementation and test results are not accepted or proved by it.
 
 Further acceptance, 6 September: EX-02's defaults are accepted in the
-[power contract](../interfaces/power-contract.md), including Seán's explicit
+[power contract](../../interfaces/power-contract.md), including Seán's explicit
 retention of switching preregulation followed by a low-noise LDO. The protected
 Foinse return remains the starting choice with autonomous source/protection
 operation. Part selection, intermediate voltage, VIOC and test evidence remain
@@ -40,8 +40,8 @@ this cascade was chosen rather than treating it as an unexplained extra stage.
 EX-03 acceptance, 6 September: Seán accepted the reset-class distinction,
 two-slot MCU-retained checkpoint direction, GNSS-independent mission time,
 deliberate disarmed new-flight preparation and attempted/observed-action
-distinction. The [reset contract](../interfaces/reset-recovery-contract.md)
-records scope and the [host checkpoint model](../tests/reset_replay/README.md).
+distinction. The [reset contract](../../interfaces/reset-recovery-contract.md)
+records scope and the [host checkpoint model](../../tests/reset_replay/README.md).
 Model tests passed; exact MCU retention, time, ECC and restart timing are not
 proved. EX-04's candidate strategy, memory placement, initial 30% reserve and
 reversible development provisioning are now accepted in the
@@ -105,7 +105,7 @@ Do not combine these into an undifferentiated claim that the system is safe.
 
 ## 2. What the evidence actually establishes
 
-The [Rev 1 flight closure](../sources/project/ogma-rev1/ogma-rev1-flight-closure.md)
+The [Rev 1 flight closure](../../sources/project/ogma-rev1/ogma-rev1-flight-closure.md)
 records an aloft Croí reset at T+14.976 s, approximately 696 m above the launch
 datum. It returned to READY at T+51.510 s after recalibration. The cause is
 unknown. The earlier inertial event is a possible precursor, not a demonstrated
@@ -127,7 +127,7 @@ evidence identifies radiation as the reset cause.
 The CATS and Fluctus photographs support serviceability and connector-scale
 judgments. They do not establish a measured EMI mechanism, a coating cure, or
 the cause of the Fluctus field failure. The
-[reference indexes](../sources/README.md) preserve those limits.
+[reference indexes](../../sources/README.md) preserve those limits.
 
 ## 3. Define flight capability separately from health
 
@@ -635,7 +635,7 @@ on the discarded section.
 For liquid staging, reconcile Ogma's staged-flight authority with the propulsion
 controller's local engine ignition authority. No channel acquires two owners
 because both documents use the word ignition. The
-[existing interface](../interfaces/ogma-foinse-propulsion-boundary.md) remains
+[existing interface](../../interfaces/ogma-foinse-propulsion-boundary.md) remains
 in force pending a jointly accepted clarification.
 
 ## 9. Recording, configuration, and service

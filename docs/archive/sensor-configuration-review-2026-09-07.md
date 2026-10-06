@@ -1,7 +1,7 @@
 # Sensor configuration review for Anav
 
 7 September 2026. Checklist subsequently accepted by Seán; not a new firmware task or pin-map
-revision. The [accepted handoff](firmware-handoff-2026-09-07.md) remains controlling.
+revision. The [accepted handoff](../firmware-handoff-2026-09-07.md) remains controlling.
 Anav chooses the implementation. No firmware was written in this review.
 
 ## Keep the existing sensors

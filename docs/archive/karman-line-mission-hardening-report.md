@@ -6,7 +6,7 @@ Status: design study before schematic capture; the workhorse role, provisional p
 
 Scope: a reusable workhorse flight computer for ordinary HiPR competition launches, with one suborbital flight to at least 100 km and recovery as its short-duration extreme case
 
-Authority: [`current-system.md`](../current-system.md) is the current architecture; only report items explicitly accepted there are architecture decisions
+Authority: [`current-system.md`](../../current-system.md) is the current architecture; only report items explicitly accepted there are architecture decisions
 
 Review update, 5 September: the [reliability design review](reliability-design-review.md)
 and [execution plan](reliability-execution-plan.md) deepen this study and own the
@@ -16,7 +16,7 @@ sequencing need explicit closure. References to independent recovery describe
 the study's proposed safety architecture, not a blanket per-mission decision
 already accepted by the team. Foinse remains MCU-less in every candidate.
 
-Acceptance update, 6 September: the [EX-01 flight fault contract](../interfaces/flight-fault-contract.md)
+Acceptance update, 6 September: the [EX-01 flight fault contract](../../interfaces/flight-fault-contract.md)
 now records accepted fault responses, phase-aware watchdog feeding, post-reset
 staging inhibit and G0–G3. Independent recovery is required for initial flights
 with live Ogma recovery authority and the Kármán mission; later ordinary-flight
@@ -24,7 +24,7 @@ policy needs explicit vehicle review. That bounded decision supersedes the
 earlier open/proposed status for those policies, not the whole study. Exact
 coverage, timing, components, circuits and all test evidence remain open.
 
-EX-02 update, 6 September: the [power contract](../interfaces/power-contract.md)
+EX-02 update, 6 September: the [power contract](../../interfaces/power-contract.md)
 records accepted source independence, protected branches, USB service and
 bounded hold-up/energy defaults. Seán explicitly retained the switching
 preregulator followed by low-noise LDO, citing the earlier external review.
@@ -32,7 +32,7 @@ Exact regulator, intermediate voltage, VIOC use and measurements remain open.
 
 EX-03 update, 6 September: accepted reset-class, checkpoint, local-time,
 new-flight preparation and action-evidence defaults are in the
-[reset contract](../interfaces/reset-recovery-contract.md). The initial host
+[reset contract](../../interfaces/reset-recovery-contract.md). The initial host
 model tests selected semantics; it does not establish MCU retention, physical
 power/reset behaviour, clock survival or qualification.
 
@@ -1631,7 +1631,7 @@ Any reopening, internal re-mate, battery or board change, invasive debug access,
 
 ## Changes this would make to the current system description
 
-This table maps the report back to [`current-system.md`](../current-system.md). The workhorse role, provisional platform envelope, bounded Kármán mission, avionics-bay service boundary, and connector lifecycle have been accepted into the current architecture. Exact connector parts and every other row remain proposals unless the current-system document explicitly marks them otherwise.
+This table maps the report back to [`current-system.md`](../../current-system.md). The workhorse role, provisional platform envelope, bounded Kármán mission, avionics-bay service boundary, and connector lifecycle have been accepted into the current architecture. Exact connector parts and every other row remain proposals unless the current-system document explicitly marks them otherwise.
 
 | Current-system area | Required change |
 | --- | --- |
@@ -1774,12 +1774,12 @@ Rejected. It can hide contamination, block sensors and contacts, change thermal 
 
 ### Current Ogma authority
 
-- [`current-system.md`](../current-system.md): current architecture checkpoint, updated 2026-09-03.
-- [`project-log.md`](../project-log.md): chronological Ogma 2 record.
-- [`ogma-rev1-flight-closure.md`](../sources/project/ogma-rev1/ogma-rev1-flight-closure.md): Rev 1 flight evidence, including the unexplained T+14.976 s reset.
-- [`rev1-unified-learnings.md`](../sources/project/ogma-rev1/rev1-unified-learnings.md): consolidated Rev 1 electrical, software, integration, and workflow evidence.
-- [`rev2-requirements.md`](../sources/project/ogma-rev1/rev2-requirements.md): earlier requirements inherited where still compatible.
-- [Local CATS Vega and Fluctus photographs](../sources/inspiration/hardware-comparison/README.md): geometry, access, connector, and stack observations only.
+- [`current-system.md`](../../current-system.md): current architecture checkpoint, updated 2026-09-03.
+- [`project-log.md`](../../project-log.md): chronological Ogma 2 record.
+- [`ogma-rev1-flight-closure.md`](../../sources/project/ogma-rev1/ogma-rev1-flight-closure.md): Rev 1 flight evidence, including the unexplained T+14.976 s reset.
+- [`rev1-unified-learnings.md`](../../sources/project/ogma-rev1/rev1-unified-learnings.md): consolidated Rev 1 electrical, software, integration, and workflow evidence.
+- [`rev2-requirements.md`](../../sources/project/ogma-rev1/rev2-requirements.md): earlier requirements inherited where still compatible.
+- [Local CATS Vega and Fluctus photographs](../../sources/inspiration/hardware-comparison/README.md): geometry, access, connector, and stack observations only.
 
 ### Recent design framing
 
@@ -1815,4 +1815,4 @@ The relevant primary sources are linked where their claims appear. The main grou
 
 ## Closure condition
 
-This report remains a design study until the team dispositions the P0 questions. Individual proposals may enter [`current-system.md`](../current-system.md) only through explicit acceptance; that does not ratify the rest of the report. Test results and decisions enter [`project-log.md`](../project-log.md) without rewriting earlier chronological entries.
+This report remains a design study until the team dispositions the P0 questions. Individual proposals may enter [`current-system.md`](../../current-system.md) only through explicit acceptance; that does not ratify the rest of the report. Test results and decisions enter [`project-log.md`](../../project-log.md) without rewriting earlier chronological entries.

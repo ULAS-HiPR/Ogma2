@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 0. What we are building
 
@@ -116,7 +116,7 @@ fault. The earlier reviews deliberately separated candidate precursors from
 causation. That discipline is part of the design: record enough to distinguish
 a command, an electrical response, a valid measurement and an actual outcome.
 [Rev 1 lessons carried forward](../../rev1-external-review-lessons.md),
-[reset and evidence contract](../../../interfaces/reset-recovery-contract.md).
+[reset and evidence contract](../../../../interfaces/reset-recovery-contract.md).
 
 ### The real simplicity trade
 
@@ -159,6 +159,6 @@ Can Seán and Anav point to every source, decision owner and unsafe failure path
 on the drawings? If not, improve the drawing or resolve that boundary before
 packing the PCB. Keep the previous routing study separate.
 
-Evidence: [current system](../../../current-system.md),
+Evidence: [current system](../../../../current-system.md),
 [accepted baseline](../../architecture-acceptance-2026-09-07.md),
-[vehicle boundary](../../../interfaces/ogma-foinse-propulsion-boundary.md).
+[vehicle boundary](../../../../interfaces/ogma-foinse-propulsion-boundary.md).

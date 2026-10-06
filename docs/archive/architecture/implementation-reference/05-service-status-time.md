@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 5. Service, status and time
 
@@ -142,4 +142,4 @@ closed; invasive debug or internal harness changes invalidate flight-ready closu
 
 Evidence: [status/time revision](../../sensing-indication-time-review-2026-09-07.md),
 [readiness revision](../../connector-servo-readiness-revision-2026-09-07.md),
-[reset contract](../../../interfaces/reset-recovery-contract.md).
+[reset contract](../../../../interfaces/reset-recovery-contract.md).

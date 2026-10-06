@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 6. GNSS and radio
 
@@ -153,7 +153,7 @@ eight-symbol preamble, the recorded calculation gave:
 
 These are illustrative calculations, not the selected packet format or lawful
 transmit profile. Regional frequency, bandwidth, EIRP and access rules remain
-separate constraints. [Reproducible research calculation](../../calculations/avionics-options-estimates.py).
+separate constraints. [Reproducible research calculation](../../../calculations/avionics-options-estimates.py).
 
 The reviewed Wio table quoted −141.1 dBm for slow SF12/125 kHz versus −110 dBm
 at 260 kbit/s FLRC and −100.5 dBm at 2.6 Mbit/s FLRC, under its stated test
@@ -198,4 +198,4 @@ the above-80-km study is non-binding.
 
 Evidence: [radio contract](../../radio-change-2026-09-07.md),
 [height study](../../height-estimation-above-80km-2026-09-07.md),
-[firmware handoff](../../firmware-handoff-2026-09-07.md).
+[firmware handoff](../../../firmware-handoff-2026-09-07.md).

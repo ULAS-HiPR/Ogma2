@@ -13,4 +13,4 @@ recorded in board-library-manifest.json. The Samtec J301 body remains absent;
 J101 Nano-Fit still has no exact land pattern. Eleven flat probes need no body.
 
 Full remaining model/footprint register:
-[model recovery report](../../../docs/model-recovery-2026-09-07.md).
+[model recovery report](../../../docs/archive/model-recovery-2026-09-07.md).

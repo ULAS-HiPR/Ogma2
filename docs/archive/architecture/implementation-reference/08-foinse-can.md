@@ -2,7 +2,7 @@
 
 Snapshot retained before the 11 September full-pack rewrite. Detailed component,
 pin and calculation evidence follows. Current review status lives in the
-[reading pack](../README.md); this snapshot does not authorize implementation.
+[reading pack](../../../architecture/README.md); this snapshot does not authorize implementation.
 
 # 8. Foinse and the vehicle boundary
 
@@ -104,7 +104,7 @@ factor**, not measured cold-pack discharge data. That gave about 21.7 Wh for
 same allowance. Pack temperature limits can also be narrower than board limits.
 Endurance closes with the assembled pack, wiring and real mode profile, not the
 cell's advertised amp-hours. No loose spring cell holder is proposed for flight.
-[Power contract](../../../interfaces/power-contract.md),
+[Power contract](../../../../interfaces/power-contract.md),
 [cell datasheet used by the study](https://www.molicel.com/wp-content/uploads/INR21700P45B_1.4_Product-Data-Sheet-of-INR-21700-P45B-80109.pdf).
 
 ### “24 V solenoid” does not mean direct 6S is valid
@@ -177,6 +177,6 @@ Next tests: autonomous startup with AUX absent, bounded monitor-bus faults,
 source short/brownout selectivity, actual return faults, CAN loss/bus-off and
 peer resets. Do not expand this review into designing unspecified valves.
 
-Evidence: [vehicle boundary](../../../interfaces/ogma-foinse-propulsion-boundary.md),
-[power contract](../../../interfaces/power-contract.md),
+Evidence: [vehicle boundary](../../../../interfaces/ogma-foinse-propulsion-boundary.md),
+[power contract](../../../../interfaces/power-contract.md),
 [sensing revision](../../sensing-indication-time-review-2026-09-07.md).

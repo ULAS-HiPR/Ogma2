@@ -10,7 +10,7 @@ current-system control implementation status.
 
 Seán authorised this investigation, including a non-binding look at height
 estimation above 80 km. He has not accepted the new component proposals below.
-The [current system](../current-system.md), physical MCU pins, accepted firmware
+The [current system](../../current-system.md), physical MCU pins, accepted firmware
 handoff and both boards are unchanged. Anav owns firmware implementation.
 
 ## Recommended answers
@@ -198,7 +198,7 @@ the first engineering PCBA. These have not been executed on hardware.
 
 ## 4. CAN: twisted wire does not require a special connector
 
-![CAN harness functional proposal](assets/can-harness-proposal.svg)
+![CAN harness functional proposal](../assets/can-harness-proposal.svg)
 
 The pair is twisted along the cable, separated briefly at each end, then each
 conductor gets its own crimp. JST GH does not carry the pair in one contact.
@@ -215,7 +215,7 @@ conductor gets its own crimp. JST GH does not carry the pair in one contact.
 | End treatment proposal | Keep untwist to about 10 mm or less where practical; chassis strain relief near each plug; service slack without a large unsupported loop |
 | Termination | Existing fixed 120 Ω at Croí, 120 Ω at propulsion; two nodes, no third terminator |
 
-Sources: [current interface](../interfaces/ogma-foinse-propulsion-boundary.md),
+Sources: [current interface](../../interfaces/ogma-foinse-propulsion-boundary.md),
 current Croí exported netlist J501/R510/U503, [JST drawing pp. 1–3](https://www.jst-mfg.com/product/pdf/eng/eGH.pdf),
 [TI physical-layer guidance](https://www.ti.com/lit/an/slla270/slla270.pdf).
 
@@ -305,7 +305,7 @@ Next review choice: **retain E22, or authorise the bounded Wio-LR2021 change**.
 My preference is Wio, with the integration checks above. Seán decides; Anav
 reviews the driver impact. No message or task has been sent to him.
 
-The [calculation](calculations/avionics-options-estimates.py) uses only Python's
+The [calculation](../calculations/avionics-options-estimates.py) uses only Python's
 standard library. Airtime reference values, inverse-square coast energy and
 half-step convergence checks pass. It is illustrative arithmetic, not firmware,
 flight simulation, RF testing or a probability-of-failure estimate.

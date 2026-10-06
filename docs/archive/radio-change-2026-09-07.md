@@ -74,7 +74,7 @@ the unused U4604 channel. It retains the existing radio power topology.
 The supply bypass capacitor follows the new module power pin. No other block
 is repacked. All four output-energy links remain DNP.
 
-The local [library record](../hardware/croi2/libraries/radio-integration.md)
+The local [library record](../../hardware/croi2/libraries/radio-integration.md)
 documents corrections needed in the manufacturer's KiCad assets. The official
 Wio STEP is available but **not linked pending alignment verification**.
 Do not mistake an absent 3D body for free mechanical space.

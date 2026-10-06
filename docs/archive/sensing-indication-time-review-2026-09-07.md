@@ -233,7 +233,7 @@ live firing, charging experiment or flight is authorised by this revision.
 ## Sources
 
 - Live Croí/Foinse schematics, native XML exports and check reports under
-  [hardware](../hardware/README.md).
+  [hardware](../../hardware/README.md).
 - [INA228 datasheet](https://www.ti.com/lit/ds/symlink/ina228.pdf), especially
   power-off input limits, calibration/register format and Kelvin layout.
 - [WSLP resistor family](https://www.vishay.com/docs/30122/wslp.pdf).

@@ -2,7 +2,7 @@
 
 7 September 2026. Working PCB changed; circuitry and MCU allocation unchanged.
 
-Open [Croi2.kicad_pro](../hardware/croi2/Croi2.kicad_pro), then its PCB.
+Open [Croi2.kicad_pro](../../hardware/croi2/Croi2.kicad_pro), then its PCB.
 If an editor still shows the old starter, reload the disk version. Do not save
 the stale editor over the new placement.
 
@@ -105,7 +105,7 @@ Whole-board routing is not settled. Before routing:
    out of driver thermal copper. Preserve every DNP energy/safety link.
 5. Resolve final connector/support positions and board outline. Preserve GNSS
    clearances and continuous GND while doing so. Then follow the
-   [ordered routing guide](pcb-layout-guide.md) and exact manufacturer pages.
+   [ordered routing guide](../pcb-layout-guide.md) and exact manufacturer pages.
 
 No local circuit is claimed to be manufacturer-reference-layout identical.
 The selected package, pin-relative placement and documented recommendations
@@ -125,7 +125,7 @@ The 31 flat signal-probe pads remain unchanged. Body diameter is nominally
 The exact STEP is missing from both the installed stock library and the direct
 upstream lookup. No bare-wire or fabricated substitute is attached. The 3D
 view therefore omits these 20 bodies; reserve their height and probe access
-explicitly. [Selection, sources and model gap](../hardware/croi2/libraries/testpoint-selection.md).
+explicitly. [Selection, sources and model gap](../../hardware/croi2/libraries/testpoint-selection.md).
 Foinse's test points were not changed.
 
 ## Checks and remaining gaps
@@ -138,8 +138,8 @@ new critical native DRC geometry/keepout finding, and a closed working outline.
 All 2,150 schematic netlist nodes are identical. MCU maps, project settings,
 custom rules and unrelated library assets are unchanged. Native DRC has no
 added finding in any category; the preceding second pass removed one silk overlap.
-Foinse is unchanged. The [placement report](../hardware/croi2/placement-report.json)
-records every position and local check; the [board checks](../hardware/croi2/board-checks.json)
+Foinse is unchanged. The [placement report](../../hardware/croi2/placement-report.json)
+records every position and local check; the [board checks](../../hardware/croi2/board-checks.json)
 record native readback against the schematic netlist. In this flexible pass,
 all schematic and library files remain byte-identical. The checker additionally
 reports the 97 placement cells and the outer groups' logical role; no check

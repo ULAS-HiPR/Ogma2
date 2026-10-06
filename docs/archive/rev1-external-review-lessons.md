@@ -30,8 +30,8 @@ TO-220s. This records the discussion, not proof of the final Rev 1 build.
 
 **Current decision:** Seán explicitly wants the switching preregulator followed
 by low-noise LDO retained in Ogma 2. This supersedes the model's direct-buck-first
-preference in the EX-02 conversation. The [power contract](../interfaces/power-contract.md)
-and [current system](../current-system.md) now carry that direction. Exact
+preference in the EX-02 conversation. The [power contract](../../interfaces/power-contract.md)
+and [current system](../../current-system.md) now carry that direction. Exact
 module, LDO, intermediate voltage and VIOC use remain open.
 
 Manufacturer checks made on 6 September:

@@ -1,60 +1,34 @@
 # Ogma 2
 
-**Start here:** [Connected component proposal](docs/architecture/00-overview.md) · [Block index](docs/architecture/README.md).
+HiPR's workhorse flight computer: **Burrito** (Croí2), the flight board, and
+**Churro** (Foinse2), an MCU-less power board. **Fajita** is the separate
+propulsion controller. The capture specification is ready; native CAD holds the
+8 September draft. Nothing is built or flown yet.
 
-22 September: named parts, connected power/data paths and short reasons. Proposed
-three-domain power/recovery, smaller comms package and two bounded local interfaces are distinct
-from the preserved CAD. [Current status](current-system.md).
+**Start here:** [system tour](docs/architecture/system-tour.md) →
+[decisions](decisions.md) → the chapter for your block.
 
-HiPR's workhorse flight computer: standalone Croí2, with MCU-less Foinse2 power
-distribution when the vehicle needs it. Engineering draft; no fabrication or
-flight release.
+## Read in this order
 
-**14 September review hold:** requirements and architecture are in flux after
-the joint session. No schematic or PCB changes until Seán authorizes the final
-stack. [Complete session extraction](docs/architecture/2026-09-10-session-review.md).
-Canonical names confirmed 13 September: Burrito (Croí2), Churro (Foinse2), Fajita (propulsion controller).
-Existing CAD/file names and cross-system contracts have not changed.
+1. [System tour](docs/architecture/system-tour.md): boards, power, data, connectors with photos.
+2. [Decisions](decisions.md): what is settled, what is proposed, what is open.
+3. [Current system](current-system.md): what is true now.
+4. [Block chapters](docs/architecture/README.md): one page per block, plus the capture specification.
+5. [Hardware](hardware/README.md) for CAD, or the [firmware handoff](docs/firmware-handoff-2026-09-07.md) for firmware.
 
-## Read
+Don't start at the project log or `docs/archive/`.
 
-1. [Current system](current-system.md) — selected architecture, boundaries and next work.
-2. [Component proposal](docs/architecture/README.md) — connected overview and focused block drawings; research linked underneath.
-3. [Firmware handoff](docs/firmware-handoff-2026-09-07.md) — detailed Anav interface; dated revisions at its top control older text.
-4. [Document index](docs/README.md) — decision records, interfaces and deeper studies.
-5. [Project log](project-log.md) — append-only history.
+## Repository
 
-The existing CAD preserves the previously accepted design. External GNSS reception and
-external power-switch connections are implemented in the checked CAD draft.
-[Exact changes and remaining tests](docs/installation-change-record-2026-09-08.md).
-Physical energetic arming remains separate. Readable schematics are installed;
-all schematic and PCB implementation remains paused pending final-stack approval.
+| Path | Contents |
+| --- | --- |
+| `hardware/croi2/`, `hardware/foinse2/` | Native KiCad projects, tracked directly; no submodules |
+| `docs/architecture/` | Block chapters, capture specification, justifications |
+| `interfaces/` | Owned contracts: power, flight fault, reset, vehicle boundary |
+| `docs/archive/` | Superseded reviews, studies and history: evidence, not instructions |
+| `project-log.md` | Append-only history |
 
-Use the connected drawing during discussion; follow the block being questioned.
-Resolve a concrete selection or connection instead of assigning another full-pack
-read. The [capture specification](docs/architecture/schematic-capture-spec.md)
-defines the handoff: after Seán's green light, Codex captures schematics and
-places components; Seán routes. Anav owns firmware. [Justifications](docs/architecture/justifications/README.md)
-are linked directly from each block.
-
-## Hardware and repository boundary
-
-[Hardware entrypoint](hardware/README.md) explains the local Croí/Foinse projects,
-dependencies and verification. This monorepo contains architecture, interfaces,
-curated evidence and both active CAD projects:
-
-- `hardware/croi2/` — Croi2.kicad_pro
-- `hardware/foinse2/` — Foinse2.kicad_pro
-
-Both are ordinary tracked directories, not submodules or separate repositories.
-A clean clone includes their native projects, symbols, footprints, available
-3D models, reading PDFs and check reports. Open the corresponding `.kicad_pro`.
-
-The earlier long current-system is [preserved verbatim](docs/history/README.md).
-Historical alternatives are not additional current requirements. Native CAD,
-controlled contracts and measured evidence outrank prose; discrepancies require
-a recorded correction, not silent regeneration.
-
-Use review branches and bounded pull requests. Do not publish raw transcripts,
-private correspondence, generated research dumps or temporary render trees.
-No repository licence has been selected; Rev 1 remains a separate project.
+Use branches and bounded pull requests. `main` is reviewed truth once merged.
+Native CAD, contracts and measurements outrank prose. No raw transcripts,
+private correspondence, generated dumps or render trees. No licence selected;
+Rev 1 is a separate project.

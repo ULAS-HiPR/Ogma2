@@ -1,6 +1,6 @@
 # MCU pin-capacity audit and package comparison
 
-**Current recommendation:** [processor review](architecture/01-mcus.md).
+**Current recommendation:** [processor review](../architecture/01-mcus.md).
 This dated audit describes the preserved allocation. The current proposal adds
 a complete 64-pad comms map and streamed service buffering; the whole-32-KiB
 buffer discussion below is historical, not a present H503 exclusion.
@@ -10,8 +10,8 @@ draft. No processor choice, pin remap, schematic edit or firmware change approve
 
 ## Evidence and method
 
-- Read the controlled [flight CSV](../hardware/croi2/libraries/inputs/flight-pinout.csv)
-  and [comms CSV](../hardware/croi2/libraries/inputs/comms-pinout.csv): 100 physical
+- Read the controlled [flight CSV](../../hardware/croi2/libraries/inputs/flight-pinout.csv)
+  and [comms CSV](../../hardware/croi2/libraries/inputs/comms-pinout.csv): 100 physical
   pad records each. These carry individual pad numbers, logical net names and AFs.
 - Exported a fresh KiCad XML netlist from the current Croí schematic to temporary
   storage, without saving or editing CAD.
@@ -23,7 +23,7 @@ draft. No processor choice, pin remap, schematic edit or firmware change approve
 - Used ST DS14258 Rev 6, Figure 5 and alternate-function tables, for the proposed
   H563 LQFP64 port mapping. This is a desk mapping, not a new native CAD audit.
 
-The read-only [audit utility](../tools/audit_mcu_pins.py) prints the grouped
+The read-only [audit utility](../../tools/audit_mcu_pins.py) prints the grouped
 allocation and fails on a CSV/netlist mismatch or unclassified pad. Run it with
 a fresh KiCad XML netlist argument. The machine's default Python had a local
 Expat library-loading fault; the system Python completed the audit. No runtime
@@ -94,7 +94,7 @@ and current are represented separately. Servos add five more.
 The early [6 September reservation](mcu-resource-and-timing-results.md) counted
 40 flight and 20 comms port pins while explicitly leaving major controls and
 diagnostics unresolved. It is historical reservation work, not a contradictory
-current pin map. The diagram in the [MCU chapter](architecture/01-mcus.md) now
+current pin map. The diagram in the [MCU chapter](../architecture/01-mcus.md) now
 accounts for the complete design.
 
 ## First comparison: H563 in LQFP64 for comms

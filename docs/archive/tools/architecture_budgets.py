@@ -2,6 +2,9 @@
 
 Run: python3 tools/architecture_budgets.py
 Inputs and limitations: docs/power-recording-can-audit-2026-09-11.md.
+Historical 11 September scenarios. Current recording/rail proposal checks:
+docs/calculations/component-proposal-checks.py. Do not use this older ledger
+or sixteen-data-page scenario as the current capture specification.
 """
 import json
 
@@ -20,7 +23,7 @@ BACKGROUND_FPS = 100  # Scenario, not an observed or approved allocation.
 def calculate():
     spare = CAPACITY_BYTES - RESERVE_BYTES - MISSION_BYTES
     return {
-        'status': 'Desk calculations, with assumed inputs; not measured performance',
+        'status': 'Historical 11 September scenarios; current proposal checks are docs/calculations/component-proposal-checks.py; not measured performance',
         'hold_up_ms_800uF_204mA': {
             str(v): 800e-6 * v / .204 * 1000 for v in (.1, .25, .5)
         },
