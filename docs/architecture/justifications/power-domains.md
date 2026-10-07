@@ -1,6 +1,6 @@
 # Power domains, restart and energy
 
-Proposed capture baseline, 22 September 2026, updated for D-6.5 and D-6.8. It
+Proposed capture baseline, 22 September 2026, updated for D-6.5, D-6.8 and D-7.1. It
 replaces the earlier two-regulator idea. CAD is unchanged. See the
 [power chapter](../02-power.md).
 
@@ -26,7 +26,7 @@ reliability number is claimed for it.
 | Short on comms MCU, GNSS or radio | U1501 limits and latches. Flight can cycle the comms branch on battery | The common buck must ride through the limited load |
 | Comms regulator output short | Comms lost; services keep their own regulator | U1501 and common-buck transients |
 | Short on one service device | Its local limiter acts; other service branches stay up if selectivity holds | Service regulator and input limiter |
-| Service regulator or input trip | Flight and comms survive; flight can restart services with PD10 | NOR tail and CAN / monitoring outage, stated openly |
+| Service regulator or input trip | Flight and comms survive; flight can restart services with PE8 | NOR tail and CAN / monitoring outage, stated openly |
 | Flight regulator or common source fails | Flight is down | Three domains are not three independent computers |
 | A regulator fails input-to-output | Its output group may see over-voltage | Current limiting does not stop over-voltage |
 
@@ -44,14 +44,14 @@ independent recovery. Keep the common buck for this revision.
 | R1504 | 36.5 kΩ → **66.5 kΩ 1%**; calculated limit 351–449 mA |
 | U1601 | Keep **before U1901**. IN = `4V_PRE`, OUT = `OPTIONAL_LDO_IN` through the existing link |
 | U1601 EN (pin 3) / R1602 | Move EN and the top of its 100 kΩ pull-down from `FLIGHT_3V3` to the new **`SERVICE_POWER_EN`** |
-| Flight PD10, pad 57 | GPIO `SERVICE_POWER_EN`, low at reset and power-off. It only replaces the deleted servo 3 PWM |
+| Flight PE8, pad 39 | GPIO `SERVICE_POWER_EN`, low at reset and power-off. Uses a pin freed by D-6.2 (was the channel 1 low-side select); servo 3 keeps PD10 (D-7.1) |
 | R1701 / R1801 / R1901 | **31.9 kΩ 0.1%** each; lower legs stay 10 kΩ 0.1% → 3.352 V nominal on all three |
 | R1604 | 56.2 kΩ → **49.9 kΩ 1%**; calculated limit 470–588 mA |
 | `3V3_OPTIONAL` | Keep the net name for capture; call it "services" on labels. It feeds NOR, CAN, AUX and the sounder, not comms |
 | Local limits and boundaries | Keep NOR, CAN and AUX limits and their partial-power signal isolation. Sensors run straight from `FLIGHT_3V3` (D-6.6) |
 | Source logic | Core enabled by `4V_PRE` presence (D-6.5); keep the battery-priority comms enable |
 
-PD10 is the only new flight pin. No output or arm-sense pin is reused. The
+PE8 is the only reassigned flight pin for this. No output or arm-sense pin is reused. The
 proposed flight CSV records this; the frozen input CSVs stay as they are until
 capture is approved.
 

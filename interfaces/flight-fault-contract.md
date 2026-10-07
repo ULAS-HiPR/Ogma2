@@ -96,12 +96,12 @@ threshold or circuit is chosen here.
 - Channels 1 and 2 are wired to the recovery domain; channel 3 to staging.
   Profiles can't put sustainer ignition on a recovery channel to dodge the
   post-reset veto.
-- Rev A fits channels 1 and 2 only. Channel 3 and the stage latch stay DNP until
-  a multistage flight is scheduled (D-6.2).
-- The stage latch design, when fitted: a supervised asynchronous clear and a
-  hardware disarm qualification on the latch data input, with a raw deliberate
-  new-flight request on the clock. Reset propagation and inert traces still need
-  proof.
+- Rev A fits all three channels and the stage latch (D-7.1). Channel 3 has its
+  own staging arm (D-7.2, proposed).
+- The stage latch: any flight reset clears it asynchronously; its data input is
+  the hardware staging-disarmed signal; a deliberate new-flight request (PD15)
+  clocks it. Channel 3 fires only while it is set. Reset propagation and inert
+  traces still need proof.
 - Firmware and a valid checkpoint can't silently defeat physical inhibits.
 
 **Kármán population.** Its energetic and servo sections are unpowered or DNP, so

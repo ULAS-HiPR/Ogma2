@@ -25,12 +25,14 @@ Start with the [system tour](docs/architecture/system-tour.md).
   mission with the comms MCU held in reset.
 - Only the flight MCU commands recovery and staging outputs. Radio, USB and CAN
   cannot.
-- Pyro energy passes an external physical arm switch (J6101). Pyro and servo
+- Pyro energy passes an external physical arm switch (J6101; staging J6102). Pyro and servo
   energy leave before the Croí eFuse U101 through their own fuses, so an output
   fault can't pull down logic power (D-6.1).
-- Recovery outputs: a current-limited TPS1H100 high side per channel (≈2.0 A),
-  igniter return to ground, one channel fired at a time. Staging is DNP until a
-  multistage flight is scheduled (D-6.2).
+- Three pyro channels and three servos are a core requirement (D-7.1). Each pyro
+  channel is a current-limited TPS1H100 high side (≈2.0 A) with the igniter
+  return to ground; one channel fires at a time (D-6.2). Channels 1 and 2 are
+  recovery. Channel 3 is staging / air-start, behind its own arm and the
+  hardware reset latch (D-7.2, proposed).
 - After launch detect, firmware holds the battery enable on (Croí and Churro AV);
   U101 and Churro U1001 auto-retry (D-6.3).
 - Any in-flight flight-MCU reset inhibits further sustainer ignition. Recovery
@@ -69,7 +71,7 @@ enables. Charging uses external balance chargers.
 | GNSS | MAX-M10S-00B, external passive antenna via SMA; 80 km / 4 g / 500 m/s limits |
 | Supervision | TPS3808 supervisors, TPS3430 earned-heartbeat watchdog |
 | Current | Croí INA228 0x40 (logic path); Foinse propulsion INA228 0x41; ADS1115 0x48 |
-| Outputs | TPS1H100 per recovery channel; servo TPS1H100 at ≈2.0 A |
+| Outputs | TPS1H100 per pyro channel (2 recovery + 1 staging), U6001 staging reset latch; one servo TPS1H100 at ≈2.0 A shared by three servos |
 | Indication | Red/green readiness, comms amber, hardware power LED, passive piezo |
 
 ## Interfaces
@@ -78,9 +80,9 @@ enables. Charging uses external balance chargers.
 | --- | --- |
 | Croí ↔ Foinse | Samtec MPT/MPS-08-01-01-L-RA-SD: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault, 8 `CROI_POWER_HOLD` |
 | Standalone 2S | Molex Nano-Fit 1053111102; footprint still to draw |
-| Pyro arm J6101 | 2-contact, to the external arm switch. Must not mate Churro J701 (Micro-Fit 430450200, raw PROP) or the GH enable loops; part chosen at capture |
-| Outputs J6601 | Micro-Fit 430450600: 1/2 high sides, 4/5 returns, 3/6 unwired |
-| Servos J6602 | Micro-Fit 430451000: PWR/PWM/GND on 1/2/3 and 4/5/6 |
+| Pyro arms J6101 / J6102 | Recovery / staging (J6102 proposed, D-7.2). 2-contact each, to external arm switches. Must not mate each other, Churro J701 (Micro-Fit 430450200, raw PROP) or the GH enable loops; parts chosen at capture |
+| Outputs J6601 | Micro-Fit 430450600: 1/2/3 high sides, 4/5/6 returns |
+| Servos J6602 | Micro-Fit 430451000: PWR/PWM/GND on 1/2/3, 4/5/6 and 7/8/9; 10 unwired |
 | CAN J501 | JST GH: 1 CAN H, 2 CAN L, 3 reference; no power |
 | Inter-MCU | Framed UART, 2 Mbaud |
 | Service | USB-C (USB4105-GF-A) on comms; TC2030 debug pads for both MCUs |
@@ -128,7 +130,7 @@ authority; no backup device is selected yet.
 
 ## Next
 
-1. 8 Oct: accept D1–D3, D5 and D-6.11; answer the open rows in decisions.md.
+1. Sunday 11 Oct: accept D1–D3, D5, D-6.11 and D-7.2; answer the open rows in decisions.md.
 2. Capture the specification; independent human review page by page.
 3. Place, then Seán routes. Footprint, rating and assembly review before order.
 4. First PCBA: functional blocks on inert loads, including the bench tests in

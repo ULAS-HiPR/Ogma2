@@ -1,7 +1,7 @@
 # 09 Connectors, enable and arm
 
-Two separate operator actions: **switch the computer on** (J103 enable) and
-**arm the pyro outputs** (J6101 arm switch). A powered computer or a green
+Separate operator actions: **switch the computer on** (J103 enable), **arm
+recovery** (J6101) and **arm staging** (J6102, proposed in D-7.2). A powered computer or a green
 lamp never means the outputs are armed, and an open enable never means they're
 safe.
 
@@ -15,9 +15,11 @@ open = off"] --> B["U101 battery entry on"]
 after launch detect"] -.->|"keeps U101 on"| B
   C --> D["Firmware readiness
 red / green lamp"]
-  E["J6101 · external arm switch"] --> F["Pyro energy at the
-output switches"]
-  F --> S["U6103 arm sense → PC8
+  E["J6101 · recovery arm"] --> F["Energy at channels 1 / 2"]
+  F --> S["U6103 A → PC8
+over USB and telemetry"]
+  E3["J6102 · staging arm"] --> F3["Energy at channel 3"]
+  F3 --> S3["U6103 B → PC9
 over USB and telemetry"]
 ```
 
@@ -37,20 +39,20 @@ It carries control current, not board current. Unplugging the battery always
 powers down, even if firmware is holding the enable.
 [Contract](../../interfaces/power-contract.md#source-enables-j103-and-j104).
 
-## Pyro arm (J6101)
+## Pyro arms (J6101, J6102)
 
 | Item | Decision |
 | --- | --- |
 | Connector | 2-contact, rated above F6101, to an external maintained switch. Part chosen at capture. It must not mate Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the JST GH enable loops, so a crossed harness can't put propulsion voltage on the pyro rail. Candidate: single-row Micro-Fit 3.0; confirm by trying the real housings |
-| Switches | Pyro energy only: `ENERGY_TAP` → F6101 → J6101 → `RECOVERY_ARMED_VBAT` |
+| Switches | Recovery energy only: `ENERGY_TAP` → F6101 → J6101 → `RECOVERY_ARMED_VBAT` |
 | Open or unplugged | No energy at the output switches, whatever firmware does |
-| Staging | No feed while its channel is DNP |
+| Staging (proposed, D-7.2) | Separate arm: F6101 → J6102 → `STAGING_ARMED_VBAT` → channel 3. J6102 is 2-contact, keyed so it can't mate J6101, J701 or the GH loops. Sense U6103 B → PC9. Alternative to weigh: one two-pole switch on a single connector |
 | Servos | Not behind the arm; own fuse |
-| Indication | Arm sense U6103 → PC8, reported over USB and telemetry; no lamp |
-| Switch part | Open: maintained, rated above F6101 at 8.4 V DC, operable from outside the airframe |
+| Indication | Arm sense U6103 → PC8 (recovery) and PC9 (staging), reported over USB and telemetry; no lamp |
+| Switch parts | Open: maintained, rated above F6101 at 8.4 V DC, operable from outside the airframe |
 
-The output harness J6601 is not an arm connector: 1/2 recovery high sides, 4/5
-igniter returns to ground, 3/6 unwired while staging is DNP. Links R6310/R6410
+The output harness J6601 is not an arm connector: 1/2 recovery high sides, 3
+staging high side, 4/5/6 igniter returns to ground. Links R6310 / R6410 / R6510
 stay DNP until the igniter and continuity values close.
 
 ## Inventory
@@ -60,9 +62,10 @@ stay DNP until the igniter and continuity values close.
 | J101 | Molex Nano-Fit 1053111102 | Standalone 2S | Footprint to draw from the Molex drawing; never fitted with J102 |
 | J102 | Samtec MPT-08-01-01-L-RA-SD | To Churro | Pin 8 now `CROI_POWER_HOLD` ([08](08-foinse-can.md)) |
 | J103 | JST GH 2-contact | FC battery enable | Defined |
-| J6101 | 2-contact, keyed apart from J701 | Pyro arm switch | Function decided; connector and switch parts open |
-| J6601 | Micro-Fit 430450600 | Recovery outputs | 1/2 high, 4/5 return, 3/6 unwired |
-| J6602 | Micro-Fit 430451000 | Two servos | [04](04-servos.md); 7–10 unwired |
+| J6101 | 2-contact, keyed apart from J701 | Recovery arm switch | Function decided; connector and switch parts open |
+| J6102 | 2-contact, keyed apart from J6101 and J701 | Staging arm switch | Proposed (D-7.2) |
+| J6601 | Micro-Fit 430450600 | Pyro outputs | 1/2 recovery high, 3 staging high, 4/5/6 return |
+| J6602 | Micro-Fit 430451000 | Three servos | [04](04-servos.md); 10 unwired |
 | J501 | JST GH 3-contact | CAN H / L / reference | No power contact |
 | J4401 | GCT USB4105-GF-A | USB-C service | Footprint mismatch with the local library to fix |
 | J4501 / J4601 | Amphenol 132134 SMA | GNSS / radio | Identical; can be swapped |
@@ -81,7 +84,8 @@ Churro adds J101 (2S), J201 (6S), J103/J104 (enables), J301 (to Burrito), J601
   damage it. Use a different connector type or gender for GNSS, or retained,
   labelled leads.
 - **Enable loops vs arm:** three 2-contact GH plugs (Croí J103, Churro J103,
-  J104) look alike; J6101 is Micro-Fit and must stay physically distinct.
+  J104) look alike; J6101 and J6102 must stay physically distinct from them,
+  from each other and from Churro J701.
 
 For every external harness, release the mating part, cavity-numbered drawing,
 wire and contact, retention, strain relief and mounting together. Include
@@ -90,7 +94,8 @@ ground-return faults and USB-attached cases in the installed review.
 ## Capture
 
 Draw J101 from the [Nano-Fit drawing](justifications/interfaces-and-installation.md#source-variants-and-harness-construction);
-a rectangle isn't a land pattern. Add J6101, F6101 and F6801 per the
+a rectangle isn't a land pattern. Add J6101, J6102 (if D-7.2 is accepted), F6101
+and F6801 per the
 [capture delta](schematic-capture-spec.md#burrito-changes). Codex
 captures and places after the go-ahead; Seán routes.
 

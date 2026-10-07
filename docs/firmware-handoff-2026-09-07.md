@@ -6,8 +6,8 @@ This handoff describes the **8 September implementation**, including two
 LQFP100 MCUs and three servo channels. It remains the interface reference for
 that CAD; it is not the latest proposed capture baseline. The
 [22 September capture specification](architecture/schematic-capture-spec.md)
-proposes a 64-pad comms MCU, two local PWM interfaces and a separately controlled
-services supply. Those changes have not been implemented or accepted. The
+proposes a 64-pad comms MCU and a separately controlled services supply; the
+three servo channels stay (D-7.1). Those changes have not been implemented or accepted. The
 [system tour](architecture/system-tour.md) compares the two states.
 
 The historical DMA/component/rationale links below point outside this clone.
@@ -18,7 +18,7 @@ repository's [processor chapter](architecture/01-mcus.md),
 pin tables for current review. No target firmware implementation is present on
 the inspected review branch; this document does not prove driver completion.
 
-## 6 October changes that affect firmware
+## 6–7 October changes that affect firmware
 
 - Two processors, decided (D-6.12): flight and comms, two firmware images. Flight
   must complete the mission with comms held in reset.
@@ -26,8 +26,13 @@ the inspected review branch; this document does not prove driver completion.
   `-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard` hold for either comms package.
 - Flight pins ([capture delta](architecture/schematic-capture-spec.md#burrito-changes)):
   PE5 → `FC_POWER_HOLD` (assert at launch detect, release after LANDED);
-  PE7/PE9 → `PYRO1_FIRE`/`PYRO2_FIRE` straight to the TPS1H100s; PE6, PA8, PA9,
-  PA10, PE8, PE10, PE13, PE14 spare; PD14/PD15 staging latch DNP.
+  PE7/PE9 → `PYRO1_FIRE`/`PYRO2_FIRE` straight to the TPS1H100s; PE12 →
+  `PYRO3_FIRE` through the staging latch; PD14 reads the latch, PD15 sets a new
+  flight (only with staging disarmed), PC9 senses the staging arm; PE8 →
+  `SERVICE_POWER_EN`; PD10 stays `SERVO3_PWM` (LPTIM2_CH2); PE6, PA8, PA9, PA10,
+  PE10, PE13, PE14, PE15 spare.
+- Three pyro channels and three servos (D-7.1). Channel 3 is staging / air-start:
+  never a recovery channel, and dead after any reset until a new flight is set.
 - Sensors have no power enables: recover I²C by clocking SCL, sensors by soft reset.
 - No one-shots: firmware bounds every firing pulse and fires one channel at a time.
 - Enable the backup regulator so backup SRAM survives on VBAT's hold-up.

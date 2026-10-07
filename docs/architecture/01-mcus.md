@@ -17,8 +17,8 @@ flowchart LR
   F <-->|"quad SPI"| N["NOR 256 MiB
 128 KiB staging in RAM"]
   F <-->|"FDCAN"| V["CAN to Fajita"]
-  F -->|"TIM3 PWM"| P["2 servo outputs"]
-  F -->|"PYRO1/2_FIRE"| O["Recovery outputs"]
+  F -->|"TIM3 + LPTIM2 PWM"| P["3 servo outputs"]
+  F -->|"PYRO1/2/3_FIRE"| O["3 pyro outputs"]
   F <-->|"USART3 · 2 Mbaud
 TXU0202 boundary"| C["Comms · H563RIT6
 event loop and DMA queues"]
@@ -85,17 +85,19 @@ measured resource budget. Sources: [pin audit](../archive/mcu-pin-capacity-audit
 ## Flight pins
 
 The [flight map](proposed-flight-pinout.csv) holds the 22 September nets. The
-6 October decisions change these pads (detail in the
+6 and 7 October decisions change these pads (detail in the
 [capture delta](schematic-capture-spec.md#burrito-changes)):
 
 | Pad | Port | Now |
 | --- | --- | --- |
 | 4 | PE5 | `FC_POWER_HOLD` |
 | 38 / 40 | PE7 / PE9 | `PYRO1_FIRE` / `PYRO2_FIRE`, straight to the TPS1H100s |
-| 43 | PE12 | `PYRO3_FIRE`, staging channel DNP |
+| 43 | PE12 | `PYRO3_FIRE`, through the staging latch AND gate (D-7.1, D-7.2) |
 | 5, 67, 68, 69 | PE6, PA8, PA9, PA10 | Spare (sensor enables removed) |
-| 39, 41, 44, 45 | PE8, PE10, PE13, PE14 | Spare (low-side selects and permit removed) |
-| 57 | PD10 | `SERVICE_POWER_EN` (22 Sep) |
+| 39 | PE8 | `SERVICE_POWER_EN` (moved from PD10, D-7.1) |
+| 41, 44, 45, 46 | PE10, PE13, PE14, PE15 | Spare (low-side selects and permits removed) |
+| 57 | PD10 | `SERVO3_PWM`, LPTIM2_CH2 AF3, as in the CAD |
+| 61 / 62 / 66 | PD14 / PD15 / PC9 | Staging latch readback / new-flight set / staging arm sense |
 
 ## Why the remaining control pins stay
 

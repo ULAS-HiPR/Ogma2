@@ -132,8 +132,9 @@ doesn't widen the declared battery range or allow a depleted-pack boost.
 
 ## Servos and current sensing
 
-**Servos.** The 7 September revision added a third servo channel; D3 removes it
-(PD10 becomes service power enable), leaving two. Servo energy now comes from
+**Servos.** Three servo channels, a core requirement (D-7.1); servo 3 stays on
+PD10 and the service power enable moves to PE8. All three share the one 2 A
+servo switch. Servo energy now comes from
 `ENERGY_TAP` through F6801 with R6804 fitted and ≥220 µF local bulk (D-6.1,
 D-6.7). The nominal shared 2 A limit doesn't prove capacity for any particular
 servo or grid-fin load. Actuator voltage, simultaneous and stall demand,

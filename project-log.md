@@ -3235,3 +3235,28 @@ legible at page width. The boundary contract changed wording only; authority
 and content are unchanged. Link and anchor checks
 clean; proposal checks, reset replay (12 tests), MCU pin audit and both board
 checkers pass. CAD unchanged.
+
+
+## 7 October 2026 — three pyro channels and three servos are a core requirement
+
+Seán: Burrito needs three pyro channels and three servos (D-7.1). This reverses
+the staging-DNP part of D-6.2 and the two-servo part of D3. Channel 3 is the
+staging / air-start channel and keeps the hardware reset inhibit. Servo 3 stays
+on PD10 (LPTIM2, its own period) as drawn in the CAD, and the service-power
+enable moves from PD10 to PE8 (freed by D-6.2).
+
+Proposed for Sunday (D-7.2): staging energy through its own 2-contact arm
+connector J6102 from F6101; latch U6001 cleared by `FLIGHT_NRST`, clocked by PD15,
+D = `STAGE_ARM_INVALID` so a new flight can only be set with staging disarmed;
+one gate (U6502) ANDs the latch with `PYRO3_FIRE`. Found while checking the CAD:
+the native latch's disarm qualification (`STAGING_DISARM_PROOF` into U6002) has
+only a pull-down, so the drawn latch could be set with staging armed;
+`STAGING_ARMED_VBAT` has no source; and the SN74LVC1G97 symbol ties IN1 to GND,
+so it can only make A AND NOT B. The proposal fixes all three (D = staging
+disarmed; J6102 feed; a true AND gate), not the CAD.
+
+Updated decisions, current-system, the capture specification, chapters 01–04
+and 09, the system tour, the power and interface justifications, the flight
+fault and power contracts and the firmware handoff. The proposal pin CSV still
+holds 22 September nets; the capture specification's pad table supersedes its
+PD10 row. CAD unchanged.

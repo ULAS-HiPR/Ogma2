@@ -1,17 +1,17 @@
 # Interfaces and installation
 
-Proposed board and assembly envelope, 22 September 2026, updated for D-6.1 and
-D-6.7. Not qualified vehicle hardware. See [connectors](../09-connectors-arming.md),
+Proposed board and assembly envelope, 22 September 2026, updated for D-6.1,
+D-6.7 and D-7.1. Not qualified vehicle hardware. See [connectors](../09-connectors-arming.md),
 [servos](../04-servos.md) and [RF](../06-gnss-radio.md).
 
-## Two local PWM interfaces; no speculative remote node
+## Three local PWM interfaces; no speculative remote node
 
-**What stays.** PC6 / PC7 on TIM3, the TXU0304PWR buffer, a TPS70933DBVR for the
-buffer-side 3.3 V, and the ten-contact Micro-Fit. Channel 3 is removed and PD10
-goes to service power enable.
+**What stays.** Three servos are a core requirement (D-7.1): PC6 / PC7 on TIM3,
+PD10 on LPTIM2, the TXU0304PWR buffer, a TPS70933DBVR for the buffer-side 3.3 V,
+and the ten-contact Micro-Fit. Service power enable moves to PE8.
 
-- Both channels share TIM3, so they share one period. A mechanism profile picks
-  compatible pulse limits and rate; software can't set two periods.
+- Servos 1 and 2 share TIM3, so they share one period; a mechanism profile picks
+  compatible pulse limits and rate. Servo 3 on LPTIM2 has its own period.
 - Bring up with an inert receiver or load. No pulse width is a universal safe
   position, and none implies the actuator behaves on its own.
 
@@ -24,7 +24,8 @@ across the installed source range up to 8.4 V.
   1.69–2.29 A under the datasheet overload conditions. That doesn't say exactly
   where limiting starts near a normal load.
 - A motor needing more current or another voltage needs a new power interface.
-  The board doesn't promise two arbitrary servos stalled at once.
+  All three share the limit. The board doesn't promise even two arbitrary
+  servos stalled at once.
 
 **Power feed (D-6.1, D-6.7, 6 October).** Servo energy comes from `ENERGY_TAP`
 through its own fuse F6801. R6804 is fitted and `SERVO_VBAT` gets ≥220 µF. Servos
@@ -89,10 +90,11 @@ reservation is not a final footprint.
 **Other connectors.** Keep the existing
 [Micro-Fit and GH mating list](../../archive/connector-servo-readiness-revision-2026-09-07.md#connectors).
 
-- Servo housing 430251000: 1/2/3 PWR/PWM/GND, 4/5/6 PWR/PWM/GND, 7–10 unwired.
+- Servo housing 430251000: 1/2/3, 4/5/6 and 7/8/9 PWR/PWM/GND; 10 unwired.
 - Temperature housing GHR-04V-S: AV / GND / PROP / GND.
-- Pyro arm J6101: 2-contact. It must not mate Churro J701 (Micro-Fit
-  430450200, raw 6S PROP) or the GH enable loops. Part chosen at capture.
+- Pyro arms J6101 (recovery) and J6102 (staging, proposed): 2-contact each. They
+  must not mate each other, Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the
+  GH enable loops. Parts chosen at capture.
 - Every drawing says whether it shows the board, the mating face or the wire
   entry. Contacts follow the actual wire gauge; a family name alone isn't a
   harness.

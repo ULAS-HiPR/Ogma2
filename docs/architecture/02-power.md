@@ -28,11 +28,13 @@ see next diagram"]
   end
   subgraph ENERGY["Output energy, outside U101"]
     direction TB
-    F61["F6101 pyro fuse"] --> ARM["J6101 → external
-arm switch"] --> PY["2 × TPS1H100 ≈2.0 A
-recovery outputs"]
+    F61["F6101 pyro fuse"] --> ARM["J6101 recovery arm"] --> PY["2 × TPS1H100 ≈2.0 A
+recovery channels"]
+    F61 --> ARM3["J6102 staging arm
+(proposed)"] --> PY3["TPS1H100 ≈2.0 A
+staging channel + reset latch"]
     F68["F6801 servo fuse"] --> SV["U6802 TPS1H100 ≈2.0 A
-≥220 µF · J6602 servos"]
+≥220 µF · 3 servos on J6602"]
   end
   TAP --> U101
   TAP --> F61
@@ -83,7 +85,7 @@ COMMS_3V3 · 3.352 V"]
   C --> CM["Comms MCU, USB
 GNSS and radio switched"]
   K --> SL["U1601 limit · 470–588 mA"]
-  PD10["PD10 SERVICE_POWER_EN"] -.-> SL
+  PE8["PE8 SERVICE_POWER_EN"] -.-> SL
   SL --> S["U1901 TPS7A91
 3V3_OPTIONAL · 3.352 V"]
   S --> SV["Local limits:
@@ -102,7 +104,7 @@ over-voltage protection: a shorted regulator pass element needs its own check.
 | Case | Survives | Lost |
 | --- | --- | --- |
 | Comms MCU, branch or regulator fault | Flight, sensors, NOR, CAN, monitoring | GNSS, radio, USB |
-| Services regulator or limiter trips | Flight, sensors, comms | NOR, CAN, monitoring, sounder until PD10 restarts it |
+| Services regulator or limiter trips | Flight, sensors, comms | NOR, CAN, monitoring, sounder until PE8 restarts it |
 | Flight MCU reset | Comms; committed records | Fresh flight state; flight-owned enables return to off |
 | Supply dip under ≈2 ms | Flight computation | NOR, CAN, GNSS continuity |
 | Source, buck or ground failure | Only independently powered systems | Everything on the board |
@@ -112,7 +114,7 @@ over-voltage protection: a shorted regulator pass element needs its own check.
 | Item | Change |
 | --- | --- |
 | Comms limiter | U1501 before U1801; R1504 = 66.5 kΩ 1% |
-| Services limiter | U1601 before U1901; R1604 = 49.9 kΩ 1%; EN (pin 3) and R1602's top move to `SERVICE_POWER_EN` (PD10, pad 57); R1602 stays 100 kΩ to GND, off by default |
+| Services limiter | U1601 before U1901; R1604 = 49.9 kΩ 1%; EN (pin 3) and R1602's top move to `SERVICE_POWER_EN` (PE8, pad 39); R1602 stays 100 kΩ to GND, off by default |
 | LDO set points | R1701/R1801/R1901 = 31.9 kΩ 0.1% over 10 kΩ 0.1%: 3.352 V on all three |
 | Core enable | Remove U1203; U1401 EN/UVLO from a divider on 4V_PRE (D-6.5) |
 | USB limit | Remove U4402; R4403 = 60.4 kΩ 1% from attach (D-6.5) |
@@ -158,7 +160,7 @@ branch fault without resetting flight.
 | CAN U501 | R502 210 kΩ | 109–152 mA | Flight enable |
 | AUX U7001 | R7004 210 kΩ | 109–152 mA | Flight enable |
 | Comms U1501 | R1504 66.5 kΩ | 351–449 mA | Flight, on battery |
-| Services U1601 | R1604 49.9 kΩ | 470–588 mA | PD10, once |
+| Services U1601 | R1604 49.9 kΩ | 470–588 mA | PE8, once |
 
 A NOR fault at 306 mA plus 135 mA of other services is ≈441 mA, under the
 470 mA services minimum. Comms and services limits plus 200 mA flight make
