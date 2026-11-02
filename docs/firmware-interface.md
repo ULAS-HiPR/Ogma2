@@ -161,8 +161,11 @@ set, and the latch is cleared by any flight reset.
 
 **Before arming (arms open):** for each channel, read continuity with both
 switches open (expect the mid-level reading), close the low side alone (expect
-≈0), reopen it (expect the mid-level reading again). An igniter that reads open
-makes that channel's check inconclusive; report it.
+≈0), reopen it (expect the mid-level reading again). While one low side is
+closed, the other channels' readings must not move; if one drops too, its low
+side is bridged or shorted to the one under test (PA9 and PA10 are neighbouring
+pads). An igniter that reads open makes that channel's check inconclusive;
+report it.
 
 **After arming:** a return node above its disarmed reading, anywhere up to the
 armed rail, means that channel's high side conducts: leaking or shorted. Never

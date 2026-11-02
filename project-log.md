@@ -3565,3 +3565,10 @@ Later the same night, from three quick models kept outside the repo for now
   The leak margin is set on the bench across temperature, against the armed
   level. The same datasheet gives K(CS) = 500 and a linear CS range of 0–4 V;
   faults drive CS to 4.3–4.9 V.
+- Pad-neighbour check of the safety pins on the LQFP100: no fire pin sits next
+  to its own low-side select. PE8 (services) sits between the channel 1 and 2
+  fire pins, PA9 / PA10 (two low sides) are neighbours, and PD15 (latch clock)
+  neighbours PD14 and PC6. A single bridge turns one high side on alone (the
+  armed check sees it), closes two low sides together (the self-test now checks
+  the other channels don't move), or clocks the latch, which with staging armed
+  only clears it. 03 and the firmware interface updated.

@@ -88,6 +88,7 @@ One fault, armed, and what happens:
 | Low-side GPIO stuck high, or a CSD17318 shorted | No fire: the high side is off. Continuity reads zero, so firmware sees it |
 | Low side fails open | That channel can't fire. The pre-arm self-test catches it |
 | One bad write to GPIO port E | Only high sides change; the low sides sit on ports A and D |
+| A solder bridge between neighbouring pads | No fire pin neighbours its own low-side select (pads 38 / 68, 40 / 69, 43 / 61). A bridge to a fire pin turns that high side on alone, which the armed check sees; PA9 and PA10 are neighbours, so the self-test checks that the other channels don't move |
 
 ## Firing and checks
 
@@ -97,8 +98,8 @@ If current still flows after the high side is switched off, opening the low
 side stops it; report the channel and don't use it again.
 
 **Before arming (arms open):** with no energy on the outputs, close each low side
-alone and check its continuity drops to zero, then reopen it and check the
-reading returns. If an igniter reads open, the low-side check for that channel
+alone and check its continuity drops to zero while the other channels' readings
+stay put, then reopen it and check the reading returns. If an igniter reads open, the low-side check for that channel
 can't conclude; report it.
 
 **After arming:** a channel whose return node reads above its disarmed level,
