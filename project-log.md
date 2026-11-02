@@ -3551,3 +3551,9 @@ Later the same night, from three quick models kept outside the repo for now
   doesn't list are the AF0 debug pins (PA13, PA14, PB3), which are standard.
 - PA2 measures `RECOVERY_ARMED_VBAT` only; the staging armed rail has no ADC,
   just its arm sense. The firmware interface now says so.
+- Hold RC, recounted: PE5's own 100 kΩ pull-down (capture spec, flight pad
+  changes) also drains the 470 µF once the pin lets go. With it, −20%
+  capacitance and 15 µA of leakage: ≈1.1 s at Churro's `AV_SHDN_N` (was quoted
+  as ≈1.2 s) and ≈1.5 s at Croí's; ≈0.9 s at −30% and 30 µA. Still well over the
+  ≈600 ms it must cover. D-2Nov.4 and the capture row now give these figures and
+  note that a 1 MΩ pull-down would win back ≈0.15 s.
