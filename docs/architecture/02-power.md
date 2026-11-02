@@ -67,9 +67,10 @@ via Samtec pin 8"]
   instead of latching off for the rest of the flight.
 - **Energy tap (D-6.1, D-2Nov.5):** after Q101, confirmed. When U101 shuts down
   it turns Q101 off too, but Q101's body diode still feeds the tap (one diode
-  drop) and still blocks a reversed pack. Regeneration can't go back into the
-  pack: U101 turns Q101 off once its output rises above the pack, so the logic
-  load and the servo bulk absorb it.
+  drop) and still blocks a reversed pack. Servo regeneration goes back into the
+  pack through Q101 when Burrito runs standalone. Churro-fed, Churro's ideal
+  diodes block that path (D-2Nov.7), so the ≈0.6 A logic load and the servo
+  bulk absorb it: back-drive test at 8.4 V.
 - **USB** powers logic only: no charging, no output energy.
 
 ## Regulated domains

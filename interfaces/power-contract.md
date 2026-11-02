@@ -295,7 +295,9 @@ No separate pre-order coupon.
 1. Cold start with the Foinse return absent.
 2. Controlled faults on optional branches.
 3. Source transitions, including pulling the umbilical under load.
-4. Servo back-drive at 8.4 V, watching `BAT_EFUSE_IN` and the logic input.
+4. Servo back-drive at 8.4 V, standalone and Churro-fed (where the ideal diodes
+   leave regeneration no path back to a pack), watching `BAT_EFUSE_IN` and the
+   logic input.
 
 Capture input, core rail, the faulted branch, reset and an essential-loop marker
 on one external timebase. Before any fault, write down the real parts and

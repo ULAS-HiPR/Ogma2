@@ -32,7 +32,7 @@ off-state signal boundary"]
 | Command | Direct timer PWM: TIM3 on PC6 / PC7, LPTIM2 on PD10 | Already mapped; no extra controller or bus. Servo 3 can run a different rate |
 | Signal boundary | U6804 TXU0304, channels A1–A3 | Stops back-powering when either side is off |
 | Power | Raw 2S through F6801 and U6802 | No new regulator. R6802 1.24 kΩ sets ≈1.989 A for all three; 1.5 A combined normal allocation |
-| Bulk | ≥220 µF on SERVO_VBAT at J6602 | Stall and regeneration transients. Regeneration can't go back into the pack (D-2Nov.5): the bulk and the ≈0.6 A logic load absorb it |
+| Bulk | ≥220 µF on SERVO_VBAT at J6602 | Stall and regeneration transients. Standalone, regeneration returns to the pack; Churro-fed, the ideal diodes block that, so the bulk and the ≈0.6 A logic load absorb it (D-2Nov.5) |
 | Arm | Not behind the pyro arms | Servos can be checked on the pad with outputs safe (D-6.1) |
 | Connector | Keep J6602 430451000, mate 430251000 | Different contact count from the output harness J6601 |
 

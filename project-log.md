@@ -3385,8 +3385,9 @@ committed to Radion that we will"). Radion is the control-systems lead, written
   22.1 kΩ pull-downs; assert at launch detect, re-assert within 50 ms of a reset
   in flight, release at LANDED plus a delay or a maximum flight time.
 - D-2Nov.5 (R5): the energy tap stays after Q101; D-6.1's check closed with the
-  netlist and TPS2663 §9.3.13 / §9.3.6. Corrects D-6.7: regeneration can't
-  reach the pack.
+  netlist and TPS2663 §9.3.13 / §9.3.6. Servo regeneration still reaches the
+  pack standalone; Churro-fed, the new ideal diodes block it, so the logic load
+  and the servo bulk absorb it.
 - D-2Nov.6 (R6): 2S Li-ion, metal-can cylindrical cells, 21700 by default;
   pad-mode target ≤150 mA; the pack alone covers six hours on the rail.
 - D-2Nov.7 (R7): rail power from a ground umbilical at Churro, per-source ideal

@@ -41,7 +41,8 @@ Fajita converts locally"]
   over-voltage trip; PROP at ≈24–25 V, set with the propulsion owner. Whichever
   source is higher carries the load, so a pack fresher than the umbilical feeds
   the vehicle until it drops to the umbilical's voltage. Fuse and TVS at the
-  umbilical connector.
+  umbilical connector. The diodes also stop servo regeneration from Burrito
+  reaching a pack, so Burrito's bulk and logic load absorb it (D-2Nov.5).
 - **Which source is live.** Churro's AV divider moves to the pack side of its
   diode, so the ADS1115 reads the pack while Burrito's INA228 reads the bus.
   Bus well above pack means the umbilical is carrying it; the threshold is set
