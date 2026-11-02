@@ -10,38 +10,47 @@ two unrouted KiCad drafts; nothing is built or flown. What's settled is in
 
 ```mermaid
 flowchart TB
-  AV["2S avionics pack"] --> C["Churro / Foinse2
+  AV["2S Li-ion avionics pack"] --> C["Churro / Foinse2
 battery protection + monitoring
 no MCU"]
   PROP["6S propulsion pack"] --> C
+  UM["Ground umbilical
+on the rail, pulled at Go"] --> C
   C -->|"protected 2S · Samtec"| B["Burrito / Croí2
 flight computer"]
   C -->|"protected 6S · Micro-Fit"| F["Fajita
 engine control, redlines, abort"]
-  B <-->|"CAN · 500 kbit/s · two nodes"| F
+  B <-->|"CAN · 500 kbit/s"| F
   B -.->|"AUX 3.3 V + I²C
 monitoring only"| C
   B <-->|"sub-GHz radio"| G["Ground station"]
   A["External GNSS antenna"] --> B
   U["USB-C laptop"] <-->|"service and logs"| B
-  B --> S["3 servo outputs"]
+  B --> S["3 servo outputs
+event moves only"]
   B --> O["3 pyro outputs: 2 recovery, 1 staging
 behind physical arm switches"]
-  I["Independent backup recovery
+  I["CATS Vega: independent recovery
 own battery and switch"]
+  N["Actuator node: roll, grid fins
+rules decided, board deferred"]
+  B -.->|"CAN stub"| N
 ```
 
-The dashed line powers and reads Churro's monitors; it never controls Churro's
-protection. The two packs keep separate positives and share ground.
+The dashed AUX line powers and reads Churro's monitors; it never controls
+Churro's protection. The two packs keep separate positives and share ground. On
+the rail the umbilical feeds both through per-source ideal diodes, so it can't
+charge either pack; pulling it hands each feed to its pack (D-2Nov.7).
 Standalone, Burrito takes its own 2S pack on J101 instead of Churro: one or the
-other, never both. USB is service power only.
+other, never both. USB is service power only. The actuator node is a set of
+rules (D-2Nov.8), not a board yet.
 
 ## The boards
 
 | Board | Job | State |
 | --- | --- | --- |
-| **Burrito / Croí2** | Sensing, estimation, flight state, recording, three pyro outputs, three servos, CAN; a comms processor for GNSS, radio and USB | 44 sheets, 643 parts, unrouted, 80 × 230 mm working outline |
-| **Churro / Foinse2** | Two separately protected and enabled pack feeds; propulsion current, voltage and temperature | 12 sheets, 113 parts, unrouted, 60 × 80 mm |
+| **Burrito / Croí2** | Sensing, estimation, flight state, recording, three pyro outputs, three servos, a magnetometer, CAN; a comms processor for GNSS, radio and USB | 44 sheets, 643 parts, unrouted, 80 × 230 mm working outline |
+| **Churro / Foinse2** | Two separately protected and enabled feeds, from the packs or the rail umbilical; propulsion current, voltage and temperature | 12 sheets, 113 parts, unrouted, 60 × 80 mm |
 | **Fajita** | Engine-side sensing, valves, permissives, redlines, abort, its own recording | Owned by propulsion; Ogma only defines the boundary |
 
 Burrito and Churro sit side by side and mate through the 8-contact Samtec pair
@@ -55,12 +64,13 @@ flowchart LR
   subgraph FLIGHT["Flight MCU · H563VIT6"]
     direction TB
     FS["Sensors: 2 IMUs, high-g, 2 barometers"]
+    FM["Magnetometer, non-essential"]
     FN["256 MiB NOR recorder"]
     FO["3 pyro outputs + 3 servos"]
     FC["CAN to Fajita"]
-    FS ~~~ FN ~~~ FO ~~~ FC
+    FS ~~~ FM ~~~ FN ~~~ FO ~~~ FC
   end
-  subgraph COMMS["Comms MCU · H563 (RIT6 proposed)"]
+  subgraph COMMS["Comms MCU · H563RIT6"]
     direction TB
     CG["GNSS"]
     CR["LoRa radio"]
@@ -73,8 +83,9 @@ flowchart LR
 | Block | Parts | Why |
 | --- | --- | --- |
 | Flight processor | STM32H563VIT6 | Owns deadlines and every vehicle action; runs with comms held in reset |
-| Comms processor | STM32H563 (VIT6 in CAD, RIT6 proposed) | Keeps GNSS, radio and USB off the flight schedule (two processors decided, D-6.12) |
-| Sensors | LSM6DSV16X + ICM-42688-P (±16 g), ADXL375 (±200 g), BMP390 + MS5607 | Independent buses; each has range limits |
+| Comms processor | STM32H563RIT6 (VIT6 still in CAD; D1) | Keeps GNSS, radio and USB off the flight schedule (two processors decided, D-6.12) |
+| Sensors | LSM6DSV16X + ICM-42688-P (±16 g), ADXL375 (±200 g), BMP390 + MS5607 | Independent buses; 47 Ω supply links so one dead short can't pull down the flight rail |
+| Magnetometer | MMC5983MA on its own I²C bus, top end of the board | Heading and roll reference for roll control and the grid fins; never gates flight decisions (D-2Nov.11) |
 | Recording | 256 MiB NOR, flight-owned | Evidence survives losing the radio |
 | GNSS | MAX-M10S, external passive antenna | Position and time when valid; 80 km / 4 g / 500 m/s limits |
 | Radio and service | Wio-LR2021 on SMA; USB-C on comms | Telemetry and ground service; ground link not yet tested |
@@ -87,28 +98,33 @@ Independent backup recovery is a separate vehicle job.
 
 ```mermaid
 flowchart LR
-  BAT["2S pack"] --> Q["Q101"] --> TAP(("ENERGY_TAP"))
+  BAT["2S pack
+or umbilical via Churro"] --> Q["Q101"] --> TAP(("ENERGY_TAP"))
   TAP --> E["U101 eFuse
 auto-retry"] --> BUCK["4.0 V buck"] --> LDO["3 LDOs
 flight · comms · services"]
-  TAP --> PF["Pyro fuse"] --> ARM["Arm switch"] --> PY["Recovery outputs"]
-  TAP --> SF["Servo fuse"] --> SV["Servos"]
+  TAP --> PF["F6101 recovery fuse"] --> ARM["J6101 arm"] --> PY["Channels 1, 2
+high + low side"]
+  TAP --> PF3["F6102 staging fuse"] --> ARM3["J6102 arm"] --> PY3["Channel 3
++ reset latch"]
+  TAP --> SF["F6801 servo fuse"] --> SV["Servos"]
   EN["J103 enable"] -.-> E
   HOLD["Firmware hold
-in flight"] -.-> E
+in flight, ≥1 s RC"] -.-> E
 ```
 
 Logic goes through U101, a 4.0 V buck and three LDOs: flight, comms and
 services (NOR, CAN, monitors), so a comms fault can't take the recorder.
 Pyro and servo energy leave before U101 through their own fuses, so a shorted
-igniter or a stalled servo can't switch the computer off. In flight, firmware
-holds the enable on; the eFuses restart after an over-current instead of
-latching off; the flight MCU's backup memory has its own hold-up. Detail in
+igniter or a stalled servo can't switch the computer off, and a staging fault
+can't blow recovery's fuse. In flight, firmware holds the enable on, and an RC
+carries it through a restart; the eFuses restart after an over-current instead
+of latching off; the flight MCU's backup memory has its own hold-up. Detail in
 [02 Power](02-power.md).
 
 Churro protects raw packs; it doesn't regulate 6S to 24 V or charge anything.
-Proposed continuous ceilings: AV 3 A, PROP 2 A. Its protection works without
-Burrito; its monitoring doesn't.
+Continuous ceilings: AV 3 A, PROP 2 A (D2). On the rail it runs the vehicle from
+the umbilical. Its protection works without Burrito; its monitoring doesn't.
 
 ## Switching on and arming
 
@@ -116,29 +132,34 @@ Burrito; its monitoring doesn't.
 | --- | --- | --- | --- |
 | Switch on | J103 enable loop | Turns on Burrito's battery entry | Disarm anything; isolate the pack |
 | Arm recovery | J6101 external switch | Connects energy to pyro channels 1 and 2 | Switch the computer on |
-| Arm staging | J6102 external switch (proposed) | Connects energy to channel 3, which also needs the reset latch set | Arm recovery |
-| In flight | Firmware hold | Keeps the computer on if J103's wire breaks | Override a pulled battery |
+| Arm staging | J6102 external switch | Connects energy to channel 3, which also needs the reset latch set | Arm recovery |
+| On the rail | Ground umbilical at Churro | Powers the vehicle; pulling it switches to the packs | Charge a pack |
+| In flight | Firmware hold | Keeps the computer on if J103's wire breaks, through a restart | Override a pulled battery |
 
-The arm switch parts aren't chosen yet. Arm state comes from sense lines over
-USB and telemetry; no lamp shows it. [09 Connectors](09-connectors-arming.md).
+The arm switch parts aren't chosen yet, and for EuRoC they must be reachable
+from the ground with the rocket on the rail. Arm state, continuity and the
+staging latch come over USB and 1 Hz pad telemetry; no lamp shows them.
+[09 Connectors](09-connectors-arming.md).
 
 ## What changes from the 8 September CAD
 
 | Topic | CAD now | At capture |
 | --- | --- | --- |
-| Comms MCU | H563VIT6, 100 pins | H563RIT6, 64 pins (proposed) |
+| Comms MCU | H563VIT6, 100 pins | H563RIT6, 64 pins (D1) |
 | Rails | Three 3.3 V domains | Three at 3.352 V; services restartable from flight |
-| Servos | Three channels | Three (D-7.1), raw 2S, own fuse, ≥220 µF |
-| Outputs | Three channels with one-shots, gates, high and low sides; no energy source | Three channels, TPS1H100 high side ≈2.0 A: two recovery behind one arm, one staging behind its own arm and the reset latch |
-| Power path | Outputs after U101; latch-off eFuses; enable open = off | Energy tapped before U101; auto-retry; firmware hold; VBAT hold-up |
-| Sensors | Per-sensor switches and isolators | Direct from FLIGHT_3V3 |
+| Servos | Three channels | Three (D-7.1), raw 2S, own fuse, ≥220 µF; event moves only |
+| Outputs | Three channels with one-shots, gates, high and low sides; no energy source | Three channels, each a TPS1H100 high side (≈2.0 A) and a CSD17318 low side on another GPIO port. Recovery fuse and arm; staging fuse, arm and reset latch. No one-shots or permit gates |
+| Power path | Outputs after U101; latch-off eFuses; enable open = off | Energy tapped after Q101, before U101; auto-retry; firmware hold with a ≥1 s RC; VBAT hold-up |
+| Sensors | Per-sensor switches and isolators | 47 Ω link per sensor; a magnetometer on I²C3 |
 | Recording | Earlier format | 15 data pages + footer per sector; full rate from launch detect |
 | Battery entries | Both provisions; J101 footprint missing | Fit one; draw the Nano-Fit footprint |
-| CAN | 500 kbit/s Classical, two nodes | Unchanged for Rev A |
+| Churro | Pack feeds only | Umbilical entry with four ideal-diode stages; AV pack readout |
+| CAN | 500 kbit/s Classical, two nodes | Unchanged for Rev A; what it may carry is now a rule (D-2Nov.9) |
 
 No target firmware exists yet; the 12 host checkpoint tests are a model, not
 firmware. A full 256 MiB download over the inter-MCU UART takes at least
-22.4 minutes.
+22.4 minutes. Pins and sequences for firmware:
+[firmware interface](../firmware-interface.md).
 
 ## Connectors
 
@@ -156,15 +177,19 @@ drawings govern the harness.
 | ![Tag-Connect TC2030-CTX-NL programming cable](https://www.tag-connect.com/wp-content/uploads/2018/03/tc2030-ctx-nl-programming-cable-380x253.jpg) | **TC2030-NL-FP** six-pad/locating-hole patterns at J2301/J4201, separate MCU debug. No mounted header. Shown **TC2030-CTX-NL** cable connects six spring contacts to Cortex ten-contact debug. [Tag-Connect](https://www.tag-connect.com/product/tc2030-ctx-nl-6-pin-no-legs-cable-with-10-pin-micro-connector-for-cortex-processors) |
 
 Same family isn't a safety key: the three 2-contact GH enable plugs and the two
-SMA sockets can be swapped, and the pyro arm connector must not mate with
-Churro's J701. Harnesses need cavity-numbered drawings, wire-matched contacts
+SMA sockets can be swapped, and the pyro arm connectors must not mate with
+Churro's J701 or each other. Churro's umbilical connector J801 is chosen with the
+vehicle owner. Harnesses need cavity-numbered drawings, wire-matched contacts
 and strain relief. [Connector inventory](09-connectors-arming.md) ·
 [assembly notes](justifications/interfaces-and-installation.md).
 
 ## What's next
 
-1. Settle the open rows in [decisions](../../decisions.md): igniter, arm switch,
-   backup altimeter, recovery logic, ground radio, bay size.
-2. Capture the [specification](schematic-capture-spec.md), with a human
-   reviewer per page; place; Seán routes.
-3. First board on inert loads; firmware bring-up; radio range test.
+1. Tuesday 3 November: review the 2 November decisions in
+   [decisions.md](../../decisions.md); Anav reviews the recovery logic.
+2. Answer the open rows: EuRoC access for packs and arm switches, LV-0690,
+   the umbilical, igniters, arm-switch parts, the actuator node's board.
+3. Capture the [specification](schematic-capture-spec.md) once Seán lifts the
+   hold, with a human reviewer per page; place; Seán routes.
+4. First board on inert loads, per [11 Verification](11-verification.md);
+   firmware bring-up; radio range test.

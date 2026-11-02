@@ -8,7 +8,8 @@ Start with the [system tour](architecture/system-tour.md) and the
 | [Block chapters](architecture/README.md) | One page per block |
 | [Capture specification](architecture/schematic-capture-spec.md) | Exact changes to the 8 September CAD |
 | [Justifications](architecture/justifications/README.md) | Reasons, calculations and sources behind the 22 September proposal |
-| [Firmware handoff](firmware-handoff-2026-09-07.md) | Hardware interface for firmware; 6 October changes at its top |
+| [Firmware interface](firmware-interface.md) | Every pin by function, the hardware sequences and the budgets, for both firmware images |
+| [Verification](architecture/11-verification.md) | Release gates, test campaigns, EuRoC tests, safety assertions for capture |
 | [PCB layout guide](pcb-layout-guide.md) | Routing order and references |
 | [Design review procedure](design-review-operating-procedure.md) | Recommendation-first review |
 | [Verification template](templates/verification-record.md) | Test record |
