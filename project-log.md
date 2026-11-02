@@ -3580,3 +3580,6 @@ Later the same night, from three quick models kept outside the repo for now
   VBUS filter). Now that it feeds pulsed pyro and servo loads, the capture row
   proposes 100 nF and 10 µF (≥16 V) at Q101's drain, which assertion 4 already
   allows.
+- The TPS1H100's limit at R = 1.24 kΩ is ≈2.0 A nominal, but TI gives ±14%
+  above 1.6 A, so the all-fire check in D-6.2 and 03 now uses the ≈1.7 A low
+  corner. D-2Nov.4 names PE5's 100 kΩ pull-down among the hold's loads.

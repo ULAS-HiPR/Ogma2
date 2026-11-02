@@ -97,10 +97,10 @@ low side off. One channel at a time. Channel 3's high side also needs the latch.
 If current still flows after the high side is switched off, opening the low
 side stops it; report the channel and don't use it again.
 
-**Before arming (arms open):** with no energy on the outputs, close each low side
-alone and check its continuity drops to zero while the other channels' readings
-stay put, then reopen it and check the reading returns. If an igniter reads open, the low-side check for that channel
-can't conclude; report it.
+**Before arming (arms open):** with no energy on the outputs, close each low
+side alone and check its continuity drops to zero while the other channels'
+readings stay put, then reopen it and check the reading returns. If an igniter
+reads open, the low-side check for that channel can't conclude; report it.
 
 **After arming:** a channel whose return node reads above its disarmed level,
 anywhere up to the armed rail, has a high side that conducts: leaking or
@@ -144,18 +144,19 @@ reasons above. They were never deleted from the CAD.
 
 ## Still open
 
-1. Igniters for recovery and air-start: all-fire current well under 2.0 A at
-   minimum battery, harness resistance, the low side's on-resistance (≤30 mΩ at
-   a 2.5 V gate) and one Q101 body-diode drop (D-2Nov.5);
-   the no-fire current sets R69x1 / R69x2 (test current with the low side
-   closed) and R69x3 / R69x4 (return, with a shorted high side). R69x1 / R69x2
-   also carry current back into the services rail whenever a high side is on;
-   keep that well inside the rail's normal load. Proposed start, not decided:
-   3.9 kΩ 1% for each of R69x1–R69x4. With one resistor shorted, 8.4 V armed
-   and 1% parts, that's ≤0.9 mA through the igniter on the self-test, ≤2.3 mA
-   with a shorted high side and ≤1.3 mA of back-feed: a tenfold margin for any
-   igniter whose no-fire current is 25 mA or more. "Present" reads about 0.27 V
-   at the ADC.
+1. Igniters for recovery and air-start: all-fire current well under the limit's
+   low corner (≈1.7 A: TI gives ±14% above 1.6 A, plus the resistor) at minimum
+   battery, harness resistance, the low side's on-resistance (≤30 mΩ at a 2.5 V
+   gate) and one Q101 body-diode drop (D-2Nov.5); the no-fire current sets
+   R69x1 / R69x2 (test current with the low side closed) and R69x3 / R69x4
+   (return, with a shorted high side). R69x1 / R69x2 also carry current back
+   into the services rail whenever a high side is on; keep that well inside the
+   rail's normal load. Proposed start, not decided: 3.9 kΩ 1% for each of
+   R69x1–R69x4. With one resistor shorted, 8.4 V armed and 1% parts, that's
+   ≤0.9 mA through the igniter on the self-test, ≤2.3 mA with a shorted high
+   side and ≤1.3 mA of back-feed: a tenfold margin for any igniter whose no-fire
+   current is 25 mA or more. "Present" reads about a quarter of a volt at the
+   ADC.
 2. Fuse and arm-switch parts. Each switch must be maintained, rated above the
    fuse at 8.4 V DC, operable from outside the airframe and reachable from the
    ground with the rocket on the rail (EuRoC LV-0270, 0280, 0540–0550).
