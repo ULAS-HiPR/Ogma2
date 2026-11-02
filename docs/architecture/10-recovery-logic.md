@@ -45,9 +45,9 @@ GNSS never triggers an event; it is evidence and position only.
 
 ## Pad datum (D-2Nov.10)
 
-EuRoC arms on the pad before filling, then holds for hours. Weather moves the
-pressure by about 1 hPa an hour, which is about 8 m of altitude, so a datum
-taken at arming would put the main deployment tens of metres off.
+EuRoC arms on the pad before filling, then holds for hours. Weather can move
+the pressure by 1 hPa in an hour, about 8 m of altitude, so a datum taken at
+arming could put the main deployment tens of metres off.
 
 - On the pad, track the barometric datum with a slow filter (minutes).
 - Hold the filter while the pressure changes faster than weather can (proposed:
