@@ -3260,3 +3260,109 @@ and 09, the system tour, the power and interface justifications, the flight
 fault and power contracts and the firmware handoff. The proposal pin CSV still
 holds 22 September nets; the capture specification's pad table supersedes its
 PD10 row. CAD unchanged.
+
+
+## 13 October 2026 — Enchilada roll-control board proposed, not decided
+
+Seán and Arnav (Discord DM, 13 October 20:56–21:39 Irish) proposed moving roll
+control to its own board, now named Enchilada, as a third CAN peer. Recorded as
+Proposed D-13.1 with an Open table, revised after Seán's review notes the same
+evening. Anav hasn't reviewed it. D-7.1 stands: Burrito's three servos make
+bounded, event-triggered moves only. Interfaces and chapters change only if
+D-13.1 is decided.
+
+Observed:
+
+- 500 kbit/s Classical CAN, 11-bit IDs, worst-case stuffing: streaming at 1 kHz
+  takes 57–69% of the bus for the full IMU as 3 × 6 B frames, 44–54% for gyro
+  and accelerometer as 2 × 8 B, and 22–27% for gyro alone. Fixed traffic (slow
+  state, authorisation, roll status, Fajita reservation) is ≈7–8%.
+- Burrito has no magnetometer.
+- Burrito's restart targets are 100–550 ms (flight-fault contract; unmeasured).
+- Croí's CAN end has fixed 120 Ω termination; the boundary contract names a
+  two-node link.
+- Churro's envelopes are AV 3 A and PROP 2 A (D2).
+- J6602 carries all three Burrito servo triplets on contacts 1–9; contact 10 is
+  unwired. Dropping to two servos would free contacts 7–9, not the connector.
+- EuRoC System Requirements Document Issue 1.1 (30 April 2026), §7: active
+  control only for stability augmentation, braking or guided recovery, landing
+  or deployables (RQT-0650); vehicle stable with actuators removed or locked
+  (0660); fail safe, surfaces to neutral and thrusters disabled (0670); boost
+  dormancy to at least 1500 m AGL without flight history, 500 m default with
+  limited history (0680); control electronics meet the recovery redundancy rule
+  RQT-0240 and §5.4 wiring (0690); stored energy meets §6.1 (0700).
+- EuRoC 2024 Rules & Requirements v05, now superseded: control algorithms
+  submitted with the RocketPy simulation (§9.5); active control makes a vehicle
+  eligible for selection for a design review (§8.2).
+- UKRA allows active surfaces for roll control and stability; surfaces that
+  guide to a specific point are prohibited.
+
+Recommended, not decided:
+
+- Gyro on Enchilada for the fast loop, slow state from Burrito. It costs one
+  driver; Anav's call.
+- STM32H563 by default; H7 only if the sims' controller misses its budget on an
+  H563.
+- Neutral through a path that survives hung firmware. A hung MCU's timer keeps
+  sending the last pulse, and a servo that loses power holds position, so
+  neither firmware centring nor a Churro fuse trip is enough.
+- Enchilada CAN IDs below Burrito's and Fajita's, on an unterminated stub.
+- Its own fused Churro output with local bulk. Three servos at stall may exceed
+  either existing envelope.
+
+Unknown: actuator and current (requirements meeting 14 October); what RQT-0690
+requires of one roll board; which competitions apply this year (the Irish
+competition and IREC unchecked); the sims' controller and its compute cost; the
+propulsion owner's agreement to a third node.
+
+Updated `decisions.md` and `current-system.md`, where D-13.1 is marked proposed
+and the two-node CAN rule stands. CAD unchanged.
+
+
+## 15 October 2026 — avionics inputs from the 14 October requirements meeting
+
+Source: the HiPR requirements meeting, 14 October evening, from Seán's
+recordings. Items are as said unless marked verified; only what affects the
+avionics is recorded. The 11 October flight computer meeting didn't run (Seán to
+Arnav, 12 October), so D1–D3, D5, D-6.11 and D-7.2 move to Sunday 18 October.
+
+Said:
+
+- EuRoC, October 2027: liquid, about 6 m long, 6 in diameter, may grow. Bottom
+  up: engine, tanks and COPVs, av-bay (RCS at its bottom), recovery bay, grid
+  fins, nose cone. Four charges, two drogue and two main, in the recovery bay.
+  Every system tested by May.
+- IREC: solid O motor, 152.4 mm, the same electronics without propulsion
+  control. Application due 25 October.
+- IRRC: a centre booster and two side boosters that separate mid-flight. The
+  boosters were given as 54 mm with a 75 mm centre, then as 76 mm. They carry a
+  CATS Vega or an Eggtimer. Rules not out.
+- Closed loop: roll control and the grid fins (an experiment). RCS has four
+  solenoids. The grid fins use servos or steppers, work under drogue and sit on
+  their own board with power and CAN through a raceway. Sim Systems writes roll
+  control's requirements.
+- The rocket is armed on the pad before filling. Nobody is within 600 m once
+  anything is pressurised. The electronics umbilical powers the rocket during
+  filling and disconnects remotely at Go.
+- Drogue descent at most 46 m/s (James, to check).
+- Radu wants a magnetometer for the hopper, maybe the grid fins. Seán asked him
+  what heading and accuracy he needs (#canards, 14 October 21:26); no answer yet.
+- Jay's ask, as Seán described it: a pyro-over-CAN board for recovery. That
+  conflicts with the rule that only the flight MCU commands recovery and staging
+  outputs.
+- Anav, first reaction to D-13.1: roll control is flight-critical, so it goes
+  on the flight computer or is a separate payload; no new board. He'll bring a
+  pyro-channel circuit on Sunday. He reads the docs as putting the arm switch on
+  the low side; D-6.1 puts it in the battery-side feed.
+- The electronics sub-team requirements in Notion are not to be relied on
+  (James).
+
+Verified, EuRoC SRD Issue 1.1 (30 April 2026): at least 6 h of battery life on
+the rail (RQT-0320); no LiPo on board (0300); a CATS Vega in every stage, for
+tracking (0430); fully redundant recovery electronics with their own power, one
+set COTS (0240, 0250); arming features on the airframe, reachable from the
+ground with the rocket vertical, opposite the rail (0260–0280, 0540–0550);
+energetics safed until the rocket is in launch position (0530).
+
+Recorded as Open rows in `decisions.md`; `current-system.md` gains the target
+vehicles and next steps. Nothing decided. CAD unchanged.

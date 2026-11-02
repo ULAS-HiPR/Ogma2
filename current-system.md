@@ -1,6 +1,6 @@
 # Ogma 2 current system
 
-Updated 6 October 2026. Decisions live in [decisions.md](decisions.md); this
+Updated 15 October 2026. Decisions live in [decisions.md](decisions.md); this
 file states what is true now. Native CAD still holds the 8 September draft.
 Capture of the [capture specification](docs/architecture/schematic-capture-spec.md)
 waits for Seán's go-ahead. No fabrication, firmware or flight release exists.
@@ -18,6 +18,12 @@ Fajita, the propulsion controller, is owned by propulsion and governs itself.
 Independent vehicle recovery, the groundstation and payloads are external.
 Start with the [system tour](docs/architecture/system-tour.md).
 
+Proposed, not decided (D-13.1; Anav hasn't reviewed it): roll control moves to
+its own board, Enchilada, a third CAN peer with its own MCU, actuators and fused
+Churro supply. Burrito would authorise it and send slow flight state, never
+compute roll commands. Enchilada's actuators go to neutral on stop, abort or
+stale authorisation. Open items are in [decisions.md](decisions.md).
+
 ## Rules that constrain the design
 
 - Two processors, decided (D-6.12): flight and comms. They separate timing from
@@ -33,12 +39,17 @@ Start with the [system tour](docs/architecture/system-tour.md).
   return to ground; one channel fires at a time (D-6.2). Channels 1 and 2 are
   recovery. Channel 3 is staging / air-start, behind its own arm and the
   hardware reset latch (D-7.2, proposed).
+- Burrito's servos make bounded, event-triggered moves only, such as unlatching
+  a payload at booster apogee; no continuous or closed-loop actuation (D-13.1,
+  proposed).
 - After launch detect, firmware holds the battery enable on (Croí and Churro AV);
   U101 and Churro U1001 auto-retry (D-6.3).
 - Any in-flight flight-MCU reset inhibits further sustainer ignition. Recovery
   resumes only through the [recovery logic](docs/architecture/10-recovery-logic.md).
 - CAN is external, linear and two-node (Ogma ↔ Fajita), 500 kbit/s Classical
-  for Rev A. Foinse owns source entry and protection; Ogma is not a power distributor.
+  for Rev A. D-13.1 proposes Enchilada as a third peer on an unterminated stub,
+  with IDs below Burrito's and Fajita's. Foinse owns source entry and
+  protection; Ogma is not a power distributor.
 - Battery, CAN, pyro and servo use keyed, locking board connectors. Bare-wire
   terminals live only on detachable development adapters.
 - Never attach standalone and Churro batteries at once. USB powers service logic
@@ -106,6 +117,15 @@ shock target; ≥±2000°/s rotation measurement; closed-bay splash only.
 Independent recovery is required on early flights where Ogma has live recovery
 authority; no backup device is selected yet.
 
+Target vehicles, as said at the 14 October requirements meeting; requirements
+not yet written: EuRoC, October 2027, liquid, about 6 m long and 6 in in
+diameter, av-bay below the recovery bay; IREC, solid O motor, 152.4 mm, the same
+electronics without propulsion control. Croí's 80 mm width fits both. EuRoC SRD
+Issue 1.1 adds at least 6 h on the rail on internal power (RQT-0320), no LiPo
+on board (0300), a CATS Vega in every stage (0430), and fully redundant recovery
+electronics with their own power, one set COTS (0240, 0250); the CATS Vega can
+be that set.
+
 ## Fault and software policy
 
 - Watchdog feeding requires progress of acquisition, estimation and phase policy.
@@ -130,10 +150,18 @@ authority; no backup device is selected yet.
 
 ## Next
 
-1. Sunday 11 Oct: accept D1–D3, D5, D-6.11 and D-7.2; answer the open rows in decisions.md.
-2. Capture the specification; independent human review page by page.
-3. Place, then Seán routes. Footprint, rating and assembly review before order.
-4. First PCBA: functional blocks on inert loads, including the bench tests in
+1. Saturday 17 Oct: Seán writes the electronics requirements from EuRoC SRD
+   Issue 1.1 and posts them for Jay.
+2. Sunday 18 Oct (the 11 Oct meeting didn't run): accept D1–D3, D5, D-6.11 and
+   D-7.2; answer the open rows in decisions.md; review Anav's pyro-channel
+   circuit against D-6.1 and D-6.2.
+3. Enchilada: Anav reviews D-13.1 (first reaction against, 14 Oct). EuRoC's
+   closed-loop actuators are RCS with four solenoids and grid fins (said
+   14 Oct); Sim Systems writes roll control's requirements. If decided, Churro
+   needs a new output before Foinse capture.
+4. Capture the specification; independent human review page by page.
+5. Place, then Seán routes. Footprint, rating and assembly review before order.
+6. First PCBA: functional blocks on inert loads, including the bench tests in
    the [output chapter](docs/architecture/03-energetic-outputs.md#bench-tests-inert-loads-only).
 
 History: [project log](project-log.md) and [archive](docs/archive/README.md).
