@@ -28,9 +28,9 @@ circuit detail. No target firmware exists yet. Anav owns the firmware.
 Both MCUs are STM32H563: Cortex-M33, single-precision FPU, 2 MiB flash,
 640 KiB RAM. Build with `-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard`.
 Start at 128 MHz with legal 64 MHz peripheral kernels; each MCU has its own
-16 MHz HSE, flight alone has the 32.768 kHz LSE for its RTC, and comms uses
-HSI48 with CRS for USB. A compiled clock tree still has to prove the kernel
-mux sources, VOS and flash wait states.
+16 MHz HSE, flight alone has the 32.768 kHz LSE for its RTC, and HSI48 with CRS
+is the candidate USB clock on comms. A compiled clock tree still has to prove
+the kernel mux sources, VOS and flash wait states.
 
 ## Flight boot order
 
