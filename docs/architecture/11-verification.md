@@ -97,9 +97,10 @@ population variant.
 4. `ENERGY_TAP` (`BAT_EFUSE_IN`) connects only to Q101's drain, U101's IN pins,
    F6101, F6102, F6801, its sense tap and local decoupling.
 5. F6101 feeds only J6101; F6102 only J6102; F6801 only the servo switch U6802.
-6. `RECOVERY_ARMED_VBAT` reaches only channels 1 and 2 (through R6310 / R6410)
-   and the recovery arm sense; `STAGING_ARMED_VBAT` only channel 3 (through
-   R6510) and the staging sense.
+6. `RECOVERY_ARMED_VBAT` reaches only channels 1 and 2 (through R6310 / R6410),
+   the recovery arm sense (R6101) and its rail-ADC divider (R8007, to PA2);
+   `STAGING_ARMED_VBAT` only channel 3 (through R6510) and the staging sense
+   (R6103).
 7. U6504's IN comes only from U6502, whose inputs are `PYRO3_FIRE` and
    `STAGE_ELIGIBLE`.
 8. U6001's CLR̄ is `FLIGHT_NRST`, its D is `STAGE_ARM_INVALID`, and its CLK is
@@ -116,8 +117,10 @@ population variant.
     magnetometer through 22 Ω; their I²C pull-ups sit on `FLIGHT_3V3`.
 16. The magnetometer's nets land on PA8, PC9 and PE6 and nowhere else.
 17. J101 and J102 sit in mutually exclusive BOM variants.
-18. USB VBUS reaches only the logic mux through U4401, and the protected VBUS
-    sense on the comms MCU.
+18. USB VBUS reaches only its connector's ESD diode (D4401) and decoupling, the
+    logic mux through U4401, the USB-present divider R1208 / R1209 into the
+    source logic, and the protected VBUS sense on the comms MCU: never an armed
+    rail, the servo feed or a pack.
 19. Each TPS7A91 divider is 31.9 kΩ over 10 kΩ; U101 and U1001 MODE are tied to GND.
 20. Churro: every source has its own ideal-diode stage, and no path from the
     umbilical connector reaches a pack connector without passing one.

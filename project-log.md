@@ -3572,3 +3572,7 @@ Later the same night, from three quick models kept outside the repo for now
   armed check sees it), closes two low sides together (the self-test now checks
   the other channels don't move), or clocks the latch, which with staging armed
   only clears it. 03 and the firmware interface updated.
+- Capture assertions 6 and 18 checked against the netlist and widened so they
+  pass on a correct board: `RECOVERY_ARMED_VBAT` also feeds its rail-ADC
+  divider R8007 (PA2), and USB VBUS also feeds D4401, its decoupling and the
+  USB-present divider R1208 / R1209.
