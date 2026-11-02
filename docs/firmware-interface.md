@@ -49,9 +49,9 @@ the kernel mux sources, VOS and flash wait states.
 
 ## Flight MCU pins
 
-STM32H563VIT6, LQFP100. Pads in brackets. Every output below has an external
-pull-down, so it's off at reset and power-off. Pins not listed are supplies,
-ground, VCAP or unused.
+STM32H563VIT6, LQFP100. Pads in brackets. Every output below is off at reset
+and power-off: pulled down externally, or open drain and released. Pins not
+listed are supplies, ground, VCAP or unused.
 
 **Outputs and arming**
 
