@@ -117,7 +117,7 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | --- | --- | --- |
 | Battery after the eFuse and shunt (÷5.42) | PA0 (23) | ADC1_INP0 |
 | `FLIGHT_3V3` | PA1 (24) | ADC1_INP1 |
-| Pyro rail / servo rail | PA2 (25) / PA3 (26) | ADC1_INP14 / ADC1_INP15 |
+| Recovery armed rail (`RECOVERY_ARMED_VBAT`; staging has no ADC, only its arm sense) / servo rail, both ÷5.42 | PA2 (25) / PA3 (26) | ADC1_INP14 / ADC1_INP15 |
 | Pyro current, channels 1–3 | PC0 / PC1 / PC2 (15–17) | ADC2_INP10–12 |
 | Continuity, channels 1–3 | PC3 / PC4 / PC5 (18, 33, 34) | ADC1_INP13 / INP4 / INP8 |
 

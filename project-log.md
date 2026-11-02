@@ -3545,3 +3545,9 @@ Later the same night, from three quick models kept outside the repo for now
   The rail dividers have no such resistor and stay ÷5.42. Fixed in 03 and the
   firmware interface, with a sampling-time note for the unfiltered ~8 kΩ
   continuity inputs.
+- Both pin maps checked against ST's CubeMX pin data (as packaged in embassy's
+  stm32-data): every pad number on the LQFP64 and LQFP100, and every
+  alternate-function row (11 comms, 29 flight), match. The only rows the data
+  doesn't list are the AF0 debug pins (PA13, PA14, PB3), which are standard.
+- PA2 measures `RECOVERY_ARMED_VBAT` only; the staging armed rail has no ADC,
+  just its arm sense. The firmware interface now says so.
