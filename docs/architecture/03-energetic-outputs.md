@@ -106,8 +106,11 @@ anywhere up to the armed rail, has a high side that conducts: leaking or
 shorted. Never close that channel's low side; report it and stop the countdown.
 A partial leak counts too: closing the low side takes R6913 / R6914 out of the
 path and lets the leak current rise. Set the margin above the disarmed level on
-the bench. Don't run the low-side self-test with an arm closed: if the high side
-were shorted, closing the low side would fire it.
+the bench, across temperature: arming alone moves the reading a little (the
+TPS1H100 body diode when disarmed, its off-state open-load current when armed;
+detail in the [firmware interface](../firmware-interface.md#pyro-outputs)).
+Don't run the low-side self-test with an arm closed: if the high side were
+shorted, closing the low side would fire it.
 
 ## Removed, and why
 

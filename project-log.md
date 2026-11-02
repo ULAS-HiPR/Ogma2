@@ -3557,3 +3557,11 @@ Later the same night, from three quick models kept outside the repo for now
   as ≈1.2 s) and ≈1.5 s at Croí's; ≈0.9 s at −30% and 30 µA. Still well over the
   ≈600 ms it must cover. D-2Nov.4 and the capture row now give these figures and
   note that a 1 MΩ pull-down would win back ≈0.15 s.
+- Two things move the continuity reading without a leak (TI SLVSCM2D,
+  TPS1H100-Q1): disarmed, part of the test current runs back through the
+  TPS1H100 body diode into the unpowered armed rail once the R6x10 links are
+  fitted (≈5% low); armed, DIAG_EN is tied high, so the off-state open-load
+  check lets up to 50 µA out of the output at 125 °C (≈+30 mV at the ADC hot).
+  The leak margin is set on the bench across temperature, against the armed
+  level. The same datasheet gives K(CS) = 500 and a linear CS range of 0–4 V;
+  faults drive CS to 4.3–4.9 V.

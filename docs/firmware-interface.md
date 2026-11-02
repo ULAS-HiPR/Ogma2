@@ -170,6 +170,16 @@ close its low side; report it. A partial leak counts: closing the low side
 removes the return resistors and lets the leak current rise. Set the margin on
 the bench. Never run the low-side self-test with an arm closed.
 
+Two things move that reading without any leak, so the margin has to cover
+them. With the arm open, part of the test current runs back through each
+TPS1H100's body diode into the unpowered armed rail (once R6310 / R6410 are
+fitted), so the disarmed reading sits about 5% low: ≈0.25 V at the ADC instead
+of ≈0.27 V with the proposed 3.9 kΩ legs. With the arm closed, DIAG_EN is tied
+high, so the TPS1H100 runs its off-state open-load check and its output leaks
+up to 50 µA at 125 °C into the test network: up to ≈+30 mV at the ADC hot, a few
+millivolts at room temperature. Compare the armed reading with the armed level
+measured on the bench across temperature, not only with the disarmed one.
+
 **Continuity reading:** the return node reaches the ADC divided by 5.86 (the
 22.1 + 22.1 / 10 kΩ divider with R6714 / R6724 / R6734's 100 kΩ in parallel
 while U6901 is on); the rail dividers are ÷5.42. Classify each reading as
