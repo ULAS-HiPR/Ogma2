@@ -189,8 +189,11 @@ Croí's 80 mm width fits both.
 1. Tuesday 3 November, after the firmware meeting: Anav, Arnav and Seán review
    PR #2 and the 2 November decisions; Anav reviews the recovery logic (D-6.11)
    and his pyro-channel circuit against D-2Nov.1.
-2. Jay: where the packs and arm switches go for EuRoC access, the umbilical,
-   and the LV-0690 question to the EuRoC officials (through #euroc-electronics).
+2. Jay: packs and arm switches go low, wired up a raceway down the outside of
+   the tanks (2 Nov); still where exactly, the run length and the umbilical.
+   LV-0690: Jay reads it as covering only independently controlled bodies; the
+   SRD's Section 7 text points the other way, so the officials' answer still
+   decides the actuator boards.
 3. Radion and Sim Systems: roll-control and grid-fin requirements, then the
    actuator node's board (D-2Nov.8); what the magnetometer has to deliver.
 4. Seán lifts the capture hold; capture the specification with an independent

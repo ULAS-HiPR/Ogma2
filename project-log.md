@@ -3616,3 +3616,29 @@ Fixed in passing, in text these changes touched: the layout guide still said
 R6804 and the continuity resistors stay DNP, but D-6.1 fits R6804 and D-2Nov.14
 sets the continuity values. `hardware/croi2/AGENTS.md` still says four DNP
 output-energy links; left for capture to reconcile with D-6.1.
+
+## 2 November 2026 — Jay's answers on pad access and LV-0690
+
+Seán asked in #euroc-electronics where the packs and arm switches go and
+whether Jay would put LV-0690 to the EuRoC officials, and posted the electronics
+requirements page for him. Jay answered the same morning:
+
+- Pad access: the packs and switches go low, with the wiring in a raceway down
+  the outside of the tanks; it won't pass through them. Not yet given: where
+  exactly they sit, how high the av-bay is on the rail, and so the run length.
+  The run counts twice in the all-fire margin (the pack pair and the arm-switch
+  loop) and sets the logic input's dip during a firing pulse. The ESD Open row
+  now covers the arm-switch loops too.
+- LV-0690: Jay reads it as covering only independently controlled systems, such
+  as a nosecone that steers itself after separating. Checked against the SRD on
+  euroc.pt: Section 7 scopes active control as the launch vehicle's own pitch or
+  roll stability augmentation, aerodynamic braking, guided recovery, precision
+  landing or guided deployable loads (LV-0650); LV-0670 names cold-gas
+  thrusters; LV-0690 applies LV-0240's redundancy to all of its electronics.
+  The text doesn't obviously support the narrower reading, so the row stays
+  open for an officials' answer. LV-0680's dormancy floors (1500 m AGL by
+  default, 500 m with limited flight history) went into the roll-control row.
+
+Seán also told the channel that the EuRoC work beyond Ogma2 (additional boards,
+the propulsion controller, the umbilical) starts in earnest once Ogma2 is
+ordered, with responsibilities allocated in the coming weeks.
