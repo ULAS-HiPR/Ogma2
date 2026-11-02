@@ -1,9 +1,8 @@
 # Power domains, restart and energy
 
 Proposed capture baseline, 22 September 2026, updated for D-6.5, D-6.8, D-7.1,
-D-2Nov.3, D-2Nov.6 and D-2Nov.11. It
-replaces the earlier two-regulator idea. CAD is unchanged. See the
-[power chapter](../02-power.md).
+D-2Nov.3, D-2Nov.6 and D-2Nov.11. It replaces the earlier two-regulator idea.
+CAD is unchanged. See the [power chapter](../02-power.md).
 
 ## Decision
 
@@ -148,9 +147,9 @@ workhorse pack is sized from measured loads instead.
 The pack interface is electrical, not a brand or SKU: 2S lithium, 8.4 V maximum
 charge, connector and polarity, and ≥30 Wh usable. The workhorse pack uses
 metal-can cylindrical Li-ion cells, 21700 by default, and never LiPo (EuRoC
-LV-0300, D-2Nov.6). A smaller pack can fly a
-shorter declared mission; it doesn't meet 8 h + 4 h by default. Nothing here
-approves buying or building a pack.
+LV-0300, D-2Nov.6). A smaller pack can fly a shorter declared mission; it
+doesn't meet 8 h + 4 h by default. Nothing here approves buying or building a
+pack.
 
 Sources: [netlist](../../../hardware/croi2/output/full-netlist.xml),
 [TPS2553](https://www.ti.com/lit/ds/symlink/tps2553.pdf),

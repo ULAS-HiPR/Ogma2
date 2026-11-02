@@ -1,8 +1,9 @@
 # Interfaces and installation
 
 Proposed board and assembly envelope, 22 September 2026, updated for D-6.1,
-D-6.7, D-7.1, D-2Nov.8, D-2Nov.9 and D-2Nov.11. Not qualified vehicle hardware. See [connectors](../09-connectors-arming.md),
-[servos](../04-servos.md) and [RF](../06-gnss-radio.md).
+D-6.7, D-7.1, D-2Nov.8, D-2Nov.9 and D-2Nov.11. Not qualified vehicle hardware.
+See [connectors](../09-connectors-arming.md), [servos](../04-servos.md) and
+[RF](../06-gnss-radio.md).
 
 ## Three local PWM interfaces; no speculative remote node
 

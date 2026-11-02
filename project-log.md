@@ -3521,3 +3521,13 @@ Later the same night, from three quick models kept outside the repo for now
   8.99 V trips; a small servo rotor at speed holds 37–343 mJ. The bench test
   decides. Added to the Open table: standalone, nothing keeps a wrong (3S) pack
   off the servos since D-6.1.
+- Continuity values, proposed for review: 3.9 kΩ 1% for each of R69x1–R69x4.
+  Every E24 pair was checked with 1% parts, 8.4 V armed and one resistor of a
+  leg shorted: ≤0.9 mA through the igniter on the self-test, ≤2.3 mA with a
+  shorted high side, ≤1.3 mA back into the services rail. That keeps a tenfold
+  margin for any igniter whose no-fire current is 25 mA or more. In 03 and the
+  capture spec as a proposed start; the igniter choice still decides.
+- MMC5983MA against MEMSIC's Rev A datasheet: VDD and CAP are shorted inside the
+  part, 10 µF at CAP, VDDIO and SPI_CS as captured, address 0x30, 2.7 kΩ
+  pull-ups in its application circuit, BW = 01 gives 100 Hz at 0.6 mG rms, and
+  3.6 V is the absolute maximum. The capture row stands.
