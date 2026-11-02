@@ -1,10 +1,11 @@
 # Ogma 2 power contract
 
 **Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
-detail describes the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and
-the [capture specification](../docs/architecture/schematic-capture-spec.md).
-Capture waits for Seán's go-ahead. No hardware has run, no part has been bought
-and nothing is released for flight.
+detail describes the 8 September CAD. Decided changes are in
+[decisions.md](../decisions.md) and the
+[capture specification](../docs/architecture/schematic-capture-spec.md). Capture
+waits for Seán's go-ahead. No hardware has run, no part has been bought and
+nothing is released for flight.
 
 This is a contract, not a finished schematic or a qualification result. See
 also the [current system](../current-system.md), the
@@ -296,8 +297,8 @@ No separate pre-order coupon.
 2. Controlled faults on optional branches.
 3. Source transitions, including pulling the umbilical under load.
 4. Servo back-drive at 8.4 V, standalone and Churro-fed (where the ideal diodes
-   leave regeneration no path back to a pack), watching `BAT_EFUSE_IN` and the
-   logic input.
+   leave regeneration no path back to a pack), at the lowest logic load,
+   watching `BAT_EFUSE_IN`, `VBAT_CROI_INPUT` and the logic input.
 
 Capture input, core rail, the faulted branch, reset and an essential-loop marker
 on one external timebase. Before any fault, write down the real parts and

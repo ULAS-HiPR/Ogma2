@@ -1,9 +1,10 @@
 # Ogma 2 flight fault contract
 
 **Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
-detail describes the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
-[capture specification](../docs/architecture/schematic-capture-spec.md).
-Capture waits for Seán's go-ahead.
+detail describes the 8 September CAD. Decided changes are in
+[decisions.md](../decisions.md) and the
+[capture specification](../docs/architecture/schematic-capture-spec.md). Capture
+waits for Seán's go-ahead.
 
 **What is accepted.** Seán accepted all EX-01 recommendations on 6 September and
 asked for them to be recorded before EX-02. That covers the policies below and
@@ -134,9 +135,9 @@ boundary. Nothing here approves a recovery device or a live test.
 
 [G0–G3](../docs/architecture/11-verification.md#release-gates): inert bench
 work, engineering-PCB order, installed-configuration qualification, then unit
-and mission release (live again from 2 November, D-2Nov.12). Each gate needs its own evidence and approval. No existing
-flight obligation is waived. Accepting the policy doesn't authorise a purchase,
-a live energetic test or a flight.
+and mission release (live again from 2 November, D-2Nov.12). Each gate needs its
+own evidence and approval. No existing flight obligation is waived. Accepting
+the policy doesn't authorise a purchase, a live energetic test or a flight.
 
 ## To close EX-01
 

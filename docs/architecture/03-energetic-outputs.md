@@ -56,14 +56,14 @@ J6601.4"))
 The services rail pushes a small test current through R6911 and R6912 into the
 igniter. It comes back through R6913 and R6914 to ground, and the return node is
 divided down to the ADC. Channel 2 uses R692x and PC4; channel 3 uses R693x and
-PC5. With the return grounded (the 6 October design), that node always read
-0 V, which is why the low side came back.
+PC5. With the return grounded (the 6 October design), that node would always
+have read 0 V, which is why the low side came back.
 
 | Return node reads | Meaning |
 | --- | --- |
 | Mid-level, set by the resistor ratio | Igniter present, both switches open |
 | ≈0 V | Igniter or harness open, or the low side is closed (or shorted) |
-| Near the armed rail | Arm closed and the high side on, leaking or shorted |
+| Above its disarmed reading, up to near the armed rail | Arm closed and the high side conducting: leaking or shorted |
 
 ## What each part does
 
@@ -97,10 +97,13 @@ alone and check its continuity drops to zero, then reopen it and check the
 reading returns. If an igniter reads open, the low-side check for that channel
 can't conclude; report it.
 
-**After arming:** a channel whose return node reads near the armed rail has a
-leaking or shorted high side. Never close that channel's low side; report it and
-stop the countdown. Don't run the low-side self-test with an arm closed: if the
-high side were shorted, closing the low side would fire it.
+**After arming:** a channel whose return node reads above its disarmed level,
+anywhere up to the armed rail, has a high side that conducts: leaking or
+shorted. Never close that channel's low side; report it and stop the countdown.
+A partial leak counts too: closing the low side takes R6913 / R6914 out of the
+path and lets the leak current rise. Set the margin above the disarmed level on
+the bench. Don't run the low-side self-test with an arm closed: if the high side
+were shorted, closing the low side would fire it.
 
 ## Removed, and why
 
@@ -134,9 +137,12 @@ reasons above. They were never deleted from the CAD.
 ## Still open
 
 1. Igniters for recovery and air-start: all-fire current well under 2.0 A at
-   minimum battery, harness resistance and one Q101 body-diode drop (D-2Nov.5);
+   minimum battery, harness resistance, the low side's on-resistance (≤30 mΩ at
+   a 2.5 V gate) and one Q101 body-diode drop (D-2Nov.5);
    the no-fire current sets R69x1 / R69x2 (test current with the low side
-   closed) and R69x3 / R69x4 (return, with a shorted high side).
+   closed) and R69x3 / R69x4 (return, with a shorted high side). R69x1 / R69x2
+   also carry current back into the services rail whenever a high side is on;
+   keep that well inside the rail's normal load.
 2. Fuse and arm-switch parts. Each switch must be maintained, rated above the
    fuse at 8.4 V DC, operable from outside the airframe and reachable from the
    ground with the rocket on the rail (EuRoC LV-0270, 0280, 0540–0550).

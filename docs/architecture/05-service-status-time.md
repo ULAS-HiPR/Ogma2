@@ -72,8 +72,8 @@ so don't show them; show battery, ADC and INA readings with age instead.
 
 TPS3808G33 supervisors on both MCUs (20 ms nominal delay, 12–28 ms with CT
 open); TPS3430 watchdog on flight, fed only after acquisition, estimation and
-policy make progress. Radio, bulk recording and the magnetometer never gate it. Boot never waits
-on a NOR scan, GNSS lock, peer discovery or USB.
+policy make progress. Radio, bulk recording and the magnetometer never gate it.
+Boot never waits on a NOR scan, GNSS lock, peer discovery or USB.
 
 Monotonic time for samples and deadlines; GNSS corrections never move an active
 deadline. Keep reset cause, time validity and session identity. A comms reset

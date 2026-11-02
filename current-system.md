@@ -68,13 +68,13 @@ D-2Nov.8 rules; which board waits for Sim Systems' requirements. Start with the
 
 ## Power path
 
-2S source → Q101 reverse blocking → `ENERGY_TAP` (outputs and servos) → U101
-eFuse (≈6.0 A, auto-retry) → 5 mΩ shunt → TPS2121 battery/USB mux → TPSM63603
-4.0 V buck → three TPS7A91 domains (flight, comms, services) at 3.352 V. Flight
-hold-up: 1000 µF, about 2 ms. Flight VBAT has its own Schottky and 100 µF
-(D-6.4). Sensors run from FLIGHT_3V3 through 47 Ω links (D-6.6, D-2Nov.3); the
-magnetometer through 22 Ω. The flight-core input enables whenever the buck is
-up (D-6.5).
+2S source → Q101 reverse blocking → `ENERGY_TAP`, where the outputs and servos
+branch off → U101 eFuse (≈6.0 A, auto-retry) → 5 mΩ shunt → TPS2121 battery/USB
+mux → TPSM63603 4.0 V buck → three TPS7A91 domains (flight, comms, services) at
+3.352 V. Flight hold-up: 1000 µF, about 2 ms. Flight VBAT has its own Schottky
+and 100 µF (D-6.4). Sensors run from FLIGHT_3V3 through 47 Ω links (D-6.6,
+D-2Nov.3); the magnetometer through 22 Ω. The flight-core input enables whenever
+the buck is up (D-6.5).
 
 The avionics pack is 2S Li-ion in metal-can cylindrical cells, 21700 by default;
 no LiPo. It alone covers ≥6 h on the rail plus the flight (D-2Nov.6). Pad-mode

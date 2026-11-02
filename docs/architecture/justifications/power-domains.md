@@ -86,12 +86,12 @@ The earlier relocated comms switch is dropped. Setting all three regulators to
 
 The MCU, five sensors, the magnetometer, NOR, GNSS, CAN and 3.3 V logic all stay
 under their 3.6 V limits; the Wio allows 3.7 V. The magnetometer's 3.6 V is an
-absolute maximum, so overshoot matters most there. Startup overshoot must still not pass those limits.
-Use the actual set point for reference and analog ratios and for rail
-measurements. Keep ≥10 µF effective at each TPS7A91 input and output after DC-bias
-derating. At 300 mA a 135 mΩ upstream switch drops about 41 mV **at the regulator
-input**; check regulation against that input, and don't subtract it again from
-the output.
+absolute maximum, so overshoot matters most there. Startup overshoot must still
+not pass those limits. Use the actual set point for reference and analog ratios
+and for rail measurements. Keep ≥10 µF effective at each TPS7A91 input and
+output after DC-bias derating. At 300 mA a 135 mΩ upstream switch drops about
+41 mV **at the regulator input**; check regulation against that input, and don't
+subtract it again from the output.
 
 Keep C1403 **PCW0J102MCO1GS**, 1000 µF / 6.3 V, on the held flight input after
 the LM73100. The old 0.98 ms figure is only an example (800 µF effective,

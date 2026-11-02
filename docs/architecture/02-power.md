@@ -69,8 +69,9 @@ via Samtec pin 8"]
   it turns Q101 off too, but Q101's body diode still feeds the tap (one diode
   drop) and still blocks a reversed pack. Servo regeneration goes back into the
   pack through Q101 when Burrito runs standalone. Churro-fed, Churro's ideal
-  diodes block that path (D-2Nov.7), so the ≈0.6 A logic load and the servo
-  bulk absorb it: back-drive test at 8.4 V.
+  diodes block that path (D-2Nov.7), so the logic load (under 150 mA in pad
+  mode) and the servo bulk absorb it: back-drive test at 8.4 V and the lowest
+  logic load, against the TPS2121 trip and U101's 8.99 V over-voltage.
 - **USB** powers logic only: no charging, no output energy.
 
 ## Regulated domains
@@ -200,10 +201,10 @@ Workhorse: 2S Li-ion in metal-can cylindrical cells, 21700 by default; no LiPo
 plus the flight and recovery. At the ≤150 mA pad-mode target that's ≈0.9 Ah for
 the six hours, well inside one 21700 per series cell; measure the real pad
 current on the first PCBA (D-6.8). The umbilical carries the pad load when it's
-plugged in, but it's margin, not the budget. Kármán overlay: 2S 8 Ah reference, ≥30 Wh usable
-at installed temperature, load and UVLO; 8 h active plus 4 h recovery needs
-29.69 Wh with assumed losses and 0.10 W overhead. The 65% usable-to-nameplate
-figure is an assumption. Actuator energy is extra.
+plugged in, but it's margin, not the budget. Kármán overlay: 2S 8 Ah reference,
+≥30 Wh usable at installed temperature, load and UVLO; 8 h active plus 4 h
+recovery needs 29.69 Wh with assumed losses and 0.10 W overhead. The 65%
+usable-to-nameplate figure is an assumption. Actuator energy is extra.
 [Energy calculation](justifications/power-domains.md#usb-and-endurance).
 
 First PCBA: measure startup, droop, fault recovery, noise, temperature and

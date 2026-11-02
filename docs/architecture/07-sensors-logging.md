@@ -88,10 +88,10 @@ drop torn tails. [Footer and identity rules](justifications/recording-and-servic
 | --- | --- |
 | Sensor data / diagnostics | 96,672 B/s / ≤1,024 B/s |
 | Magnetometer, 100 Hz with 16-byte records (D-2Nov.11) | ≈1,600 B/s more |
-| 128 KiB staging at that rate | 1.342 s |
-| Kármán mission ledger with 10 s lead-in | 183,407,936 B |
-| Sector-rounded, footers charged again | 195,637,248 B |
-| Spare in the 192 MiB region | 5,689,344 B; last 64 MiB reserved |
+| 128 KiB staging at the full rate | 1.320 s (1.342 s without the magnetometer) |
+| Kármán mission ledger with 10 s lead-in | 186,303,936 B (183,407,936 B without the magnetometer) |
+| Sector-rounded, footers charged again | 198,725,632 B (195,637,248 B) |
+| Spare in the 192 MiB region | 2,600,960 B (5,689,344 B); last 64 MiB reserved |
 | Throughput target, measured with acquisition running | ≥125 kB/s (desk bound 160 kB/s at 1.5 ms per page) |
 
 The 192 MiB window and 30-minute full-rate figure are the Kármán overlay

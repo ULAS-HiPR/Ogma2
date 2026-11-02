@@ -136,9 +136,15 @@ sector_bytes = 16 * 256
 conservative_storage = math.ceil((existing_mission + added) / data_bytes) * sector_bytes
 assert conservative_storage == 195637248
 assert conservative_storage + reserve < capacity
+# D-2Nov.11 magnetometer: 100 Hz x 16-byte records across the same 1,810 s.
+mag_rate = 100 * 16
+with_mag = existing_mission + added + mag_rate * 1810
+with_mag_storage = math.ceil(with_mag / data_bytes) * sector_bytes
+assert with_mag_storage == 198725632
+assert with_mag_storage + reserve < capacity
 assert binascii.crc32(b'123456789') == 0xCBF43926
 throughput_target = 125000
-assert throughput_target > rate + comms_rate
+assert throughput_target > rate + comms_rate + mag_rate
 assert throughput_target < data_bytes / (16 * .0015)
 
 # Replace the affected healthy branch allocation when considering one fault.
@@ -184,6 +190,10 @@ print(json.dumps({
     'revised_mission_ledger_bytes': existing_mission + added,
     'conservative_storage_bytes': conservative_storage,
     'spare_beyond_64MiB_reserve_bytes': capacity - reserve - conservative_storage,
+    'with_magnetometer_ledger_bytes': with_mag,
+    'with_magnetometer_conservative_storage_bytes': with_mag_storage,
+    'with_magnetometer_spare_bytes': capacity - reserve - with_mag_storage,
+    'with_magnetometer_writer_seconds': 128 * 1024 / (rate + comms_rate + mag_rate),
     'record_expansion_after_footer_within_20pct_allowance': 1.2 * 15 / 16 - 1,
     'program_only_useful_bytes_per_second': data_bytes / (16*.0015),
     'required_measured_useful_bytes_per_second': throughput_target,

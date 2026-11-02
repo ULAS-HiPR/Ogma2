@@ -428,9 +428,10 @@ is provided; no exact 3D model is claimed. No LCD or NeoPixel is included.
 
 Bring each channel's high side, low side and continuity parts beside the output
 connector. The one-shots and permit gates are gone (D-6.2); the low sides stay
-(D-2Nov.1), with their gate resistors at the FET. Put driver bypass, clamp/current-sense components and high-current copper
-at their driver. Use short outgoing/return paths that do not travel under IMUs
-or through the ADC-reference region. Respect thermal copper and current limits.
+(D-2Nov.1), with their gate resistors at the FET. Put driver bypass,
+clamp/current-sense components and high-current copper at their driver. Use
+short outgoing/return paths that do not travel under IMUs or through the
+ADC-reference region. Respect thermal copper and current limits.
 
 **Do not finish the raw armed-power routes from the current drawing.** Physical
 arm contacts, disarm proof, group protection, actual loads and pulse/no-fire

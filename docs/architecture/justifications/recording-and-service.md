@@ -83,6 +83,7 @@ and test reads and writes across 16 MiB and region boundaries.
 | Charging sector footers again, to be safe | ceil(183,407,936 / 3840) × 4096 = **195,637,248 B** |
 | Left in the 192 MiB region | **5,689,344 B**, before anything new |
 | Queue duration at 97,696 B/s | **1.342 s** when empty; real free space sets the margin |
+| Adding the magnetometer, 1,600 B/s for 1,810 s (D-2Nov.11) | 186,303,936 B; sector-rounded 198,725,632 B; **2,600,960 B** left; queue 1.320 s |
 | Most encoding growth allowed if footers must fit the original 20% | **12.5%** before footers |
 
 The ledger deliberately charges footers twice, where the old allowance already

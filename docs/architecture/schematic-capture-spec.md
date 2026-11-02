@@ -173,7 +173,7 @@ or firmware has shown them.
 | Area | Proposal |
 | --- | --- |
 | Logic power | 200 / 300 / 200 mA for flight / comms / services; all three at 3.352 V nominal |
-| Source endurance | Workhorse: from measured first-PCBA loads and the vehicle timeline (D-6.8). Kármán overlay keeps 2S 8 Ah, ≥30 Wh, 8 h + 4 h |
+| Source endurance | Workhorse: 2S Li-ion, 21700 by default; for EuRoC the pack alone covers ≥6 h on the rail plus the flight (D-2Nov.6); otherwise from measured first-PCBA loads and the vehicle timeline (D-6.8). Kármán overlay keeps 2S 8 Ah, ≥30 Wh, 8 h + 4 h |
 | USB only | Flight core and comms boot at reduced clock, services off; ≤387 mA from attach (D-6.5); restricted loads for download |
 | Boot and restart | Essential flight work starts on its own. Services are sequenced with PE8; one bounded service restart. Nothing waits for a NOR scan, GNSS or CAN |
 | Recording | 15 data pages + footer per 4 KiB sector. Full rate from launch detect with a RAM pre-trigger; erase-ahead only before launch detect (D-6.9). Magnetometer at 100 Hz adds ≈1.6 kB/s (D-2Nov.11). [Format](justifications/recording-and-service.md) |

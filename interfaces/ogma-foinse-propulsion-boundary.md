@@ -1,10 +1,11 @@
 # Ogma, Foinse and propulsion boundary
 
 **Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
-detail describes the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
-[capture specification](../docs/architecture/schematic-capture-spec.md).
-Capture waits for Seán's go-ahead. The LTS copy in `lts-controls/interfaces/`
-points here; if the two differ, this file wins.
+detail describes the 8 September CAD. Decided changes are in
+[decisions.md](../decisions.md) and the
+[capture specification](../docs/architecture/schematic-capture-spec.md). Capture
+waits for Seán's go-ahead. The LTS copy in `lts-controls/interfaces/` points
+here; if the two differ, this file wins.
 
 Authority: [current system](../current-system.md). This file sets the boundary
 between Ogma 2, Foinse 2 and the liquid-propulsion controller so each can be
@@ -56,10 +57,10 @@ operator UI is disconnected.
   (D-2Nov.9): permissions and mode; slow state that stays valid through Ogma's
   worst-case 550 ms restart; health; and commands the receiver drops to safe
   when they go stale. No sensor streams or control loops at loop rate.
-- A closed-loop actuator node (roll control, grid fins) may join only as a
-  named peer under D-2Nov.8: an unterminated stub, CAN IDs below Ogma's and
-  propulsion's, its own Foinse feed. Proposed to the propulsion owner; not
-  agreed.
+- A closed-loop actuator node (roll control, grid fins) may join only as a named
+  peer under D-2Nov.8: an unterminated stub, CAN IDs that lose arbitration to
+  Ogma's and propulsion's (numerically higher), its own Foinse feed. Proposed to
+  the propulsion owner; not agreed.
 - Full-rate engine data stays in propulsion-local storage or goes over a bounded
   test-only path.
 - Croí: 500 kbit/s Classical CAN, TCAN3413DRBR, fixed 120 Ω end termination,

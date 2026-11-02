@@ -1,4 +1,4 @@
-# Recovery logic
+# 10 Recovery logic
 
 **6 October · draft for Anav's review ([D-6.11](../../decisions.md)). The pad
 datum, ground-test mode and pad telemetry were decided on 2 November (D-2Nov.10);
@@ -28,7 +28,7 @@ stateDiagram-v2
 | --- | --- | --- | --- |
 | Launch detect | Axial acceleration above 3 g for 100 ms on both low-g IMUs, or the high-g channel when they clip (proposed) | Barometric altitude rising within 1 s | None. Launch detect freezes the pad datum, starts full-rate recording and asserts `FC_POWER_HOLD` |
 | Burnout | Axial acceleration below 0 g for 100 ms (proposed) | — | Starts the Mach lockout timer |
-| Apogee → drogue | Fused vertical velocity ≤ 0 | Barometric altitude below its running maximum for 3 consecutive samples at 50 Hz (proposed) | No barometric apogee while fused speed exceeds 0.8 Mach or within 2 s of burnout (proposed). Backup: fire at launch + simulated apogee time + margin (per vehicle) |
+| Apogee → drogue | Fused vertical velocity ≤ 0 | Barometric altitude below its running maximum for 3 consecutive samples at 50 Hz (proposed) | No barometric apogee while fused speed exceeds 0.8 Mach or within 2 s of burnout (proposed). Backup: fire at launch + simulated apogee time + margin (per vehicle). Neither fires until the barometric altitude has passed 100 m above the pad datum, or inertial evidence shows flight if both barometers are invalid (proposed), so a false launch detect on the pad can't fire the drogue |
 | Main | Barometric altitude above the pad datum ≤ main altitude while descending (per vehicle) | 3 consecutive samples (proposed) | Backup timer after drogue (per vehicle). Never above the main altitude |
 | Landed | Altitude change < 2 m over 10 s and acceleration ≈ 1 g (proposed) | — | Ends full-rate recording after a tail; releases `FC_POWER_HOLD` after a delay. A configured maximum flight time releases the hold even if LANDED never comes |
 
@@ -73,6 +73,18 @@ then read the checkpoint ([reset contract](../../interfaces/reset-recovery-contr
 
 This is what Rev 1 lacked: it recalibrated aloft.
 
+On the pad, the armed row without a checkpoint means a cold boot with an arm
+closed. That path can't deploy the main, and the phase in the pad telemetry
+shows it: disarm, let the board boot normally, then re-arm.
+
+Open for Anav: a reset after launch detect but before the first in-flight
+checkpoint boots as PAD. Launch detect fires again only while the motor still
+burns; after burnout nothing would. Proposed: write the in-flight checkpoint
+before anything else at launch detect, and add a missed-launch backup in PAD
+(armed, barometric altitude more than 50 m above the datum for 2 s) that takes
+the armed row above. That row must then be unable to fire the main from a pad
+pressure transient.
+
 ## Pad telemetry (D-2Nov.10)
 
 Once armed, nobody is within 600 m of the rocket, so the radio is the only view
@@ -101,14 +113,16 @@ profile while the board sits still.
 | Who fires | The flight MCU's own event logic, as in flight |
 | Outputs | Recovery channels 1 and 2 only. Staging stays disarmed and its latch cleared |
 | Power hold | Not asserted: J103 must still switch the board off |
-| Exit | Clears at power-off; never carried into a flight |
+| Exit | Clears at power-off and at any reset; never carried into a flight. A checkpoint written in ground-test mode never reads as in flight, so a reset mid-test comes back on the pad with nothing firing (proposed) |
 | Record | Every use logged with its configuration, for the annex |
 
 ## Per-flight configuration
 
 Main altitude, backup timers, simulated apogee time, pulse length per output,
 Mach lockout threshold, landed tail, hold-release delay, maximum flight time and
-the ground-test flag. Read back over USB before arming; the running build and
+the ground-test flag. If J103's loop broke in flight, releasing the hold
+switches the board off and ends the GNSS beacon, so set the release delay with
+recovery in mind. Read back over USB before arming; the running build and
 configuration are recorded at launch detect.
 
 ## Tests
@@ -120,5 +134,7 @@ configuration are recorded at launch detect.
 4. A six-hour pad hold with a pressure drift profile: the datum follows the
    weather and freezes at launch detect.
 5. The LV-0520 ground test in ground-test mode, inert loads first.
+6. A forced false launch detect on the pad, arms closed on inert loads: nothing
+   fires, including after every backup timer.
 
 Where these sit among the other campaigns: [11 Verification](11-verification.md).

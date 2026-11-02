@@ -1,9 +1,10 @@
 # Ogma 2 reset, retained state and time contract
 
 **Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
-detail describes the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
-[capture specification](../docs/architecture/schematic-capture-spec.md).
-Capture waits for Seán's go-ahead.
+detail describes the 8 September CAD. Decided changes are in
+[decisions.md](../decisions.md) and the
+[capture specification](../docs/architecture/schematic-capture-spec.md). Capture
+waits for Seán's go-ahead.
 
 **What is accepted.** Seán accepted all five EX-03 recommendations (defaults
 below). A host model exists. MCU-specific implementation, timing, power and

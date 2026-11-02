@@ -28,13 +28,14 @@ across the installed source range up to 8.4 V.
   servos stalled at once.
 
 **Power feed (D-6.1, D-6.7, 6 October).** Servo energy comes from `ENERGY_TAP`
-through its own fuse F6801. R6804 is fitted and `SERVO_VBAT` gets ≥220 µF. Servos
-are not behind the pyro arm. One motor fault can still take out the shared motor
-branch. Churro-fed, regeneration can't return to the pack through the ideal
-diodes (D-2Nov.5, D-2Nov.7), so the bulk and the logic load absorb it.
-Regeneration, stall, startup and temperature need tests with the installed load. The switch is not a regulated motor supply and doesn't tolerate
-every kind of regeneration. This bounded interface is enough to capture the
-schematic without inventing a mechanism.
+through its own fuse F6801. R6804 is fitted and `SERVO_VBAT` gets ≥220 µF.
+Servos are not behind the pyro arm. One motor fault can still take out the
+shared motor branch. Churro-fed, regeneration can't return to the pack through
+the ideal diodes (D-2Nov.5, D-2Nov.7), so the bulk and the logic load absorb it.
+Regeneration, stall, startup and temperature need tests with the installed load.
+The switch is not a regulated motor supply and doesn't tolerate every kind of
+regeneration. This bounded interface is enough to capture the schematic without
+inventing a mechanism.
 
 **No remote node on Burrito.** Local PWM is Burrito's only actuator interface,
 for bounded, event-triggered moves. Don't add a remote actuator node,
@@ -42,9 +43,10 @@ controller, expander or connector to Burrito. Fajita keeps its own local
 control. A mechanism that moves the vehicle in a closed loop (roll control, grid
 fins) gets its own node under D-2Nov.8: its own processor and fast sensor, a
 neutral path that survives hung firmware, dormant until authorised, an
-unterminated CAN stub with IDs below Burrito's and Fajita's, and its own fused
-Churro feed. Its board waits for Sim Systems' requirements. The 200 Hz traffic
-example doesn't create that architecture.
+unterminated CAN stub with IDs that lose arbitration to Burrito's and Fajita's
+(numerically higher), and its own fused Churro feed. Its board waits for Sim
+Systems' requirements. The 200 Hz traffic example doesn't create that
+architecture.
 
 Sources: [TI TPS1H100-Q1 Rev D](https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf)
 §6.5 with its accuracy footnotes, and §7.3;

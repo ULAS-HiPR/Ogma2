@@ -46,7 +46,11 @@ Fajita converts locally"]
 - **Which source is live.** Churro's AV divider moves to the pack side of its
   diode, so the ADS1115 reads the pack while Burrito's INA228 reads the bus.
   Bus well above pack means the umbilical is carrying it; the threshold is set
-  on the bench.
+  on the bench. The pack voltage is a go/no-go item before the umbilical is
+  pulled: while the umbilical carries the load, nothing else shows a missing or
+  flat pack. PROP's divider (R6111) stays on the protected output unless the
+  propulsion owner wants it moved, so until then a missing or flat PROP pack is
+  invisible on the umbilical.
 - Each protection circuit starts from its own pack. AUX and I²C only feed
   monitoring, so if Burrito or AUX is gone, protection still works and the
   readings go unknown.
@@ -148,14 +152,14 @@ receiver drops to safe when they go stale. No sensor streams or control loops at
 loop rate: every node closes its own fast loop with its own sensors.
 
 Rev A: 500 kbit/s Classical CAN, two nodes. A closed-loop actuator node, if one
-is added, joins on an unterminated stub with CAN IDs below Burrito's and
-Fajita's, so unplugging it leaves the link intact (D-2Nov.8; needs the propulsion
-owner's agreement). CAN FD (500 kbit/s arbitration,
-2 Mbit/s data, 11-bit IDs) only as a migration agreed with Fajita; the TCAN3413
-supports it, but that doesn't qualify the harness. FD needs both peers to agree
-bitrate, IDs, message versions and units, periods and bursts, command age,
-reboot epochs, expiry and bus-off recovery. What a peer does on lost power or
-link belongs in its own contract.
+is added, joins on an unterminated stub with CAN IDs that lose arbitration to
+Burrito's and Fajita's (numerically higher), so unplugging it leaves the link
+intact (D-2Nov.8; needs the propulsion owner's agreement). CAN FD (500 kbit/s
+arbitration, 2 Mbit/s data, 11-bit IDs) only as a migration agreed with Fajita;
+the TCAN3413 supports it, but that doesn't qualify the harness. FD needs both
+peers to agree bitrate, IDs, message versions and units, periods and bursts,
+command age, reboot epochs, expiry and bus-off recovery. What a peer does on
+lost power or link belongs in its own contract.
 
 Earlier comparison for one hypothetical remote actuator: 16 B command and
 16 B status at 200 Hz, 8 B health at 20 Hz, 8 B Fajita reservation at 100 Hz,

@@ -60,11 +60,11 @@ First PCBA, inert loads, current-limited supplies.
 | Block | Tests | Detail |
 | --- | --- | --- |
 | Outputs | Arms open means no output; low-side self-test; a high side on alone stays below no-fire; all-fire at minimum battery with one body-diode drop; shorts during a pulse; a staging short leaves recovery working; the latch after a reset | [03 Outputs](03-energetic-outputs.md#bench-tests-inert-loads-only) |
-| Power | Cold start with Churro's return absent; branch faults; break the enable loop during a simulated flight and reset the flight MCU: the board stays up; the hold releases at LANDED and at the time cap; servo back-drive at 8.4 V, standalone and Churro-fed, against the TPS2121 trip | [02 Power](02-power.md), [power contract](../../interfaces/power-contract.md#first-test-and-closure) |
+| Power | Cold start with Churro's return absent; branch faults; break the enable loop during a simulated flight and reset the flight MCU: the board stays up; the hold releases at LANDED and at the time cap; servo back-drive at 8.4 V, standalone and Churro-fed at the lowest logic load, against the TPS2121 trip and U101's over-voltage | [02 Power](02-power.md), [power contract](../../interfaces/power-contract.md#first-test-and-closure) |
 | Sensors | Short one sensor's supply: the flight rail stays in regulation and the other sensors keep running; the link's drop at each sensor's peak; dead-sensor pin parking | [07 Sensors](07-sensors-logging.md) |
 | Magnetometer | Noise and heading error in the assembled bay, with servos moving and current in the pyro and battery leads | [Layout guide C09a](../pcb-layout-guide.md#c09a-magnetometer) |
 | Churro | Umbilical pulled under load on both branches; no current into either pack; the source report; startup with AUX absent | [08 Churro](08-foinse-can.md) |
-| Recovery logic | Rev 1 replay; hardware-in-the-loop trajectories; reset injection in every phase; a six-hour pad hold with pressure drift; the ground-test mode | [10 Recovery logic](10-recovery-logic.md#tests) |
+| Recovery logic | Rev 1 replay; hardware-in-the-loop trajectories; reset injection in every phase; a six-hour pad hold with pressure drift; the ground-test mode; a false launch detect on the pad fires nothing | [10 Recovery logic](10-recovery-logic.md#tests) |
 | CAN boundary | Peer in reset, missing, corrupt, bus-off; stale and illegal requests | [Boundary contract](../../interfaces/ogma-foinse-propulsion-boundary.md#boundary-tests) |
 
 ## EuRoC tests and checks

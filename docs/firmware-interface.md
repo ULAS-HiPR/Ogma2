@@ -159,13 +159,18 @@ switches open (expect the mid-level reading), close the low side alone (expect
 ≈0), reopen it (expect the mid-level reading again). An igniter that reads open
 makes that channel's check inconclusive; report it.
 
-**After arming:** a return node near the armed rail means that channel's high
-side is leaking or shorted. Never close its low side; report it. Never run the
-low-side self-test with an arm closed.
+**After arming:** a return node above its disarmed reading, anywhere up to the
+armed rail, means that channel's high side conducts: leaking or shorted. Never
+close its low side; report it. A partial leak counts: closing the low side
+removes the return resistors and lets the leak current rise. Set the margin on
+the bench. Never run the low-side self-test with an arm closed.
 
 **Continuity reading:** the return node is divided by 5.42 to the ADC. Classify
-each reading as present, open (≈0 V), low side closed (0 V), or high side
-leaking (near the armed rail), and send both the class and the raw value. The
+each reading as present (mid-level), zero, or high side leaking (above the
+disarmed reading, up to the armed rail), and send both the class and the raw
+value. Zero means an open igniter or harness when the low side is commanded
+open, and a working low side when it's commanded closed; zero with the low side
+open on a channel that read present before can also mean a shorted low side. The
 test current comes from the services rail, so services must be on.
 
 **Staging latch:** pulse PD15 only on the pad, with staging disarmed (PE15
@@ -181,6 +186,8 @@ move ignition onto channels 1 or 2.
   delay, or at the configured maximum flight time, whichever comes first.
 - After any reset, if the checkpoint says in flight, drive it high within 50 ms.
   The RC keeps the enables on for ≥1 s, longer than the worst-case 550 ms restart.
+- In flight, write PE5 high again every essential-loop cycle, so a stray port-E
+  write can't drop it for longer than one cycle.
 - Never in ground-test mode.
 
 ## Sensors
@@ -210,7 +217,9 @@ move ignition onto channels 1 or 2.
   frame goes to USB.
 - Ground-test mode: a configuration flag loaded over USB and shown in readback;
   launch declared over USB; barometric logic alone; recovery channels only; no
-  power hold; cleared at power-off; every use logged.
+  power hold; cleared at power-off; every use logged. Proposed: any reset also
+  clears it, and a checkpoint written in ground-test mode never reads as in
+  flight.
 - USB service: bounded 4 KiB chunks with credits; never blocks acquisition; a
   timed-out flight reply is unknown, never the last value.
 
@@ -227,7 +236,8 @@ Event rules: [Recovery logic](architecture/10-recovery-logic.md). Format:
   through a 550 ms restart, health, and commands the receiver drops to safe when
   stale. No sensor streams, no loops at loop rate. Classical 500 kbit/s for
   Rev A; the message contract is written with Fajita's owner. A closed-loop
-  actuator node, if added, takes IDs below Burrito's and Fajita's.
+  actuator node, if added, takes IDs that lose arbitration to Burrito's and
+  Fajita's: numerically higher.
 
 ## Monitoring
 

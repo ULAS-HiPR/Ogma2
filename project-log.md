@@ -3444,3 +3444,62 @@ The PR #2 description was corrected the same day: D-6.5 was not a brownout
 weakening, and EX-10 is still cited by the flight fault contract.
 
 CAD unchanged. Capture stays on hold until after Tuesday's review.
+
+## 2 November 2026 — overnight check of the 2 November write-up
+
+Every page changed in PR #2 read again end to end, with the link, table and
+calculation checks re-run and the new parts checked against data. Fixed:
+
+- Actuator-node CAN IDs. "Below Burrito's and Fajita's" could be read as
+  numerically lower, which wins arbitration; D-13.1 meant lower priority. Every
+  copy now says the IDs lose arbitration (numerically higher).
+- Churro-fed regeneration. The sink is the logic load at the time, under 150 mA
+  in pad mode, not the ≈0.6 A budget. The back-drive test runs at the lowest
+  logic load and also watches U101's 8.99 V over-voltage, which is sensed at
+  `VBAT_CROI_INPUT` (R1003 / R1004).
+- Leak check after arming. A conducting high side shows as any rise above the
+  disarmed continuity reading, not only a reading near the rail: a partial leak
+  can grow once the low side takes R69x3 / R69x4 out of the path. 03 and the
+  firmware interface say so.
+- Recording budget with the magnetometer for the whole Kármán window:
+  186,303,936 B, 198,725,632 B sector-rounded, 2,600,960 B spare in the 192 MiB
+  region; staging 1.320 s. Added to `component-proposal-checks.py`.
+- The capture spec's endurance row still gave only the D-6.8 path; it now
+  carries D-2Nov.6. J6102's connector is rated above F6102, not F6101. The
+  all-fire margin includes the low side's on-resistance.
+
+Proposed for Anav's review of D-6.11 (not decided):
+
+- No drogue, primary or backup timer, until the barometric altitude has passed
+  100 m above the pad datum (or inertial evidence of flight with both barometers
+  invalid). As written, a false launch detect on the pad with the arms closed
+  would let the backup timer fire.
+- A reset between launch detect and the first in-flight checkpoint boots as
+  PAD, and after burnout nothing detects launch again. Write that checkpoint
+  first, and consider a missed-launch backup.
+- Any reset clears ground-test mode, and its checkpoint never reads as in
+  flight.
+- Write PE5 high every essential-loop cycle in flight. Set the hold-release
+  delay knowing that, with J103's loop broken, release ends the GNSS beacon.
+- Before the umbilical is pulled, the AV pack voltage is a go/no-go item. With
+  R6111 still on Churro's protected PROP output, a missing PROP pack is
+  invisible on the umbilical.
+
+Checked, no change:
+
+- PA8 / PC9 are I2C3 AF4, PB8 / PB9 I2C4 AF6, PD10 LPTIM2_CH2 AF3, PD0 / PD1
+  FDCAN1 AF9; PA9 / PC9 are UCPD1 DB1 / DB2 with CC1 / CC2 on PB13 / PB14.
+  Source: ST's CubeMX pin data as packaged in embassy's stm32-data. Every flight
+  pad number in the docs matches.
+- TPS3700 (TI SBVS187 §7.3.1): OUTA releases when INA+ rises past the
+  threshold, OUTB pulls low when INB− does. So `RECOVERY_ARM_VALID` high means
+  armed and `STAGE_ARM_INVALID` high means staging disarmed, as documented, and
+  the latch can be set only with staging disarmed. U6001 PRE̅ is tied high and
+  CLR̄ is on `FLIGHT_NRST`.
+- CSD17318Q2: ≤30 mΩ at a 2.5 V gate, 0.9 V typical threshold.
+- Hold RC, simulated with a BAT54-class diode model: ≈1.24 s at Churro's
+  `AV_SHDN_N` and ≈1.69 s at `BAT_SHDN_N` with −20% capacitance and 15 µA of
+  capacitor leakage; still ≈1.0 s at −30% and 30 µA. It has to cover about
+  600 ms (550 ms restart plus 50 ms to re-assert).
+
+CAD unchanged.

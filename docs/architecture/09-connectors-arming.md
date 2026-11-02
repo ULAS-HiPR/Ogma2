@@ -43,7 +43,7 @@ powers down, even if firmware is holding the enable.
 
 | Item | Decision |
 | --- | --- |
-| Connector | 2-contact, rated above F6101, to an external maintained switch. Part chosen at capture. It must not mate Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the JST GH enable loops, so a crossed harness can't put propulsion voltage on the pyro rail. Candidate: single-row Micro-Fit 3.0; confirm by trying the real housings |
+| Connector | 2-contact, rated above its fuse (F6101 / F6102), to an external maintained switch. Part chosen at capture. It must not mate Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the JST GH enable loops, so a crossed harness can't put propulsion voltage on the pyro rail. Candidate: single-row Micro-Fit 3.0; confirm by trying the real housings |
 | Recovery | `ENERGY_TAP` → F6101 → J6101 → `RECOVERY_ARMED_VBAT` → channels 1 and 2 |
 | Staging (D-7.2, D-2Nov.2) | Its own fuse and arm: `ENERGY_TAP` → F6102 → J6102 → `STAGING_ARMED_VBAT` → channel 3. J6102 is 2-contact, keyed so it can't mate J6101, J701 or the GH loops |
 | Open or unplugged | No energy at the output switches, whatever firmware does |
