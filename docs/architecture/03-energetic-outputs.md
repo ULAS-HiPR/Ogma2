@@ -50,12 +50,14 @@ test current"| HI
 J6601.4"))
   LO --> LS["Q6301 low side · PA9"] --> G["GND"]
   LO -->|"R6913 + R6914"| G
-  LO -->|"÷ 5.42 · U6901"| ADC["PC3 continuity ADC"]
+  LO -->|"÷ 5.86 · U6901"| ADC["PC3 continuity ADC"]
 ```
 
 The services rail pushes a small test current through R6911 and R6912 into the
 igniter. It comes back through R6913 and R6914 to ground, and the return node is
-divided down to the ADC. Channel 2 uses R692x and PC4; channel 3 uses R693x and
+divided down to the ADC: 22.1 kΩ + 22.1 kΩ over 10 kΩ, with R6714's 100 kΩ
+pull-down on the ADC side in parallel while U6901 is on, so ÷5.86, not the ÷5.42
+of the rail dividers. Channel 2 uses R692x and PC4; channel 3 uses R693x and
 PC5. With the return grounded (the 6 October design), that node would always
 have read 0 V, which is why the low side came back.
 
@@ -148,7 +150,7 @@ reasons above. They were never deleted from the CAD.
    3.9 kΩ 1% for each of R69x1–R69x4. With one resistor shorted, 8.4 V armed
    and 1% parts, that's ≤0.9 mA through the igniter on the self-test, ≤2.3 mA
    with a shorted high side and ≤1.3 mA of back-feed: a tenfold margin for any
-   igniter whose no-fire current is 25 mA or more. "Present" reads about 0.29 V
+   igniter whose no-fire current is 25 mA or more. "Present" reads about 0.27 V
    at the ADC.
 2. Fuse and arm-switch parts. Each switch must be maintained, rated above the
    fuse at 8.4 V DC, operable from outside the airframe and reachable from the

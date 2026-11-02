@@ -3540,3 +3540,8 @@ Later the same night, from three quick models kept outside the repo for now
 - Open row added: nothing protects J6601's six pyro lines or the J6602 servo
   lines against ESD or induced transients on their harnesses; decide at capture
   between a TVS per pyro line and a written check of the part ratings.
+- The continuity divider is ÷5.86, not ÷5.42: R6714 / R6724 / R6734 (100 kΩ,
+  on the ADC side of U6901) sit across the 10 kΩ foot while the switch is on.
+  The rail dividers have no such resistor and stay ÷5.42. Fixed in 03 and the
+  firmware interface, with a sampling-time note for the unfiltered ~8 kΩ
+  continuity inputs.

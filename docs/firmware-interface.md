@@ -122,7 +122,10 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | Continuity, channels 1–3 | PC3 / PC4 / PC5 (18, 33, 34) | ADC1_INP13 / INP4 / INP8 |
 
 Use calibrated VREFINT for absolute voltages; the ADC reference is the flight
-rail itself.
+rail itself. The continuity inputs have no filter capacitor and a source of
+about 8 kΩ, so give them a long sampling time (start at 47.5 cycles and check it
+against the reference manual's source-impedance table); the rail dividers have
+10 nF at their scaled node.
 
 ## Comms MCU pins
 
@@ -167,13 +170,15 @@ close its low side; report it. A partial leak counts: closing the low side
 removes the return resistors and lets the leak current rise. Set the margin on
 the bench. Never run the low-side self-test with an arm closed.
 
-**Continuity reading:** the return node is divided by 5.42 to the ADC. Classify
-each reading as present (mid-level), zero, or high side leaking (above the
-disarmed reading, up to the armed rail), and send both the class and the raw
-value. Zero means an open igniter or harness when the low side is commanded
-open, and a working low side when it's commanded closed; zero with the low side
-open on a channel that read present before can also mean a shorted low side. The
-test current comes from the services rail, so services must be on.
+**Continuity reading:** the return node reaches the ADC divided by 5.86 (the
+22.1 + 22.1 / 10 kΩ divider with R6714 / R6724 / R6734's 100 kΩ in parallel
+while U6901 is on); the rail dividers are ÷5.42. Classify each reading as
+present (mid-level), zero, or high side leaking (above the disarmed reading, up
+to the armed rail), and send both the class and the raw value. Zero means an
+open igniter or harness when the low side is commanded open, and a working low
+side when it's commanded closed; zero with the low side open on a channel that
+read present before can also mean a shorted low side. The test current comes
+from the services rail, so services must be on.
 
 **Staging latch:** pulse PD15 only on the pad, with staging disarmed (PE15
 high). Then PE14 reads low (eligible). Any reset or power-up sets PE14 high
