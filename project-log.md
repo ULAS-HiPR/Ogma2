@@ -3576,3 +3576,7 @@ Later the same night, from three quick models kept outside the repo for now
   pass on a correct board: `RECOVERY_ARMED_VBAT` also feeds its rail-ADC
   divider R8007 (PA2), and USB VBUS also feeds D4401, its decoupling and the
   USB-present divider R1208 / R1209.
+- `BAT_EFUSE_IN` has no capacitance in the CAD (only Q101, U101 and the INA228
+  VBUS filter). Now that it feeds pulsed pyro and servo loads, the capture row
+  proposes 100 nF and 10 µF (≥16 V) at Q101's drain, which assertion 4 already
+  allows.
