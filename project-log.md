@@ -3537,3 +3537,6 @@ Later the same night, from three quick models kept outside the repo for now
 - Pad telemetry frame, estimated: about 28 bytes packed with sequence, time and
   CRC, inside the 64-byte 1 Hz packet the radio chapter budgets. The
   ground-test flag is held in RAM and never stored with the configuration.
+- Open row added: nothing protects J6601's six pyro lines or the J6602 servo
+  lines against ESD or induced transients on their harnesses; decide at capture
+  between a TVS per pyro line and a written check of the part ratings.
