@@ -3531,3 +3531,9 @@ Later the same night, from three quick models kept outside the repo for now
   part, 10 µF at CAP, VDDIO and SPI_CS as captured, address 0x30, 2.7 kΩ
   pull-ups in its application circuit, BW = 01 gives 100 Hz at 0.6 mG rms, and
   3.6 V is the absolute maximum. The capture row stands.
+- Firing sequence: if a channel's current sense hasn't fallen to zero after the
+  high side is switched off, opening the low side stops it; firmware reports
+  the channel and doesn't use it again. Added to 03 and the firmware interface.
+- Pad telemetry frame, estimated: about 28 bytes packed with sequence, time and
+  CRC, inside the 64-byte 1 Hz packet the radio chapter budgets. The
+  ground-test flag is held in RAM and never stored with the configuration.

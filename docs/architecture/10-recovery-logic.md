@@ -98,6 +98,9 @@ of it. At 1 Hz, from arming to launch detect:
 - phase, fault flags and the configuration identity.
 
 The same frame goes to USB. It is evidence for the crew, never a command path.
+Packed, with a sequence number, time and CRC, it's about 28 bytes (estimate), so
+it fits inside the 64-byte, 1 Hz packet the [radio chapter](06-gnss-radio.md)
+already budgets, with room left for a GNSS fix.
 
 ## Ground-test mode (D-2Nov.10)
 
@@ -113,7 +116,7 @@ profile while the board sits still.
 | Who fires | The flight MCU's own event logic, as in flight |
 | Outputs | Recovery channels 1 and 2 only. Staging stays disarmed and its latch cleared |
 | Power hold | Not asserted: J103 must still switch the board off |
-| Exit | Clears at power-off and at any reset; never carried into a flight. A checkpoint written in ground-test mode never reads as in flight, so a reset mid-test comes back on the pad with nothing firing (proposed) |
+| Exit | Held in RAM, never stored with the configuration: clears at power-off and at any reset; never carried into a flight. A checkpoint written in ground-test mode never reads as in flight, so a reset mid-test comes back on the pad with nothing firing (proposed) |
 | Record | Every use logged with its configuration, for the annex |
 
 ## Per-flight configuration

@@ -91,6 +91,8 @@ One fault, armed, and what happens:
 
 **Fire:** low side on, high side on for the configured pulse, high side off,
 low side off. One channel at a time. Channel 3's high side also needs the latch.
+If current still flows after the high side is switched off, opening the low
+side stops it; report the channel and don't use it again.
 
 **Before arming (arms open):** with no energy on the outputs, close each low side
 alone and check its continuity drops to zero, then reopen it and check the

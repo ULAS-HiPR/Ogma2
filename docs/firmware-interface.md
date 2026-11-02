@@ -149,8 +149,10 @@ Set `UCPD_DBDIS` here too.
 3. High side off.
 4. Low side off.
 
-Wait about 1 ms between steps to start with; set the gaps on the bench. One
-channel at a time. Every pulse is bounded by the per-flight configuration;
+Wait about 1 ms between steps to start with; set the gaps on the bench. After
+step 3, that channel's current sense should fall to zero. If it doesn't, the
+high side is stuck on: step 4 still breaks the circuit, so do it, then report
+the channel and never use it again that session. One channel at a time. Every pulse is bounded by the per-flight configuration;
 nothing in hardware shortens it now. Channel 3's high side also needs the latch
 set, and the latch is cleared by any flight reset.
 
