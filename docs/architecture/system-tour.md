@@ -110,7 +110,7 @@ high + low side"]
   TAP --> SF["F6801 servo fuse"] --> SV["Servos"]
   EN["J103 enable"] -.-> E
   HOLD["Firmware hold
-in flight, ≥1 s RC"] -.-> E
+in flight, ≈1 s RC"] -.-> E
 ```
 
 Logic goes through U101, a 4.0 V buck and three LDOs: flight, comms and
@@ -149,7 +149,7 @@ staging latch come over USB and 1 Hz pad telemetry; no lamp shows them.
 | Rails | Three 3.3 V domains | Three at 3.352 V; services restartable from flight |
 | Servos | Three channels | Three (D-7.1), raw 2S, own fuse, ≥220 µF; event moves only |
 | Outputs | Three channels with one-shots, gates, high and low sides; no energy source | Three channels, each a TPS1H100 high side (≈2.0 A) and a CSD17318 low side on another GPIO port. Recovery fuse and arm; staging fuse, arm and reset latch. No one-shots or permit gates |
-| Power path | Outputs after U101; latch-off eFuses; enable open = off | Energy tapped after Q101, before U101; auto-retry; firmware hold with a ≥1 s RC; VBAT hold-up |
+| Power path | Outputs after U101; latch-off eFuses; enable open = off | Energy tapped after Q101, before U101; auto-retry; firmware hold with a ≈1 s RC; VBAT hold-up |
 | Sensors | Per-sensor switches and isolators | 47 Ω link per sensor; a magnetometer on I²C3 |
 | Recording | Earlier format | 15 data pages + footer per sector; full rate from launch detect |
 | Battery entries | Both provisions; J101 footprint missing | Fit one; draw the Nano-Fit footprint |

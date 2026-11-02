@@ -3583,3 +3583,36 @@ Later the same night, from three quick models kept outside the repo for now
 - The TPS1H100's limit at R = 1.24 kΩ is ≈2.0 A nominal, but TI gives ±14%
   above 1.6 A, so the all-fire check in D-6.2 and 03 now uses the ≈1.7 A low
   corner. D-2Nov.4 names PE5's 100 kΩ pull-down among the hold's loads.
+
+## 2 November 2026 — Seán accepts the overnight proposals: D-2Nov.13–D-2Nov.18
+
+Seán accepted all six recommendations from the overnight check, each put to him
+with its reason, cost, alternative and check. Recorded as:
+
+- D-2Nov.13: no deployment, primary or backup, until the barometric altitude
+  has passed 100 m above the pad datum; inertial evidence of flight stands in
+  if both barometers are invalid. What counts as that evidence is open, and the
+  rest of D-6.11 still waits on Anav's review.
+- D-2Nov.14: continuity resistors R69x1–R69x4 = 3.9 kΩ 1% 0603 on all three
+  channels, for any igniter with a no-fire current of 25 mA or more. Added to
+  `component-proposal-checks.py`: with one resistor shorted, 0.88 mA on the
+  self-test and 2.33 mA with a shorted high side; 1.32 mA back into the
+  services rail; "present" 0.260–0.272 V at the ADC; a 100 µA leak +62 mV.
+- D-2Nov.15: 100 nF and 10 µF (≥16 V) at Q101's drain. Open: ringing at pack
+  plug-in if the 10 µF is ceramic.
+- D-2Nov.16: ground-test mode lives in RAM, any reset clears it, and a
+  checkpoint written in it never reads as in flight.
+- D-2Nov.17: a DNP 1000–2200 µF footprint on `SERVO_VBAT` at J6602; the ≈9.0 V
+  over-voltage trips stay until the back-drive test; no clamp.
+- D-2Nov.18: PE5's pull-down becomes 1 MΩ and the hold rule is restated.
+  Recounting showed D-2Nov.4's ≈1.1 s assumed 0.20 V per BAT54-class diode: at
+  the part's 0.24 V maximum Churro held 1.03 s, and 0.71 s at an assumed cold
+  0.30 V with −30% capacitance and 30 µA. With 1 MΩ: 1.25 s typical and 0.79 s
+  at that corner, against the ≈600 ms the hold has to cover. Seán accepted
+  "≥0.8 s worst case"; the corner computes to 0.79 s, so the rule reads
+  ≥0.75 s. The hold model is in the checks script.
+
+Fixed in passing, in text these changes touched: the layout guide still said
+R6804 and the continuity resistors stay DNP, but D-6.1 fits R6804 and D-2Nov.14
+sets the continuity values. `hardware/croi2/AGENTS.md` still says four DNP
+output-energy links; left for capture to reconcile with D-6.1.

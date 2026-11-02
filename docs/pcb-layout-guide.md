@@ -30,11 +30,15 @@ Where this guide and [decisions.md](../decisions.md) disagree, the decisions win
   [C09a](#c09a-magnetometer).
 - **Outputs (C14):** the one-shots and permit gates are gone (D-6.2). Each
   channel keeps its high side and its low side (D-2Nov.1). New fuses F6101 /
-  F6102 / F6801 and arm connectors J6101 / J6102 (D-6.1, D-2Nov.2).
+  F6102 / F6801 and arm connectors J6101 / J6102 (D-6.1, D-2Nov.2). Beside
+  D-6.7's servo bulk at J6602 goes a DNP footprint for a 1000–2200 µF can, with
+  room to stake it (D-2Nov.17).
 - **GNSS (C03):** U4504 is now a MAX-M10S with an external passive antenna on
   J4501 (SMA). The SAM-M10Q patch geometry in C03 is history; see the note there.
-- **Power (C04):** the energy tap sits at `BAT_EFUSE_IN`, after Q101 (D-2Nov.5).
-  The hold RC (330 Ω, 470 µF) sits between PE5 and the SHDN diodes (D-2Nov.4).
+- **Power (C04):** the energy tap sits at `BAT_EFUSE_IN`, after Q101 (D-2Nov.5),
+  with its 100 nF and 10 µF at Q101's drain (D-2Nov.15). The hold RC (330 Ω,
+  470 µF) sits between PE5 and the SHDN diodes; PE5's pull-down is 1 MΩ
+  (D-2Nov.4, D-2Nov.18).
 - **Churro:** a ground umbilical connector J801 and four ideal-diode stages
   ahead of the eFuses (D-2Nov.7).
 
@@ -435,8 +439,9 @@ ADC-reference region. Respect thermal copper and current limits.
 
 **Do not finish the raw armed-power routes from the current drawing.** Physical
 arm contacts, disarm proof, group protection, actual loads and pulse/no-fire
-settings remain open. Preserve R6310/R6410/R6510/R6804 DNP and the continuity
-resistor DNPs. No thin trace or fitted 0 Ω shortcut may defeat that absence.
+settings remain open. Preserve R6310/R6410/R6510 DNP until the igniter values
+close (R6804 is fitted, D-6.1; the continuity resistors are 3.9 kΩ, D-2Nov.14).
+No thin trace or fitted 0 Ω shortcut may defeat that absence.
 The three recovery/staging roles and servo boundary remain distinct. Current
 sensing is observation, never permission to omit hardware inhibition.
 

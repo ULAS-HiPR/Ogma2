@@ -128,14 +128,14 @@ semiconductor fault isn't contained by this circuit.
 and surge response; cable ESD; open-wire leakage; retained-contact vibration and
 bounce. The 100 nF filter doesn't guarantee debounce.
 
-**Enable hold (D-6.3, D-2Nov.4).** Cycling SHDN resets a latched eFuse fault and
-can cause repeated board resets. So from 6 October, firmware holds SHDN high in
-flight through `FC_POWER_HOLD`: Croí directly, Churro AV over Samtec pin 8. U101
-and U1001 auto-retry. The hold RC keeps SHDN above 2 V for ≥1 s after the GPIO
-lets go, sized with both 22.1 kΩ pull-downs; keep those values, or resize the
-RC. Firmware asserts the hold only after launch detect, re-asserts it within
-50 ms of a reset in flight, and releases it at LANDED plus a delay or at a
-maximum flight time.
+**Enable hold (D-6.3, D-2Nov.4, D-2Nov.18).** Cycling SHDN resets a latched
+eFuse fault and can cause repeated board resets. So from 6 October, firmware
+holds SHDN high in flight through `FC_POWER_HOLD`: Croí directly, Churro AV over
+Samtec pin 8. U101 and U1001 auto-retry. The hold RC keeps SHDN above 2 V for
+about 1 s after the GPIO lets go (≥0.75 s worst case), sized with both 22.1 kΩ
+pull-downs; keep those values, or resize the RC. Firmware asserts the hold only
+after launch detect, re-asserts it within 50 ms of a reset in flight, and
+releases it at LANDED plus a delay or at a maximum flight time.
 
 **Limits.** The 6 A Croí / avionics, ≈3 A propulsion and 2 A shared-servo
 starting limits are unchanged, provisional and not load-qualified. The switch
@@ -298,7 +298,9 @@ No separate pre-order coupon.
 3. Source transitions, including pulling the umbilical under load.
 4. Servo back-drive at 8.4 V, standalone and Churro-fed (where the ideal diodes
    leave regeneration no path back to a pack), at the lowest logic load,
-   watching `BAT_EFUSE_IN`, `VBAT_CROI_INPUT` and the logic input.
+   watching `BAT_EFUSE_IN`, `VBAT_CROI_INPUT` and the logic input. If anything
+   trips, fit the DNP bulk on `SERVO_VBAT` or raise the over-voltage trips
+   (D-2Nov.17).
 
 Capture input, core rail, the faulted branch, reset and an essential-loop marker
 on one external timebase. Before any fault, write down the real parts and

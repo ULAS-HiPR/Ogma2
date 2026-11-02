@@ -48,7 +48,7 @@ staging channel + reset latch"]
 open = off"] -.-> U101
   HOLD["PE5 FC_POWER_HOLD
 launch detect to LANDED
-RC carries it ≥1 s"] -.-> U101
+RC carries it ≈1 s"] -.-> U101
   HOLD -.-> CHU["Churro AV eFuse U1001
 via Samtec pin 8"]
 ```
@@ -57,21 +57,25 @@ via Samtec pin 8"]
   nominal. Tolerance and sag set the real range; 2S doesn't promise a 6 V start.
 - **J103** is the FC battery enable. Open means off, but upstream circuits stay
   live and USB can still power logic. It is not a disarm.
-- **Enable hold (D-6.3, D-2Nov.4):** after launch detect, PE5 holds `BAT_SHDN_N`
-  and, over Samtec pin 8, Churro's `AV_SHDN_N` high, so a broken enable wire or
-  plug can't switch the computer off in flight. An RC (330 Ω, 470 µF) keeps both
-  above 2 V for ≥1 s after PE5 lets go, longer than Burrito's worst-case 550 ms
+- **Enable hold (D-6.3, D-2Nov.4, D-2Nov.18):** after launch detect, PE5 holds
+  `BAT_SHDN_N` and, over Samtec pin 8, Churro's `AV_SHDN_N` high, so a broken
+  enable wire or plug can't switch the computer off in flight. An RC (330 Ω,
+  470 µF, with PE5's 1 MΩ pull-down) keeps both above 2 V for about 1 s after
+  PE5 lets go (≥0.75 s worst case), longer than Burrito's worst-case 550 ms
   restart; firmware re-asserts within 50 ms of a reset when the checkpoint says
   in flight. Released at LANDED plus a delay, or at a maximum flight time.
 - **Auto-retry (D-6.3):** U101 and Churro U1001 restart after an over-current
   instead of latching off for the rest of the flight.
-- **Energy tap (D-6.1, D-2Nov.5):** after Q101, confirmed. When U101 shuts down
-  it turns Q101 off too, but Q101's body diode still feeds the tap (one diode
-  drop) and still blocks a reversed pack. Servo regeneration goes back into the
-  pack through Q101 when Burrito runs standalone. Churro-fed, Churro's ideal
-  diodes block that path (D-2Nov.7), so the logic load (under 150 mA in pad
-  mode) and the servo bulk absorb it: back-drive test at 8.4 V and the lowest
-  logic load, against the TPS2121 trip and U101's 8.99 V over-voltage.
+- **Energy tap (D-6.1, D-2Nov.5):** after Q101, confirmed, with 100 nF and 10 µF
+  at Q101's drain (D-2Nov.15). When U101 shuts down it turns Q101 off too, but
+  Q101's body diode still feeds the tap (one diode drop) and still blocks a
+  reversed pack. Servo regeneration goes back into the pack through Q101 when
+  Burrito runs standalone. Churro-fed, Churro's ideal diodes block that path
+  (D-2Nov.7), so the logic load (under 150 mA in pad mode) and the servo bulk
+  absorb it: back-drive test at 8.4 V and the lowest logic load, against the
+  TPS2121 trip and U101's 8.99 V over-voltage. The trips stay as drawn until
+  that test; if the bus reaches them, fit the DNP bulk on `SERVO_VBAT` or raise
+  them. No clamp: it would have only 2% to work in (D-2Nov.17).
 - **USB** powers logic only: no charging, no output energy.
 
 ## Regulated domains
@@ -131,7 +135,8 @@ over-voltage protection: a shorted regulator pass element needs its own check.
 | Comms branch logic | Keep `COMMS_BRANCH_EN = BAT_VALID ? FLIGHT_COMMS_EN : USB_PRESENT` |
 | Hold-up | C1403 = Nichicon PCW0J102MCO1GS, 1000 µF / 6.3 V |
 | U101, U1001 | MODE to GND (auto-retry) |
-| Enable hold | 330 Ω + 470 µF ≥6.3 V: SHDN above 2 V for ≥1 s with both 22.1 kΩ pull-downs (D-2Nov.4) |
+| Enable hold | 330 Ω + 470 µF ≥6.3 V, PE5 pull-down 1 MΩ: SHDN above 2 V for about 1 s (≥0.75 s worst case) with both 22.1 kΩ pull-downs (D-2Nov.4, D-2Nov.18) |
+| Energy tap | 100 nF + 10 µF ≥16 V at Q101's drain (D-2Nov.15) |
 | Staging fuse | F6102 for the staging arm; F6101 for recovery only (D-2Nov.2) |
 
 Full list: [capture specification](schematic-capture-spec.md#burrito-changes).

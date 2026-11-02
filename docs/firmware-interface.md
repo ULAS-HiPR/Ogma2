@@ -16,10 +16,11 @@ circuit detail. No target firmware exists yet. Anav owns the firmware.
 | Sensors have no power enables; each has a 47 Ω supply link | D-6.6, D-2Nov.3 | Recover by clocking SCL and soft reset; park a dead sensor's pins |
 | No one-shots or permit gates; a low side per channel again | D-6.2, D-2Nov.1 | Firmware bounds every pulse; fires in a four-step sequence; runs the pad self-tests |
 | Staging latch and its own arm | D-7.1, D-7.2 | Set a new flight with PD15 only while staging is disarmed |
-| Power hold | D-6.3, D-2Nov.4 | Assert at launch detect; re-assert within 50 ms of a reset in flight; release at LANDED or the time cap |
+| Power hold | D-6.3, D-2Nov.4, D-2Nov.18 | Assert at launch detect; re-assert within 50 ms of a reset in flight; release at LANDED or the time cap |
 | Magnetometer on I²C3 | D-2Nov.11 | 100 Hz, logged, non-essential |
 | Recording from launch detect | D-6.9 | Low-rate pad log, RAM pre-trigger, full rate from launch detect |
-| Pad datum, ground-test mode, pad telemetry | D-2Nov.10 | See [Recovery logic](architecture/10-recovery-logic.md) |
+| Pad datum, ground-test mode, pad telemetry | D-2Nov.10, D-2Nov.16 | See [Recovery logic](architecture/10-recovery-logic.md); any reset ends ground-test mode |
+| No deployment below 100 m | D-2Nov.13 | Gate the drogue and main, primary and backup, on 100 m above the pad datum |
 | What CAN carries | D-2Nov.9 | Permissions, mode, slow state, health and stale-safe commands only |
 | Rail power from the umbilical | D-2Nov.7 | Report which source is live |
 
@@ -177,11 +178,11 @@ Two things move that reading without any leak, so the margin has to cover
 them. With the arm open, part of the test current runs back through each
 TPS1H100's body diode into the unpowered armed rail (once R6310 / R6410 are
 fitted), so the disarmed reading sits about 5% low: ≈0.25 V at the ADC instead
-of ≈0.27 V with the proposed 3.9 kΩ legs. With the arm closed, DIAG_EN is tied
-high, so the TPS1H100 runs its off-state open-load check and its output leaks
-up to 50 µA at 125 °C into the test network: up to ≈+30 mV at the ADC hot, a few
-millivolts at room temperature. Compare the armed reading with the armed level
-measured on the bench across temperature, not only with the disarmed one.
+of ≈0.27 V with the 3.9 kΩ legs (D-2Nov.14). With the arm closed, DIAG_EN is
+tied high, so the TPS1H100 runs its off-state open-load check and its output
+leaks up to 50 µA at 125 °C into the test network: up to ≈+30 mV at the ADC hot,
+a few millivolts at room temperature. Compare the armed reading with the armed
+level measured on the bench across temperature, not only with the disarmed one.
 
 **Continuity reading:** the return node reaches the ADC divided by 5.86 (the
 22.1 + 22.1 / 10 kΩ divider with R6714 / R6724 / R6734's 100 kΩ in parallel
@@ -205,7 +206,8 @@ move ignition onto channels 1 or 2.
 - Release it by driving PE5 low (not high-Z), at LANDED plus the configured
   delay, or at the configured maximum flight time, whichever comes first.
 - After any reset, if the checkpoint says in flight, drive it high within 50 ms.
-  The RC keeps the enables on for ≥1 s, longer than the worst-case 550 ms restart.
+  The RC keeps the enables on for about 1 s (≥0.75 s worst case, D-2Nov.18),
+  longer than the worst-case 550 ms restart.
 - In flight, write PE5 high again every essential-loop cycle, so a stray port-E
   write can't drop it for longer than one cycle.
 - Never in ground-test mode.
@@ -235,11 +237,11 @@ move ignition onto channels 1 or 2.
   continuity per channel (class and raw), the staging latch, AV pack voltage,
   bus voltage, live source, phase, faults and configuration identity. The same
   frame goes to USB.
-- Ground-test mode: a configuration flag loaded over USB and shown in readback;
-  launch declared over USB; barometric logic alone; recovery channels only; no
-  power hold; cleared at power-off; every use logged. Proposed: any reset also
-  clears it, and a checkpoint written in ground-test mode never reads as in
-  flight.
+- Ground-test mode: a configuration flag loaded over USB, shown in readback and
+  held in RAM only; launch declared over USB; barometric logic alone; recovery
+  channels only; no power hold; cleared at power-off and at any reset, and a
+  checkpoint written in ground-test mode never reads as in flight (D-2Nov.16);
+  every use logged.
 - USB service: bounded 4 KiB chunks with credits; never blocks acquisition; a
   timed-out flight reply is unknown, never the last value.
 

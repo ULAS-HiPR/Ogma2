@@ -147,16 +147,15 @@ reasons above. They were never deleted from the CAD.
 1. Igniters for recovery and air-start: all-fire current well under the limit's
    low corner (≈1.7 A: TI gives ±14% above 1.6 A, plus the resistor) at minimum
    battery, harness resistance, the low side's on-resistance (≤30 mΩ at a 2.5 V
-   gate) and one Q101 body-diode drop (D-2Nov.5); the no-fire current sets
-   R69x1 / R69x2 (test current with the low side closed) and R69x3 / R69x4
-   (return, with a shorted high side). R69x1 / R69x2 also carry current back
-   into the services rail whenever a high side is on; keep that well inside the
-   rail's normal load. Proposed start, not decided: 3.9 kΩ 1% for each of
-   R69x1–R69x4. With one resistor shorted, 8.4 V armed and 1% parts, that's
-   ≤0.9 mA through the igniter on the self-test, ≤2.3 mA with a shorted high
-   side and ≤1.3 mA of back-feed: a tenfold margin for any igniter whose no-fire
-   current is 25 mA or more. "Present" reads about a quarter of a volt at the
-   ADC.
+   gate) and one Q101 body-diode drop (D-2Nov.5), and a no-fire current of 25 mA
+   or more. R69x1–R69x4 are 3.9 kΩ 1% (D-2Nov.14): with one resistor shorted,
+   8.4 V armed and 1% parts, that's 0.88 mA through the igniter on the self-test
+   (R69x1 / R69x2, low side closed) and 2.33 mA with a shorted high side
+   (R69x3 / R69x4, low side open), a tenfold margin at 25 mA. R69x1 / R69x2 also
+   carry 1.3 mA back into the services rail whenever a high side is on; check
+   that against the rail's lightest load. "Present" reads about a quarter of a
+   volt at the ADC. An igniter rated below 25 mA changes the values, not the
+   layout.
 2. Fuse and arm-switch parts. Each switch must be maintained, rated above the
    fuse at 8.4 V DC, operable from outside the airframe and reachable from the
    ground with the rocket on the rail (EuRoC LV-0270, 0280, 0540–0550).

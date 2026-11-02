@@ -1,9 +1,10 @@
 # 10 Recovery logic
 
 **6 October · draft for Anav's review ([D-6.11](../../decisions.md)). The pad
-datum, ground-test mode and pad telemetry were decided on 2 November (D-2Nov.10);
-the power-hold rules come from D-2Nov.4. Values marked "proposed" are starting
-points; values marked "per vehicle" are not chosen.**
+datum, ground-test mode and pad telemetry were decided on 2 November (D-2Nov.10,
+D-2Nov.16), as was the 100 m deployment gate (D-2Nov.13); the power-hold rules
+come from D-2Nov.4. Values marked "proposed" are starting points; values marked
+"per vehicle" are not chosen.**
 
 Deploy the drogue near apogee and the main at a set altitude, never early, and
 do the right thing after a reset. Rev 1 reached DROGUE from its apogee vote,
@@ -28,8 +29,8 @@ stateDiagram-v2
 | --- | --- | --- | --- |
 | Launch detect | Axial acceleration above 3 g for 100 ms on both low-g IMUs, or the high-g channel when they clip (proposed) | Barometric altitude rising within 1 s | None. Launch detect freezes the pad datum, starts full-rate recording and asserts `FC_POWER_HOLD` |
 | Burnout | Axial acceleration below 0 g for 100 ms (proposed) | — | Starts the Mach lockout timer |
-| Apogee → drogue | Fused vertical velocity ≤ 0 | Barometric altitude below its running maximum for 3 consecutive samples at 50 Hz (proposed) | No barometric apogee while fused speed exceeds 0.8 Mach or within 2 s of burnout (proposed). Backup: fire at launch + simulated apogee time + margin (per vehicle). Neither fires until the barometric altitude has passed 100 m above the pad datum, or inertial evidence shows flight if both barometers are invalid (proposed), so a false launch detect on the pad can't fire the drogue, and the main straight after it (0 m counts as at or below the main altitude) |
-| Main | Barometric altitude above the pad datum ≤ main altitude while descending (per vehicle) | 3 consecutive samples (proposed) | Backup timer after drogue (per vehicle). Never above the main altitude |
+| Apogee → drogue | Fused vertical velocity ≤ 0 | Barometric altitude below its running maximum for 3 consecutive samples at 50 Hz (proposed) | No barometric apogee while fused speed exceeds 0.8 Mach or within 2 s of burnout (proposed). Backup: fire at launch + simulated apogee time + margin (per vehicle). Neither fires until the barometric altitude has passed 100 m above the pad datum, or inertial evidence shows flight if both barometers are invalid (D-2Nov.13; what counts as inertial evidence is still to define), so a false launch detect on the pad can't fire the drogue, and the main straight after it (0 m counts as at or below the main altitude) |
+| Main | Barometric altitude above the pad datum ≤ main altitude while descending (per vehicle) | 3 consecutive samples (proposed) | Backup timer after drogue (per vehicle). Never above the main altitude, and never before the 100 m gate (D-2Nov.13) |
 | Landed | Altitude change < 2 m over 10 s and acceleration ≈ 1 g (proposed) | — | Ends full-rate recording after a tail; releases `FC_POWER_HOLD` after a delay. A configured maximum flight time releases the hold even if LANDED never comes |
 
 Fire one output at a time ([output rules](03-energetic-outputs.md#firmware-rules)).
@@ -116,7 +117,7 @@ profile while the board sits still.
 | Who fires | The flight MCU's own event logic, as in flight |
 | Outputs | Recovery channels 1 and 2 only. Staging stays disarmed and its latch cleared |
 | Power hold | Not asserted: J103 must still switch the board off |
-| Exit | Held in RAM, never stored with the configuration: clears at power-off and at any reset; never carried into a flight. A checkpoint written in ground-test mode never reads as in flight, so a reset mid-test comes back on the pad with nothing firing (proposed) |
+| Exit | Held in RAM, never stored with the configuration: clears at power-off and at any reset; never carried into a flight. A checkpoint written in ground-test mode never reads as in flight, so a reset mid-test comes back on the pad with nothing firing (D-2Nov.16) |
 | Record | Every use logged with its configuration, for the annex |
 
 ## Per-flight configuration
@@ -133,7 +134,8 @@ configuration are recorded at launch detect.
 1. Replay the Rev 1 flight log; drogue must fire at its recorded apogee window.
 2. Hardware-in-the-loop with simulated trajectories, including transonic pressure spikes.
 3. Reset injection in every phase on the bench, outputs on inert loads,
-   including a reset in the first second after launch detect.
+   including a reset in the first second after launch detect and one during a
+   ground-test run (D-2Nov.16).
 4. A six-hour pad hold with a pressure drift profile: the datum follows the
    weather and freezes at launch detect.
 5. The LV-0520 ground test in ground-test mode, inert loads first.

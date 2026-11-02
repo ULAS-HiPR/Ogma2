@@ -177,6 +177,64 @@ assert endurance_wh < 30
 reference_usable_wh = 7.4 * 8 * .65
 assert reference_usable_wh > endurance_wh
 servo_nominal_a = 1.233 * 2000 / 1240
+
+# D-2Nov.14 continuity legs, one channel: services rail -> R69x1 + R69x2 ->
+# OUTPUTn_HIGH -> igniter -> OUTPUTn_LOW -> R69x3 + R69x4 -> GND, plus the
+# 22.1k + 22.1k over 10k || 100k (R6714) divider from OUTPUTn_LOW to the ADC.
+# Single fault: one resistor per leg shorted, the other 1% low. Armed rail 8.4 V.
+def par(a, b):
+    return a * b / (a + b)
+
+cont_r, armed_v = 3.9e3, 8.4
+cont_bottom = par(10e3, 100e3)
+cont_divider = 2 * 22.1e3 + cont_bottom
+cont_ratio = cont_divider / cont_bottom
+assert abs(cont_ratio - 5.862) < .001
+one_left = cont_r * .99
+cont_ma = {
+    'self_test_low_side_closed': high / one_left * 1e3,
+    'shorted_high_side_low_side_open': armed_v / par(one_left, cont_divider) * 1e3,
+    'back_feed_into_services_high_side_on': (armed_v - low) / one_left * 1e3,
+}
+assert cont_ma['self_test_low_side_closed'] < 25 / 10
+assert cont_ma['shorted_high_side_low_side_open'] < 25 / 10
+assert cont_ma['back_feed_into_services_high_side_on'] < 3
+# Healthy network, disarmed: "present" at the ADC over rail, 1% and igniter corners.
+cont_present_v = [v * par(2 * cont_r * kr, cont_divider)
+                  / (2 * cont_r * kt + ign + par(2 * cont_r * kr, cont_divider)) / cont_ratio
+                  for v in (low, high) for kt in (.99, 1.01) for kr in (.99, 1.01)
+                  for ign in (.5, 3)]
+assert .25 < min(cont_present_v) and max(cont_present_v) < .28
+cont_leak_shift_v = 100e-6 * par(2 * cont_r, par(2 * cont_r, cont_divider)) / cont_ratio
+assert cont_leak_shift_v > .05
+
+# D-2Nov.18 power hold: PE5 (3.3 V) -> 330 R -> 470 uF -> BAT54-class diode ->
+# Croí SHDN (22.1k); same node -> diode -> Samtec pin 8 -> diode -> Churro SHDN
+# (22.1k). Once PE5 lets go, its pull-down (through the 330 R), both SHDN
+# pull-downs and the capacitor's leakage drain it. Seconds until each SHDN
+# falls to 2 V, TI's rising level, so conservative.
+def hold_s(pull_down, cap, leak, drop, pe5_v=3.3, series=330, dt=1e-4):
+    def shdn_and_leak(v):
+        return (max(0, v - drop) + max(0, v - 2 * drop)) / 22.1e3 + leak
+    v = pe5_v
+    for _ in range(100):
+        v = pe5_v - series * shdn_and_leak(v)
+    t, churro = 0.0, None
+    while v - drop >= 2:
+        v -= (v / (pull_down + series) + shdn_and_leak(v)) / cap * dt
+        t += dt
+        if churro is None and v - 2 * drop < 2:
+            churro = t
+    return round(churro, 2), round(t, 2)
+
+hold_corners = {'-20pct_15uA': (470e-6 * .8, 15e-6), '-30pct_30uA': (470e-6 * .7, 30e-6)}
+hold = {f'{name}_drop_{drop:.2f}V_{label}': hold_s(r, cap, leak, drop)
+        for name, (cap, leak) in hold_corners.items() for drop in (.20, .24, .30)
+        for label, r in (('100k', 100e3), ('1M', 1e6))}
+hold_1m_churro = {k: v[0] for k, v in hold.items() if k.endswith('1M')}
+assert all(v >= 1.0 for k, v in hold_1m_churro.items() if '0.20V' in k)
+assert min(hold_1m_churro.values()) >= .75 > .55 + .05
+assert all(v[1] > v[0] for v in hold.values())
 print(json.dumps({
     'scope': 'Proposed capture arithmetic and native baseline checks; not measurements',
     'maps': '64 comms and 100 flight pads checked against native electrical nodes; only flight PD10 changes function',
@@ -207,4 +265,8 @@ print(json.dumps({
     'logic_endurance_wh_assumptions_in_rationale': endurance_wh,
     'reference_8Ah_usable_wh_at_assumed_65pct': reference_usable_wh,
     'full_allocation_USB_current_ma_at_4V35_85pct_before_overhead': active_w/(4.35*.85)*1000,
+    'continuity_3k9_ma_one_resistor_shorted': cont_ma,
+    'continuity_3k9_present_adc_v_range': [min(cont_present_v), max(cont_present_v)],
+    'continuity_3k9_100uA_leak_shift_at_adc_v': cont_leak_shift_v,
+    'hold_seconds_churro_croi_by_corner_drop_pulldown': hold,
 }, indent=2))

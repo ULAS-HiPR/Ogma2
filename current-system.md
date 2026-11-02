@@ -38,16 +38,19 @@ D-2Nov.8 rules; which board waits for Sim Systems' requirements. Start with the
   Channels 1 and 2 are recovery. Channel 3 is staging / air-start, behind its
   own arm and the hardware reset latch (D-7.2).
 - Before arming, firmware checks each low side against continuity; after
-  arming, a high side that reads as leaking is never fired.
+  arming, a high side that reads as leaking is never fired. The continuity legs
+  are 3.9 kΩ, safe for any igniter with a no-fire current of 25 mA or more
+  (D-2Nov.14).
 - Burrito's servos make bounded, event-triggered moves only, such as unlatching
   a payload at booster apogee. A closed-loop actuator has its own processor and
   fast sensor, goes to neutral through a path that survives hung firmware, stays
   dormant until Burrito authorises it, and has its own fused Churro feed
   (D-2Nov.8).
 - After launch detect, firmware holds the battery enable on (Croí and Churro
-  AV). An RC keeps it on for ≥1 s if firmware lets go; after any reset in flight
-  firmware re-asserts it within 50 ms; it releases at LANDED plus a delay or at a
-  maximum flight time (D-6.3, D-2Nov.4). U101 and Churro U1001 auto-retry.
+  AV). An RC keeps it on for about 1 s (≥0.75 s worst case) if firmware lets go;
+  after any reset in flight firmware re-asserts it within 50 ms; it releases at
+  LANDED plus a delay or at a maximum flight time (D-6.3, D-2Nov.4, D-2Nov.18).
+  U101 and Churro U1001 auto-retry.
 - Any in-flight flight-MCU reset inhibits further sustainer ignition. Recovery
   resumes only through the [recovery logic](docs/architecture/10-recovery-logic.md).
 - CAN is external, linear and two-node (Ogma ↔ Fajita), 500 kbit/s Classical for
@@ -68,13 +71,13 @@ D-2Nov.8 rules; which board waits for Sim Systems' requirements. Start with the
 
 ## Power path
 
-2S source → Q101 reverse blocking → `ENERGY_TAP`, where the outputs and servos
-branch off → U101 eFuse (≈6.0 A, auto-retry) → 5 mΩ shunt → TPS2121 battery/USB
-mux → TPSM63603 4.0 V buck → three TPS7A91 domains (flight, comms, services) at
-3.352 V. Flight hold-up: 1000 µF, about 2 ms. Flight VBAT has its own Schottky
-and 100 µF (D-6.4). Sensors run from FLIGHT_3V3 through 47 Ω links (D-6.6,
-D-2Nov.3); the magnetometer through 22 Ω. The flight-core input enables whenever
-the buck is up (D-6.5).
+2S source → Q101 reverse blocking → `ENERGY_TAP` (100 nF + 10 µF, D-2Nov.15),
+where the outputs and servos branch off → U101 eFuse (≈6.0 A, auto-retry) →
+5 mΩ shunt → TPS2121 battery/USB mux → TPSM63603 4.0 V buck → three TPS7A91
+domains (flight, comms, services) at 3.352 V. Flight hold-up: 1000 µF, about
+2 ms. Flight VBAT has its own Schottky and 100 µF (D-6.4). Sensors run from
+FLIGHT_3V3 through 47 Ω links (D-6.6, D-2Nov.3); the magnetometer through 22 Ω.
+The flight-core input enables whenever the buck is up (D-6.5).
 
 The avionics pack is 2S Li-ion in metal-can cylindrical cells, 21700 by default;
 no LiPo. It alone covers ≥6 h on the rail plus the flight (D-2Nov.6). Pad-mode
@@ -98,7 +101,7 @@ enables. Charging uses external balance chargers with the packs off the vehicle.
 | GNSS | MAX-M10S-00B, external passive antenna via SMA; 80 km / 4 g / 500 m/s limits |
 | Supervision | TPS3808 supervisors, TPS3430 earned-heartbeat watchdog |
 | Current | Croí INA228 0x40 (logic path); Foinse propulsion INA228 0x41; ADS1115 0x48 |
-| Outputs | Per channel a TPS1H100 high side and a CSD17318 low side (2 recovery + 1 staging); U6001 staging latch with an SN74LVC1G08 AND; one servo TPS1H100 at ≈2.0 A shared by three servos |
+| Outputs | Per channel a TPS1H100 high side and a CSD17318 low side (2 recovery + 1 staging); U6001 staging latch with an SN74LVC1G08 AND; one servo TPS1H100 at ≈2.0 A shared by three servos, with ≥220 µF bulk and a DNP 1000–2200 µF footprint on `SERVO_VBAT`; over-voltage trips stay ≈9.0 V until the back-drive test (D-6.7, D-2Nov.17) |
 | Churro rail power | Four LM74700-Q1-class ideal-diode stages, umbilical connector J801, fuse and TVS (D-2Nov.7) |
 | Indication | Red/green readiness, comms amber, hardware power LED, passive piezo |
 
@@ -163,8 +166,11 @@ Croí's 80 mm width fits both.
 - Recording is append-only, checked and replayable; full rate from launch detect
   with a RAM pre-trigger (D-6.9). Telemetry is never the only record.
 - The pad datum is tracked on the pad and frozen at launch detect; a reset never
-  creates one. Pad telemetry at 1 Hz shows arm, continuity, latch and power
-  state. A ground-test mode serves EuRoC's recovery ground test (D-2Nov.10).
+  creates one. Nothing deploys before the barometric altitude has passed 100 m
+  above it, or inertial evidence shows flight if both barometers are invalid
+  (D-2Nov.13). Pad telemetry at 1 Hz shows arm, continuity, latch and power
+  state. A ground-test mode serves EuRoC's recovery ground test (D-2Nov.10); it
+  lives in RAM and any reset ends it (D-2Nov.16).
 - Initial budgets: 128 MHz, 1 kHz essential loop, 200 Hz estimation/policy,
   30% timing reserve. These are allocations, not measurements.
 
