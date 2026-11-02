@@ -5,6 +5,10 @@ and 2 run from flight TIM3 (PC6, PC7), servo 3 from LPTIM2 (PD10) with its own
 period. All three are powered from the battery through their own fuse and one
 shared 2.0 A switch. This is the CAD's servo circuit as drawn.
 
+Burrito's servos make bounded, event-triggered moves only, such as unlatching a
+payload at booster apogee. Anything that moves the vehicle in a closed loop gets
+its own node ([below](#closed-loop-actuators-go-on-their-own-node), D-2Nov.8).
+
 ```mermaid
 flowchart TB
   T["ENERGY_TAP"] --> FU["F6801 servo fuse
@@ -28,7 +32,7 @@ off-state signal boundary"]
 | Command | Direct timer PWM: TIM3 on PC6 / PC7, LPTIM2 on PD10 | Already mapped; no extra controller or bus. Servo 3 can run a different rate |
 | Signal boundary | U6804 TXU0304, channels A1–A3 | Stops back-powering when either side is off |
 | Power | Raw 2S through F6801 and U6802 | No new regulator. R6802 1.24 kΩ sets ≈1.989 A for all three; 1.5 A combined normal allocation |
-| Bulk | ≥220 µF on SERVO_VBAT at J6602 | Stall and regeneration transients; regen returns to the battery through the fuse (D-6.7) |
+| Bulk | ≥220 µF on SERVO_VBAT at J6602 | Stall and regeneration transients. Regeneration can't go back into the pack (D-2Nov.5): the bulk and the ≈0.6 A logic load absorb it |
 | Arm | Not behind the pyro arms | Servos can be checked on the pad with outputs safe (D-6.1) |
 | Connector | Keep J6602 430451000, mate 430251000 | Different contact count from the output harness J6601 |
 
@@ -48,13 +52,26 @@ six-contact connector was considered and dropped: it would mate with J6601.
 - PC6 and PC7 share TIM3's period; PD10 has its own. Bring up on an inert load;
   a mid-range pulse is not a proven safe position.
 
-## Remote actuation
+## Closed-loop actuators go on their own node
 
-No remote actuator node. Fajita keeps its own local control. A future remote
-mechanism must justify where its feedback lives and how commands expire. The
-earlier 200 Hz / 13.3% CAN load example is a comparison, not a requirement.
-End-to-end timing includes sensing, computation, queueing, PWM phase and the
-mechanism, not only CAN wire time.
+Burrito doesn't run actuator loops. Roll control (RCS, four solenoids) and the
+grid fins (servos or steppers, working under drogue) go on a separate node that
+follows the D-2Nov.8 rules:
+
+- its own processor and its own fast sensor (a gyro for roll);
+- goes to neutral on stop, abort or stale authorisation, through a path that
+  survives hung firmware: a servo that loses power holds position, and a hung
+  timer keeps sending its last pulse, so neither is a neutral path on its own;
+- dormant until Burrito authorises it, with field-adjustable boost dormancy
+  (EuRoC LV-0680);
+- CAN IDs below Burrito's and Fajita's, on an unterminated stub, so unplugging it
+  leaves the Burrito–Fajita link intact;
+- its own fused Churro feed with local bulk, never power from Burrito.
+
+Burrito sends it permissions, mode and slow state, and logs the health it
+reports. CAN carries nothing a loop depends on at loop rate (D-2Nov.9). Which
+board does this waits for Sim Systems' requirements: first a Burrito variant,
+then a Fajita-class valve-driver board, before a new design.
 
 ## Capture
 

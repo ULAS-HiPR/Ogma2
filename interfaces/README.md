@@ -7,6 +7,9 @@
 | [Power contract](power-contract.md) | EX-02: power chain, source enables, branches, source states, first inert test | Policy and defaults | Numbers and hardware closure |
 | [Reset, retained state and time](reset-recovery-contract.md) | EX-03: reset classes, checkpoints, clock, host model | Defaults | Retention bank, clock, timing and mechanism evidence |
 
+Release gates and the test campaigns these contracts point to:
+[11 Verification](../docs/architecture/11-verification.md).
+
 These are Ogma 2's own interface definitions. They don't give permission to
 change a neighbouring system on our own. A real boundary change has to be agreed
 with the other owning project and verified at both ends.

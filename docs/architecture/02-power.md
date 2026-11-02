@@ -1,9 +1,12 @@
 # 02 Power
 
-One 2S pack feeds three things: the logic chain, the pyro outputs and the
-servos. Logic goes through the Croí eFuse U101, a 4.0 V buck and three LDO
-domains. Pyro and servo energy leave before U101 through their own fuses, so an
-output fault can't pull down the flight computer ([D-6.1](../../decisions.md)).
+One 2S Li-ion pack (21700 cells by default, [D-2Nov.6](../../decisions.md))
+feeds three things: the logic chain, the pyro outputs and the servos. Logic goes
+through the Croí eFuse U101, a 4.0 V buck and three LDO domains. Pyro and servo
+energy leave before U101 through their own fuses, so an output fault can't pull
+down the flight computer (D-6.1). On the rail, Churro feeds Burrito from the
+ground umbilical instead of the pack (D-2Nov.7); Burrito sees the same input
+either way.
 
 ## Battery to everything
 
@@ -28,23 +31,24 @@ see next diagram"]
   end
   subgraph ENERGY["Output energy, outside U101"]
     direction TB
-    F61["F6101 pyro fuse"] --> ARM["J6101 recovery arm"] --> PY["2 × TPS1H100 ≈2.0 A
+    F61["F6101 recovery fuse"] --> ARM["J6101 recovery arm"] --> PY["2 × TPS1H100 ≈2.0 A
 recovery channels"]
-    F61 --> ARM3["J6102 staging arm
-(proposed)"] --> PY3["TPS1H100 ≈2.0 A
+    F62["F6102 staging fuse"] --> ARM3["J6102 staging arm"] --> PY3["TPS1H100 ≈2.0 A
 staging channel + reset latch"]
     F68["F6801 servo fuse"] --> SV["U6802 TPS1H100 ≈2.0 A
 ≥220 µF · 3 servos on J6602"]
   end
   TAP --> U101
   TAP --> F61
+  TAP --> F62
   TAP --> F68
   USB["USB VBUS"] --> UL["U4401 limit
 387–491 mA"] --> MUX
   J103["J103 enable loop
 open = off"] -.-> U101
   HOLD["PE5 FC_POWER_HOLD
-held from launch to LANDED"] -.-> U101
+launch detect to LANDED
+RC carries it ≥1 s"] -.-> U101
   HOLD -.-> CHU["Churro AV eFuse U1001
 via Samtec pin 8"]
 ```
@@ -53,15 +57,19 @@ via Samtec pin 8"]
   nominal. Tolerance and sag set the real range; 2S doesn't promise a 6 V start.
 - **J103** is the FC battery enable. Open means off, but upstream circuits stay
   live and USB can still power logic. It is not a disarm.
-- **Enable hold (D-6.3):** after launch detect, PE5 holds `BAT_SHDN_N` and,
-  over Samtec pin 8, Churro's `AV_SHDN_N` high, so a broken enable wire or plug
-  can't switch the computer off in flight. An RC on the hold carries it through
-  one watchdog reset.
+- **Enable hold (D-6.3, D-2Nov.4):** after launch detect, PE5 holds `BAT_SHDN_N`
+  and, over Samtec pin 8, Churro's `AV_SHDN_N` high, so a broken enable wire or
+  plug can't switch the computer off in flight. An RC (330 Ω, 470 µF) keeps both
+  above 2 V for ≥1 s after PE5 lets go, longer than Burrito's worst-case 550 ms
+  restart; firmware re-asserts within 50 ms of a reset when the checkpoint says
+  in flight. Released at LANDED plus a delay, or at a maximum flight time.
 - **Auto-retry (D-6.3):** U101 and Churro U1001 restart after an over-current
   instead of latching off for the rest of the flight.
-- **Energy tap (D-6.1):** shown after Q101. That holds only if TPS26630 keeps
-  Q101 on through U101 faults and shutdown; otherwise the tap moves to the
-  connector side with reverse-polarity protection per branch.
+- **Energy tap (D-6.1, D-2Nov.5):** after Q101, confirmed. When U101 shuts down
+  it turns Q101 off too, but Q101's body diode still feeds the tap (one diode
+  drop) and still blocks a reversed pack. Regeneration can't go back into the
+  pack: U101 turns Q101 off once its output rises above the pack, so the logic
+  load and the servo bulk absorb it.
 - **USB** powers logic only: no charging, no output energy.
 
 ## Regulated domains
@@ -121,6 +129,8 @@ over-voltage protection: a shorted regulator pass element needs its own check.
 | Comms branch logic | Keep `COMMS_BRANCH_EN = BAT_VALID ? FLIGHT_COMMS_EN : USB_PRESENT` |
 | Hold-up | C1403 = Nichicon PCW0J102MCO1GS, 1000 µF / 6.3 V |
 | U101, U1001 | MODE to GND (auto-retry) |
+| Enable hold | 330 Ω + 470 µF ≥6.3 V: SHDN above 2 V for ≥1 s with both 22.1 kΩ pull-downs (D-2Nov.4) |
+| Staging fuse | F6102 for the staging arm; F6101 for recovery only (D-2Nov.2) |
 
 Full list: [capture specification](schematic-capture-spec.md#burrito-changes).
 
@@ -184,8 +194,12 @@ attached drops to service behaviour.
 
 ## Battery sizing
 
-Workhorse: size the pack from measured first-PCBA loads and the vehicle's pad
-and flight timeline (D-6.8). Kármán overlay: 2S 8 Ah reference, ≥30 Wh usable
+Workhorse: 2S Li-ion in metal-can cylindrical cells, 21700 by default; no LiPo
+(EuRoC LV-0300, D-2Nov.6). The pack alone must last ≥6 h on the rail (LV-0320)
+plus the flight and recovery. At the ≤150 mA pad-mode target that's ≈0.9 Ah for
+the six hours, well inside one 21700 per series cell; measure the real pad
+current on the first PCBA (D-6.8). The umbilical carries the pad load when it's
+plugged in, but it's margin, not the budget. Kármán overlay: 2S 8 Ah reference, ≥30 Wh usable
 at installed temperature, load and UVLO; 8 h active plus 4 h recovery needs
 29.69 Wh with assumed losses and 0.10 W overhead. The 65% usable-to-nameplate
 figure is an assumption. Actuator energy is extra.

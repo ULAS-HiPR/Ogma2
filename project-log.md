@@ -3366,3 +3366,80 @@ energetics safed until the rocket is in launch position (0530).
 
 Recorded as Open rows in `decisions.md`; `current-system.md` gains the target
 vehicles and next steps. Nothing decided. CAD unchanged.
+
+## 2 November 2026 — review answers recorded: D-2Nov.1–D-2Nov.12
+
+Seán answered the fifteen review recommendations (R1–R15) in chat on 2 November,
+ahead of the Tuesday 3 November review with Anav and Arnav. All accepted as
+recommended except R12, the magnetometer, where he chose to add one ("I
+committed to Radion that we will"). Radion is the control-systems lead, written
+"Radu" in the 15 October entry. The answers are in `decisions.md`:
+
+- D-2Nov.1 (R1): a low-side CSD17318 per pyro channel again, on PA9 / PA10 /
+  PD14, away from the port-E fire pins; four-step firing sequence; pre-arm
+  low-side self-test. Continuity sensing works again.
+- D-2Nov.2 (R2): staging gets F6102; F6101 is recovery only.
+- D-2Nov.3 (R3): sensor supply links 0 Ω → 47 Ω; firmware parks a dead
+  sensor's pins.
+- D-2Nov.4 (R4): the power-hold RC holds SHDN above 2 V for ≥1 s with both
+  22.1 kΩ pull-downs; assert at launch detect, re-assert within 50 ms of a reset
+  in flight, release at LANDED plus a delay or a maximum flight time.
+- D-2Nov.5 (R5): the energy tap stays after Q101; D-6.1's check closed with the
+  netlist and TPS2663 §9.3.13 / §9.3.6. Corrects D-6.7: regeneration can't
+  reach the pack.
+- D-2Nov.6 (R6): 2S Li-ion, metal-can cylindrical cells, 21700 by default;
+  pad-mode target ≤150 mA; the pack alone covers six hours on the rail.
+- D-2Nov.7 (R7): rail power from a ground umbilical at Churro, per-source ideal
+  diodes ahead of the eFuses, no charging on the vehicle. Seán: "the whole point
+  of the umbilical is that when on rail it just is alive through the umbilical,
+  and then when we unplug it switches."
+- R8: D1, D2, D3, D5 and D-7.2 accepted, D-7.2 amended by D-2Nov.1, D-2Nov.2 and
+  the pin moves, with U6502 fixed as an SN74LVC1G08.
+- D-2Nov.8 (R9): rules for closed-loop actuator nodes replace D-13.1
+  (Enchilada); the board waits for Sim Systems' requirements.
+- D-2Nov.9 (R10): what CAN may carry. Seán: "can should be for permissions and
+  mode; slow state that survives Burrito's worst-case 550 ms restart; health;
+  commands the receiver drops to safe when they go stale.. not high rate control
+  loops."
+- D-2Nov.10 (R11): pad datum tracked and frozen at launch detect; ground-test
+  mode for EuRoC LV-0520; 1 Hz pad telemetry. D-6.11 stays proposed for Anav.
+- D-2Nov.11 (R12): MMC5983MA magnetometer on I²C3 (PA8 / PC9).
+- D-2Nov.12 (R13): release gates and test campaigns live again in
+  `docs/architecture/11-verification.md`, with EuRoC's tests and the D-6.10
+  capture assertions.
+- R14 and R15 are documentation: `docs/firmware-interface.md` replaces the
+  7 September handoff (moved to `docs/archive/`), and `decisions.md` now has one
+  newest-first table per status with dates.
+
+Judgment calls made while writing these up, for Tuesday's review:
+
+- R1 first put the low sides on PA8 / PA9 / PA10. The magnetometer needs PA8
+  for I²C3, so they went to PA9 / PA10 / PD14; the latch readback moved to PE14
+  (with a 1 kΩ series resistor) and staging arm sense to PE15. PE10 and PE13 are
+  spare.
+- R7 said two ideal-diode controllers. It's four: each pack needs its own so the
+  umbilical can't charge it.
+- PA9 and PC9 (not PA10) are the H563's UCPD dead-battery pins, gating
+  pull-downs on PB13 / PB14, the TDK IMU's SPI. Firmware sets `UCPD_DBDIS` at
+  boot. Found in the KiCad symbol and confirmed against an ST community thread.
+- TI gives the TPS26630 SHDN levels as 2 V rising and 0.8 V falling, with no
+  guaranteed band between, so the hold RC is sized to stay above 2 V: 330 Ω and
+  470 µF, ≈1.2 s at Churro's `AV_SHDN_N` with −20% capacitance.
+- The magnetometer's link is 22 Ω because its minimum supply is 2.8 V; its INT
+  goes to the spare PE6.
+- Churro's AV divider moves to the pack side so the pack stays readable on the
+  umbilical, and the live source comes from bus minus pack.
+- After arming, a channel whose return node reads near the armed rail has a
+  leaking high side and is never fired; the low-side self-test runs only with
+  the arms open.
+
+Also on 2 November: the EuRoC rule texts behind the open rows were checked
+against the published SRD (LV-0240, 0260–0280, 0300–0320, 0480–0560,
+0650–0700). The note under LV-0270 rules out ladders and stools. LV-0500
+applies to N₂O, which boils below −50 °C. The pack and arm-switch access
+question and the LV-0690 question go to Jay through #euroc-electronics.
+
+The PR #2 description was corrected the same day: D-6.5 was not a brownout
+weakening, and EX-10 is still cited by the flight fault contract.
+
+CAD unchanged. Capture stays on hold until after Tuesday's review.

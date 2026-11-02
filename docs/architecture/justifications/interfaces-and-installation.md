@@ -1,7 +1,7 @@
 # Interfaces and installation
 
 Proposed board and assembly envelope, 22 September 2026, updated for D-6.1,
-D-6.7 and D-7.1. Not qualified vehicle hardware. See [connectors](../09-connectors-arming.md),
+D-6.7, D-7.1, D-2Nov.8, D-2Nov.9 and D-2Nov.11. Not qualified vehicle hardware. See [connectors](../09-connectors-arming.md),
 [servos](../04-servos.md) and [RF](../06-gnss-radio.md).
 
 ## Three local PWM interfaces; no speculative remote node
@@ -30,16 +30,21 @@ across the installed source range up to 8.4 V.
 **Power feed (D-6.1, D-6.7, 6 October).** Servo energy comes from `ENERGY_TAP`
 through its own fuse F6801. R6804 is fitted and `SERVO_VBAT` gets ≥220 µF. Servos
 are not behind the pyro arm. One motor fault can still take out the shared motor
-branch. Regeneration, stall, startup and temperature need tests with the
-installed load. The switch is not a regulated motor supply and doesn't tolerate
+branch. Regeneration can't return to the pack (D-2Nov.5), so the bulk and the
+logic load absorb it. Regeneration, stall, startup and temperature need tests
+with the installed load. The switch is not a regulated motor supply and doesn't tolerate
 every kind of regeneration. This bounded interface is enough to capture the
 schematic without inventing a mechanism.
 
-**No remote node.** Local PWM is the board baseline. Don't add a remote actuator
-node, controller, expander or connector. Fajita keeps its own local control. If
-a future mechanism needs a remote loop, its command age, local feedback and
-loss behaviour become a separate peer contract. The 200 Hz traffic example does
-not quietly create that architecture.
+**No remote node on Burrito.** Local PWM is Burrito's only actuator interface,
+for bounded, event-triggered moves. Don't add a remote actuator node,
+controller, expander or connector to Burrito. Fajita keeps its own local
+control. A mechanism that moves the vehicle in a closed loop (roll control, grid
+fins) gets its own node under D-2Nov.8: its own processor and fast sensor, a
+neutral path that survives hung firmware, dormant until authorised, an
+unterminated CAN stub with IDs below Burrito's and Fajita's, and its own fused
+Churro feed. Its board waits for Sim Systems' requirements. The 200 Hz traffic
+example doesn't create that architecture.
 
 Sources: [TI TPS1H100-Q1 Rev D](https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf)
 §6.5 with its accuracy footnotes, and §7.3;
@@ -58,6 +63,9 @@ linear trunk terminated only at its two ends.
   visible.
 - Each node owns its own behaviour when the link drops. A guessed actuator
   command is never the fallback.
+- What CAN carries (D-2Nov.9): permissions and mode, slow state that survives
+  Burrito's worst-case 550 ms restart, health, and commands the receiver drops
+  to safe when stale. No sensor streams or control loops at loop rate.
 - Keeping the hardware doesn't make the provisional FD traffic table a
   closed-loop deadline. See the
   [controlled boundary](../../../interfaces/ogma-foinse-propulsion-boundary.md).
@@ -92,7 +100,7 @@ reservation is not a final footprint.
 
 - Servo housing 430251000: 1/2/3, 4/5/6 and 7/8/9 PWR/PWM/GND; 10 unwired.
 - Temperature housing GHR-04V-S: AV / GND / PROP / GND.
-- Pyro arms J6101 (recovery) and J6102 (staging, proposed): 2-contact each. They
+- Pyro arms J6101 (recovery) and J6102 (staging): 2-contact each. They
   must not mate each other, Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the
   GH enable loops. Parts chosen at capture.
 - Every drawing says whether it shows the board, the mating face or the wire
@@ -151,6 +159,11 @@ After Seán approves the schematic, **Codex captures and places; Seán routes.**
 - Sensor axes defined in board coordinates.
 - RF parts on a short 50 Ω route with continuous reference to their own SMA.
   Switching-current loops kept away from RF, clocks and pressure sensing.
+- Magnetometer at the top end of Burrito, ≥20 mm from the GNSS receiver and as
+  far as the board allows from power entry, the buck, the outputs and the servo
+  connector; no current-carrying copper under it on any layer and no steel
+  fasteners nearby ([layout guide](../../pcb-layout-guide.md#c09a-magnetometer)).
+  Record its axes in board coordinates like the other sensors.
 
 Deliverable: an unrouted board with every footprint, pad and net mapping
 reconciled; courtyards and access checked; keepouts and net classes defined;

@@ -1,7 +1,7 @@
 # Ogma 2 power contract
 
-**Status, 6 October 2026: controlling contract.** Electrical detail describes
-the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and
+**Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
+detail describes the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and
 the [capture specification](../docs/architecture/schematic-capture-spec.md).
 Capture waits for Seán's go-ahead. No hardware has run, no part has been bought
 and nothing is released for flight.
@@ -27,9 +27,11 @@ amended 6 October:
   and 800 µF effective.)
 - USB enters the logic mux only. U4401 limits it to 387–491 mA from attach
   (D-6.5). USB never powers pyro or servo energy and never charges the battery.
-- Battery validity keeps essential power independent of the comms processor.
-- Pyro and servo energy leave before U101, each through its own fuse, and
-  bypass it (D-6.1). Pyro energy then passes the J6101 arm switch.
+- Flight-core power depends on source presence only (D-6.5), never on the
+  comms processor.
+- Pyro and servo energy leave before U101 at `ENERGY_TAP`, after Q101 (D-6.1,
+  D-2Nov.5), each through its own fuse: F6101 recovery, F6102 staging, F6801
+  servos. Pyro energy then passes the J6101 / J6102 arm switches.
 
 Foinse (Churro):
 
@@ -38,8 +40,11 @@ Foinse (Churro):
 - One protected Croí feed with a provisional 6 A aggregate ceiling.
 - Liquid propulsion has its own 6S pack and domain. It is not a load on Croí's
   logic rail.
-- External matched balance chargers do the charging. Physical charge/arm
-  exclusion is still required.
+- External matched balance chargers do the charging, with the packs off the
+  vehicle. Physical charge/arm exclusion is still required.
+- On the rail, a ground umbilical feeds both branches through per-source ideal
+  diodes ahead of the eFuses; pulling it hands each branch to its pack. It never
+  charges a pack (D-2Nov.7).
 - Each Samtec ground path must carry the full 6 A as an alternate fault return.
 
 All branch limits, energy estimates and rail-sequencing requirements in the
@@ -64,8 +69,9 @@ reopens the selected parts or brings back the old ≈3.8 V intermediate.
    The exact intermediate voltage follows headroom, noise and thermal evidence.
 4. **USB is service only.** USB alone supports configuration, readback and log
    download, with no USB path able to power pyro or servo loads. Battery plus USB
-   must not backfeed or charge either source. Charging stays in Foinse's designed
-   service path; standalone servicing must not add an implicit Ogma charger.
+   must not backfeed or charge either source. Charging stays external, with the
+   packs off the vehicle (D-2Nov.7); standalone servicing must not add an
+   implicit Ogma charger.
 5. **Hold-up is for brief dips.** Core hold-up covers short interruptions, not
    flying on after a broken source connection. No extra battery or large
    supercapacitor by default. Longer outages follow EX-01's restart or
@@ -121,10 +127,14 @@ semiconductor fault isn't contained by this circuit.
 and surge response; cable ESD; open-wire leakage; retained-contact vibration and
 bounce. The 100 nF filter doesn't guarantee debounce.
 
-**Enable hold (D-6.3).** Cycling SHDN resets a latched eFuse fault and can cause
-repeated board resets. So from 6 October, firmware holds SHDN high in flight
-through `FC_POWER_HOLD`: Croí directly, Churro AV over Samtec pin 8. U101 and
-U1001 auto-retry.
+**Enable hold (D-6.3, D-2Nov.4).** Cycling SHDN resets a latched eFuse fault and
+can cause repeated board resets. So from 6 October, firmware holds SHDN high in
+flight through `FC_POWER_HOLD`: Croí directly, Churro AV over Samtec pin 8. U101
+and U1001 auto-retry. The hold RC keeps SHDN above 2 V for ≥1 s after the GPIO
+lets go, sized with both 22.1 kΩ pull-downs; keep those values, or resize the
+RC. Firmware asserts the hold only after launch detect, re-asserts it within
+50 ms of a reset in flight, and releases it at LANDED plus a delay or at a
+maximum flight time.
 
 **Limits.** The 6 A Croí / avionics, ≈3 A propulsion and 2 A shared-servo
 starting limits are unchanged, provisional and not load-qualified. The switch
@@ -222,7 +232,8 @@ power and signal paths in every powered and unpowered combination.
 | Foinse source only | Same Ogma logic chain; source path doesn't depend on the returned auxiliary power | Device dependency drawing; absent-return test |
 | USB only | Configuration, readback, log download. No actuator power from USB | USB budget, entry point, rail sequencing, backfeed tests |
 | One vehicle source plus USB | Servicing works with no contention, backfeed or unintended charging | Priority / ORing mechanism; attach and remove tests |
-| Integrated charging service | Only through the controlled Foinse service path | Charger and source combinations, allowed mode, isolation, operator procedure |
+| Umbilical on the rail (Churro-fed) | The umbilical carries the load through its own ideal diode; the pack's diode stops it charging the pack. Pulling it hands each branch to its pack with no reset (D-2Nov.7) | Switchover transient, diode heating, source reporting threshold |
+| Charging | Not on the vehicle: external balance chargers with the packs removed (D-2Nov.7) | Operator procedure |
 | Standalone battery and Foinse together | Not allowed. Physically exclude it, or review and protect it explicitly first | Exact connector and source arrangement |
 | Source removed or interrupted | Carry on only within proven hold-up; otherwise a defined reset or unavailable outcome | Interruption envelope; EX-03 retention classes |
 | Auxiliary or comms rail off while its interfaces stay connected | No damaging injection, half-powered running or defeated isolation | Exact pin limits, pull-ups, discharge, bus ownership |
@@ -276,13 +287,15 @@ attached load. No capacity or flight endurance is claimed here.
 
 ## First test and closure
 
-Run [PWR-01](../docs/archive/reliability-execution-plan.md#experiment-pwr-01-source-transition-and-branch-containment)
+Run PWR-01 ([11 Verification](../docs/architecture/11-verification.md#campaigns);
+[full procedure](../docs/archive/reliability-execution-plan.md#experiment-pwr-01-source-transition-and-branch-containment))
 on blocks of the first full PCBA with current-limited supplies and inert loads.
 No separate pre-order coupon.
 
 1. Cold start with the Foinse return absent.
 2. Controlled faults on optional branches.
-3. Source transitions.
+3. Source transitions, including pulling the umbilical under load.
+4. Servo back-drive at 8.4 V, watching `BAT_EFUSE_IN` and the logic input.
 
 Capture input, core rail, the faulted branch, reset and an essential-loop marker
 on one external timebase. Before any fault, write down the real parts and

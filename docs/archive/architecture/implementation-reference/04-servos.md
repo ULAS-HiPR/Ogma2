@@ -118,4 +118,4 @@ limiting, reset/off defaults, regeneration clamp and all three loaded channels.
 Do not populate R6804 just to make an early demo move.
 
 Evidence: [third-servo revision](../../connector-servo-readiness-revision-2026-09-07.md),
-[firmware handoff](../../../firmware-handoff-2026-09-07.md).
+[firmware handoff](../../firmware-handoff-2026-09-07.md).

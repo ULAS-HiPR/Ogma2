@@ -21,13 +21,30 @@ remains available for circuit-by-circuit source notes and close-ups.
 The fourteen parts labelled REV-B are intended for the first engineering PCBA,
 not deferred to a second manufacturing revision. Foinse is unchanged by this study.
 
+## Since 7 September (read this first)
+
+Where this guide and [decisions.md](../decisions.md) disagree, the decisions win.
+
+- **Sensors (C09):** the per-sensor limiters and translators are gone (D-6.6).
+  Each sensor's supply comes through a 47 Ω link (D-2Nov.3). New magnetometer:
+  [C09a](#c09a-magnetometer).
+- **Outputs (C14):** the one-shots and permit gates are gone (D-6.2). Each
+  channel keeps its high side and its low side (D-2Nov.1). New fuses F6101 /
+  F6102 / F6801 and arm connectors J6101 / J6102 (D-6.1, D-2Nov.2).
+- **GNSS (C03):** U4504 is now a MAX-M10S with an external passive antenna on
+  J4501 (SMA). The SAM-M10Q patch geometry in C03 is history; see the note there.
+- **Power (C04):** the energy tap sits at `BAT_EFUSE_IN`, after Q101 (D-2Nov.5).
+  The hold RC (330 Ω, 470 µF) sits between PE5 and the SHDN diodes (D-2Nov.4).
+- **Churro:** a ground umbilical connector J801 and four ideal-diode stages
+  ahead of the eFuses (D-2Nov.7).
+
 ## Open these
 
 - [Croí project](../hardware/croi2/Croi2.kicad_pro).
 - [Foinse project](../hardware/foinse2/Foinse2.kicad_pro).
 - [Manufacturer page index](../../layout-reference-2026-09-07/DATASHEET-PAGES.md).
 - [Power sensing, indicators and RTC decision](archive/sensing-indication-time-review-2026-09-07.md).
-- [Updated firmware handoff for Anav](firmware-handoff-2026-09-07.md).
+- [Firmware interface](firmware-interface.md) (replaces the 7 September handoff).
 
 The reference folder contains shortened original PDFs named for components.
 Follow the actual package/version: TPS26630 **QFN**, H563 **non-SMPS LQFP100**,
@@ -125,6 +142,14 @@ faces. Put mounting supports near high insertion-force connectors, while keeping
 MEMS devices away from the immediate mounting-hole strain field.
 
 ### C03. Correct the GNSS reservation before packing around it
+
+**Update, 2 November:** U4504 is a MAX-M10S-00B receiver with an external
+passive antenna on J4501, not the SAM-M10Q patch module this section describes.
+It needs no sky view or 50 × 50 mm ground patch: keep its RF input short to
+J4501, 50 Ω over solid ground, and give the receiver its own quiet ground and
+bypass. The old 56 × 56 mm reservation around it can shrink, which frees the top
+end for the magnetometer ([C09a](#c09a-magnetometer)). The text below is the
+7 September record.
 
 U4504 **SAM-M10Q-00B** anchors the opposite, sky-facing end. Read the supplied
 integration-manual pages **60–63** before moving it. The manufacturer reference
@@ -277,7 +302,8 @@ strain. Keep them away from the buck, hold-up can, hot drivers and sounder.
 
 Record each sensor's actual rotation and position for Anav. A silkscreen body
 axis is useful; a guessed firmware axis transform is not. Place each sensor's
-limiter, translator, interrupt boundary, bypass and any series damping nearby.
+47 Ω supply link, bypass and series damping nearby; the limiters and translators
+are gone (D-6.6, D-2Nov.3).
 Same-sheet membership does not justify a long shared sensor supply route.
 
 Read the ADXL375 mounting/land-pattern pages. Retrieve the listed missing ST/TDK
@@ -291,6 +317,26 @@ local heat and airflow jets. The BMP390 solder standoff is part of mechanical
 decoupling; its datasheet calls for at least 50 µm after reflow. No glue, coating,
 flux residue or cleaning liquid in either port. A sealed/blocked common bay
 defeats both pressure readings regardless of two manufacturers.
+
+### C09a. Magnetometer
+
+U3701 MMC5983MA (D-2Nov.11) needs the magnetically quietest spot on the board,
+which is the top end, away from the power and output corridor.
+
+- Put it in the top 20 mm (local y 0–20; KiCad absolute y ≈ 50–70), at least
+  20 mm from the GNSS receiver U4504 (local (40, 30)).
+- Keep it as far as the board allows from power entry (J101 / J102, U101 and
+  its shunt), the buck U1301, the outputs J6601 and the servo connector J6602.
+  At the top end all of those are about 150 mm or more away.
+- No current-carrying copper under it, on any layer, and none on the opposite
+  side. No ferromagnetic part close by: no steel screws or standoffs, no shield
+  cans, and no battery behind it in the bay.
+- R3701 (22 Ω), C3701 (10 µF on CAP) and the decoupling go at its pins. Route
+  I²C3 (PA8 / PC9) and INT (PE6) as a short group over solid ground, with the
+  22 Ω damping at the MCU end.
+- Record its axes in board coordinates for Anav, like the IMUs. It's calibrated
+  in the assembled bay, so the bay hardware near it should be final before
+  calibration.
 
 ### C10. NOR and its signal-isolation boundary
 
@@ -380,9 +426,9 @@ is provided; no exact 3D model is claimed. No LCD or NeoPixel is included.
 
 ### C14. Output circuits: reserve now, route after their open circuit boundary closes
 
-Bring each channel's complete pulse/permission/driver/low-side group beside the
-output connector. Keep timer SET/DIV parts local and away from power-switching
-nodes. Put driver bypass, clamp/current-sense components and high-current copper
+Bring each channel's high side, low side and continuity parts beside the output
+connector. The one-shots and permit gates are gone (D-6.2); the low sides stay
+(D-2Nov.1), with their gate resistors at the FET. Put driver bypass, clamp/current-sense components and high-current copper
 at their driver. Use short outgoing/return paths that do not travel under IMUs
 or through the ADC-reference region. Respect thermal copper and current limits.
 

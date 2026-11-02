@@ -1,6 +1,7 @@
 # Power domains, restart and energy
 
-Proposed capture baseline, 22 September 2026, updated for D-6.5, D-6.8 and D-7.1. It
+Proposed capture baseline, 22 September 2026, updated for D-6.5, D-6.8, D-7.1,
+D-2Nov.3, D-2Nov.6 and D-2Nov.11. It
 replaces the earlier two-regulator idea. CAD is unchanged. See the
 [power chapter](../02-power.md).
 
@@ -44,11 +45,11 @@ independent recovery. Keep the common buck for this revision.
 | R1504 | 36.5 kΩ → **66.5 kΩ 1%**; calculated limit 351–449 mA |
 | U1601 | Keep **before U1901**. IN = `4V_PRE`, OUT = `OPTIONAL_LDO_IN` through the existing link |
 | U1601 EN (pin 3) / R1602 | Move EN and the top of its 100 kΩ pull-down from `FLIGHT_3V3` to the new **`SERVICE_POWER_EN`** |
-| Flight PE8, pad 39 | GPIO `SERVICE_POWER_EN`, low at reset and power-off. Uses a pin freed by D-6.2 (was the channel 1 low-side select); servo 3 keeps PD10 (D-7.1) |
+| Flight PE8, pad 39 | GPIO `SERVICE_POWER_EN`, low at reset and power-off. Uses a pin freed by D-6.2 (was the channel 1 low-side select, which moves to PA9 under D-2Nov.1); servo 3 keeps PD10 (D-7.1) |
 | R1701 / R1801 / R1901 | **31.9 kΩ 0.1%** each; lower legs stay 10 kΩ 0.1% → 3.352 V nominal on all three |
 | R1604 | 56.2 kΩ → **49.9 kΩ 1%**; calculated limit 470–588 mA |
 | `3V3_OPTIONAL` | Keep the net name for capture; call it "services" on labels. It feeds NOR, CAN, AUX and the sounder, not comms |
-| Local limits and boundaries | Keep NOR, CAN and AUX limits and their partial-power signal isolation. Sensors run straight from `FLIGHT_3V3` (D-6.6) |
+| Local limits and boundaries | Keep NOR, CAN and AUX limits and their partial-power signal isolation. Sensors run from `FLIGHT_3V3` through 47 Ω links (D-6.6, D-2Nov.3); the magnetometer through 22 Ω (D-2Nov.11) |
 | Source logic | Core enabled by `4V_PRE` presence (D-6.5); keep the battery-priority comms enable |
 
 PE8 is the only reassigned flight pin for this. No output or arm-sense pin is reused. The
@@ -83,8 +84,9 @@ The earlier relocated comms switch is dropped. Setting all three regulators to
 - Static margin **116 mV** before PCB drops, ripple and transients. Allow 50 mV
   for those in healthy running; about 66 mV is left.
 
-The MCU, five sensors, NOR, GNSS, CAN and 3.3 V logic all stay under their 3.6 V
-limits; the Wio allows 3.7 V. Startup overshoot must still not pass those limits.
+The MCU, five sensors, the magnetometer, NOR, GNSS, CAN and 3.3 V logic all stay
+under their 3.6 V limits; the Wio allows 3.7 V. The magnetometer's 3.6 V is an
+absolute maximum, so overshoot matters most there. Startup overshoot must still not pass those limits.
 Use the actual set point for reference and analog ratios and for rail
 measurements. Keep ≥10 µF effective at each TPS7A91 input and output after DC-bias
 derating. At 300 mA a 135 mΩ upstream switch drops about 41 mV **at the regulator
@@ -103,7 +105,7 @@ measured or summed worst-case currents.
 
 | Domain | Ceiling | Split |
 | --- | --- | --- |
-| Flight | 200 mA | MCU and support 150; sensors 35; margin 15 |
+| Flight | 200 mA | MCU and support 150; sensors 35; magnetometer ≈3 at 100 Hz; margin 12 |
 | Comms | 300 mA | MCU and support 100; RF 150; GNSS tracking 35; margin 15 |
 | Services | 200 mA | NOR writing 65; CAN 80; AUX 25; sounder, support and margin 30 |
 
@@ -144,7 +146,9 @@ workhorse pack is sized from measured loads instead.
   recovery budget without redoing the sum.
 
 The pack interface is electrical, not a brand or SKU: 2S lithium, 8.4 V maximum
-charge, connector and polarity, and ≥30 Wh usable. A smaller pack can fly a
+charge, connector and polarity, and ≥30 Wh usable. The workhorse pack uses
+metal-can cylindrical Li-ion cells, 21700 by default, and never LiPo (EuRoC
+LV-0300, D-2Nov.6). A smaller pack can fly a
 shorter declared mission; it doesn't meet 8 h + 4 h by default. Nothing here
 approves buying or building a pack.
 

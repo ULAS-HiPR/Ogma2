@@ -21,7 +21,7 @@ interface, do not silently restore the older design.
 | [Foinse/CAN](08-foinse-can.md) | Packs, interfaces and power-boundary detail |
 
 Exact current allocations remain in the
-[firmware handoff](../../../firmware-handoff-2026-09-07.md) and
+[firmware handoff](../../firmware-handoff-2026-09-07.md) and
 [interface contracts](../../../../interfaces/README.md). Their dated amendments
 control older text. The [document index](../../../README.md) links the original
 research and implementation records.

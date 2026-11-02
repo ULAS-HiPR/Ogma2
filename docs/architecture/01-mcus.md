@@ -1,8 +1,8 @@
 # 01 Processors
 
 Two STM32H563s: **H563VIT6 (LQFP100) for flight**, **H563RIT6 (LQFP64) for
-comms**. Two processors is decided ([D-6.12](../../decisions.md)); the comms
-package is proposed (D1). The CAD still has two H563VIT6.
+comms**. Two processors ([D-6.12](../../decisions.md)) and the comms package
+(D1, accepted 2 November) are decided. The CAD still has two H563VIT6.
 
 Both are Arm Cortex-M33 with a single-precision FPU, 2 MiB flash and 640 KiB
 RAM. Firmware builds with `-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard`
@@ -10,15 +10,18 @@ whichever comms package is fitted.
 
 ```mermaid
 flowchart LR
-  S["5 sensors
+  S["5 flight sensors
 3 SPI + 2 I²C"] --> F["Flight · H563VIT6
 1 kHz acquisition
 200 Hz estimation and policy"]
+  M["Magnetometer · I²C3
+100 Hz, non-essential"] --> F
   F <-->|"quad SPI"| N["NOR 256 MiB
 128 KiB staging in RAM"]
   F <-->|"FDCAN"| V["CAN to Fajita"]
   F -->|"TIM3 + LPTIM2 PWM"| P["3 servo outputs"]
-  F -->|"PYRO1/2/3_FIRE"| O["3 pyro outputs"]
+  F -->|"fire PE7/PE9/PE12
+low sides PA9/PA10/PD14"| O["3 pyro outputs"]
   F <-->|"USART3 · 2 Mbaud
 TXU0202 boundary"| C["Comms · H563RIT6
 event loop and DMA queues"]
@@ -32,7 +35,7 @@ event loop and DMA queues"]
 
 | Role | What it must do | Why this part |
 | --- | --- | --- |
-| Flight | Three sensor SPI buses, two pressure I²C buses, monitor I²C4, quad NOR, CAN, UART, timing, outputs, servos | The existing LQFP100 map fits; independent buses use the pins |
+| Flight | Three sensor SPI buses, two pressure I²C buses, the magnetometer's I²C3, monitor I²C4, quad NOR, CAN, UART, timing, outputs, servos | The existing LQFP100 map fits; independent buses use the pins |
 | Comms | Radio SPI, two UARTs, PPS, USB, enables and resets, status, HSE, SWD | Every function fits LQFP64; same family, so one driver and DMA target |
 | Split | Flight keeps flying with comms held in reset | USB, radio and GNSS parsing and service stalls stay off the flight schedule |
 
@@ -42,7 +45,7 @@ stays at 128 MHz; the part's maximum clock is not a requirement.
 
 | Resource | Flight | Comms |
 | --- | --- | --- |
-| Acquisition | 3 SPI + 2 I²C sensor buses, 1 kHz schedule | GNSS UART/PPS, radio SPI, flight UART, USB |
+| Acquisition | 3 SPI + 2 I²C sensor buses, 1 kHz schedule; magnetometer on I²C3 at 100 Hz | GNSS UART/PPS, radio SPI, flight UART, USB |
 | DMA | 11 streams: 6 SPI, 2 ADC, 2 UART, NOR | 6 streams: 4 UART, 2 SPI; request routing to build-test |
 | RAM | 128 KiB recorder staging | 8 KiB service buffers proposed; parsers, queues and stacks to measure |
 | CPU | 200 Hz estimation/policy, 128 MHz budget | No benchmark sets a clock |
@@ -50,7 +53,7 @@ stays at 128 MHz; the part's maximum clock is not a requirement.
 | Comms alternative | Comparison | Position |
 | --- | --- | --- |
 | H563VIT6 (in CAD) | Same software, no pin migration, bigger package | Keep if the smaller package buys little layout |
-| **H563RIT6** | Same resources, 64 pins, fully mapped | Proposed |
+| **H563RIT6** | Same resources, 64 pins, fully mapped | Decided (D1) |
 | G474RE | 512 KiB flash, 128 KiB RAM in several regions | New family and DMA work; no quote |
 | H503 | 128 KiB flash, 32 KiB RAM | Streaming removes the old 32 KiB-buffer objection; fit unproven |
 
@@ -85,19 +88,26 @@ measured resource budget. Sources: [pin audit](../archive/mcu-pin-capacity-audit
 ## Flight pins
 
 The [flight map](proposed-flight-pinout.csv) holds the 22 September nets. The
-6 and 7 October decisions change these pads (detail in the
-[capture delta](schematic-capture-spec.md#burrito-changes)):
+October and November decisions change these pads (detail in the
+[capture delta](schematic-capture-spec.md#burrito-changes); every pin by function
+in the [firmware interface](../firmware-interface.md#flight-mcu-pins)):
 
-| Pad | Port | Now |
-| --- | --- | --- |
-| 4 | PE5 | `FC_POWER_HOLD` |
-| 38 / 40 | PE7 / PE9 | `PYRO1_FIRE` / `PYRO2_FIRE`, straight to the TPS1H100s |
-| 43 | PE12 | `PYRO3_FIRE`, through the staging latch AND gate (D-7.1, D-7.2) |
-| 5, 67, 68, 69 | PE6, PA8, PA9, PA10 | Spare (sensor enables removed) |
-| 39 | PE8 | `SERVICE_POWER_EN` (moved from PD10, D-7.1) |
-| 41, 44, 45, 46 | PE10, PE13, PE14, PE15 | Spare (low-side selects and permits removed) |
-| 57 | PD10 | `SERVO3_PWM`, LPTIM2_CH2 AF3, as in the CAD |
-| 61 / 62 / 66 | PD14 / PD15 / PC9 | Staging latch readback / new-flight set / staging arm sense |
+| Pad | Port | Now | Decision |
+| --- | --- | --- | --- |
+| 4 | PE5 | `FC_POWER_HOLD` | D-6.3, D-2Nov.4 |
+| 38 / 40 / 43 | PE7 / PE9 / PE12 | `PYRO1_FIRE` / `PYRO2_FIRE` straight to the TPS1H100s; `PYRO3_FIRE` through the staging latch AND gate | D-7.1, D-7.2 |
+| 68 / 69 / 61 | PA9 / PA10 / PD14 | `PYRO1_LS_SELECT` / `PYRO2_LS_SELECT` / `PYRO3_LS_SELECT`, on ports A and D, away from the port-E fire pins | D-2Nov.1 |
+| 67 / 66 | PA8 / PC9 | Magnetometer I²C3 SCL / SDA, AF4 | D-2Nov.11 |
+| 5 | PE6 | Magnetometer INT (optional data-ready) | D-2Nov.11 |
+| 45 / 46 | PE14 / PE15 | Staging latch readback (through 1 kΩ) / staging arm sense | D-7.2 |
+| 62 / 65 | PD15 / PC8 | New-flight latch set / recovery arm sense | D-7.2 |
+| 39 | PE8 | `SERVICE_POWER_EN` (moved from PD10) | D-7.1 |
+| 57 | PD10 | `SERVO3_PWM`, LPTIM2_CH2 AF3, as in the CAD | D-7.1 |
+| 41 / 44 | PE10 / PE13 | Spare | — |
+
+PA9 and PC9 are also the H563's UCPD dead-battery pins: until firmware sets
+`UCPD_DBDIS`, a high level on them switches pull-downs onto PB13 / PB14, the TDK
+IMU's SPI clock and data. Set it first thing at boot.
 
 ## Why the remaining control pins stay
 

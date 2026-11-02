@@ -15,3 +15,4 @@ those win. Links inside these files were updated for the move; the verbatim
 | Library and placement history | `kicad-library-preparation.md`, `model-recovery-*`, `croi2-functional-placement-*` |
 | Earlier current-system | `history/` |
 | Old budget script | `tools/architecture_budgets.py` |
+| Firmware handoff, 7 September (archived 2 November) | `firmware-handoff-2026-09-07.md`; replaced by the [firmware interface](../firmware-interface.md) |

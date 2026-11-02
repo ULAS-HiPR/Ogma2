@@ -8,7 +8,7 @@ PCB, pin allocation, firmware or cross-project interface was changed.
 
 - Current [system](../../current-system.md), [power contract](../../interfaces/power-contract.md)
   and [vehicle interface](../../interfaces/ogma-foinse-propulsion-boundary.md).
-- Current [firmware handoff](../firmware-handoff-2026-09-07.md): 7 September current
+- Current [firmware handoff](firmware-handoff-2026-09-07.md): 7 September current
   record revision, optional CAN branch, memory allocation and device starting rates.
 - [Croí schematic](../../hardware/croi2/Croi2.kicad_sch), inspected through the fresh
   KiCad XML export used by the pin audit. Schematic hashes still match the native

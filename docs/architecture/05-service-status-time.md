@@ -40,7 +40,8 @@ red / green readiness"]
 | Right board, build, profile? | USB readback from both MCUs | A missing flight reply shows unknown, never last session's values |
 | Acquisition and recording moving? | USB sample age, errors, committed sequence, drops | Show stalled ages explicitly |
 | CAN peer healthy? | USB peer identity, heartbeat age, sequence loss, error counters | Bus activity alone isn't health |
-| Armed? | USB and telemetry arm sense (U6103) | Lamps don't show arm state |
+| Armed? | USB and the 1 Hz pad telemetry: arm sense (U6103), continuity class per channel, staging latch (D-2Nov.10) | Lamps don't show arm state |
+| Running on the umbilical or the pack? | USB and pad telemetry: AV pack voltage, bus voltage, live source (D-2Nov.7) | Close voltages make the source ambiguous; it's reported as such |
 | Output diagnostics valid? | Separate USB fields with age | Unavailable stays unknown |
 
 Ground service: power → read both identities, builds and config → check live
@@ -51,12 +52,12 @@ reboot and read back again; an acknowledged transfer isn't enough.
 
 | Group | Fields |
 | --- | --- |
-| Identity | Board ID, both build IDs, profile, config checksum, test or flight mode |
+| Identity | Board ID, both build IDs, profile, config checksum, flight or ground-test mode (D-2Nov.10) |
 | Measurements | Sensor and calibration IDs, freshness, clipping and errors, voltage and current with age |
 | Recorder | Prepared capacity, committed sequence, drops and gaps, reset epoch |
 | Vehicle link | Peer identity, age, sequence loss, bus-off and error counters |
 | GNSS and radio | Solution time and validity, packet direction and sequence, receiver RSSI/SNR, mode |
-| Outputs | Arm sense, continuity, current, each with validity |
+| Outputs | Arm sense, continuity (raw and class), staging latch, current, each with validity |
 
 A timed-out flight reply is **unknown**, even with comms healthy. Service
 queues stay bounded; log download never blocks acquisition. A two-MCU update
@@ -71,7 +72,7 @@ so don't show them; show battery, ADC and INA readings with age instead.
 
 TPS3808G33 supervisors on both MCUs (20 ms nominal delay, 12–28 ms with CT
 open); TPS3430 watchdog on flight, fed only after acquisition, estimation and
-policy make progress. Radio and bulk recording never gate it. Boot never waits
+policy make progress. Radio, bulk recording and the magnetometer never gate it. Boot never waits
 on a NOR scan, GNSS lock, peer discovery or USB.
 
 Monotonic time for samples and deadlines; GNSS corrections never move an active
@@ -90,5 +91,5 @@ comms reset during logging, lamp behaviour on reset in the installed bay.
 Sources: [indicator inventory](../archive/architecture/2026-09-18-review-investigations.md#5-indicators-and-operator-sequence) ·
 [service hardware](../archive/architecture/implementation-reference/05-service-status-time.md) ·
 [reset contract](../../interfaces/reset-recovery-contract.md) ·
-[firmware handoff](../firmware-handoff-2026-09-07.md) ·
+[firmware interface](../firmware-interface.md) ·
 [USB modes](02-power.md#usb-modes) · [connectors](09-connectors-arming.md)

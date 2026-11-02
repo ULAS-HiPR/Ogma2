@@ -257,5 +257,5 @@ Logging failure may degrade evidence after launch; it must not create a flight
 reset loop. Keep current monitoring explicitly separate from mechanical proof.
 
 Evidence: [sensor configuration](../../sensor-configuration-review-2026-09-07.md),
-[firmware handoff](../../../firmware-handoff-2026-09-07.md),
+[firmware handoff](../../firmware-handoff-2026-09-07.md),
 [fault contract](../../../../interfaces/flight-fault-contract.md).

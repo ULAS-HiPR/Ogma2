@@ -1,7 +1,7 @@
 # Ogma, Foinse and propulsion boundary
 
-**Status, 6 October 2026: controlling contract.** Electrical detail describes the
-8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
+**Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
+detail describes the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
 [capture specification](../docs/architecture/schematic-capture-spec.md).
 Capture waits for Seán's go-ahead. The LTS copy in `lts-controls/interfaces/`
 points here; if the two differ, this file wins.
@@ -39,7 +39,7 @@ tested hardware override it where they conflict.
 | --- | --- | --- |
 | Ogma 2 | Vehicle mission state, high-level engine requests, bounded propulsion summaries, recovery, staged-flight energetic authority | Engine redlines, main-engine actuation, GSE, propulsion power distribution |
 | Propulsion controller | Engine-critical acquisition, local state and redlines, main-engine valves, ignition, local abort, local full-rate evidence | General GSE sequencing, research-only stand DAQ, vehicle recovery |
-| Foinse 2 | Vehicle source entry, protection and vehicle-specific power distribution. No onboard charging | Flight state, propulsion state, redlines, command decisions |
+| Foinse 2 | Vehicle source entry, protection and vehicle-specific power distribution, including the rail umbilical. No onboard charging | Flight state, propulsion state, redlines, command decisions |
 
 The propulsion controller is a self-governing peer. It must carry out its own
 defined safe response while Ogma is in reset, CAN is missing or corrupt, and the
@@ -52,7 +52,14 @@ operator UI is disconnected.
 - GSE, the stand host and the remote operator computer never join that
   production bus.
 - CAN carries versioned, bounded requests, plus propulsion state, health,
-  counters, validity and selected summaries.
+  counters, validity and selected summaries. Ogma's rule for every node
+  (D-2Nov.9): permissions and mode; slow state that stays valid through Ogma's
+  worst-case 550 ms restart; health; and commands the receiver drops to safe
+  when they go stale. No sensor streams or control loops at loop rate.
+- A closed-loop actuator node (roll control, grid fins) may join only as a
+  named peer under D-2Nov.8: an unterminated stub, CAN IDs below Ogma's and
+  propulsion's, its own Foinse feed. Proposed to the propulsion owner; not
+  agreed.
 - Full-rate engine data stays in propulsion-local storage or goes over a bounded
   test-only path.
 - Croí: 500 kbit/s Classical CAN, TCAN3413DRBR, fixed 120 Ω end termination,
@@ -125,9 +132,15 @@ production third node and doesn't bridge the vehicle bus to GSE.
   18–25.2 V raw. Coil current, duty, surge suppression and whether regulated
   24 V is needed depend on the propulsion design. This is not a frozen valve
   count or a finished propulsion supply specification.
+- On the rail, a ground umbilical feeds both Foinse branches through per-source
+  ideal diodes ahead of the eFuses, so the enables and protection still apply
+  and nothing charges a pack. Pulling it hands each branch to its pack (D-2Nov.7).
+  AV is set at 8.4 V; the PROP voltage (≈24–25 V proposed) needs the propulsion
+  owner's agreement.
 - Charging uses matched external balance chargers and controlled fused service
-  wiring, with physical charge/arm exclusion. Independent recovery has its own
-  qualified supply and path outside the shared Foinse fault boundary.
+  wiring, with the packs off the vehicle and physical charge/arm exclusion.
+  Independent recovery has its own qualified supply and path outside the shared
+  Foinse fault boundary.
 
 ## Boundary tests
 
@@ -145,6 +158,10 @@ To be done; none has run.
 - Full-rate local evidence and first-fault retention through all of the above.
 - Swapping production Ogma and the emulator without adding a CAN node.
 - Ogma held in reset with propulsion active.
+- Umbilical pulled under load: both branches move to their packs without
+  resetting Ogma or propulsion.
+- If an actuator node is added: node unplugged, held in reset or babbling,
+  with the Ogma–propulsion link unaffected.
 
 Specify retained evidence separately for host loss, MCU reset and total power
 loss.

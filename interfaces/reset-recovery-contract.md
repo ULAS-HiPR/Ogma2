@@ -1,7 +1,7 @@
 # Ogma 2 reset, retained state and time contract
 
-**Status, 6 October 2026: controlling contract.** Electrical detail describes the
-8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
+**Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
+detail describes the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
 [capture specification](../docs/architecture/schematic-capture-spec.md).
 Capture waits for Seán's go-ahead.
 
@@ -88,7 +88,9 @@ unavailable and follow the fault allocation.
 schema against: format and version; board, flight, profile and calibration
 identity; generation and wrap rules; evidence the write completed; phase;
 launch datum; estimator state, uncertainty and acquisition age; sensor reset
-epochs; attempted events, kept apart from observations.
+epochs; attempted events, kept apart from observations. The pad datum is
+tracked on the pad, checkpointed every 10 s and frozen at launch detect
+(D-2Nov.10).
 
 **Open:** the production bank, binary format, CRC, write granularity, cache,
 barrier and DMA rules, writer ownership, update rate and maximum checkpoint
@@ -112,7 +114,8 @@ Preparation and restart both keep the hardware output inhibits.
 
 - **Preparation:** explicit disarm, deliberate creation of a flight identity,
   full calibration and readiness work.
-- **In-flight restart:** capture reset evidence, get known-good execution,
+- **In-flight restart:** capture reset evidence, re-assert the power hold within
+  50 ms if the checkpoint says in flight (D-2Nov.4), get known-good execution,
   validate whatever state and time are available, reacquire required
   measurements, and allow only the supported phase-specific continuation.
 
@@ -137,7 +140,8 @@ nothing about hardware survival or flight readiness.
 
 ## To close EX-03
 
-Use [RST-01](../docs/archive/reliability-execution-plan.md#experiment-rst-01-restart-with-known-evidence)
+Use RST-01 ([11 Verification](../docs/architecture/11-verification.md#campaigns);
+[full procedure](../docs/archive/reliability-execution-plan.md#experiment-rst-01-restart-with-known-evidence))
 to carry the model onto the real device.
 
 1. Declare per-phase limits for interruption, state age and uncertainty before

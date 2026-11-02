@@ -1,7 +1,8 @@
 # 08 Churro and the vehicle CAN link
 
 Churro (Foinse2) is a power board with no MCU: two independently protected
-pack feeds, plus propulsion current, voltage and temperature monitoring that
+feeds, AV and PROP, each fed by its pack or, on the rail, by the ground
+umbilical; plus propulsion current, voltage and temperature monitoring that
 Burrito powers and reads. The CAN link to Fajita stays two-node Classical CAN
 at 500 kbit/s for Rev A.
 
@@ -9,12 +10,19 @@ at 500 kbit/s for Rev A.
 
 ```mermaid
 flowchart TB
-  AV["2S avionics pack · J101"] --> AP["U1001 TPS26630 + CSD18540
+  AV["2S avionics pack · J101"] --> DA1["ideal diode"]
+  UM["Ground umbilical · J801
+AV 8.4 V · PROP ≈24–25 V"] --> DA2["ideal diode"]
+  UM --> DP2["ideal diode"]
+  DA1 --> AP["U1001 TPS26630 + CSD18540
 ≈6 A · auto-retry (D-6.3)"]
+  DA2 --> AP
   AP --> J["J301 Samtec MPS-08
 to Burrito J102"]
-  PR["6S propulsion pack · J201"] --> PP["U2001 TPS26630 + CSD18540
+  PR["6S propulsion pack · J201"] --> DP1["ideal diode"]
+  DP1 --> PP["U2001 TPS26630 + CSD18540
 ≈2.98 A · latch-off"]
+  DP2 --> PP
   PP --> P["J701 · paired PROP power
 Fajita converts locally"]
   J -->|"AUX 3.3 V from Burrito"| M["INA228 0x41 · ADS1115 0x48"]
@@ -24,7 +32,20 @@ Fajita converts locally"]
   EPR["J104 PROP enable loop"] -.-> PP
 ```
 
-- The two pack positives never join; the grounds are common.
+- The AV and PROP positives never join; the grounds are common.
+- **Rail power (D-2Nov.7).** On the rail the umbilical carries the load. When it
+  pulls away at Go, each feed switches to its pack with no dropout. Each source
+  has its own ideal diode (LM74700-Q1 class), ORed ahead of U1001 / U2001, so the
+  enables and protection work the same on either source and the umbilical can't
+  charge a pack. The AV umbilical sits at 8.4 V at Churro, below every
+  over-voltage trip; PROP at ≈24–25 V, set with the propulsion owner. Whichever
+  source is higher carries the load, so a pack fresher than the umbilical feeds
+  the vehicle until it drops to the umbilical's voltage. Fuse and TVS at the
+  umbilical connector.
+- **Which source is live.** Churro's AV divider moves to the pack side of its
+  diode, so the ADS1115 reads the pack while Burrito's INA228 reads the bus.
+  Bus well above pack means the umbilical is carrying it; the threshold is set
+  on the bench.
 - Each protection circuit starts from its own pack. AUX and I²C only feed
   monitoring, so if Burrito or AUX is gone, protection still works and the
   readings go unknown.
@@ -34,8 +55,9 @@ Fajita converts locally"]
   from the TPS1H100 sense lines. Addresses 0x40, 0x41 and 0x48 don't clash.
   Monitoring is on flight I²C4 (PB8/PB9) at 100 kHz.
 - No charger, BMS, CAN endpoint or 24 V converter. Charging uses external
-  pack-matched balance chargers. A 24 V coil isn't automatically 6S-compatible;
-  size any converter from the real load.
+  pack-matched balance chargers, with the packs off the vehicle; the umbilical
+  never charges. A 24 V coil isn't automatically 6S-compatible; size any
+  converter from the real load.
 
 Samtec J301/J102: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault,
 8 `CROI_POWER_HOLD`. Each ground contact must carry the full fault return, and
@@ -44,6 +66,7 @@ the CAN reference must never become the propulsion power return.
 | Block | Parts | Still to decide or measure |
 | --- | --- | --- |
 | AV entry | J101 Nano-Fit 1053111102; U1001 + CSD18540 | 3 A continuous ceiling, 5 A source fuse proposed; thermal and energy |
+| Umbilical entry (D-2Nov.7) | J801, four ideal-diode stages, fuse and TVS per pair | Connector and pull-away mechanism (vehicle owner); diode heating; switchover transient |
 | AV thresholds | Start/stop 6.63/6.20 V, OVP 8.99 V; 3 kΩ ILIM (≈6 A); MODE to GND | Tolerance and sag; 6 A is not a connector or wire rating |
 | PROP entry | J201 Micro-Fit 430450400; U2001 + CSD18540 | 2 A continuous ceiling, 5 A source fuse proposed |
 | PROP thresholds | Start/stop 19.92/18.63 V, OVP 27.0 V; 6.04 kΩ ILIM (≈2.98 A) | Coil and controller input range, inrush |
@@ -52,7 +75,7 @@ the CAN reference must never become the propulsion power return.
 | PROP current | R2011 5 mΩ WSLP2512; INA228 U5001 | Kelvin routing; error over temperature |
 | PROP bus voltage | INA228 VBUS after the reverse blocker, before the eFuse | Doesn't prove the output is on |
 | Monitor bus | Burrito AUX → local rails; TCA4307 U3001 | Monitoring can vanish while both feeds stay live |
-| Voltages | ADS1115; TMUX1511 U6101 isolates dividers when off; AV 22.1k + 22.1k / 10k, PROP 110k + 110k / 10k | Keep scaled readings separate from INA voltage |
+| Voltages | ADS1115; TMUX1511 U6101 isolates dividers when off; AV 22.1k + 22.1k / 10k on the AV pack (moved from the protected output, D-2Nov.7), PROP 110k + 110k / 10k on the protected output | Keep scaled readings separate from INA voltage |
 | Temperatures | J601 GH 4-contact: AV probe, GND, PROP probe, GND | Dedicated probes, not charger-biased sensors |
 | PROP output | J701 Micro-Fit 430450200 | Harness current; conversion at Fajita |
 
@@ -118,7 +141,15 @@ off-state boundary"]
 own local control"]
 ```
 
-Rev A: 500 kbit/s Classical CAN, two nodes. CAN FD (500 kbit/s arbitration,
+**What CAN carries (D-2Nov.9):** permissions and mode; slow state that stays
+valid through Burrito's worst-case 550 ms restart; health; and commands the
+receiver drops to safe when they go stale. No sensor streams or control loops at
+loop rate: every node closes its own fast loop with its own sensors.
+
+Rev A: 500 kbit/s Classical CAN, two nodes. A closed-loop actuator node, if one
+is added, joins on an unterminated stub with CAN IDs below Burrito's and
+Fajita's, so unplugging it leaves the link intact (D-2Nov.8; needs the propulsion
+owner's agreement). CAN FD (500 kbit/s arbitration,
 2 Mbit/s data, 11-bit IDs) only as a migration agreed with Fajita; the TCAN3413
 supports it, but that doesn't qualify the harness. FD needs both peers to agree
 bitrate, IDs, message versions and units, periods and bursts, command age,
@@ -128,7 +159,7 @@ link belongs in its own contract.
 Earlier comparison for one hypothetical remote actuator: 16 B command and
 16 B status at 200 Hz, 8 B health at 20 Hz, 8 B Fajita reservation at 100 Hz,
 no bulk traffic: 13.3% load, ≈0.77 ms worst wait before software. Not a
-deadline proof, and no remote node is planned.
+deadline proof; under D-2Nov.9 no node streams commands at that rate anyway.
 
 Next: Fajita's FD support, the message and command-age contract, the longest
 real harness; Churro startup with AUX absent and return-path checks.

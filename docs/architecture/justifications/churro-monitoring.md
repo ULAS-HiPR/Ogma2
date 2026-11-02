@@ -1,6 +1,7 @@
 # Churro monitoring and source boundaries
 
-Proposed additions for capture, 22 September 2026, updated for D-6.3. Not built.
+Proposed additions for capture, 22 September 2026, updated for D-6.3 and
+D-2Nov.7. Not built.
 See the [Churro chapter](../08-foinse-can.md).
 
 ## Keep the power companion small
@@ -41,9 +42,19 @@ positive service boundary, off the PCB and close to the pack, in a
 
 **Connectors and charging.** Use the existing 2S Nano-Fit and 6S four-contact
 Micro-Fit source connectors; never swap in matching source plugs. Grounds need a
-full alternate-return check through Samtec, CAN and USB. Charging stays on an
-external matched charger with the packs off the vehicle. No onboard charger, BMS
-or 24 V converter.
+full alternate-return check through Samtec, CAN, USB and the umbilical. Charging
+stays on an external matched charger with the packs off the vehicle. No onboard
+charger, BMS or 24 V converter, and the umbilical never charges.
+
+**Rail power (D-2Nov.7).** A ground umbilical (J801) feeds both branches on the
+rail. Each source, pack or umbilical, gets its own ideal-diode stage (LM74700-Q1
+class plus an N-FET) ahead of U1001 / U2001, so the same enables and protection
+apply to either source, and no current flows into a pack. That's four stages,
+two per branch. A fuse and a TVS sit at the umbilical connector. The AV umbilical
+is set at 8.4 V at Churro, below U1001's 8.99 V and Burrito's TPS2121 trip; the
+PROP voltage (≈24–25 V) is the propulsion owner's call. The higher source
+carries the load. The enable bias and the UV / OV dividers move to the ORed node
+so the umbilical alone can enable.
 
 ## Finish the two temperature inputs
 
@@ -119,8 +130,13 @@ CP-10-16 package; use that drawing for the land pattern.
 - AV current at 100 Hz; PROP monitoring starts at 10 Hz.
 - A read timeout is bounded. No retry loop may stall flight.
 - Source protection starts and runs with AUX missing.
-- PROP INA228 VBUS is before its eFuse; the ADS tap is on the protected output.
-  They answer different questions. Publish both with location, validity and age.
+- PROP INA228 VBUS is before its eFuse; the PROP ADS tap is on the protected
+  output. They answer different questions. Publish both with location, validity
+  and age.
+- The AV ADS tap moves from the protected output to the AV pack, before its
+  ideal diode (D-2Nov.7), so the pack stays readable while the umbilical carries
+  the load. Burrito's INA228 reads the AV bus; bus well above pack means the
+  umbilical is live.
 - A low shared nFAULT says there's a fault, not where.
 
 ## Alternatives considered

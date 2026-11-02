@@ -1,12 +1,17 @@
 # 07 Sensors and recording
 
-Five sensors on their own buses, powered straight from FLIGHT_3V3, and a
-256 MiB NOR flash owned by the flight MCU. Full-rate recording starts at launch
-detect, with a RAM pre-trigger ([D-6.6, D-6.9](../../decisions.md)).
+Five flight sensors on their own buses, each fed from FLIGHT_3V3 through a
+47 Ω link; a magnetometer on its own bus that the flight decisions never depend
+on; and a 256 MiB NOR flash owned by the flight MCU. Full-rate recording starts
+at launch detect, with a RAM pre-trigger
+([D-6.6, D-6.9, D-2Nov.3, D-2Nov.11](../../decisions.md)).
 
 ```mermaid
 flowchart TB
-  P["FLIGHT_3V3 · a 0 Ω link per sensor, R3101–R3501"] --> ST & TD & HG & BP & TE
+  P["FLIGHT_3V3 · a 47 Ω link per sensor, R3101–R3501"] --> ST & TD & HG & BP & TE
+  P2["FLIGHT_3V3 · 22 Ω link R3701"] --> MG["MMC5983MA magnetometer
+100 Hz · non-essential"]
+  MG -->|"I²C3"| F
   ST["LSM6DSV16X
 960 Hz · low-g + gyro"] -->|"SPI1 + DRDY"| F["Flight MCU"]
   TD["ICM-42688-P
@@ -34,19 +39,27 @@ axis transform, validity and clipping flag.
 | ADXL375BCCZ / SPI3 | Acceleration when both IMUs clip | ±200 g nominal, ±180 g minimum |
 | BMP390 / I²C1 | Compact pressure for lower flight | 300–1250 hPa; at 9 km (≈308 hPa) it's at its floor |
 | MS560702BA03-50 / I²C2 | Independent pressure conversion | Best accuracy 300–1100 mbar; extended range is less accurate |
+| MMC5983MA / I²C3 | Heading and roll reference for roll control and the grid fins; attitude after a flight (D-2Nov.11) | ±8 G, 0.6 mG RMS at 100 Hz. Needs calibration in the assembled bay; never gates the watchdog or the estimator |
 | MX66L2G45GMI00 / quad SPI | Capacity without a removable card | 256 MiB; program stalls need the RAM buffer |
 
 Two of each sensor type gives range and independent observations, not a vote
 that finds the truth. Shared mounting, power and a blocked vent stay common faults.
 
-**Power (D-6.6):** no per-sensor switches or isolators. They guarded a rare
-sensor short or latch-up with 13 ICs, each one a new way to lose a sensor.
-Firmware recovers a hung I²C bus by clocking SCL and resets a sensor with its
-soft-reset command. The NOR keeps its own limiter (U3601) and boundaries.
+**Power (D-6.6, D-2Nov.3):** no per-sensor switches or isolators. They guarded a
+rare sensor short or latch-up with 13 ICs, each one a new way to lose a sensor.
+Instead each sensor's supply link is 47 Ω: a dead short draws at most ≈71 mA,
+which the flight rail carries, and the 0603 may burn open, which isolates it.
+In normal running the link drops ≤66 mV (MS5607 converting). Firmware recovers a
+hung I²C bus by clocking SCL and resets a sensor with its soft-reset command. A
+sensor it gives up on gets its bus pins parked (driven low or set as inputs), so
+the MCU doesn't feed it through the 22 Ω damping. The magnetometer's link is
+22 Ω because its minimum supply is 2.8 V. The NOR keeps its own limiter (U3601)
+and boundaries.
 
 **Pins:** ST PA5/PA6/PA7; TDK PB13/PB14/PB15; ADXL PC10/PC11/PC12; BMP PB6/PB7;
-TE PB10/PB3. NOR: PB2 clock, PE11 select, PD11 IO0, PD12 IO1, PE2 IO2, PD13 IO3.
-Interrupts: [flight pin map](proposed-flight-pinout.csv).
+TE PB10/PB3; magnetometer PA8 (SCL) / PC9 (SDA), INT on PE6. NOR: PB2 clock,
+PE11 select, PD11 IO0, PD12 IO1, PE2 IO2, PD13 IO3. Interrupts and the rest:
+[firmware interface](../firmware-interface.md#flight-mcu-pins).
 
 ## Recording
 
@@ -74,6 +87,7 @@ drop torn tails. [Footer and identity rules](justifications/recording-and-servic
 | Budget (calculated) | Value |
 | --- | --- |
 | Sensor data / diagnostics | 96,672 B/s / ≤1,024 B/s |
+| Magnetometer, 100 Hz with 16-byte records (D-2Nov.11) | ≈1,600 B/s more |
 | 128 KiB staging at that rate | 1.342 s |
 | Kármán mission ledger with 10 s lead-in | 183,407,936 B |
 | Sector-rounded, footers charged again | 195,637,248 B |
@@ -88,8 +102,11 @@ mission window erased.
 
 ## Capture and placement
 
-Keep the sensors and NOR; remove the per-sensor switches and isolators in the
-[capture delta](schematic-capture-spec.md#burrito-changes). The comms
+Keep the sensors and NOR; remove the per-sensor switches and isolators and fit
+the 47 Ω links and the magnetometer, per the
+[capture delta](schematic-capture-spec.md#sensors-memory-and-can). Place the
+magnetometer at the top end of the board, away from current and steel
+([layout guide](../pcb-layout-guide.md#c09a-magnetometer)). The comms
 regulator split keeps NOR powered through a comms-LDO fault; a services fault
 still drops it. Hold-up protects flight execution, not a last flash commit.
 

@@ -198,4 +198,4 @@ the above-80-km study is non-binding.
 
 Evidence: [radio contract](../../radio-change-2026-09-07.md),
 [height study](../../height-estimation-above-80km-2026-09-07.md),
-[firmware handoff](../../../firmware-handoff-2026-09-07.md).
+[firmware handoff](../../firmware-handoff-2026-09-07.md).

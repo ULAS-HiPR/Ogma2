@@ -1,7 +1,7 @@
 # Ogma 2 flight fault contract
 
-**Status, 6 October 2026: controlling contract.** Electrical detail describes the
-8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
+**Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
+detail describes the 8 September CAD. Decided changes are in [decisions.md](../decisions.md) and the
 [capture specification](../docs/architecture/schematic-capture-spec.md).
 Capture waits for Seán's go-ahead.
 
@@ -65,8 +65,8 @@ processors (D-6.12) are not redundant flight computers.
 ## Watchdog
 
 Only essential progress earns the heartbeat: acquisition and validation,
-estimation and phase policy, each within its deadline. Bulk logging and radio
-are not in-flight prerequisites.
+estimation and phase policy, each within its deadline. Bulk logging, radio and
+the magnetometer are not in-flight prerequisites (D-2Nov.11).
 
 Degraded mode is still supervised. A logger fault never justifies feeding the
 watchdog while the essential loop is dead. Losing required core progress still
@@ -83,8 +83,11 @@ coordination with external supervision are EX-03/04 work.
 - A reset or error flag alone never authorises deployment. Missing evidence is
   not permission to fire; the gap needs independent recovery coverage.
 - Still in force: the physical arm in the pyro feed, outputs off by default at
-  reset, firmware-bounded pulses with a per-channel current limit, and the
-  staging inhibit (D-6.1, D-6.2).
+  reset, a high side and a low side per channel (D-2Nov.1), firmware-bounded
+  pulses with a per-channel current limit, and the staging inhibit (D-6.1,
+  D-6.2, D-7.2).
+- The power hold is re-asserted within 50 ms of a reset in flight (D-2Nov.4), so
+  a restart doesn't also lose the battery enable.
 
 Accepted cost: a recoverable processor reset can end the staging objective.
 Reconstruction logic, interruption budgets, actuator-event evidence and how
@@ -97,7 +100,10 @@ threshold or circuit is chosen here.
   Profiles can't put sustainer ignition on a recovery channel to dodge the
   post-reset veto.
 - Rev A fits all three channels and the stage latch (D-7.1). Channel 3 has its
-  own staging arm (D-7.2, proposed).
+  own fuse and staging arm (D-7.2, D-2Nov.2).
+- Each igniter sits between a high side and a low side on different GPIO ports
+  (D-2Nov.1): one stuck pin or one shorted switch can't fire it once armed, and
+  the pad checks can see both failures.
 - The stage latch: any flight reset clears it asynchronously; its data input is
   the hardware staging-disarmed signal; a deliberate new-flight request (PD15)
   clocks it. Channel 3 fires only while it is set. Reset propagation and inert
@@ -126,9 +132,9 @@ boundary. Nothing here approves a recovery device or a live test.
 
 ## Release gates
 
-[G0–G3](../docs/archive/reliability-execution-plan.md#release-gates): inert bench
+[G0–G3](../docs/architecture/11-verification.md#release-gates): inert bench
 work, engineering-PCB order, installed-configuration qualification, then unit
-and mission release. Each gate needs its own evidence and approval. No existing
+and mission release (live again from 2 November, D-2Nov.12). Each gate needs its own evidence and approval. No existing
 flight obligation is waived. Accepting the policy doesn't authorise a purchase,
 a live energetic test or a flight.
 
@@ -140,8 +146,9 @@ assigned yet, and no test has run.
 For each exercised row add: the actual phase and arm conditions; how the fault is
 detected and the coverage limit; a numerical response and interruption budget
 with its reasoning; the supported reset and retention class; mission-specific
-independent coverage; a named owner and reviewer; and a linked test result. Use
-the EX-01 closure criteria in the
+independent coverage; a named owner and reviewer; and a linked test result. The
+campaigns are in [11 Verification](../docs/architecture/11-verification.md#campaigns);
+the full EX-01 closure criteria stay in the archived
 [execution plan](../docs/archive/reliability-execution-plan.md#ex-01--fault-allocation-and-release-policy).
 
 Don't invent millisecond limits before the power, sensing and restart work
