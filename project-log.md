@@ -3503,3 +3503,21 @@ Checked, no change:
   600 ms (550 ms restart plus 50 ms to re-assert).
 
 CAD unchanged.
+
+Later the same night, from three quick models kept outside the repo for now
+(assumptions stated with them; models, not evidence):
+
+- The events table as a state machine, fed a 3.6 g, 150 ms knock on the pad:
+  launch detect passes, there's no burnout, and the backup timer fires the
+  drogue about 25 s later. The main follows at once, since 0 m counts as at or
+  below the main altitude. With the proposed 100 m gate nothing fires, and a
+  modelled flight gives the same events either way. EuRoC arms before filling,
+  so the crew is still at the rocket in that window.
+- Pad datum over 2,000 modelled six-hour holds: captured at arming, the main
+  would be 20 m off on a typical hold and 59 m at the 95th percentile; tracked
+  with τ ≈ 3 min, under 1 m. Measuring the hold rate on 30 s means rather than
+  single samples keeps gusts from holding the filter half the time.
+- Regeneration, order of magnitude: about 1 mJ lifts 220 µF from 8.4 V to the
+  8.99 V trips; a small servo rotor at speed holds 37–343 mJ. The bench test
+  decides. Added to the Open table: standalone, nothing keeps a wrong (3S) pack
+  off the servos since D-6.1.
