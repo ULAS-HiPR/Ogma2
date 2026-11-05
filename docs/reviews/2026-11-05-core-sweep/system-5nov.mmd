@@ -1,0 +1,52 @@
+---
+title: Ogma2 as decided by 5 Nov 2026 (dashed yellow = decided in chat 5 Nov, not yet in decisions.md)
+---
+flowchart TB
+  subgraph LOW["Low in the rocket, reachable from the ground · wiring up a raceway outside the tanks (Jay, 2 Nov)"]
+    AVP["2S Li-ion avionics pack"]
+    PRP["6S propulsion pack"]
+    ARMS["Arm switches
+recovery J6101 · staging J6102"]
+    ACTEN["Active-board enable switch"]
+    VSW["CATS Vega switch"]
+  end
+  UMB["Ground umbilical
+on the rail, pulled at Go"]
+  CH["Churro
+no MCU · protection + monitoring"]
+  BU["Burrito
+flight MCU: sensors + magnetometer, flash,
+pyro, servos, both CAN buses
+comms MCU: GNSS, LoRa radio, USB"]
+  FA["Fajita
+propulsion controller, governs itself"]
+  ACT["Active control board
+own IMU + magnetometer
+up to two servos · canards, maybe grid fins
+dormant until Burrito says Active"]
+  CV["CATS Vega
+independent COTS recovery, own battery"]
+  PY["3 pyro outputs
+2 recovery + 1 staging, one e-match each"]
+  SV["3 servo outputs
+event moves only"]
+  GS["Ground station"]
+
+  AVP --> CH
+  PRP --> CH
+  UMB --> CH
+  CH -->|"AV · protected 2S · Samtec"| BU
+  CH -->|"PROP · protected 6S · Micro-Fit"| FA
+  CH -->|"new: AV branch 3 · own eFuse, not after U1001"| ACT
+  ACTEN -.->|"enable loop"| CH
+  ARMS -.->|"loops in series with pyro power"| BU
+  BU -->|"CAN bus 1 · FDCAN1 · 500 kbit/s"| FA
+  BU -->|"new: CAN bus 2 · FDCAN2 · Safe / Active / Abort"| ACT
+  BU --> PY
+  BU --> SV
+  BU <-->|"sub-GHz radio"| GS
+  VSW -.-> CV
+
+  classDef new fill:#fff4d6,stroke:#b07d00,stroke-width:2px,stroke-dasharray:6 4
+  class ACT,ACTEN new
+  style LOW fill:#f3f3f3,stroke:#999999
