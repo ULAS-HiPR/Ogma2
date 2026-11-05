@@ -56,6 +56,54 @@ evening. **Open** and **Proposed** stay as they are until he decides.
    - Burrito has no room for wired extras: after the FDCAN2 move no flight
      pins are spare, and the H563's two CAN controllers are both used.
    - What decides it: what the board would fire, and where.
+9. §2, §10, §11 **Proposed (Seán):** one access panel on the side of the
+   rocket, reachable from the ground, holding the arm switches, the umbilical
+   and a service port for programming. Notes:
+   - The panel sits low with the packs and switches (Jay, 2 Nov), so USB runs up
+     the raceway to Burrito's J4401. Full-speed USB over that length and
+     through two connectors needs a bench test.
+   - Programming through it is USB to the comms MCU; the flight MCU takes its
+     new build over the inter-MCU UART and checks it after reboot (05's
+     "two-MCU update"). Comms never gets a path to flight reset (firmware
+     interface). SWD (TC2030) stays bench-only.
+   - The umbilical plug at the panel matches D-2Nov.7's pull-away plug on the
+     skin. The active board's enable and any external pyro arm would join the
+     switches there.
+10. §2 **Open (Jay and Seán):** is the umbilical needed? Jay: switch on, walk
+    away, launch. Seán: hours pass between switch-on and launch, and GNSS lock
+    should come early. In the repo, the avionics pack alone covers ≥6 h on the
+    rail plus flight (D-2Nov.6), so for avionics the umbilical is margin and
+    GNSS can stay on through the hold either way. Its stronger case is the
+    propulsion side during filling (PROP ≈24–25 V, set with the propulsion
+    owner) and packs that launch full.
+11. §10 **Confirmed (already in the repo):** the GNSS antenna is external on
+    SMA (J4501); the radio has its own SMA (J4601). The av-bay design has to
+    take both antennas and their cables. The GNSS antenna is passive and
+    Burrito has no bias circuit for an active one, so keep that coax short. The
+    two SMA ports are identical and can be swapped: label or key the cables.
+12. §7 **Open:** do Burrito's three event servos need position evidence too? No
+    flight pins are spare after the FDCAN2 move.
+13. §13 **Context (Seán):** a Waterloo-style design sheet, every number in one
+    place with one owner per value; its avionics tab gives the av-bay designer
+    board models, mounting holes, orientation and battery sizes. For Ogma2:
+    the sheet owns the vehicle-interface numbers (outlines, holes, masses, pack
+    sizes, panel layout) and the repo links to it, so no value lives in two
+    places.
+
+## Parked for other boards
+
+Not for tonight; kept so nothing is lost.
+
+- **Servo position sensing on Fajita and the active board (Seán):** without it
+  there's no evidence of actual servo position. Proposed: one tiny Hall-effect
+  angle board reused on both, with no MCU: a magnetic angle sensor IC and a
+  diametric magnet on the driven shaft (valve stem or fin, not the servo horn),
+  PWM or analogue out on three wires to the board that drives that servo, read
+  on a timer or ADC pin. Not a CAN node per sensor: the active board's loop
+  needs fin angle at loop rate (D-2Nov.9 keeps that off CAN), and each node
+  would add an MCU, regulator, transceiver, firmware and ID for a three-wire
+  signal. Candidates to check: AS5048A, AS5600. Fajita's requirements capture
+  is a couple of months out.
 
 Context, stated by Seán on 5 November: close Burrito and Churro first, made and
 tested as soon as possible (agreed with Jay, Anav and Arnav). The other boards
