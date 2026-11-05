@@ -37,6 +37,25 @@ evening. **Open** and **Proposed** stay as they are until he decides.
    hand tug test; Harwin Gecko-MT as the high-reliability alternative (what
    Waterloo Rocketry flies). DroneCAN calls GH unsuitable for safety-critical
    hardware.
+8. §2, §6, §9 **Open (Seán):** we may need an external pyro board, probably on
+   the same CAN bus as the active board. Which Churro supply would it use?
+   Unsure. Notes for the sweep:
+   - Supply, if it happens: its own Churro branch off the AV source, fused,
+     with its own physical arm switch in series at the bottom of the raceway
+     (LV-0530, 0550, 0270, 0280). Not the active board's servo branch, not
+     Burrito (Ogma doesn't distribute power), not the 6S PROP feed. The AV
+     pack is fine for the SRAD chain; the CATS Vega stays the chain with its
+     own battery (LV-0240).
+   - It reopens a core rule: only the flight MCU commands recovery and staging
+     outputs, and CAN can't (AGENTS.md, current-system, D-2Nov.9; the "pyro
+     over CAN" Open row, Jay's 14 Oct ask, says "not for recovery").
+   - On bus 2 it would share wires with the experimental board that bus 2
+     exists to isolate, and that harness would become safety-critical
+     deployment wiring (SRD §5.4, LV-0490 tug test) inside the ground test
+     (LV-0520).
+   - Burrito has no room for wired extras: after the FDCAN2 move no flight
+     pins are spare, and the H563's two CAN controllers are both used.
+   - What decides it: what the board would fire, and where.
 
 Context, stated by Seán on 5 November: close Burrito and Churro first, made and
 tested as soon as possible (agreed with Jay, Anav and Arnav). The other boards
