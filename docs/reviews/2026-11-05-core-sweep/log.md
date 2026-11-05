@@ -89,6 +89,26 @@ evening. **Open** and **Proposed** stay as they are until he decides.
     the sheet owns the vehicle-interface numbers (outlines, holes, masses, pack
     sizes, panel layout) and the repo links to it, so no value lives in two
     places.
+14. §7, §5 **Proposed (Seán), answers 12 if needed:** expose the monitor I²C
+    (I²C4, PB8/PB9, 100 kHz, already carrying Churro's INA228 0x41 and ADS1115
+    0x48 and Croí's INA228 0x40) at a connector on Burrito, and plug angle
+    sensors into it. Notes:
+    - Costs no MCU pins, and the bus already leaves the board to Churro through
+      a TCA4307, designed so a stuck bus leaves readings unknown and protection
+      unaffected.
+    - Shared fate: a shorted or stuck sensor harness would also blind Churro's
+      monitoring (pack voltage, live source, PROP current), which pad telemetry
+      depends on. So the port gets its own TCA4307, ESD protection and a
+      current-limited 3.3 V feed.
+    - Three sensors need three addresses other than 0x40, 0x41 and 0x48: pick a
+      sensor with selectable addresses and a PWM output too (AS5048B to check),
+      so one angle board also serves Fajita and the active board on plain pins.
+    - I²C is a board-level bus: fine inside the av-bay, wrong for a run to the
+      fins or the nose.
+    - Serves Burrito's own servos only. The active board still reads its fin
+      angles locally, at loop rate.
+    - Decides it: whether Burrito's servos need evidence (12), and where they
+      sit.
 
 ## Parked for other boards
 
