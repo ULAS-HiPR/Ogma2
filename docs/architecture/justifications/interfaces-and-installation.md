@@ -40,13 +40,12 @@ inventing a mechanism.
 
 **No remote node on Burrito.** Local PWM is Burrito's only actuator interface,
 for bounded, event-triggered moves. Don't add a remote actuator node,
-controller, expander or connector to Burrito. Fajita keeps its own local
-control. A mechanism that moves the vehicle in a closed loop (roll control, grid
-fins) gets its own node under D-2Nov.8: its own processor and fast sensor, a
-neutral path that survives hung firmware, dormant until authorised, an
-unterminated CAN stub with IDs that lose arbitration to Burrito's and Fajita's
-(numerically higher), and its own fused Churro feed. Its board waits for Sim
-Systems' requirements. The 200 Hz traffic example doesn't create that
+controller or expander to Burrito; its only link to one is CAN bus 2. Fajita
+keeps its own local control. A mechanism that moves the vehicle in a closed
+loop (roll control, grid fins) goes on the active board under D-2Nov.8: its own
+processor and fast sensors, a neutral path that survives hung firmware, acting
+only on a fresh Active from Burrito (D-5Nov.2), on its own CAN bus (D-5Nov.3)
+and its own pack (D-18Nov.1). The 200 Hz traffic example doesn't create that
 architecture.
 
 Sources: [TI TPS1H100-Q1 Rev D](https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf)
@@ -55,8 +54,9 @@ Sources: [TI TPS1H100-Q1 Rev D](https://www.ti.com/lit/ds/symlink/tps1h100-q1.pd
 
 ## CAN: capture the hardware now, change both nodes together
 
-Keep the TCAN3413DRBR, TXU0304PWR, FDCAN pins, the three-contact GH and the
-linear trunk terminated only at its two ends.
+Keep the TCAN3413DRBR, TXU0304PWR, FDCAN pins, a three-contact connector (Harwin
+Gecko from D-18Nov.4) and each linear trunk terminated only at its two ends.
+Bus 2 (D-5Nov.3) copies bus 1's circuit on FDCAN2.
 
 - **Commission at the existing 500 kbit/s Classical CAN contract.**
 - 500 kbit/s arbitration with 2 Mbit/s FD data is a proposed firmware change

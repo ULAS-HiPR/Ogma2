@@ -143,3 +143,21 @@ start from scratch with the team, using Ogma2 as the template.
       firmware interface, the power contract and the propulsion boundary.
 - [ ] `project-log.md` entry for the sweep.
 - [ ] One commit on PR #2 after Seán's go-ahead; then `python3 render.py`.
+
+## 18 November: outcome, recorded
+
+Decided in chat on 5 and 18 November and recorded in `decisions.md` on
+18 November (see the project log).
+
+- 1, 2: confirmed, no new row.
+- 3 → D-5Nov.1. 4 → D-5Nov.2. 5 → D-5Nov.3, pins confirmed.
+- 6 → replaced by D-18Nov.1: the active board gets its own pack and arm key;
+  Churro keeps two feeds.
+- 7 → D-18Nov.4: Harwin Gecko, for bus 2 and J501.
+- 8: still open. Seán thinks the recovery bay is far from the av-bay; ask James.
+- 9: unchanged; the active board's arm key and the CATS Vega's switch and cell
+  join the panel.
+- 10: keep D-2Nov.7; whether to fit the umbilical is settled with Jay and
+  propulsion.
+- 11, 13: unchanged.
+- 12, 14 → D-18Nov.3: no.

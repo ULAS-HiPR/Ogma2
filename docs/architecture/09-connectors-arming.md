@@ -16,7 +16,7 @@ after launch detect"] -.->|"keeps U101 on"| B
   C --> D["Firmware readiness
 red / green lamp"]
   E["J6101 · recovery arm"] --> F["Energy at channels 1 / 2"]
-  F --> S["U6103 A → PC8
+  F --> S["U6103 A → PE13
 over USB and telemetry"]
   E3["J6102 · staging arm"] --> F3["Energy at channel 3"]
   F3 --> S3["U6103 B → PE15
@@ -43,14 +43,14 @@ powers down, even if firmware is holding the enable.
 
 | Item | Decision |
 | --- | --- |
-| Connector | 2-contact, rated above its fuse (F6101 / F6102), to an external maintained switch. Part chosen at capture. It must not mate Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the JST GH enable loops, so a crossed harness can't put propulsion voltage on the pyro rail. Candidate: single-row Micro-Fit 3.0; confirm by trying the real housings |
+| Connector | 2-contact, rated above its fuse (F6101 / F6102), to an external maintained switch. Part chosen at capture. It must not mate Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the JST GH enable loops, so a crossed harness can't put propulsion voltage on the pyro rail. Proposed (19 Nov): single-row Micro-Fit 3.0, recovery 2-way, staging 3-way with one cavity empty, so they can't swap; confirm by trying the real housings |
 | Recovery | `ENERGY_TAP` → F6101 → J6101 → `RECOVERY_ARMED_VBAT` → channels 1 and 2 |
 | Staging (D-7.2, D-2Nov.2) | Its own fuse and arm: `ENERGY_TAP` → F6102 → J6102 → `STAGING_ARMED_VBAT` → channel 3. J6102 is 2-contact, keyed so it can't mate J6101, J701 or the GH loops |
 | Open or unplugged | No energy at the output switches, whatever firmware does |
-| Servos | Not behind the arm; own fuse |
-| Indication | Arm sense U6103 → PC8 (recovery) and PE15 (staging), over USB and the 1 Hz pad telemetry (D-2Nov.10); no lamp |
+| Servos | None on Burrito (D-19Nov.2) |
+| Indication | Arm sense U6103 → PE13 (recovery, D-5Nov.3) and PE15 (staging), over USB and the 1 Hz pad telemetry (D-2Nov.10); no lamp |
 | Switch parts | Open: maintained, rated above the fuses at 8.4 V DC, operable from outside the airframe |
-| Where they go | EuRoC: on the airframe, reachable from the ground with the rocket on the rail, no ladders or stools, on the side away from the rail (LV-0260–0280, 0540–0550). The av-bay sits above the tanks, so the switches may need to sit low with a harness up to Burrito; open with Jay |
+| Where they go | EuRoC: on the airframe, reachable from the ground with the rocket on the rail, no ladders or stools, on the side away from the rail (LV-0260–0280, 0540–0550). The av-bay sits above the tanks, so the switches may need to sit low with a harness up to Burrito; open with Jay. The active board's arm key (D-18Nov.1) and the CATS Vega's switch and cell (D-18Nov.2) go with them |
 
 The output harness J6601 is not an arm connector: 1/2 recovery high sides, 3
 staging high side, 4/5/6 igniter returns, each switched to ground by its own low
@@ -63,12 +63,13 @@ continuity values close.
 | --- | --- | --- | --- |
 | J101 | Molex Nano-Fit 1053111102 | Standalone 2S | Footprint to draw from the Molex drawing; never fitted with J102 |
 | J102 | Samtec MPT-08-01-01-L-RA-SD | To Churro | Pin 8 now `CROI_POWER_HOLD` ([08](08-foinse-can.md)) |
-| J103 | JST GH 2-contact | FC battery enable | Defined |
+| J103 | Harwin Gecko 2-contact (was JST GH, D-19Nov.5) | FC battery enable | Series and lock at capture |
 | J6101 | 2-contact, keyed apart from J701 | Recovery arm switch | Function decided; connector and switch parts open |
 | J6102 | 2-contact, keyed apart from J6101 and J701 | Staging arm switch | Function decided (D-7.2); connector and switch parts open |
 | J6601 | Micro-Fit 430450600 | Pyro outputs | 1/2 recovery high, 3 staging high, 4/5/6 switched returns |
-| J6602 | Micro-Fit 430451000 | Three servos | [04](04-servos.md); 10 unwired |
-| J501 | JST GH 3-contact | CAN H / L / reference | No power contact |
+| J6602 | Removed | Was three servos | D-19Nov.2 |
+| J501 | Harwin Gecko 3-contact (was JST GH) | CAN bus 1 H / L / reference, to Fajita | No power contact; series and lock chosen at capture; Fajita's end has to match (D-18Nov.4) |
+| Bus 2 (ref at capture) | Harwin Gecko 3-contact | CAN bus 2 H / L / reference, to the active board | No power contact (D-5Nov.3, D-18Nov.4) |
 | J4401 | GCT USB4105-GF-A | USB-C service | Footprint mismatch with the local library to fix |
 | J4501 / J4601 | Amphenol 132134 SMA | GNSS / radio | Identical; can be swapped |
 | J2301 / J4201 | TC2030-NL-FP | Flight / comms debug | Development only |
@@ -82,12 +83,11 @@ The umbilical plug falls under the same EuRoC access rule as the arm switches.
 
 - **Two batteries:** fit J101 or J102, never both. A note beside two fitted
   connectors doesn't make them exclusive; use assembly variants.
-- **Servo vs output harness:** J6602 has 10 contacts, J6601 has 6, so they
-  can't mate.
+- **Servo vs output harness:** moot since D-19Nov.2; J6602 is gone.
 - **GNSS vs radio SMA:** identical; radio transmit into the GNSS input may
   damage it. Use a different connector type or gender for GNSS, or retained,
   labelled leads.
-- **Enable loops vs arm:** three 2-contact GH plugs (Croí J103, Churro J103,
+- **Enable loops vs arm:** three 2-contact Gecko plugs (D-19Nov.5; Croí J103, Churro J103,
   J104) look alike; J6101 and J6102 must stay physically distinct from them,
   from each other and from Churro J701.
 
@@ -98,7 +98,7 @@ ground-return faults and USB-attached cases in the installed review.
 ## Capture
 
 Draw J101 from the [Nano-Fit drawing](justifications/interfaces-and-installation.md#source-variants-and-harness-construction);
-a rectangle isn't a land pattern. Add J6101, J6102, F6101, F6102 and F6801 per
+a rectangle isn't a land pattern. Add J6101, J6102, F6101 and F6102 per
 the [capture delta](schematic-capture-spec.md#burrito-changes), and Churro's J801
 per the [Churro changes](schematic-capture-spec.md#churro-changes). Codex
 captures and places after the go-ahead; Seán routes.

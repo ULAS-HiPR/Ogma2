@@ -78,13 +78,13 @@ On the pad, the armed row without a checkpoint means a cold boot with an arm
 closed. That path can't deploy the main, and the phase in the pad telemetry
 shows it: disarm, let the board boot normally, then re-arm.
 
-Open for Anav: a reset after launch detect but before the first in-flight
-checkpoint boots as PAD. Launch detect fires again only while the motor still
-burns; after burnout nothing would. Proposed: write the in-flight checkpoint
-before anything else at launch detect, and add a missed-launch backup in PAD
-(armed, barometric altitude more than 50 m above the datum for 2 s) that takes
-the armed row above. That row must then be unable to fire the main from a pad
-pressure transient.
+**Must, before first flight (D-19Nov.1).** A reset after launch detect but
+before the first in-flight checkpoint would boot as PAD, and launch detect fires
+again only while the motor still burns; after burnout nothing would. So firmware
+must write the in-flight checkpoint before anything else at launch detect, and
+must run a missed-launch catch in PAD (armed, barometric altitude more than 50 m
+above the datum for 2 s; proposed values) that takes the armed row above. That
+row must be unable to fire the main from a pad pressure transient. Owner: Anav.
 
 ## Pad telemetry (D-2Nov.10)
 
@@ -124,7 +124,8 @@ profile while the board sits still.
 
 Main altitude, backup timers, simulated apogee time, pulse length per output,
 Mach lockout threshold, landed tail, hold-release delay, maximum flight time and
-the ground-test flag. If J103's loop broke in flight, releasing the hold
+the ground-test flag. At EuRoC the main altitude is at most 450 m above the pad
+(LV-0370, D-18Nov.5); readback checks the configuration against that limit. If J103's loop broke in flight, releasing the hold
 switches the board off and ends the GNSS beacon, so set the release delay with
 recovery in mind. Read back over USB before arming; the running build and
 configuration are recorded at launch detect.
@@ -141,5 +142,8 @@ configuration are recorded at launch detect.
 5. The LV-0520 ground test in ground-test mode, inert loads first.
 6. A forced false launch detect on the pad, arms closed on inert loads: nothing
    fires, including after every backup timer.
+7. D-19Nov.1: a reset straight after launch detect comes back in flight, not on
+   the pad; a missed launch trips the catch; a pad pressure transient with an
+   arm closed fires nothing.
 
 Where these sit among the other campaigns: [11 Verification](11-verification.md).

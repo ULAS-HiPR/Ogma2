@@ -20,21 +20,19 @@ on the rail, pulled at Go"] --> C
 flight computer"]
   C -->|"protected 6S · Micro-Fit"| F["Fajita
 engine control, redlines, abort"]
-  B <-->|"CAN · 500 kbit/s"| F
+  B <-->|"CAN bus 1 · 500 kbit/s"| F
   B -.->|"AUX 3.3 V + I²C
 monitoring only"| C
   B <-->|"sub-GHz radio"| G["Ground station"]
   A["External GNSS antenna"] --> B
   U["USB-C laptop"] <-->|"service and logs"| B
-  B --> S["3 servo outputs
-event moves only"]
   B --> O["3 pyro outputs: 2 recovery, 1 staging
 behind physical arm switches"]
-  I["CATS Vega: independent recovery
-own battery and switch"]
-  N["Actuator node: roll, grid fins
-rules decided, board deferred"]
-  B -.->|"CAN stub"| N
+  I["CATS Vega: independent COTS recovery
+own cell, switch and e-matches"]
+  N["Active board: RCS, grid fins
+own pack and arm key, own IMU and magnetometer"]
+  B <-->|"CAN bus 2 · Safe / Active / Abort"| N
 ```
 
 The dashed AUX line powers and reads Churro's monitors; it never controls
@@ -42,14 +40,16 @@ Churro's protection. The two packs keep separate positives and share ground. On
 the rail the umbilical feeds both through per-source ideal diodes, so it can't
 charge either pack; pulling it hands each feed to its pack (D-2Nov.7).
 Standalone, Burrito takes its own 2S pack on J101 instead of Churro: one or the
-other, never both. USB is service power only. The actuator node is a set of
-rules (D-2Nov.8), not a board yet.
+other, never both. USB is service power only. The active board follows the
+D-2Nov.8 rules on its own CAN bus (D-5Nov.3) and its own pack (D-18Nov.1); it
+is designed with the build group from 19 November. The CATS Vega is the COTS
+recovery set (D-18Nov.2).
 
 ## The boards
 
 | Board | Job | State |
 | --- | --- | --- |
-| **Burrito / Croí2** | Sensing, estimation, flight state, recording, three pyro outputs, three servos, a magnetometer, CAN; a comms processor for GNSS, radio and USB | 44 sheets, 643 parts, unrouted, 80 × 230 mm working outline |
+| **Burrito / Croí2** | Sensing, estimation, flight state, recording, three pyro outputs, a magnetometer, CAN; a comms processor for GNSS, radio and USB | 44 sheets, 643 parts, unrouted, 80 × 230 mm working outline |
 | **Churro / Foinse2** | Two separately protected and enabled feeds, from the packs or the rail umbilical; propulsion current, voltage and temperature | 12 sheets, 113 parts, unrouted, 60 × 80 mm |
 | **Fajita** | Engine-side sensing, valves, permissives, redlines, abort, its own recording | Owned by propulsion; Ogma only defines the boundary |
 
@@ -66,7 +66,7 @@ flowchart LR
     FS["Sensors: 2 IMUs, high-g, 2 barometers"]
     FM["Magnetometer, non-essential"]
     FN["256 MiB NOR recorder"]
-    FO["3 pyro outputs + 3 servos"]
+    FO["3 pyro outputs"]
     FC["CAN to Fajita"]
     FS ~~~ FM ~~~ FN ~~~ FO ~~~ FC
   end
@@ -107,7 +107,6 @@ flight · comms · services"]
 high + low side"]
   TAP --> PF3["F6102 staging fuse"] --> ARM3["J6102 arm"] --> PY3["Channel 3
 + reset latch"]
-  TAP --> SF["F6801 servo fuse"] --> SV["Servos"]
   EN["J103 enable"] -.-> E
   HOLD["Firmware hold
 in flight, ≈1 s RC"] -.-> E
@@ -115,8 +114,8 @@ in flight, ≈1 s RC"] -.-> E
 
 Logic goes through U101, a 4.0 V buck and three LDOs: flight, comms and
 services (NOR, CAN, monitors), so a comms fault can't take the recorder.
-Pyro and servo energy leave before U101 through their own fuses, so a shorted
-igniter or a stalled servo can't switch the computer off, and a staging fault
+Pyro energy leaves before U101 through its own fuses, so a shorted
+igniter can't switch the computer off, and a staging fault
 can't blow recovery's fuse. In flight, firmware holds the enable on, and an RC
 carries it through a restart; the eFuses restart after an over-current instead
 of latching off; the flight MCU's backup memory has its own hold-up. Detail in
@@ -147,7 +146,7 @@ staging latch come over USB and 1 Hz pad telemetry; no lamp shows them.
 | --- | --- | --- |
 | Comms MCU | H563VIT6, 100 pins | H563RIT6, 64 pins (D1) |
 | Rails | Three 3.3 V domains | Three at 3.352 V; services restartable from flight |
-| Servos | Three channels | Three (D-7.1), raw 2S, own fuse, ≥220 µF; event moves only |
+| Servos | Three channels | None (D-19Nov.2): the active board runs the loops |
 | Outputs | Three channels with one-shots, gates, high and low sides; no energy source | Three channels, each a TPS1H100 high side (≈2.0 A) and a CSD17318 low side on another GPIO port. Recovery fuse and arm; staging fuse, arm and reset latch. No one-shots or permit gates |
 | Power path | Outputs after U101; latch-off eFuses; enable open = off | Energy tapped after Q101, before U101; auto-retry; firmware hold with a ≈1 s RC; VBAT hold-up |
 | Sensors | Per-sensor switches and isolators | 47 Ω link per sensor; a magnetometer on I²C3 |
@@ -170,8 +169,8 @@ drawings govern the harness.
 | --- | --- |
 | ![Molex Nano-Fit 1053111102](https://www.molex.com/content/dam/molex/molex-dot-com/products/manual/en-us/images/105/105311/1053111102_hires.jpg?wid=480&hei=327) | **Nano-Fit, 2.5 mm, two contacts.** Burrito J101 standalone 2S and Churro J101 AV pack. Board **1053111102**, mate **1053071202**. Exact footprint missing on both boards. [Molex](https://www.molex.com/en-us/products/part-detail/1053111102) |
 | ![Samtec MPT eight-contact header](https://suddendocs.samtec.com/kineticimages/images/product/parts/mpt/mpt-08-01-01-l-ra-sd.png) ![Samtec MPS eight-contact receptacle](https://suddendocs.samtec.com/kineticimages/images/product/parts/mps/mps-08-01-01-l-ra-sd.png) | **Samtec, 5 mm, eight contacts.** Burrito J102 **MPT-08-01-01-L-RA-SD** ↔ Churro J301 **MPS-08-01-01-L-RA-SD**. Protected 2S, two grounds, returned AUX 3.3 V, I²C, fault and `CROI_POWER_HOLD` on pin 8. [Header](https://www.samtec.com/products/mpt-08-01-01-l-ra-sd) / [receptacle](https://www.samtec.com/products/mps-08-01-01-l-ra-sd) |
-| ![JST GH connector family](https://www.jst-mfg.com/product/images/pict/GH.jpg) | **JST GH, 1.25 mm.** Two-contact **BM02B-GHS-TBT(LF)(SN)** / **GHR-02V-S**: Burrito J103 and Churro J103/J104 source enables. Three-contact **BM03B-GHS-TBT(LF)(SN)** / **GHR-03V-S**: Burrito J501 CAN H/L/ground, no power. Four-contact **BM04B-GHS-TBT(LF)(SN)** / **GHR-04V-S**: Churro J601 probes. [JST family and exact variants](https://www.jst-mfg.com/product/index.php?series=105) |
-| ![Molex Micro-Fit 430451000 ten-contact header](https://www.molex.com/content/dam/molex/molex-dot-com/products/manual/en-us/images/430/43045/0430451000_hires.jpg?wid=480&hei=327) | **Micro-Fit 3.0.** Photo: Burrito J6602 ten-contact **430451000**, mate **430251000**, three-servo harness. Other exact variants: J6601 six-contact **430450600 / 430250600**, three-pyro output harness; Churro J201 four-contact **430450400 / 430250400**, PROP input; J701 two-contact **430450200 / 430250200**, protected PROP output. The pyro arms J6101 / J6102 must not use this same two-contact part. [Ten-contact part](https://www.molex.com/en-us/products/part-detail/430451000) |
+| ![JST GH connector family](https://www.jst-mfg.com/product/images/pict/GH.jpg) | **JST GH, 1.25 mm.** Two-contact **BM02B-GHS-TBT(LF)(SN)** / **GHR-02V-S**: Burrito J103 and Churro J103/J104 source enables. Burrito J501 (CAN) leaves the GH family for Harwin Gecko, like bus 2's connector (D-18Nov.4); series chosen at capture. Four-contact **BM04B-GHS-TBT(LF)(SN)** / **GHR-04V-S**: Churro J601 probes. [JST family and exact variants](https://www.jst-mfg.com/product/index.php?series=105) |
+| ![Molex Micro-Fit 430451000 ten-contact header](https://www.molex.com/content/dam/molex/molex-dot-com/products/manual/en-us/images/430/43045/0430451000_hires.jpg?wid=480&hei=327) | **Micro-Fit 3.0.** Photo: the ten-contact **430451000**, the family's look (Burrito's J6602 was removed, D-19Nov.2). Exact variants in use: J6601 six-contact **430450600 / 430250600**, three-pyro output harness; Churro J201 four-contact **430450400 / 430250400**, PROP input; J701 two-contact **430450200 / 430250200**, protected PROP output. The pyro arms J6101 / J6102 must not use this same two-contact part. [Ten-contact part](https://www.molex.com/en-us/products/part-detail/430451000) |
 | ![GCT USB4105 render](https://cdn.gct.co/products/USB/USB4105/USB4105_0_3D-Render.png) | **GCT USB4105-GF-A**, USB-C USB 2.0 service socket, Burrito J4401. Logic/data service, no pack charging. Current PCB/library footprint mismatch needs reconciliation. [GCT](https://gct.co/connector/usb4105) |
 | ![Amphenol 132134 SMA jack](https://s3.us-west-2.amazonaws.com/catsy.582/132134.jpg) | **Amphenol 132134**, vertical through-hole, 50 Ω standard SMA jack. Burrito J4501 GNSS and J4601 radio. Passive GNSS baseline; identical sockets need distinct retained leads. [Amphenol](https://www.amphenolrf.com/en-us/part/132134/662/) |
 | ![Tag-Connect TC2030-CTX-NL programming cable](https://www.tag-connect.com/wp-content/uploads/2018/03/tc2030-ctx-nl-programming-cable-380x253.jpg) | **TC2030-NL-FP** six-pad/locating-hole patterns at J2301/J4201, separate MCU debug. No mounted header. Shown **TC2030-CTX-NL** cable connects six spring contacts to Cortex ten-contact debug. [Tag-Connect](https://www.tag-connect.com/product/tc2030-ctx-nl-6-pin-no-legs-cable-with-10-pin-micro-connector-for-cortex-processors) |
@@ -185,11 +184,12 @@ and strain relief. [Connector inventory](09-connectors-arming.md) ·
 
 ## What's next
 
-1. Tuesday 3 November: review the 2 November decisions in
-   [decisions.md](../../decisions.md); Anav reviews the recovery logic.
-2. Answer the open rows: EuRoC access for packs and arm switches, LV-0690,
-   the umbilical, igniters, arm-switch parts, the actuator node's board.
-3. Capture the [specification](schematic-capture-spec.md) once Seán lifts the
+1. Anav reviews the recovery logic and his pyro-channel circuit.
+2. Answer the open rows in [decisions.md](../../decisions.md): EuRoC access for
+   packs and arm switches, the RF window, LV-0690, the external pyro board, the
+   umbilical, igniters, arm-switch parts, the CATS Vega's buyer.
+3. The active board, from its requirements, with the build group.
+4. Capture the [specification](schematic-capture-spec.md) once Seán lifts the
    hold, with a human reviewer per page; place; Seán routes.
-4. First board on inert loads, per [11 Verification](11-verification.md);
+5. First board on inert loads, per [11 Verification](11-verification.md);
    firmware bring-up; radio range test.

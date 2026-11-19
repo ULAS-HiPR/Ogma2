@@ -75,13 +75,17 @@ From the EuRoC SRD. These feed G2 and G3 for a EuRoC flight.
 | --- | --- | --- |
 | LV-0510 | Thermally test the electronics to know their reliable operating range | Thermal-chamber run of the flight assembly, powered and logging |
 | LV-0520 | Test every recovery mechanism successfully before EuRoC, with simulated triggers, recorded in a signed annex | Ground-test mode (D-2Nov.10): a vacuum chamber drives both barometers; inert loads first, then the procedure EuRoC accepts |
-| LV-0320 | At least six hours of battery life on the launch rail | Measured pad current × 6 h against cold pack capacity, then a six-hour powered hold on the bench without the umbilical |
-| LV-0300 | No LiPo or lithium primary cells on board | Inspection of every pack, the PROP pack included |
+| LV-0320 | At least six hours of battery life on the launch rail | Measured pad current × 6 h against cold pack capacity, then a six-hour powered hold on the bench without the umbilical; for every onboard pack, the active board's and the CATS Vega's included |
+| LV-0300 | No LiPo or lithium primary cells on board | Inspection of every pack: AV, PROP, the active board's and the CATS Vega's cell (Li-ion only in metal-can cylindrical cells, Appendix C) |
 | LV-0260–0280, 0310, 0540–0550 | Manually operated switches, connectors, batteries and arming features on the airframe, reachable from the ground without ladders, opposite the rail | Bay mockup, then the integrated vehicle on a rail |
 | LV-0480–0500 | Safety-critical wiring: cable management, secure connections, cryogenic-rated insulation near the N₂O | Harness inspection |
 | LV-0530 | Energetics safed until the rocket is in launch position | Arming procedure; arm sense in the pad telemetry |
-| LV-0240, 0250, 0430 | Fully redundant recovery electronics with their own power, one set COTS; a CATS Vega in each stage | Vehicle review: the CATS Vega on its own battery beside Burrito |
-| LV-0650–0700 | Active control: allowed uses, stable without it, fails safe, boost dormancy, electronics rules | The actuator-node review under D-2Nov.8, after the LV-0690 ruling |
+| LV-0240, 0250, 0430 | Fully redundant recovery electronics with their own power, one set COTS; a CATS Vega in each stage | Vehicle review: the CATS Vega on its own cell beside Burrito, each with its own e-match per event, and no SRAD hardware between the Vega and its e-matches (D-18Nov.2, Appendix B1) |
+| LV-0440–0470 | The CATS Vega's call-sign, EuRoC's mandated firmware, the CATS ground station, and its switch reachable like ours | Every CATS link shown at the FRR; firmware version read back before the flight |
+| LV-0340–0380 | Dual deployment: drogue at or near apogee, 23–46 m/s; main at or below 450 m AGL, under 9 m/s | Recovery's sizing; the main-altitude limit checked at readback (D-18Nov.5) |
+| LV-0650–0700 | Active control: allowed uses, stable without it, fails safe, boost dormancy, electronics rules | The active board's review under D-2Nov.8 and D-5Nov.2, after the LV-0690 ruling: dormant until at least 1500 m AGL without flight history (Appendix F1), Safe on a stale message, its own pack and arm key (D-18Nov.1) |
+| LV-0780–0820 | RF windows: 360°, at least two calibres long, not carbon; antennas centred in them, away from wiring and metal; no radio outside the skin | Bay mockup, then the integrated vehicle |
+| LV-0030, 0190, Appendix E1, SE-0010–0030 | Remote igniter arming; remote vent after an abort; a manual disconnect for valve power; launch-control range, interlock and dead-man switches | Propulsion's evidence, listed in the [boundary contract](../../interfaces/ogma-foinse-propulsion-boundary.md#euroc-items-on-the-propulsion-side) |
 
 ## Safety assertions at capture
 
@@ -95,8 +99,8 @@ population variant.
 3. Each `OUTPUTn_LOW` connects only to its low-side drain, its continuity
    network and J6601; never straight to GND.
 4. `ENERGY_TAP` (`BAT_EFUSE_IN`) connects only to Q101's drain, U101's IN pins,
-   F6101, F6102, F6801, its sense tap and local decoupling.
-5. F6101 feeds only J6101; F6102 only J6102; F6801 only the servo switch U6802.
+   F6101, F6102, its sense tap and local decoupling.
+5. F6101 feeds only J6101; F6102 only J6102.
 6. `RECOVERY_ARMED_VBAT` reaches only channels 1 and 2 (through R6310 / R6410),
    the recovery arm sense (R6101) and its rail-ADC divider (R8007, to PA2);
    `STAGING_ARMED_VBAT` only channel 3 (through R6510) and the staging sense

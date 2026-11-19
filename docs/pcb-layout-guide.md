@@ -136,7 +136,7 @@ drawing, not just a warning in firmware.
 
 Reserve J6601 energetic and J6602 servo connector mouths outward, next to their
 drivers. Keep J4401 USB accessible without opening the installed bay. Place
-J501 CAN at its harness exit, not through the quiet sensor area. Add independent
+J501 and bus 2's CAN connector (D-5Nov.3) at their harness exits, not through the quiet sensor area. Add independent
 harness strain relief to the carrier near each connector; the connector latch
 does not secure the wire mass. Leave room for fingers in field conditions.
 
@@ -393,7 +393,7 @@ See [Seeed's host layout guide](https://wiki.seeedstudio.com/wio_lr2021_pcb_desi
 and the [integration record](archive/radio-change-2026-09-07.md). The official Wio STEP
 is not yet aligned/linked; its missing 3D body does not make this space available.
 
-CAN U503 sits by J501 with protection and fixed end termination placed so cable
+CAN U503 sits by J501, and bus 2's transceiver by its connector, each with protection and fixed end termination placed so cable
 transients do not cross the MCU/sensor area first. The example page shows options
 such as split termination; do not add them when our schematic does not use them.
 Pair CAN H/L and preserve the explicit reference/return policy. Croí exports

@@ -1,6 +1,6 @@
 # Ogma 2 current system
 
-Updated 2 November 2026. Decisions live in [decisions.md](decisions.md); this
+Updated 18 November 2026. Decisions live in [decisions.md](decisions.md); this
 file states what is true now. Native CAD still holds the 8 September draft.
 Capture of the [capture specification](docs/architecture/schematic-capture-spec.md)
 waits for Seán's go-ahead after the Tuesday 3 November review. No fabrication,
@@ -12,14 +12,15 @@ Ogma 2 is HiPR's workhorse flight computer. It owns two boards:
 
 | Board | Name | Job |
 | --- | --- | --- |
-| Croí2 | Burrito | Flight computer: sensing, estimation, mission state, recording, recovery and staging outputs, servos, CAN; separate comms processor for GNSS, radio and USB |
+| Croí2 | Burrito | Flight computer: sensing, estimation, mission state, recording, recovery and staging outputs, CAN; separate comms processor for GNSS, radio and USB |
 | Foinse2 | Churro | MCU-less power board: protected 2S avionics and 6S propulsion feeds, from the packs or the rail umbilical; propulsion current, voltage and temperature monitoring |
 
 Fajita, the propulsion controller, is owned by propulsion and governs itself.
-Independent vehicle recovery, the groundstation and payloads are external.
-Closed-loop actuators (roll control, grid fins) go on their own node under the
-D-2Nov.8 rules; which board waits for Sim Systems' requirements. Start with the
-[system tour](docs/architecture/system-tour.md).
+The active board runs roll control and the grid fins in a closed loop, on its
+own CAN bus from Burrito and its own pack (D-2Nov.8, D-5Nov.3, D-18Nov.1); it is
+designed with the build group from 19 November. The CATS Vega is the
+independent COTS recovery set (D-18Nov.2). The groundstation and payloads are
+external. Start with the [system tour](docs/architecture/system-tour.md).
 
 ## Rules that constrain the design
 
@@ -28,24 +29,29 @@ D-2Nov.8 rules; which board waits for Sim Systems' requirements. Start with the
   mission with the comms MCU held in reset.
 - Only the flight MCU commands recovery and staging outputs. Radio, USB and CAN
   cannot.
-- Pyro and servo energy leave before the Croí eFuse U101, at a tap after Q101,
-  each through its own fuse: F6101 recovery, F6102 staging, F6801 servos (D-6.1,
-  D-2Nov.2, D-2Nov.5). An output fault can't pull down logic power. Pyro energy
+- Pyro energy leaves before the Croí eFuse U101, at a tap after Q101, through
+  its own fuses: F6101 recovery, F6102 staging (D-6.1, D-2Nov.2, D-2Nov.5). The
+  servo branch is gone (D-19Nov.2). An output fault can't pull down logic power. Pyro energy
   then passes an external physical arm switch: J6101 recovery, J6102 staging.
-- Three pyro channels and three servos are a core requirement (D-7.1). Each
+- Three pyro channels are a core requirement (D-7.1; its servos went in D-19Nov.2). Each
   channel has a current-limited TPS1H100 high side (≈2.0 A) and a CSD17318 low
   side, driven from different GPIO ports (D-2Nov.1). One channel fires at a time.
   Channels 1 and 2 are recovery. Channel 3 is staging / air-start, behind its
   own arm and the hardware reset latch (D-7.2).
+- Recovery has two independent chains: Burrito's channels 1 and 2 on the AV
+  pack through Churro, and the CATS Vega, COTS, on its own cell, with its own
+  e-match for each event wired directly (D-18Nov.2; LV-0240, 0250).
 - Before arming, firmware checks each low side against continuity; after
   arming, a high side that reads as leaking is never fired. The continuity legs
   are 3.9 kΩ, safe for any igniter with a no-fire current of 25 mA or more
   (D-2Nov.14).
-- Burrito's servos make bounded, event-triggered moves only, such as unlatching
-  a payload at booster apogee. A closed-loop actuator has its own processor and
-  fast sensor, goes to neutral through a path that survives hung firmware, stays
-  dormant until Burrito authorises it, and has its own fused Churro feed
-  (D-2Nov.8).
+- Burrito has no servos (D-19Nov.2): a one-off move uses a pyro channel or the
+  payload's own electronics. A
+  closed-loop actuator has its own processor and fast sensor (the active board
+  adds its own magnetometer, D-5Nov.1), goes to neutral through a path that
+  survives hung firmware, acts only on a fresh Active from Burrito (D-5Nov.2),
+  and has its own pack and arm key, never power from Burrito or Churro
+  (D-2Nov.8, D-18Nov.1).
 - After launch detect, firmware holds the battery enable on (Croí and Churro
   AV). An RC keeps it on for about 1 s (≥0.75 s worst case) if firmware lets go;
   after any reset in flight firmware re-asserts it within 50 ms; it releases at
@@ -53,15 +59,21 @@ D-2Nov.8 rules; which board waits for Sim Systems' requirements. Start with the
   U101 and Churro U1001 auto-retry.
 - Any in-flight flight-MCU reset inhibits further sustainer ignition. Recovery
   resumes only through the [recovery logic](docs/architecture/10-recovery-logic.md).
-- CAN is external, linear and two-node (Ogma ↔ Fajita), 500 kbit/s Classical for
-  Rev A. It carries permissions and mode, slow state that survives Burrito's
-  worst-case 550 ms restart, health, and commands the receiver drops to safe when
-  stale; never a loop at loop rate (D-2Nov.9). An actuator node may join only
-  under D-2Nov.8, on an unterminated stub, with the propulsion owner's agreement.
+- CAN is external and linear: two buses of two nodes each, 500 kbit/s Classical
+  for Rev A. Bus 1 links Burrito and Fajita (FDCAN1); bus 2 links Burrito and the
+  active board (FDCAN2), which Fajita never sees. Both transceivers share one
+  standby line and one supply limiter (D-5Nov.3). CAN carries permissions and
+  mode, slow state that survives Burrito's worst-case 550 ms restart, health, and
+  commands the receiver drops to safe when stale; never a loop at loop rate
+  (D-2Nov.9). On bus 2 Burrito sends Safe, Active or Abort with a counter at
+  10–20 Hz, and stale means Safe (D-5Nov.2). Connectors are Harwin Gecko
+  (D-18Nov.4).
 - Foinse owns source entry and protection; Ogma is not a power distributor. On
   the rail the vehicle runs from a ground umbilical at Churro, through
   per-source ideal diodes ahead of the eFuses; pulling it hands each feed to its
-  pack. Nothing on the vehicle charges a pack (D-2Nov.7).
+  pack. Nothing on the vehicle charges a pack (D-2Nov.7). Churro has two feeds,
+  AV and PROP; the active board and the CATS Vega have their own packs
+  (D-18Nov.1, D-18Nov.2).
 - Battery, CAN, pyro and servo use keyed, locking board connectors. Bare-wire
   terminals live only on detachable development adapters.
 - Never attach standalone and Churro batteries at once. USB powers service logic
@@ -72,7 +84,7 @@ D-2Nov.8 rules; which board waits for Sim Systems' requirements. Start with the
 ## Power path
 
 2S source → Q101 reverse blocking → `ENERGY_TAP` (100 nF + 10 µF, D-2Nov.15),
-where the outputs and servos branch off → U101 eFuse (≈6.0 A, auto-retry) →
+where the outputs branch off → U101 eFuse (≈6.0 A, auto-retry) →
 5 mΩ shunt → TPS2121 battery/USB mux → TPSM63603 4.0 V buck → three TPS7A91
 domains (flight, comms, services) at 3.352 V. Flight hold-up: 1000 µF, about
 2 ms. Flight VBAT has its own Schottky and 100 µF (D-6.4). Sensors run from
@@ -101,8 +113,9 @@ enables. Charging uses external balance chargers with the packs off the vehicle.
 | GNSS | MAX-M10S-00B, external passive antenna via SMA; 80 km / 4 g / 500 m/s limits |
 | Supervision | TPS3808 supervisors, TPS3430 earned-heartbeat watchdog |
 | Current | Croí INA228 0x40 (logic path); Foinse propulsion INA228 0x41; ADS1115 0x48 |
-| Outputs | Per channel a TPS1H100 high side and a CSD17318 low side (2 recovery + 1 staging); U6001 staging latch with an SN74LVC1G08 AND; one servo TPS1H100 at ≈2.0 A shared by three servos, with ≥220 µF bulk and a DNP 1000–2200 µF footprint on `SERVO_VBAT`; over-voltage trips stay ≈9.0 V until the back-drive test (D-6.7, D-2Nov.17) |
+| Outputs | Per channel a TPS1H100 high side and a CSD17318 low side (2 recovery + 1 staging); U6001 staging latch with an SN74LVC1G08 AND; no servo outputs (D-19Nov.2) |
 | Churro rail power | Four LM74700-Q1-class ideal-diode stages, umbilical connector J801, fuse and TVS (D-2Nov.7) |
+| CAN | Two TCAN3413 transceivers, each behind a TXU0304 boundary: bus 1 on FDCAN1 (PD1 / PD0), bus 2 on FDCAN2 (PA10 TX, PB5 RX); one standby line on PE10 and the PB1 CAN limiter for both (D-5Nov.3) |
 | Indication | Red/green readiness, comms amber, hardware power LED, passive piezo |
 
 ## Interfaces
@@ -111,10 +124,11 @@ enables. Charging uses external balance chargers with the packs off the vehicle.
 | --- | --- |
 | Croí ↔ Foinse | Samtec MPT/MPS-08-01-01-L-RA-SD: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault, 8 `CROI_POWER_HOLD` |
 | Standalone 2S | Molex Nano-Fit 1053111102; footprint still to draw |
-| Pyro arms J6101 / J6102 | Recovery / staging (D-7.2), each with its own fuse. 2-contact each, to external arm switches. Must not mate each other, Churro J701 (Micro-Fit 430450200, raw PROP) or the GH enable loops; parts chosen at capture |
+| Pyro arms J6101 / J6102 | Recovery / staging (D-7.2), each with its own fuse. 2-contact each, to external arm switches. Must not mate each other, Churro J701 (Micro-Fit 430450200, raw PROP) or the Gecko enable loops (D-19Nov.5). Proposed: single-row Micro-Fit 3.0, recovery 2-way, staging 3-way with one cavity empty |
 | Outputs J6601 | Micro-Fit 430450600: 1/2/3 high sides, 4/5/6 returns through each channel's low side |
-| Servos J6602 | Micro-Fit 430451000: PWR/PWM/GND on 1/2/3, 4/5/6 and 7/8/9; 10 unwired |
-| CAN J501 | JST GH: 1 CAN H, 2 CAN L, 3 reference; no power |
+| Servos J6602 | Removed (D-19Nov.2) |
+| CAN J501, bus 1 | Harwin Gecko (D-18Nov.4; was JST GH): 1 CAN H, 2 CAN L, 3 reference; no power. To Fajita, whose end has to match |
+| CAN bus 2 | Harwin Gecko, same pinout, to the active board; reference set at capture (D-5Nov.3) |
 | Umbilical J801 (Churro) | AV+ / AV− / PROP+ / PROP−; AV 8.4 V, PROP ≈24–25 V at Churro; part and mechanism with the vehicle owner |
 | Inter-MCU | Framed UART, 2 Mbaud |
 | Service | USB-C (USB4105-GF-A) on comms; TC2030 debug pads for both MCUs |
@@ -123,6 +137,23 @@ Full contracts: [power](interfaces/power-contract.md), [flight fault](interfaces
 [reset and retained state](interfaces/reset-recovery-contract.md),
 [Ogma/Foinse/propulsion boundary](interfaces/ogma-foinse-propulsion-boundary.md).
 Firmware: [firmware interface](docs/firmware-interface.md).
+
+## 19 November changes (D-19Nov.1–9)
+
+- Vehicle, since 8 November: the grid fins sit below the recovery bay, merged
+  with the RCS (two cold-gas solenoids) into one module that one active board
+  drives (D-19Nov.6). The 14 October stack above is kept as history.
+- Burrito has no servo outputs (D-19Nov.2). The freed pins are test pads: a
+  timing strobe on PB0 and a reset memory on PA3 (D-19Nov.3).
+- No external pyro board (D-19Nov.7). Paired e-matches, if Recovery wants two
+  from Burrito, share one channel (D-19Nov.8).
+- The sounder beeps continuity and state at arming (D-19Nov.4).
+- JST GH leaves the vehicle harness for Gecko (D-19Nov.5). Batteries and
+  connectors get particular attention: they are where student vehicles fail.
+- One USB-C per programmable board at the access panel; no firmware over CAN
+  (D-19Nov.9).
+- Firmware writes the in-flight checkpoint first at launch detect, and PAD
+  catches a missed launch (D-19Nov.1).
 
 ## Mission envelope
 
@@ -137,7 +168,7 @@ Firmware: [firmware interface](docs/firmware-interface.md).
 Shared provisional targets: powered −20 to +70 °C; 50 g quasi-static; 200 g
 shock target; ≥±2000°/s rotation measurement; closed-bay splash only.
 Independent recovery is required on early flights where Ogma has live recovery
-authority; for EuRoC the mandatory CATS Vega is that set.
+authority; for EuRoC the mandatory CATS Vega is that set (D-18Nov.2).
 
 Target vehicles, as said at the 14 October requirements meeting:
 
@@ -149,8 +180,14 @@ Target vehicles, as said at the 14 October requirements meeting:
   Vega in every stage (0430); fully redundant recovery electronics with their own
   power, one set COTS (0240, 0250); switches, connectors and batteries touched
   on the pad reachable from the ground, no ladders, opposite the rail
-  (0260–0280, 0310, 0540–0550). Open: where the packs and arm switches go (the
-  av-bay is above the tanks), and whether LV-0690 makes roll control redundant.
+  (0260–0280, 0310, 0540–0550). Drogue at or near apogee, main at or below
+  450 m AGL (0350, 0370; D-18Nov.5). Antennas inside the skin need a 360°
+  non-carbon RF window at least two calibres long (0780–0820). Active control
+  stays dormant until at least 1500 m AGL without flight history (0680). Open:
+  where the packs and arm switches go (the av-bay is above the tanks), how far
+  the charges sit from Burrito (Seán, 18 Nov: the recovery bay may be well above
+  the av-bay; James to confirm), and whether LV-0690 makes roll control
+  redundant.
 - **IREC.** Solid O motor, 152.4 mm, the same electronics without propulsion
   control.
 
@@ -170,7 +207,8 @@ Croí's 80 mm width fits both.
   above it, or inertial evidence shows flight if both barometers are invalid
   (D-2Nov.13). Pad telemetry at 1 Hz shows arm, continuity, latch and power
   state. A ground-test mode serves EuRoC's recovery ground test (D-2Nov.10); it
-  lives in RAM and any reset ends it (D-2Nov.16).
+  lives in RAM and any reset ends it (D-2Nov.16). The in-flight checkpoint is
+  written first at launch detect, and PAD catches a missed launch (D-19Nov.1).
 - Initial budgets: 128 MHz, 1 kHz essential loop, 200 Hz estimation/policy,
   30% timing reserve. These are allocations, not measurements.
 
@@ -186,16 +224,17 @@ Croí's 80 mm width fits both.
 
 ## Next
 
-1. Tuesday 3 November, after the firmware meeting: Anav, Arnav and Seán review
-   PR #2 and the 2 November decisions; Anav reviews the recovery logic (D-6.11)
-   and his pyro-channel circuit against D-2Nov.1.
-2. Jay: packs and arm switches go low, wired up a raceway down the outside of
-   the tanks (2 Nov); still where exactly, the run length and the umbilical.
-   LV-0690: Jay reads it as covering only independently controlled bodies; the
-   SRD's Section 7 text points the other way, so the officials' answer still
-   decides the actuator boards.
-3. Radion and Sim Systems: roll-control and grid-fin requirements, then the
-   actuator node's board (D-2Nov.8); what the magnetometer has to deliver.
+1. Anav: the recovery logic (D-6.11) and his pyro-channel circuit against
+   D-2Nov.1.
+2. Jay and James: where the panel, packs, switches, Churro and the CATS Vega
+   sit; the run length; how far the charges are from Burrito (the external pyro
+   board row); the RF window. LV-0690: Jay reads it as covering only
+   independently controlled bodies; the SRD's Section 7 text points the other
+   way, so the officials' answer still decides one active board or two.
+3. The active board, with the build group from 19 November: its requirements
+   from Radion and Sim Systems (controls' plan, as reported: LQR on the RCS, two
+   solenoids, plus four fin servos and a lock servo), its loads and its pack; what the magnetometer has to
+   deliver.
 4. Seán lifts the capture hold; capture the specification with an independent
    human review page by page.
 5. Place, then Seán routes. Footprint, rating and assembly review before order (G1).

@@ -1,6 +1,6 @@
 # Firmware interface
 
-**2 November 2026.** The hardware interface for Ogma 2's two firmware images: every
+**2 November 2026, amended 18 November.** The hardware interface for Ogma 2's two firmware images: every
 pin by function, the sequences that touch hardware, and the budgets. It replaces
 the [7 September handoff](archive/firmware-handoff-2026-09-07.md), which
 described the 8 September CAD and had three layers of later changes stacked on
@@ -23,6 +23,11 @@ circuit detail. No target firmware exists yet. Anav owns the firmware.
 | No deployment below 100 m | D-2Nov.13 | Gate the drogue and main, primary and backup, on 100 m above the pad datum |
 | What CAN carries | D-2Nov.9 | Permissions, mode, slow state, health and stale-safe commands only |
 | Rail power from the umbilical | D-2Nov.7 | Report which source is live |
+| CAN bus 2 to the active board; pins moved | D-5Nov.3 | FDCAN2 on PA10 / PB5; one standby (PE10) for both buses; channel 2's low side on PC8, recovery arm sense on PE13 |
+| Authority over the active board | D-5Nov.2 | Send Safe, Active or Abort at a fixed 10–20 Hz with a counter; Active only after the dormancy |
+| Main altitude limit at EuRoC | D-18Nov.5 | Readback checks the main altitude is at most 450 m above the pad |
+| No servos; freed pins; sounder at arming | D-19Nov.2–D-19Nov.4 | No servo timers or enable; PB0 is a timing strobe, PA3 a reset memory read at boot step 1, PC6 / PC7 / PD10 inputs with pull-downs; the sounder beeps continuity and state at arming |
+| Checkpoint first at launch detect; missed-launch catch in PAD | D-19Nov.1 | **Must, before first flight.** Write the in-flight checkpoint before anything else at launch detect. In PAD with an arm closed, run the missed-launch catch (proposed: 50 m above the datum for 2 s) into the armed row. A pad pressure transient can't make it fire the main |
 
 ## Build target
 
@@ -35,7 +40,9 @@ the kernel mux sources, VOS and flash wait states.
 
 ## Flight boot order
 
-1. Record the reset cause and supply evidence before any library clears them.
+1. Record the reset cause and supply evidence before any library clears them,
+   and read the reset memory on PA3: a pin reset with it low means the watchdog
+   fired; with it high, a supply dip; the power-on flag means power-on (D-19Nov.3).
 2. Set `PWR_UCPDR.UCPD_DBDIS`. PA9 and PC9 are the UCPD dead-battery pins: until
    this bit is set, a high level on them switches pull-downs onto PB13 / PB14,
    the TDK IMU's SPI clock and data.
@@ -62,9 +69,9 @@ listed are supplies, ground, VCAP or unused.
 | `PYRO2_FIRE` | PE9 (40) | Out | Channel 2 high side, U6404 IN |
 | `PYRO3_FIRE` | PE12 (43) | Out | Channel 3 high side, through the AND with the staging latch |
 | `PYRO1_LS_SELECT` | PA9 (68) | Out | Channel 1 low side Q6301 |
-| `PYRO2_LS_SELECT` | PA10 (69) | Out | Channel 2 low side Q6401 |
+| `PYRO2_LS_SELECT` | PC8 (65) | Out | Channel 2 low side Q6401 (moved from PA10, D-5Nov.3) |
 | `PYRO3_LS_SELECT` | PD14 (61) | Out | Channel 3 low side Q6501 |
-| `RECOVERY_ARM_SENSE` | PC8 (65) | In | High = recovery energy present (armed) |
+| `RECOVERY_ARM_SENSE` | PE13 (44) | In | High = recovery energy present (armed); moved from PC8 (D-5Nov.3) |
 | `STAGING_ARM_SENSE` | PE15 (46) | In | `STAGE_ARM_INVALID`: high = staging disarmed, low = armed |
 | `STAGE_INHIBIT_LATCHED` | PE14 (45) | In | Latch Q̄ through 1 kΩ: high = channel 3 inhibited |
 | `NEW_FLIGHT_CLEAR_REQUEST` | PD15 (62) | Out | Rising edge sets the latch, only if staging is disarmed |
@@ -78,7 +85,7 @@ listed are supplies, ground, VCAP or unused.
 | `NOR_EN` | PA11 (70) | Out | NOR local limiter |
 | `CAN_POWER_EN` | PB1 (36) | Out | CAN local limiter |
 | `FOINSE_RETURN_EN` | PA15 (77) | Out | Monitoring domain (Croí INA228 and Churro); enable standalone too |
-| `SERVO_POWER_EN` | PB0 (35) | Out | Servo switch U6802 |
+| `TP_STROBE` | PB0 (35) | Out | Timing strobe: toggle at loop start, at reset recovery and at each firing step (D-19Nov.3) |
 | `FLIGHT_COMMS_EN` | PA12 (71) | Out | Comms branch, on battery |
 | `COMMS_RESET_REQUEST` | PB4 (90) | Out, open drain | Resets the comms MCU only |
 | `NOR_RESET_REQUEST` | PD3 (84) | Out, open drain | NOR reset |
@@ -103,14 +110,15 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | Function | Pins | Notes |
 | --- | --- | --- |
 | Inter-MCU UART | USART3: PD8 TX, PD9 RX (AF7) | 2 Mbaud 8N1 through the TXU0202 boundary |
-| CAN to Fajita | FDCAN1: PD1 TX, PD0 RX (AF9); PB5 standby | Classical CAN, 500 kbit/s; TCAN3413 |
-| Servos | TIM3 CH1 / CH2: PC6 / PC7 (AF2); LPTIM2 CH2: PD10 (AF3) | Servos 1 and 2 share a period; servo 3 has its own |
+| CAN bus 1, to Fajita | FDCAN1: PD1 TX, PD0 RX (AF9); PE10 standby, shared with bus 2 | Classical CAN, 500 kbit/s; TCAN3413 |
+| CAN bus 2, to the active board | FDCAN2: PA10 TX, PB5 RX (AF to confirm); PE10 standby, shared | Classical CAN, 500 kbit/s; second TCAN3413 (D-5Nov.3) |
+| Spare test pads | PC6, PC7, PD10 | Inputs with pull-downs; PC7 never drives, because it neighbours channel 2's low side (D-19Nov.2, D-19Nov.3) |
 | Monitor bus | I²C4: PB8 SCL, PB9 SDA (AF6) | 100 kHz; INA228 0x40 (Croí), 0x41 (Churro PROP); ADS1115 0x48 |
 | Watchdog | PD4 `SUPERVISOR_WDI` | Toggled only on earned essential progress |
 | Readiness lamp | PD7 | Low or reset = red, high = green |
 | Sounder | PD6 through Q9001 | Passive piezo; ground only, silent in flight |
 | Debug | PA13 SWDIO, PA14 SWCLK; BOOT0 pulled down | Service only |
-| Spare | PE10 (41), PE13 (44) | PC13 stays quiet (LSE erratum) |
+| Spare | None since D-5Nov.3 | PC13 stays quiet (LSE erratum) |
 
 **Analog**
 
@@ -118,7 +126,7 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | --- | --- | --- |
 | Battery after the eFuse and shunt (÷5.42) | PA0 (23) | ADC1_INP0 |
 | `FLIGHT_3V3` | PA1 (24) | ADC1_INP1 |
-| Recovery armed rail (`RECOVERY_ARMED_VBAT`; staging has no ADC, only its arm sense) / servo rail, both ÷5.42 | PA2 (25) / PA3 (26) | ADC1_INP14 / ADC1_INP15 |
+| Recovery armed rail (`RECOVERY_ARMED_VBAT`, ÷5.42; staging has no ADC, only its arm sense) / reset memory `RESET_MEMORY` | PA2 (25) / PA3 (26) | ADC1_INP14 / digital input, read at boot (D-19Nov.3) |
 | Pyro current, channels 1–3 | PC0 / PC1 / PC2 (15–17) | ADC2_INP10–12 |
 | Continuity, channels 1–3 | PC3 / PC4 / PC5 (18, 33, 34) | ADC1_INP13 / INP4 / INP8 |
 
@@ -164,9 +172,10 @@ set, and the latch is cleared by any flight reset.
 switches open (expect the mid-level reading), close the low side alone (expect
 ≈0), reopen it (expect the mid-level reading again). While one low side is
 closed, the other channels' readings must not move; if one drops too, its low
-side is bridged or shorted to the one under test (PA9 and PA10 are neighbouring
-pads). An igniter that reads open makes that channel's check inconclusive;
-report it.
+side is bridged or shorted to the one under test. Run the check with CAN bus 2
+transmitting: PA9 (channel 1's low side) neighbours bus 2's TX on PA10
+(D-5Nov.3). PC8 (channel 2's) neighbours PC7, a quiet input since D-19Nov.2. An
+igniter that reads open makes that channel's check inconclusive; report it.
 
 **After arming:** a return node above its disarmed reading, anywhere up to the
 armed rail, means that channel's high side conducts: leaking or shorted. Never
@@ -237,6 +246,8 @@ move ignition onto channels 1 or 2.
   continuity per channel (class and raw), the staging latch, AV pack voltage,
   bus voltage, live source, phase, faults and configuration identity. The same
   frame goes to USB.
+- At arming, the sounder beeps continuity and state, ground only and silent in
+  flight, so the crew at the panel hears go or no-go (D-19Nov.4).
 - Ground-test mode: a configuration flag loaded over USB, shown in readback and
   held in RAM only; launch declared over USB; barometric logic alone; recovery
   channels only; no power hold; cleared at power-off and at any reset, and a
@@ -257,9 +268,14 @@ Event rules: [Recovery logic](architecture/10-recovery-logic.md). Format:
 - **CAN (D-2Nov.9):** carries permissions and mode, slow state that stays valid
   through a 550 ms restart, health, and commands the receiver drops to safe when
   stale. No sensor streams, no loops at loop rate. Classical 500 kbit/s for
-  Rev A; the message contract is written with Fajita's owner. A closed-loop
-  actuator node, if added, takes IDs that lose arbitration to Burrito's and
-  Fajita's: numerically higher.
+  Rev A on both buses. Bus 1's message contract is written with Fajita's
+  owner. Bus 2 carries one authority message to the active board at a fixed
+  10–20 Hz with a counter: Safe (the default), Active (only after the
+  field-adjustable boost dormancy, at least 1500 m AGL without flight history)
+  or Abort (neutral until power-cycled on the ground); the board treats stale or
+  missing as Safe (D-5Nov.2). Slow flight state may ride alongside; the board's
+  health comes back and is logged. Frame layout, counter width, rate and stale
+  timeout are still to set.
 
 ## Monitoring
 

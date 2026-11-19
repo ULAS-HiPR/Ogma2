@@ -1,6 +1,6 @@
 # Ogma, Foinse and propulsion boundary
 
-**Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
+**Status, 6 October 2026, amended 2 and 18 November: controlling contract.** Electrical
 detail describes the 8 September CAD. Decided changes are in
 [decisions.md](../decisions.md) and the
 [capture specification](../docs/architecture/schematic-capture-spec.md). Capture
@@ -57,14 +57,18 @@ operator UI is disconnected.
   (D-2Nov.9): permissions and mode; slow state that stays valid through Ogma's
   worst-case 550 ms restart; health; and commands the receiver drops to safe
   when they go stale. No sensor streams or control loops at loop rate.
-- A closed-loop actuator node (roll control, grid fins) may join only as a named
-  peer under D-2Nov.8: an unterminated stub, CAN IDs that lose arbitration to
-  Ogma's and propulsion's (numerically higher), its own Foinse feed. Proposed to
-  the propulsion owner; not agreed.
+- The closed-loop actuator node (roll control, grid fins) is the active board,
+  on its own CAN bus from Ogma (D-5Nov.3) and its own pack (D-18Nov.1). It never
+  joins this link and takes no Foinse feed, so this link stays two-node.
 - Full-rate engine data stays in propulsion-local storage or goes over a bounded
   test-only path.
 - Croí: 500 kbit/s Classical CAN, TCAN3413DRBR, fixed 120 Ω end termination,
-  JST GH with pin 1 CAN H, pin 2 CAN L, pin 3 reference. No power pin.
+  pin 1 CAN H, pin 2 CAN L, pin 3 reference. No power pin. Connector: Ogma
+  moves J501 from JST GH to Harwin Gecko (D-18Nov.4), so the propulsion end
+  has to match; proposed to the propulsion owner, not agreed.
+- Croí's two transceivers share one standby line (PE10) and one supply limiter
+  (D-5Nov.3): one fault there quiets this link and bus 2 together. Propulsion's
+  safe response to a missing link covers it.
 - Exact messages and installed cable and bonding evidence still need doing
   together.
 - An open propulsion return must not push actuator current through the CAN
@@ -143,6 +147,32 @@ production third node and doesn't bridge the vehicle bus to GSE.
   Independent recovery has its own qualified supply and path outside the shared
   Foinse fault boundary.
 
+## EuRoC items on the propulsion side
+
+From EuRoC SRD Issue 1.1 (traced 18 November). Propulsion's to answer and
+evidence; listed here because each touches this boundary. None is decided.
+
+- **PROP pack (LV-0300, 0310, 0320):** no LiPo; Li-ion only in metal-can
+  cylindrical cells (Appendix C). 6S Li-ion keeps Foinse's 18–25.2 V planning
+  range; LiFePO4 would change its protection values. Reachable from the ground,
+  and good for 6 h on the rail with whatever Fajita draws there.
+- **Valve power disconnect (Appendix E1, a "should"):** a manual, ground-level
+  disconnect (pull-plug or key) in the valves' hot line, not the return. Where it
+  sits (the PROP harness, Foinse or Fajita) is to agree.
+- **Remote vent after an abort (LV-0190):** once the umbilical is pulled at Go,
+  which path carries the command: Fajita's own link, or Ogma's radio relayed over
+  this link (firmware, not hardware).
+- **Igniter arming (LV-0030):** armable and disarmable only with nobody within
+  15 m, so remotely.
+- **Loading (LV-0110, 0130, 0150):** pressurise only after the loading lines are
+  off; a hand-operated emergency release on any remote loading mechanism; loading
+  done within 90 minutes.
+- **Hold-down (LV-1020):** released only once thrust is enough for stable flight.
+- **Launch control (SE-0010–0030):** electronically operated, with at least
+  750 m of reliable command range; one-fault tolerant, with a removable
+  interlock in series with the launch switch, kept by the arming crew; momentary
+  dead-man ignition switches.
+
 ## Boundary tests
 
 To be done; none has run.
@@ -161,8 +191,9 @@ To be done; none has run.
 - Ogma held in reset with propulsion active.
 - Umbilical pulled under load: both branches move to their packs without
   resetting Ogma or propulsion.
-- If an actuator node is added: node unplugged, held in reset or babbling,
-  with the Ogma–propulsion link unaffected.
+- Bus 2 faults (the active board unplugged, held in reset or babbling), with
+  this link unaffected; then Croí's shared CAN standby stuck, with both links
+  quiet and propulsion in its safe response.
 
 Specify retained evidence separately for host loss, MCU reset and total power
 loss.

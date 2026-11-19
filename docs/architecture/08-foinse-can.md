@@ -41,7 +41,7 @@ Fajita converts locally"]
   over-voltage trip; PROP at ≈24–25 V, set with the propulsion owner. Whichever
   source is higher carries the load, so a pack fresher than the umbilical feeds
   the vehicle until it drops to the umbilical's voltage. Fuse and TVS at the
-  umbilical connector. The diodes also stop servo regeneration from Burrito
+  umbilical connector. The diodes would also stop servo regeneration from Burrito (none since D-19Nov.2)
   reaching a pack, so Burrito's bulk and logic load absorb it (D-2Nov.5).
 - **Which source is live.** Churro's AV divider moves to the pack side of its
   diode, so the ADS1115 reads the pack while Burrito's INA228 reads the bus.
@@ -56,7 +56,7 @@ Fajita converts locally"]
   readings go unknown.
 - In flight Burrito holds the AV enable on over Samtec pin 8 (D-6.3). PROP is
   not held: that's the propulsion owner's call, as is U2001's latch-off.
-- Burrito's INA228 (0x40) measures logic current; pyro and servo current come
+- Burrito's INA228 (0x40) measures logic current; pyro current comes
   from the TPS1H100 sense lines. Addresses 0x40, 0x41 and 0x48 don't clash.
   Monitoring is on flight I²C4 (PB8/PB9) at 100 kHz.
 - No charger, BMS, CAN endpoint or 24 V converter. Charging uses external
@@ -76,12 +76,12 @@ the CAN reference must never become the propulsion power return.
 | PROP entry | J201 Micro-Fit 430450400; U2001 + CSD18540 | 2 A continuous ceiling, 5 A source fuse proposed |
 | PROP thresholds | Start/stop 19.92/18.63 V, OVP 27.0 V; 6.04 kΩ ILIM (≈2.98 A) | Coil and controller input range, inrush |
 | Transients | 22 nF dV/dt; SMBJ12A / SMBJ28A TVS to start | Fuse, TVS and eFuse coordination with real cables |
-| Enables | J103 AV, J104 PROP, JST GH, each biased from its own pack | External switch, retention, labelling |
+| Enables | J103 AV, J104 PROP, Harwin Gecko 2-contact (D-19Nov.5; was JST GH), each biased from its own pack | External switch, retention, labelling |
 | PROP current | R2011 5 mΩ WSLP2512; INA228 U5001 | Kelvin routing; error over temperature |
 | PROP bus voltage | INA228 VBUS after the reverse blocker, before the eFuse | Doesn't prove the output is on |
 | Monitor bus | Burrito AUX → local rails; TCA4307 U3001 | Monitoring can vanish while both feeds stay live |
 | Voltages | ADS1115; TMUX1511 U6101 isolates dividers when off; AV 22.1k + 22.1k / 10k on the AV pack (moved from the protected output, D-2Nov.7), PROP 110k + 110k / 10k on the protected output | Keep scaled readings separate from INA voltage |
-| Temperatures | J601 GH 4-contact: AV probe, GND, PROP probe, GND | Dedicated probes, not charger-biased sensors |
+| Temperatures | J601 Gecko 4-contact (D-19Nov.5; was GH): AV probe, GND, PROP probe, GND | Dedicated probes, not charger-biased sensors |
 | PROP output | J701 Micro-Fit 430450200 | Harness current; conversion at Fajita |
 
 ## Temperature inputs
@@ -129,21 +129,36 @@ downstream fault may never clear the source fuse.
 
 ## Vehicle CAN
 
-TCAN3413 behind a TXU0304 boundary on flight FDCAN (PD1 TX, PD0 RX); PB5
-standby, PB1 branch enable.
+Two buses, each a TCAN3413 behind a TXU0304 boundary (D-5Nov.3). Bus 1 to
+Fajita on FDCAN1 (PD1 TX, PD0 RX); bus 2 to the active board on FDCAN2 (PA10
+TX, PB5 RX). One standby line, PE10, and the PB1 CAN limiter serve both
+transceivers, so one fault there quiets both buses; each receiver goes safe
+when messages stop.
 
 ```mermaid
 flowchart TB
   F["Flight MCU
-FDCAN"] <-->|"TX / RX"| X["U502 TXU0304
+FDCAN1 · FDCAN2"] <-->|"bus 1 TX / RX"| X["U502 TXU0304
 off-state boundary"]
   X <--> T["U503 TCAN3413"]
-  T <--> J["J501 JST GH
+  T <--> J["J501 Harwin Gecko
 1 H · 2 L · 3 reference"]
   J <--> H["Linear twisted pair
 120 Ω at each end"]
   H <--> P["Fajita
 own local control"]
+  F <-->|"bus 2 TX / RX"| X2["Second TXU0304
+off-state boundary"]
+  X2 <--> T2["Second TCAN3413"]
+  T2 <--> J2["Bus 2 Harwin Gecko
+same pinout"]
+  J2 <--> H2["Linear twisted pair
+120 Ω at each end"]
+  H2 <--> A["Active board
+own loop, own pack"]
+  S["PE10 standby
+PB1 CAN limiter"] -.-> T
+  S -.-> T2
 ```
 
 **What CAN carries (D-2Nov.9):** permissions and mode; slow state that stays
@@ -151,10 +166,12 @@ valid through Burrito's worst-case 550 ms restart; health; and commands the
 receiver drops to safe when they go stale. No sensor streams or control loops at
 loop rate: every node closes its own fast loop with its own sensors.
 
-Rev A: 500 kbit/s Classical CAN, two nodes. A closed-loop actuator node, if one
-is added, joins on an unterminated stub with CAN IDs that lose arbitration to
-Burrito's and Fajita's (numerically higher), so unplugging it leaves the link
-intact (D-2Nov.8; needs the propulsion owner's agreement). CAN FD (500 kbit/s
+Rev A: 500 kbit/s Classical CAN; each bus has two nodes, terminated at both
+ends. Bus 2 carries Burrito's authority over the active board: Safe, Active or
+Abort with a counter at a fixed 10–20 Hz; stale or missing counts as Safe, and
+Active is sent only after Burrito's field-adjustable boost dormancy (D-5Nov.2,
+LV-0680). Fajita never sees the active board, so its owner doesn't have to
+agree to a third node. Connectors are Harwin Gecko (D-18Nov.4). CAN FD (500 kbit/s
 arbitration, 2 Mbit/s data, 11-bit IDs) only as a migration agreed with Fajita;
 the TCAN3413 supports it, but that doesn't qualify the harness. FD needs both
 peers to agree bitrate, IDs, message versions and units, periods and bursts,
@@ -166,8 +183,9 @@ Earlier comparison for one hypothetical remote actuator: 16 B command and
 no bulk traffic: 13.3% load, ≈0.77 ms worst wait before software. Not a
 deadline proof; under D-2Nov.9 no node streams commands at that rate anyway.
 
-Next: Fajita's FD support, the message and command-age contract, the longest
-real harness; Churro startup with AUX absent and return-path checks.
+Next: Fajita's FD support, the message and command-age contract, bus 2's frame
+layout and stale timeout, the longest real harness; Churro startup with AUX
+absent and return-path checks.
 
 ## Capture
 

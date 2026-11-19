@@ -9,7 +9,7 @@ block. [Decisions](../../decisions.md) say which is which.
 | [01 Processors](01-mcus.md) | Flight and comms MCUs, pin maps |
 | [02 Power](02-power.md) | Source path, domains, enable hold, USB, hold-up |
 | [03 Outputs](03-energetic-outputs.md) | Recovery and staging outputs: two switches per channel, fuses, arms, continuity, pad checks |
-| [04 Servos](04-servos.md) | Three PWM servos and their feed; rules for closed-loop actuator nodes |
+| [04 Servos](04-servos.md) | Burrito's servos removed (D-19Nov.2); rules for closed-loop actuator nodes |
 | [05 Service](05-service-status-time.md) | Indication, USB readback, time |
 | [06 GNSS and radio](06-gnss-radio.md) | Receiver limits, radio, reference assembly |
 | [07 Sensors and recording](07-sensors-logging.md) | Sensors, magnetometer, NOR format, recording trigger |

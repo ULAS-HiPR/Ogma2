@@ -1,6 +1,6 @@
 # Ogma 2 power contract
 
-**Status, 6 October 2026, amended 2 November: controlling contract.** Electrical
+**Status, 6 October 2026, amended 2 and 18 November: controlling contract.** Electrical
 detail describes the 8 September CAD. Decided changes are in
 [decisions.md](../decisions.md) and the
 [capture specification](../docs/architecture/schematic-capture-spec.md). Capture
@@ -30,9 +30,10 @@ amended 6 October:
   (D-6.5). USB never powers pyro or servo energy and never charges the battery.
 - Flight-core power depends on source presence only (D-6.5), never on the
   comms processor.
-- Pyro and servo energy leave before U101 at `ENERGY_TAP`, after Q101 (D-6.1,
-  D-2Nov.5), each through its own fuse: F6101 recovery, F6102 staging, F6801
-  servos. Pyro energy then passes the J6101 / J6102 arm switches.
+- Pyro energy leaves before U101 at `ENERGY_TAP`, after Q101 (D-6.1,
+  D-2Nov.5), through its own fuses: F6101 recovery, F6102 staging. It then
+  passes the J6101 / J6102 arm switches. Burrito has no servo branch
+  (D-19Nov.2).
 
 Foinse (Churro):
 
@@ -46,6 +47,9 @@ Foinse (Churro):
 - On the rail, a ground umbilical feeds both branches through per-source ideal
   diodes ahead of the eFuses; pulling it hands each branch to its pack. It never
   charges a pack (D-2Nov.7).
+- Two feeds only, AV and PROP. The active board has its own pack and arm key,
+  and the CATS Vega its own cell; neither takes power from Croí or Foinse
+  (D-18Nov.1, D-18Nov.2).
 - Each Samtec ground path must carry the full 6 A as an alternate fault return.
 
 All branch limits, energy estimates and rail-sequencing requirements in the
@@ -137,19 +141,15 @@ pull-downs; keep those values, or resize the RC. Firmware asserts the hold only
 after launch detect, re-asserts it within 50 ms of a reset in flight, and
 releases it at LANDED plus a delay or at a maximum flight time.
 
-**Limits.** The 6 A Croí / avionics, ≈3 A propulsion and 2 A shared-servo
+**Limits.** The 6 A Croí / avionics and ≈3 A propulsion
 starting limits are unchanged, provisional and not load-qualified. The switch
 doesn't widen the declared battery range or allow a depleted-pack boost.
 
 ## Servos and current sensing
 
-**Servos.** Three servo channels, a core requirement (D-7.1); servo 3 stays on
-PD10 and the service power enable moves to PE8. All three share the one 2 A
-servo switch. Servo energy now comes from
-`ENERGY_TAP` through F6801 with R6804 fitted and ≥220 µF local bulk (D-6.1,
-D-6.7). The nominal shared 2 A limit doesn't prove capacity for any particular
-servo or grid-fin load. Actuator voltage, simultaneous and stall demand,
-regeneration and upstream selectivity still need closing on the bench. No Foinse
+**Servos.** None on Burrito since 19 November (D-19Nov.2); F6801, U6802 and
+the servo bulk are gone, and so is the servo back-drive case. Closed-loop
+actuators are the active board's, on its own pack (D-18Nov.1, D-19Nov.6). No Foinse
 power-boundary change follows. History:
 [servo revision](../docs/archive/connector-servo-readiness-revision-2026-09-07.md).
 
@@ -182,8 +182,7 @@ autonomous protection"] -->|"J102 Samtec"| Q
   Q --> TAP(("ENERGY_TAP"))
   TAP --> U101["U101 eFuse"] --> LOGIC["Buck → three LDOs
 Ogma logic"]
-  TAP -->|"own fuses"| OUT["Pyro, via J6101 arm
-and servo"]
+  TAP -->|"own fuses"| OUT["Pyro, via J6101 / J6102 arms"]
   USB["USB-C"] -->|"logic mux only"| LOGIC
   LOGIC -.->|"protected 3.3 V return
 not needed to start"| CL["Churro low-power
@@ -296,11 +295,7 @@ No separate pre-order coupon.
 1. Cold start with the Foinse return absent.
 2. Controlled faults on optional branches.
 3. Source transitions, including pulling the umbilical under load.
-4. Servo back-drive at 8.4 V, standalone and Churro-fed (where the ideal diodes
-   leave regeneration no path back to a pack), at the lowest logic load,
-   watching `BAT_EFUSE_IN`, `VBAT_CROI_INPUT` and the logic input. If anything
-   trips, fit the DNP bulk on `SERVO_VBAT` or raise the over-voltage trips
-   (D-2Nov.17).
+4. (Removed with the servos, D-19Nov.2: the servo back-drive test.)
 
 Capture input, core rail, the faulted branch, reset and an essential-loop marker
 on one external timebase. Before any fault, write down the real parts and

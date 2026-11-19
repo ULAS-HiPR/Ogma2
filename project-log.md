@@ -3642,3 +3642,102 @@ requirements page for him. Jay answered the same morning:
 Seán also told the channel that the EuRoC work beyond Ogma2 (additional boards,
 the propulsion controller, the umbilical) starts in earnest once Ogma2 is
 ordered, with responsibilities allocated in the coming weeks.
+
+## 18 November 2026 — the 5 November sweep decisions recorded; EuRoC SRD 1.1 trace; the active board on its own pack
+
+Seán decided these in chat: log entries 1–6 of the
+[5 November sweep](docs/reviews/2026-11-05-core-sweep/log.md) on 5 November,
+the rest on 18 November. The sweep's passes never ran as passes; this entry
+records the outcome.
+
+- Confirmed, no change: three pyro channels, one e-match each, with separate
+  recovery and staging arms (D-7.1, D-2Nov.1); the NOR flash stays on the flight
+  MCU.
+- D-5Nov.1: the active board carries its own magnetometer.
+- D-5Nov.2: Burrito sends the active board Safe, Active or Abort at 10–20 Hz
+  with a counter; stale means Safe; Active only after the dormancy.
+- D-5Nov.3: CAN bus 2 on FDCAN2, Burrito to the active board only, which closes
+  the third-node row. Pins confirmed on 18 November against Burrito's MCU symbol
+  and the capture specification: PB5 RX, PA10 TX; the standby moves to PE10 for
+  both transceivers; channel 2's low side moves PA10 → PC8 and the recovery arm
+  sense PC8 → PE13. No flight pin is spare now. New pad neighbours: PE10 beside
+  PE9, PE13 beside PE12, PA10 beside PA9, PC8 beside PC7. None pairs a fire pin
+  with its own low side; the pad self-test now runs with CAN and servo 2 active.
+- D-18Nov.1: the active board gets its own pack and arm key; Churro keeps two
+  feeds. It replaces 5 November's third Churro branch (log 6), never recorded
+  as Decided: that branch was sized for two servos off the AV pack Burrito
+  shares, while controls' plan as reported from the 18 November deck (the deck
+  itself not checked) is LQR on the RCS plus five grid-fin servos, and the RCS's
+  four solenoids were never counted.
+- D-18Nov.2: the CATS Vega is the COTS recovery set, with EuRoC's rules for it.
+- D-18Nov.3: no I²C angle port or servo position evidence on Burrito for Rev A
+  (closes logs 12 and 14).
+- D-18Nov.4: Harwin Gecko for CAN: bus 2, and J501 too, with the Fajita owner's
+  agreement.
+- D-18Nov.5: the main deploys at or below 450 m AGL at EuRoC.
+- Still open: the external pyro board (log 8). Seán thinks the recovery bay may
+  sit well above the av-bay; James is to confirm the distance. The umbilical
+  stays as D-2Nov.7 draws it; EuRoC doesn't require one, and whether to fit it
+  is settled with Jay and propulsion (log 10). The capture hold stays on until
+  Seán lifts it.
+
+The architecture was traced against EuRoC SRD Issue 1.1 (30 April 2026). The SRD
+was read through a summarising web fetch, because the PDF can't be downloaded
+into the working session, so its numbers need a glance against the PDF. New Open
+rows: the RF window (LV-0780–0820), e-matches per event (0240), the CATS Vega's
+buyer, and the propulsion-side items (0030, 0110, 0130, 0150, 0190, 1020,
+Appendix E1, SE-0010–0030), now listed in the boundary contract. The EuRoC table
+in 11 Verification gained 0340–0380, 0440–0470, 0780–0820 and the propulsion
+items. Not checked: Appendix B's Figure 2, EuRoC's separate Competition Rules
+page, IREC's rules and the Irish competition's.
+
+Older text fixed where these decisions contradicted it: the D-2Nov.1, D-2Nov.8,
+D-6.6 and D2 rows; the interface justification, the layout guide and the system
+tour's connector gallery.
+
+## 19 November 2026 — architecture pass by voice; D-19Nov.1 recorded
+
+- Seán is signing off the architecture subsystem by subsystem before the first
+  build session (19 November, 18:00). Signed so far: the philosophy, the vehicle,
+  power. The pass notes go into a sign-off record when it ends.
+- D-19Nov.1: firmware writes the in-flight checkpoint first at launch detect, and
+  PAD gets a missed-launch catch that a pad pressure transient can't turn into a
+  main deployment. Required before first flight; Seán: "It has to be a must".
+- Decided in the pass and to be recorded with it: one active board for the
+  merged RCS and grid-fin module; no external pyro board; one USB-C per board at
+  the panel; two e-matches in parallel per channel if Recovery wants two from
+  Burrito. The grid fins moved below the recovery bay (Radion, #grid-fins,
+  8 November); the RCS has two solenoids (Jay).
+
+## 19 November 2026 — architecture pass signed off; D-19Nov.2–D-19Nov.9 recorded
+
+- Seán signed off, by voice and text, the philosophy, the vehicle and all ten
+  Burrito and Churro subsystems. The record, with his words and the open items,
+  is in [docs/reviews/2026-11-19-architecture-signoff](docs/reviews/2026-11-19-architecture-signoff/README.md);
+  the access panel brief is in [docs/briefs/access-panel.md](docs/briefs/access-panel.md).
+- Recorded: D-19Nov.2 (no servos on Burrito), .3 (freed pins as test pads, a
+  timing strobe and a reset memory), .4 (sounder at arming), .5 (JST to Gecko),
+  .6 (one active board), .7 (no external pyro board), .8 (paired e-matches),
+  .9 (USB-C per board at the panel). Open rows closed or updated: the external
+  pyro board, the CATS Vega buyer, e-matches per event, which node runs the
+  fins.
+- Corrections to the 18 November entry: the RCS has two solenoids (Jay), not
+  four, and controls' five grid-fin servos are four fin servos plus a lock
+  servo.
+- Still to do before the commit: 04 Servos, 02 Power, the capture
+  specification, the firmware interface, the power contract and the system tour
+  follow D-19Nov.2 and D-19Nov.3; the older four-solenoid text is fixed where it
+  is touched.
+
+## 19 November 2026 — D-19Nov.2 and D-19Nov.3 carried through the chapters
+
+- 04 Servos rewritten; 02 Power, 03 Outputs, 08 Churro, 09 Connectors, 01
+  Processors, the capture specification, the firmware interface, the power
+  contract, the system tour, the architecture index and 11 Verification follow
+  D-19Nov.2–D-19Nov.5. The firmware interface gains the strobe on PB0, the
+  reset memory read at boot step 1 and the sounder at arming.
+- The four-solenoid and five-grid-fin-servo text from 18 November is corrected
+  in decisions.md, current-system.md and 04 (two solenoids; four fin servos and
+  a lock servo).
+- Older servo text in the layout guide and the interface justification is
+  overridden by D-19Nov.2 and fixed when those files are next touched.

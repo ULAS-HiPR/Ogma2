@@ -18,10 +18,11 @@ flowchart LR
 100 Hz, non-essential"] --> F
   F <-->|"quad SPI"| N["NOR 256 MiB
 128 KiB staging in RAM"]
-  F <-->|"FDCAN"| V["CAN to Fajita"]
-  F -->|"TIM3 + LPTIM2 PWM"| P["3 servo outputs"]
+  F <-->|"FDCAN1"| V["CAN bus 1 to Fajita"]
+  F <-->|"FDCAN2"| V2["CAN bus 2 to the active board"]
+  F -.->|"PB0 strobe · PA3 reset memory"| P["Test pads (D-19Nov.3)"]
   F -->|"fire PE7/PE9/PE12
-low sides PA9/PA10/PD14"| O["3 pyro outputs"]
+low sides PA9/PC8/PD14"| O["3 pyro outputs"]
   F <-->|"USART3 · 2 Mbaud
 TXU0202 boundary"| C["Comms · H563RIT6
 event loop and DMA queues"]
@@ -35,7 +36,7 @@ event loop and DMA queues"]
 
 | Role | What it must do | Why this part |
 | --- | --- | --- |
-| Flight | Three sensor SPI buses, two pressure I²C buses, the magnetometer's I²C3, monitor I²C4, quad NOR, CAN, UART, timing, outputs, servos | The existing LQFP100 map fits; independent buses use the pins |
+| Flight | Three sensor SPI buses, two pressure I²C buses, the magnetometer's I²C3, monitor I²C4, quad NOR, two CAN buses, UART, timing, outputs | The existing LQFP100 map fits; independent buses use the pins, and none is spare since D-5Nov.3 |
 | Comms | Radio SPI, two UARTs, PPS, USB, enables and resets, status, HSE, SWD | Every function fits LQFP64; same family, so one driver and DMA target |
 | Split | Flight keeps flying with comms held in reset | USB, radio and GNSS parsing and service stalls stay off the flight schedule |
 
@@ -96,14 +97,17 @@ in the [firmware interface](../firmware-interface.md#flight-mcu-pins)):
 | --- | --- | --- | --- |
 | 4 | PE5 | `FC_POWER_HOLD` | D-6.3, D-2Nov.4 |
 | 38 / 40 / 43 | PE7 / PE9 / PE12 | `PYRO1_FIRE` / `PYRO2_FIRE` straight to the TPS1H100s; `PYRO3_FIRE` through the staging latch AND gate | D-7.1, D-7.2 |
-| 68 / 69 / 61 | PA9 / PA10 / PD14 | `PYRO1_LS_SELECT` / `PYRO2_LS_SELECT` / `PYRO3_LS_SELECT`, on ports A and D, away from the port-E fire pins | D-2Nov.1 |
+| 68 / 65 / 61 | PA9 / PC8 / PD14 | `PYRO1_LS_SELECT` / `PYRO2_LS_SELECT` / `PYRO3_LS_SELECT`, on ports A, C and D, away from the port-E fire pins (channel 2 moved from PA10) | D-2Nov.1, D-5Nov.3 |
+| 91 / 69 | PB5 / PA10 | FDCAN2 RX / TX, CAN bus 2 to the active board | D-5Nov.3 |
 | 67 / 66 | PA8 / PC9 | Magnetometer I²C3 SCL / SDA, AF4 | D-2Nov.11 |
 | 5 | PE6 | Magnetometer INT (optional data-ready) | D-2Nov.11 |
 | 45 / 46 | PE14 / PE15 | Staging latch readback (through 1 kΩ) / staging arm sense | D-7.2 |
-| 62 / 65 | PD15 / PC8 | New-flight latch set / recovery arm sense | D-7.2 |
+| 62 | PD15 | New-flight latch set | D-7.2 |
+| 44 | PE13 | Recovery arm sense (moved from PC8) | D-7.2, D-5Nov.3 |
 | 39 | PE8 | `SERVICE_POWER_EN` (moved from PD10) | D-7.1 |
-| 57 | PD10 | `SERVO3_PWM`, LPTIM2_CH2 AF3, as in the CAD | D-7.1 |
-| 41 / 44 | PE10 / PE13 | Spare | — |
+| 57 / 63 / 64 | PD10 / PC6 / PC7 | Spare test pads, inputs with pull-downs (servos removed) | D-19Nov.2, D-19Nov.3 |
+| 35 / 26 | PB0 / PA3 | `TP_STROBE` timing strobe / `RESET_MEMORY` read at boot | D-19Nov.3 |
+| 41 | PE10 | `CAN_STB` for both transceivers (moved from PB5) | D-5Nov.3 |
 
 PA9 and PC9 are also the H563's UCPD dead-battery pins: until firmware sets
 `UCPD_DBDIS`, a high level on them switches pull-downs onto PB13 / PB14, the TDK

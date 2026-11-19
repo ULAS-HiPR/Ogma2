@@ -1,9 +1,9 @@
 # 02 Power
 
 One 2S Li-ion pack (21700 cells by default, [D-2Nov.6](../../decisions.md))
-feeds three things: the logic chain, the pyro outputs and the servos. Logic goes
-through the Croí eFuse U101, a 4.0 V buck and three LDO domains. Pyro and servo
-energy leave before U101 through their own fuses, so an output fault can't pull
+feeds two things: the logic chain and the pyro outputs (no servos, D-19Nov.2). Logic goes
+through the Croí eFuse U101, a 4.0 V buck and three LDO domains. Pyro
+energy leaves before U101 through their own fuses, so an output fault can't pull
 down the flight computer (D-6.1). On the rail, Churro feeds Burrito from the
 ground umbilical instead of the pack (D-2Nov.7); Burrito sees the same input
 either way.
@@ -35,13 +35,10 @@ see next diagram"]
 recovery channels"]
     F62["F6102 staging fuse"] --> ARM3["J6102 staging arm"] --> PY3["TPS1H100 ≈2.0 A
 staging channel + reset latch"]
-    F68["F6801 servo fuse"] --> SV["U6802 TPS1H100 ≈2.0 A
-≥220 µF · 3 servos on J6602"]
   end
   TAP --> U101
   TAP --> F61
   TAP --> F62
-  TAP --> F68
   USB["USB VBUS"] --> UL["U4401 limit
 387–491 mA"] --> MUX
   J103["J103 enable loop
@@ -69,8 +66,8 @@ via Samtec pin 8"]
 - **Energy tap (D-6.1, D-2Nov.5):** after Q101, confirmed, with 100 nF and 10 µF
   at Q101's drain (D-2Nov.15). When U101 shuts down it turns Q101 off too, but
   Q101's body diode still feeds the tap (one diode drop) and still blocks a
-  reversed pack. Servo regeneration goes back into the pack through Q101 when
-  Burrito runs standalone. Churro-fed, Churro's ideal diodes block that path
+  reversed pack. The servo regeneration case went with the servos
+  (D-19Nov.2); the rest of this bullet is kept as history. Churro-fed, Churro's ideal diodes block that path
   (D-2Nov.7), so the logic load (under 150 mA in pad mode) and the servo bulk
   absorb it: back-drive test at 8.4 V and the lowest logic load, against the
   TPS2121 trip and U101's 8.99 V over-voltage. The trips stay as drawn until

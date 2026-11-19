@@ -23,7 +23,7 @@ after Q101, before U101"] --> F1["F6101 recovery fuse"]
   J2 --> H3["U6504 high side
 PE12 AND latch U6001"]
   H1 --> I1["igniter 1"] --> L1["Q6301 low side · PA9"]
-  H2 --> I2["igniter 2"] --> L2["Q6401 low side · PA10"]
+  H2 --> I2["igniter 2"] --> L2["Q6401 low side · PC8"]
   H3 --> I3["igniter 3"] --> L3["Q6501 low side · PD14"]
   L1 --> G["GND"]
   L2 --> G
@@ -76,7 +76,7 @@ have read 0 V, which is why the low side came back.
 | TPS1H100 high side, R6314 / R6414 / R6514 = 1.24 kΩ | Switches the battery side; limits to ≈2.0 A (1.233 V × 2000 / 1240 Ω); thermal shutdown | Shorted igniter after firing; harness short during a pulse |
 | CSD17318 low side, gate from its own GPIO through 100 Ω, 100 kΩ pull-downs | Switches the return. Off at reset and power-off | One stuck GPIO or one shorted high side can't fire alone. Brings back continuity sensing |
 | U6001 latch + U6502 AND (SN74LVC1G08) | Channel 3's high side works only while the latch is set. Any flight reset or power-up clears it; only PD15 can set it again, and only while staging is disarmed | A reset mid-flight re-lighting a motor ([FF-03](../../interfaces/flight-fault-contract.md)) |
-| U6103 arm sense | Reports recovery (PC8) and staging (PE15) energy present | Firmware sees disarmed vs armed, not a guess |
+| U6103 arm sense | Reports recovery (PE13, D-5Nov.3) and staging (PE15) energy present | Firmware sees disarmed vs armed, not a guess |
 | 06c current sense | Per-channel current to ADC | Evidence that current flowed; not proof the charge fired |
 | 06e / 06f continuity | Small test current through the igniter, read at the return node | Open igniter or harness; a dead low side; a leaking high side |
 
@@ -87,8 +87,8 @@ One fault, armed, and what happens:
 | High-side fire pin stuck high, or a TPS1H100 shorted | No fire: the low side is open and R6913 / R6914 limit the current. The return node reads near the rail, so firmware sees it |
 | Low-side GPIO stuck high, or a CSD17318 shorted | No fire: the high side is off. Continuity reads zero, so firmware sees it |
 | Low side fails open | That channel can't fire. The pre-arm self-test catches it |
-| One bad write to GPIO port E | Only high sides change; the low sides sit on ports A and D |
-| A solder bridge between neighbouring pads | No fire pin neighbours its own low-side select (pads 38 / 68, 40 / 69, 43 / 61). A bridge to a fire pin turns that high side on alone, which the armed check sees; PA9 and PA10 are neighbours, so the self-test checks that the other channels don't move |
+| One bad write to GPIO port E | Only the high sides and the CAN standby change (both buses go quiet and their receivers go safe); the low sides sit on ports A, C and D |
+| A solder bridge between neighbouring pads | No fire pin neighbours its own low-side select (pads 38 / 68, 40 / 65, 43 / 61). A bridge to a fire pin turns that high side on alone, which the armed check sees; since D-5Nov.3 the fire pins' neighbours include the CAN standby (PE10, beside PE9) and the recovery arm sense (PE13, beside PE12). Two low sides now sit beside toggling signals, PA9 beside bus 2's TX (PA10) and PC8 beside servo 2's PWM (PC7), so the self-test runs with CAN transmitting and servo 2 pulsing and checks that no channel's reading moves |
 
 ## Firing and checks
 
@@ -129,7 +129,7 @@ reasons above. They were never deleted from the CAD.
 
 - The flight MCU alone commands outputs. Radio, USB and CAN cannot.
 - Fire one channel at a time. With Churro feeding the board, its ≈6.0 A AV
-  eFuse also carries logic (≈0.6 A) and servos (2.0 A limit).
+  eFuse also carries logic (≈0.6 A); there are no servos (D-19Nov.2).
 - Bound each firing pulse in the per-flight configuration.
 - Channels 1 and 2 are recovery hardware, channel 3 staging hardware. A flight
   profile can't put ignition on 1 or 2 to dodge the reset inhibit.
