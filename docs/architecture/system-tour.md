@@ -2,9 +2,9 @@
 
 Start here. Ogma2 is HiPR's workhorse flight computer: two boards we own,
 **Burrito** (Croí2) and **Churro** (Foinse2), talking to **Fajita**, the
-propulsion team's engine controller. It exists as a capture specification and
-two unrouted KiCad drafts; nothing is built or flown. What's settled is in
-[decisions](../../decisions.md).
+engine controller, ours too but its own project (D-20Nov.2). Ogma2 exists as
+a capture specification and two unrouted KiCad drafts; nothing is built or
+flown. What's settled is in [decisions](../../decisions.md).
 
 ## The vehicle
 
@@ -51,7 +51,7 @@ recovery set (D-18Nov.2).
 | --- | --- | --- |
 | **Burrito / Croí2** | Sensing, estimation, flight state, recording, three pyro outputs, a magnetometer, CAN; a comms processor for GNSS, radio and USB | 44 sheets, 643 parts, unrouted, 80 × 230 mm working outline |
 | **Churro / Foinse2** | Two separately protected and enabled feeds, from the packs or the rail umbilical; propulsion current, voltage and temperature | 12 sheets, 113 parts, unrouted, 60 × 80 mm |
-| **Fajita** | Engine-side sensing, valves, permissives, redlines, abort, its own recording | Owned by propulsion; Ogma only defines the boundary |
+| **Fajita** | Engine-side sensing, valves, permissives, redlines, abort, its own recording | Ours since 20 November, as its own project (D-20Nov.2); this repository sets only the boundary |
 
 Burrito and Churro sit side by side and mate through the 8-contact Samtec pair
 (7.39 mm edge gap, 52.63 mm connector envelope); separate supports take the

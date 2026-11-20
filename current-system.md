@@ -1,6 +1,6 @@
 # Ogma 2 current system
 
-Updated 18 November 2026. Decisions live in [decisions.md](decisions.md); this
+Updated 20 November 2026. Decisions live in [decisions.md](decisions.md); this
 file states what is true now. Native CAD still holds the 8 September draft.
 Capture of the [capture specification](docs/architecture/schematic-capture-spec.md)
 waits for Seán's go-ahead after the Tuesday 3 November review. No fabrication,
@@ -15,8 +15,9 @@ Ogma 2 is HiPR's workhorse flight computer. It owns two boards:
 | Croí2 | Burrito | Flight computer: sensing, estimation, mission state, recording, recovery and staging outputs, CAN; separate comms processor for GNSS, radio and USB |
 | Foinse2 | Churro | MCU-less power board: protected 2S avionics and 6S propulsion feeds, from the packs or the rail umbilical; propulsion current, voltage and temperature monitoring |
 
-Fajita, the propulsion controller, is owned by propulsion and governs itself.
-The active board runs roll control and the grid fins in a closed loop, on its
+Fajita, the propulsion controller, is ours too since 20 November, as its own
+project (D-20Nov.2); it governs itself. The active board, Salsa, runs roll
+control and the grid fins in a closed loop, on its
 own CAN bus from Burrito and its own pack (D-2Nov.8, D-5Nov.3, D-18Nov.1); it is
 designed with the build group from 19 November. The CATS Vega is the
 independent COTS recovery set (D-18Nov.2). The groundstation and payloads are
@@ -188,8 +189,8 @@ Target vehicles, as said at the 14 October requirements meeting:
   the charges sit from Burrito (Seán, 18 Nov: the recovery bay may be well above
   the av-bay; James to confirm), and whether LV-0690 makes roll control
   redundant.
-- **IREC.** Solid O motor, 152.4 mm, the same electronics without propulsion
-  control.
+- **IREC.** Solid O motor, 152.4 mm. Flies Burrito, Churro and Salsa without
+  Fajita, as the flight test of our core before EuRoC (D-20Nov.3).
 
 Croí's 80 mm width fits both.
 

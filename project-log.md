@@ -3754,3 +3754,17 @@ tour's connector gallery.
 - Open: which packs and how (a charging bus through every joint, Appendix C);
   the CATS Vega's cell, since LV-0430 bans modifying it; charge/arm exclusion
   against charging until Go.
+
+## 20 November 2026 — Fajita is ours; IREC flies the core (D-20Nov.2, D-20Nov.3)
+
+- Seán: "Fajita is ours." The propulsion controller is now an Electronics
+  project with its own owner. It still governs itself, and this repository
+  still sets only its boundary with Ogma. The open rows marked "Fajita owner"
+  pass to that owner.
+- The IREC rocket, on a solid O motor, flies Burrito, Churro and Salsa (the
+  active board) without Fajita. Jay wants our flight computer in it, and Seán
+  wants the core flight-tested before EuRoC. Seán thinks Fajita can run on the
+  same timeline anyway.
+- current-system.md, the system tour and the boundary contract follow. Still to
+  check: IREC's rules on SRAD recovery and active control; the integration date
+  (James).

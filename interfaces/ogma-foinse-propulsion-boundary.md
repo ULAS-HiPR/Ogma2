@@ -1,6 +1,6 @@
 # Ogma, Foinse and propulsion boundary
 
-**Status, 6 October 2026, amended 2 and 18 November: controlling contract.** Electrical
+**Status, 6 October 2026, amended 2, 18 and 20 November: controlling contract.** Electrical
 detail describes the 8 September CAD. Decided changes are in
 [decisions.md](../decisions.md) and the
 [capture specification](../docs/architecture/schematic-capture-spec.md). Capture
@@ -64,8 +64,8 @@ operator UI is disconnected.
   test-only path.
 - Croí: 500 kbit/s Classical CAN, TCAN3413DRBR, fixed 120 Ω end termination,
   pin 1 CAN H, pin 2 CAN L, pin 3 reference. No power pin. Connector: Ogma
-  moves J501 from JST GH to Harwin Gecko (D-18Nov.4), so the propulsion end
-  has to match; proposed to the propulsion owner, not agreed.
+  moves J501 from JST GH to Harwin Gecko (D-18Nov.4), so Fajita's end
+  has to match, which is ours to design in since D-20Nov.2.
 - Croí's two transceivers share one standby line (PE10) and one supply limiter
   (D-5Nov.3): one fault there quiets this link and bus 2 together. Propulsion's
   safe response to a missing link covers it.
@@ -149,8 +149,9 @@ production third node and doesn't bridge the vehicle bus to GSE.
 
 ## EuRoC items on the propulsion side
 
-From EuRoC SRD Issue 1.1 (traced 18 November). Propulsion's to answer and
-evidence; listed here because each touches this boundary. None is decided.
+From EuRoC SRD Issue 1.1 (traced 18 November). Fajita's owner answers and
+evidences these with propulsion (D-20Nov.2); listed here because each
+touches this boundary. None is decided.
 
 - **PROP pack (LV-0300, 0310, 0320):** no LiPo; Li-ion only in metal-can
   cylindrical cells (Appendix C). 6S Li-ion keeps Foinse's 18–25.2 V planning
