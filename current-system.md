@@ -71,7 +71,7 @@ external. Start with the [system tour](docs/architecture/system-tour.md).
 - Foinse owns source entry and protection; Ogma is not a power distributor. On
   the rail the vehicle runs from a ground umbilical at Churro, through
   per-source ideal diodes ahead of the eFuses; pulling it hands each feed to its
-  pack. Nothing on the vehicle charges a pack (D-2Nov.7). Churro has two feeds,
+  pack. The packs stay in the vehicle and charge through the umbilical (D-20Nov.1; design open). Churro has two feeds,
   AV and PROP; the active board and the CATS Vega have their own packs
   (D-18Nov.1, D-18Nov.2).
 - Battery, CAN, pyro and servo use keyed, locking board connectors. Bare-wire
@@ -97,7 +97,7 @@ target ≤150 mA, to be measured.
 
 J103 is the FC battery enable: open means off, upstream circuits stay live. It
 is not an arm and not physical isolation. Churro has separate AV and PROP
-enables. Charging uses external balance chargers with the packs off the vehicle.
+enables. Charging moves on board, through the umbilical (D-20Nov.1); the charger design is open.
 
 ## Parts (8 Sep CAD, with decided changes)
 

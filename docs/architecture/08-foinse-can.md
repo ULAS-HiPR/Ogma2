@@ -59,9 +59,8 @@ Fajita converts locally"]
 - Burrito's INA228 (0x40) measures logic current; pyro current comes
   from the TPS1H100 sense lines. Addresses 0x40, 0x41 and 0x48 don't clash.
   Monitoring is on flight I²C4 (PB8/PB9) at 100 kHz.
-- No charger, BMS, CAN endpoint or 24 V converter. Charging uses external
-  pack-matched balance chargers, with the packs off the vehicle; the umbilical
-  never charges. A 24 V coil isn't automatically 6S-compatible; size any
+- No BMS, CAN endpoint or 24 V converter. Charging moves on board, through the
+  umbilical (D-20Nov.1); the charger design is open. A 24 V coil isn't automatically 6S-compatible; size any
   converter from the real load.
 
 Samtec J301/J102: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault,

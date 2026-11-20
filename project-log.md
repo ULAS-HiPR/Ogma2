@@ -3741,3 +3741,16 @@ tour's connector gallery.
   a lock servo).
 - Older servo text in the layout guide and the interface justification is
   overridden by D-19Nov.2 and fixed when those files are next touched.
+
+## 20 November 2026 — the packs charge on board (D-20Nov.1)
+
+- EuRoC LV-0310 needs onboard batteries readily accessible from the ground with
+  the rocket on the rail. Appendix C allows charging on board through an
+  umbilical, or batteries behind service panels reachable from the ground.
+  Jay won't allow a battery hatch, so Seán decided Churro gets charging; the
+  umbilical becomes required.
+- Replaces "charging stays external" in D-2Nov.7, and the matching lines in
+  current-system.md, the power contract and the access-panel brief.
+- Open: which packs and how (a charging bus through every joint, Appendix C);
+  the CATS Vega's cell, since LV-0430 bans modifying it; charge/arm exclusion
+  against charging until Go.

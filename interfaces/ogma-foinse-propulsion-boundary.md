@@ -142,8 +142,8 @@ production third node and doesn't bridge the vehicle bus to GSE.
   and nothing charges a pack. Pulling it hands each branch to its pack (D-2Nov.7).
   AV is set at 8.4 V; the PROP voltage (≈24–25 V proposed) needs the propulsion
   owner's agreement.
-- Charging uses matched external balance chargers and controlled fused service
-  wiring, with the packs off the vehicle and physical charge/arm exclusion.
+- Charging moves on board, through the umbilical (D-20Nov.1); the charger design
+  is open, and physical charge/arm exclusion has to be squared with charging until Go.
   Independent recovery has its own qualified supply and path outside the shared
   Foinse fault boundary.
 

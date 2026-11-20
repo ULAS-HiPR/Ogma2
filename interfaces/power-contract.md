@@ -1,6 +1,6 @@
 # Ogma 2 power contract
 
-**Status, 6 October 2026, amended 2 and 18 November: controlling contract.** Electrical
+**Status, 6 October 2026, amended 2, 18 and 20 November: controlling contract.** Electrical
 detail describes the 8 September CAD. Decided changes are in
 [decisions.md](../decisions.md) and the
 [capture specification](../docs/architecture/schematic-capture-spec.md). Capture
@@ -42,11 +42,11 @@ Foinse (Churro):
 - One protected Croí feed with a provisional 6 A aggregate ceiling.
 - Liquid propulsion has its own 6S pack and domain. It is not a load on Croí's
   logic rail.
-- External matched balance chargers do the charging, with the packs off the
-  vehicle. Physical charge/arm exclusion is still required.
+- Charging moves on board, through the umbilical (D-20Nov.1); the charger design
+  is open, and physical charge/arm exclusion has to be squared with charging until Go.
 - On the rail, a ground umbilical feeds both branches through per-source ideal
-  diodes ahead of the eFuses; pulling it hands each branch to its pack. It never
-  charges a pack (D-2Nov.7).
+  diodes ahead of the eFuses; pulling it hands each branch to its pack. It will
+  also charge the packs (D-20Nov.1); until that design exists, the diodes stop it.
 - Two feeds only, AV and PROP. The active board has its own pack and arm key,
   and the CATS Vega its own cell; neither takes power from Croí or Foinse
   (D-18Nov.1, D-18Nov.2).
@@ -74,8 +74,8 @@ reopens the selected parts or brings back the old ≈3.8 V intermediate.
    The exact intermediate voltage follows headroom, noise and thermal evidence.
 4. **USB is service only.** USB alone supports configuration, readback and log
    download, with no USB path able to power pyro or servo loads. Battery plus USB
-   must not backfeed or charge either source. Charging stays external, with the
-   packs off the vehicle (D-2Nov.7); standalone servicing must not add an
+   must not backfeed or charge either source. Charging comes from the umbilical
+   (D-20Nov.1), never from USB; standalone servicing must not add an
    implicit Ogma charger.
 5. **Hold-up is for brief dips.** Core hold-up covers short interruptions, not
    flying on after a broken source connection. No extra battery or large
@@ -233,7 +233,7 @@ power and signal paths in every powered and unpowered combination.
 | USB only | Configuration, readback, log download. No actuator power from USB | USB budget, entry point, rail sequencing, backfeed tests |
 | One vehicle source plus USB | Servicing works with no contention, backfeed or unintended charging | Priority / ORing mechanism; attach and remove tests |
 | Umbilical on the rail (Churro-fed) | The umbilical carries the load through its own ideal diode; the pack's diode stops it charging the pack. Pulling it hands each branch to its pack with no reset (D-2Nov.7) | Switchover transient, diode heating, source reporting threshold |
-| Charging | Not on the vehicle: external balance chargers with the packs removed (D-2Nov.7) | Operator procedure |
+| Charging | On board, from the umbilical, ending at Go (D-20Nov.1); design open | Charger design, charge/arm exclusion, thermal limits |
 | Standalone battery and Foinse together | Not allowed. Physically exclude it, or review and protect it explicitly first | Exact connector and source arrangement |
 | Source removed or interrupted | Carry on only within proven hold-up; otherwise a defined reset or unavailable outcome | Interruption envelope; EX-03 retention classes |
 | Auxiliary or comms rail off while its interfaces stay connected | No damaging injection, half-powered running or defeated isolation | Exact pin limits, pull-ups, discharge, bus ownership |

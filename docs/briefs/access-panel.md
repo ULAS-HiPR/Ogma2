@@ -1,6 +1,6 @@
 # Access panel brief
 
-**Status, 19 November 2026: requirements for the access-panel subproject.**
+**Status, 19 November 2026, amended 20 November: requirements for the access-panel subproject.**
 Decided items cite their decision; the rest is proposed.
 
 One panel, low on the vehicle and opposite the rail, reachable from the ground
@@ -26,12 +26,11 @@ without a ladder: everything the pad crew touches (EuRoC LV-0260–0280, 0310,
   release by design.
 - Every harness: a cavity-numbered drawing, wire and contact, retention, strain
   relief, and a tug test (LV-0490); PTFE wire near the nitrous (LV-0500).
-- Nothing charges on board; the umbilical never charges a pack.
+- The packs stay inside and charge through the umbilical (D-20Nov.1); no battery hatch.
 - The sounder beeps continuity and state at arming (D-19Nov.4), so the crew hears
   go or no-go at the panel.
 
 ## Open
 
 Switch and plug parts; the panel's position and height; the raceway route; how
-the umbilical is pulled; whether the umbilical is fitted at all (Jay and
-propulsion).
+the umbilical is pulled; its charging contacts (D-20Nov.1).

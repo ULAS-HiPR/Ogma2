@@ -43,8 +43,8 @@ positive service boundary, off the PCB and close to the pack, in a
 **Connectors and charging.** Use the existing 2S Nano-Fit and 6S four-contact
 Micro-Fit source connectors; never swap in matching source plugs. Grounds need a
 full alternate-return check through Samtec, CAN, USB and the umbilical. Charging
-stays on an external matched charger with the packs off the vehicle. No onboard
-charger, BMS or 24 V converter, and the umbilical never charges.
+moves on board, through the umbilical (D-20Nov.1); the charger design is open.
+No BMS or 24 V converter.
 
 **Rail power (D-2Nov.7).** A ground umbilical (J801) feeds both branches on the
 rail. Each source, pack or umbilical, gets its own ideal-diode stage (LM74700-Q1
