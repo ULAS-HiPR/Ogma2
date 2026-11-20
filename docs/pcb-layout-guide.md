@@ -516,9 +516,9 @@ Do not print a readiness claim beside a mere power LED.
    clips cannot bridge 6S to AUX or the mate's small signals.
 9. Check both boards together in the carrier, actual plugs fitted. Foinse's
    current outline contains no reserved/qualified future 24 V converter. Real
-   coils may require a separate placement study or a larger Foinse. External
-   matched balance charging remains a segregated pack/service harness, not
-   current carried through the monitor or Croí.
+   coils may require a separate placement study or a larger Foinse. Charging
+   moves on board through the umbilical (D-20Nov.1), design open; its current
+   never goes through Croí.
 
 ## Final layout checks before an order
 

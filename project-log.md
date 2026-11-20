@@ -3768,3 +3768,12 @@ tour's connector gallery.
 - current-system.md, the system tour and the boundary contract follow. Still to
   check: IREC's rules on SRAD recovery and active control; the integration date
   (James).
+
+## 20 November 2026 — D-20Nov.1 carried through the rest
+
+- The charging commit (7a34d03) missed six places that still said nothing
+  charges on board or through the umbilical: the boundary contract's
+  who-owns-what table and rail-power bullet, chapter 08's rail power, the
+  capture specification's Churro changes, the system tour's switching table and
+  step 9 of the layout guide. Each now follows D-20Nov.1. The load path's ideal
+  diodes still can't charge a pack; the charger is its own design, still open.

@@ -130,8 +130,9 @@ Also on the processors:
 
 Keep: autonomous source protection, threshold networks, source controls, the
 Samtec pinout (pin 8 is now `CROI_POWER_HOLD`), TCA4307, INA228, ADS1115 and the
-voltage-input TMUX1511. Don't add an MCU, charger, BMS, CAN endpoint or 24 V
-converter, and don't charge anything through the umbilical. The
+voltage-input TMUX1511. Don't add an MCU, CAN endpoint or 24 V converter.
+Churro gains charging (D-20Nov.1); the charger, any balancing and the
+umbilical's charging contacts wait for their design. The
 [monitoring justification](justifications/churro-monitoring.md) is the
 connection authority for the probe and reference additions below; the umbilical
 rows come from D-2Nov.7.

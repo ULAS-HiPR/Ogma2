@@ -132,7 +132,7 @@ the umbilical. Its protection works without Burrito; its monitoring doesn't.
 | Switch on | J103 enable loop | Turns on Burrito's battery entry | Disarm anything; isolate the pack |
 | Arm recovery | J6101 external switch | Connects energy to pyro channels 1 and 2 | Switch the computer on |
 | Arm staging | J6102 external switch | Connects energy to channel 3, which also needs the reset latch set | Arm recovery |
-| On the rail | Ground umbilical at Churro | Powers the vehicle; pulling it switches to the packs | Charge a pack |
+| On the rail | Ground umbilical at Churro | Powers the vehicle; pulling it switches to the packs. It will charge them too (D-20Nov.1) | Charge a pack yet: the charger isn't designed |
 | In flight | Firmware hold | Keeps the computer on if J103's wire breaks, through a restart | Override a pulled battery |
 
 The arm switch parts aren't chosen yet, and for EuRoC they must be reachable

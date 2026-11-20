@@ -36,8 +36,8 @@ Fajita converts locally"]
 - **Rail power (D-2Nov.7).** On the rail the umbilical carries the load. When it
   pulls away at Go, each feed switches to its pack with no dropout. Each source
   has its own ideal diode (LM74700-Q1 class), ORed ahead of U1001 / U2001, so the
-  enables and protection work the same on either source and the umbilical can't
-  charge a pack. The AV umbilical sits at 8.4 V at Churro, below every
+  enables and protection work the same on either source and that path can't
+  charge a pack (charging: D-20Nov.1, below). The AV umbilical sits at 8.4 V at Churro, below every
   over-voltage trip; PROP at ≈24–25 V, set with the propulsion owner. Whichever
   source is higher carries the load, so a pack fresher than the umbilical feeds
   the vehicle until it drops to the umbilical's voltage. Fuse and TVS at the

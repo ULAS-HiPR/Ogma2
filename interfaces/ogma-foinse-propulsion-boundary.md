@@ -40,7 +40,7 @@ tested hardware override it where they conflict.
 | --- | --- | --- |
 | Ogma 2 | Vehicle mission state, high-level engine requests, bounded propulsion summaries, recovery, staged-flight energetic authority | Engine redlines, main-engine actuation, GSE, propulsion power distribution |
 | Propulsion controller | Engine-critical acquisition, local state and redlines, main-engine valves, ignition, local abort, local full-rate evidence | General GSE sequencing, research-only stand DAQ, vehicle recovery |
-| Foinse 2 | Vehicle source entry, protection and vehicle-specific power distribution, including the rail umbilical. No onboard charging | Flight state, propulsion state, redlines, command decisions |
+| Foinse 2 | Vehicle source entry, protection and vehicle-specific power distribution, including the rail umbilical and, since D-20Nov.1, on-board charging through it | Flight state, propulsion state, redlines, command decisions |
 
 The propulsion controller is a self-governing peer. It must carry out its own
 defined safe response while Ogma is in reset, CAN is missing or corrupt, and the
@@ -139,7 +139,7 @@ production third node and doesn't bridge the vehicle bus to GSE.
   count or a finished propulsion supply specification.
 - On the rail, a ground umbilical feeds both Foinse branches through per-source
   ideal diodes ahead of the eFuses, so the enables and protection still apply
-  and nothing charges a pack. Pulling it hands each branch to its pack (D-2Nov.7).
+  and the diodes can't charge a pack. Pulling it hands each branch to its pack (D-2Nov.7).
   AV is set at 8.4 V; the PROP voltage (≈24–25 V proposed) needs the propulsion
   owner's agreement.
 - Charging moves on board, through the umbilical (D-20Nov.1); the charger design
