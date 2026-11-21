@@ -1,0 +1,1968 @@
+(kicad_sch
+  (version 20250114)
+  (generator eeschema)
+  (generator_version "9.0")
+  (uuid "d48738e4-406e-57b0-adf9-aa831ec88852")
+  (paper "User" 297 230.32)
+  (title_block
+    (title "Magnetometer / MMC5983MA / I2C3")
+    (date "2026-11-21")
+    (rev "A-DRAFT")
+    (company "HiPR")
+    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
+  (lib_symbols
+    (symbol "Device:R"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "R"
+        (at 2.032 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "R"
+        (at 0 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at -1.778 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Resistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "R res resistor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "R_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "R_0_1"
+        (rectangle
+          (start -1.016 -2.54)
+          (end 1.016 2.54)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "R_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no))
+    (symbol "Device:C"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0.254))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "C"
+        (at 0.635 2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Value" "C"
+        (at 0.635 -2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Footprint" ""
+        (at 0.9652 -3.81 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Unpolarized capacitor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "cap capacitor"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "C_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "C_0_1"
+        (polyline
+          (pts
+            (xy -2.032 0.762)
+            (xy 2.032 0.762))
+          (stroke
+            (width 0.508)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy -2.032 -0.762)
+            (xy 2.032 -0.762))
+          (stroke
+            (width 0.508)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "C_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 2.794)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 2.794)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no))
+    (symbol "power:PWR_FLAG"
+      (power)
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0)
+        (hide yes))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "#FLG"
+        (at 0 1.905 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Value" "PWR_FLAG"
+        (at 0 3.81 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Special symbol for telling ERC where power comes from"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "flag power"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "PWR_FLAG_0_0"
+        (pin power_out line
+          (at 0 0 90)
+          (length 0)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (symbol "PWR_FLAG_0_1"
+        (polyline
+          (pts
+            (xy 0 0)
+            (xy 0 1.27)
+            (xy -1.016 1.905)
+            (xy 0 2.54)
+            (xy 1.016 1.905)
+            (xy 0 1.27))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none))))
+      (embedded_fonts no))
+    (symbol "Ogma2:MMC5983MA"
+      (pin_names
+        (offset 0.508))
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "U"
+        (at -10.16 12.7 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (property "Value" "MMC5983MA"
+        (at -10.16 11.43 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (justify left)))
+      (symbol "MMC5983MA_0_1"
+        (rectangle
+          (start -10.16 -15.24)
+          (end 10.16 10.16)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "MMC5983MA_1_1"
+        (pin input line
+          (at -15.24 7.62 0)
+          (length 5.08)
+          (name "SCL/SPI_SCK"
+            (effects
+              (font
+                (size 1 1))))
+          (number "1"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin bidirectional line
+          (at -15.24 5.08 0)
+          (length 5.08)
+          (name "SDA/SPI_SDI"
+            (effects
+              (font
+                (size 1 1))))
+          (number "16"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin output line
+          (at -15.24 2.54 0)
+          (length 5.08)
+          (name "INT"
+            (effects
+              (font
+                (size 1 1))))
+          (number "15"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin input line
+          (at -15.24 0 0)
+          (length 5.08)
+          (name "SPI_CS"
+            (effects
+              (font
+                (size 1 1))))
+          (number "4"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin output line
+          (at -15.24 -2.54 0)
+          (length 5.08)
+          (name "SPI_SDO"
+            (effects
+              (font
+                (size 1 1))))
+          (number "5"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin no_connect line
+          (at -15.24 -7.62 0)
+          (length 5.08)
+          (name "NC"
+            (effects
+              (font
+                (size 1 1))))
+          (number "3"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin no_connect line
+          (at -15.24 -10.16 0)
+          (length 5.08)
+          (name "NC"
+            (effects
+              (font
+                (size 1 1))))
+          (number "6"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin no_connect line
+          (at -15.24 -12.7 0)
+          (length 5.08)
+          (name "NC"
+            (effects
+              (font
+                (size 1 1))))
+          (number "7"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin power_in line
+          (at 15.24 7.62 180)
+          (length 5.08)
+          (name "VDD"
+            (effects
+              (font
+                (size 1 1))))
+          (number "2"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin power_in line
+          (at 15.24 5.08 180)
+          (length 5.08)
+          (name "CAP"
+            (effects
+              (font
+                (size 1 1))))
+          (number "10"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin power_in line
+          (at 15.24 2.54 180)
+          (length 5.08)
+          (name "VDDIO"
+            (effects
+              (font
+                (size 1 1))))
+          (number "13"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin no_connect line
+          (at 15.24 -2.54 180)
+          (length 5.08)
+          (name "NC"
+            (effects
+              (font
+                (size 1 1))))
+          (number "8"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin no_connect line
+          (at 15.24 -5.08 180)
+          (length 5.08)
+          (name "NC"
+            (effects
+              (font
+                (size 1 1))))
+          (number "12"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin no_connect line
+          (at 15.24 -7.62 180)
+          (length 5.08)
+          (name "NC"
+            (effects
+              (font
+                (size 1 1))))
+          (number "14"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin power_in line
+          (at 15.24 -10.16 180)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (size 1 1))))
+          (number "9"
+            (effects
+              (font
+                (size 1 1)))))
+        (pin power_in line
+          (at 15.24 -12.7 180)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (size 1 1))))
+          (number "11"
+            (effects
+              (font
+                (size 1 1))))))
+      (property "Footprint" "Ogma2:MMC5983MA"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://mpython-docs-en.readthedocs.io/en/latest/_downloads/904b626be755c6b67b1cbb23966aeee9/MMC5983MA.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "MMC5983MA"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "MEMSIC"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Magnetometer, I2C 0x30 (D-2Nov.11)"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "pins transcribed from the MMC5983MA pin table (MEMSIC datasheet Rev A); footprint is KiCad 9.0.7 Package_LGA:LGA-16_3x3mm_P0.5mm, made from MEMSIC's MMC5883MA drawing (same 3 x 3 x 1 mm LGA-16): pads to check against the MMC5983MA drawing before layout"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))))
+  (text "MAGNETOMETER / MMC5983MA / I2C3"
+    (exclude_from_sim no)
+    (at 15.24 15.24 0)
+    (effects
+      (font
+        (size 2.54 2.54))
+      (justify left))
+    (uuid "cdcf30e5-e6c3-5068-9d7c-e7d391e07834"))
+  (text "What this does: Measures the magnetic field for heading and roll, read at 100 Hz and logged. Non-essential:\nit never gates the watchdog or the estimator (D-2Nov.11).\nConnects to: FLIGHT_3V3 through R3701 -> MAG_3V3; I2C3 (PA8 MAG_SCL, PC9 MAG_SDA) and MAG_INT (PE6) on 02-flight-mcu."
+    (exclude_from_sim no)
+    (at 15.24 27.94 0)
+    (effects
+      (font
+        (size 1.4 1.4))
+      (justify left top))
+    (uuid "aed4a53d-f7d2-5fdb-8886-7aa84e7fa787"))
+  (text "1  SUPPLY LINK"
+    (exclude_from_sim no)
+    (at 15.24 52.07 0)
+    (effects
+      (font
+        (size 1.524 1.524))
+      (justify left))
+    (uuid "6fb8818c-01ff-55dd-b97a-1aeebcc3f83c"))
+  (text "2  SENSOR, I2C3 AND DATA READY"
+    (exclude_from_sim no)
+    (at 15.24 88.9 0)
+    (effects
+      (font
+        (size 1.524 1.524))
+      (justify left))
+    (uuid "70d493d0-dec0-5cb1-a389-f5d4ac2153c5"))
+  (symbol
+    (lib_id "Device:R")
+    (at 50.8 68.58 90)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "b0e8e73d-b709-5683-a7ca-6d58d5ea8e35")
+    (property "Reference" "R3701"
+      (at 50.8 63.5 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "22R"
+      (at 50.8 66.04 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 50.8 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 50.8 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 50.8 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 50.8 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 50.8 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "Magnetometer supply link, 22 ohm not 47: VDD minimum is 2.8 V and the SET/RESET pulses come through it (D-2Nov.11)"
+      (at 50.8 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "R3701")
+          (unit 1))))
+    (pin "1"
+      (uuid "3226c1a0-1962-57dc-a9ef-ad1590e140b5"))
+    (pin "2"
+      (uuid "4dfc48dc-6e0b-5840-8414-396399dd15d3")))
+  (symbol
+    (lib_id "power:PWR_FLAG")
+    (at 66.04 68.58 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "70a9d017-cd0d-54fc-b075-d914585d3b39")
+    (property "Reference" "#FLG021"
+      (at 66.04 60.96 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "PWR_FLAG"
+      (at 66.04 63.5 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" ""
+      (at 66.04 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 66.04 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Special symbol for telling ERC where power comes from"
+      (at 66.04 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "flag power"
+      (at 66.04 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "ERC source path through the 22 ohm link from FLIGHT_3V3. Not a qualification claim."
+      (at 66.04 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "#FLG021")
+          (unit 1))))
+    (pin "1"
+      (uuid "8b2856d5-ace3-5b98-acf0-df9162ba65f3")))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 40.64 68.58 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "b6279280-313d-5269-8db6-7c3074e1fcbc")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 40.64 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (global_label "MAG_3V3"
+    (shape bidirectional)
+    (at 78.74 68.58 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "a0a4711e-45a9-5cd6-979b-580d36673ca2")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 78.74 68.58 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (junction
+    (at 66.04 68.58)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "235aeb78-d0b0-55b6-a83c-f722c25b7c43"))
+  (wire
+    (pts
+      (xy 40.64 68.58)
+      (xy 46.99 68.58))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "ff9e720b-9c1f-53bf-bb04-4233988f17f2"))
+  (wire
+    (pts
+      (xy 54.61 68.58)
+      (xy 66.04 68.58))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "e3ed7648-529e-5a77-971d-c0c8b3e721b4"))
+  (wire
+    (pts
+      (xy 66.04 68.58)
+      (xy 78.74 68.58))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "e7c93491-093d-58bf-b33d-e6b43c912cbd"))
+  (symbol
+    (lib_id "Device:R")
+    (at 67.31 116.84 90)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "c84874e2-e245-5f59-ad73-e537bc9afcba")
+    (property "Reference" "R3704"
+      (at 67.31 111.76 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "22R"
+      (at 67.31 114.3 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 67.31 116.84 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 67.31 116.84 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 67.31 116.84 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 67.31 116.84 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 67.31 116.84 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "I2C3 SCL damping (D-2Nov.11)"
+      (at 67.31 116.84 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "R3704")
+          (unit 1))))
+    (pin "1"
+      (uuid "86f574d7-0750-594f-88ab-95a838d1d29b"))
+    (pin "2"
+      (uuid "c1fe919f-a3e9-5300-aa06-bde299274e1f")))
+  (symbol
+    (lib_id "Device:R")
+    (at 55.88 109.22 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "b5e5dbf9-7444-52d3-9fd6-65c3cea1aebe")
+    (property "Reference" "R3702"
+      (at 59.69 107.95 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "2.7k"
+      (at 59.69 110.49 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 55.88 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 55.88 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 55.88 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 55.88 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 55.88 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "I2C3 SCL pull-up to FLIGHT_3V3 (D-2Nov.11)"
+      (at 55.88 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "R3702")
+          (unit 1))))
+    (pin "1"
+      (uuid "2d9258b6-95a1-5b91-8af8-5c8337147b14"))
+    (pin "2"
+      (uuid "be9fa809-05da-5c07-88fd-99fe0ec129c9")))
+  (global_label "MAG_SCL"
+    (shape bidirectional)
+    (at 40.64 116.84 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "26bceb35-62a8-5ae9-bfcb-0fbcdcfc5259")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 40.64 116.84 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (global_label "MAG_SCL_DAMP"
+    (shape bidirectional)
+    (at 78.74 116.84 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "b45509ef-42f4-52c7-b29c-f7e5f4684fd7")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 78.74 116.84 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 50.8 101.6 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "832ed757-3ac9-5597-9fd4-13a3bbd074b4")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 50.8 101.6 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (junction
+    (at 55.88 116.84)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "3072097a-e54d-5b22-bc0a-efdb41820121"))
+  (wire
+    (pts
+      (xy 40.64 116.84)
+      (xy 55.88 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "de00afec-869c-5080-bd70-9868e7df767c"))
+  (wire
+    (pts
+      (xy 55.88 116.84)
+      (xy 63.5 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "eae60acd-a635-5ecf-9526-3d118da7ac08"))
+  (wire
+    (pts
+      (xy 71.12 116.84)
+      (xy 78.74 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "cc1bb7c5-ef17-5ba0-acba-6d35acc253ef"))
+  (wire
+    (pts
+      (xy 55.88 113.03)
+      (xy 55.88 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "cf188b3d-4e12-53b0-9fdc-6ffe01df2bcd"))
+  (wire
+    (pts
+      (xy 55.88 105.41)
+      (xy 55.88 101.6))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "01965f24-baaf-5771-a59e-f8051a3fe552"))
+  (wire
+    (pts
+      (xy 55.88 101.6)
+      (xy 50.8 101.6))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "1cc0a9fb-80d4-50dd-8204-2dc87aabe4db"))
+  (symbol
+    (lib_id "Device:R")
+    (at 67.31 139.7 90)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "ff473acd-7d71-5d8c-8616-3ca7ef501dfa")
+    (property "Reference" "R3705"
+      (at 67.31 134.62 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "22R"
+      (at 67.31 137.16 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 67.31 139.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 67.31 139.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 67.31 139.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 67.31 139.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 67.31 139.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "I2C3 SDA damping (D-2Nov.11)"
+      (at 67.31 139.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "R3705")
+          (unit 1))))
+    (pin "1"
+      (uuid "db0037b2-cb9b-52a5-a5de-aa4c6f00ef50"))
+    (pin "2"
+      (uuid "9844816f-8786-5be5-8d7c-69426744f0e2")))
+  (symbol
+    (lib_id "Device:R")
+    (at 55.88 132.08 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "8d109ca9-50e6-52ab-a4de-38bda8ae046f")
+    (property "Reference" "R3703"
+      (at 59.69 130.81 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "2.7k"
+      (at 59.69 133.35 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 55.88 132.08 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 55.88 132.08 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 55.88 132.08 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 55.88 132.08 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 55.88 132.08 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "I2C3 SDA pull-up to FLIGHT_3V3 (D-2Nov.11)"
+      (at 55.88 132.08 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "R3703")
+          (unit 1))))
+    (pin "1"
+      (uuid "55e2a152-8c7b-5936-83c2-24a9c9683aa7"))
+    (pin "2"
+      (uuid "098ff148-db2b-55d2-b53d-50ac45a307ea")))
+  (global_label "MAG_SDA"
+    (shape bidirectional)
+    (at 40.64 139.7 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "d1b39f23-80fa-577a-80b8-486987be0053")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 40.64 139.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (global_label "MAG_SDA_DAMP"
+    (shape bidirectional)
+    (at 78.74 139.7 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "5eb2322d-cb75-5477-aa2a-c16d1fb32785")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 78.74 139.7 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 50.8 124.46 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "18ec954c-d7ca-5df7-8751-b0b63fa7a4a7")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 50.8 124.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (junction
+    (at 55.88 139.7)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "bc254827-d873-5930-a86f-1346ac7598c4"))
+  (wire
+    (pts
+      (xy 40.64 139.7)
+      (xy 55.88 139.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "579b3008-73ba-57e1-9814-5f2b8923661a"))
+  (wire
+    (pts
+      (xy 55.88 139.7)
+      (xy 63.5 139.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "32ee2a2e-3f60-5952-89f5-f0b1e2699f6f"))
+  (wire
+    (pts
+      (xy 71.12 139.7)
+      (xy 78.74 139.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "6b8bc002-2112-5504-ba8a-684822fd873b"))
+  (wire
+    (pts
+      (xy 55.88 135.89)
+      (xy 55.88 139.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "9f2f4e6d-934f-5107-99f8-232cd1d9a2dd"))
+  (wire
+    (pts
+      (xy 55.88 128.27)
+      (xy 55.88 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "2a3bc0c2-6f5e-5893-827d-cf4237595623"))
+  (wire
+    (pts
+      (xy 55.88 124.46)
+      (xy 50.8 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "986fb332-e68f-5cb0-8c16-218327d25aee"))
+  (symbol
+    (lib_id "Ogma2:MMC5983MA")
+    (at 157.48 127 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "99f665b6-b9ac-57e1-8951-c111bdedb64c")
+    (property "Reference" "U3701"
+      (at 147.32 111.76 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "MMC5983MA"
+      (at 147.32 114.3 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Ogma2:MMC5983MA"
+      (at 157.48 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://mpython-docs-en.readthedocs.io/en/latest/_downloads/904b626be755c6b67b1cbb23966aeee9/MMC5983MA.pdf"
+      (at 157.48 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Magnetometer, I2C 0x30 (D-2Nov.11)"
+      (at 157.48 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "MMC5983MA"
+      (at 157.48 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "MEMSIC"
+      (at 157.48 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "pins transcribed from the MMC5983MA pin table (MEMSIC datasheet Rev A); footprint is KiCad 9.0.7 Package_LGA:LGA-16_3x3mm_P0.5mm, made from MEMSIC's MMC5883MA drawing (same 3 x 3 x 1 mm LGA-16): pads to check against the MMC5983MA drawing before layout"
+      (at 157.48 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "Top end of the board, away from power entry, outputs and GNSS (layout guide C09a)"
+      (at 157.48 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "U3701")
+          (unit 1))))
+    (pin "1"
+      (uuid "91aead2f-da24-52b7-95c6-262cef5e40ec"))
+    (pin "16"
+      (uuid "5b30ba96-77a1-5568-b8f4-2864a9f54c8a"))
+    (pin "15"
+      (uuid "dc3ddb94-edff-5b1c-8b74-86820d672cdb"))
+    (pin "4"
+      (uuid "2e520cfe-d023-5f21-a47d-302665ab1a81"))
+    (pin "5"
+      (uuid "e2f0c33a-e257-5264-8dfb-cdf7e385a03f"))
+    (pin "3"
+      (uuid "afa3ae36-eb11-51d9-a184-3571a0391f9d"))
+    (pin "6"
+      (uuid "ba6b69b0-1ba0-5a08-a1d8-da0655646459"))
+    (pin "7"
+      (uuid "1c1f1c9b-31f5-5a02-87e0-90bf0cf5b8ef"))
+    (pin "2"
+      (uuid "92e4c70f-ce1a-5461-b310-9a09e1af6ce6"))
+    (pin "10"
+      (uuid "5bfcb9e1-0f2e-5634-b4ff-f5aaf25a2fff"))
+    (pin "13"
+      (uuid "25679cc5-9235-5f21-ad92-0d8c89c1bee0"))
+    (pin "8"
+      (uuid "70100993-0a04-5a73-9c45-e5696f952d60"))
+    (pin "12"
+      (uuid "16bebf6a-6ba6-5c66-a753-a4c95230c46b"))
+    (pin "14"
+      (uuid "090dfa16-3beb-586e-b427-59061e4ab471"))
+    (pin "9"
+      (uuid "88e08a1f-339f-58c6-9239-9fb4cdc21203"))
+    (pin "11"
+      (uuid "0eebb36f-cb6f-5f27-b6a8-a64069e0c0f9")))
+  (wire
+    (pts
+      (xy 142.24 119.38)
+      (xy 137.16 119.38))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "8fd0f9a4-68d5-51e8-8305-f3f950159661"))
+  (global_label "MAG_SCL_DAMP"
+    (shape bidirectional)
+    (at 137.16 119.38 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "d6b1c64c-020e-5035-9d5d-21d7d87fc901")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 137.16 119.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 142.24 121.92)
+      (xy 137.16 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "8797885e-d202-5834-bbf3-886522e18f9c"))
+  (global_label "MAG_SDA_DAMP"
+    (shape bidirectional)
+    (at 137.16 121.92 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "2f032b3e-ab14-548a-8065-c9aa45a454d4")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 137.16 121.92 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 142.24 124.46)
+      (xy 137.16 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "5ad2e030-3a4a-5c3d-94ce-60cad49ec417"))
+  (global_label "MAG_INT"
+    (shape bidirectional)
+    (at 137.16 124.46 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "e8e2a5d8-0f3f-5648-b643-0ca0c2ae5794")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 137.16 124.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 142.24 127)
+      (xy 137.16 127))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "7996ae15-5f87-5f88-8c10-de235cc0395d"))
+  (global_label "MAG_3V3"
+    (shape bidirectional)
+    (at 137.16 127 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "4565c668-628d-58fa-b3ce-f0128698f545")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 137.16 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (no_connect
+    (at 142.24 129.54)
+    (uuid "2b0faeee-363b-54ba-8173-3aed699f9ece"))
+  (no_connect
+    (at 142.24 134.62)
+    (uuid "4961a5de-3c1f-5e8a-b2b1-c2353951ae09"))
+  (no_connect
+    (at 142.24 137.16)
+    (uuid "6c88bb5a-71d1-5db2-a563-a77feccac39b"))
+  (no_connect
+    (at 142.24 139.7)
+    (uuid "1848ec3b-56ca-52dd-8a45-83580b7db815"))
+  (no_connect
+    (at 172.72 129.54)
+    (uuid "3d470fce-dd5a-5c17-a0fe-3b8580a0d716"))
+  (no_connect
+    (at 172.72 132.08)
+    (uuid "cc7d735d-7fff-5878-9e3b-7be8f3c99257"))
+  (no_connect
+    (at 172.72 134.62)
+    (uuid "c2aca2f1-2e70-51b4-8c38-f90b72a49e5c"))
+  (wire
+    (pts
+      (xy 172.72 119.38)
+      (xy 177.8 119.38))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "8d2f40ce-2e9d-5425-b132-669ab0e7cb6b"))
+  (wire
+    (pts
+      (xy 177.8 119.38)
+      (xy 177.8 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "fa043c87-925f-5408-bea6-7549800ba69a"))
+  (wire
+    (pts
+      (xy 172.72 121.92)
+      (xy 182.88 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "392b27ea-8cda-558f-982b-3ea6b04412db"))
+  (wire
+    (pts
+      (xy 182.88 121.92)
+      (xy 182.88 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "f82d947a-ee91-5267-a20d-3bbbab6e5384"))
+  (wire
+    (pts
+      (xy 172.72 124.46)
+      (xy 187.96 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "c305f3a7-9970-5baa-9ee7-f10f9d16ad1f"))
+  (wire
+    (pts
+      (xy 187.96 124.46)
+      (xy 187.96 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0917089a-38b2-5ec7-9f53-77618af76328"))
+  (wire
+    (pts
+      (xy 177.8 106.68)
+      (xy 182.88 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "520541a1-e696-5096-b7c4-3dffd9197b94"))
+  (wire
+    (pts
+      (xy 182.88 106.68)
+      (xy 187.96 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "76df9d4a-d45b-57bc-8089-34cc0d8b217c"))
+  (wire
+    (pts
+      (xy 187.96 106.68)
+      (xy 195.58 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "733739ae-8784-5374-9107-f9250562428d"))
+  (wire
+    (pts
+      (xy 195.58 106.68)
+      (xy 213.36 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "cce2e0ff-0f68-5ad3-9c6f-7d6d33fe97b9"))
+  (wire
+    (pts
+      (xy 213.36 106.68)
+      (xy 231.14 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "2d3a4bf6-2884-5362-aaad-53738659e810"))
+  (wire
+    (pts
+      (xy 231.14 106.68)
+      (xy 248.92 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "287e9635-441a-58df-988a-5f80e2f8fdb9"))
+  (wire
+    (pts
+      (xy 248.92 106.68)
+      (xy 256.54 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "8e18535a-3755-57e8-b466-ae0be7ab717b"))
+  (symbol
+    (lib_id "Device:C")
+    (at 195.58 114.3 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "a08c0a3c-716a-51ab-a9d8-b2c7c398e592")
+    (property "Reference" "C3701"
+      (at 199.39 113.03 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "10u 16V X7R"
+      (at 199.39 115.57 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
+      (at 195.58 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 195.58 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 195.58 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 195.58 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 195.58 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "SET/RESET reservoir at CAP (pin 10), low ESR; >=10 uF asked, X7R at 16 V keeps most of it at 3.3 V"
+      (at 195.58 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "C3701")
+          (unit 1))))
+    (pin "1"
+      (uuid "ee0c401a-6ee2-59ab-8b4e-60a88cac24d4"))
+    (pin "2"
+      (uuid "e1aabd7b-65d3-5e89-8f9a-4e03364de8ce")))
+  (wire
+    (pts
+      (xy 195.58 106.68)
+      (xy 195.58 110.49))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "80a5f6b1-4ed9-553b-9746-878ca37694f7"))
+  (wire
+    (pts
+      (xy 195.58 118.11)
+      (xy 195.58 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "61358ab5-61f4-5d4b-a83a-30e94262d162"))
+  (symbol
+    (lib_id "Device:C")
+    (at 213.36 114.3 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "e290337f-1988-5536-86ad-b9bf49bc428a")
+    (property "Reference" "C3702"
+      (at 217.17 113.03 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "1u 16V X7R"
+      (at 217.17 115.57 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 213.36 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 213.36 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 213.36 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 213.36 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 213.36 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "At VDD (pin 2)"
+      (at 213.36 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "C3702")
+          (unit 1))))
+    (pin "1"
+      (uuid "febf9c30-01a0-55a4-a1bf-7cba11f0c0c0"))
+    (pin "2"
+      (uuid "e303c4f1-3acf-5d3a-95ff-3620b8b2b607")))
+  (wire
+    (pts
+      (xy 213.36 106.68)
+      (xy 213.36 110.49))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "cd7b1746-080b-5cd1-b858-d87b256a249d"))
+  (wire
+    (pts
+      (xy 213.36 118.11)
+      (xy 213.36 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "d265e6d3-c946-5a7f-ba5b-cc150b55bbe4"))
+  (symbol
+    (lib_id "Device:C")
+    (at 231.14 114.3 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "7b4dc76b-9cc2-5141-a1bf-c0d9ee571152")
+    (property "Reference" "C3703"
+      (at 234.95 113.03 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100n 16V X7R"
+      (at 234.95 115.57 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 231.14 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 231.14 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 231.14 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 231.14 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 231.14 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "At VDD (pin 2)"
+      (at 231.14 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "C3703")
+          (unit 1))))
+    (pin "1"
+      (uuid "ec91f069-d13a-5047-8818-8c4148cd6300"))
+    (pin "2"
+      (uuid "877c6eaa-ccb8-5b90-9957-92b575a656e3")))
+  (wire
+    (pts
+      (xy 231.14 106.68)
+      (xy 231.14 110.49))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0ae70092-306f-5024-b563-f1a9cb5583be"))
+  (wire
+    (pts
+      (xy 231.14 118.11)
+      (xy 231.14 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "f915e657-c4cf-5ec0-839c-2051fb2d9063"))
+  (symbol
+    (lib_id "Device:C")
+    (at 248.92 114.3 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "dd72f3a0-1957-58ce-af5c-cd0f737edbfe")
+    (property "Reference" "C3704"
+      (at 252.73 113.03 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "100n 16V X7R"
+      (at 252.73 115.57 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 248.92 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 248.92 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Unpolarized capacitor"
+      (at 248.92 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "cap capacitor"
+      (at 248.92 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "C_*"
+      (at 248.92 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "At VDDIO (pin 13)"
+      (at 248.92 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8"
+          (reference "C3704")
+          (unit 1))))
+    (pin "1"
+      (uuid "b9b50f4b-c693-5aff-960e-0a39ec8e45b3"))
+    (pin "2"
+      (uuid "b426be40-3258-56a3-9394-2e50c0814496")))
+  (wire
+    (pts
+      (xy 248.92 106.68)
+      (xy 248.92 110.49))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "d93c07c2-1b6e-5dc2-8428-93c12066c1bf"))
+  (wire
+    (pts
+      (xy 248.92 118.11)
+      (xy 248.92 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "bdc13faa-6388-5112-8d26-173e5094dc2a"))
+  (wire
+    (pts
+      (xy 195.58 121.92)
+      (xy 213.36 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "485866ca-3179-5f64-89dc-d0c13914278d"))
+  (wire
+    (pts
+      (xy 213.36 121.92)
+      (xy 231.14 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "a8d92f20-8944-5dce-a20c-9e4bce8077f3"))
+  (wire
+    (pts
+      (xy 231.14 121.92)
+      (xy 248.92 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "617f2636-75a2-5f77-9463-50b576e62955"))
+  (wire
+    (pts
+      (xy 248.92 121.92)
+      (xy 256.54 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "984fb75c-9b17-5690-a071-912858464b7d"))
+  (global_label "MAG_3V3"
+    (shape bidirectional)
+    (at 256.54 106.68 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "1ef30b98-d5cd-51b8-8c8e-5f2ac7934f75")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 256.54 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 256.54 121.92 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "5f8beef3-d3c0-566a-93d4-e58d6fe10237")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 256.54 121.92 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (junction
+    (at 182.88 106.68)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "189051c2-e00c-5849-a41f-ec7da0832947"))
+  (junction
+    (at 187.96 106.68)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "02f9b0e9-66b5-50de-a866-92c872e385a1"))
+  (junction
+    (at 195.58 106.68)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "60a449cb-f5be-5e25-9f2f-77cda581d54a"))
+  (junction
+    (at 213.36 106.68)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "276e91da-11f9-5bbd-b984-ca43bb59f8fc"))
+  (junction
+    (at 231.14 106.68)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "2ef4d366-3afe-5e54-83ff-c3c4fd79a091"))
+  (junction
+    (at 248.92 106.68)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "fadbfbf3-e9f5-5bcd-9503-27c8ef134cfd"))
+  (junction
+    (at 213.36 121.92)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "b4196466-d499-56b9-aead-63e2e1ebc20f"))
+  (junction
+    (at 231.14 121.92)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "05a03304-24d3-561b-8efe-932bbe0739d8"))
+  (junction
+    (at 248.92 121.92)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "5c672046-d0b1-5e63-beb7-89d33c2c1343"))
+  (wire
+    (pts
+      (xy 172.72 137.16)
+      (xy 177.8 137.16))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "33087a0a-c41f-5d32-86d9-896224ff27f4"))
+  (wire
+    (pts
+      (xy 177.8 137.16)
+      (xy 177.8 139.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "9a530ba7-c9d0-5ba4-8744-11aa3bc55ed0"))
+  (wire
+    (pts
+      (xy 172.72 139.7)
+      (xy 177.8 139.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "31eb941e-50b8-5690-ab37-e9bc2921edad"))
+  (wire
+    (pts
+      (xy 177.8 139.7)
+      (xy 177.8 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "a251da35-53e1-5c82-838e-542c612940ea"))
+  (wire
+    (pts
+      (xy 177.8 142.24)
+      (xy 182.88 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "82d76907-7116-5a1f-8001-a44d9c09bf26"))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 182.88 142.24 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "d7d0b173-495e-543d-bae3-686595e5dfa0")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 182.88 142.24 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (junction
+    (at 177.8 139.7)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "030d3675-03ad-5ace-bec4-9fe298f73596"))
+  (text "22 ohm link, not 47: VDD's minimum is 2.8 V and the SET/RESET pulses come through the link (D-2Nov.11).\nC3701 is the SET/RESET reservoir, at CAP (pin 10); C3702 / C3703 at VDD (pin 2); C3704 at VDDIO (pin 13).\nI2C only: SPI_CS tied to VDDIO; SDO and the NC pads unconnected. Address 0x30. Pull-ups go to FLIGHT_3V3."
+    (exclude_from_sim no)
+    (at 15.24 165.1 0)
+    (effects
+      (font
+        (size 1.15 1.15))
+      (justify left))
+    (uuid "94395e7f-f01f-55e2-ab08-ced2ad2d71a8"))
+  (text "Placement: layout guide C09a. Footprint: KiCad's MEMSIC LGA-16 3 x 3 mm pattern (made from the MMC5883MA\ndrawing); check its pads against the MMC5983MA drawing before layout."
+    (exclude_from_sim no)
+    (at 15.24 182.88 0)
+    (effects
+      (font
+        (size 1.05 1.05))
+      (justify left))
+    (uuid "9f094552-1659-5562-ab18-3434c9c6993e"))
+  (embedded_fonts no))

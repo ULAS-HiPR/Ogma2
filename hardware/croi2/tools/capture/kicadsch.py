@@ -232,7 +232,7 @@ def add(tree, node):
 
 def make_symbol(tree, lib_id, ref, at, angle=0, value='', footprint='', sheet='', extra=None,
                 dnp=False, ref_at=None, val_at=None, field_angle=0, justify='left', hide_value=False,
-                project='Croi2'):
+                project='Croi2', inst=None):
     """Place a new symbol in the house style of the readable sheets; returns its pin positions."""
     x, y = at
     lp = {p[1]: p[2] for p in children(lib_symbol(tree, lib_id), 'property')}
@@ -250,7 +250,7 @@ def make_symbol(tree, lib_id, ref, at, angle=0, value='', footprint='', sheet=''
             s.append(prop(k, lp[k], at))
     for k, v in (extra or {}).items():
         s.append(prop(k, v, at))
-    s.append(el('instances', el('project', project, el('path', sheet_path(tree), el('reference', ref), el('unit', num(1))))))
+    s.append(el('instances', el('project', project, el('path', inst or sheet_path(tree), el('reference', ref), el('unit', num(1))))))
     for p in lib_pins(tree, lib_id):
         s.append(el('pin', p, el('uuid', ident(sheet, 'pin', ref, p))))
     add(tree, s)
@@ -379,6 +379,49 @@ def remove_part(tree, ref):
     log = []
     for p in sorted({v[:2] for v in pin_positions(tree, ref).values()}):
         log += strip_branch(tree, p, ref)
+        if not _others_at(tree, p, ref)[0]:                 # its no-connect flags go with it
+            n = remove(tree, lambda x: x[0] == 'no_connect' and xy(x) == p)
+            log += [('no_connect', p)] * n
     sym = symbols(tree)[ref]
     remove(tree, lambda x: x is sym)
     return log
+
+
+def ic_symbol(name, pins, props, width=10.16, top=10.16, bottom=-12.7):
+    """A library symbol in the Ogma2 house style: a box, pins of length 5.08 on the left and right.
+    pins: [(number, name, type, side 'L'/'R', y)]; props: {name: value} (Reference and Value shown)."""
+    body = el('symbol', f'{name}_0_1', el('rectangle', el('start', num(-width), num(bottom)), el('end', num(width), num(top)),
+              el('stroke', el('width', num(0.254)), el('type', A('default'))), el('fill', el('type', A('background')))))
+    pinlist = []
+    for number, pname, ptype, side, y in pins:
+        x, ang = (-width - 5.08, 0) if side == 'L' else (width + 5.08, 180)
+        pinlist.append(el('pin', A(ptype), A('line'), el('at', num(x), num(y), num(ang)), el('length', num(5.08)),
+                          el('name', pname, el('effects', el('font', el('size', num(1.0), num(1.0))))),
+                          el('number', number, el('effects', el('font', el('size', num(1.0), num(1.0)))))))
+    sym = el('symbol', name, el('pin_names', el('offset', num(0.508))), el('in_bom', A('yes')), el('on_board', A('yes')),
+             el('property', 'Reference', props.pop('Reference', 'U'), el('at', num(-width), num(top + 2.54), num(0)), fx(1.27, 'left')),
+             el('property', 'Value', props.pop('Value', name), el('at', num(-width), num(top + 1.27), num(0)), fx(1.27, 'left')),
+             body, el('symbol', f'{name}_1_1', *pinlist))
+    for k, v in props.items():
+        sym.append(el('property', k, v, el('at', num(0), num(0), num(0)), fx(1.27, hide=True)))
+    return sym
+
+
+def add_lib_symbol(lib_path, sym):
+    """Append a symbol to a vendored .kicad_sym (no-op if the name exists)."""
+    lib = load(lib_path)
+    if any(s[1] == sym[1] for s in children(lib, 'symbol')):
+        return False
+    tail = [i for i, x in enumerate(lib) if isinstance(x, list) and x and x[0] == 'symbol'][-1]
+    lib.insert(tail + 1, sym)
+    save(lib, lib_path)
+    return True
+
+
+def new_sheet(title, paper=(297, 230.32), file_id=''):
+    """An empty KiCad 9 sub-sheet in the house style."""
+    return [A('kicad_sch'), el('version', A('20250114')), el('generator', A('eeschema')), el('generator_version', '9.0'),
+            el('uuid', ident(file_id, 'file')), el('paper', 'User', num(paper[0]), num(paper[1])),
+            el('title_block', el('title', title), el('date', '2026-11-21'), el('rev', 'A-DRAFT'), el('company', 'HiPR'),
+               el('comment', A('1'), 'ENGINEERING DRAFT - review open; not for fabrication or flight.')),
+            el('lib_symbols'), el('embedded_fonts', A('no'))]
