@@ -100,7 +100,7 @@ listed are supplies, ground, VCAP or unused.
 
 | Device | Bus and pins | Data-ready | Start setting |
 | --- | --- | --- | --- |
-| LSM6DSV16X | SPI1: PA5 SCK, PA6 MISO, PA7 MOSI, PA4 NCS (AF5) | PE0 (EXTI0) | 4 MHz; 960 Hz, ±16 g, ±4000°/s |
+| LSM6DSV32X (D-21Nov.16) | SPI1: PA5 SCK, PA6 MISO, PA7 MOSI, PA4 NCS (AF5) | PE0 (EXTI0) | 4 MHz; 960 Hz, ±16 g, ±4000°/s |
 | ICM-42688-P | SPI2: PB13 SCK, PB14 MISO, PB15 MOSI, PB12 NCS (AF5) | PE3 (EXTI3) | 4 MHz; 1 kHz, ±16 g, ±2000°/s |
 | ADXL375 | SPI3: PC10 SCK, PC11 MISO, PC12 MOSI, PD2 NCS (AF6) | PE4 (EXTI4) | 2 MHz, mode 3; 800 Hz, ±200 g |
 | BMP390 | I²C1: PB6 SCL, PB7 SDA (AF4) | — | 400 kHz; 50 Hz |
@@ -121,7 +121,7 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | Monitor bus | I²C4: PB8 SCL, PB9 SDA (AF6) | 100 kHz; INA228 0x40 (Croí), 0x41 (Churro PROP); ADS1115 0x48 |
 | Watchdog | PD4 `SUPERVISOR_WDI` | Toggled only on earned essential progress |
 | Readiness lamp | PD7 | Low or reset = red, high = green |
-| Sounder | PD6 through Q9001 | Passive piezo; ground only, silent in flight |
+| Sounder | PD6 through Q9001 | Magnetic transducer (D-21Nov.20): drive a 4 kHz square wave; ground only, silent in flight |
 | Debug | PA13 SWDIO, PA14 SWCLK; BOOT0 pulled down | Service only |
 | Spare | None since D-5Nov.3 | PC13 stays quiet (LSE erratum) |
 
@@ -151,7 +151,7 @@ STM32H563RIT6, LQFP64 ([64-pad map](architecture/proposed-comms-pinout.csv); as 
 | GNSS (MAX-M10S) | USART1: PA9 TX, PA10 RX (AF7); PA0 PPS (TIM2_CH1); PC5 reset (open drain); PB0 enable |
 | Radio (Wio-LR2021) | SPI1: PA5 SCK, PA6 MISO, PA7 MOSI (AF5), PA4 NSS; PC0 reset, PC1 BUSY, PC2 IRQ (DIO5); PB1 enable. PC3 / PC4 unused, held low |
 | USB | PA11 DM, PA12 DP; PB2 VBUS sense |
-| Source status | PA1 `CC_USB_CONFIG_OK` (out), PA2 `CC_BAT_VALID` (in), PB5 `CC_BRANCH_FAULT_N` (in) |
+| Source status | PA2 `CC_BAT_VALID` (in), PB5 `CC_BRANCH_FAULT_N` (in); PA1 unused (D-21Nov.14) |
 | Status and debug | PB4 amber lamp; PA13 / PA14 SWD; PB3 SWO |
 
 Comms has no path to flight reset, the arms or any output, and never gets one.

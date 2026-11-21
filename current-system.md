@@ -113,7 +113,7 @@ chargers are drawn at the Churro power review (D-21Nov.9).
 | Block | Selection |
 | --- | --- |
 | MCUs | STM32H563VIT6 flight; STM32H563RIT6 comms (D1; the CAD still has a VIT6) |
-| Low-g IMUs | ST LSM6DSV16XTR, TDK ICM-42688-P |
+| Low-g IMUs | ST LSM6DSV32XTR (D-21Nov.16), TDK ICM-42688-P |
 | High-g | ADI ADXL375BCCZ, ±200 g nominal |
 | Pressure | Bosch BMP390, TE MS560702BA03-50, separate buses |
 | Magnetometer | MEMSIC MMC5983MA on I²C3, 100 Hz, non-essential (D-2Nov.11) |
@@ -125,7 +125,7 @@ chargers are drawn at the Churro power review (D-21Nov.9).
 | Outputs | Per channel a TPS1H100 high side and a CSD17318 low side (2 recovery + 1 staging); U6001 staging latch with an SN74LVC1G08 AND; no servo outputs (D-19Nov.2) |
 | Churro rail power | Four LM74700-Q1-class ideal-diode stages, umbilical connector J801, fuse and TVS (D-2Nov.7); damping per pair (D-21Nov.3); chargers (D-21Nov.2) and the ACT branch (D-21Nov.1) at the power review |
 | CAN | Two TCAN3413 transceivers, each behind a TXU0304 boundary: bus 1 on FDCAN1 (PD1 / PD0), bus 2 on FDCAN2 (PA10 TX, PB5 RX); one standby line on PE10 and the PB1 CAN limiter for both (D-5Nov.3) |
-| Indication | Red/green readiness, comms amber, hardware power LED, passive piezo |
+| Indication | Red/green readiness, comms amber, hardware power LED, magnetic sounder (D-21Nov.20) |
 
 ## Interfaces
 

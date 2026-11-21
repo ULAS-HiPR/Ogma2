@@ -3899,3 +3899,16 @@ tour's connector gallery.
   status file: USB_CONFIG_OK, doubled pull-ups, the Gecko series, the sensor,
   monitor and flash substitutions, the X7R bulk capacitors, and the 31.9k and
   74.9k 0.1% resistors.
+
+## 21 November 2026 — Burrito's open calls decided (delegated)
+
+- Seán delegated the nine calls left after capture ("make a decision on each of
+  them"). Claude decided them as D-21Nov.12–D-21Nov.20: the arm connectors
+  (Mini-Fit Jr. and JST VH), Gecko-SL kept, USB_CONFIG_OK dropped, the doubled
+  pull-ups removed, the LSM6DSV32X in for the LSM6DSV16X with the BMP390, INA228
+  and NOR kept through Global Sourcing, stocked bulk capacitors, 32k and 75k
+  0.1% resistors, three of each MCU to buy into JLC's private library, and a
+  magnetic sounder for B-07.
+- Observed: the fitted sounder is 65 dB in JLC's listing against B-07's 76 dBA
+  ambient. Everything else rests on datasheets and the 21 Nov stock scrape.
+- The CAD still shows the pre-decision parts; capturing these is the next step.
