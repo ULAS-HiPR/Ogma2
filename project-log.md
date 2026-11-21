@@ -3936,3 +3936,28 @@ tour's connector gallery.
 - Still open: J101's footprint (Molex's drawing), the MCU buy (Seán,
   D-21Nov.19), the sounder's level at 3.3 V and B-07's panel test, then the PCB
   update and layout.
+
+## 21 November 2026 — Layout: scripted, placed fresh; its open points decided (delegated)
+
+- Seán set the layout's method (D-21Nov.21): both boards are the output of scripts
+  in the repo, rerunnable from a clean state, with JLC's current capabilities
+  cited; Burrito first, with review stops at placement, critical nets and the
+  full route. He chose to start placement fresh, not from the 8 September draft.
+- He delegated the open points that affect layout ("use your judgment to approach
+  each of these open points. think deeply and decide."). Claude decided them:
+  - Burrito's layout doesn't wait for Churro; Churro's power review is drafted
+    next, then scripted capture and layout, working to 80 × 120 mm (D-21Nov.22).
+  - Eight isolated M3 holes in four rows 73 mm apart, a pair flanking J102
+    (D-21Nov.23). Inferred from a beam estimate, not measured: the first mode
+    rises from ≈33 Hz on end supports to ≈300 Hz.
+  - J102 stays where it sits (IR-3), at the aft end; connectors sit at the end
+    their harness leaves by (D-21Nov.24). Both SMAs at the forward end
+    (D-21Nov.25).
+  - Four layers, 1.6 mm, JLC's impedance stackup with the 0.1 mm prepreg
+    (D-21Nov.26), from JLC's published stackups and capabilities, read today.
+  - Every part on top (D-21Nov.27): the courtyards add up to 36% of one side.
+    D4501 is the one part below JLC Economic's 0402 minimum.
+- J101's footprint: Claude reads Molex's drawing in the browser before the
+  placement stop; Seán attaches the PDF only if that fails.
+- Next: the phase 1 test of scripting and routing approaches, then the routing
+  brief (phase 2).

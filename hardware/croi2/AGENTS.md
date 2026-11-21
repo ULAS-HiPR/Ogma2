@@ -11,12 +11,13 @@ This is a tracked engineering draft in the Ogma2 monorepo, not manufacturing or 
 - Croí must operate standalone. Flight must complete with comms held in reset.
   The processors separate responsibilities; they are not redundant.
 - Preserve the accepted Samtec, CAN and output pinouts. No servo outputs
-  (D-19Nov.2): J6602 and sheet 06d are gone. J6101 / J6102 arm-switch
-  connectors are placeholders until their parts are chosen. Igniter values and
+  (D-19Nov.2): J6602 and sheet 06d are gone. J6101 (Mini-Fit Jr.) and
+  J6102 (JST VH) are two families so the arm plugs can't cross-mate (D-21Nov.12). Igniter values and
   output release remain unresolved. Keep the three DNP energy links
   R6310 / R6410 / R6510 and the other documented DNP safeguards.
-- Native KiCad files are current working CAD. Scripts may create scratch
-  candidates; never overwrite manual schematic edits, placement or routing.
+- Native KiCad files are current working CAD. The PCB is the output of the
+  layout scripts (D-21Nov.21): change a script and rerun it from a clean state;
+  never hand-edit the .kicad_pcb. Never overwrite manual schematic edits.
 - Keep active symbols, footprints and models local to this repo. Preserve
   provenance, update intentional library hashes, and rerun native checks.
 - J101 (Molex Nano-Fit 1053111102) has no footprint until Molex's drawing is in

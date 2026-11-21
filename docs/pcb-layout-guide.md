@@ -25,6 +25,13 @@ not deferred to a second manufacturing revision. Foinse is unchanged by this stu
 
 Where this guide and [decisions.md](../decisions.md) disagree, the decisions win.
 
+- **21 November:** the layout is now scripted and placed fresh from the schematic
+  (D-21Nov.21); the placement, cells and rule areas below describe the 8 September
+  draft only. Decided since: eight isolated M3 holes (D-21Nov.23), J102's end aft
+  and connectors by harness end (D-21Nov.24), both SMAs forward (D-21Nov.25), four
+  layers on JLC's 0.1 mm-prepreg stackup (D-21Nov.26), every part on top (D-21Nov.27).
+  The circuit notes (C04–C14) still apply.
+
 - **Sensors (C09):** the per-sensor limiters and translators are gone (D-6.6).
   Each sensor's supply comes through a 47 Ω link (D-2Nov.3). New magnetometer:
   [C09a](#c09a-magnetometer).

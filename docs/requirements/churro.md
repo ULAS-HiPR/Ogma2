@@ -58,5 +58,5 @@ Burrito's side is frozen ([B-36](burrito.md)). Every Churro change keeps to thes
 | C-22 | The actuator pack's voltage shows on its pack side while the umbilical carries the load | Seán, 21 Nov (every pack monitored); D-2Nov.7 | PROP's divider (R6111) moves to the pack side of its diode, like AV's | Bench: umbilical connected, pack removed | Open |
 | C-18 | No MCU on Churro | Capture spec | MCU-less design | Inspection | Met |
 | C-19 | No charger or propulsion current passes through Burrito | Boundary contract | Topology | Assertion | Met |
-| C-20 | 80 mm wide; length as needed; held independently of the Samtec mate | D-21Nov.6; layout guide | Outline; separate supports | Mockup | Open |
+| C-20 | 80 mm wide; length as needed; held independently of the Samtec mate | D-21Nov.6; D-21Nov.22; layout guide | Outline, 80 × 120 mm working (D-21Nov.22); separate supports | Mockup | Open |
 | C-21 | No LiPo and no lithium primary cell in any pack | LV-0300 | 2S and 6S metal-can cylindrical Li-ion | Inspection | Met |
