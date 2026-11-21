@@ -1,8 +1,8 @@
 [
   {
     "file": "01-power.kicad_sch",
-    "purpose": "Accepts one 2S battery source, blocks reverse connection and shuts down a faulty input.",
-    "connects_to": "Standalone battery or Foinse mate -> battery monitor shunt -> logic and output branches. The external switch is on 44-master-enable."
+    "purpose": "Accepts one 2S battery source, blocks reverse connection, shuts down a faulty input and retries,\nand holds the battery enable on through a flight-computer reset aloft (FC_POWER_HOLD).",
+    "connects_to": "Standalone battery or Foinse mate -> battery monitor shunt -> logic and output branches. The external switch is on 44-master-enable.\nENERGY_TAP (Q101 drain, ahead of the eFuse) -> output arm feeds on 06*, battery-monitor VBUS on 07a."
   },
   {
     "file": "01a-source-mux.kicad_sch",
@@ -12,7 +12,7 @@
   {
     "file": "01b-bootstrap.kicad_sch",
     "purpose": "Lets the board start before firmware is running, then hands the appropriate power controls to the flight MCU.",
-    "connects_to": "Battery/USB status -> core and comms power enables. Feeds the held flight path, comms limiter and the inter-MCU status link."
+    "connects_to": "Battery/USB status -> comms power enable; 4V_PRE level -> core input enable. Feeds the held flight path, comms limiter and the inter-MCU status link."
   },
   {
     "file": "01c-preregulator.kicad_sch",
@@ -22,7 +22,7 @@
   {
     "file": "01d-held-core.kicad_sch",
     "purpose": "Reserves local energy for the flight MCU during a brief input dip, and blocks that energy flowing back upstream.",
-    "connects_to": "01c 4 V supply and 01b permission -> 01flight-ldo. C1403 is still an unselected capacitor allocation; hold-up time is not proved."
+    "connects_to": "01c 4 V supply, enabled by its own level (01b) -> 01flight-ldo. Hold-up time is not proved."
   },
   {
     "file": "01comms-limit.kicad_sch",
@@ -32,7 +32,7 @@
   {
     "file": "01optional-limit.kicad_sch",
     "purpose": "Limits current into optional peripherals, which must not be required for flight to continue.",
-    "connects_to": "01c 4 V supply and flight control -> 01optional-ldo -> separately controlled peripheral circuits."
+    "connects_to": "01c 4 V supply and SERVICE_POWER_EN from the flight MCU -> 01optional-ldo -> separately controlled peripheral circuits."
   },
   {
     "file": "01flight-ldo.kicad_sch",
@@ -51,13 +51,13 @@
   },
   {
     "file": "02-flight-mcu.kicad_sch",
-    "purpose": "Runs flight sensing, estimation, mission decisions, recording, outputs and vehicle CAN.",
-    "connects_to": "Sensor/storage sheets 03*, outputs 06*, CAN 05, monitoring 07*/08 and comms link 04b. Supplies/clocks: 02a. Reset/debug: 02flight-reset-debug."
+    "purpose": "Runs flight sensing, estimation, mission decisions, recording, outputs and both vehicle CAN buses.",
+    "connects_to": "Sensor/storage sheets 03*, outputs 06*, CAN 05, monitoring 07*/08, comms link 04b and the power hold on 01-power. Supplies/clocks/test pads: 02a. Reset/debug: 02flight-reset-debug."
   },
   {
     "file": "02a-flight-support.kicad_sch",
-    "purpose": "Gives the flight MCU stable local supplies and its two clock sources.",
-    "connects_to": "FLIGHT_3V3 -> U201 on 02-flight-mcu. Main 16 MHz clock and 32.768 kHz RTC clock are separate; their startup margins need measurement."
+    "purpose": "Gives the flight MCU stable local supplies, its two clock sources, the backup-domain feed,\nthe watchdog-reset memory, the timing strobe and the spare test pads.",
+    "connects_to": "FLIGHT_3V3 -> U201 on 02-flight-mcu; FLIGHT_MR_N from the watchdog on 02flight-reset-debug. Main 16 MHz clock and 32.768 kHz RTC clock are separate; their startup margins need measurement."
   },
   {
     "file": "02flight-reset-debug.kicad_sch",
@@ -77,27 +77,32 @@
   {
     "file": "03st-sensor.kicad_sch",
     "purpose": "Measures low-g acceleration and rotation with the ST IMU.",
-    "connects_to": "Flight MCU SPI/control/interrupt pins -> this sensor. Its own power switch and signal switches separate it from an unpowered or disabled sensor."
+    "connects_to": "Flight MCU SPI/control/interrupt pins -> this sensor. Fed from FLIGHT_3V3 through R3101, a 47 ohm link: a shorted sensor draws <=71 mA (D-6.6, D-2Nov.3)."
   },
   {
     "file": "03tdk-sensor.kicad_sch",
     "purpose": "Measures low-g acceleration and rotation with a second IMU from TDK.",
-    "connects_to": "Flight MCU SPI/control/interrupt pins -> this sensor. It has its own switched branch, separate from the ST IMU on 03st-sensor."
+    "connects_to": "Flight MCU SPI/control/interrupt pins -> this sensor. Fed from FLIGHT_3V3 through R3201, a 47 ohm link, like the ST IMU (D-6.6, D-2Nov.3)."
   },
   {
     "file": "03hg-sensor.kicad_sch",
     "purpose": "Measures acceleration beyond the low-g IMUs' range, using the ADXL375.",
-    "connects_to": "Flight MCU SPI and data-ready pins -> this high-g sensor. Its supply and signal switches allow independent shutdown."
+    "connects_to": "Flight MCU SPI and data-ready pins -> this high-g sensor. Fed from FLIGHT_3V3 through R3301, a 47 ohm link (D-6.6, D-2Nov.3)."
   },
   {
     "file": "03bmp-pressure.kicad_sch",
     "purpose": "Measures air pressure with the Bosch BMP390, one of the two dissimilar pressure sensors.",
-    "connects_to": "Its own flight-MCU I2C bus, address 0x76, plus independent switched power. Pressure is not a valid height measurement across the whole space-shot profile."
+    "connects_to": "Its own flight-MCU I2C bus, address 0x76, supplied through R3401, a 47 ohm link from FLIGHT_3V3 (D-6.6, D-2Nov.3). Pressure is not a valid height measurement across the whole space-shot profile."
   },
   {
     "file": "03te-pressure.kicad_sch",
     "purpose": "Measures air pressure with the TE MS5607, independently of the Bosch sensor.",
-    "connects_to": "Its own flight-MCU I2C bus, address 0x77, plus independent switched power. Both pressure readings go to the estimator; neither proves full-envelope height."
+    "connects_to": "Its own flight-MCU I2C bus, address 0x77, supplied through R3501, a 47 ohm link from FLIGHT_3V3 (D-6.6, D-2Nov.3). Both pressure readings go to the estimator; neither proves full-envelope height."
+  },
+  {
+    "file": "03mag-magnetometer.kicad_sch",
+    "purpose": "Measures the magnetic field for heading and roll, read at 100 Hz and logged. Non-essential:\nit never gates the watchdog or the estimator (D-2Nov.11).",
+    "connects_to": "FLIGHT_3V3 through R3701 -> MAG_3V3; I2C3 (PA8 MAG_SCL, PC9 MAG_SDA) and MAG_INT (PE6) on 02-flight-mcu."
   },
   {
     "file": "04-comms-gnss-radio.kicad_sch",
@@ -117,7 +122,7 @@
   {
     "file": "04c-usb-service.kicad_sch",
     "purpose": "Lets a laptop power service logic and exchange data with the comms MCU.",
-    "connects_to": "USB-C -> current-limited logic input on 01a, and protected USB data -> U401. USB does not charge batteries or power servos/energetic outputs."
+    "connects_to": "USB-C -> current-limited logic input on 01a, and protected USB data -> U401. USB does not charge batteries or power energetic outputs."
   },
   {
     "file": "04d-gnss.kicad_sch",
@@ -136,38 +141,38 @@
   },
   {
     "file": "05-can.kicad_sch",
-    "purpose": "Connects the flight MCU to the propulsion controller over a wired CAN pair.",
-    "connects_to": "Flight CAN pins -> switched transceiver -> JST GH H/L/reference. The two-node link is 500 kbit/s; this connector supplies no power."
+    "purpose": "Connects the flight MCU to the propulsion controller (bus 1, FDCAN1, J501) and to the active board\n(bus 2, FDCAN2, J502), each over its own wired CAN pair.",
+    "connects_to": "Flight CAN pins -> switched transceivers -> Harwin Gecko-SL H / L / reference. Each link is two nodes at\n500 kbit/s; neither connector supplies power. Both transceivers share CAN_3V3 (PB1) and standby (PE10)."
   },
   {
     "file": "06-outputs.kicad_sch",
-    "purpose": "Combines flight requests with the logic conditions that permit recovery and staging outputs.",
-    "connects_to": "Flight MCU, reset and arm/disarm indications -> 06a and the three channel sheets. This logic does not replace a physical energy disconnect."
+    "purpose": "Holds the staging channel inhibited after any flight reset or power-up, until the flight MCU clocks the latch with staging disarmed (D-7.2).",
+    "connects_to": "FLIGHT_NRST, PD15 request and STAGE_ARM_INVALID (06a) -> STAGE_ELIGIBLE to 06pyro3; STAGE_INHIBIT_LATCHED -> PE14. This logic does not replace a physical energy disconnect."
   },
   {
     "file": "06a-arm-boundary.kicad_sch",
-    "purpose": "Senses armed-rail voltage and combines the conditions for the staging channel.",
-    "connects_to": "06-outputs eligibility + flight requests + external arm indications -> channel permissions. The physical arm assembly and its proof contacts are still undefined."
+    "purpose": "Feeds each pyro group from ENERGY_TAP through its own fuse and external arm switch, and senses the armed voltage.",
+    "connects_to": "ENERGY_TAP (01-power) -> F6101 / F6102 -> J6101 / J6102 -> RECOVERY_ARMED_VBAT (06pyro1, 06pyro2) and STAGING_ARMED_VBAT (06pyro3); arm sense -> PE13 / PE15."
   },
   {
     "file": "06pyro1.kicad_sch",
-    "purpose": "Shows the two switched sides and bounded-pulse logic for recovery channel 1.",
-    "connects_to": "Recovery permission and flight request -> J6601 load pair on 06b; current report -> 06c. Energy and load-setting parts remain DNP: do not connect an initiator."
+    "purpose": "Shows the two switched sides for recovery channel 1: PE7 drives the high side, PA9 the low side.",
+    "connects_to": "RECOVERY_ARMED_VBAT (06a) and the flight MCU -> J6601 load pair on 06b; current report -> 06c. Energy link remains DNP: do not connect an initiator."
   },
   {
     "file": "06pyro2.kicad_sch",
-    "purpose": "Shows the two switched sides and bounded-pulse logic for recovery channel 2.",
-    "connects_to": "Recovery permission and flight request -> J6601 load pair on 06b; current report -> 06c. Energy and load-setting parts remain DNP: do not connect an initiator."
+    "purpose": "Shows the two switched sides for recovery channel 2: PE9 drives the high side, PC8 the low side.",
+    "connects_to": "RECOVERY_ARMED_VBAT (06a) and the flight MCU -> J6601 load pair on 06b; current report -> 06c. Energy link remains DNP: do not connect an initiator."
   },
   {
     "file": "06pyro3.kicad_sch",
-    "purpose": "Shows the two switched sides and bounded-pulse logic for the staging channel.",
-    "connects_to": "Staging permission and flight request -> J6601 load pair on 06b; current report -> 06c. Energy and load-setting parts remain DNP: do not connect an initiator."
+    "purpose": "Shows the two switched sides for the staging channel: PE12 through the latch AND gate drives the high side, PD14 the low side.",
+    "connects_to": "STAGING_ARMED_VBAT (06a), STAGE_ELIGIBLE (06-outputs) and the flight MCU -> J6601 load pair on 06b; current report -> 06c. Energy link remains DNP: do not connect an initiator."
   },
   {
     "file": "06b-output-harness.kicad_sch",
-    "purpose": "Defines the physical connector contacts for three energetic loads and three servos.",
-    "connects_to": "Three channel sheets -> J6601. Servo power/PWM on 06d -> J6602. Both wires of each energetic load return here; LOW is a switched return, not ground."
+    "purpose": "Defines the physical connector contacts for three energetic loads.",
+    "connects_to": "Three channel sheets -> J6601. Both wires of each energetic load return here; LOW is a switched return, not ground."
   },
   {
     "file": "06c-output-diagnostics.kicad_sch",
@@ -175,14 +180,9 @@
     "connects_to": "Three high-side switches -> resistor/filter networks -> flight ADC. The separate continuity inputs only have default pulls here; their test circuit is on 06e/06f."
   },
   {
-    "file": "06d-servo-power.kicad_sch",
-    "purpose": "Switches the shared battery supply to three servos and passes their PWM commands without back-powering the servos.",
-    "connects_to": "Flight enable/PWM/reset -> protected raw-2S output and three PWM lines -> J6602 on 06b. The small 3.3 V regulator powers the signal buffer, not the motors."
-  },
-  {
     "file": "06e-continuity.kicad_sch",
     "purpose": "Shows the proposed low-current check for whether each external load is connected.",
-    "connects_to": "External load pairs -> test/return resistors -> divider on 06f -> flight ADC. Test resistors remain DNP until load-specific no-fire limits are proved."
+    "connects_to": "External load pairs -> test/return resistors -> divider on 06f -> flight ADC. Test and return resistors are 3.9k, safe for an igniter with a no-fire current of 25 mA or more."
   },
   {
     "file": "06f-continuity-isolation.kicad_sch",
@@ -201,8 +201,8 @@
   },
   {
     "file": "08-rail-diagnostics.kicad_sch",
-    "purpose": "Lets the flight MCU read battery, flight-supply, recovery-arm and servo-supply voltages.",
-    "connects_to": "Four rails -> resistor dividers -> power-off signal switches -> flight ADC. Voltage readings are useful evidence, not permission to fire or proof of isolation."
+    "purpose": "Lets the flight MCU read battery, flight-supply and recovery-arm voltages.",
+    "connects_to": "Three rails -> resistor dividers -> power-off signal switches -> flight ADC. Voltage readings are useful evidence, not permission to fire or proof of isolation."
   },
   {
     "file": "09-indicators.kicad_sch",

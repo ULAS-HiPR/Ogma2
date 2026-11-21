@@ -1,3 +1,5 @@
+> Superseded for the servos: D-19Nov.2 removed J6602 and the servo block at capture (21 Nov 2026). Kept as the record of the 7 September revision.
+
 # Connector/readiness/third-servo library revision
 
 7 September 2026. Exact-named KiCad 9 stock imports: SMA_Amphenol_132134_Vertical,

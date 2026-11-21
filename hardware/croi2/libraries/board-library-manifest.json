@@ -1,14 +1,24 @@
 {
   "project": "Croi2",
   "source_project": "hardware/Ogma2",
-  "symbol_count": 102,
-  "physical_components": 643,
+  "symbol_count": 81,
+  "physical_components": 581,
   "footprints": [
     {
-      "id": "Capacitor_SMD:CP_Elec_10x10.5",
-      "source": "/Applications/KiCad.app/Contents/SharedSupport/footprints/Capacitor_SMD.pretty/CP_Elec_10x10.5.kicad_mod",
+      "id": "Capacitor_SMD:CP_Elec_6.3x7.7",
+      "source": "KiCad 9.0.7 official library, Capacitor_SMD.pretty; capture step 2 (C1007)",
       "models": [
-        "Capacitor_SMD.3dshapes/CP_Elec_10x10.5.step"
+        "Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step"
+      ],
+      "refs": [
+        "C1007"
+      ]
+    },
+    {
+      "id": "Capacitor_SMD:CP_Elec_8x10.5",
+      "source": "KiCad 9.0.7 official library, Capacitor_SMD.pretty; capture step 3 (C1403); land pattern to check against Nichicon",
+      "models": [
+        "Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step"
       ],
       "refs": [
         "C1403"
@@ -24,6 +34,7 @@
         "C1001",
         "C1002",
         "C1003",
+        "C1004",
         "C1006",
         "C1101",
         "C1102",
@@ -33,7 +44,6 @@
         "C1106",
         "C1201",
         "C1202",
-        "C1203",
         "C1204",
         "C1301",
         "C1302",
@@ -74,41 +84,23 @@
         "C216",
         "C217",
         "C218",
+        "C220",
         "C2301",
         "C2302",
         "C2303",
-        "C3101",
         "C3102",
-        "C3103",
-        "C3104",
-        "C3105",
-        "C3106",
         "C3107",
         "C3108",
-        "C3201",
         "C3202",
-        "C3203",
-        "C3204",
-        "C3205",
-        "C3206",
         "C3207",
         "C3208",
         "C3209",
-        "C3301",
         "C3302",
-        "C3303",
-        "C3304",
-        "C3305",
-        "C3306",
         "C3307",
         "C3308",
-        "C3401",
         "C3402",
-        "C3403",
         "C3404",
-        "C3501",
         "C3502",
-        "C3503",
         "C3504",
         "C3601",
         "C3602",
@@ -116,14 +108,15 @@
         "C3604",
         "C3605",
         "C3606",
+        "C3702",
+        "C3703",
+        "C3704",
         "C401",
         "C402",
         "C403",
         "C404",
-        "C405",
         "C406",
         "C407",
-        "C408",
         "C409",
         "C410",
         "C411",
@@ -160,37 +153,20 @@
         "C504",
         "C505",
         "C506",
+        "C507",
+        "C508",
+        "C509",
+        "C510",
         "C6001",
-        "C6002",
-        "C6003",
-        "C6004",
-        "C6005",
-        "C6101",
-        "C6102",
         "C6103",
-        "C6104",
-        "C6301",
-        "C6302",
-        "C6303",
         "C6304",
-        "C6401",
-        "C6402",
-        "C6403",
         "C6404",
-        "C6501",
         "C6502",
-        "C6503",
         "C6504",
         "C6701",
         "C6711",
         "C6721",
         "C6731",
-        "C6801",
-        "C6802",
-        "C6803",
-        "C6804",
-        "C6805",
-        "C6806",
         "C6901",
         "C7001",
         "C7002",
@@ -201,7 +177,6 @@
         "C8001",
         "C8002",
         "C8003",
-        "C8004",
         "C8005",
         "C9101"
       ]
@@ -213,6 +188,9 @@
         "Capacitor_SMD.3dshapes/C_1206_3216Metric.step"
       ],
       "refs": [
+        "C1005",
+        "C219",
+        "C3701",
         "C4612"
       ]
     },
@@ -238,11 +216,11 @@
     {
       "id": "Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical",
       "source": "2026-09-08 controlled addition; see installation-change-record.md",
-      "refs": [
-        "J103"
-      ],
       "models": [
         "Connector_JST.3dshapes/JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical.step"
+      ],
+      "refs": [
+        "J103"
       ]
     },
     {
@@ -252,7 +230,33 @@
         "Diode_SMD.3dshapes/D_SOD-123.step"
       ],
       "refs": [
+        "D1003",
+        "D1004",
+        "D201",
+        "D202",
         "D9002"
+      ]
+    },
+    {
+      "id": "Fuse:Fuse_1206_3216Metric",
+      "source": "KiCad 9.0.7 official library, Fuse.pretty; capture step 5 (F501 / F502)",
+      "models": [
+        "Fuse.3dshapes/Fuse_1206_3216Metric.step"
+      ],
+      "refs": [
+        "F501",
+        "F502"
+      ]
+    },
+    {
+      "id": "Fuse:Fuse_Littelfuse-NANO2-451_453",
+      "source": "KiCad 9.0.7 official library, Fuse.pretty; capture step 6 (F6101 / F6102)",
+      "models": [
+        "Fuse.3dshapes/Fuse_Littelfuse-NANO2-451_453.step"
+      ],
+      "refs": [
+        "F6101",
+        "F6102"
       ]
     },
     {
@@ -276,19 +280,7 @@
       ],
       "refs": [
         "J6601"
-      ],
-      "model_provenance": "See libraries/model-recovery-2026-09-07.md; visual CAD, not manufacturing approval"
-    },
-    {
-      "id": "Ogma2:430451000",
-      "source": "KiCad 9 stock footprint, exact named package; see connector-servo-revision.md",
-      "models": [
-        "Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43045-1000_2x05_P3.00mm_Horizontal.step"
-      ],
-      "refs": [
-        "J6602"
-      ],
-      "model_provenance": "See libraries/model-recovery-2026-09-07.md; visual CAD, not manufacturing approval"
+      ]
     },
     {
       "id": "Ogma2:ABS07-32.768KHZ-7-T",
@@ -309,16 +301,6 @@
       ]
     },
     {
-      "id": "Ogma2:BM03B-GHS-TBT_LF__SN_",
-      "source": "workspace:hipr/ogma2/ogma2/hardware/libraries/Ogma2.pretty/BM03B-GHS-TBT_LF__SN_.kicad_mod",
-      "models": [
-        "Connector_JST.3dshapes/JST_GH_BM03B-GHS-TBT_1x03-1MP_P1.25mm_Vertical.step"
-      ],
-      "refs": [
-        "J501"
-      ]
-    },
-    {
       "id": "Ogma2:BMP390",
       "source": "workspace:hipr/ogma2/ogma2/hardware/libraries/Ogma2.pretty/BMP390.kicad_mod",
       "models": [],
@@ -334,8 +316,7 @@
       ],
       "refs": [
         "BZ9001"
-      ],
-      "model_provenance": "See libraries/model-recovery-2026-09-07.md; visual CAD, not manufacturing approval"
+      ]
     },
     {
       "id": "Ogma2:CSD17318Q2",
@@ -347,8 +328,7 @@
         "Q6301",
         "Q6401",
         "Q6501"
-      ],
-      "model_provenance": "EasyEDA public LCSC record C2862001; third-party package CAD. See libraries/model-recovery-easyeda-2026-09-07.md."
+      ]
     },
     {
       "id": "Ogma2:CSD18540Q5B",
@@ -367,6 +347,17 @@
       "refs": [
         "Y201",
         "Y401"
+      ]
+    },
+    {
+      "id": "Ogma2:G125-MS10605M2P",
+      "source": "KiCad 9.0.7 official library, Connector_Harwin:Harwin_Gecko_G125-MS10605M2P_2x03_P1.25mm_Vertical; capture step 5",
+      "models": [
+        "Connector_Harwin.3dshapes/Harwin_Gecko_G125-MS10605M2P_2x03_P1.25mm_Vertical.step"
+      ],
+      "refs": [
+        "J501",
+        "J502"
       ]
     },
     {
@@ -397,8 +388,7 @@
       ],
       "refs": [
         "U1401"
-      ],
-      "model_provenance": "EasyEDA public LCSC record C3210761; third-party package CAD. See libraries/model-recovery-easyeda-2026-09-07.md."
+      ]
     },
     {
       "id": "Ogma2:LSM6DSV16XTR",
@@ -411,15 +401,13 @@
       ]
     },
     {
-      "id": "Ogma2:LTC6993IS6-1_TRMPBF",
-      "source": "workspace:hipr/ogma2/ogma2/hardware/libraries/Ogma2.pretty/LTC6993IS6-1_TRMPBF.kicad_mod",
+      "id": "Ogma2:MMC5983MA",
+      "source": "KiCad 9.0.7 official library, Package_LGA:LGA-16_3x3mm_P0.5mm (drawn from MEMSIC MMC5883MA); capture step 4; pads to check against the MMC5983MA drawing",
       "models": [
-        "Package_TO_SOT_SMD.3dshapes/TSOT-23-6.step"
+        "Package_LGA.3dshapes/LGA-16_3x3mm_P0.5mm.step"
       ],
       "refs": [
-        "U6301",
-        "U6401",
-        "U6501"
+        "U3701"
       ]
     },
     {
@@ -477,24 +465,9 @@
       ],
       "refs": [
         "U1202",
-        "U1203",
         "U1204",
         "U4501",
-        "U4601",
-        "U6002",
-        "U6003",
-        "U6004",
-        "U6005",
-        "U6101",
-        "U6102",
-        "U6104",
-        "U6302",
-        "U6303",
-        "U6402",
-        "U6403",
-        "U6502",
-        "U6503",
-        "U6801"
+        "U4601"
       ]
     },
     {
@@ -504,8 +477,7 @@
         "Package_QFP.3dshapes/LQFP-100_14x14mm_P0.5mm.step"
       ],
       "refs": [
-        "U201",
-        "U401"
+        "U201"
       ]
     },
     {
@@ -524,9 +496,9 @@
         "Package_SON.3dshapes/Texas_S-PVSON-N8.step"
       ],
       "refs": [
-        "U503"
-      ],
-      "model_provenance": "See libraries/model-recovery-2026-09-07.md; visual CAD, not manufacturing approval"
+        "U503",
+        "U505"
+      ]
     },
     {
       "id": "Ogma2:TMUX1511PWR",
@@ -535,8 +507,6 @@
         "Package_SO.3dshapes/TSSOP-14_4.4x5mm_P0.65mm.step"
       ],
       "refs": [
-        "U3402",
-        "U3502",
         "U3602",
         "U3603",
         "U4503",
@@ -555,8 +525,7 @@
       "refs": [
         "U6304",
         "U6404",
-        "U6504",
-        "U6802"
+        "U6504"
       ]
     },
     {
@@ -567,8 +536,7 @@
       ],
       "refs": [
         "U1101"
-      ],
-      "model_provenance": "EasyEDA public LCSC record C485916; third-party package CAD. See libraries/model-recovery-easyeda-2026-09-07.md."
+      ]
     },
     {
       "id": "Ogma2:TPS22918DBVR",
@@ -590,11 +558,6 @@
       "refs": [
         "U1501",
         "U1601",
-        "U3101",
-        "U3201",
-        "U3301",
-        "U3401",
-        "U3501",
         "U3601",
         "U4401",
         "U501",
@@ -650,8 +613,7 @@
         "Package_TO_SOT_SMD.3dshapes/SOT-23-5.step"
       ],
       "refs": [
-        "U1102",
-        "U6803"
+        "U1102"
       ]
     },
     {
@@ -673,25 +635,12 @@
       ]
     },
     {
-      "id": "Ogma2:TS5A3167DBVR",
-      "source": "workspace:hipr/ogma2/ogma2/hardware/libraries/Ogma2.pretty/TS5A3167DBVR.kicad_mod",
-      "models": [
-        "Package_TO_SOT_SMD.3dshapes/SOT-23-5.step"
-      ],
-      "refs": [
-        "U4402"
-      ]
-    },
-    {
       "id": "Ogma2:TXU0101DCKR",
       "source": "workspace:hipr/ogma2/ogma2/hardware/libraries/Ogma2.pretty/TXU0101DCKR.kicad_mod",
       "models": [
         "Package_TO_SOT_SMD.3dshapes/SOT-363_SC-70-6.step"
       ],
       "refs": [
-        "U3103",
-        "U3203",
-        "U3303",
         "U4302"
       ]
     },
@@ -712,12 +661,9 @@
         "Package_SO.3dshapes/TSSOP-14_4.4x5mm_P0.65mm.step"
       ],
       "refs": [
-        "U3102",
-        "U3202",
-        "U3302",
         "U4303",
         "U502",
-        "U6804"
+        "U504"
       ]
     },
     {
@@ -738,24 +684,33 @@
       ],
       "refs": [
         "U4606"
-      ],
-      "model_provenance": "See libraries/model-recovery-2026-09-07.md; visual CAD, not manufacturing approval"
+      ]
     },
     {
       "id": "Ogma2_GNSS:MAX-M10S-00B",
       "source": "2026-09-08 controlled addition; see installation-change-record.md",
+      "models": [],
       "refs": [
         "U4504"
-      ],
-      "models": []
+      ]
     },
     {
       "id": "Ogma2_GNSS:TPD1E0B04DPYR",
       "source": "2026-09-08 controlled addition; see installation-change-record.md",
+      "models": [],
       "refs": [
         "D4501"
+      ]
+    },
+    {
+      "id": "Package_QFP:LQFP-64_10x10mm_P0.5mm",
+      "source": "KiCad 9.0.7 official library, Package_QFP.pretty; capture step 7 (U401)",
+      "models": [
+        "Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step"
       ],
-      "models": []
+      "refs": [
+        "U401"
+      ]
     },
     {
       "id": "Package_TO_SOT_SMD:SOT-23",
@@ -766,6 +721,7 @@
       "refs": [
         "D1002",
         "D501",
+        "D502",
         "Q102",
         "Q9001",
         "U1002"
@@ -778,6 +734,7 @@
         "Package_TO_SOT_SMD.3dshapes/SOT-23-5.step"
       ],
       "refs": [
+        "U6502",
         "U9101"
       ]
     },
@@ -809,6 +766,8 @@
         "R1009",
         "R1010",
         "R1011",
+        "R1014",
+        "R1015",
         "R1101",
         "R1102",
         "R1103",
@@ -826,6 +785,7 @@
         "R1207",
         "R1208",
         "R1209",
+        "R1210",
         "R1301",
         "R1302",
         "R1303",
@@ -857,42 +817,36 @@
         "R1903",
         "R1904",
         "R201",
+        "R202",
+        "R203",
+        "R204",
+        "R205",
         "R2301",
         "R2302",
         "R2303",
         "R2310",
         "R2311",
         "R3101",
-        "R3102",
-        "R3103",
         "R3105",
         "R3106",
         "R3107",
         "R3108",
         "R3201",
-        "R3202",
-        "R3203",
         "R3205",
         "R3206",
         "R3207",
         "R3208",
         "R3301",
-        "R3302",
-        "R3303",
         "R3305",
         "R3306",
         "R3307",
         "R3308",
         "R3401",
-        "R3402",
-        "R3403",
         "R3405",
         "R3406",
         "R3407",
         "R3408",
         "R3501",
-        "R3502",
-        "R3503",
         "R3505",
         "R3506",
         "R3507",
@@ -907,6 +861,11 @@
         "R3608",
         "R3609",
         "R3610",
+        "R3701",
+        "R3702",
+        "R3703",
+        "R3704",
+        "R3705",
         "R401",
         "R4201",
         "R4202",
@@ -948,10 +907,12 @@
         "R507",
         "R508",
         "R509",
+        "R511",
+        "R512",
+        "R513",
+        "R514",
         "R6001",
-        "R6002",
-        "R6003",
-        "R6004",
+        "R6005",
         "R6101",
         "R6102",
         "R6103",
@@ -960,25 +921,17 @@
         "R6106",
         "R6107",
         "R6108",
-        "R6301",
         "R6302",
         "R6303",
         "R6304",
         "R6305",
         "R6310",
-        "R6311",
-        "R6312",
-        "R6313",
         "R6314",
-        "R6401",
         "R6402",
         "R6403",
         "R6404",
         "R6405",
         "R6410",
-        "R6411",
-        "R6412",
-        "R6413",
         "R6414",
         "R6501",
         "R6502",
@@ -986,17 +939,7 @@
         "R6504",
         "R6505",
         "R6510",
-        "R6511",
-        "R6512",
-        "R6513",
         "R6514",
-        "R6601",
-        "R6602",
-        "R6603",
-        "R6604",
-        "R6605",
-        "R6606",
-        "R6607",
         "R6711",
         "R6712",
         "R6713",
@@ -1012,10 +955,6 @@
         "R6733",
         "R6734",
         "R6735",
-        "R6801",
-        "R6802",
-        "R6803",
-        "R6804",
         "R6911",
         "R6912",
         "R6913",
@@ -1058,9 +997,6 @@
         "R8007",
         "R8008",
         "R8009",
-        "R8010",
-        "R8011",
-        "R8012",
         "R9001",
         "R9002",
         "R9003",
@@ -1079,18 +1015,21 @@
         "Resistor_SMD.3dshapes/R_0805_2012Metric.step"
       ],
       "refs": [
-        "R510"
+        "R510",
+        "R515",
+        "R516",
+        "R517"
       ]
     },
     {
       "id": "Resistor_SMD:R_2010_5025Metric",
       "source": "2026-09-08 controlled addition; see installation-change-record.md",
+      "models": [
+        "Resistor_SMD.3dshapes/R_2010_5025Metric.step"
+      ],
       "refs": [
         "R1012",
         "R1013"
-      ],
-      "models": [
-        "Resistor_SMD.3dshapes/R_2010_5025Metric.step"
       ]
     },
     {
@@ -1128,31 +1067,7 @@
         "TP4601",
         "TP501",
         "TP502"
-      ],
-      "model_status": "Exact stock STEP missing locally and upstream; no substitute attached.",
-      "manufacturer_drawing": "https://www.keyelco.com/product-pdf.cfm?p=1309",
-      "mpn_by_ref": {
-        "TP1001": "5000",
-        "TP1002": "5000",
-        "TP1301": "5000",
-        "TP1302": "5000",
-        "TP1401": "5000",
-        "TP1701": "5000",
-        "TP1801": "5000",
-        "TP1901": "5000",
-        "TP3101": "5000",
-        "TP3201": "5000",
-        "TP3301": "5000",
-        "TP3401": "5000",
-        "TP3501": "5000",
-        "TP2303": "5000",
-        "TP2304": "5001",
-        "TP4203": "5000",
-        "TP4204": "5001",
-        "TP4601": "5000",
-        "TP501": "5000",
-        "TP502": "5001"
-      }
+      ]
     },
     {
       "id": "TestPoint:TestPoint_Pad_D1.0mm",
@@ -1162,6 +1077,11 @@
         "TP1003",
         "TP1004",
         "TP1303",
+        "TP201",
+        "TP202",
+        "TP203",
+        "TP204",
+        "TP205",
         "TP2301",
         "TP2302",
         "TP3102",
@@ -1189,7 +1109,9 @@
         "TP4603",
         "TP4604",
         "TP503",
-        "TP504"
+        "TP504",
+        "TP505",
+        "TP506"
       ]
     }
   ],
@@ -1197,9 +1119,26 @@
     {
       "ref": "J101",
       "value": "1053111102"
+    },
+    {
+      "ref": "J6101",
+      "value": "Recovery arm switch (part open)"
+    },
+    {
+      "ref": "J6102",
+      "value": "Staging arm switch (part open)"
     }
   ],
-  "unavailable_model_references": [],
+  "unavailable_model_references": [
+    {
+      "footprint": "Fuse:Fuse_Littelfuse-NANO2-451_453",
+      "model": "Fuse.3dshapes/Fuse_Littelfuse-NANO2-451_453.step"
+    },
+    {
+      "footprint": "Ogma2:G125-MS10605M2P",
+      "model": "Connector_Harwin.3dshapes/Harwin_Gecko_G125-MS10605M2P_2x03_P1.25mm_Vertical.step"
+    }
+  ],
   "model_less_footprints": [
     "Ogma2:ABS07-32.768KHZ-7-T",
     "Ogma2:BMP390",
@@ -1215,10 +1154,19 @@
     "TestPoint:TestPoint_Keystone_5000-5004_Miniature",
     "TestPoint:TestPoint_Pad_D1.0mm"
   ],
+  "model_sources": {
+    "Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
+    "Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
+    "Fuse.3dshapes/Fuse_1206_3216Metric.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
+    "Package_LGA.3dshapes/LGA-16_3x3mm_P0.5mm.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
+    "Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out"
+  },
   "scope": "Portable snapshot, not footprint approval. No fabricated exact 3D models.",
   "hashes": {
     "libraries/3d/CSD17318Q2-package-EasyEDA.step": "74331cfc2063ee4fe0a23718319f6cbeee02873c98796253adfd37ed339882a3",
     "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_10x10.5.step": "866051839e3e1f725ea48390ac881121e55ce86e5ba54077cf13470e18135884",
+    "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step": "c2a2efc3a0562b25c21f2b732dd2d6f0c3ff67148e12d40edff0e8fbdf71989b",
+    "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step": "ae35c4f1043bc64d44be9822563a47867ce2b6bed1663a1144d81c9b58368562",
     "libraries/3d/Capacitor_SMD.3dshapes/C_0603_1608Metric.step": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
     "libraries/3d/Capacitor_SMD.3dshapes/C_1206_3216Metric.step": "11e948c72c90e2b6322436b72745f40ff4e8ba0da64fb2a0df943dfa61e89c1a",
     "libraries/3d/Capacitor_SMD.3dshapes/C_1210_3225Metric.step": "f8510481c5044113cf49b0fa6dd54ddab9224508bd6808e1afab8ef0cefdefc9",
@@ -1228,13 +1176,16 @@
     "libraries/3d/Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43045-1000_2x05_P3.00mm_Horizontal.step": "2f54617f5d2cb5b7c8ba90c8713ed0afde9987505193969924e834ea39428d47",
     "libraries/3d/Connector_USB.3dshapes/USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal.step": "6338ce740fa231c2d3dcc6384e0576994a47240a312a21413cb85d76990a69a0",
     "libraries/3d/Diode_SMD.3dshapes/D_SOD-123.step": "b3dc4065573abc72e3d5b4cca0e908f72a24205a41b6284b1f75ccacbe99adf8",
+    "libraries/3d/Fuse.3dshapes/Fuse_1206_3216Metric.step": "5e6dcbe286696143d35a8ea37d91eef4b54ff3d1bd7c2c2b4dedda83d3f8e203",
     "libraries/3d/LED_SMD.3dshapes/LED_0603_1608Metric.step": "98343205ec260ec165026ba2d44329a23096779ac36c553ea84aa7b370242e6d",
     "libraries/3d/LM73100RPWR-EasyEDA.step": "d7a805b97e8c24cc388b72ed83b5ae958a63b7f9920c710381bf13da05fc5dd2",
     "libraries/3d/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step": "7f57f4040117e2ef4f78a76d74424d6f4d23513883c32457503aaaa3beb70471",
     "libraries/3d/Package_LGA.3dshapes/LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y.step": "135b7bb3b2262aa62b4493c9b0e06504cf329c6e4970fa84d0f8d063763daeb5",
     "libraries/3d/Package_LGA.3dshapes/LGA-14_3x5mm_P0.8mm_LayoutBorder1x6y.step": "5dc3991aa9836ef8c4adbbd416d6b7120b072db0b1c3fb70a61b01c8794d014e",
+    "libraries/3d/Package_LGA.3dshapes/LGA-16_3x3mm_P0.5mm.step": "1d2b970790db9b1c89b67a969aad6a49b3c3e0d100dc3389c4abb0262ecb8653",
     "libraries/3d/Package_LGA.3dshapes/LGA-8_3x5mm_P1.25mm.step": "3a123ddf8e383b1f95c84c8aa221b5c2a79929a3c2d6b2a426cfcd6ddb084257",
     "libraries/3d/Package_QFP.3dshapes/LQFP-100_14x14mm_P0.5mm.step": "51720097260ffba41c3062f85f67623721102fa535901c47cb555a1f444feeb3",
+    "libraries/3d/Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step": "6f8b1cb1fc3d691653a86181b1e92857e1735a2de55be86aacb41e5d966aceab",
     "libraries/3d/Package_SO.3dshapes/SOIC-16W_7.5x10.3mm_P1.27mm.step": "159663ceb2b4996b1b89d3111e4a355fc27de3e24d3570f50e5ed9086e0d73af",
     "libraries/3d/Package_SO.3dshapes/TSSOP-14_4.4x5mm_P0.65mm.step": "3ee5786aae56190997aa793ba3cfc003fd616782770e29719b4562f012982245",
     "libraries/3d/Package_SO.3dshapes/VSSOP-10_3x3mm_P0.5mm.step": "bc262100f46f22cfc4b251fb05142a6eb384549011ccd750c9bc7efb6b1bca4b",
@@ -1258,16 +1209,20 @@
     "libraries/3d/U.FL_Hirose_U.FL-R-SMT-1_Vertical.step": "bb861ac13b1fa3709690e81d82a64544b02d4420ea410f7334fc7a4b57f8e71a",
     "libraries/3d/Wio-LR2021.step": "2c9c47194bb2b6044c1d70d354a3863090b08743aafcd55d94a9661189d1da9c",
     "libraries/Capacitor_SMD.pretty/CP_Elec_10x10.5.kicad_mod": "71e9c2fc4cb75a087ef3f90222870a3620ca13d414db613f96d21ea95bd4f4de",
+    "libraries/Capacitor_SMD.pretty/CP_Elec_6.3x7.7.kicad_mod": "62aee941cf8542dcb83a2a2e94d2bc8c00faced287d9875b104a7dcba358c469",
+    "libraries/Capacitor_SMD.pretty/CP_Elec_8x10.5.kicad_mod": "2d5f4cf81dd49af261f38c9452270999140f3b98b8bae143ca652f16f362265b",
     "libraries/Capacitor_SMD.pretty/C_0603_1608Metric.kicad_mod": "035a17aaaf5fa8adbfebefe62da311f82731bbe448f3e722b0535b7de4d82045",
     "libraries/Capacitor_SMD.pretty/C_1206_3216Metric.kicad_mod": "95e740f22a4e7424dc2f1c13b75c96dfaaa979cef54622b3ee736db505f10380",
     "libraries/Capacitor_SMD.pretty/C_1210_3225Metric.kicad_mod": "110dfa4e1a43a3ec9f1437196983c0c21864787023178cb2caf424d37c1aa505",
     "libraries/Connector.kicad_sym": "fe04822ac4b04de279d7d2a99d1c8a9f9038763ecfafae11c6809b7f78f44448",
-    "libraries/Connector_Generic.kicad_sym": "81948c22bc6ba97bebe94818dc39fca4ad096d5a98748406b9e42b58fbe71016",
+    "libraries/Connector_Generic.kicad_sym": "8939c26da538c4aeb6b3df508e631d9dfd7b0bda8a7fc7b8f44c5a1c0a92c91f",
     "libraries/Connector_JST.pretty/JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical.kicad_mod": "976175260ff6b158bc74e69a4564fedb13ca848be660050dbdcd4fbf195fc8a5",
-    "libraries/Device.kicad_sym": "235b195221fb165f2ecd95168071749e09608cad6db4f2b723f7e78c7a3bce3a",
+    "libraries/Device.kicad_sym": "e3a4bc4a19c7a55e936be10f9f1e8924df26301abf50254a4037773748e4ad10",
     "libraries/Diode_SMD.pretty/D_SOD-123.kicad_mod": "79ea090239f95ab7c861a510b787331de955bda70206edd3373edc726540ca40",
+    "libraries/Fuse.pretty/Fuse_1206_3216Metric.kicad_mod": "e0ab749e3d6ce623bf1825905e13ab7aa8f2e9b361304d1cecbde3aa519a7c23",
+    "libraries/Fuse.pretty/Fuse_Littelfuse-NANO2-451_453.kicad_mod": "501e5c76d8965dc098b251e071c3fe523638400ef5984e431c303d3e1c2356f2",
     "libraries/LED_SMD.pretty/LED_0603_1608Metric.kicad_mod": "e748e0f2590b7e36fffd755c6a96b2d1ee899ddd27c8cc0fff646192cd21d9a3",
-    "libraries/Ogma2.kicad_sym": "7235cf7a52feb066d127ca48873bfc6446dc5ba0976c85d58f2c2fc378920133",
+    "libraries/Ogma2.kicad_sym": "508e6cbed131287dd8a3dfac7af313a1e81a6d375fd80a254feb4cdda7b9cc20",
     "libraries/Ogma2.pretty/430450600.kicad_mod": "a90faecfa4458517157aa3b1354088ed32f7f4e750d9c384d0c6fcc74fb85f4e",
     "libraries/Ogma2.pretty/430450800.kicad_mod": "137ee79986b0da0caf2e4bf02a86240e9dab709e51116620cce47a796b7ce819",
     "libraries/Ogma2.pretty/430451000.kicad_mod": "dd971c8e25738d193263f0e9d5a0388f35b85d4bb15beb260bb4d7b3d8045d35",
@@ -1280,11 +1235,13 @@
     "libraries/Ogma2.pretty/CSD18540Q5B.kicad_mod": "8e8b305c7c3668b408783ce5037ba8c1828df1f39b6d4f8b3bf2ebf9fd840564",
     "libraries/Ogma2.pretty/E22-900M22S.kicad_mod": "4d364b56c4b074fbff532296ab1d2eeffbae03c3efb965b0049f80908fd11797",
     "libraries/Ogma2.pretty/ECS-160-10-36Q-ES-TR.kicad_mod": "469ada3b63324825b130ddf60771d059fd22ded3528a50ff7929a8a113c28494",
+    "libraries/Ogma2.pretty/G125-MS10605M2P.kicad_mod": "5980dcc32342da0616267728ef37824f454a7527d1c2e97b1169261fb7bcfff7",
     "libraries/Ogma2.pretty/ICM-42688-P.kicad_mod": "1817fb1e1d3fc2c4f569542c8993bdd2152065a3f1b59f56ef6230a4379a7ba6",
     "libraries/Ogma2.pretty/INA228AIDGSR.kicad_mod": "5814ac71da7f3becd670573b720ec34a18c89fbcf7e862ccbbc718a776f45dbe",
     "libraries/Ogma2.pretty/LM73100RPWR.kicad_mod": "46ac974c58a2caa4953a8f4c3da6cb22339f1b6572465d4b84fc002cc13a475d",
     "libraries/Ogma2.pretty/LSM6DSV16XTR.kicad_mod": "ea8b86217eff4d51216244f0810bba80aa538b58417ea1fa83d5ff61978dc202",
     "libraries/Ogma2.pretty/LTC6993IS6-1_TRMPBF.kicad_mod": "9e261866e52ac7f3149b464336818ec1c24155241c70a4172aa7df0012b0957e",
+    "libraries/Ogma2.pretty/MMC5983MA.kicad_mod": "32629c4a0c5009fe8b8bcb481bd57023ed3643e8d46418fdddb10be6c9481687",
     "libraries/Ogma2.pretty/MPT-08-01-01-L-RA-SD.kicad_mod": "b8ce6f7e0edc975bc352f8a8b34dd17d237c21c011b049a62d6d685bfaffcae1",
     "libraries/Ogma2.pretty/MS560702BA03-50.kicad_mod": "601ac0decc1c06cdf73217bdbae49977e080a48393ddc4e15948ab094f6f83d1",
     "libraries/Ogma2.pretty/MX66L2G45GMI00.kicad_mod": "299c3ed2377564cd02d7d3a8286db0750c0c8cc77324c1ab30a9124c5c0455a7",
@@ -1321,6 +1278,7 @@
     "libraries/Ogma2_Readable_Core.kicad_sym": "75bc8cdda672f25a9dba0fa8c2e9fbef4548e85cfe3e854a0790abbd8defd66b",
     "libraries/Ogma2_Readable_IO.kicad_sym": "fb93e807357ac2b22224445ee5ae14211b4b557aa88cd57a8835e5053c10ca09",
     "libraries/Ogma2_Readable_Output.kicad_sym": "89dc9c992e63602af729677d8e23a930a0ff4f6aeee3ae6b1517b335b2c31b3b",
+    "libraries/Package_QFP.pretty/LQFP-64_10x10mm_P0.5mm.kicad_mod": "a52e49c57473a78ebb0027b9f2517b6eac1ede19de463d2081d94a38a714fbae",
     "libraries/Package_TO_SOT_SMD.pretty/SOT-23-5.kicad_mod": "3713981a8c074273d70d3c8eed1f0161f32b17ceef99b3f01a8771a7ebc81a8e",
     "libraries/Package_TO_SOT_SMD.pretty/SOT-23-6.kicad_mod": "469fae3229c50f78e57aa9bac736d7887757221d4e8580fdecd424cba043a1a1",
     "libraries/Package_TO_SOT_SMD.pretty/SOT-23.kicad_mod": "e138ecb07a4609bdc92d3dbb48a65c297324877fa69cadb6da3c0a741b1605a5",
@@ -1335,6 +1293,6 @@
     "libraries/Transistor_FET.kicad_sym": "271b8de6aefdc8439c47072dff35b7de19f54525a862a2c90255f5eb61b162f8",
     "libraries/power.kicad_sym": "0fb7aa46f140b400eb79e21b07681eef31d7dcaaa786a29c796d3be275d55536"
   },
-  "revision_note": "2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
+  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-8. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained); J6101 / J6102 are placeholders until their parts are chosen. 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
   "symbol_count_definition": "Distinct symbol library IDs used by physical components in the native XML; excludes ERC flags."
 }

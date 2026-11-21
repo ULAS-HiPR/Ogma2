@@ -1,59 +1,18 @@
 {
     "$schema": "https://schemas.kicad.org/erc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-09-08T02:52:10+0100",
-    "kicad_version": "9.0.6",
+    "date": "2026-11-21T17:28:03+0000",
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "9.0.8",
     "sheets": [
         {
             "path": "/",
             "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e",
-            "violations": [
-                {
-                    "description": "Label global connecté à aucun autre élément dans la schématique",
-                    "items": [
-                        {
-                            "description": "Label Global 'LORA_RXEN'",
-                            "pos": {
-                                "x": 1.905,
-                                "y": 1.9304
-                            },
-                            "uuid": "1603712c-2fc7-5170-87e7-696ca29282fa"
-                        }
-                    ],
-                    "severity": "warning",
-                    "type": "global_label_dangling"
-                },
-                {
-                    "description": "Label global connecté à aucun autre élément dans la schématique",
-                    "items": [
-                        {
-                            "description": "Label Global 'LORA_TXEN'",
-                            "pos": {
-                                "x": 1.905,
-                                "y": 1.9558
-                            },
-                            "uuid": "6f0a47d9-57b2-5c5b-9e16-e6eadcfb023f"
-                        }
-                    ],
-                    "severity": "warning",
-                    "type": "global_label_dangling"
-                },
-                {
-                    "description": "Label global connecté à aucun autre élément dans la schématique",
-                    "items": [
-                        {
-                            "description": "Label Global 'SERVO_ARMED_VBAT'",
-                            "pos": {
-                                "x": 2.2479,
-                                "y": 0.8128
-                            },
-                            "uuid": "dc225468-d9c6-55f8-ad3f-545c0a7067a0"
-                        }
-                    ],
-                    "severity": "warning",
-                    "type": "global_label_dangling"
-                }
-            ]
+            "violations": []
         },
         {
             "path": "/01-power/",
@@ -130,10 +89,12 @@
             "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/12f6be2c-cd81-5c18-a6c2-c9f149762673",
             "violations": [
                 {
-                    "description": "Les pins de type Bidirectionnel et Power output sont connectées",
+                    "comment": "U3104 pin 2 (LSM6DSV16X aux pin, unused) strapped to GND as the datasheet allows; GND carries a PWR_FLAG. Correct as drawn (baseline)",
+                    "description": "Conflict problem between pins",
+                    "excluded": true,
                     "items": [
                         {
-                            "description": "Symbol U3104 Pin 2 [GND_[2,3,6,7], Bidirectionnel, Ligne]",
+                            "description": "Symbol U3104 Pin 2 [GND_[2,3,6,7], Bidirectional, Line]",
                             "pos": {
                                 "x": 2.921,
                                 "y": 2.9591
@@ -141,7 +102,7 @@
                             "uuid": "251173d1-477c-575d-9a5b-e09d2c0af87e"
                         },
                         {
-                            "description": "Symbol #FLG001 Pin 1 [Power output, Ligne]",
+                            "description": "Symbol #FLG001 Pin 1 [Power output, Line]",
                             "pos": {
                                 "x": 2.8448,
                                 "y": 2.921
@@ -153,10 +114,12 @@
                     "type": "pin_to_pin"
                 },
                 {
-                    "description": "Les pins de type Bidirectionnel et Power output sont connectées",
+                    "comment": "U3104 pin 3 (LSM6DSV16X aux pin, unused) strapped to GND as the datasheet allows; GND carries a PWR_FLAG. Correct as drawn (baseline)",
+                    "description": "Pins of type Bidirectional and Power output are connected",
+                    "excluded": true,
                     "items": [
                         {
-                            "description": "Symbol U3104 Pin 3 [Bidirectionnel, Ligne]",
+                            "description": "Symbol U3104 Pin 3 [Bidirectional, Line]",
                             "pos": {
                                 "x": 2.921,
                                 "y": 2.9591
@@ -164,7 +127,7 @@
                             "uuid": "f4743fb4-d2f8-520d-8f93-80fcb42aa1f6"
                         },
                         {
-                            "description": "Symbol #FLG001 Pin 1 [Power output, Ligne]",
+                            "description": "Symbol #FLG001 Pin 1 [Power output, Line]",
                             "pos": {
                                 "x": 2.8448,
                                 "y": 2.921
@@ -192,10 +155,12 @@
             "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/92bc9dab-010d-59bf-bfc3-b2b5d70f928e",
             "violations": [
                 {
-                    "description": "Les pins de type Bidirectionnel et Power output sont connectées",
+                    "comment": "U3403 pin 5 (BMP390 SDO, I2C address select) tied to GND for address 0x76; GND carries a PWR_FLAG. Correct as drawn (baseline)",
+                    "description": "Conflict problem between pins",
+                    "excluded": true,
                     "items": [
                         {
-                            "description": "Symbol U3403 Pin 5 [Bidirectionnel, Ligne]",
+                            "description": "Symbol U3403 Pin 5 [Bidirectional, Line]",
                             "pos": {
                                 "x": 2.9464,
                                 "y": 2.9083
@@ -203,7 +168,7 @@
                             "uuid": "9f69283e-cf1e-59f9-a6d6-460f2304b6db"
                         },
                         {
-                            "description": "Symbol #FLG001 Pin 1 [Power output, Ligne]",
+                            "description": "Symbol #FLG001 Pin 1 [Power output, Line]",
                             "pos": {
                                 "x": 2.8448,
                                 "y": 2.921
@@ -289,65 +254,17 @@
         {
             "path": "/06pyro1/",
             "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/e5662528-ca84-5cac-95a1-6e33854fa653",
-            "violations": [
-                {
-                    "description": "Pin entrée de puissance pilotée par aucune pin sortie de puissance",
-                    "items": [
-                        {
-                            "description": "Symbol U6304 Pin 8 [VS_[8,9,10], Power input, Ligne]",
-                            "pos": {
-                                "x": 1.27,
-                                "y": 2.8702
-                            },
-                            "uuid": "439f6324-6945-51bc-b9a5-dff649e72978"
-                        }
-                    ],
-                    "severity": "error",
-                    "type": "power_pin_not_driven"
-                }
-            ]
+            "violations": []
         },
         {
             "path": "/06pyro2/",
             "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb",
-            "violations": [
-                {
-                    "description": "Pin entrée de puissance pilotée par aucune pin sortie de puissance",
-                    "items": [
-                        {
-                            "description": "Symbol U6404 Pin 8 [VS_[8,9,10], Power input, Ligne]",
-                            "pos": {
-                                "x": 1.27,
-                                "y": 2.8702
-                            },
-                            "uuid": "f192dfd5-d61e-5431-b915-ca633be0c8de"
-                        }
-                    ],
-                    "severity": "error",
-                    "type": "power_pin_not_driven"
-                }
-            ]
+            "violations": []
         },
         {
             "path": "/06pyro3/",
             "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c",
-            "violations": [
-                {
-                    "description": "Pin entrée de puissance pilotée par aucune pin sortie de puissance",
-                    "items": [
-                        {
-                            "description": "Symbol U6504 Pin 8 [VS_[8,9,10], Power input, Ligne]",
-                            "pos": {
-                                "x": 1.27,
-                                "y": 2.8702
-                            },
-                            "uuid": "162db068-7acc-59a4-9736-abc97224a2d5"
-                        }
-                    ],
-                    "severity": "error",
-                    "type": "power_pin_not_driven"
-                }
-            ]
+            "violations": []
         },
         {
             "path": "/06b-output-harness/",
@@ -358,27 +275,6 @@
             "path": "/06c-output-diagnostics/",
             "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/dc2c631c-09a5-538b-a3b7-e495109f3f23",
             "violations": []
-        },
-        {
-            "path": "/06d-servo-power/",
-            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/004862ed-8fd8-54df-824a-a46ff8ec255a",
-            "violations": [
-                {
-                    "description": "Pin entrée de puissance pilotée par aucune pin sortie de puissance",
-                    "items": [
-                        {
-                            "description": "Symbol U6802 Pin 8 [VS_[8,9,10], Power input, Ligne]",
-                            "pos": {
-                                "x": 2.9464,
-                                "y": 1.0668
-                            },
-                            "uuid": "479675c1-9acf-5d69-8f93-25b22df69947"
-                        }
-                    ],
-                    "severity": "error",
-                    "type": "power_pin_not_driven"
-                }
-            ]
         },
         {
             "path": "/06e-continuity/",
@@ -403,6 +299,11 @@
         {
             "path": "/44-master-enable/",
             "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/62096935-b4a4-4c50-8b7f-1c9b0c843f73",
+            "violations": []
+        },
+        {
+            "path": "/03mag-magnetometer/",
+            "uuid_path": "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/5db2944b-b91e-50ba-ad10-bde4d1a5bff8",
             "violations": []
         }
     ],

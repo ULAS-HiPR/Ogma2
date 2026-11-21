@@ -1,200 +1,298 @@
-"""Verify native exported connectivity, frozen MCU allocations and safety defaults.
+"""Verify native exported connectivity, the as-captured MCU allocations and the capture safety assertions.
 
-Generated expectations check serialization/geometry. Separate fixed assertions
-check architectural boundaries. Neither is an analog simulation or qualification.
+Generated expectations (full-expected-pins.json) check netlist parity pin by pin. The fixed
+assertions check architectural boundaries: the capture assertions of
+docs/architecture/11-verification.md (numbered A1-A22) and the board's retained checks.
+Neither is an analog simulation or qualification. Rewritten at capture close-out, 21 Nov 2026.
 """
 import argparse
 import copy
 import csv
 import hashlib
 import json
-from collections import Counter
+import re
+from collections import Counter, defaultdict
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-HW=Path(__file__).resolve().parents[1]
+HW = Path(__file__).resolve().parents[1]
+ENERGETIC = re.compile(r'PYRO|ARM|STAGE|OUTPUT\d|SERVO')
+OUTPUT_ENABLES = re.compile(r'^(PYRO\d_(FIRE|LS_SELECT|HS_ENABLE|GATE)|STAGE_ELIGIBLE|STAGE_INHIBIT_LATCHED|STAGE_ARM_INVALID)$')
 
 
 def node_map(root):
-    out={}
+    out = {}
     for net in root.findall('nets/net'):
         for pin in net.findall('node'):
-            key=(pin.get('ref'),pin.get('pin'))
-            assert key not in out,('duplicate pin',key)
-            out[key]=net.get('name').rsplit('/',1)[-1]
+            key = (pin.get('ref'), pin.get('pin'))
+            assert key not in out, ('duplicate pin', key)
+            out[key] = net.get('name').rsplit('/', 1)[-1]
     return out
 
 
-def verify(root,expected):
-    actual=node_map(root);count=0
-    for ref,pins in expected.items():
-        if ref.startswith('#'):continue  # Power symbols are absent from netlist BOM.
-        for pin,net in pins.items():
-            found=actual.get((ref,pin))
+def verify(root, expected):
+    actual = node_map(root)
+    count = 0
+    for ref, pins in expected.items():
+        if ref.startswith('#'):
+            continue  # Power symbols are absent from the netlist BOM.
+        for pin, net in pins.items():
+            found = actual.get((ref, pin))
             if net is None:
-                assert found is None or found.startswith('unconnected-'),(ref,pin,'NC',found)
+                assert found is None or found.startswith('unconnected-'), (ref, pin, 'NC', found)
             else:
-                assert found==net,(ref,pin,net,found)
-            count+=1
-    assert set(actual).issubset({(r,p) for r,ps in expected.items() for p in ps}), 'Unexpected pins'
-    return actual,count
+                assert found == net, (ref, pin, net, found)
+            count += 1
+    assert set(actual).issubset({(r, p) for r, ps in expected.items() for p in ps}), 'Unexpected pins'
+    return actual, count
 
 
-def check(project,netlist,erc):
-    root=ET.parse(netlist).getroot()
-    expected=json.loads((project/'full-expected-pins.json').read_text())
-    actual,pincount=verify(root,expected)
-    checks=[]
-    def require(condition,description):
-        assert condition,description
+def expected_from(root):
+    """The generated expectation: every exported pin and its net (None for an unconnected pad)."""
+    out = defaultdict(dict)
+    for (ref, pin), net in sorted(node_map(root).items()):
+        out[ref][pin] = None if net.startswith('unconnected-') else net
+    return dict(out)
+
+
+def check(project, netlist, erc):
+    root = ET.parse(netlist).getroot()
+    expected = json.loads((project / 'full-expected-pins.json').read_text())
+    actual, pincount = verify(root, expected)
+    parts = {c.get('ref'): c for c in root.findall('components/comp')}
+    nets = defaultdict(set)
+    for key, net in actual.items():
+        nets[net].add(key)
+    ptype = {(n.get('ref'), n.get('pin')): n.get('pintype', '') for net in root.findall('nets/net') for n in net.findall('node')}
+    pfunc = {(n.get('ref'), n.get('pin')): n.get('pinfunction', '') for net in root.findall('nets/net') for n in net.findall('node')}
+    supplies = {net for net, keys in nets.items() if net == 'GND' or any(ptype[k].startswith(('power_in', 'power_out')) for k in keys)}
+    refs = lambda net: {r for r, p in nets.get(net, ())}
+    value = lambda ref: parts[ref].findtext('value')
+    dnp = [r for r, c in parts.items() if any(p.get('name') == 'dnp' for p in c.findall('property'))]
+    checks = []
+
+    def require(condition, description):
+        assert condition, description
         checks.append(description)
-    for role,ref in [('flight','U201'),('comms','U401')]:
-        tag=role.upper();rows=list(csv.DictReader((HW/f'libraries/inputs/{role}-pinout.csv').open()))
-        require(len(rows)==100,f'{role}: 100 frozen allocation rows')
-        for row in rows:
-            pin=row['pad'];net=row['net'];fn=row['function']
-            if net.startswith('NC') or (role=='comms' and fn=='LSE'):
-                require(actual.get((ref,pin),'unconnected-').startswith('unconnected-'),f'{ref}.{pin} intentionally unused')
+
+    def reach(start_nets, through=('R', 'F', 'L', 'D', 'FB', 'JP')):
+        """Nets reachable from start_nets through two-terminal passives, never entering a supply net."""
+        seen, todo = set(), [n for n in start_nets if n not in supplies]
+        while todo:
+            net = todo.pop()
+            if net in seen:
                 continue
-            if fn.startswith('ADC'):net='ADC_'+net
-            elif net in ['HSE_IN','HSE_OUT','LSE_IN','LSE_OUT','SWDIO','SWCLK','STATUS_LED','STATUS_LED1','STATUS_LED2']:
-                net=tag+'_'+net
-            elif role=='comms' and net in ['FLIGHT_TO_COMMS','COMMS_TO_FLIGHT','BRANCH_FAULT_N','BAT_VALID','USB_CONFIG_OK']:
-                net='CC_'+net
-            elif role=='flight' and net=='COMMS_EN':net='FLIGHT_COMMS_EN'
-            if pin in ['21','22']:net=tag+'_VDDA'
-            require(actual[(ref,pin)]==net,f'{ref}.{pin}: frozen allocation with documented physical-net mapping')
-    parts={c.get('ref'):c for c in root.findall('components/comp')}
-    assert parts['U4606'].findtext("fields/field[@name='MPN']")=='Wio-LR2021 / SKU 100058045','Stale radio procurement identity'
-    assert parts['U4606'].findtext("fields/field[@name='Manufacturer']")=='Seeed Studio','Stale radio manufacturer'
-    require(set(parts)=={ref for ref in expected if not ref.startswith('#')},'Every native component covered')
-    for ref,mpn in [('U201','STM32H563VIT6'),('U401','STM32H563VIT6'),
-                    ('U3604','MX66L2G45GMI00'),('U4504','MAX-M10S-00B'),('U4606','Wio-LR2021')]:
-        require(parts[ref].findtext('value')==mpn,f'{ref}: accepted exact device')
-    require(actual[('U201','22')]!=actual[('U201','11')],'Flight VDDA link is not bypassed by a drawing short')
-    require(actual[('U401','22')]!=actual[('U401','11')],'Comms VDDA link is not bypassed by a drawing short')
-    for pin in ['48','98']:
-        require(actual[('U201',pin)]=='FLIGHT_VCAP',f'Flight VCAP pad {pin} is not a 3.3 V supply')
-    require(actual[('U201','6')]=='FLIGHT_3V3','Backup pin is held flight 3.3 V, not vehicle battery')
-    for pin,net in {'1':'GND','2':'GNSS_RX_ISO','3':'GNSS_TX_ISO','4':'GNSS_PPS_ISO',
-                    '7':'GNSS_3V3','8':'GNSS_3V3','9':'GNSS_RESET_N_ISO','10':'GND','11':'GNSS_RF','12':'GND'}.items():
-        require(actual[('U4504',pin)]==net,f'MAX-M10S manufacturer pin {pin}: {net}')
-    for pin in ['5','6','13','14','15','16','17','18']:
-        require(actual[('U4504',pin)].startswith('unconnected-'),f'MAX unused pin {pin}; SAFEBOOT18 and backup6 unloaded')
-    require({key for key,net in actual.items() if net=='GNSS_RF'}=={('U4504','11'),('J4501','1'),('D4501','1')},'Single passive GNSS RF path with ESD; no bias supply')
-    require(actual[('J4501','2')]==actual[('D4501','2')]=='GND','GNSS SMA and ESD returns')
-    require(parts['J4501'].findtext('value')=='132134','External GNSS vertical SMA')
-    require(parts['D4501'].findtext('value')=='TPD1E0B04DPYR','GNSS low-capacitance ESD selection')
-    require(parts['R1006'].findtext('value')=='22.1k 1%' and actual[('R1006','1')]=='BAT_SHDN_N' and actual[('R1006','2')]=='GND','Source enable defaults OFF locally; no raw-pack pull-up')
-    for ref,pins in {'D1002':{'1':'VBAT_CROI_INPUT','3':'BAT_SW_DIODE'},
-                     'R1012':{'1':'BAT_SW_DIODE','2':'BAT_SW_RMID'},
-                     'R1013':{'1':'BAT_SW_RMID','2':'BAT_SWITCH_3V'},
-                     'U1002':{'1':'BAT_SWITCH_3V','2':'GND'},
-                     'J103':{'1':'BAT_SWITCH_3V','2':'BAT_SHDN_N'},
-                     'C1006':{'1':'BAT_SHDN_N','2':'GND'}}.items():
-        for pin,net in pins.items():require(actual[(ref,pin)]==net,f'External master {ref}.{pin}: {net}')
-    require({r for (r,p),net in actual.items() if net=='BAT_SHDN_N'}=={'U101','R1006','J103','C1006'},'No firmware/AUX dependency in master-enable return')
-    for pin,net in {'1':'LORA_3V3','2':'LORA_DIO1_MOD','3':'LORA_RESET_N_MOD',
-                    '4':'LORA_MISO_MOD','5':'LORA_MOSI_MOD','6':'LORA_SCK_MOD',
-                    '7':'LORA_NCS_MOD','8':'LORA_BUSY_MOD','9':'GND','10':'LORA_RF_SUBG',
-                    '11':'GND','12':'GND','14':'GND','15':'GND','20':'GND'}.items():
-        require(actual[('U4606',pin)]==net,f'Wio manufacturer pin {pin}: {net}')
-    for pin in ['13','16','17','18','19','21','22']:
-        require(actual[('U4606',pin)].startswith('unconnected-'),f'Wio unused RF/DIO pin {pin} NC')
-    require({key for key,net in actual.items() if net=='LORA_RF_SUBG'}=={('U4606','10'),('J4601','1')},'Single sub-GHz host RF path')
-    require(actual[('J4601','2')]=='GND','RF connector ground')
-    require(parts['J4601'].findtext('value')=='132134' and parts['J4601'].findtext('footprint')=='Ogma2:SMA_Amphenol_132134_Vertical','Approved vertical standard SMA')
-    require(actual[('U201','57')]=='SERVO3_PWM' and actual[('U201','88')]=='FLIGHT_STATUS_LED1','PD10 servo3; PD7 complementary readiness control')
-    require(actual[('U6804','4')]=='SERVO3_PWM' and actual[('U6804','11')]=='SERVO3_PWM_ISO','Third forward PWM-buffer channel')
-    require(actual[('R6606','1')]=='SERVO3_PWM_ISO' and actual[('R6606','2')]=='SERVO3_PWM_EXT','Servo3 series boundary')
-    require(actual[('R6607','1')]=='SERVO3_PWM_EXT' and actual[('R6607','2')]=='GND','Servo3 connector-side off-default pull-down')
-    require(parts['J6602'].findtext('value')=='430451000','Ten-contact servo connector')
-    for pin,net in {'1':'SERVO_VBAT','2':'SERVO1_PWM_EXT','3':'GND','4':'SERVO_VBAT','5':'SERVO2_PWM_EXT','6':'GND','7':'SERVO_VBAT','8':'SERVO3_PWM_EXT','9':'GND'}.items():
-        require(actual[('J6602',pin)]==net,f'Three-servo harness contact {pin}')
-    require(actual[('J6602','10')].startswith('unconnected-'),'Servo connector contact10 NC')
-    for pin,net in {'2':'FLIGHT_STATUS_LED1','3':'GND','4':'FLIGHT_NOT_READY','5':'FLIGHT_3V3'}.items():
-        require(actual[('U9101',pin)]==net,f'Inverter manufacturer DBV contact {pin}')
-    require(parts['U9101'].findtext('value')=='SN74LVC1G04DBVR','Readiness inverter exact selection')
-    require(actual[('R9102','1')]=='FLIGHT_STATUS_LED1' and actual[('R9102','2')]=='GND' and parts['R9102'].findtext('value')=='47k','Readiness defaults low when MCU pin floats')
-    require(actual[('R9101','1')]=='FLIGHT_NOT_READY','Red LED no longer loads servo GPIO')
-    require(actual[('C9101','1')]=='FLIGHT_3V3' and actual[('C9101','2')]=='GND','Local inverter bypass')
-    require(actual[('R4621','1')]=='LORA_3V3' and actual[('R4621','2')]=='LORA_BUSY_MOD','Open-drain BUSY pulled to switched rail')
-    for i,sig in enumerate(['SCK','MOSI','MISO','NCS','RESET_N','BUSY','DIO1']):
-        ref=f'R{4614+i}'
-        require(actual[(ref,'1')]==f'LORA_{sig}_ISO' and actual[(ref,'2')]==f'LORA_{sig}_MOD',f'{sig} series boundary')
-        require(parts[ref].findtext('value')=='470R',f'{sig} initial damping value')
-    require(not {'U4605','C4605','R4606','R4607'} & set(parts),'Obsolete external RF-switch control components removed')
-    require(actual[('U4604','13')]=='GND' and all(actual[('U4604',pin)].startswith('unconnected-') for pin in ['11','12']),'Unused isolation channel disabled')
-    require(actual[('U101','11')].startswith('unconnected-'),'TPS26630 MODE open selects latch-off, not retry')
-    for pin,net in {'1':'VBAT_CROI_INPUT','2':'GND','3':'FOINSE_AUX_3V3','4':'GND',
-                    '5':'FOINSE_SCL_EXT','6':'FOINSE_SDA_EXT','7':'FOINSE_FAULT_N_EXT'}.items():
-        require(actual[('J102',pin)]==net,f'Samtec contact {pin} / {net}')
-    for net,pin in [('CAN_H','1'),('CAN_L','2')]:
-        required={('J501',pin),('D501',pin),('R510',pin),('U503','7' if pin=='1' else '6')}
-        require({n for n,v in actual.items() if v==net}==required,f'Exact {net} conductors; no H/L short')
-    require(actual[('U502','1')]!=actual[('U502','14')],'CAN translator supply domains remain separate')
-    require(actual[('U503','3')]==actual[('U503','5')]=='CAN_3V3','CAN VCC and VIO both follow switched rail')
-    require(actual[('U1401','1')]=='CORE_INPUT_EN' and actual[('U1701','7')]=='CORE_HELD_4V',
-            'Core gate precedes hold-up; LDO enable stays on held input')
-    # Evaluate the actual two source-policy gates from their exported pin nets.
-    def gate_value(ref,states):
-        return states[actual[(ref,'3')]] if states[actual[(ref,'6')]] else states[actual[(ref,'1')]]
-    for bat in [0,1]:
-        for usb in [0,1]:
-            for config in [0,1]:
-                for flight in [0,1]:
-                    states={'GND':0,'BOOT_3V3':1,'BAT_VALID':bat,'USB_PRESENT':usb,
-                            'USB_CONFIG_OK':config,'FLIGHT_COMMS_EN':flight}
-                    require(gate_value('U1203',states)==(bat or config),'Core source-permission truth-table row')
-                    require(gate_value('U1202',states)==(flight if bat else usb),'Comms source-permission truth-table row')
-    require(actual[('U6001','1')]=='NEW_FLIGHT_CLEAR_REQUEST','Staging request clocks latch directly')
-    require(actual[('U6001','2')]=='STAGE_NEW_FLIGHT_ALLOWED','Physical disarm qualifies D, never CLK')
-    require(actual[('U6001','6')]=='FLIGHT_NRST','Reset clears staging eligibility asynchronously')
-    require(actual[('U6001','3')]=='STAGE_INHIBIT_LATCHED','Q-bar readback polarity preserved')
-    require(actual[('U4302','4')]=='COMMS_MR_N','Flight reset buffer drives comms supervisor MR, not NRST bus')
-    require(actual[('U201','14')]!=actual[('U401','14')],'No cross-reset net short')
-    # Native XML includes DNP entries as explicit properties, not only a value string.
-    dnp=[r for r,c in parts.items() if any(p.get('name')=='dnp' for p in c.findall('property'))]
-    for ref in ['R6310','R6410','R6510','R6804']:
-        require(ref in dnp,f'{ref}: raw energetic/servo source link is DNP')
-    require(all(f'R69{i}{j}' in dnp for i in [1,2,3] for j in [1,2,3,4]),'All continuity injection/return limiting paths DNP')
-    missing=[r for r,c in parts.items() if not c.findtext('footprint')]
-    require(set(missing)=={'J101'},'Only exact Nano-Fit footprint remains missing')
-    require(actual[('U101','17')]==actual[('U101','18')]=='VBAT_SHUNT_IN','Both eFuse OUT pads feed upstream shunt node')
-    require(actual[('R7101','1')]=='VBAT_SHUNT_IN' and actual[('R7101','2')]=='VBAT_PROTECTED','Bulk shunt separates common source protection from load branches')
-    require(actual[('J101','1')]==actual[('J102','1')]=='VBAT_CROI_INPUT','Both mutually exclusive sources feed the same measured path')
-    require(actual[('U7101','1')]==actual[('U7101','2')]=='GND','Croi INA228 address 0x40')
-    require(actual[('U7101','4')]=='FOINSE_SDA_EXT' and actual[('U7101','5')]=='FOINSE_SCL_EXT','Current monitor remains behind existing optional bus boundary')
-    require(actual[('R7105','1')]=='FOINSE_AUX_3V3' and actual[('R7105','2')]=='CROI_MON_3V3','Local current monitor operates without Foinse board')
-    require('BZ9001' not in dnp,'Selected external-drive piezo populated')
-    require(actual[('R9005','1')]=='3V3_OPTIONAL' and actual[('R9005','2')]=='BUZZER_LOW','Piezo discharge path present')
-    # Negative tests exercise the checker, not a modified live schematic.
-    bad=copy.deepcopy(root)
-    h=next(net for net in bad.findall('nets/net') if net.get('name')=='CAN_H')
-    n=next(n for n in h.findall('node') if n.get('ref')=='J501');n.set('pin','2')
-    try:verify(bad,expected)
-    except AssertionError:checks.append('Negative test: swapped CAN contact rejected')
-    else:raise AssertionError('Checker accepted corrupted connector map')
-    bad=copy.deepcopy(root)
+            seen.add(net)
+            for ref, pin in nets[net]:
+                if re.match(rf'^({"|".join(through)})\d', ref) and not ref.startswith(('FL',)):
+                    for other in {n for (r, p), n in actual.items() if r == ref} - {net}:
+                        if other not in supplies and not other.startswith('unconnected-'):
+                            todo.append(other)
+        return seen
+
+    # ---- as-captured MCU allocations (libraries/inputs, exact native nets)
+    for role, ref, n in (('flight', 'U201', 100), ('comms', 'U401', 64)):
+        rows = list(csv.DictReader((HW / f'libraries/inputs/{role}-pinout.csv').open()))
+        require(len(rows) == n and {r['pad'] for r in rows} == {str(i) for i in range(1, n + 1)}, f'{role}: {n} allocation rows')
+        for row in rows:
+            got = actual.get((ref, row['pad']), 'unconnected-')
+            if row['net'] == 'NC':
+                require(got.startswith('unconnected-'), f"{ref}.{row['pad']} intentionally unused")
+            else:
+                require(got == row['net'], f"{ref}.{row['pad']}: as-captured allocation {row['net']}")
+    for ref, mpn in [('U201', 'STM32H563VIT6'), ('U401', 'STM32H563RIT6'), ('U3604', 'MX66L2G45GMI00'),
+                     ('U4504', 'MAX-M10S-00B'), ('U4606', 'Wio-LR2021'), ('U3701', 'MMC5983MA'), ('U6502', 'SN74LVC1G08DBVR')]:
+        require(value(ref) == mpn, f'{ref}: accepted exact device')
+    require(set(parts) == {ref for ref in expected if not ref.startswith('#')}, 'Every native component covered')
+    assert parts['U4606'].findtext("fields/field[@name='MPN']") == 'Wio-LR2021 / SKU 100058045', 'Stale radio procurement identity'
+    assert parts['U4606'].findtext("fields/field[@name='Manufacturer']") == 'Seeed Studio', 'Stale radio manufacturer'
+
+    # ---- processors: supplies and boundaries
+    require(actual[('U201', '22')] != actual[('U201', '11')], 'Flight VDDA link is not bypassed by a drawing short')
+    require(actual[('U401', '13')] == 'COMMS_VDDA' and actual[('U401', '19')] == 'COMMS_3V3', 'Comms VDDA/VREF+ on its own linked rail')
+    for pin in ['48', '98']:
+        require(actual[('U201', pin)] == 'FLIGHT_VCAP', f'Flight VCAP pad {pin} is not a 3.3 V supply')
+    for pin in ['30', '62']:
+        require(actual[('U401', pin)] == 'COMMS_VCAP', f'Comms VCAP pad {pin} is not a 3.3 V supply')
+    require(actual[('U201', '6')] == 'FLIGHT_VBAT' and actual[('D201', '1')] == 'FLIGHT_VBAT' and actual[('D201', '2')] == 'FLIGHT_3V3',
+            'Flight VBAT fed from FLIGHT_3V3 through D201, never the vehicle battery (D-6.4)')
+    require(actual[('U401', '1')] == 'COMMS_3V3', 'Comms backup pin on COMMS_3V3')
+    require(actual[('U401', '51')] == actual[('U4301', '1')] == 'CC_COMMS_TO_FLIGHT'
+            and actual[('U401', '52')] == actual[('U4301', '8')] == 'CC_FLIGHT_TO_COMMS', 'Inter-MCU USART3 on PC10 / PC11 through U4301')
+    require(actual[('U4302', '4')] == 'COMMS_MR_N', 'Flight reset buffer drives comms supervisor MR, not NRST bus')
+    require(actual[('U201', '14')] != actual[('U401', '7')], 'No cross-reset net short')
+
+    # ---- GNSS and radio (unchanged by capture)
+    for pin, net in {'1': 'GND', '2': 'GNSS_RX_ISO', '3': 'GNSS_TX_ISO', '4': 'GNSS_PPS_ISO', '7': 'GNSS_3V3', '8': 'GNSS_3V3',
+                     '9': 'GNSS_RESET_N_ISO', '10': 'GND', '11': 'GNSS_RF', '12': 'GND'}.items():
+        require(actual[('U4504', pin)] == net, f'MAX-M10S manufacturer pin {pin}: {net}')
+    for pin in ['5', '6', '13', '14', '15', '16', '17', '18']:
+        require(actual[('U4504', pin)].startswith('unconnected-'), f'MAX unused pin {pin}; SAFEBOOT18 and backup6 unloaded')
+    require(nets['GNSS_RF'] == {('U4504', '11'), ('J4501', '1'), ('D4501', '1')}, 'Single passive GNSS RF path with ESD; no bias supply')
+    require(actual[('J4501', '2')] == actual[('D4501', '2')] == 'GND', 'GNSS SMA and ESD returns')
+    require(value('J4501') == '132134' and value('D4501') == 'TPD1E0B04DPYR', 'GNSS SMA and low-capacitance ESD selections')
+    for pin, net in {'1': 'LORA_3V3', '2': 'LORA_DIO1_MOD', '3': 'LORA_RESET_N_MOD', '4': 'LORA_MISO_MOD', '5': 'LORA_MOSI_MOD',
+                     '6': 'LORA_SCK_MOD', '7': 'LORA_NCS_MOD', '8': 'LORA_BUSY_MOD', '9': 'GND', '10': 'LORA_RF_SUBG',
+                     '11': 'GND', '12': 'GND', '14': 'GND', '15': 'GND', '20': 'GND'}.items():
+        require(actual[('U4606', pin)] == net, f'Wio manufacturer pin {pin}: {net}')
+    for pin in ['13', '16', '17', '18', '19', '21', '22']:
+        require(actual[('U4606', pin)].startswith('unconnected-'), f'Wio unused RF/DIO pin {pin} NC')
+    require(nets['LORA_RF_SUBG'] == {('U4606', '10'), ('J4601', '1')} and actual[('J4601', '2')] == 'GND', 'Single sub-GHz host RF path')
+    require(value('J4601') == '132134' and parts['J4601'].findtext('footprint') == 'Ogma2:SMA_Amphenol_132134_Vertical', 'Approved vertical SMA')
+    require(actual[('R4621', '1')] == 'LORA_3V3' and actual[('R4621', '2')] == 'LORA_BUSY_MOD', 'Open-drain BUSY pulled to switched rail')
+    for i, sig in enumerate(['SCK', 'MOSI', 'MISO', 'NCS', 'RESET_N', 'BUSY', 'DIO1']):
+        ref = f'R{4614 + i}'
+        require(actual[(ref, '1')] == f'LORA_{sig}_ISO' and actual[(ref, '2')] == f'LORA_{sig}_MOD' and value(ref) == '470R', f'{sig} series boundary')
+    require(not {'U4605', 'C4605', 'R4606', 'R4607'} & set(parts), 'Obsolete external RF-switch control components removed')
+    require(actual[('U4604', '13')] == 'GND' and all(actual[('U4604', p)].startswith('unconnected-') for p in ['11', '12']), 'Unused isolation channel disabled')
+
+    # ---- source, master enable, monitoring
+    require(value('R1006') == '22.1k 1%' and actual[('R1006', '1')] == 'BAT_SHDN_N' and actual[('R1006', '2')] == 'GND', 'Source enable defaults OFF locally')
+    for ref, pins in {'D1002': {'1': 'VBAT_CROI_INPUT', '3': 'BAT_SW_DIODE'}, 'R1012': {'1': 'BAT_SW_DIODE', '2': 'BAT_SW_RMID'},
+                      'R1013': {'1': 'BAT_SW_RMID', '2': 'BAT_SWITCH_3V'}, 'U1002': {'1': 'BAT_SWITCH_3V', '2': 'GND'},
+                      'J103': {'1': 'BAT_SWITCH_3V', '2': 'BAT_SHDN_N'}, 'C1006': {'1': 'BAT_SHDN_N', '2': 'GND'}}.items():
+        for pin, net in pins.items():
+            require(actual[(ref, pin)] == net, f'External master {ref}.{pin}: {net}')
+    require(refs('BAT_SHDN_N') == {'U101', 'R1006', 'J103', 'C1006', 'D1003'}, 'Master-enable return: no firmware path except the FC_POWER_HOLD diode')
+    for pin, net in {'1': 'VBAT_CROI_INPUT', '2': 'GND', '3': 'FOINSE_AUX_3V3', '4': 'GND', '5': 'FOINSE_SCL_EXT',
+                     '6': 'FOINSE_SDA_EXT', '7': 'FOINSE_FAULT_N_EXT', '8': 'CROI_POWER_HOLD'}.items():
+        require(actual[('J102', pin)] == net, f'Samtec contact {pin} / {net}')
+    require(actual[('U101', '17')] == actual[('U101', '18')] == 'VBAT_SHUNT_IN', 'Both eFuse OUT pads feed upstream shunt node')
+    require(actual[('R7101', '1')] == 'VBAT_SHUNT_IN' and actual[('R7101', '2')] == 'VBAT_PROTECTED', 'Bulk shunt separates source protection from loads')
+    require(actual[('J101', '1')] == actual[('J102', '1')] == 'VBAT_CROI_INPUT', 'Both mutually exclusive sources feed the same measured path')
+    require(actual[('U7101', '1')] == actual[('U7101', '2')] == 'GND', 'Croi INA228 address 0x40')
+    require(actual[('U7101', '4')] == 'FOINSE_SDA_EXT' and actual[('U7101', '5')] == 'FOINSE_SCL_EXT', 'Current monitor behind existing optional bus boundary')
+    require(actual[('R7104', '1')] == 'ENERGY_TAP', 'Battery monitor VBUS reads ENERGY_TAP (D-2Nov.5)')
+    require(actual[('R7105', '1')] == 'FOINSE_AUX_3V3' and actual[('R7105', '2')] == 'CROI_MON_3V3', 'Local current monitor operates without Foinse board')
+    require(actual[('U1401', '1')] == 'CORE_INPUT_EN' and refs('CORE_INPUT_EN') == {'U1401', 'R1210', 'R1204'}
+            and actual[('R1210', '1')] == '4V_PRE' and value('R1210') == '200k 1%' and value('R1204') == '100k',
+            'Core input enable from its own 4V_PRE divider, whatever the source (D-6.5)')
+    require(actual[('U1701', '7')] == 'CORE_HELD_4V', 'Flight LDO input on the held core rail')
+    require(actual[('U1601', '3')] == 'SERVICE_POWER_EN' and actual[('U201', '39')] == 'SERVICE_POWER_EN', 'Service restart on PE8 (D-6.5)')
+
+    # ---- CAN
+    for bus, (j, d, r, u) in {'': ('J501', 'D501', 'R510', 'U503'), '2': ('J502', 'D502', 'R515', 'U505')}.items():
+        for net, pin in [(f'CAN{bus}_H', '1'), (f'CAN{bus}_L', '2')]:
+            require(nets[net] == {(j, pin), (d, pin), (r, pin), (u, '7' if pin == '1' else '6')}, f'Exact {net} conductors; no H/L short')
+        require(value(j) == 'G125-MS10605M2P' and all(actual[(j, p)].startswith('unconnected-') for p in '456'), f'{j}: Gecko-SL, spare contacts NC')
+    require(actual[('U502', '1')] != actual[('U502', '14')], 'CAN translator supply domains remain separate')
+    require(actual[('U503', '3')] == actual[('U503', '5')] == actual[('U505', '3')] == actual[('U505', '5')] == 'CAN_3V3', 'Both transceivers on the switched CAN rail')
+    require(refs('CAN_STB') == {'U201', 'R505', 'U502', 'U504'}, 'One standby line (PE10) for both buses (D-5Nov.3)')
+
+    # ---- status and service
+    for pin, net in {'2': 'FLIGHT_STATUS_LED1', '3': 'GND', '4': 'FLIGHT_NOT_READY', '5': 'FLIGHT_3V3'}.items():
+        require(actual[('U9101', pin)] == net, f'Inverter manufacturer DBV contact {pin}')
+    require(value('U9101') == 'SN74LVC1G04DBVR' and actual[('R9102', '1')] == 'FLIGHT_STATUS_LED1' and value('R9102') == '47k', 'Readiness inverter and its default')
+    require('BZ9001' not in dnp and actual[('R9005', '1')] == '3V3_OPTIONAL' and actual[('R9005', '2')] == 'BUZZER_LOW', 'Piezo populated with discharge path')
+    require(not [n for n in nets if 'SERVO' in n] and not [r for r in parts if r.startswith(('U68', 'J6602'))], 'No servo nets or parts (D-19Nov.2)')
+
+    # ---- capture safety assertions (11-verification.md)
+    for n, fire, sel in ((1, 'U6304', 'Q6301'), (2, 'U6404', 'Q6401'), (3, 'U6502', 'Q6501')):
+        for net in (f'PYRO{n}_FIRE', f'PYRO{n}_LS_SELECT'):
+            pulls = [r for r in refs(net) if r.startswith('R') and value(r) == '100k' and 'GND' in {actual[(r, '1')], actual[(r, '2')]}]
+            drivers = {k for k in nets[net] if k[0] == 'U201' or ptype[k].startswith(('output', 'bidirectional', 'tri_state', 'power_out', 'open'))}
+            require(len(pulls) == 1 and {k[0] for k in drivers} == {'U201'}, f'A1: {net} has one 100k pull-down and no driver but its MCU pin')
+        fp = pfunc[next(k for k in nets[f'PYRO{n}_FIRE'] if k[0] == 'U201')][:2]
+        sp = pfunc[next(k for k in nets[f'PYRO{n}_LS_SELECT'] if k[0] == 'U201')][:2]
+        require(fp != sp, f'A2: channel {n} fire ({fp}) and low-side select ({sp}) on different ports')
+        low = refs(f'OUTPUT{n}_LOW')
+        require(low == {'J6601', sel, f'R69{n}3', f'R69{n}5'} and actual[('J6601', str(n + 3))] == f'OUTPUT{n}_LOW', f'A3: OUTPUT{n}_LOW only on its low-side drain, continuity network and J6601')
+    require(refs('ENERGY_TAP') == {'Q101', 'U101', 'F6101', 'F6102', 'R7104', 'C1004', 'C1005'}, 'A4: ENERGY_TAP only Q101 drain, U101 IN, F6101 / F6102, its sense tap and decoupling')
+    for f, j in (('F6101', 'J6101'), ('F6102', 'J6102')):
+        require(refs(actual[(f, '2')]) == {f, j}, f'A5: {f} feeds only {j}')
+    require(refs('RECOVERY_ARMED_VBAT') == {'J6101', 'R6310', 'R6410', 'R6101', 'R8007'}, 'A6: recovery armed rail only to channels 1 / 2, its arm sense and its ADC divider')
+    require(refs('STAGING_ARMED_VBAT') == {'J6102', 'R6510', 'R6103'}, 'A6: staging armed rail only to channel 3 and its arm sense')
+    require(refs(actual[('U6504', '3')]) == {'U6504', 'U6502', 'R6503'} and actual[('U6502', '1')] == 'PYRO3_FIRE'
+            and actual[('U6502', '2')] == 'STAGE_ELIGIBLE', 'A7: U6504 IN only from U6502 (PYRO3_FIRE AND STAGE_ELIGIBLE)')
+    require(actual[('U6001', '6')] == 'FLIGHT_NRST' and actual[('U6001', '2')] == 'STAGE_ARM_INVALID' and actual[('U6001', '1')] == 'NEW_FLIGHT_CLEAR_REQUEST'
+            and pfunc[('U201', '62')].startswith('PD15') and 'R6001' in refs('NEW_FLIGHT_CLEAR_REQUEST') and value('R6001') == '100k',
+            'A8: U6001 CLR = FLIGHT_NRST, D = STAGE_ARM_INVALID, CLK = PD15 with pull-down')
+    require(all(refs(f'OUTPUT{n}_HIGH') == {'J6601', f'U6{n + 2}04', f'R69{n}2'} and refs(f'PYRO{n}_ENERGY') == {f'U6{n + 2}04', f'R6{n + 2}10', f'C6{n + 2}04'}
+                and actual[(f'R69{n}1', '1')] == '3V3_OPTIONAL' and refs(actual[(f'R69{n}1', '2')]) == {f'R69{n}1', f'R69{n}2'} for n in (1, 2, 3)),
+            'A9: no logic rail on an armed rail; the only logic-rail path to J6601 is R69x1 / R69x2')
+    for ref in ['R6310', 'R6410', 'R6510']:
+        require(ref in dnp, f'A10: {ref} energy link DNP until the igniter values close')
+    comms = {actual[(r, p)] for (r, p) in actual if r == 'U401'} - supplies
+    require(not [n for n in reach(comms) if ENERGETIC.search(n)], 'A11: comms MCU has no path to any pyro, servo or arm net')
+    starts = [n for n in nets if re.match(r'^(CAN|LORA|USB|CC_USB)', n)]
+    require(not [n for n in reach(starts) if OUTPUT_ENABLES.match(n)], 'A12: CAN, radio and USB nets have no path to an output enable')
+    require(refs('FC_POWER_HOLD') == {'U201', 'R1014', 'R1015'} and value('R1014') == '330R' and value('C1007').startswith('470u')
+            and refs(actual[('R1014', '2')]) == {'R1014', 'C1007', 'D1003', 'D1004'} and actual[('D1003', '1')] == 'BAT_SHDN_N'
+            and actual[('D1004', '1')] == 'CROI_POWER_HOLD' and refs('CROI_POWER_HOLD') == {'D1004', 'J102'},
+            'A14: FC_POWER_HOLD reaches BAT_SHDN_N and J102.8 only through diodes, 330R / 470uF')
+    for ref, rail in (('R3101', 'ST_3V3'), ('R3201', 'TDK_3V3'), ('R3301', 'HG_3V3'), ('R3401', 'BMP_3V3'), ('R3501', 'TE_3V3'), ('R3701', 'MAG_3V3')):
+        want = '22R' if ref == 'R3701' else '47R 1%'
+        require(value(ref) == want and actual[(ref, '1')] == 'FLIGHT_3V3' and actual[(ref, '2')] == rail, f'A15: {rail} fed through {ref} {want}')
+    for net in ('BMP_SCL', 'BMP_SDA', 'TE_SCL', 'TE_SDA', 'MAG_SCL', 'MAG_SDA'):
+        ups = [r for r in refs(net) if r.startswith('R') and ({actual[(r, '1')], actual[(r, '2')]} - {net}) & supplies]
+        require(ups and all({actual[(r, '1')], actual[(r, '2')]} - {net} == {'FLIGHT_3V3'} for r in ups), f'A15: {net} pull-ups on FLIGHT_3V3')
+    mag_mcu = {pfunc[k][:3] for n in ('MAG_SCL', 'MAG_SDA', 'MAG_INT') for k in nets[n] if k[0] == 'U201'}
+    require(mag_mcu == {'PA8', 'PC9', 'PE6'} and refs('MAG_INT') == {'U201', 'U3701'}
+            and all(refs(n) <= {'U201', 'R3702', 'R3703', 'R3704', 'R3705'} for n in ('MAG_SCL', 'MAG_SDA')), 'A16: magnetometer nets land on PA8, PC9 and PE6 only')
+    require(refs('USB_VBUS') == {'J4401', 'D4401', 'C4401', 'C4402', 'U4401', 'R1208'}, 'A18: USB VBUS only to its ESD, decoupling, U4401 and the R1208 divider')
+    for ref in ('R1701', 'R1801', 'R1901'):
+        bottom = next(r for r in refs(actual[(ref, '2')]) if r.startswith('R') and r != ref)
+        require(value(ref) == '31.9k 0.1%' and value(bottom).startswith('10k'), f'A19: {ref} 31.9k over {bottom} 10k')
+    require(actual[('U101', '11')] == 'GND', 'A19: U101 MODE tied to GND (auto-retry, D-6.3)')
+    for j, r, f in (('J501', 'R516', 'F501'), ('J502', 'R517', 'F502')):
+        ref_net = actual[(j, '3')]
+        require(refs(ref_net) == {j, r} and refs(actual[(r, '2')]) == {r, f} and actual[(f, '2')] == 'GND', f'A22: {j} reference reaches GND only through {r} / {f}')
+
+    # ---- population
+    for n in (1, 2, 3):
+        require(value(f'R6{n + 2}14') == '1.24k 1%' and f'R6{n + 2}14' not in dnp, f'Channel {n} current limit fitted (about 2.0 A)')
+    require(all(f'R69{i}{j}' not in dnp and value(f'R69{i}{j}') == '3.9k 1%' for i in (1, 2, 3) for j in (1, 2, 3, 4)), 'Continuity resistors 3.9k fitted (D-2Nov.14)')
+    missing = sorted(r for r, c in parts.items() if not c.findtext('footprint'))
+    require(missing == ['J101', 'J6101', 'J6102'], 'Only J101 (Nano-Fit drawing) and the J6101 / J6102 placeholders lack footprints')
+
+    # ---- negative tests exercise the checker, not a modified live schematic
+    bad = copy.deepcopy(root)
+    h = next(net for net in bad.findall('nets/net') if net.get('name') == 'CAN_H')
+    next(n for n in h.findall('node') if n.get('ref') == 'J501').set('pin', '2')
+    try:
+        verify(bad, expected)
+    except AssertionError:
+        checks.append('Negative test: swapped CAN contact rejected')
+    else:
+        raise AssertionError('Checker accepted corrupted connector map')
+    bad = copy.deepcopy(root)
     for net in bad.findall('nets/net'):
-        if net.get('name')=='FLIGHT_VDDA':net.set('name','FLIGHT_3V3')
-    try:verify(bad,expected)
-    except AssertionError:checks.append('Negative test: analog-supply bypass short rejected')
-    else:raise AssertionError('Checker accepted shorted VDDA')
-    report=json.loads(erc.read_text());violations=[v for s in report['sheets'] for v in s['violations']]
-    categories=Counter((v['severity']+' / '+v['type']) for v in violations)
-    return {'status':'connectivity checks pass; engineering draft, not release',
-            'physical_component_count':len(parts),'checked_pin_count':pincount,'architecture_checks':len(checks),
-            'dnp_count':len(dnp),'dnp_refs':dnp,'missing_footprints':missing,
-            'erc_categories':dict(categories),'checks':checks,
-            'netlist_sha256':hashlib.sha256(netlist.read_bytes()).hexdigest(),
-            'schematic_sha256':{f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(project.glob('*.kicad_sch'))},
-            'limits':'No analog simulation, target test, layout/rating/thermal/inrush/ESD qualification or energetic release.'}
+        if net.get('name') == 'FLIGHT_VDDA':
+            net.set('name', 'FLIGHT_3V3')
+    try:
+        verify(bad, expected)
+    except AssertionError:
+        checks.append('Negative test: analog-supply bypass short rejected')
+    else:
+        raise AssertionError('Checker accepted shorted VDDA')
+
+    report = json.loads(erc.read_text())
+    violations = [v for s in report['sheets'] for v in s['violations']]
+    categories = Counter(('excluded / ' if v.get('excluded') else '') + v['severity'] + ' / ' + v['type'] for v in violations)
+    require(not [v for v in violations if not v.get('excluded')], 'ERC: no unexcluded finding')
+    return {'status': 'connectivity checks pass; engineering draft, not release',
+            'physical_component_count': len(parts), 'checked_pin_count': pincount, 'architecture_checks': len(checks),
+            'dnp_count': len(dnp), 'dnp_refs': dnp, 'missing_footprints': missing,
+            'not_checkable_here': {'A13': 'J6101 / J6102 parts not chosen; mating is mechanical',
+                                   'A17': 'KiCad 9 schematic has no BOM variants; J101 / J102 exclusivity is an assembly rule',
+                                   'A20': 'Churro', 'A21': 'Churro'},
+            'erc_categories': dict(categories), 'checks': checks,
+            'netlist_sha256': hashlib.sha256(netlist.read_bytes()).hexdigest(),
+            'schematic_sha256': {f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(project.glob('*.kicad_sch'))},
+            'limits': 'No analog simulation, target test, layout/rating/thermal/inrush/ESD qualification or energetic release.'}
 
 
-if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('project',type=Path);p.add_argument('netlist',type=Path)
-    p.add_argument('erc',type=Path);p.add_argument('--output',type=Path)
-    a=p.parse_args();result=check(a.project,a.netlist,a.erc)
-    if a.output:a.output.write_text(json.dumps(result,indent=2)+'\n')
-    print(json.dumps({k:v for k,v in result.items() if k not in ['checks','schematic_sha256','dnp_refs']}))
+if __name__ == '__main__':
+    p = argparse.ArgumentParser()
+    p.add_argument('project', type=Path)
+    p.add_argument('netlist', type=Path)
+    p.add_argument('erc', type=Path)
+    p.add_argument('--output', type=Path)
+    p.add_argument('--write-expected', action='store_true', help='regenerate full-expected-pins.json from this netlist first')
+    a = p.parse_args()
+    if a.write_expected:
+        (a.project / 'full-expected-pins.json').write_text(json.dumps(expected_from(ET.parse(a.netlist).getroot()), indent=1, sort_keys=True) + '\n')
+    result = check(a.project, a.netlist, a.erc)
+    if a.output:
+        a.output.write_text(json.dumps(result, indent=2) + '\n')
+    print(json.dumps({k: v for k, v in result.items() if k not in ['checks', 'schematic_sha256', 'dnp_refs']}))

@@ -10,7 +10,10 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
-netlist = ET.parse(ROOT / 'hardware/croi2/output/full-netlist.xml').getroot()
+# These desk checks are against the 8 September baseline, so they read its archived exports
+# (hardware/croi2/history/baseline-2026-09-08), not the as-captured CAD of 21 November.
+BASELINE = ROOT / 'hardware/croi2/history/baseline-2026-09-08'
+netlist = ET.parse(BASELINE / 'full-netlist.xml').getroot()
 pins = {}
 native_ports = {}
 for net in netlist.findall('./nets/net'):
@@ -64,7 +67,7 @@ assert by_port['PB5']['net'] == 'CC_BRANCH_FAULT_N'
 # Only PD10 changes function. Other corrected names preserve native wiring.
 with (ROOT / 'docs/architecture/proposed-flight-pinout.csv').open() as f:
     flight = list(csv.DictReader(f))
-with (ROOT / 'hardware/croi2/libraries/inputs/flight-pinout.csv').open() as f:
+with (BASELINE / 'inputs/flight-pinout.csv').open() as f:
     native_flight = list(csv.DictReader(f))
 assert len(flight) == 100
 assert {int(row['pad']) for row in flight} == set(range(1, 101))
