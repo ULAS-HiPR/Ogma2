@@ -1,7 +1,12 @@
 # 08 Churro and the vehicle CAN link
 
-Churro (Foinse2) is a power board with no MCU: two independently protected
-feeds, AV and PROP, each fed by its pack or, on the rail, by the ground
+**21 November:** Churro gains an ACT branch for Salsa beside PROP, both from one
+6S actuator pack (D-21Nov.1); a charger per pack (D-21Nov.2); and damping on
+each umbilical pair (D-21Nov.3). The circuits below predate them; the Churro
+power review redraws them.
+
+Churro (Foinse2) is a power board with no MCU: independently protected
+feeds, AV and PROP (and now ACT), each fed by its pack or, on the rail, by the ground
 umbilical; plus propulsion current, voltage and temperature monitoring that
 Burrito powers and reads. The CAN link to Fajita stays two-node Classical CAN
 at 500 kbit/s for Rev A.
@@ -154,7 +159,7 @@ same pinout"]
   J2 <--> H2["Linear twisted pair
 120 Ω at each end"]
   H2 <--> A["Active board
-own loop, own pack"]
+own loop, ACT feed from Churro"]
   S["PE10 standby
 PB1 CAN limiter"] -.-> T
   S -.-> T2

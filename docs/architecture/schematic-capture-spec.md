@@ -6,17 +6,20 @@ three servos) and 2 November with D-2Nov.1–D-2Nov.11, D-2Nov.14, D-2Nov.15,
 D-2Nov.17, D-2Nov.18 and the acceptance of D1, D2, D3, D5 and D-7.2, and
 18 November with D-5Nov.3 (CAN bus 2 and its pin moves) and D-18Nov.4 (Gecko CAN
 connectors), all in [decisions.md](../../decisions.md). D-6.12 (two processors),
-D-18Nov.1 (no third Churro branch) and D-18Nov.3 (no I²C port) need no capture
-change.
+D-18Nov.3 (no I²C port) needs no capture change. D-18Nov.1's "no third Churro
+branch" is replaced: Churro gains the ACT branch (D-21Nov.1).
 
-**Status: proposed baseline. Capture has not been approved; Seán holds it until
-after the Tuesday 3 November review.** [Readiness list](#what-ready-for-capture-means).
+**Status, 21 November: Burrito's capture baseline.** Burrito's capture starts
+once its requirements and the Burrito–Churro interface are frozen (D-21Nov.9).
+Churro's capture waits for its power review: charging (D-21Nov.2), the ACT
+branch (D-21Nov.1) and umbilical damping (D-21Nov.3) aren't drawn yet. [Readiness list](#what-ready-for-capture-means).
 
 ## Who does what
 
 1. Seán approves this specification.
-2. Codex captures the schematics and places components.
-3. Seán routes.
+2. Claude captures the schematics the readable-schematics way (the 7–8 September
+   method), one sheet at a time, each reviewed by Seán before the next.
+3. Placement and routing with computer use; Seán reviews.
 
 Anav owns firmware. Approval to capture is not approval to fabricate, to use the
 energetic outputs, or to fly.
@@ -58,7 +61,7 @@ energetic outputs, or to fly.
 | Block | Instruction | Why |
 | --- | --- | --- |
 | Flight U201 | Keep STM32H563VIT6 LQFP100. Use the [100-pad map](proposed-flight-pinout.csv), amended by the next row | The CSV still holds 22 September nets so the proposal checker keeps passing; its PD10 `SERVICE_POWER_EN` row is superseded by the next row |
-| Flight pad changes | PE5 pad 4 → `FC_POWER_HOLD` with 1 MΩ pull-down (D-2Nov.18). PE7 pad 38 → `PYRO1_FIRE`, PE9 pad 40 → `PYRO2_FIRE`, each driving its TPS1H100 IN directly. PE12 pad 43 → `PYRO3_FIRE`, through the staging latch AND gate (D-7.2). Low-side selects: PA9 pad 68 → `PYRO1_LS_SELECT`, PC8 pad 65 → `PYRO2_LS_SELECT`, PD14 pad 61 → `PYRO3_LS_SELECT` (D-2Nov.1, D-5Nov.3). CAN bus 2: PB5 pad 91 → FDCAN2 RX, PA10 pad 69 → FDCAN2 TX; PE10 pad 41 → `CAN_STB` for both transceivers, moved from PB5 (D-5Nov.3). Magnetometer I²C3: PA8 pad 67 → `MAG_SCL`, PC9 pad 66 → `MAG_SDA`, AF4 (D-2Nov.11). PE14 pad 45 → `STAGE_INHIBIT_LATCHED` through a 1 kΩ series resistor; PE15 pad 46 → staging arm sense (`STAGE_ARM_INVALID` via R6108). PD15 pad 62 stays `NEW_FLIGHT_CLEAR_REQUEST`; PE13 pad 44 → recovery arm sense, moved from PC8 (D-5Nov.3). PE8 pad 39 → `SERVICE_POWER_EN`. PD10 pad 57 stays `SERVO3_PWM` (LPTIM2_CH2, AF3), as in the CAD. PE6 pad 5 → `MAG_INT` (optional data-ready input). No flight pad is left spare | D-6.2, D-6.3, D-6.6, D-7.1, D-7.2, D-2Nov.1, D-2Nov.11, D-2Nov.18, D-5Nov.3. The low sides sit on ports A, C and D, away from the port-E fire pins, so one bad port write can't close both switches of a channel. No fire pin neighbours its own low side. The 1 kΩ stops a wrongly configured PE14 fighting the latch output |
+| Flight pad changes | PE5 pad 4 → `FC_POWER_HOLD` with 1 MΩ pull-down (D-2Nov.18). PE7 pad 38 → `PYRO1_FIRE`, PE9 pad 40 → `PYRO2_FIRE`, each driving its TPS1H100 IN directly. PE12 pad 43 → `PYRO3_FIRE`, through the staging latch AND gate (D-7.2). Low-side selects: PA9 pad 68 → `PYRO1_LS_SELECT`, PC8 pad 65 → `PYRO2_LS_SELECT`, PD14 pad 61 → `PYRO3_LS_SELECT` (D-2Nov.1, D-5Nov.3). CAN bus 2: PB5 pad 91 → FDCAN2 RX, PA10 pad 69 → FDCAN2 TX; PE10 pad 41 → `CAN_STB` for both transceivers, moved from PB5 (D-5Nov.3). Magnetometer I²C3: PA8 pad 67 → `MAG_SCL`, PC9 pad 66 → `MAG_SDA`, AF4 (D-2Nov.11). PE14 pad 45 → `STAGE_INHIBIT_LATCHED` through a 1 kΩ series resistor; PE15 pad 46 → staging arm sense (`STAGE_ARM_INVALID` via R6108). PD15 pad 62 stays `NEW_FLIGHT_CLEAR_REQUEST`; PE13 pad 44 → recovery arm sense, moved from PC8 (D-5Nov.3). PE8 pad 39 → `SERVICE_POWER_EN`. PD10 pad 57 becomes a labelled test pad (D-19Nov.3). PE6 pad 5 → `MAG_INT` (optional data-ready input). No flight pad is left spare | D-6.2, D-6.3, D-6.6, D-7.1, D-7.2, D-2Nov.1, D-2Nov.11, D-2Nov.18, D-5Nov.3. The low sides sit on ports A, C and D, away from the port-E fire pins, so one bad port write can't close both switches of a channel. No fire pin neighbours its own low side. The 1 kΩ stops a wrongly configured PE14 fighting the latch output |
 | Comms U401 | STM32H563RIT6 LQFP64. Use the [64-pad map](proposed-comms-pinout.csv) | [Package choice](01-mcus.md). Supply, VCAP, HSE and SWD follow this package; don't copy 100-pin numbering |
 | Inter-MCU link | Comms PC10 TX → `CC_COMMS_TO_FLIGHT` → U4301.1. PC11 RX → `CC_FLIGHT_TO_COMMS` → U4301.8. USART3, AF7 | Flight-side `FLIGHT_TO_COMMS` / `COMMS_TO_FLIGHT` stay on the other side of U4301 |
 
@@ -131,8 +134,10 @@ Also on the processors:
 Keep: autonomous source protection, threshold networks, source controls, the
 Samtec pinout (pin 8 is now `CROI_POWER_HOLD`), TCA4307, INA228, ADS1115 and the
 voltage-input TMUX1511. Don't add an MCU, CAN endpoint or 24 V converter.
-Churro gains charging (D-20Nov.1); the charger, any balancing and the
-umbilical's charging contacts wait for their design. The
+Churro gains charging (D-20Nov.1, D-21Nov.2), an ACT branch for Salsa beside
+PROP, both from one 6S actuator pack (D-21Nov.1), and damping on each umbilical
+pair (D-21Nov.3). Those circuits are drawn at the Churro power review; balancing
+stays off the vehicle. The
 [monitoring justification](justifications/churro-monitoring.md) is the
 connection authority for the probe and reference additions below; the umbilical
 rows come from D-2Nov.7.
@@ -207,7 +212,7 @@ See the [output chapter](03-energetic-outputs.md).
 2. Seán lifts the capture hold (an Open row).
 3. The new parts have checked library entries: MMC5983MA (LGA-16), SN74LVC1G08
    (SOT-23-5), the LM74700-Q1 class controllers and their FETs, fuses F6101 /
-   F6102 / F6801, the hold capacitor, the Nano-Fit footprint, and the Gecko
+   F6102, the hold capacitor, the Nano-Fit footprint, and the Gecko
    connectors for J501 and bus 2 (D-18Nov.4).
 
 **These stay open during capture and don't block it:** igniters (all-fire and

@@ -45,7 +45,7 @@ keeps its own local control. A mechanism that moves the vehicle in a closed
 loop (roll control, grid fins) goes on the active board under D-2Nov.8: its own
 processor and fast sensors, a neutral path that survives hung firmware, acting
 only on a fresh Active from Burrito (D-5Nov.2), on its own CAN bus (D-5Nov.3)
-and its own pack (D-18Nov.1). The 200 Hz traffic example doesn't create that
+powered through Churro's ACT branch (D-21Nov.1; D-18Nov.1's own pack is replaced). The 200 Hz traffic example doesn't create that
 architecture.
 
 Sources: [TI TPS1H100-Q1 Rev D](https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf)

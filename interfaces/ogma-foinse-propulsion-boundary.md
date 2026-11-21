@@ -40,7 +40,7 @@ tested hardware override it where they conflict.
 | --- | --- | --- |
 | Ogma 2 | Vehicle mission state, high-level engine requests, bounded propulsion summaries, recovery, staged-flight energetic authority | Engine redlines, main-engine actuation, GSE, propulsion power distribution |
 | Propulsion controller | Engine-critical acquisition, local state and redlines, main-engine valves, ignition, local abort, local full-rate evidence | General GSE sequencing, research-only stand DAQ, vehicle recovery |
-| Foinse 2 | Vehicle source entry, protection and vehicle-specific power distribution, including the rail umbilical and, since D-20Nov.1, on-board charging through it | Flight state, propulsion state, redlines, command decisions |
+| Foinse 2 | Vehicle source entry, protection and vehicle-specific power distribution, including the rail umbilical, on-board charging through it (D-20Nov.1, D-21Nov.2) and the actuator feeds to Fajita and the active board (D-21Nov.1) | Flight state, propulsion state, redlines, command decisions |
 
 The propulsion controller is a self-governing peer. It must carry out its own
 defined safe response while Ogma is in reset, CAN is missing or corrupt, and the
@@ -58,8 +58,8 @@ operator UI is disconnected.
   worst-case 550 ms restart; health; and commands the receiver drops to safe
   when they go stale. No sensor streams or control loops at loop rate.
 - The closed-loop actuator node (roll control, grid fins) is the active board,
-  on its own CAN bus from Ogma (D-5Nov.3) and its own pack (D-18Nov.1). It never
-  joins this link and takes no Foinse feed, so this link stays two-node.
+  on its own CAN bus from Ogma (D-5Nov.3), powered through Foinse's ACT branch
+  (D-21Nov.1). It never joins this link, so this link stays two-node.
 - Full-rate engine data stays in propulsion-local storage or goes over a bounded
   test-only path.
 - Croí: 500 kbit/s Classical CAN, TCAN3413DRBR, fixed 120 Ω end termination,
@@ -133,10 +133,13 @@ production third node and doesn't bridge the vehicle bus to GSE.
   retention bridge.
 - Foinse source protection is pack-powered TPS26630 / CSD18540. INA228 and
   ADS1115 are bounded monitoring, never needed for boot or protection.
-- Larger liquid use adds a separate 6S propulsion pack and domain, planning range
-  18–25.2 V raw. Coil current, duty, surge suppression and whether regulated
-  24 V is needed depend on the propulsion design. This is not a frozen valve
-  count or a finished propulsion supply specification.
+- Liquid use adds a 6S actuator pack, planning range 18–25.2 V raw, feeding two
+  protected Foinse branches: PROP to Fajita and ACT to the active board
+  (D-21Nov.1). Fajita converts to its actuators' voltages itself. Jay (20 Nov,
+  said): about nine valve servos, three per bank, angle sensors on all but the
+  main fuel valves, no propulsion solenoids. PROP's rating is set at the Churro
+  power review; each valve's unpowered state, and the vent's, are still to
+  define (ECU-06, LV-0190).
 - On the rail, a ground umbilical feeds both Foinse branches through per-source
   ideal diodes ahead of the eFuses, so the enables and protection still apply
   and the diodes can't charge a pack. Pulling it hands each branch to its pack (D-2Nov.7).

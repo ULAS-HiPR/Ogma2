@@ -47,9 +47,10 @@ Foinse (Churro):
 - On the rail, a ground umbilical feeds both branches through per-source ideal
   diodes ahead of the eFuses; pulling it hands each branch to its pack. It will
   also charge the packs (D-20Nov.1); until that design exists, the diodes stop it.
-- Two feeds only, AV and PROP. The active board has its own pack and arm key,
-  and the CATS Vega its own cell; neither takes power from Croí or Foinse
-  (D-18Nov.1, D-18Nov.2).
+- Three branches: AV (logic and pyro), PROP (Fajita) and ACT (the active board,
+  through its arm key), PROP and ACT from one 6S actuator pack (D-21Nov.1). The
+  CATS Vega has its own cell, charged through its own lead (D-18Nov.2,
+  D-21Nov.2). Nothing takes actuator power from Croí.
 - Each Samtec ground path must carry the full 6 A as an alternate fault return.
 
 All branch limits, energy estimates and rail-sequencing requirements in the
@@ -149,8 +150,8 @@ doesn't widen the declared battery range or allow a depleted-pack boost.
 
 **Servos.** None on Burrito since 19 November (D-19Nov.2); F6801, U6802 and
 the servo bulk are gone, and so is the servo back-drive case. Closed-loop
-actuators are the active board's, on its own pack (D-18Nov.1, D-19Nov.6). No Foinse
-power-boundary change follows. History:
+actuators are the active board's, powered through Foinse's ACT branch
+(D-21Nov.1, D-19Nov.6). History:
 [servo revision](../docs/archive/connector-servo-readiness-revision-2026-09-07.md).
 
 **Current sensing** (7 September, [revision](../docs/archive/sensing-indication-time-review-2026-09-07.md)):
@@ -190,7 +191,7 @@ devices"]
   LOGIC <-->|"CAN, two nodes"| FJ["Fajita
 self-governing"]
   CP["Churro PROP
-6S, own pack"] --> FJ
+6S actuator pack"] --> FJ
 ```
 
 Rules the drawing implies:

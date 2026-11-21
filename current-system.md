@@ -1,6 +1,6 @@
 # Ogma 2 current system
 
-Updated 20 November 2026. Decisions live in [decisions.md](decisions.md); this
+Updated 21 November 2026. Decisions live in [decisions.md](decisions.md); this
 file states what is true now. Native CAD still holds the 8 September draft.
 Capture of the [capture specification](docs/architecture/schematic-capture-spec.md)
 waits for Seán's go-ahead after the Tuesday 3 November review. No fabrication,
@@ -13,12 +13,13 @@ Ogma 2 is HiPR's workhorse flight computer. It owns two boards:
 | Board | Name | Job |
 | --- | --- | --- |
 | Croí2 | Burrito | Flight computer: sensing, estimation, mission state, recording, recovery and staging outputs, CAN; separate comms processor for GNSS, radio and USB |
-| Foinse2 | Churro | MCU-less power board: protected 2S avionics and 6S propulsion feeds, from the packs or the rail umbilical; propulsion current, voltage and temperature monitoring |
+| Foinse2 | Churro | MCU-less power board: a protected 2S avionics feed and two protected 6S actuator feeds (PROP to Fajita, ACT to Salsa), from the packs or the rail umbilical; charges every pack on the rail; current, voltage and temperature monitoring (D-21Nov.1, D-21Nov.2) |
 
 Fajita, the propulsion controller, is ours too since 20 November, as its own
 project (D-20Nov.2); it governs itself. The active board, Salsa, runs roll
 control and the grid fins in a closed loop, on its
-own CAN bus from Burrito and its own pack (D-2Nov.8, D-5Nov.3, D-18Nov.1); it is
+own CAN bus from Burrito, powered through Churro's ACT branch (D-2Nov.8, D-5Nov.3,
+D-21Nov.1); at IREC it also drives Ériú's nose canards (D-21Nov.7). It is
 designed with the build group from 19 November. The CATS Vega is the
 independent COTS recovery set (D-18Nov.2). The groundstation and payloads are
 external. Start with the [system tour](docs/architecture/system-tour.md).
@@ -51,8 +52,9 @@ external. Start with the [system tour](docs/architecture/system-tour.md).
   closed-loop actuator has its own processor and fast sensor (the active board
   adds its own magnetometer, D-5Nov.1), goes to neutral through a path that
   survives hung firmware, acts only on a fresh Active from Burrito (D-5Nov.2),
-  and has its own pack and arm key, never power from Burrito or Churro
-  (D-2Nov.8, D-18Nov.1).
+  and takes its actuator power from Churro's ACT branch through its own arm
+  key, never from Burrito (D-2Nov.8, D-21Nov.1). Unpowered, its surfaces sit
+  neutral by mechanical centring (D-21Nov.7).
 - After launch detect, firmware holds the battery enable on (Croí and Churro
   AV). An RC keeps it on for about 1 s (≥0.75 s worst case) if firmware lets go;
   after any reset in flight firmware re-asserts it within 50 ms; it releases at
@@ -72,9 +74,12 @@ external. Start with the [system tour](docs/architecture/system-tour.md).
 - Foinse owns source entry and protection; Ogma is not a power distributor. On
   the rail the vehicle runs from a ground umbilical at Churro, through
   per-source ideal diodes ahead of the eFuses; pulling it hands each feed to its
-  pack. The packs stay in the vehicle and charge through the umbilical (D-20Nov.1; design open). Churro has two feeds,
-  AV and PROP; the active board and the CATS Vega have their own packs
-  (D-18Nov.1, D-18Nov.2).
+  pack. The packs stay in the vehicle and charge through the umbilical: one
+  standalone charger per pack voltage, at maintenance rate, temperature-gated
+  (D-20Nov.1, D-21Nov.2). Churro has three branches: AV (logic and pyro), PROP
+  (Fajita) and ACT (Salsa), the last two from one 6S actuator pack (D-21Nov.1).
+  The CATS Vega has its own cell, charged through its own lead (D-18Nov.2,
+  D-21Nov.2). Each umbilical pair is damped against hot-plug ringing (D-21Nov.3).
 - Battery, CAN, pyro and servo use keyed, locking board connectors. Bare-wire
   terminals live only on detachable development adapters.
 - Never attach standalone and Churro batteries at once. USB powers service logic
@@ -98,7 +103,8 @@ target ≤150 mA, to be measured.
 
 J103 is the FC battery enable: open means off, upstream circuits stay live. It
 is not an arm and not physical isolation. Churro has separate AV and PROP
-enables. Charging moves on board, through the umbilical (D-20Nov.1); the charger design is open.
+enables. Charging is on board, through the umbilical (D-20Nov.1, D-21Nov.2); the
+chargers are drawn at the Churro power review (D-21Nov.9).
 
 ## Parts (8 Sep CAD, with decided changes)
 
@@ -115,7 +121,7 @@ enables. Charging moves on board, through the umbilical (D-20Nov.1); the charger
 | Supervision | TPS3808 supervisors, TPS3430 earned-heartbeat watchdog |
 | Current | Croí INA228 0x40 (logic path); Foinse propulsion INA228 0x41; ADS1115 0x48 |
 | Outputs | Per channel a TPS1H100 high side and a CSD17318 low side (2 recovery + 1 staging); U6001 staging latch with an SN74LVC1G08 AND; no servo outputs (D-19Nov.2) |
-| Churro rail power | Four LM74700-Q1-class ideal-diode stages, umbilical connector J801, fuse and TVS (D-2Nov.7) |
+| Churro rail power | Four LM74700-Q1-class ideal-diode stages, umbilical connector J801, fuse and TVS (D-2Nov.7); damping per pair (D-21Nov.3); chargers (D-21Nov.2) and the ACT branch (D-21Nov.1) at the power review |
 | CAN | Two TCAN3413 transceivers, each behind a TXU0304 boundary: bus 1 on FDCAN1 (PD1 / PD0), bus 2 on FDCAN2 (PA10 TX, PB5 RX); one standby line on PE10 and the PB1 CAN limiter for both (D-5Nov.3) |
 | Indication | Red/green readiness, comms amber, hardware power LED, passive piezo |
 
@@ -130,9 +136,9 @@ enables. Charging moves on board, through the umbilical (D-20Nov.1); the charger
 | Servos J6602 | Removed (D-19Nov.2) |
 | CAN J501, bus 1 | Harwin Gecko (D-18Nov.4; was JST GH): 1 CAN H, 2 CAN L, 3 reference; no power. To Fajita, whose end has to match |
 | CAN bus 2 | Harwin Gecko, same pinout, to the active board; reference set at capture (D-5Nov.3) |
-| Umbilical J801 (Churro) | AV+ / AV− / PROP+ / PROP−; AV 8.4 V, PROP ≈24–25 V at Churro; part and mechanism with the vehicle owner |
+| Umbilical J801 (Churro) | AV and actuator power pairs plus charge contacts (D-21Nov.2); AV 8.4 V at Churro; part, contact count and mechanism with the vehicle owner |
 | Inter-MCU | Framed UART, 2 Mbaud |
-| Service | USB-C (USB4105-GF-A) on comms; TC2030 debug pads for both MCUs |
+| Service | USB-C (USB4105-GF-A) on comms, at the av-bay: nothing is flashed on the rail (D-21Nov.4); TC2030 debug pads for both MCUs |
 
 Full contracts: [power](interfaces/power-contract.md), [flight fault](interfaces/flight-fault-contract.md),
 [reset and retained state](interfaces/reset-recovery-contract.md),
@@ -151,8 +157,8 @@ Firmware: [firmware interface](docs/firmware-interface.md).
 - The sounder beeps continuity and state at arming (D-19Nov.4).
 - JST GH leaves the vehicle harness for Gecko (D-19Nov.5). Batteries and
   connectors get particular attention: they are where student vehicles fail.
-- One USB-C per programmable board at the access panel; no firmware over CAN
-  (D-19Nov.9).
+- One USB-C per programmable board; no firmware over CAN (D-19Nov.9). The ports
+  stay at the av-bay (D-21Nov.4).
 - Firmware writes the in-flight checkpoint first at launch detect, and PAD
   catches a missed launch (D-19Nov.1).
 
@@ -173,9 +179,12 @@ authority; for EuRoC the mandatory CATS Vega is that set (D-18Nov.2).
 
 Target vehicles, as said at the 14 October requirements meeting:
 
-- **EuRoC, October 2027.** Liquid, about 6 m long, 6 in diameter. Bottom up:
-  engine, tanks and COPVs, av-bay (RCS at its bottom), recovery bay, grid fins,
-  nose. Armed on the pad before filling; nobody within 600 m once anything is
+- **EuRoC, October 2027.** Liquid, about 6 m long, 7 in (178 mm; James, 22 Oct;
+  Aerostructures AER-07, AER-11). Bottom up (Jay, 20 Nov): engine, tanks and
+  COPVs, valve bay (e-reg, burst discs, relief valves, vent), grid-fin and RCS
+  module, av-bay, recovery, nose and payload. Harness runs through a downcomer
+  in the tanks, with no raceways; pad-touched items sit in the lowest ≈1.8 m
+  (AER-18). The 14 October stack is history. Armed on the pad before filling; nobody within 600 m once anything is
   pressurised; the umbilical powers the rocket until it disconnects remotely at
   Go. EuRoC SRD Issue 1.1: ≥6 h on the rail (LV-0320); no LiPo (0300); a CATS
   Vega in every stage (0430); fully redundant recovery electronics with their own
@@ -189,10 +198,17 @@ Target vehicles, as said at the 14 October requirements meeting:
   the charges sit from Burrito (Seán, 18 Nov: the recovery bay may be well above
   the av-bay; James to confirm), and whether LV-0690 makes roll control
   redundant.
-- **IREC.** Solid O motor, 152.4 mm. Flies Burrito, Churro and Salsa without
-  Fajita, as the flight test of our core before EuRoC (D-20Nov.3).
+- **IREC: Ériú.** SRAD solid O motor to 30,000 ft; tubes 156.4 mm outside,
+  152.4 mm bore. The recovery bay sits above the av-bay; the nose carries the
+  canards and Cornstar. The av-bay's contents must pass a Ø111 opening at the
+  RADAX lugs, so they fit Ø109 (Ø104 inside the sheath), and the bay is 321 mm
+  between lug faces today (Notion, Ériú av-bay requirements, Rev 1.3, measured
+  from the CAD). Flies Burrito, Churro and Salsa without Fajita, as the flight
+  test of our core before EuRoC (D-20Nov.3); Salsa drives the nose canards
+  (D-21Nov.7). IREC 2027 DTEG REV P1 (15 Oct 2026) applies.
 
-Croí's 80 mm width fits both.
+Every board is 80 mm wide (D-21Nov.6). Ériú's av-bay must grow to hold the
+stack: about 400–420 mm between lug faces, or a two-sided sled.
 
 ## Fault and software policy
 
@@ -225,21 +241,28 @@ Croí's 80 mm width fits both.
 
 ## Next
 
-1. Anav: the recovery logic (D-6.11) and his pyro-channel circuit against
+1. Freeze the Burrito–Churro interface (eight Samtec contacts, the I²C map);
+   then capture Burrito sheet by sheet the readable-schematics way, each sheet
+   reviewed by Seán (D-21Nov.9).
+2. The Churro power review: branch ratings, chargers, damping, faults
+   (D-21Nov.1–D-21Nov.3); then Churro's capture.
+3. Anav: the recovery logic (D-6.11) and his pyro-channel circuit against
    D-2Nov.1.
-2. Jay and James: where the panel, packs, switches, Churro and the CATS Vega
+4. Jay and James: Ériú av-bay Rev 2 length; actuator and valve specs, and each
+   valve's unpowered state; where the panel, packs, switches, Churro and the CATS Vega
    sit; the run length; how far the charges are from Burrito (the external pyro
    board row); the RF window. LV-0690: Jay reads it as covering only
    independently controlled bodies; the SRD's Section 7 text points the other
    way, so the officials' answer still decides one active board or two.
-3. The active board, with the build group from 19 November: its requirements
-   from Radion and Sim Systems (controls' plan, as reported: LQR on the RCS, two
-   solenoids, plus four fin servos and a lock servo), its loads and its pack; what the magnetometer has to
-   deliver.
-4. Seán lifts the capture hold; capture the specification with an independent
-   human review page by page.
-5. Place, then Seán routes. Footprint, rating and assembly review before order (G1).
-6. First PCBA: functional blocks on inert loads, per
+5. The active board, with the build group from 19 November: its phase table
+   and its requirements from Radion and Sim Systems (controls' plan, as
+   reported: LQR on the RCS, two solenoids, four fin servos and a lock servo),
+   the IREC canards included (D-21Nov.7); its loads, which set the ACT branch
+   rating; what the magnetometer has to deliver.
+6. Place and route with computer use; DRC; JLC files from its parts library.
+   Footprint, rating and assembly review before order (G1). Burrito first, then
+   Churro (D-21Nov.9).
+7. First PCBA: functional blocks on inert loads, per
    [11 Verification](docs/architecture/11-verification.md#bench-tests-by-block).
 
 History: [project log](project-log.md) and [archive](docs/archive/README.md).

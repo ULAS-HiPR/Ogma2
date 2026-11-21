@@ -31,17 +31,19 @@ behind physical arm switches"]
   I["CATS Vega: independent COTS recovery
 own cell, switch and e-matches"]
   N["Active board: RCS, grid fins
-own pack and arm key, own IMU and magnetometer"]
+ACT feed via its arm key, own IMU and magnetometer"]
   B <-->|"CAN bus 2 · Safe / Active / Abort"| N
 ```
 
 The dashed AUX line powers and reads Churro's monitors; it never controls
 Churro's protection. The two packs keep separate positives and share ground. On
-the rail the umbilical feeds both through per-source ideal diodes, so it can't
-charge either pack; pulling it hands each feed to its pack (D-2Nov.7).
+the rail the umbilical feeds them through per-source ideal diodes, and a charger
+per pack tops each one up (D-21Nov.2); pulling it hands each feed to its pack
+(D-2Nov.7).
 Standalone, Burrito takes its own 2S pack on J101 instead of Churro: one or the
 other, never both. USB is service power only. The active board follows the
-D-2Nov.8 rules on its own CAN bus (D-5Nov.3) and its own pack (D-18Nov.1); it
+D-2Nov.8 rules on its own CAN bus (D-5Nov.3), powered through Churro's ACT
+branch (D-21Nov.1); it
 is designed with the build group from 19 November. The CATS Vega is the COTS
 recovery set (D-18Nov.2).
 
@@ -50,7 +52,7 @@ recovery set (D-18Nov.2).
 | Board | Job | State |
 | --- | --- | --- |
 | **Burrito / Croí2** | Sensing, estimation, flight state, recording, three pyro outputs, a magnetometer, CAN; a comms processor for GNSS, radio and USB | 44 sheets, 643 parts, unrouted, 80 × 230 mm working outline |
-| **Churro / Foinse2** | Two separately protected and enabled feeds, from the packs or the rail umbilical; propulsion current, voltage and temperature | 12 sheets, 113 parts, unrouted, 60 × 80 mm |
+| **Churro / Foinse2** | Protected AV, PROP and ACT feeds from the packs or the rail umbilical; charges every pack; current, voltage and temperature (D-21Nov.1, D-21Nov.2) | 12 sheets, 113 parts, unrouted, 60 × 80 mm |
 | **Fajita** | Engine-side sensing, valves, permissives, redlines, abort, its own recording | Ours since 20 November, as its own project (D-20Nov.2); this repository sets only the boundary |
 
 Burrito and Churro sit side by side and mate through the 8-contact Samtec pair
@@ -132,7 +134,7 @@ the umbilical. Its protection works without Burrito; its monitoring doesn't.
 | Switch on | J103 enable loop | Turns on Burrito's battery entry | Disarm anything; isolate the pack |
 | Arm recovery | J6101 external switch | Connects energy to pyro channels 1 and 2 | Switch the computer on |
 | Arm staging | J6102 external switch | Connects energy to channel 3, which also needs the reset latch set | Arm recovery |
-| On the rail | Ground umbilical at Churro | Powers the vehicle; pulling it switches to the packs. It will charge them too (D-20Nov.1) | Charge a pack yet: the charger isn't designed |
+| On the rail | Ground umbilical at Churro | Powers the vehicle; pulling it switches to the packs. It will charge them too (D-20Nov.1) | Charge a pack yet: the chargers are drawn at the Churro power review (D-21Nov.2) |
 | In flight | Firmware hold | Keeps the computer on if J103's wire breaks, through a restart | Override a pulled battery |
 
 The arm switch parts aren't chosen yet, and for EuRoC they must be reachable
@@ -152,7 +154,7 @@ staging latch come over USB and 1 Hz pad telemetry; no lamp shows them.
 | Sensors | Per-sensor switches and isolators | 47 Ω link per sensor; a magnetometer on I²C3 |
 | Recording | Earlier format | 15 data pages + footer per sector; full rate from launch detect |
 | Battery entries | Both provisions; J101 footprint missing | Fit one; draw the Nano-Fit footprint |
-| Churro | Pack feeds only | Umbilical entry with four ideal-diode stages; AV pack readout |
+| Churro | Pack feeds only | Umbilical entry with four ideal-diode stages and damping; AV pack readout; an ACT branch beside PROP from one 6S actuator pack; a charger per pack (D-21Nov.1–D-21Nov.3; drawn at the power review) |
 | CAN | 500 kbit/s Classical, two nodes | Unchanged for Rev A; what it may carry is now a rule (D-2Nov.9) |
 
 No target firmware exists yet; the 12 host checkpoint tests are a model, not

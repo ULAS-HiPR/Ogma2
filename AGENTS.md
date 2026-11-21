@@ -43,11 +43,12 @@ hardware, measurements, and tests outrank prose.
 - Coordinate overlapping work with other tasks. Nominate one writer for shared
   Git staging, commits and pushes; inspect the full staged scope before committing.
 
-- `main` is reviewed current truth. Use branches and pull requests.
-- Keep pull requests bounded. Do not mix an electrical decision, prose cleanup,
+- `main` is reviewed current truth. Since 20 November 2026 Seán pushes reviewed
+  changes straight to main.
+- Keep commits bounded. Do not mix an electrical decision, prose cleanup,
   and unrelated source import.
 - Architecture changes update `decisions.md`, `current-system.md`, the affected
-  interface or chapter, and append `project-log.md` in the same pull request.
+  interface or chapter, and append `project-log.md` in the same commit.
 - Never commit credentials, private correspondence, personal data, raw model
   output, temporary rendering trees, or machine metadata.
 - Reference images with unresolved reuse rights may remain in this private

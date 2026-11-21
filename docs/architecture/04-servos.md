@@ -31,8 +31,12 @@ servos and a lock servo. The board follows the D-2Nov.8 rules:
   EuRoC LV-0680);
 - its own CAN bus from Burrito, bus 2 on FDCAN2, so Fajita never sees it
   (D-5Nov.3), with Gecko at both ends (D-18Nov.4);
-- its own pack and arm key at the access panel, with local bulk, never power
-  from Burrito or Churro (D-18Nov.1); its own USB-C at the panel (D-19Nov.9).
+- actuator power from Churro's ACT branch, through its arm key at the access
+  panel, with local bulk and its own conversion to its actuators' voltages
+  (D-21Nov.1); never power from Burrito; its own USB-C, at the av-bay
+  (D-19Nov.9, D-21Nov.4);
+- at IREC, Ériú's nose canards too, their leads crossing the nose joint through
+  a breakaway; unpowered surfaces sit neutral by mechanical centring (D-21Nov.7).
 
 Burrito sends it the authority message and slow state, and logs the health it
 reports. CAN carries nothing a loop depends on at loop rate (D-2Nov.9). The

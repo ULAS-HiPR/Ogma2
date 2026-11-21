@@ -3777,3 +3777,43 @@ tour's connector gallery.
   capture specification's Churro changes, the system tour's switching table and
   step 9 of the layout guide. Each now follows D-20Nov.1. The load path's ideal
   diodes still can't charge a pack; the charger is its own design, still open.
+
+## 21 November 2026 — Churro powers and charges everything; the panel, outlines and IREC (D-21Nov.1–D-21Nov.9)
+
+- Seán's handoff listed 14 items from Friday's RTÉ shoot with Jay; he asked for a
+  reconciliation, an EuRoC and IREC rules sweep, a requirement-to-mechanism
+  trace and his calls. The rules sweep used EuRoC SRD Issue 1.1 and the IREC 2027
+  DTEG and R&R (REV P1, 15 Oct 2026).
+- He agreed with every lean in the calls brief (21 Nov: "i agree with literally
+  everything you have said"):
+  - Churro powers all actuation from one 6S actuator pack through PROP and ACT
+    branches, with the drive voltage set at the load (D-21Nov.1).
+  - One standalone charger per pack voltage on Churro Rev A (D-21Nov.2).
+  - Damping and a hot-plug test at the umbilical (D-21Nov.3).
+  - USB-C at the av-bay (D-21Nov.4), the low access panel's contents (D-21Nov.5)
+    and an 80 mm family width (D-21Nov.6).
+  - One Salsa for Ériú's canards and the EuRoC module (D-21Nov.7).
+  - A proof flight before IREC (D-21Nov.8).
+  - Burrito ordered before Churro, after an interface freeze (D-21Nov.9).
+- Vehicle facts found:
+  - Ériú is the IREC vehicle. Its av-bay must pass Ø111, so its contents fit
+    Ø109 (Ø104 inside the sheath), and it is 321 mm between RADAX lug faces
+    (Notion, Rev 1.3).
+  - EuRoC is 7 in (Aerostructures AER-07, AER-11).
+  - No IREC mission plan is written; the IREC 27 requirements database still
+    cites DTEG 2026.
+- Fixed on the way:
+  - The capture spec's PD10 line and fuse F6801.
+  - Verification assertions 9 and 20, and the Churro bench test (charging
+    paths).
+  - Every live "the active board has its own pack" line.
+  - AGENTS.md's branch-and-PR rule (Seán pushes to main since 20 Nov).
+  - The EuRoC stack and diameter in current-system.
+- Still open:
+  - Branch ratings (Seán's call).
+  - The Churro power review.
+  - Salsa's phase table.
+  - The e-reg's home.
+  - Each valve's unpowered state, and the vent's (ECU-06).
+  - Ériú av-bay Rev 2 length.
+  - The proof-flight vehicle.
