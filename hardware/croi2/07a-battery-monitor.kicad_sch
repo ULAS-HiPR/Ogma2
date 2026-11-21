@@ -1093,7 +1093,7 @@
       (uuid "ac7a0606-b790-5f01-8aac-9a0ca82f3e06"))
     (pin "2"
       (uuid "208f5e11-3487-5b70-8d76-9e28b673f74c")))
-  (global_label "BAT_EFUSE_IN"
+  (global_label "ENERGY_TAP"
     (shape bidirectional)
     (at 90.17 114.3 0)
     (effects
@@ -1431,7 +1431,7 @@
         (size 1.2 1.2))
       (justify left))
     (uuid "fa1ccc7c-44d9-5560-ae2d-8ae91662f6fd"))
-  (text "VBUS measures BAT_EFUSE_IN, upstream of the load shunt. Current measures all downstream battery loads, not USB-only consumption."
+  (text "VBUS measures ENERGY_TAP, upstream of the eFuse and the load shunt. Current measures all downstream battery loads, not USB-only consumption."
     (at 15.24 274.32 0)
     (effects
       (font

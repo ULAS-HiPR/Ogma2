@@ -307,3 +307,19 @@ def clone_symbol(tree, template_ref, ref, at, sheet='', props_=None):
         first(pin, 'uuid')[1] = ident(sheet, 'pin', ref, pin[1])
     add(tree, s)
     return pin_positions(tree, ref)
+
+
+KICAD_FOOTPRINTS = '/opt/resolute/usr/share/kicad/footprints'   # official KiCad 9.0.7 footprints
+
+
+def vendor_footprint(lib_dir, lib, name):
+    """Copy an official footprint into the project's vendored <lib>.pretty, in the house format,
+    with its 3D model path pointed at libraries/3d (the model itself is collected at close-out)."""
+    dst = Path(lib_dir) / f'{lib}.pretty' / f'{name}.kicad_mod'
+    if dst.exists():
+        return False
+    fp = load(f'{KICAD_FOOTPRINTS}/{lib}.pretty/{name}.kicad_mod')
+    for m in children(fp, 'model'):
+        m[1] = m[1].replace('${KICAD9_3DMODEL_DIR}', '${KIPRJMOD}/libraries/3d')
+    save(fp, dst)
+    return True

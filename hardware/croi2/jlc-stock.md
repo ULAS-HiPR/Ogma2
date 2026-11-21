@@ -20,7 +20,6 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 | LM73100RPWR | U1401 | None (LM66100 is 1.5 A, not equivalent) | Global Sourcing or consign |
 | TPSM63603RDHR | U1301 | None (TPSM63610: 15 stocked, different footprint) | Global Sourcing or consign |
 | TPS3430WDRCR | U2302 | None (TPS3435 has a different pinout) | Global Sourcing or consign |
-| LTC6993IS6-1 | U6301, U6401, U6501 | LTC6993MPS6-1 (C690015, **6**): same TSOT-23-6, −55 to 125 °C | Drop-in, but only 6 in stock |
 | TXU0304PWR | U502, U4303, bus 2's boundary (3) | TXU0304RUTR (C2959768, 13,977): UQFN-12 1.7 × 2 mm | New footprint; no probe access to pins |
 | TXU0101DCKR | U4302 | TXU0101DBVR (C7136368, 2,820): SOT-23-6 | New footprint |
 | TXU0202DCUR | U4301 | TXU0202QDCURQ1 (C7372013, 1,028): automotive grade, same VSSOP-8 | Drop-in |
@@ -50,6 +49,8 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 | Harwin Gecko (G125) | CAN connectors, step 5 | Tens per variant; part chosen at step 5 |
 
 JLC can hold parts in an account's private library ahead of an order.
+
+The LTC6993 one-shots (U6301, U6401, U6501) are short too (1 stocked), but step 6 removes all three.
 
 ## Parts added by capture
 
