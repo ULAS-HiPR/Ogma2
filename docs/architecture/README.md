@@ -6,6 +6,7 @@ block. [Decisions](../../decisions.md) say which is which.
 | Chapter | Contents |
 | --- | --- |
 | [System tour](system-tour.md) | Whole system, power and data, connector photos |
+| [Behaviour map](behaviour-map.md) | The whole system as mechanisms and behaviours, each tagged decided, proposed or open: the page to verify against |
 | [01 Processors](01-mcus.md) | Flight and comms MCUs, pin maps |
 | [02 Power](02-power.md) | Source path, domains, enable hold, USB, hold-up |
 | [03 Outputs](03-energetic-outputs.md) | Recovery and staging outputs: two switches per channel, fuses, arms, continuity, pad checks |

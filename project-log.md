@@ -3817,3 +3817,14 @@ tour's connector gallery.
   - Each valve's unpowered state, and the vent's (ECU-06).
   - Ériú av-bay Rev 2 length.
   - The proof-flight vehicle.
+
+## 21 November 2026 — Burrito's requirements frozen
+
+- `docs/requirements/burrito.md`, B-01–B-38, frozen for capture (D-21Nov.9). Each
+  requirement carries its source, its mechanism and its verification. B-36 fixes
+  the Burrito–Churro interface: the eight Samtec contacts and I²C4, nothing more.
+- `docs/requirements/churro.md` is a draft until the Churro power review; branch
+  ratings wait for Seán's call (C-02).
+- The rules sweep (EuRoC SRD 1.1, IREC 2027 REV P1) is kept as dated evidence.
+- `docs/architecture/behaviour-map.md` shows the system as mechanisms and
+  behaviours, tagged decided, proposed or open, for verification.
