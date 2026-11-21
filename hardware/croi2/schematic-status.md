@@ -13,7 +13,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | 2 | 01-power: auto-retry, power hold, energy tap, J102.8 | Done: 7 parts, 20 pins; `BAT_EFUSE_IN` renamed `ENERGY_TAP` (also on 07a); 1 finding closed |
 | 3 | The other power sheets: core enable, limiters, LDO dividers, C1403, USB limiter | Done: U1203, its bypass C1203 and U4402 removed; R1210 added; 7 values; service restart on PE8; 1 finding closed |
 | 4 | Sensor sheets and the new magnetometer sheet | Done: 42 parts out (switches, isolators, their pull-downs, bleeders and bypass caps); links 47R; nets joined; new 03mag sheet, 10 parts; 3 findings closed |
-| 5 | 05-can: bus 2, Gecko connectors, B-39 | — |
+| 5 | 05-can: bus 2, Gecko connectors, B-39 | Done: bus 2 copied from bus 1 (17 parts); J501 / J502 Gecko-SL; B-39 R / F footprints on both references; 2 findings closed |
 | 6 | Output sheets and servo removal | — |
 | 7 | Comms MCU to LQFP64; inter-MCU link | — |
 | 8 | Close-out: root sheet, full ERC, checkers, pin CSVs, J101 footprint | — |
@@ -37,7 +37,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | `SERVICE_POWER_EN` dangling | 3: closed |
 | `MAG_INT`, `MAG_SCL`, `MAG_SDA` dangling | 4: closed |
 | Pin-to-pin warnings on 03st and 03bmp (baseline): the IMU's aux pins and the BMP390's SDO are strapped to GND, a net with a PWR_FLAG. Correct as drawn; record as ERC exclusions with that note | 8 |
-| `CAN2_TX`, `CAN2_RX` dangling | 5 |
+| `CAN2_TX`, `CAN2_RX` dangling | 5: closed |
 | `PYRO1_FIRE`–`PYRO3_FIRE` dangling; pyro VS pins undriven (baseline); the servo block's findings (`SERVO*`, `ADC_SERVO_RAIL`, U6802, U6804) | 6 |
 | `LORA_RXEN`, `LORA_TXEN` dangling (baseline) | 7 |
 
@@ -45,7 +45,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 
 | Check | Where | Status |
 | --- | --- | --- |
-| JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Early pass done ([jlc-stock.md](jlc-stock.md)): 20 lines not in stock, alternatives listed; Seán's calls owed on the sensor, monitor and flash swaps |
+| JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Early pass done ([jlc-stock.md](jlc-stock.md)): 21 lines not in stock, alternatives listed; Seán's calls owed on the sensor, monitor and flash swaps |
 | Flight MCU alternate functions against ST's pin data | 0 | Done: all 29 AF rows match; FDCAN2 = AF9 on PA10/PB5; I²C3 = AF4 on PA8/PC9 |
 | Comms MCU alternate functions against ST's pin data | 7 | Open |
 | TPS2663 MODE: GND gives auto-retry (D-6.3) | 2 | Done: TI datasheet, section 8.4 |
@@ -53,7 +53,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | Hold capacitor (470 µF) is aluminium electrolytic, leakage ≤30 µA, as D-2Nov.18's hold time assumes. A polymer part's ≈300 µA cuts Churro's hold to 0.33–0.45 s | 2 | Chosen: C1007 Panasonic EEEFKJ471XSP, 6.3 V; the standard 0.01CV limit gives 29.6 µA. Confirm on Panasonic's FK datasheet at G1 |
 | Sounder level for IREC 6.16 (B-07): a louder sounder is a capture choice | 6 or 8 | Open: Seán's call on the level |
 | J6101 / J6102 and umbilical-side parts drawn as reviewed placeholders | 6 | Open |
-| Library provenance for parts added during capture (step 1: `Device:D_Schottky`; steps 2 and 3: `CP_Elec_6.3x7.7` and `CP_Elec_8x10.5`; step 4: `Ogma2:MMC5983MA` symbol and footprint; 3D models still to collect; all from KiCad 9.0.7). Ogma2.kicad_sym also holds three copies each of `430451000` and `SN74LVC1G04DBVR` and the board library manifest | 8 | Open |
+| Library provenance for parts added during capture (step 1: `Device:D_Schottky`; steps 2 and 3: `CP_Elec_6.3x7.7` and `CP_Elec_8x10.5`; step 4: `Ogma2:MMC5983MA` symbol and footprint; step 5: `Conn_02x03_Top_Bottom`, `Polyfuse`, `Fuse_1206_3216Metric` (new `Fuse` library) and `Ogma2:G125-MS10605M2P`; 3D models still to collect; all from KiCad 9.0.7). Ogma2.kicad_sym also holds three copies each of `430451000` and `SN74LVC1G04DBVR` and the board library manifest | 8 | Open |
 | C1403 (Nichicon PCW0J102MCO1GS, 8 × 10.5 mm) land pattern against Nichicon's drawing; `CP_Elec_8x10.5` is KiCad's generic 8 mm can | G1 | Open |
 | `USB_CONFIG_OK` now drives nothing: its two loads (U1203, U4402) are gone, and the spec keeps comms PA1 and its boundary. Keep it, or drop the signal and its parts | 7 | Open: Seán's call |
 | Docs that still say the core input follows `BAT_VALID OR USB_CONFIG_OK` (pcb-layout-guide.md) | 8 | Open |
@@ -62,7 +62,8 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | Capture assertions 1–22 ([11 Verification](../../docs/architecture/11-verification.md)) | 8 | Open |
 | Revised pin maps and [firmware interface](../../docs/firmware-interface.md) | 8 | Open |
 | J102 position against Ériú's bay answer (Jay): the Samtec pair only mates end to end | Before layout | Open |
-| B-39 series-part values | Bench | Open |
+| B-39 series-part values (R516 / F501 bus 1, R517 / F502 bus 2; 0R until then) | Bench | Open |
+| CAN connector series (D-18Nov.4 left it open): drawn as Gecko-SL G125-MS10605M2P, 2×3 vertical SMT with screw-lok fixings; pins 1–3 H / L / reference, 4–6 spare. The latched through-hole G125-MV10605L1 is the alternative. Fajita's end of J501 has to match | Before layout | Open: Seán's call |
 | Footprint, rating and assembly review (G1) | After layout | Open |
 
 ## Baseline, 8 September 2026
