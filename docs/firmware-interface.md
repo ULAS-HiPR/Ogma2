@@ -116,7 +116,7 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | --- | --- | --- |
 | Inter-MCU UART | USART3: PD8 TX, PD9 RX (AF7) | 2 Mbaud 8N1 through the TXU0202 boundary |
 | CAN bus 1, to Fajita | FDCAN1: PD1 TX, PD0 RX (AF9); PE10 standby, shared with bus 2 | Classical CAN, 500 kbit/s; TCAN3413 |
-| CAN bus 2, to the active board | FDCAN2: PA10 TX, PB5 RX (AF to confirm); PE10 standby, shared | Classical CAN, 500 kbit/s; second TCAN3413 (D-5Nov.3) |
+| CAN bus 2, to the active board | FDCAN2: PA10 TX, PB5 RX (AF9, checked against ST's open pin data on 21 Nov); PE10 standby, shared | Classical CAN, 500 kbit/s; second TCAN3413 (D-5Nov.3) |
 | Spare test pads | PC6, PC7, PD10 | Inputs with pull-downs; PC7 never drives, because it neighbours channel 2's low side (D-19Nov.2, D-19Nov.3) |
 | Monitor bus | I²C4: PB8 SCL, PB9 SDA (AF6) | 100 kHz; INA228 0x40 (Croí), 0x41 (Churro PROP); ADS1115 0x48 |
 | Watchdog | PD4 `SUPERVISOR_WDI` | Toggled only on earned essential progress |

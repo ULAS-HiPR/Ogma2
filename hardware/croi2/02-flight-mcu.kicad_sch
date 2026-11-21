@@ -2307,7 +2307,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "ST_EN"
+  (global_label "FC_POWER_HOLD"
     (shape bidirectional)
     (at 119.38 137.16 0)
     (effects
@@ -2321,7 +2321,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "TDK_EN"
+  (global_label "MAG_INT"
     (shape bidirectional)
     (at 119.38 139.7 0)
     (effects
@@ -2355,11 +2355,6 @@
     (diameter 0)
     (color 0 0 0 0)
     (uuid "2582f899-0420-5c99-8326-e210283c8510"))
-  (junction
-    (at 149.86 86.36)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "2d9eda93-21be-52e7-b84e-56e8bddeefad"))
   (junction
     (at 165.1 86.36)
     (diameter 0)
@@ -2611,7 +2606,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "ADC_SERVO_RAIL"
+  (global_label "RESET_MEMORY"
     (shape bidirectional)
     (at 190.5 109.22 180)
     (effects
@@ -2709,7 +2704,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "SERVO_POWER_EN"
+  (global_label "TP_STROBE"
     (shape bidirectional)
     (at 190.5 144.78 180)
     (effects
@@ -2751,7 +2746,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "PYRO1_HS_REQUEST"
+  (global_label "PYRO1_FIRE"
     (shape bidirectional)
     (at 119.38 142.24 0)
     (effects
@@ -2765,7 +2760,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "PYRO1_LS_SELECT"
+  (global_label "SERVICE_POWER_EN"
     (shape bidirectional)
     (at 119.38 144.78 0)
     (effects
@@ -2779,7 +2774,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "PYRO2_HS_REQUEST"
+  (global_label "PYRO2_FIRE"
     (shape bidirectional)
     (at 119.38 147.32 0)
     (effects
@@ -2793,7 +2788,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "PYRO2_LS_SELECT"
+  (global_label "CAN_STB"
     (shape bidirectional)
     (at 119.38 149.86 0)
     (effects
@@ -2821,7 +2816,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "PYRO3_HS_REQUEST"
+  (global_label "PYRO3_FIRE"
     (shape bidirectional)
     (at 119.38 154.94 0)
     (effects
@@ -2835,7 +2830,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "PYRO3_LS_SELECT"
+  (global_label "RECOVERY_ARM_SENSE"
     (shape bidirectional)
     (at 119.38 157.48 0)
     (effects
@@ -2849,7 +2844,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "RECOVERY_PERMIT"
+  (global_label "STAGE_INHIBIT_LATCHED"
     (shape bidirectional)
     (at 119.38 160.02 0)
     (effects
@@ -2863,7 +2858,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "STAGING_PERMIT"
+  (global_label "STAGING_ARM_SENSE"
     (shape bidirectional)
     (at 119.38 162.56 0)
     (effects
@@ -2989,7 +2984,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "SERVO3_PWM"
+  (global_label "TP_PD10"
     (shape bidirectional)
     (at 119.38 193.04 0)
     (effects
@@ -3045,7 +3040,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "STAGE_INHIBIT_LATCHED"
+  (global_label "PYRO3_LS_SELECT"
     (shape bidirectional)
     (at 119.38 203.2 0)
     (effects
@@ -3073,7 +3068,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "SERVO1_PWM"
+  (global_label "TP_PC6"
     (shape bidirectional)
     (at 190.5 200.66 180)
     (effects
@@ -3087,7 +3082,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "SERVO2_PWM"
+  (global_label "TP_PC7"
     (shape bidirectional)
     (at 190.5 203.2 180)
     (effects
@@ -3101,7 +3096,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "RECOVERY_ARM_SENSE"
+  (global_label "PYRO2_LS_SELECT"
     (shape bidirectional)
     (at 190.5 205.74 180)
     (effects
@@ -3115,7 +3110,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "STAGING_ARM_SENSE"
+  (global_label "MAG_SDA"
     (shape bidirectional)
     (at 190.5 208.28 180)
     (effects
@@ -3129,7 +3124,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "HG_EN"
+  (global_label "MAG_SCL"
     (shape bidirectional)
     (at 190.5 121.92 180)
     (effects
@@ -3143,7 +3138,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "BMP_EN"
+  (global_label "PYRO1_LS_SELECT"
     (shape bidirectional)
     (at 190.5 124.46 180)
     (effects
@@ -3157,7 +3152,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "TE_EN"
+  (global_label "CAN2_TX"
     (shape bidirectional)
     (at 190.5 127.0 180)
     (effects
@@ -3423,7 +3418,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (global_label "CAN_STB"
+  (global_label "CAN2_RX"
     (shape bidirectional)
     (at 190.5 157.48 180)
     (effects
@@ -3535,7 +3530,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (text "Allocation: accepted 100-pad CSV. No GPIO reassignment.\nADC_ labels are scaled physical inputs, never raw battery rails.\nVCAP pins share their own node; never tied to 3.3 V.\nVBAT is the backup-domain pin, supplied by this MCU domain.\nSWD and oscillator nets are distinct for each processor."
+  (text "Allocation: the 100-pad map as amended by the capture specification, 21 Nov 2026\n(D-2Nov.1, D-2Nov.11, D-2Nov.18, D-5Nov.3, D-7.2, D-19Nov.2, D-19Nov.3).\nPin names and directions: docs/firmware-interface.md.\nADC_ labels are scaled physical inputs, never raw battery rails.\nVCAP pins share their own node; never tied to 3.3 V.\nVBAT is the backup-domain pin: FLIGHT_VBAT, from FLIGHT_3V3 through a Schottky\nwith 100 uF hold-up on 02a (D-6.4).\nSWD and oscillator nets are distinct for each processor."
     (at 248.92 68.58 0)
     (effects
       (font
@@ -3615,14 +3610,6 @@
     (uuid "d8055306-6e10-578b-962e-5153caa1fded"))
   (wire
     (pts
-      (xy 147.32 91.44)
-      (xy 147.32 86.36))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "799e7d8c-b3d4-5c14-a13f-942ff7502c45"))
-  (wire
-    (pts
       (xy 165.1 91.44)
       (xy 165.1 86.36))
     (stroke
@@ -3645,14 +3632,6 @@
       (width 0)
       (type default))
     (uuid "516f0e0f-e3e9-5e6d-b5e5-532a55238ec8"))
-  (wire
-    (pts
-      (xy 147.32 86.36)
-      (xy 149.86 86.36))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a5a6f8b7-077d-5cc5-8032-495f493d60b0"))
   (wire
     (pts
       (xy 149.86 86.36)
@@ -4382,10 +4361,32 @@
       (type default))
     (uuid "eca3a0d8-82bb-5ce8-a159-6312d516374b"))
   (embedded_fonts no)
-  (text "What this does: Runs flight sensing, estimation, mission decisions, recording, outputs and vehicle CAN.\nConnects to: Sensor/storage sheets 03*, outputs 06*, CAN 05, monitoring 07*/08 and comms link 04b. Supplies/clocks: 02a. Reset/debug: 02flight-reset-debug."
+  (text "What this does: Runs flight sensing, estimation, mission decisions, recording, outputs and both vehicle CAN buses.\nConnects to: Sensor/storage sheets 03*, outputs 06*, CAN 05, monitoring 07*/08, comms link 04b and the power hold on 01-power. Supplies/clocks/test pads: 02a. Reset/debug: 02flight-reset-debug."
     (at 15.24 27.94 0.0)
     (effects
       (font
         (size 1.4 1.4))
       (justify left top))
-    (uuid "a237af9b-0e5d-546a-81f0-a38176176211")))
+    (uuid "a237af9b-0e5d-546a-81f0-a38176176211"))
+  (wire
+    (pts
+      (xy 147.32 91.44)
+      (xy 147.32 81.28))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "29e3e964-182b-534a-8f98-61b1fe2e0dea"))
+  (global_label "FLIGHT_VBAT"
+    (shape bidirectional)
+    (at 147.32 81.28 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "75bc2316-b859-54ad-88a9-a9b94aa9116d")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 147.32 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))))
