@@ -71,7 +71,8 @@ Fajita converts locally"]
 
 Samtec J301/J102: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault,
 8 `CROI_POWER_HOLD`. Each ground contact must carry the full fault return, and
-the CAN reference must never become the propulsion power return.
+the CAN reference must never become the propulsion power return: Burrito puts a
+series part in each reference (D-21Nov.11, B-39).
 
 | Block | Parts | Still to decide or measure |
 | --- | --- | --- |

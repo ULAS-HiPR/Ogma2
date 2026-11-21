@@ -247,7 +247,8 @@ stack: about 400–420 mm between lug faces, or a two-sided sled.
 
 1. Capture Burrito sheet by sheet the readable-schematics way, each sheet
    reviewed by Seán (D-21Nov.9). The interface is frozen (B-36); Churro keeps
-   the interface rules in its requirements. B-39 waits on Seán.
+   the interface rules in its requirements. Burrito limits each CAN reference
+   (B-39, D-21Nov.11).
 2. The Churro power review: branch ratings, chargers, damping, faults
    (D-21Nov.1–D-21Nov.3); then Churro's capture.
 3. Anav: the recovery logic (D-6.11) and his pyro-channel circuit against

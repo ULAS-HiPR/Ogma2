@@ -65,7 +65,7 @@ AV-BAY
 | P11 | Pad mode ≤150 mA; the AV pack alone covers 6 h plus the flight | D |
 | P12 | Repeated hot-plugging of the umbilical can't overvolt anything | D (D-21Nov.3); test open |
 | P13 | Burrito reads every pack (pack side), each branch's current and voltage, both NTCs and each charger's state, all over I²C4; Churro adds no pins | D for the interface (B-36, interface rules); PROP pack side, ACT, CATS cell and charge state open (C-15, C-17, C-22, C-23) |
-| P14 | Actuator return current stays off Burrito, even with an actuator return broken | ? B-39 proposed |
+| P14 | Actuator return current stays off Burrito, even with an actuator return broken | D (D-21Nov.11, B-39); values on the bench |
 
 ---
 

@@ -3855,3 +3855,19 @@ tour's connector gallery.
   justification. The firmware interface gains rows for board temperatures,
   charge state, pack voltages, no flashing on the rail and the proposed IREC
   radio behaviour. Cornstar's independence and the nose keep-out are recorded.
+
+## 21 November 2026 — B-39 decided; first estimate of the actuator branches
+
+- Seán agreed B-39 (D-21Nov.11): series footprints for a resistor and a
+  resettable fuse in each CAN reference on Burrito. It is in the frozen list,
+  the capture specification and the capture assertions (22).
+- Seán couldn't estimate the branch currents (C-02), so the model did, in
+  `docs/calculations/actuator-branch-estimate.py`, from published stall currents
+  of 55–80 kg·cm servos (6.5–12.3 A at 7.4 V). Central figures at 6S: PROP
+  ≈14 A for tens of ms when three valve servos and the e-reg start together
+  (≈9 A staggered), ≈2 A averaged; ACT ≈15 A (≈10 A staggered), ≈2 A averaged.
+  Confidence 2/5; the servo choices and a bench probe settle it.
+- What follows for Churro: the TPS2663 eFuse (6 A at most) can't carry either
+  branch; connectors size from the averaged figure; the 6S pack wants
+  high-drain cells. Fajita and Salsa should stagger servo starts and protect
+  each servo, so a jam trips one servo rather than the branch.

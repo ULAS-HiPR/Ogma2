@@ -130,6 +130,8 @@ population variant.
     the umbilical connector to a pack connector is through that pack's charger
     (D-21Nov.2).
 21. Churro: R6101's top is on `AV_PACK`; R1006 stays 22.1 kΩ.
+22. Burrito: each CAN connector's reference contact reaches board GND only
+    through its series parts (B-39).
 
 ## Records
 

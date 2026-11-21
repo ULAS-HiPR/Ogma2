@@ -81,11 +81,4 @@ Status:
 | B-36 | The interface to Churro is the eight Samtec contacts and I²C4; no further Burrito–Churro signal is added. Churro's new status rides on I²C4, and Churro keeps the [interface rules](churro.md#interface-rules-what-keeps-burritos-order-valid) | D-21Nov.9 | Samtec pair: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault, 8 `CROI_POWER_HOLD` | Netlist parity; mate check | Met |
 | B-37 | Proof of function before IREC: ground and flight test, or a COTS computer can take Burrito's place when ESRA asks | IREC 6.11.6; D-21Nov.8 | Test campaign, then a named proof flight; Ériú keeps a second CATS Vega mount as the swap-in | Proof flight; ESRA review | Open: vehicle and date, Seán |
 | B-38 | Assembled by JLC from its parts library | D-21Nov.9 | BOM check before order, with substitutes for what isn't stocked | BOM availability check | Open: capture |
-
-## Proposed, not yet frozen
-
-Added 21 November, before the order sign-off. A row joins the frozen list only through a decision row.
-
-| ID | Requirement | Source | Mechanism | Verification | Status |
-| --- | --- | --- | --- | --- | --- |
-| B-39 | Actuator return current stays off Burrito: a broken actuator return can't push current through Burrito's CAN reference, and in normal running a servo move's return current stays on its own wire | Boundary contract: "An open propulsion return must not push actuator current through the CAN reference." D-21Nov.1 puts Fajita and Salsa on Churro's common ground, so each CAN reference parallels an actuator return | A series part in the reference contact of each CAN connector (J501 and bus 2's): footprints for a resistor or a resettable fuse, value set on the bench inside the TCAN3413's common-mode range. Today the reference is bonded straight to GND | Bench: reference current during a servo stall; open the actuator return under load | **Proposed: Seán's OK** |
+| B-39 | Actuator return current stays off Burrito: a broken actuator return can't push current through a CAN reference, and a servo move's return current stays on its own wire | Boundary contract ("An open propulsion return must not push actuator current through the CAN reference."); D-21Nov.1; D-21Nov.11 | Series footprints between each CAN reference contact (J501 and bus 2's) and board GND, for a resistor and a resettable fuse; values inside the TCAN3413's common-mode range | Bench: reference current during a servo stall; open the actuator return under load | Open: values on the bench |

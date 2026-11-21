@@ -72,8 +72,8 @@ operator UI is disconnected.
 - Exact messages and installed cable and bonding evidence still need doing
   together.
 - An open propulsion return must not push actuator current through the CAN
-  reference. If bonding can't guarantee that, review isolation of the whole
-  interface before claiming containment.
+  reference. Burrito puts a series part in each reference to limit it
+  (D-21Nov.11, B-39); Fajita may also isolate its CAN.
 - Once implementation starts, Ogma and propulsion firmware both use one
   machine-readable, versioned message contract.
 
