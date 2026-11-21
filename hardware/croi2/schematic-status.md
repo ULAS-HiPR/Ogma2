@@ -45,7 +45,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 
 | Check | Where | Status |
 | --- | --- | --- |
-| JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Early pass done ([jlc-stock.md](jlc-stock.md)): 21 lines not in stock, alternatives listed; Seán's calls owed on the sensor, monitor and flash swaps |
+| JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Done ([jlc-stock.md](jlc-stock.md)). Parts with an MPN: 21 lines not stocked, alternatives listed; Seán's calls owed on the sensor, monitor and flash swaps. Generic passives (step 8): 68 of 73 lines matched (34 Basic); 47 µF / 100 µF / 10 µF X7R, 31.9k and 74.9k 0.1% need a call |
 | Flight MCU alternate functions against ST's pin data | 0 | Done: all 29 AF rows match; FDCAN2 = AF9 on PA10/PB5; I²C3 = AF4 on PA8/PC9 |
 | Comms MCU alternate functions against ST's pin data | 7 | Done: all 64 pads and 11 AF rows match ST's open pin data (STM32H563RITx.xml, H56x GPIO modes); USART3 = AF7 on PC10 / PC11 (`s07_check.py`) |
 | TPS2663 MODE: GND gives auto-retry (D-6.3) | 2 | Done: TI datasheet, section 8.4 |

@@ -1,7 +1,8 @@
-# Croi2 (Burrito): JLC stock, early pass
+# Croi2 (Burrito): JLC stock
 
 21 November 2026, during capture (B-38: assembled by JLC from its parts library).
-The full pass, with every generic passive matched, comes at capture step 8.
+Parts with an MPN were checked during capture; every generic resistor and capacitor was
+matched at the close-out (step 8), below.
 
 Source: the [jlcparts](https://github.com/yaqwsx/jlcparts) scrape of JLC's assembly parts
 library, deployed 21 Nov 2026 11:53 UTC. It lists in-stock parts only, so "not stocked" means
@@ -73,8 +74,97 @@ SN74LVC1G04/74/97, TMUX1511, TPD1E0B04, TPS2121, TPS22918, TPS2553-1, TPS3700, T
 TPS70933, TPS7A9101, USB4105-GF-A, USBLC6-2SC6, BAS116, ICM-42688-P, MS5607,
 ABS07-32.768KHZ-7-T, JST GH BM02B, Molex 430450600 / 430451000, Keystone 5001.
 
-## For the full pass (step 8)
+## Generic passives (full pass, step 8)
 
-- Generic passives: match every value to a stocked part, Basic where one exists.
-  There is no Basic 2.2 µF X7R 0603 (C209, C210, C220, C409, C410).
-- Leave footprint-only items out of the BOM: the TC2030 pads and the 1 mm test pads.
+73 value lines, 417 parts, from the as-captured netlist, matched by
+[tools/capture/jlc_passives.py](tools/capture/jlc_passives.py): value, package, tolerance (1% where
+the schematic states none), power where stated; capacitors at or above the stated voltage, same
+dielectric (X7R also covers X5R). Basic first, then stock. 68 lines match: 34 of them Basic
+(295 parts), 34 Extended. The TC2030 pads and the 1 mm test pads are footprints only and stay out of the BOM.
+
+Five lines have no stocked part as specified:
+
+| Line | Refs | Nearest stocked | Fit |
+| --- | --- | --- | --- |
+| 47 µF 16 V X7R 1210 | C1305, C1306, C1705, C1706, C1805, C1806, C1905, C1906 | No X7R. GRM32EC81C476KE15L X6S (C162512, 62,976) or GRM32ER61C476KE15L X5R (C77101, 132,470) | Seán's call: X6S keeps more capacitance hot; or Global Sourcing for X7R |
+| 100 µF 10 V X7R 1210 | C4613 | X5R only: CL32A107MPVNNNE 10 V (C23742) or EMK325ABJ107MM-P 16 V (C90143) | Seán's call |
+| 10 µF 16 V X7R 0603 | C4504 | X5R in 0603 (CL10A106MO8NQNC, C92487), or X7R in a larger case | Seán's call |
+| 31.9k 0.1% 0603 | R1701, R1801, R1901 | Not stocked. 31.6k 0.1% is (RT0603BRE0731K6L, C705846) but moves the LDOs to 3.328 V nominal | Global Sourcing to keep 3.352 V, or a new divider (a design change) |
+| 74.9k 0.1% 0603 | R1103 | Not stocked at 0.1% | Global Sourcing, or another 0.1% pair |
+
+| Value | Package | Qty | LCSC | Part | Class | Stock | Note |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 100n 16V X7R | 0603 | 87 | C14663 | CC0603KRX7R9BB104 | Basic | 50,349,394 |  |
+| 100n 25V X7R | 0603 | 4 | C14663 | CC0603KRX7R9BB104 | Basic | 50,349,394 |  |
+| 100n 50V X7R | 0603 | 3 | C14663 | CC0603KRX7R9BB104 | Basic | 50,349,394 |  |
+| 10n 100V C0G | 0603 | 1 | C432938 | CGA3E1C0G2A103JT0Y0E | Extended | 5,911 |  |
+| 10n 100V X7R | 0603 | 1 | C107059 | CC0603KRX7R0BB103 | Extended | 1,211,568 |  |
+| 10n 16V X7R | 0603 | 8 | C57112 | 0603B103K500NT | Basic | 5,976,362 |  |
+| 10u 16V X7R | 0603 | 1 | none | | | | **not matched** |
+| 15p C0G provisional | 0603 | 4 | C1644 | CL10C150JB8NNNC | Basic | 804,717 |  |
+| 1n 16V X7R | 0603 | 5 | C1588 | CL10B102KB8NNNC | Basic | 6,432,787 |  |
+| 1u 10V X7R | 0603 | 1 | C59302 | 0603B105K250NT | Extended | 904,388 |  |
+| 1u 16V X7R | 0603 | 17 | C59302 | 0603B105K250NT | Extended | 904,388 |  |
+| 2.2u 10V X7R | 0603 | 5 | C99228 | 0603B225K250NT | Extended | 447,538 |  |
+| 2.2u 16V X7R | 0603 | 3 | C99228 | 0603B225K250NT | Extended | 447,538 |  |
+| 22n 25V X7R | 0603 | 1 | C21122 | CL10B223KB8NNNC | Basic | 937,591 |  |
+| 4.7u 16V X7R | 0603 | 3 | C389010 | GRM188Z71C475KE21D | Extended | 11,522 |  |
+| 47n 16V X7R | 0603 | 1 | C1622 | CL10B473KB8NNNC | Basic | 527,059 |  |
+| 9.1p C0G provisional | 0603 | 2 | C513588 | CC0603CRNPO9BN9R1 | Extended | 18,002 |  |
+| 100u 6.3V X5R | 1206 | 1 | C15008 | CL31A107MQHNNNE | Basic | 1,464,361 |  |
+| 10u 16V X7R | 1206 | 3 | C14860 | CL31B106KAHNNNE | Extended | 981,002 |  |
+| 100u 10V X7R | 1210 | 1 | none | | | | **not matched** |
+| 22u 25V X7R | 1210 | 1 | C309062 | CL32B226KAJNNNE | Extended | 85,304 |  |
+| 47u 16V X7R | 1210 | 8 | none | | | | **not matched** |
+| 0R | 0603 | 14 | C21189 | 0603WAF0000T5E | Basic | 24,128,786 | no tolerance stated: 1% chosen |
+| 0R ENERGY LINK - DNP | 0603 | 3 (3 DNP) | C21189 | 0603WAF0000T5E | Basic | 24,128,786 | no tolerance stated: 1% chosen |
+| 1.24k 1% | 0603 | 3 | C2933135 | FRC0603F1241TS | Extended | 253,807 |  |
+| 100R | 0603 | 6 | C22775 | 0603WAF1000T5E | Basic | 11,248,464 | no tolerance stated: 1% chosen |
+| 100k | 0603 | 41 | C25803 | 0603WAF1003T5E | Basic | 19,748,113 | no tolerance stated: 1% chosen |
+| 100k 0.1% | 0603 | 1 | C122538 | RT0603BRD07100KL | Extended | 1,363,538 |  |
+| 100k 1% | 0603 | 1 | C25803 | 0603WAF1003T5E | Basic | 19,748,113 |  |
+| 10R | 0603 | 2 | C22859 | 0603WAF100JT5E | Basic | 6,134,273 | no tolerance stated: 1% chosen |
+| 10k | 0603 | 22 | C25804 | 0603WAF1002T5E | Basic | 32,380,385 | no tolerance stated: 1% chosen |
+| 10k 0.1% | 0603 | 20 | C95204 | RT0603BRD0710KL | Extended | 2,121,585 |  |
+| 127k 0.1% | 0603 | 3 | C1509626 | ARG03BTC1273 | Extended | 7,350 |  |
+| 15k 0.1% | 0603 | 1 | C326733 | RT0603BRD0715KL | Extended | 47,687 |  |
+| 16.5k 1% | 0603 | 1 | C22812 | 0603WAF1652T5E | Extended | 84,553 |  |
+| 1M | 0603 | 1 | C22935 | 0603WAF1004T5E | Basic | 5,647,551 | no tolerance stated: 1% chosen |
+| 1k | 0603 | 4 | C21190 | 0603WAF1001T5E | Basic | 24,277,749 | no tolerance stated: 1% chosen |
+| 2.2k | 0603 | 3 | C4190 | 0603WAF2201T5E | Basic | 6,762,276 | no tolerance stated: 1% chosen |
+| 2.7k | 0603 | 2 | C13167 | 0603WAF2701T5E | Basic | 1,074,013 | no tolerance stated: 1% chosen |
+| 200k 1% | 0603 | 1 | C25811 | 0603WAF2003T5E | Basic | 2,578,190 |  |
+| 20k 0.1% | 0603 | 2 | C723637 | RT0603BRD0720KL | Extended | 48,214 |  |
+| 210k 1% | 0603 | 2 | C2933168 | FRC0603F2103TS | Extended | 669,626 |  |
+| 22.1k 0.1% | 0603 | 13 | C723484 | RT0603BRD0722K1L | Extended | 24,915 |  |
+| 22.1k 1% | 0603 | 1 | C2960862 | FRC0603F2212TS | Extended | 297,462 |  |
+| 22R | 0603 | 12 | C23345 | 0603WAF220JT5E | Basic | 7,914,544 | no tolerance stated: 1% chosen |
+| 23.7k 0.1% | 0603 | 6 | C861245 | RT0603BRD0723K7L | Extended | 5,197 |  |
+| 26.7k 0.1% | 0603 | 1 | C728587 | RT0603BRD0726K7L | Extended | 12,510 |  |
+| 3.3k | 0603 | 1 | C22978 | 0603WAF3301T5E | Basic | 6,068,499 | no tolerance stated: 1% chosen |
+| 3.9k 1% | 0603 | 12 | C23018 | 0603WAF3901T5E | Basic | 683,408 |  |
+| 30k 0.1% | 0603 | 1 | C723585 | RT0603BRD0730KL | Extended | 365,795 |  |
+| 31.9k 0.1% | 0603 | 3 | none | | | | **not matched** |
+| 330R | 0603 | 2 | C23138 | 0603WAF3300T5E | Basic | 3,527,043 | no tolerance stated: 1% chosen |
+| 39.2k 0.1% | 0603 | 1 | C861369 | RT0603BRD0739K2L | Extended | 26,949 |  |
+| 3k 1% | 0603 | 1 | C4211 | 0603WAF3001T5E | Basic | 7,620,180 |  |
+| 4.7k | 0603 | 4 | C23162 | 0603WAF4701T5E | Basic | 19,500,720 | no tolerance stated: 1% chosen |
+| 40.2k 0.1% | 0603 | 1 | C667101 | TD03G4022BT | Extended | 25,184 |  |
+| 43.2k 0.1% | 0603 | 1 | C861404 | RT0603BRD0743K2L | Extended | 6,370 |  |
+| 44.2k 1% | 0603 | 1 | C2930103 | FRC0603F4422TS | Extended | 10,818 |  |
+| 470R | 0603 | 7 | C23179 | 0603WAF4700T5E | Basic | 5,676,038 | no tolerance stated: 1% chosen |
+| 470k | 0603 | 1 | C23178 | 0603WAF4703T5E | Basic | 1,322,160 | no tolerance stated: 1% chosen |
+| 47R 1% | 0603 | 5 | C23182 | 0603WAF470JT5E | Basic | 1,432,929 |  |
+| 47k | 0603 | 31 | C25819 | 0603WAF4702T5E | Basic | 1,993,053 | no tolerance stated: 1% chosen |
+| 47k 0.1% | 0603 | 3 | C335087 | ARG03BTC4702 | Extended | 27,707 |  |
+| 49.9k 1% | 0603 | 1 | C23184 | 0603WAF4992T5E | Basic | 1,691,456 |  |
+| 5.1k 1% | 0603 | 2 | C23186 | 0603WAF5101T5E | Basic | 23,749,760 |  |
+| 60.4k 1% | 0603 | 1 | C2933245 | FRC0603F6042TS | Extended | 774,612 |  |
+| 64.9k 0.1% | 0603 | 1 | C861510 | RT0603BRD0764K9L | Extended | 15,866 |  |
+| 66.5k 1% | 0603 | 1 | C2933250 | FRC0603F6652TS | Extended | 69,092 |  |
+| 74.9k 0.1% | 0603 | 1 | none | | | | **not matched** |
+| 750R 1% | 0603 | 3 | C114635 | RC0603FR-07750RL | Extended | 466,345 |  |
+| 0R | 0805 | 2 | C17477 | 0805W8F0000T5E | Basic | 6,171,305 | no tolerance stated: 1% chosen |
+| 120R 1% 0.25W | 0805 | 2 | C543533 | ERJP06F1200V | Extended | 45,341 |  |
+| 5m 1% 3W WSLP2512R0050FEA | 2512 | 1 | C154688 | LR2512-23R005F4 | Extended | 22,829 |  |
+
