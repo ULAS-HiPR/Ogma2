@@ -32,6 +32,7 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 | Samtec MPT-08-01-01-L-RA-SD | J102 | None; must mate the bay's Samtec half | Global Sourcing or consign |
 | Amphenol 132134 (SMA, vertical) | J4501, J4601 | None (132203 is right-angle) | Global Sourcing or consign |
 | Seeed Wio-LR2021 | U4606 | Not carried (module) | Consign or hand-fit |
+| Nichicon PCW0J102MCO1GS (1000 µF polymer, step 3) | C1403 | None in SMD; JLC's stocked 1000 µF polymers are through-hole | Global Sourcing or consign |
 
 ## Stocked, but thin
 
@@ -67,7 +68,7 @@ The LTC6993 one-shots (U6301, U6401, U6501) are short too (1 stocked), but step 
 
 STM32 aside, every other part with an MPN is stocked well beyond one board's need:
 SN74LVC1G04/74/97, TMUX1511, TPD1E0B04, TPS2121, TPS22918, TPS2553-1, TPS3700, TPS3808G33,
-TPS70933, TPS7A9101, TS5A3167, USB4105-GF-A, USBLC6-2SC6, BAS116, ICM-42688-P, MS5607,
+TPS70933, TPS7A9101, USB4105-GF-A, USBLC6-2SC6, BAS116, ICM-42688-P, MS5607,
 ABS07-32.768KHZ-7-T, JST GH BM02B / BM03B, Molex 430450600 / 430451000, Keystone 5001.
 
 ## For the full pass (step 8)

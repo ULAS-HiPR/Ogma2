@@ -874,13 +874,13 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "1000u 10V - MPN OPEN"
+    (property "Value" "1000u 6.3V polymer"
       (at 344.17 121.92 0)
       (effects
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Footprint" "Capacitor_SMD:CP_Elec_10x10.5"
+    (property "Footprint" "Capacitor_SMD:CP_Elec_8x10.5"
       (at 340.36 120.65 0)
       (effects
         (font
@@ -910,7 +910,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Envelope placeholder only. Require >=800uF effective; ESR/leakage/retention and MPN unresolved."
+    (property "Implementation_Note" "Flight hold-up only. Nichicon PCW, polymer, AEC-Q200, 8 x 10.5 mm max; >=800 uF effective at -20%. Land pattern to check against Nichicon's drawing"
+      (at 340.36 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "PCW0J102MCO1GS"
+      (at 340.36 120.65 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Nichicon"
       (at 340.36 120.65 0)
       (effects
         (font
@@ -1569,7 +1581,7 @@
         (size 1.15 1.15))
       (justify left))
     (uuid "8314c8f0-7dbc-52ea-a0d8-228b75b3af6d"))
-  (text "C1403 remains a 1000 uF volume reservation, not an approved capacitor/footprint. Effective capacitance, ESR and retention remain open."
+  (text "C1403: Nichicon PCW0J102MCO1GS, 1000 uF 6.3 V polymer, 8 x 10.5 mm, flight hold-up only.\nLand pattern to check against Nichicon's drawing; hold-up time not proved."
     (at 15.24 236.22 0)
     (effects
       (font
@@ -1974,7 +1986,7 @@
     (diameter 0)
     (color 0 0 0 0)
     (uuid "77ff97ab-6f62-5a85-b4a8-17cf9f984c54"))
-  (text "What this does: Reserves local energy for the flight MCU during a brief input dip, and blocks that energy flowing back upstream.\nConnects to: 01c 4 V supply and 01b permission -> 01flight-ldo. C1403 is still an unselected capacitor allocation; hold-up time is not proved."
+  (text "What this does: Reserves local energy for the flight MCU during a brief input dip, and blocks that energy flowing back upstream.\nConnects to: 01c 4 V supply, enabled by its own level (01b) -> 01flight-ldo. Hold-up time is not proved."
     (at 15.24 27.94 0.0)
     (effects
       (font

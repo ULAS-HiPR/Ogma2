@@ -714,7 +714,7 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "FLIGHT_3V3"
+  (global_label "SERVICE_POWER_EN"
     (shape bidirectional)
     (at 54.61 95.25 0)
     (effects
@@ -756,7 +756,7 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "56.2k 1%"
+    (property "Value" "49.9k 1%"
       (at 114.3 127.0 0)
       (effects
         (font
@@ -822,7 +822,7 @@
         (size 1.1 1.1))
       (justify left))
     (uuid "36270884-09c4-5ea8-9575-e5438eb9e001"))
-  (text "Current-limit resistor is a provisional selected value. Native connectivity is preserved; no first-PCBA fault test has been performed."
+  (text "Current limit set by R1604 49.9k: 470-588 mA calculated. EN on SERVICE_POWER_EN (PE8), held low by R1602\nat reset and power-off: a bounded, sequenced restart separate from comms. Native connectivity is preserved; no first-PCBA fault test has been performed."
     (at 15.24 185.42 0)
     (effects
       (font
@@ -1092,7 +1092,7 @@
     (diameter 0)
     (color 0 0 0 0)
     (uuid "25543a05-f0bb-5cf4-8404-54d8b59388c4"))
-  (text "What this does: Limits current into optional peripherals, which must not be required for flight to continue.\nConnects to: 01c 4 V supply and flight control -> 01optional-ldo -> separately controlled peripheral circuits."
+  (text "What this does: Limits current into optional peripherals, which must not be required for flight to continue.\nConnects to: 01c 4 V supply and SERVICE_POWER_EN from the flight MCU -> 01optional-ldo -> separately controlled peripheral circuits."
     (at 15.24 27.94 0.0)
     (effects
       (font

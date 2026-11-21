@@ -1007,6 +1007,114 @@
             (effects
               (font
                 (size 0.9 0.9))))))))
+  (symbol
+    (lib_id "Device:R")
+    (at 420.37 138.43 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "0106512c-a3d9-5fc8-b5c6-95c0bc2e55e1")
+    (property "Reference" "R1210"
+      (at 424.18 137.16 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "200k 1%"
+      (at 424.18 139.7 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+      (at 420.37 138.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 420.37 138.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Resistor"
+      (at 420.37 138.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "R res resistor"
+      (at 420.37 138.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "R_*"
+      (at 420.37 138.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "Core-enable divider top over R1204 100k: U1401 EN/UVLO 1.183-1.223 V rising, 1.076-1.116 V falling, so on at 3.5-3.7 V and off at 3.2-3.4 V of 4V_PRE (D-6.5)"
+      (at 420.37 138.43 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1a1c026a-4813-53f4-ba31-05bebceed320"
+          (reference "R1210")
+          (unit 1))))
+    (pin "1"
+      (uuid "2720a34f-1cb6-5609-84b2-bb003af06c86"))
+    (pin "2"
+      (uuid "1716b83c-dda5-5c88-b93b-b6aeea8301d6")))
+  (wire
+    (pts
+      (xy 420.37 142.24)
+      (xy 420.37 146.05))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "42eb4959-9952-5fed-b918-4e60eaa0e978"))
+  (wire
+    (pts
+      (xy 420.37 134.62)
+      (xy 420.37 130.81))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "39a81a49-6e3b-5a5d-a8cf-0e8b9012d115"))
+  (wire
+    (pts
+      (xy 420.37 130.81)
+      (xy 412.75 130.81))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "74df1da1-e43a-5a13-902f-322bc8cf3d06"))
+  (global_label "4V_PRE"
+    (shape bidirectional)
+    (at 412.75 130.81 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "3590701b-cc69-5f6a-a69c-d9985e4f55ff")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 412.75 130.81 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (junction
+    (at 420.37 146.05)
+    (diameter 0)
+    (color 0 0 0 0)
+    (uuid "6ed589f6-2eaa-511c-8276-4a9a24711149"))
   (embedded_fonts no)
   (text "HARDWARE STARTUP"
     (at 15.24 15.24 0)
@@ -1089,89 +1197,6 @@
   (no_connect
     (at 160.02 168.91)
     (uuid "244a3b6f-c37a-539a-b157-910c5bc23129"))
-  (symbol
-    (lib_id "Ogma2_Readable_Core:Readable_U1203")
-    (at 355.6 146.05 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "bf06257c-0b32-55a9-bde1-d604fb72bcc7")
-    (property "Reference" "U1203"
-      (at 355.6 113.03 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G97DBVR"
-      (at 355.6 115.57 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-      (at 355.6 146.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-      (at 355.6 146.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Bootstrap logic mux OR"
-      (at 355.6 146.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-      (at 355.6 146.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "SOT* SC*"
-      (at 355.6 146.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G97DBVR"
-      (at 355.6 146.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 355.6 146.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 355.6 146.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1a1c026a-4813-53f4-ba31-05bebceed320"
-          (reference "U1203")
-          (unit 1))))
-    (pin "3"
-      (uuid "90d32e34-152a-5bf7-9e3d-a5b9131ffb8d"))
-    (pin "1"
-      (uuid "68f1eef8-97d0-5835-9b30-f60ddb4d2e55"))
-    (pin "6"
-      (uuid "c0b23ba3-a2a1-57bc-8f6c-82a07e61dd41"))
-    (pin "5"
-      (uuid "85820eb4-6b76-5fb5-9c13-240459fa33bd"))
-    (pin "2"
-      (uuid "1bbd87d5-3fd2-53f9-bd7d-f3a0bb5cc6a0"))
-    (pin "4"
-      (uuid "cf6e8e3f-9a54-5179-9800-b273df0b8d8e")))
   (symbol
     (lib_id "Ogma2_Readable_Core:Readable_U1204")
     (at 134.62 331.47 0)
@@ -2070,79 +2095,6 @@
         (hide yes))))
   (symbol
     (lib_id "Device:C")
-    (at 388.62 90.17 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "cd62d698-0f56-50bc-8cbf-9483fbb7b362")
-    (property "Reference" "C1203"
-      (at 392.43 88.9 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 392.43 91.44 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 388.62 90.17 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 388.62 90.17 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 388.62 90.17 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 388.62 90.17 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 388.62 90.17 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1a1c026a-4813-53f4-ba31-05bebceed320"
-          (reference "C1203")
-          (unit 1))))
-    (pin "1"
-      (uuid "2a03fa91-6549-5a81-992f-df735e7e4cbc"))
-    (pin "2"
-      (uuid "e9f63cc2-6f87-5d36-9caa-8082c55f90db")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 388.62 99.06 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "36f8ceff-f945-5905-ac08-ad06a9e34ca9")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 388.62 99.06 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:C")
     (at 168.91 269.24 0)
     (unit 1)
     (in_bom yes)
@@ -2287,7 +2239,7 @@
         (font
           (size 1 1))
         (hide yes))))
-  (text "Core input = BAT_VALID OR USB_CONFIG_OK. The flight LDO stays enabled from its held input."
+  (text "Core input enable: R1210 / R1204 from 4V_PRE into U1401 EN/UVLO (1.2 V): on above ~3.6 V, off below ~3.3 V,\nwhatever the source (D-6.5). The flight LDO stays enabled from its held input."
     (at 15.24 217.17 0)
     (effects
       (font
@@ -2318,20 +2270,6 @@
     (uuid "55fefeba-246e-5294-87f0-dc410459242e")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 134.62 184.15 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 355.6 176.53 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "79148c68-d4af-5125-aa13-c97c49293317")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 355.6 176.53 0)
       (effects
         (font
           (size 1 1))
@@ -2402,20 +2340,6 @@
     (uuid "18382257-a377-55b4-9d5d-51462ff00124")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 134.62 251.46 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "BOOT_3V3"
-    (shape bidirectional)
-    (at 355.6 72.39 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "fab1604c-8198-55d5-8e8a-34864e925436")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 355.6 72.39 0)
       (effects
         (font
           (size 1 1))
@@ -2566,36 +2490,12 @@
     (uuid "89c24775-c297-5251-b6d1-30af9a5e120c"))
   (wire
     (pts
-      (xy 245.11 153.67)
-      (xy 267.97 153.67))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "e407288c-5e48-5e7b-a206-6be7797bd613"))
-  (wire
-    (pts
       (xy 245.11 321.31)
       (xy 330.2 321.31))
     (stroke
       (width 0)
       (type default))
     (uuid "01ff776c-542a-53d3-8ffb-a5fddb769ecc"))
-  (wire
-    (pts
-      (xy 267.97 138.43)
-      (xy 267.97 153.67))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "538fde23-a297-5dd3-b55b-55215f45534a"))
-  (wire
-    (pts
-      (xy 267.97 138.43)
-      (xy 330.2 138.43))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a46c10be-9017-5fa0-89f2-c7db74a293b8"))
   (wire
     (pts
       (xy 54.61 144.78)
@@ -2678,22 +2578,6 @@
     (uuid "9f97741e-7c50-5d45-833a-5f85c93c88bb"))
   (wire
     (pts
-      (xy 355.6 72.39)
-      (xy 355.6 120.65))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "8bee15f2-00bb-5ab0-980c-37e14ec048ad"))
-  (wire
-    (pts
-      (xy 355.6 72.39)
-      (xy 388.62 72.39))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "37b88eb0-a8c8-5e35-8307-a79326bf59cf"))
-  (wire
-    (pts
       (xy 355.6 236.22)
       (xy 355.6 290.83))
     (stroke
@@ -2708,14 +2592,6 @@
       (width 0)
       (type default))
     (uuid "86adf4ca-c539-52e3-a5a1-88707a010066"))
-  (wire
-    (pts
-      (xy 388.62 72.39)
-      (xy 388.62 86.36))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "b59d67be-473c-5e4c-948e-35f6a422a0dd"))
   (wire
     (pts
       (xy 388.62 236.22)
@@ -2838,28 +2714,12 @@
     (uuid "9d77a64e-2f3f-5468-a473-5e02304f0ac3"))
   (wire
     (pts
-      (xy 355.6 171.45)
-      (xy 355.6 176.53))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "68547e97-a41e-56ef-9556-7651784148f1"))
-  (wire
-    (pts
       (xy 355.6 351.79)
       (xy 355.6 356.87))
     (stroke
       (width 0)
       (type default))
     (uuid "3a9e0eb0-f8ec-5ed0-95c0-1adc45c0118f"))
-  (wire
-    (pts
-      (xy 388.62 93.98)
-      (xy 388.62 99.06))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f89655a8-6bcd-5096-a7ef-ec075947d83a"))
   (wire
     (pts
       (xy 388.62 257.81)
@@ -2892,14 +2752,6 @@
       (width 0)
       (type default))
     (uuid "1b8c62b7-7cb2-5ce5-bda6-81998e668969"))
-  (wire
-    (pts
-      (xy 295.91 153.67)
-      (xy 330.2 153.67))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f41c0aad-50e8-5312-b29e-533fd78cc35e"))
   (wire
     (pts
       (xy 160.02 331.47)
@@ -2959,16 +2811,11 @@
     (color 0 0 0 0)
     (uuid "401ce1df-2d75-5fd1-a369-fa4599b57ef2"))
   (junction
-    (at 245.11 153.67)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "96e9d3a7-3125-510e-9ac7-e3229709c7fa"))
-  (junction
     (at 54.61 153.67)
     (diameter 0)
     (color 0 0 0 0)
     (uuid "14ceb405-5f09-5fa8-9214-761840056fa6"))
-  (text "What this does: Lets the board start before firmware is running, then hands the appropriate power controls to the flight MCU.\nConnects to: Battery/USB status -> core and comms power enables. Feeds the held flight path, comms limiter and the inter-MCU status link."
+  (text "What this does: Lets the board start before firmware is running, then hands the appropriate power controls to the flight MCU.\nConnects to: Battery/USB status -> comms power enable; 4V_PRE level -> core input enable. Feeds the held flight path, comms limiter and the inter-MCU status link."
     (at 15.24 27.94 0.0)
     (effects
       (font

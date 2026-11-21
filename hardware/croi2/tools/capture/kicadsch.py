@@ -323,3 +323,62 @@ def vendor_footprint(lib_dir, lib, name):
         m[1] = m[1].replace('${KICAD9_3DMODEL_DIR}', '${KIPRJMOD}/libraries/3d')
     save(fp, dst)
     return True
+
+
+def _others_at(tree, p, skip_ref):
+    """Pins of other symbols, labels and junctions at point p."""
+    pins = [(r, n) for r in symbols(tree) if r != skip_ref and not r.startswith('#')
+            for n, v in pin_positions(tree, r).items() if v[:2] == p]
+    pins += [(r, n) for r in symbols(tree) if r.startswith('#') for n, v in pin_positions(tree, r).items() if v[:2] == p]
+    labs = [l for k in ('global_label', 'label', 'hierarchical_label') for l in children(tree, k) if xy(l) == p]
+    juns = [j for j in children(tree, 'junction') if xy(j) == p]
+    return pins, labs, juns
+
+
+def strip_branch(tree, start, ref):
+    """Remove the wire chain running from `start` (a pin of `ref`, which is being removed) up to the
+    first point where something else connects. A label left with nothing attached goes too, and a
+    junction left joining fewer than three things is dropped. Returns a log of what went."""
+    log, p, seen = [], start, set()
+    pins, labs, juns = _others_at(tree, p, ref)
+    if pins:
+        return log                                       # another pin sits on this one: nothing to strip
+    if labs:                                             # a label on the pin itself
+        if not [x for x in wires(tree) if start in (x[1], x[2])]:
+            for l in labs:
+                remove(tree, lambda x: x is l)
+                log.append(('label', l[1], start))
+        return log                                       # with wires beyond it, the label keeps them named
+    while True:
+        ws = [(w, a, b) for w, a, b in wires(tree) if p in (a, b) and id(w) not in seen]
+        if len(ws) != 1:
+            break
+        w, a, b = ws[0]
+        seen.add(id(w))
+        q = b if a == p else a
+        remove(tree, lambda x: x is w)
+        log.append(('wire', a, b))
+        pins, labs, juns = _others_at(tree, q, ref)
+        rest = [x for x in wires(tree) if q in (x[1], x[2])]
+        if pins or len(rest) != 1 or labs:
+            if not pins and not rest:                    # a label that only served this branch
+                for l in labs:
+                    remove(tree, lambda x: x is l)
+                    log.append(('label', l[1], q))
+            for j in juns:
+                if len(rest) + len(pins) < 3:
+                    remove(tree, lambda x: x is j)
+                    log.append(('junction', q))
+            break
+        p = q
+    return log
+
+
+def remove_part(tree, ref):
+    """Delete a symbol and the wiring that served only it."""
+    log = []
+    for p in sorted({v[:2] for v in pin_positions(tree, ref).values()}):
+        log += strip_branch(tree, p, ref)
+    sym = symbols(tree)[ref]
+    remove(tree, lambda x: x is sym)
+    return log

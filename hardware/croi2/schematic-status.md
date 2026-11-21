@@ -11,7 +11,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | 0 | 02-flight-mcu: the amended pad map | Done: 23 pins; alternate functions checked against ST's pin data |
 | 1 | 02a-flight-support: VBAT feed, test pads, strobe, reset memory | Done: 13 parts, 22 pins; C207 moved to `FLIGHT_VBAT`; 7 findings closed |
 | 2 | 01-power: auto-retry, power hold, energy tap, J102.8 | Done: 7 parts, 20 pins; `BAT_EFUSE_IN` renamed `ENERGY_TAP` (also on 07a); 1 finding closed |
-| 3 | The other power sheets: core enable, limiters, LDO dividers, C1403, USB limiter | — |
+| 3 | The other power sheets: core enable, limiters, LDO dividers, C1403, USB limiter | Done: U1203, its bypass C1203 and U4402 removed; R1210 added; 7 values; service restart on PE8; 1 finding closed |
 | 4 | Sensor sheets and the new magnetometer sheet | — |
 | 5 | 05-can: bus 2, Gecko connectors, B-39 | — |
 | 6 | Output sheets and servo removal | — |
@@ -34,7 +34,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | --- | --- |
 | U201 VBAT undriven; `FLIGHT_VBAT`, `RESET_MEMORY`, `TP_STROBE`, `TP_PC6`, `TP_PC7`, `TP_PD10` dangling | 1: closed |
 | `FC_POWER_HOLD` dangling | 2: closed |
-| `SERVICE_POWER_EN` dangling | 3 |
+| `SERVICE_POWER_EN` dangling | 3: closed |
 | `MAG_INT`, `MAG_SCL`, `MAG_SDA` dangling; PWR_FLAG pin-to-pin warnings on 03st and 03bmp (baseline) | 4 |
 | `CAN2_TX`, `CAN2_RX` dangling | 5 |
 | `PYRO1_FIRE`–`PYRO3_FIRE` dangling; pyro VS pins undriven (baseline); the servo block's findings (`SERVO*`, `ADC_SERVO_RAIL`, U6802, U6804) | 6 |
@@ -44,7 +44,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 
 | Check | Where | Status |
 | --- | --- | --- |
-| JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Early pass done ([jlc-stock.md](jlc-stock.md)): 19 lines not in stock, alternatives listed; Seán's calls owed on the sensor, monitor and flash swaps |
+| JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Early pass done ([jlc-stock.md](jlc-stock.md)): 20 lines not in stock, alternatives listed; Seán's calls owed on the sensor, monitor and flash swaps |
 | Flight MCU alternate functions against ST's pin data | 0 | Done: all 29 AF rows match; FDCAN2 = AF9 on PA10/PB5; I²C3 = AF4 on PA8/PC9 |
 | Comms MCU alternate functions against ST's pin data | 7 | Open |
 | TPS2663 MODE: GND gives auto-retry (D-6.3) | 2 | Done: TI datasheet, section 8.4 |
@@ -52,7 +52,10 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | Hold capacitor (470 µF) is aluminium electrolytic, leakage ≤30 µA, as D-2Nov.18's hold time assumes. A polymer part's ≈300 µA cuts Churro's hold to 0.33–0.45 s | 2 | Chosen: C1007 Panasonic EEEFKJ471XSP, 6.3 V; the standard 0.01CV limit gives 29.6 µA. Confirm on Panasonic's FK datasheet at G1 |
 | Sounder level for IREC 6.16 (B-07): a louder sounder is a capture choice | 6 or 8 | Open: Seán's call on the level |
 | J6101 / J6102 and umbilical-side parts drawn as reviewed placeholders | 6 | Open |
-| Library provenance for parts added during capture (step 1: `Device:D_Schottky`; step 2: `CP_Elec_6.3x7.7`, its 3D model still to collect; all from KiCad 9.0.7) and the board library manifest | 8 | Open |
+| Library provenance for parts added during capture (step 1: `Device:D_Schottky`; steps 2 and 3: `CP_Elec_6.3x7.7` and `CP_Elec_8x10.5`, their 3D models still to collect; all from KiCad 9.0.7) and the board library manifest | 8 | Open |
+| C1403 (Nichicon PCW0J102MCO1GS, 8 × 10.5 mm) land pattern against Nichicon's drawing; `CP_Elec_8x10.5` is KiCad's generic 8 mm can | G1 | Open |
+| `USB_CONFIG_OK` now drives nothing: its two loads (U1203, U4402) are gone, and the spec keeps comms PA1 and its boundary. Keep it, or drop the signal and its parts | 7 | Open: Seán's call |
+| Docs that still say the core input follows `BAT_VALID OR USB_CONFIG_OK` (pcb-layout-guide.md) | 8 | Open |
 | Capture assertions 1–22 ([11 Verification](../../docs/architecture/11-verification.md)) | 8 | Open |
 | Revised pin maps and [firmware interface](../../docs/firmware-interface.md) | 8 | Open |
 | J102 position against Ériú's bay answer (Jay): the Samtec pair only mates end to end | Before layout | Open |
