@@ -143,12 +143,16 @@ production third node and doesn't bridge the vehicle bus to GSE.
 - On the rail, a ground umbilical feeds both Foinse branches through per-source
   ideal diodes ahead of the eFuses, so the enables and protection still apply
   and the diodes can't charge a pack. Pulling it hands each branch to its pack (D-2Nov.7).
-  AV is set at 8.4 V; the PROP voltage (≈24–25 V proposed) needs the propulsion
-  owner's agreement.
-- Charging moves on board, through the umbilical (D-20Nov.1); the charger design
-  is open, and physical charge/arm exclusion has to be squared with charging until Go.
-  Independent recovery has its own qualified supply and path outside the shared
-  Foinse fault boundary.
+  AV is set at 8.4 V; the PROP umbilical voltage is set at the Churro review
+  (D-21Nov.1), to suit the 6S charger and both actuator branches.
+- Charging is on board, through the umbilical: one standalone charger per pack
+  voltage, at maintenance rate, temperature-gated. There is no charge/arm
+  interlock; fault analysis and a bench test show no charger fault makes a
+  firing path (D-20Nov.1, D-21Nov.2). Independent recovery keeps its own cell
+  and path; its charge lead is protected so no Foinse fault can drain or short
+  that cell (C-23).
+- The e-reg is its own board on its own CAN link to Fajita, and never joins this
+  link. Fajita protects against overpressure independently of it (D-21Nov.10).
 
 ## EuRoC items on the propulsion side
 

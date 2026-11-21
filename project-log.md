@@ -3828,3 +3828,30 @@ tour's connector gallery.
 - The rules sweep (EuRoC SRD 1.1, IREC 2027 REV P1) is kept as dated evidence.
 - `docs/architecture/behaviour-map.md` shows the system as mechanisms and
   behaviours, tagged decided, proposed or open, for verification.
+
+## 21 November 2026 — e-reg board, Churro interface rules, B-39 proposed
+
+- Seán chose option B for the e-reg (D-21Nov.10): its own board beside the valve
+  bay, on its own CAN link to Fajita. Fajita stays the overpressure protector.
+  The reason is ownership ("little packets that they can own"). A DM to James is
+  drafted in `~/Critical/discord/2026-11-21-ereg-james/`, not sent.
+- Before signing off Burrito's order, Seán asked whether the Burrito–Churro
+  interface survives the Churro changes we expect. It does, under seven rules
+  now in `docs/requirements/churro.md` (IR-1–IR-7): new readings over I²C4,
+  faults wire-ORed onto pin 7, no new pins, the AV window, current limit and
+  hold timing kept, AUX not loaded, and actuator returns never through Burrito.
+- One Burrito change is proposed, not frozen: B-39, a series part in each CAN
+  reference. With D-21Nov.1 every actuator shares Churro's ground, so each CAN
+  reference parallels an actuator return. Waits on Seán.
+- Mechanical exposure: the Samtec pair is right-angle and mates end to end. If
+  Ériú's bay stays 321 mm and the sled goes two-sided, an adapter at J102 keeps
+  Burrito unchanged. Jay's answer sets J102's place before layout.
+- Charge state is read explicitly from each charger (C-15), with the voltage
+  trend as a cross-check. PROP's divider moves to the pack side (C-22). The CATS
+  cell's charge lead is protected so no Churro fault drains it (C-23).
+- Stale lines replaced: the ≈24–25 V PROP note (solenoid coils), "the charger
+  design is open", "doesn't charge anything" and the 24 V converter notes, in the
+  contracts, chapter 08, the tour, the layout guide and the monitoring
+  justification. The firmware interface gains rows for board temperatures,
+  charge state, pack voltages, no flashing on the rail and the proposed IREC
+  radio behaviour. Cornstar's independence and the nose keep-out are recorded.

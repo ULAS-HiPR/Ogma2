@@ -3,7 +3,7 @@
 Updated 21 November 2026. Decisions live in [decisions.md](decisions.md); this
 file states what is true now. Native CAD still holds the 8 September draft.
 Capture of the [capture specification](docs/architecture/schematic-capture-spec.md)
-waits for Seán's go-ahead after the Tuesday 3 November review. No fabrication,
+is cleared for Burrito (21 November); Churro's waits for its power review. No fabrication,
 firmware or flight release exists.
 
 ## The system
@@ -16,7 +16,8 @@ Ogma 2 is HiPR's workhorse flight computer. It owns two boards:
 | Foinse2 | Churro | MCU-less power board: a protected 2S avionics feed and two protected 6S actuator feeds (PROP to Fajita, ACT to Salsa), from the packs or the rail umbilical; charges every pack on the rail; current, voltage and temperature monitoring (D-21Nov.1, D-21Nov.2) |
 
 Fajita, the propulsion controller, is ours too since 20 November, as its own
-project (D-20Nov.2); it governs itself. The active board, Salsa, runs roll
+project (D-20Nov.2); it governs itself. The e-reg is its own board beside the
+valve bay, on its own CAN link to Fajita (D-21Nov.10). The active board, Salsa, runs roll
 control and the grid fins in a closed loop, on its
 own CAN bus from Burrito, powered through Churro's ACT branch (D-2Nov.8, D-5Nov.3,
 D-21Nov.1); at IREC it also drives Ériú's nose canards (D-21Nov.7). It is
@@ -205,7 +206,10 @@ Target vehicles, as said at the 14 October requirements meeting:
   between lug faces today (Notion, Ériú av-bay requirements, Rev 1.3, measured
   from the CAD). Flies Burrito, Churro and Salsa without Fajita, as the flight
   test of our core before EuRoC (D-20Nov.3); Salsa drives the nose canards
-  (D-21Nov.7). IREC 2027 DTEG REV P1 (15 Oct 2026) applies.
+  (D-21Nov.7). IREC 2027 DTEG REV P1 (15 Oct 2026) applies. Cornstar, the
+  heated payload in the nose, is independent: its own pack, launch detect,
+  switch and logging, and no wires to Ogma. The canard servos and their leads
+  keep clear of its hot module.
 
 Every board is 80 mm wide (D-21Nov.6). Ériú's av-bay must grow to hold the
 stack: about 400–420 mm between lug faces, or a two-sided sled.
@@ -241,14 +245,16 @@ stack: about 400–420 mm between lug faces, or a two-sided sled.
 
 ## Next
 
-1. Freeze the Burrito–Churro interface (eight Samtec contacts, the I²C map);
-   then capture Burrito sheet by sheet the readable-schematics way, each sheet
-   reviewed by Seán (D-21Nov.9).
+1. Capture Burrito sheet by sheet the readable-schematics way, each sheet
+   reviewed by Seán (D-21Nov.9). The interface is frozen (B-36); Churro keeps
+   the interface rules in its requirements. B-39 waits on Seán.
 2. The Churro power review: branch ratings, chargers, damping, faults
    (D-21Nov.1–D-21Nov.3); then Churro's capture.
 3. Anav: the recovery logic (D-6.11) and his pyro-channel circuit against
    D-2Nov.1.
-4. Jay and James: Ériú av-bay Rev 2 length; actuator and valve specs, and each
+4. Jay and James: Ériú av-bay Rev 2 length (it sets where J102 sits before
+   Burrito's layout: the Samtec pair only mates end to end); the e-reg's
+   readings and PTs (D-21Nov.10); actuator and valve specs, and each
    valve's unpowered state; where the panel, packs, switches, Churro and the CATS Vega
    sit; the run length; how far the charges are from Burrito (the external pyro
    board row); the RF window. LV-0690: Jay reads it as covering only

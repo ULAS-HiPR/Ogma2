@@ -11,8 +11,8 @@ separate 2S AV and 6S PROP positives, a common reference, the existing
 thresholds and source enables. Both AV protection stages stay, so Burrito still
 works standalone. Don't claim which of the two similar AV stages trips first.
 AV U1001 moves to auto-retry (D-6.3); PROP U2001 waits for the propulsion owner.
-Fajita does its own conversion. Churro supplies **protected raw 6S**, not
-regulated 24 V.
+Fajita and Salsa do their own conversion (D-21Nov.1). Churro supplies
+**protected raw 6S**, not a regulated actuator voltage.
 
 **Current ceilings.**
 
@@ -43,16 +43,16 @@ positive service boundary, off the PCB and close to the pack, in a
 **Connectors and charging.** Use the existing 2S Nano-Fit and 6S four-contact
 Micro-Fit source connectors; never swap in matching source plugs. Grounds need a
 full alternate-return check through Samtec, CAN, USB and the umbilical. Charging
-moves on board, through the umbilical (D-20Nov.1); the charger design is open.
-No BMS or 24 V converter.
+is on board: one standalone charger per pack voltage (D-20Nov.1, D-21Nov.2).
+No BMS or actuator-voltage converter.
 
 **Rail power (D-2Nov.7).** A ground umbilical (J801) feeds both branches on the
 rail. Each source, pack or umbilical, gets its own ideal-diode stage (LM74700-Q1
 class plus an N-FET) ahead of U1001 / U2001, so the same enables and protection
 apply to either source, and no current flows into a pack. That's four stages,
 two per branch. A fuse and a TVS sit at the umbilical connector. The AV umbilical
-is set at 8.4 V at Churro, below U1001's 8.99 V and Burrito's TPS2121 trip; the
-PROP voltage (≈24–25 V) is the propulsion owner's call. The higher source
+is set at 8.4 V at Churro, below U1001's 8.99 V and Burrito's TPS2121 trip; PROP's
+umbilical voltage is set at the Churro review (D-21Nov.1). The higher source
 carries the load. The enable bias and the UV / OV dividers move to the ORed node
 so the umbilical alone can enable.
 

@@ -2,7 +2,21 @@
 
 **Draft, 21 November 2026. Not frozen.** These freeze at the Churro power review (D-21Nov.9). Until then, only the interface to Burrito ([B-36](burrito.md)) is fixed. Values in [brackets] are open.
 
-Sources: [decisions.md](../../decisions.md) (D2, D-2Nov.7, D-20Nov.1, D-21Nov.1–D-21Nov.3); the [rules sweep](2026-11-21-rules-sweep.md); OG-09.
+Sources: [decisions.md](../../decisions.md) (D2, D-2Nov.7, D-20Nov.1, D-21Nov.1–D-21Nov.3, D-21Nov.10); the [rules sweep](2026-11-21-rules-sweep.md); OG-09.
+
+## Interface rules: what keeps Burrito's order valid
+
+Burrito's side is frozen ([B-36](burrito.md)). Every Churro change keeps to these rules, so no Churro change reaches back into Burrito.
+
+| Rule | Why |
+| --- | --- |
+| IR-1. Everything new on Churro is read over I²C4, behind Churro's own buffer, at addresses that don't clash. Taken: 0x40 (Burrito's monitor), 0x41, 0x48 | I²C takes any number of devices: Burrito's firmware changes, its hardware doesn't |
+| IR-2. New faults wire-OR onto the open-drain fault line (Samtec pin 7); the detail is read over I²C | One line says "something faulted", however much Churro grows |
+| IR-3. No new Burrito–Churro signal. The Samtec stays eight contacts with today's pinout and meanings, and Churro's J301 mates Burrito's J102 where it sits now | The one change that would make Burrito's order wrong |
+| IR-4. AV at Burrito stays as today: ≤8.4 V nominal from pack, umbilical or charger, with tolerance under Churro's 8.99 V and Burrito's TPS2121 trips; a current limit no lower than today's ≈6 A; auto-retry; a shutdown input that keeps the pin-8 hold's timing (D-2Nov.18) | Burrito's over-voltage trips, all-fire margin (B-05) and reset ride-through (B-14) stay valid |
+| IR-5. Churro's monitors stay within AUX's 109–152 mA limit; chargers and actuator branches never run from AUX | AUX is a monitoring supply from Burrito's limiter |
+| IR-6. Actuator return current never routes through Burrito: actuator returns go to the actuator pack through Churro's ground | Burrito's CAN references and ground plane aren't sized for it (B-39, proposed) |
+| IR-7. Burrito only reads Churro. Any I²C-set output ever added powers up in its safe state and holds it through a Burrito reset | A Burrito reset never switches power on Churro |
 
 ## Branches and protection
 
@@ -32,14 +46,16 @@ Sources: [decisions.md](../../decisions.md) (D2, D-2Nov.7, D-20Nov.1, D-21Nov.1�
 | C-12 | No charging above [45] °C at a pack; resumes below [40] °C | D-21Nov.2; LV-0510 | Existing NTC probes gate each charger | Bench with a heated probe | Open |
 | C-13 | Charging stops when the umbilical leaves (Go) | D-20Nov.1 | No charge source once pulled | Bench | Met by topology |
 | C-14 | No charger fault can make a firing path | D-21Nov.2 | Firing needs the flight MCU to close both switches of a channel with the arm closed; eFuse overvoltage trips | Fault analysis; bench injection | Open |
-| C-15 | Burrito reads charge status over I²C4 and controls nothing in the charge path | D-21Nov.2; B-36 | Status into Churro's I²C devices | Bench | Open |
+| C-15 | Burrito reads charge status over I²C4 and controls nothing in the charge path | D-21Nov.2; B-36 | Each charger's status pins (charging, done, fault) and its temperature hold into an I²C expander on Churro. The voltage trend alone can't tell done from stopped, or why it stopped; firmware keeps it as a cross-check | Bench: force each state, read it over I²C4 | Open |
 | C-16 | Payload packs never charge from our bus | D-21Nov.2; LV-0880 | Not connected | Inspection | Met |
+| C-23 | No Churro fault can drain or short the CATS Vega's cell, and the cell's voltage is read | LV-0240, LV-0250 (the COTS chain stays independent); D-21Nov.2 | A fuse at the cell end of its charge lead; reverse blocking in the charger path; a high-value divider behind a series resistor into a second ADS1115 (0x49) | Bench: short the 1S charger output and the divider; the cell holds | Open: with the officials' answer on charging the cell (C-11) |
 
 ## Monitoring, construction and fit
 
 | ID | Requirement | Source | Mechanism | Verification | Status |
 | --- | --- | --- | --- | --- | --- |
-| C-17 | Monitors branch current and voltage and both pack temperatures, and shows which source is live | D2; D-2Nov.7 | Current monitors, ADC, NTC probes with a reference bias; AV pack readout on the pack side | Bench readings; probe-lead faults; switchover | Met for AV and PROP; ACT at the review |
+| C-17 | Monitors branch current and voltage and both pack temperatures, and shows which source is live | D2; D-2Nov.7 | Current monitors, ADC, NTC probes with a reference bias; AV pack readout on the pack side | Bench readings; probe-lead faults; switchover | Met for AV; PROP's pack side (C-22) and ACT at the review |
+| C-22 | The actuator pack's voltage shows on its pack side while the umbilical carries the load | Seán, 21 Nov (every pack monitored); D-2Nov.7 | PROP's divider (R6111) moves to the pack side of its diode, like AV's | Bench: umbilical connected, pack removed | Open |
 | C-18 | No MCU on Churro | Capture spec | MCU-less design | Inspection | Met |
 | C-19 | No charger or propulsion current passes through Burrito | Boundary contract | Topology | Assertion | Met |
 | C-20 | 80 mm wide; length as needed; held independently of the Samtec mate | D-21Nov.6; layout guide | Outline; separate supports | Mockup | Open |

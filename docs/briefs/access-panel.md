@@ -18,6 +18,7 @@ without a ladder: everything the pad crew touches (EuRoC LV-0260–0280, 0310,
 | Enable loops for Burrito and Churro (AV, PROP) | Gecko 2-contact (D-19Nov.5) |
 | The umbilical | A keyed positive-lock plug on Churro that can't take the 6S plug (proposed: Nano-Fit 4-way), and at the skin a pull-away that releases at Go (proposed: a magnetic breakaway or a lanyard-pulled power connector). Part chosen with propulsion once the pad currents and who pulls it are known (D-2Nov.7) |
 | USB-C service | Not on the panel. The ports stay at the av-bay; nothing is flashed on the rail (D-21Nov.4) |
+| Cornstar's screw switch (IREC) | Not on our panel: it sits at the nose with its own access hole, and Cornstar has no wires to Ogma |
 | The COTS GPS tracker's switch (IREC) | Switched and powered on its own (IREC DTEG 4.2.3), unless the CATS Vega counts as the tracker |
 | Labels | On every switch, plug and port. Burrito's two SMA antenna plugs are identical: label or key them in the av-bay |
 

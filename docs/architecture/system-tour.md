@@ -123,8 +123,10 @@ carries it through a restart; the eFuses restart after an over-current instead
 of latching off; the flight MCU's backup memory has its own hold-up. Detail in
 [02 Power](02-power.md).
 
-Churro protects raw packs; it doesn't regulate 6S to 24 V or charge anything.
-Continuous ceilings: AV 3 A, PROP 2 A (D2). On the rail it runs the vehicle from
+Churro protects the raw packs and charges them through the umbilical
+(D-21Nov.2); it doesn't regulate: Fajita and Salsa convert at the load
+(D-21Nov.1). AV's continuous ceiling is 3 A (D2); PROP and ACT are rated at the
+Churro review. On the rail it runs the vehicle from
 the umbilical. Its protection works without Burrito; its monitoring doesn't.
 
 ## Switching on and arming

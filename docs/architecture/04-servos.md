@@ -37,6 +37,8 @@ servos and a lock servo. The board follows the D-2Nov.8 rules:
   (D-19Nov.9, D-21Nov.4);
 - at IREC, Ériú's nose canards too, their leads crossing the nose joint through
   a breakaway; unpowered surfaces sit neutral by mechanical centring (D-21Nov.7).
+  In Ériú's nose the canard servos and leads keep clear of Cornstar's hot
+  module (shield 50–70 °C, chamber 210 °C, on its bench), with PTFE where they pass it.
 
 Burrito sends it the authority message and slow state, and logs the health it
 reports. CAN carries nothing a loop depends on at loop rate (D-2Nov.9). The

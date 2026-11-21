@@ -17,7 +17,7 @@ at 500 kbit/s for Rev A.
 flowchart TB
   AV["2S avionics pack · J101"] --> DA1["ideal diode"]
   UM["Ground umbilical · J801
-AV 8.4 V · PROP ≈24–25 V"] --> DA2["ideal diode"]
+AV 8.4 V · PROP set at review"] --> DA2["ideal diode"]
   UM --> DP2["ideal diode"]
   DA1 --> AP["U1001 TPS26630 + CSD18540
 ≈6 A · auto-retry (D-6.3)"]
@@ -43,7 +43,7 @@ Fajita converts locally"]
   has its own ideal diode (LM74700-Q1 class), ORed ahead of U1001 / U2001, so the
   enables and protection work the same on either source and that path can't
   charge a pack (charging: D-20Nov.1, below). The AV umbilical sits at 8.4 V at Churro, below every
-  over-voltage trip; PROP at ≈24–25 V, set with the propulsion owner. Whichever
+  over-voltage trip; PROP's is set at the Churro review (D-21Nov.1). Whichever
   source is higher carries the load, so a pack fresher than the umbilical feeds
   the vehicle until it drops to the umbilical's voltage. Fuse and TVS at the
   umbilical connector. The diodes would also stop servo regeneration from Burrito (none since D-19Nov.2)
@@ -53,9 +53,9 @@ Fajita converts locally"]
   Bus well above pack means the umbilical is carrying it; the threshold is set
   on the bench. The pack voltage is a go/no-go item before the umbilical is
   pulled: while the umbilical carries the load, nothing else shows a missing or
-  flat pack. PROP's divider (R6111) stays on the protected output unless the
-  propulsion owner wants it moved, so until then a missing or flat PROP pack is
-  invisible on the umbilical.
+  flat pack. PROP's divider (R6111) moves to the pack side at the Churro review
+  (C-22), so a missing or flat actuator pack shows while the umbilical carries
+  the load.
 - Each protection circuit starts from its own pack. AUX and I²C only feed
   monitoring, so if Burrito or AUX is gone, protection still works and the
   readings go unknown.
@@ -64,9 +64,10 @@ Fajita converts locally"]
 - Burrito's INA228 (0x40) measures logic current; pyro current comes
   from the TPS1H100 sense lines. Addresses 0x40, 0x41 and 0x48 don't clash.
   Monitoring is on flight I²C4 (PB8/PB9) at 100 kHz.
-- No BMS, CAN endpoint or 24 V converter. Charging moves on board, through the
-  umbilical (D-20Nov.1); the charger design is open. A 24 V coil isn't automatically 6S-compatible; size any
-  converter from the real load.
+- No MCU, CAN endpoint or actuator-voltage converter: Fajita and Salsa convert
+  at the load (D-21Nov.1). Charging is on board: one standalone charger per pack
+  voltage (D-21Nov.2). Churro keeps the interface rules in its requirements, so
+  no Churro change reaches Burrito (B-36).
 
 Samtec J301/J102: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault,
 8 `CROI_POWER_HOLD`. Each ground contact must carry the full fault return, and
@@ -77,14 +78,14 @@ the CAN reference must never become the propulsion power return.
 | AV entry | J101 Nano-Fit 1053111102; U1001 + CSD18540 | 3 A continuous ceiling, 5 A source fuse proposed; thermal and energy |
 | Umbilical entry (D-2Nov.7) | J801, four ideal-diode stages, fuse and TVS per pair | Connector and pull-away mechanism (vehicle owner); diode heating; switchover transient |
 | AV thresholds | Start/stop 6.63/6.20 V, OVP 8.99 V; 3 kΩ ILIM (≈6 A); MODE to GND | Tolerance and sag; 6 A is not a connector or wire rating |
-| PROP entry | J201 Micro-Fit 430450400; U2001 + CSD18540 | 2 A continuous ceiling, 5 A source fuse proposed |
-| PROP thresholds | Start/stop 19.92/18.63 V, OVP 27.0 V; 6.04 kΩ ILIM (≈2.98 A) | Coil and controller input range, inrush |
+| PROP entry | J201 Micro-Fit 430450400; U2001 + CSD18540 | Was 2 A continuous, for coils; re-rated with ACT at the Churro review (D-21Nov.1) |
+| PROP thresholds | Start/stop 19.92/18.63 V, OVP 27.0 V; 6.04 kΩ ILIM (≈2.98 A) | Re-rated for the valve servos and the e-reg at the Churro review (D-21Nov.1) |
 | Transients | 22 nF dV/dt; SMBJ12A / SMBJ28A TVS to start | Fuse, TVS and eFuse coordination with real cables |
 | Enables | J103 AV, J104 PROP, Harwin Gecko 2-contact (D-19Nov.5; was JST GH), each biased from its own pack | External switch, retention, labelling |
 | PROP current | R2011 5 mΩ WSLP2512; INA228 U5001 | Kelvin routing; error over temperature |
 | PROP bus voltage | INA228 VBUS after the reverse blocker, before the eFuse | Doesn't prove the output is on |
 | Monitor bus | Burrito AUX → local rails; TCA4307 U3001 | Monitoring can vanish while both feeds stay live |
-| Voltages | ADS1115; TMUX1511 U6101 isolates dividers when off; AV 22.1k + 22.1k / 10k on the AV pack (moved from the protected output, D-2Nov.7), PROP 110k + 110k / 10k on the protected output | Keep scaled readings separate from INA voltage |
+| Voltages | ADS1115; TMUX1511 U6101 isolates dividers when off; AV 22.1k + 22.1k / 10k on the AV pack (moved from the protected output, D-2Nov.7), PROP 110k + 110k / 10k on the protected output (to the pack side, C-22) | Keep scaled readings separate from INA voltage |
 | Temperatures | J601 Gecko 4-contact (D-19Nov.5; was GH): AV probe, GND, PROP probe, GND | Dedicated probes, not charger-biased sensors |
 | PROP output | J701 Micro-Fit 430450200 | Harness current; conversion at Fajita |
 

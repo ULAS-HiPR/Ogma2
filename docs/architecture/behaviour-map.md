@@ -64,6 +64,8 @@ AV-BAY
 | P10 | USB runs logic only, ≤387 mA; never outputs, never charging | D |
 | P11 | Pad mode ≤150 mA; the AV pack alone covers 6 h plus the flight | D |
 | P12 | Repeated hot-plugging of the umbilical can't overvolt anything | D (D-21Nov.3); test open |
+| P13 | Burrito reads every pack (pack side), each branch's current and voltage, both NTCs and each charger's state, all over I²C4; Churro adds no pins | D for the interface (B-36, interface rules); PROP pack side, ACT, CATS cell and charge state open (C-15, C-17, C-22, C-23) |
+| P14 | Actuator return current stays off Burrito, even with an actuator return broken | ? B-39 proposed |
 
 ---
 
@@ -99,6 +101,7 @@ AV-BAY
  FLIGHT MCU ── only it ───────────────────────────► pyro channels, staging
  FLIGHT MCU ── CAN 2: Safe / Active / Abort, 10–20 Hz ─► SALSA ─► actuators (neutral unless fresh Active)
  FLIGHT MCU ── CAN 1: requests, permissions ────────► FAJITA (governs itself; may refuse)
+ FAJITA ── own CAN link ──► E-REG (pressure loop; Fajita can always vent)
  COMMS MCU ── radio · GNSS · USB ── no path to any output
  GROUND ── radio ─► comms MCU ── framed UART ─► flight MCU (requests only)
 ```
@@ -110,6 +113,7 @@ AV-BAY
 | A3 | Burrito sends Active only after the field-adjustable dormancy (EuRoC: ≥1500 m AGL with no flight history) | D |
 | A4 | The phases in which Burrito grants Active: ascent after dormancy (RCS), under drogue (grid fins steering back) | ? no table yet |
 | A5 | Fajita keeps its own safe response with Burrito in reset, CAN dead, or the operator link lost | D |
+| A5a | The e-reg runs the pressure loop on its own board and link; Fajita's overpressure protection doesn't depend on it | D (D-21Nov.10); PTs and link open |
 | A6 | An unpowered actuator sits neutral (mechanical centring); IREC 7.3, EuRoC LV-0670 | D (D-21Nov.7); mechanism open |
 | A7 | No firmware over CAN; each board is flashed through its own USB | D |
 | A7a | The USB ports sit at the av-bay; nothing is flashed on the rail | D (D-21Nov.4) |

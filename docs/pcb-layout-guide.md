@@ -514,11 +514,10 @@ Do not print a readiness claim beside a mere power LED.
    second, AUX/I²C/fault third. Keep power copper away from analog acquisition
    loops without splitting the whole ground plane. Put rail/ground loops where
    clips cannot bridge 6S to AUX or the mate's small signals.
-9. Check both boards together in the carrier, actual plugs fitted. Foinse's
-   current outline contains no reserved/qualified future 24 V converter. Real
-   coils may require a separate placement study or a larger Foinse. Charging
-   moves on board through the umbilical (D-20Nov.1), design open; its current
-   never goes through Croí.
+9. Check both boards together in the carrier, actual plugs fitted. Foinse has
+   no actuator-voltage converter: Fajita and Salsa convert at the load
+   (D-21Nov.1). Its chargers (D-21Nov.2) and the ACT branch need room, set at
+   the Churro review; charge current never goes through Croí.
 
 ## Final layout checks before an order
 

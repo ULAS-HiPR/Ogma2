@@ -27,6 +27,11 @@ circuit detail. No target firmware exists yet. Anav owns the firmware.
 | Authority over the active board | D-5Nov.2 | Send Safe, Active or Abort at a fixed 10–20 Hz with a counter; Active only after the dormancy |
 | Main altitude limit at EuRoC | D-18Nov.5 | Readback checks the main altitude is at most 450 m above the pad |
 | No servos; freed pins; sounder at arming | D-19Nov.2–D-19Nov.4 | No servo timers or enable; PB0 is a timing strobe, PA3 a reset memory read at boot step 1, PC6 / PC7 / PD10 inputs with pull-downs; the sounder beeps continuity and state at arming |
+| Board temperatures | B-30 (LV-0510) | Log the flight MCU die, one IMU and one barometer temperature at 1 Hz on the pad (in pad telemetry) and 10 Hz in flight; pad telemetry warns above [60] °C |
+| Charge state | D-21Nov.2, C-15 | Read each charger's state over I²C4: charging, done, temperature hold, fault. Cross-check against the pack-voltage trend. Burrito controls nothing in the charge path |
+| Pack voltages | C-17, C-22, C-23 | AV and actuator packs on their pack side (readable on the umbilical), the CATS cell, both NTCs; pad telemetry shows each, with the live source |
+| No flashing on the rail | D-21Nov.4 | USB service at the av-bay only |
+| IREC radio behaviour | B-27 (proposed) | Transmit off by default; on once the recovery arm closes on the pad, or by a flag set over USB; channel set over USB |
 | Checkpoint first at launch detect; missed-launch catch in PAD | D-19Nov.1 | **Must, before first flight.** Write the in-flight checkpoint before anything else at launch detect. In PAD with an arm closed, run the missed-launch catch (proposed: 50 m above the datum for 2 s) into the armed row. A pad pressure transient can't make it fire the main |
 
 ## Build target

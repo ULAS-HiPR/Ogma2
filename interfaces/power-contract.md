@@ -42,11 +42,12 @@ Foinse (Churro):
 - One protected Croí feed with a provisional 6 A aggregate ceiling.
 - Liquid propulsion has its own 6S pack and domain. It is not a load on Croí's
   logic rail.
-- Charging moves on board, through the umbilical (D-20Nov.1); the charger design
-  is open, and physical charge/arm exclusion has to be squared with charging until Go.
+- Charging is on board, through the umbilical: one standalone charger per pack
+  voltage, at maintenance rate, temperature-gated; no charge/arm interlock, shown
+  safe by fault analysis and test (D-20Nov.1, D-21Nov.2).
 - On the rail, a ground umbilical feeds both branches through per-source ideal
-  diodes ahead of the eFuses; pulling it hands each branch to its pack. It will
-  also charge the packs (D-20Nov.1); until that design exists, the diodes stop it.
+  diodes ahead of the eFuses; pulling it hands each branch to its pack. The diodes
+  carry load only; each pack charges through its own charger (D-21Nov.2).
 - Three branches: AV (logic and pyro), PROP (Fajita) and ACT (the active board,
   through its arm key), PROP and ACT from one 6S actuator pack (D-21Nov.1). The
   CATS Vega has its own cell, charged through its own lead (D-18Nov.2,

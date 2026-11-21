@@ -133,7 +133,7 @@ Also on the processors:
 
 Keep: autonomous source protection, threshold networks, source controls, the
 Samtec pinout (pin 8 is now `CROI_POWER_HOLD`), TCA4307, INA228, ADS1115 and the
-voltage-input TMUX1511. Don't add an MCU, CAN endpoint or 24 V converter.
+voltage-input TMUX1511. Don't add an MCU, CAN endpoint or actuator-voltage converter (D-21Nov.1).
 Churro gains charging (D-20Nov.1, D-21Nov.2), an ACT branch for Salsa beside
 PROP, both from one 6S actuator pack (D-21Nov.1), and damping on each umbilical
 pair (D-21Nov.3). Those circuits are drawn at the Churro power review; balancing
