@@ -250,7 +250,9 @@ def make_symbol(tree, lib_id, ref, at, angle=0, value='', footprint='', sheet=''
             s.append(prop(k, lp[k], at))
     for k, v in (extra or {}).items():
         s.append(prop(k, v, at))
-    s.append(el('instances', el('project', project, el('path', inst or sheet_path(tree), el('reference', ref), el('unit', num(1))))))
+    inst = inst or sheet_path(tree)
+    assert inst, f'{ref}: no instance path; pass inst= on a sheet with no other symbols'
+    s.append(el('instances', el('project', project, el('path', inst, el('reference', ref), el('unit', num(1))))))
     for p in lib_pins(tree, lib_id):
         s.append(el('pin', p, el('uuid', ident(sheet, 'pin', ref, p))))
     add(tree, s)

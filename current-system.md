@@ -1,9 +1,10 @@
 # Ogma 2 current system
 
 Updated 21 November 2026. Decisions live in [decisions.md](decisions.md); this
-file states what is true now. Native CAD still holds the 8 September draft.
-Capture of the [capture specification](docs/architecture/schematic-capture-spec.md)
-is cleared for Burrito (21 November); Churro's waits for its power review. No fabrication,
+file states what is true now. Burrito's schematic is captured from the
+[capture specification](docs/architecture/schematic-capture-spec.md) (21 November;
+[status](hardware/croi2/schematic-status.md)); its PCB still holds the 8 September
+draft. Churro's capture waits for its power review. No fabrication,
 firmware or flight release exists.
 
 ## The system
@@ -237,18 +238,18 @@ stack: about 400–420 mm between lug faces, or a two-sided sled.
 
 | Item | State |
 | --- | --- |
-| Croí CAD | 44 pages, 643 parts, unrouted, 80 × 230 mm working canvas; ERC 4 errors / 6 warnings; DRC 61 + unrouted |
+| Croí CAD | Schematic: 44 pages, 581 parts, captured 21 Nov; ERC clean with 3 recorded exclusions; 342 checks incl. the capture assertions. PCB: 8 September parts, unrouted, 80 × 230 mm working canvas, not yet updated from the schematic |
 | Foinse CAD | 12 pages, 113 parts, unrouted, 60 × 80 mm; ERC clean; DRC 24 + unrouted |
-| Known CAD gaps | Nano-Fit footprints on both boards; Croí USB footprint mismatch; every decided change since 6 October (capture specification) |
+| Known CAD gaps | Nano-Fit footprints on both boards (Burrito needs Molex's 1053111102 drawing); J6101 / J6102 arm-switch parts; Croí USB footprint mismatch; Burrito's PCB update and layout; Churro's capture |
 | Firmware | [Firmware interface](docs/firmware-interface.md); build-pipeline brief v0.1.0 (Anav); no target code yet |
 | Tests | Host checkpoint model only (12 tests); no hardware tests. Gates and campaigns in [11 Verification](docs/architecture/11-verification.md) |
 
 ## Next
 
-1. Capture Burrito sheet by sheet the readable-schematics way, each sheet
-   reviewed by Seán (D-21Nov.9). The interface is frozen (B-36); Churro keeps
-   the interface rules in its requirements. Burrito limits each CAN reference
-   (B-39, D-21Nov.11).
+1. Burrito: schematic captured (steps 0–8); Seán's open calls are listed in
+   [schematic-status.md](hardware/croi2/schematic-status.md). Next: the PCB
+   update and layout, then the JLC assembly files. Burrito limits each CAN
+   reference (B-39, D-21Nov.11).
 2. The Churro power review: branch ratings, chargers, damping, faults
    (D-21Nov.1–D-21Nov.3); then Churro's capture.
 3. Anav: the recovery logic (D-6.11) and his pyro-channel circuit against

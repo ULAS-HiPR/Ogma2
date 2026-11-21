@@ -137,7 +137,7 @@ def comms_sheet():
     done |= SUPPLY | GROUND | {'13'}
     assert done | {p for p, r in rows.items() if r['net'] == 'NC'} | set(RESERVED) == set(rows)
     K.add(t, K.text('PC3 / PC4: LORA_RXEN / LORA_TXEN reservations, MCU-only, no external\n'
-                    'connection (64-pad map); firmware leaves them analog.', (30.48, AT[1] - 6.35), S, 'nRes', 1.016))
+                    'connection (64-pad map); firmware holds them low or analog.', (30.48, AT[1] - 6.35), S, 'nRes', 1.016))
     for n in K.children(t, 'text'):
         if n[1] == 'COMMS MCU / STM32H563VIT6 / NON-Q LQFP100':
             n[1] = 'COMMS MCU / STM32H563RIT6 / LQFP64'

@@ -51,8 +51,8 @@ FLIGHT = {  # pad: (net, function, AF, note) from the capture specification's fl
     '69': ('CAN2_TX', 'FDCAN2_TX', 'AF9', 'Bus 2 via U504 (D-5Nov.3)'),
     '91': ('CAN2_RX', 'FDCAN2_RX', 'AF9', 'Bus 2 via U504 (D-5Nov.3)'),
 }
-COMMS = {'11': 'Reserved LORA_RXEN: MCU-only, no external connection (no-connect); firmware sets analog',
-         '24': 'Reserved LORA_TXEN: MCU-only, no external connection (no-connect); firmware sets analog'}
+COMMS = {'11': 'Reserved LORA_RXEN: MCU-only, no external connection (no-connect); safe low or analog',
+         '24': 'Reserved LORA_TXEN: MCU-only, no external connection (no-connect); safe low or analog'}
 DEBUG = {'SWD': ('DEBUG_JTMS-SWDIO', 'DEBUG_JTCK-SWCLK'), 'TRACESWO': ('DEBUG_JTDO-SWO',)}
 
 

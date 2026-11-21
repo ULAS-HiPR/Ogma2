@@ -3871,3 +3871,31 @@ tour's connector gallery.
   branch; connectors size from the averaged figure; the 6S pack wants
   high-drain cells. Fajita and Salsa should stagger servo starts and protect
   each servo, so a jam trips one servo rather than the branch.
+
+## 21 November 2026 — Burrito schematic captured
+
+- Burrito (Croí2) was captured from the capture specification in nine steps,
+  each a commit on main with Seán reviewing between them
+  (`hardware/croi2/schematic-status.md`): the flight pad map, 02a, the power
+  sheets, the sensors and the new magnetometer sheet, CAN bus 2 with Gecko-SL
+  connectors and the B-39 reference parts, the outputs with the servos removed,
+  the comms MCU in LQFP64, then the close-out.
+- Observed: 643 → 581 parts. At each step the netlist change matched the
+  intended change pin for pin. ERC went from four errors and six warnings to
+  none, with three recorded exclusions (strap pins tied to GND). The rewritten
+  board checker passes 342 checks, including the capture safety assertions
+  A1–A12, A14–A16, A18, A19 and A22. Both MCU maps match ST's open pin data:
+  all pads, and every AF or ADC row (40 flight, 11 comms).
+- As-captured pin maps are in `hardware/croi2/libraries/inputs`. The
+  8 September exports and the 7 September maps are kept in
+  `hardware/croi2/history/baseline-2026-09-08`; the 22 September desk checks
+  now read them there.
+- JLC: parts with an MPN were checked early and every generic passive at the
+  close-out. 68 of 73 passive lines match; the rest are listed in
+  `hardware/croi2/jlc-stock.md`.
+- Still open: J101's Nano-Fit footprint (Molex's drawing couldn't be obtained
+  from this session); the J6101 / J6102 connector parts; 3D models for the NANO2
+  fuse and the Gecko; the PCB update and layout. Seán's calls are listed in the
+  status file: USB_CONFIG_OK, doubled pull-ups, the Gecko series, the sensor,
+  monitor and flash substitutions, the X7R bulk capacitors, and the 31.9k and
+  74.9k 0.1% resistors.

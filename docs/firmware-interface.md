@@ -62,7 +62,7 @@ the kernel mux sources, VOS and flash wait states.
 
 ## Flight MCU pins
 
-STM32H563VIT6, LQFP100. Pads in brackets. Every output below is off at reset
+STM32H563VIT6, LQFP100 (as captured: [flight map](../hardware/croi2/libraries/inputs/flight-pinout.csv)). Pads in brackets. Every output below is off at reset
 and power-off: pulled down externally, or open drain and released. Pins not
 listed are supplies, ground, VCAP or unused.
 
@@ -110,7 +110,7 @@ listed are supplies, ground, VCAP or unused.
 
 Check every AF number against ST DS14258 when the clock tree is built.
 
-**Links, servos, monitoring, status**
+**Links, monitoring, status**
 
 | Function | Pins | Notes |
 | --- | --- | --- |
@@ -143,7 +143,7 @@ against the reference manual's source-impedance table); the rail dividers have
 
 ## Comms MCU pins
 
-STM32H563RIT6, LQFP64 ([64-pad map](architecture/proposed-comms-pinout.csv)).
+STM32H563RIT6, LQFP64 ([64-pad map](architecture/proposed-comms-pinout.csv); as captured: [comms map](../hardware/croi2/libraries/inputs/comms-pinout.csv)).
 
 | Function | Pins |
 | --- | --- |

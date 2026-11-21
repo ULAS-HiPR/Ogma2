@@ -228,8 +228,9 @@ stay clear of the buck loop. USB bypass must not backfeed the battery.
 
 Group U1102 bootstrap bias and U1201–U1204 source-permission logic near the mux.
 Do not move this small logic island into the sensor zone just because it has
-few parts. `BAT_VALID OR USB_CONFIG_OK` enables the core **input**; the held-side
-LDO must not lose enable merely because the incoming source vanished.
+few parts. The core **input** enables from its own 4V_PRE level (R1210 / R1204 into U1401
+EN/UVLO, D-6.5), whatever the source; the held-side LDO must not lose enable
+merely because the incoming source vanished.
 
 ### C06. Buck: place and route its local loop before leaving the block
 
