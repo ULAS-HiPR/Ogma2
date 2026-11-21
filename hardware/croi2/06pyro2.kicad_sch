@@ -1673,7 +1673,128 @@
             (effects
               (font
                 (size 0.9 0.9))
-              (hide yes)))))))
+              (hide yes))))))
+    (symbol "power:PWR_FLAG"
+      (power)
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0)
+        (hide yes))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "#FLG"
+        (at 0 1.905 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Value" "PWR_FLAG"
+        (at 0 3.81 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Special symbol for telling ERC where power comes from"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "flag power"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "PWR_FLAG_0_0"
+        (pin power_out line
+          (at 0 0 90)
+          (length 0)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (symbol "PWR_FLAG_0_1"
+        (polyline
+          (pts
+            (xy 0 0)
+            (xy 0 1.27)
+            (xy -1.016 1.905)
+            (xy 0 2.54)
+            (xy 1.016 1.905)
+            (xy 0 1.27))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none))))
+      (embedded_fonts no)))
+  (symbol
+    (lib_id "power:PWR_FLAG")
+    (at 185.42 251.46 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "9eed0711-f8bf-5988-8196-422da90b14f3")
+    (property "Reference" "#FLG023"
+      (at 185.42 243.84 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "PWR_FLAG"
+      (at 185.42 246.38 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" ""
+      (at 185.42 251.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 185.42 251.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Special symbol for telling ERC where power comes from"
+      (at 185.42 251.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "flag power"
+      (at 185.42 251.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
+          (reference "#FLG023")
+          (unit 1))))
+    (pin "1"
+      (uuid "676206de-792a-5f5a-9cd5-9019bea60879")))
   (embedded_fonts no)
   (text "PYRO2 / RECOVERY DOMAIN"
     (at 15.24 15.24 0)
@@ -1682,617 +1803,13 @@
         (size 2.54 2.54))
       (justify left))
     (uuid "4a4082a7-da13-5c8a-90dc-51eb68b605ff"))
-  (text "1  ONE-SHOT HIGH-SIDE REQUEST / LOAD-SPECIFIC TIMING"
+  (text "1  HIGH-SIDE REQUEST: PYRO2_FIRE DIRECT TO U6404 IN"
     (at 15.24 58.42 0)
     (effects
       (font
         (size 1.4 1.4))
       (justify left))
     (uuid "63eba749-9381-5744-8ab9-51220ffe2a74"))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6401")
-    (at 91.44 106.68 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "0962407c-3dc9-556c-84ba-102105494d15")
-    (property "Reference" "U6401"
-      (at 116.84 78.74 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "LTC6993IS6-1#TRMPBF"
-      (at 116.84 81.28 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:LTC6993IS6-1_TRMPBF"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC6993-6993-1-6993-2-6993-3-6993-4.pdf"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Hardware finitepulse element"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Timer TimerBlox monostable pulse"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "TSOT*23*"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "LTC6993IS6-1#TRMPBF"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Analog Devices"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "U6401")
-          (unit 1))))
-    (pin "4"
-      (uuid "5d274e12-4049-54e5-ad28-110099ecfc02"))
-    (pin "1"
-      (uuid "b34516e7-390b-5437-89e0-6d55bfaeb2f6"))
-    (pin "3"
-      (uuid "155cc035-7b70-54bb-8cd5-7d2f0251260d"))
-    (pin "5"
-      (uuid "f533884c-ae46-5f41-83ee-8a3c03fc5f5a"))
-    (pin "2"
-      (uuid "98cce9b0-5f7f-547d-a460-e4316366a1f1"))
-    (pin "6"
-      (uuid "bbd9f311-06fe-57b4-92d2-b96c4f04c572")))
-  (symbol
-    (lib_id "Device:C")
-    (at 119.38 68.58 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "81db9d8c-517f-552f-888e-a81ed5824160")
-    (property "Reference" "C6401"
-      (at 123.19 67.31 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 123.19 69.85 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "C6401")
-          (unit 1))))
-    (pin "1"
-      (uuid "2919fd40-34f9-56a7-add4-4aa1688d274a"))
-    (pin "2"
-      (uuid "38665f98-e371-50c2-9494-3d9cf9771916")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 119.38 77.47 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "2a838a01-3fee-562b-b040-e31ca3973213")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 119.38 77.47 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 40.64 139.7 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "c06c524b-0736-5ea0-b72f-c780c77b4442")
-    (property "Reference" "R6401"
-      (at 44.45 138.43 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100k"
-      (at 44.45 140.97 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 40.64 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 40.64 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 40.64 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 40.64 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 40.64 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "R6401")
-          (unit 1))))
-    (pin "1"
-      (uuid "ec019890-e372-52f4-b7fe-2228b2ca1ff4"))
-    (pin "2"
-      (uuid "1608c724-02af-534c-b588-6dc1650a4737")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 40.64 148.59 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "ee3267d6-64c4-5e42-a405-9a9628b8c112")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 40.64 148.59 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 71.12 157.48 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp yes)
-    (uuid "e1e794f7-68c4-57d0-b4cc-134e76fa4398")
-    (property "Reference" "R6411"
-      (at 74.93 156.21 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "TBD pulse RSET"
-      (at 74.93 158.75 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "R6411")
-          (unit 1))))
-    (pin "1"
-      (uuid "3be8c1bd-8734-53c5-b288-f70291acfda4"))
-    (pin "2"
-      (uuid "067cefd3-7098-5edf-935e-79a6da843c7e")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 71.12 168.91 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "7a032a89-1756-5d80-b450-68a139608424")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 71.12 168.91 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 134.62 139.7 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp yes)
-    (uuid "07d29925-8121-5fc4-a6d6-29485f1a1f5e")
-    (property "Reference" "R6412"
-      (at 138.43 138.43 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "TBD pulse DIV high"
-      (at 138.43 140.97 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "R6412")
-          (unit 1))))
-    (pin "1"
-      (uuid "9b3fa4ba-8732-5092-95d9-9e46736e50c9"))
-    (pin "2"
-      (uuid "b158afe4-0961-5d0e-b426-c30841d3018d")))
-  (symbol
-    (lib_id "Device:R")
-    (at 134.62 177.8 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp yes)
-    (uuid "9ad2cb5e-d11e-5e78-b3da-e94e43c5315c")
-    (property "Reference" "R6413"
-      (at 138.43 176.53 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "TBD pulse DIV low"
-      (at 138.43 179.07 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "R6413")
-          (unit 1))))
-    (pin "1"
-      (uuid "129a1ac8-669f-5146-b78e-d3733aea985a"))
-    (pin "2"
-      (uuid "6acc5428-a4e0-587f-9065-42fc387809c3")))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 134.62 128.27 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "68a39c82-41ff-5340-b0db-cbbd1742f33a")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 134.62 128.27 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 134.62 189.23 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "0bbdda06-3774-5683-a244-eada419a612b")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 134.62 189.23 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6402")
-    (at 228.6 106.68 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "3b4f7f82-538d-500f-b6bc-2b3277dff7a6")
-    (property "Reference" "U6402"
-      (at 254 83.82 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G97DBVR"
-      (at 254 86.36 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Bootstrap logic mux OR"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "SOT* SC*"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G97DBVR"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "U6402")
-          (unit 1))))
-    (pin "3"
-      (uuid "886a3755-9acb-5875-b12f-c89767521790"))
-    (pin "1"
-      (uuid "0a2a08ee-05e6-5be6-9ebf-55979a186fdd"))
-    (pin "6"
-      (uuid "cc1de835-f0e6-5a04-9f45-c80397e7613f"))
-    (pin "5"
-      (uuid "35c070eb-cdec-5a52-ba5a-53654803ae19"))
-    (pin "2"
-      (uuid "7ef62e02-9466-519e-b8b1-7ebd99b158f0"))
-    (pin "4"
-      (uuid "d83c738a-8efc-5a4e-98a6-c3648da18da1")))
-  (symbol
-    (lib_id "Device:C")
-    (at 254 93.98 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "b657cb01-149b-5823-abcc-aaf6abba6c98")
-    (property "Reference" "C6402"
-      (at 257.81 92.71 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 257.81 95.25 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 254 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 254 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 254 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 254 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 254 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "C6402")
-          (unit 1))))
-    (pin "1"
-      (uuid "1601b5dc-7b7e-5e67-a9fb-3403d7d0b7d4"))
-    (pin "2"
-      (uuid "bfba5878-126d-5b4f-a0ee-cfba46325e68")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 254 102.87 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "196048c0-7a16-573a-a93e-df12595fe5ac")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 254 102.87 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (symbol
     (lib_id "Device:R")
     (at 269.24 139.7 0)
@@ -2613,7 +2130,7 @@
     (unit 1)
     (in_bom yes)
     (on_board yes)
-    (dnp yes)
+    (dnp no)
     (uuid "5a86a331-d3ef-5dfa-a680-554db3b4a2a1")
     (property "Reference" "R6414"
       (at 95.25 359.41 0)
@@ -2621,7 +2138,7 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "TBD load current limit"
+    (property "Value" "1.24k 1%"
       (at 95.25 361.95 0)
       (effects
         (font
@@ -2657,6 +2174,12 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
+    (property "Implementation_Note" "TPS1H100 current limit, about 2.0 A (D-6.2, D-7.1)"
+      (at 91.44 360.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
@@ -2687,162 +2210,6 @@
         (size 1.4 1.4))
       (justify left))
     (uuid "8c6b85a1-2473-5cf6-a4e2-d3ac33b86c7d"))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6403")
-    (at 287.02 279.4 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "0477214e-dc07-5e6a-8f57-2ca6cef38d41")
-    (property "Reference" "U6403"
-      (at 312.42 256.54 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G97DBVR"
-      (at 312.42 259.08 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Bootstrap logic mux OR"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "SOT* SC*"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G97DBVR"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "U6403")
-          (unit 1))))
-    (pin "3"
-      (uuid "493b4892-eba6-59ad-870f-6ff77bc7ad24"))
-    (pin "1"
-      (uuid "4cc9db97-5eed-5f94-a79d-d12aee45e3b2"))
-    (pin "6"
-      (uuid "fc448951-a1fc-5368-a18b-d48494663c6b"))
-    (pin "5"
-      (uuid "54ffab26-7811-5793-a527-3910e0706d3d"))
-    (pin "2"
-      (uuid "fffe30df-1b38-557a-92d5-513ebcfc4c4a"))
-    (pin "4"
-      (uuid "2aed5915-9455-52c6-9244-4b15723a43b4")))
-  (symbol
-    (lib_id "Device:C")
-    (at 312.42 266.7 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "c5d362e5-4352-5063-881f-d99c5272b750")
-    (property "Reference" "C6403"
-      (at 316.23 265.43 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 316.23 267.97 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7904adff-0897-51e6-8550-87dad4a222eb"
-          (reference "C6403")
-          (unit 1))))
-    (pin "1"
-      (uuid "2fdd3816-d127-5d79-bc19-3b8776197b0c"))
-    (pin "2"
-      (uuid "7bd167a8-88ad-5255-9f68-4f64c789c1d8")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 312.42 275.59 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "edae82b8-e4a5-544a-a5db-6afd79fcb29d")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 312.42 275.59 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (symbol
     (lib_id "Device:R")
     (at 251.46 304.8 0)
@@ -3121,7 +2488,7 @@
         (font
           (size 1 1))
         (hide yes))))
-  (text "Load/pulse/no-fire evidence absent: energy link and timing/current-setting resistors DNP."
+  (text "Igniter values open: energy link R6410 stays DNP. R6414 1.24k sets the switch limit near 2.0 A; pulse length is set in firmware (D-6.2)."
     (at 15.24 411.48 0)
     (effects
       (font
@@ -3142,62 +2509,6 @@
         (size 1.05 1.05))
       (justify left))
     (uuid "4a84c5e9-ba96-5048-aea2-859f22171080"))
-  (global_label "PYRO2_TDIV"
-    (shape bidirectional)
-    (at 99.06 127.0 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "e68f5c56-17ca-5777-a419-d2f0410fce32")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 99.06 127.0 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO2_HS_REQUEST"
-    (shape bidirectional)
-    (at 40.64 106.68 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "e6bf396a-46b0-5312-a15d-dd913d1d5d00")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 40.64 106.68 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO2_TSET"
-    (shape bidirectional)
-    (at 83.82 127.0 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "67624776-d152-5788-b53b-e65f5e245311")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 83.82 127.0 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 228.6 81.28 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "5d2e71f3-3306-5d58-b466-0629be5e4c69")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 228.6 81.28 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "FLIGHT_3V3"
     (shape bidirectional)
     (at 111.76 281.94 0)
@@ -3208,34 +2519,6 @@
     (uuid "d44fb89b-4177-5708-8815-7b45547f5d23")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 111.76 281.94 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 91.44 55.88 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "58d4ea4c-738e-5d82-8422-04bf0c0169de")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 55.88 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 287.02 254.0 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "ed0e70a4-eefc-5c2e-9eb4-27355c1d11a2")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 287.02 254.0 0)
       (effects
         (font
           (size 1 1))
@@ -3268,91 +2551,7 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 287.02 299.72 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "8eeec62c-d037-5c4f-9d7e-320a16f59141")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 287.02 299.72 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 228.6 127.0 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "07ba1507-78a7-501d-a539-6d5be18be004")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 228.6 127.0 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 91.44 132.08 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "92091b15-9074-5107-a529-0cb54c9edaa4")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 132.08 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO2_PULSE"
-    (shape bidirectional)
-    (at 111.76 106.68 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "5c7d30a9-5ede-5d18-bd56-72c38c36ae69")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 111.76 106.68 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "RECOVERY_HW_PERMIT"
-    (shape bidirectional)
-    (at 266.7 274.32 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "7345e37c-fb47-5f17-8f2f-7d0645b41b61")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 266.7 274.32 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "RECOVERY_HW_PERMIT"
-    (shape bidirectional)
-    (at 208.28 101.6 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "58c784ea-bbba-5276-b0db-c2e2a3ff05dd")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 208.28 101.6 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO2_HS_ENABLE"
+  (global_label "PYRO2_FIRE"
     (shape bidirectional)
     (at 88.9 312.42 0)
     (effects
@@ -3366,7 +2565,7 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "PYRO2_HS_ENABLE"
+  (global_label "PYRO2_FIRE"
     (shape bidirectional)
     (at 243.84 106.68 180)
     (effects
@@ -3464,7 +2663,7 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "PYRO2_LS_ENABLE"
+  (global_label "PYRO2_LS_SELECT"
     (shape bidirectional)
     (at 302.26 279.4 180)
     (effects
@@ -3508,116 +2707,12 @@
         (hide yes))))
   (wire
     (pts
-      (xy 91.44 55.88)
-      (xy 91.44 86.36))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "e49356ca-97df-56b4-a75c-7876f5aedb8e"))
-  (wire
-    (pts
-      (xy 91.44 55.88)
-      (xy 119.38 55.88))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "08c6c316-11ee-5ec9-bf3f-9076762e8141"))
-  (wire
-    (pts
       (xy 111.76 281.94)
       (xy 111.76 287.02))
     (stroke
       (width 0)
       (type default))
     (uuid "4ca88839-fc6e-540b-ad31-84c65d35b8a8"))
-  (wire
-    (pts
-      (xy 119.38 55.88)
-      (xy 119.38 64.77))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a9f1c30c-94cd-5482-b259-87d9f20d31c5"))
-  (wire
-    (pts
-      (xy 134.62 128.27)
-      (xy 134.62 135.89))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "aab6eee3-856a-5011-8d51-d37b747ffebf"))
-  (wire
-    (pts
-      (xy 228.6 81.28)
-      (xy 228.6 91.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d05f1156-5489-5dd1-8c79-7ebba2518e82"))
-  (wire
-    (pts
-      (xy 228.6 81.28)
-      (xy 254 81.28))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a128172b-2d96-58fc-a1e1-145fd7bc68b1"))
-  (wire
-    (pts
-      (xy 254 81.28)
-      (xy 254 90.17))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "c3702e4b-b120-5df3-88d3-0e52eb5136c9"))
-  (wire
-    (pts
-      (xy 287.02 254.0)
-      (xy 287.02 264.16))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "14811e33-b27e-50f3-8a8b-3f6c092dc98e"))
-  (wire
-    (pts
-      (xy 287.02 254.0)
-      (xy 312.42 254.0))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "abc5df97-c6bb-5d2a-bb83-a689c919a62b"))
-  (wire
-    (pts
-      (xy 312.42 254.0)
-      (xy 312.42 262.89))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9cd5cc64-291d-5c7a-827f-f7aa7cc32def"))
-  (wire
-    (pts
-      (xy 40.64 143.51)
-      (xy 40.64 148.59))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "cccea2e1-6fa7-5eb5-b92b-de57ce045494"))
-  (wire
-    (pts
-      (xy 71.12 161.29)
-      (xy 71.12 168.91))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "3d057d52-a3f4-5dce-8df0-fd88e64f281a"))
-  (wire
-    (pts
-      (xy 91.44 127.0)
-      (xy 91.44 132.08))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f6a8181b-66bd-5812-98c4-d30d242736ed"))
   (wire
     (pts
       (xy 91.44 364.49)
@@ -3628,28 +2723,12 @@
     (uuid "f7d12cad-d0d7-53b9-9d99-b0a78f95dda7"))
   (wire
     (pts
-      (xy 119.38 72.39)
-      (xy 119.38 77.47))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "e043d47a-cee3-54fb-bcd8-7bdb16002965"))
-  (wire
-    (pts
       (xy 119.38 337.82)
       (xy 119.38 342.9))
     (stroke
       (width 0)
       (type default))
     (uuid "f7928923-ddc4-5c66-b5df-fcb7ffe291d5"))
-  (wire
-    (pts
-      (xy 134.62 181.61)
-      (xy 134.62 189.23))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "32fda8f4-c4d1-5f33-9919-f1f38a04875f"))
   (wire
     (pts
       (xy 185.42 293.37)
@@ -3660,14 +2739,6 @@
     (uuid "77032d06-8669-5a38-b491-0acca85f9c42"))
   (wire
     (pts
-      (xy 228.6 121.92)
-      (xy 228.6 127.0))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "56c00f26-dd9d-5cd2-84f3-85b97b9cf0d9"))
-  (wire
-    (pts
       (xy 251.46 308.61)
       (xy 251.46 313.69))
     (stroke
@@ -3676,36 +2747,12 @@
     (uuid "d60ba705-6fc5-585d-aaba-3c938a8f0a83"))
   (wire
     (pts
-      (xy 254 97.79)
-      (xy 254 102.87))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a5712e93-9ab9-5ae1-a154-cd19e604c4c5"))
-  (wire
-    (pts
       (xy 269.24 143.51)
       (xy 269.24 148.59))
     (stroke
       (width 0)
       (type default))
     (uuid "60d812ce-cab9-551c-b6a3-46a0d90ae8af"))
-  (wire
-    (pts
-      (xy 287.02 294.64)
-      (xy 287.02 299.72))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "db0ef706-ffec-5daa-9866-19a9fca4b693"))
-  (wire
-    (pts
-      (xy 312.42 270.51)
-      (xy 312.42 275.59))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "fcef50de-b8c0-5364-9f95-b263f0bda990"))
   (wire
     (pts
       (xy 347.98 379.73)
@@ -3876,22 +2923,6 @@
     (uuid "02c7e6bb-3ad5-54b4-8d02-27c51529cbfb"))
   (wire
     (pts
-      (xy 40.64 106.68)
-      (xy 40.64 135.89))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "368c6fd2-1579-5d47-893d-076956c55e0e"))
-  (wire
-    (pts
-      (xy 40.64 106.68)
-      (xy 71.12 106.68))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "0ae4a595-17a6-555c-bfa8-435ebcd02f05"))
-  (wire
-    (pts
       (xy 302.26 279.4)
       (xy 312.42 279.4))
     (stroke
@@ -3924,132 +2955,23 @@
     (uuid "4dae48f7-dc5b-584e-9f38-b4972f96747c"))
   (wire
     (pts
-      (xy 251.46 284.48)
-      (xy 271.78 284.48))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "17bf8a70-4c8e-531d-85a5-061ac16f7640"))
-  (wire
-    (pts
-      (xy 111.76 106.68)
-      (xy 175.26 106.68))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "94530089-ad6a-5e48-8d83-99fb94aa8cc5"))
-  (wire
-    (pts
-      (xy 175.26 106.68)
-      (xy 175.26 111.76))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2986d923-0a94-5ec7-830c-86e97a3815da"))
-  (wire
-    (pts
-      (xy 175.26 111.76)
-      (xy 213.36 111.76))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9c61ec65-279f-5375-8625-f40bd0a8cacd"))
-  (wire
-    (pts
-      (xy 99.06 127.0)
-      (xy 99.06 157.48))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "13953a9f-1472-5a10-9df3-078c8c3f85f4"))
-  (wire
-    (pts
-      (xy 99.06 157.48)
-      (xy 134.62 157.48))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "6db4acde-721b-57ef-89e9-a11cc7685153"))
-  (wire
-    (pts
-      (xy 134.62 143.51)
-      (xy 134.62 157.48))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1c4c9e66-adaa-5aaa-b4ec-d75e27c1e924"))
-  (wire
-    (pts
-      (xy 134.62 157.48)
-      (xy 134.62 173.99))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "ae64bf36-1a4c-5486-ae6b-fac184d55902"))
-  (wire
-    (pts
-      (xy 71.12 137.16)
-      (xy 71.12 153.67))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d9566c30-e182-53f0-91ed-cbe7c922aa99"))
-  (wire
-    (pts
-      (xy 71.12 137.16)
-      (xy 83.82 137.16))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "e7402ef4-bfc8-5796-a400-4ffc6e07cf47"))
-  (wire
-    (pts
-      (xy 83.82 127.0)
-      (xy 83.82 137.16))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a63137bb-64f6-5311-b158-4922a07be14b"))
-  (wire
-    (pts
       (xy 151.13 251.46)
       (xy 156.21 251.46))
     (stroke
       (width 0)
       (type default))
     (uuid "8dd5af18-9c8b-5ea3-b53d-347b07c2dd33"))
-  (wire
-    (pts
-      (xy 208.28 101.6)
-      (xy 213.36 101.6))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "39167594-7c1a-5aa4-a5de-97ba8e96efce"))
-  (wire
-    (pts
-      (xy 266.7 274.32)
-      (xy 271.78 274.32))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "304224fe-7885-5bef-b830-67a00d56b10e"))
   (junction
     (at 127 276.86)
     (diameter 0)
     (color 0 0 0 0)
     (uuid "131b7d43-6907-58f0-aa0f-f05baefae549"))
   (junction
-    (at 134.62 157.48)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "d0f1e2f0-1781-5f18-b901-84cb6b136ea0"))
-  (junction
     (at 347.98 347.98)
     (diameter 0)
     (color 0 0 0 0)
     (uuid "24dd4639-c7bb-56d3-972c-031374d94062"))
-  (text "What this does: Shows the two switched sides and bounded-pulse logic for recovery channel 2.\nConnects to: Recovery permission and flight request -> J6601 load pair on 06b; current report -> 06c. Energy and load-setting parts remain DNP: do not connect an initiator."
+  (text "What this does: Shows the two switched sides for recovery channel 2: PE9 drives the high side, PC8 the low side.\nConnects to: RECOVERY_ARMED_VBAT (06a) and the flight MCU -> J6601 load pair on 06b; current report -> 06c. Energy link remains DNP: do not connect an initiator."
     (at 15.24 27.94 0.0)
     (effects
       (font

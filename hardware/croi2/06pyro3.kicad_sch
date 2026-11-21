@@ -1673,7 +1673,433 @@
             (effects
               (font
                 (size 0.9 0.9))
-              (hide yes)))))))
+              (hide yes))))))
+    (symbol "Ogma2:SN74LVC1G08DBVR"
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "U"
+        (at -5.08 7.62 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "SN74LVC1G08DBVR"
+        (at 7.62 -7.62 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g08.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Single AND Gate, Low-Voltage CMOS"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "Single Gate AND LVC CMOS"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "SOT?23* Texas?R-PDSO-G5?DCK* Texas?R-PDSO-N5?DRL* Texas?X2SON*0.8x0.8mm*P0.48mm*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "MPN" "SN74LVC1G08DBVR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Manufacturer" "Texas Instruments"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Library_Check" "KiCad 9.0.7 74xGxx:74LVC1G08, renamed. DBV pinout: 1 A, 2 B, 3 GND, 4 Y, 5 VCC (TI SN74LVC1G08 datasheet). Footprint: KiCad Package_TO_SOT_SMD:SOT-23-5, as U2 / U3 gates"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "SN74LVC1G08DBVR_0_1"
+        (arc
+          (start 0 5.08)
+          (mid 5.0579 0)
+          (end 0 -5.08)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background)))
+        (polyline
+          (pts
+            (xy 0 -5.08)
+            (xy -7.62 -5.08)
+            (xy -7.62 5.08)
+            (xy 0 5.08))
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background))))
+      (symbol "SN74LVC1G08DBVR_1_1"
+        (pin input line
+          (at -15.24 2.54 0)
+          (length 7.62)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin input line
+          (at -15.24 -2.54 0)
+          (length 7.62)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin power_in line
+          (at 0 10.16 270)
+          (length 5.08)
+          (name "VCC"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "5"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin power_in line
+          (at 0 -10.16 90)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "3"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin output line
+          (at 12.7 0 180)
+          (length 7.62)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "4"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no))
+    (symbol "power:PWR_FLAG"
+      (power)
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0)
+        (hide yes))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "#FLG"
+        (at 0 1.905 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Value" "PWR_FLAG"
+        (at 0 3.81 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Special symbol for telling ERC where power comes from"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "flag power"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "PWR_FLAG_0_0"
+        (pin power_out line
+          (at 0 0 90)
+          (length 0)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (symbol "PWR_FLAG_0_1"
+        (polyline
+          (pts
+            (xy 0 0)
+            (xy 0 1.27)
+            (xy -1.016 1.905)
+            (xy 0 2.54)
+            (xy 1.016 1.905)
+            (xy 0 1.27))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none))))
+      (embedded_fonts no)))
+  (symbol
+    (lib_id "Ogma2:SN74LVC1G08DBVR")
+    (at 228.6 106.68 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "1d6cff71-6bde-5109-81c2-82e1925aebc2")
+    (property "Reference" "U6502"
+      (at 233.68 97.79 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "SN74LVC1G08DBVR"
+      (at 233.68 115.57 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+      (at 228.6 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g08.pdf"
+      (at 228.6 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Single AND Gate, Low-Voltage CMOS"
+      (at 228.6 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "Single Gate AND LVC CMOS"
+      (at 228.6 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "SOT?23* Texas?R-PDSO-G5?DCK* Texas?R-PDSO-N5?DRL* Texas?X2SON*0.8x0.8mm*P0.48mm*"
+      (at 228.6 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "SN74LVC1G08DBVR"
+      (at 228.6 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Texas Instruments"
+      (at 228.6 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "True 2-input AND: PYRO3_FIRE AND STAGE_ELIGIBLE -> PYRO3_HS_ENABLE (D-7.2). Not the 1G97: its configuration gave A AND NOT B"
+      (at 228.6 106.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
+          (reference "U6502")
+          (unit 1))))
+    (pin "1"
+      (uuid "2e4ce7a2-f83d-56b7-905b-663869b331fb"))
+    (pin "2"
+      (uuid "1cf83213-3ca5-53f6-b41d-bc7fa28ad87a"))
+    (pin "5"
+      (uuid "0f9e1da9-863b-5941-869c-2f02d0013d2f"))
+    (pin "3"
+      (uuid "1b8a5358-1380-5c1b-90d3-82fa9737b887"))
+    (pin "4"
+      (uuid "74387f77-cfdb-5a78-b84f-ea9bc0c53cac")))
+  (wire
+    (pts
+      (xy 241.3 106.68)
+      (xy 243.84 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "87e19298-38b0-5ef4-9ac6-2521509cb4df"))
+  (wire
+    (pts
+      (xy 228.6 96.52)
+      (xy 228.6 81.28))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3911f3f0-2ed6-5686-8539-5a68d446ceb7"))
+  (wire
+    (pts
+      (xy 228.6 116.84)
+      (xy 228.6 121.92))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "b7140db0-f6f9-576f-b55f-1d79007d1761"))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 228.6 121.92 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "d11fd1c0-7a65-5a2f-8a12-44f56a834013")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 228.6 121.92 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 213.36 104.14)
+      (xy 205.74 104.14))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0768698d-cb67-5e27-b439-d16ae68db018"))
+  (global_label "PYRO3_FIRE"
+    (shape bidirectional)
+    (at 205.74 104.14 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "96e4b6e3-8f3b-5031-a58f-8b4bc0669a13")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 205.74 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 213.36 109.22)
+      (xy 205.74 109.22))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3f1d7f5d-3c67-58f9-ad78-13045b0dbfb8"))
+  (global_label "STAGE_ELIGIBLE"
+    (shape bidirectional)
+    (at 205.74 109.22 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "555c839e-7690-5298-aa84-96008bf8a5e0")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 205.74 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol
+    (lib_id "power:PWR_FLAG")
+    (at 185.42 251.46 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "166b91da-9d7e-5e2a-b1bb-c92111552e44")
+    (property "Reference" "#FLG024"
+      (at 185.42 243.84 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "PWR_FLAG"
+      (at 185.42 246.38 0)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" ""
+      (at 185.42 251.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 185.42 251.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Special symbol for telling ERC where power comes from"
+      (at 185.42 251.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "flag power"
+      (at 185.42 251.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
+          (reference "#FLG024")
+          (unit 1))))
+    (pin "1"
+      (uuid "6ce36a20-ab42-50ca-8942-b74b5923df87")))
   (embedded_fonts no)
   (text "PYRO3 / STAGING DOMAIN"
     (at 15.24 15.24 0)
@@ -1682,169 +2108,13 @@
         (size 2.54 2.54))
       (justify left))
     (uuid "ad7f7a64-e240-5998-b5a3-77e793fca2ce"))
-  (text "1  ONE-SHOT HIGH-SIDE REQUEST / LOAD-SPECIFIC TIMING"
+  (text "1  HIGH-SIDE REQUEST: PYRO3_FIRE AND STAGE_ELIGIBLE (U6502)"
     (at 15.24 58.42 0)
     (effects
       (font
         (size 1.4 1.4))
       (justify left))
     (uuid "83fc5113-b9ea-5075-acfe-b3ff4ab5a332"))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6501")
-    (at 91.44 106.68 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "a1dc8eb3-a5a6-588c-9ebd-b8062da23485")
-    (property "Reference" "U6501"
-      (at 116.84 78.74 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "LTC6993IS6-1#TRMPBF"
-      (at 116.84 81.28 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:LTC6993IS6-1_TRMPBF"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC6993-6993-1-6993-2-6993-3-6993-4.pdf"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Hardware finitepulse element"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Timer TimerBlox monostable pulse"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "TSOT*23*"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "LTC6993IS6-1#TRMPBF"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Analog Devices"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 91.44 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
-          (reference "U6501")
-          (unit 1))))
-    (pin "4"
-      (uuid "627794b3-fd47-5783-b6f5-6e4b2b317d39"))
-    (pin "1"
-      (uuid "b5b4c76f-4405-5a85-b3a9-bbcc696e2f43"))
-    (pin "3"
-      (uuid "9a6a8438-3b75-5e43-acb7-f980b7d4e0d6"))
-    (pin "5"
-      (uuid "2fcbe6d1-af34-5ffd-a90d-69102cb0d71a"))
-    (pin "2"
-      (uuid "aa19c06e-6c0f-5bcd-9063-1ae57b55e97d"))
-    (pin "6"
-      (uuid "f171e88f-38af-5dbf-b57e-97f390d5bb31")))
-  (symbol
-    (lib_id "Device:C")
-    (at 119.38 68.58 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "3e641507-ef82-58b4-8113-ea4bf6a6a540")
-    (property "Reference" "C6501"
-      (at 123.19 67.31 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 123.19 69.85 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 119.38 68.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
-          (reference "C6501")
-          (unit 1))))
-    (pin "1"
-      (uuid "fd4d7b55-ae5d-59c6-bc52-622afdaef79a"))
-    (pin "2"
-      (uuid "766a7a93-c6f2-5faf-9a0f-b098f5da177c")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 119.38 77.47 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "fee14963-a95e-511f-8df6-fb85629881de")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 119.38 77.47 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (symbol
     (lib_id "Device:R")
     (at 40.64 139.7 0)
@@ -1918,308 +2188,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 71.12 157.48 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp yes)
-    (uuid "bee40cfb-46fe-54b0-b216-c8dba7bc1aeb")
-    (property "Reference" "R6511"
-      (at 74.93 156.21 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "TBD pulse RSET"
-      (at 74.93 158.75 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 71.12 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
-          (reference "R6511")
-          (unit 1))))
-    (pin "1"
-      (uuid "06baccab-74eb-5481-9b9d-fa8a7c097f70"))
-    (pin "2"
-      (uuid "156294fd-92c7-55ab-97b3-de96dcc8916f")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 71.12 168.91 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "70a0fb48-4139-5cb8-8f96-55a2768cc618")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 71.12 168.91 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 134.62 139.7 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp yes)
-    (uuid "61409aaf-c7cc-5cc6-b451-84366a0c2813")
-    (property "Reference" "R6512"
-      (at 138.43 138.43 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "TBD pulse DIV high"
-      (at 138.43 140.97 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 134.62 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
-          (reference "R6512")
-          (unit 1))))
-    (pin "1"
-      (uuid "fb4ec959-b932-58ea-8f52-0501ad3c1fe3"))
-    (pin "2"
-      (uuid "8c02d395-9850-5659-ae8c-1bcd86a115a8")))
-  (symbol
-    (lib_id "Device:R")
-    (at 134.62 177.8 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp yes)
-    (uuid "c688b9fc-b7f9-5340-8dae-97a1c90a336d")
-    (property "Reference" "R6513"
-      (at 138.43 176.53 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "TBD pulse DIV low"
-      (at 138.43 179.07 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 134.62 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
-          (reference "R6513")
-          (unit 1))))
-    (pin "1"
-      (uuid "979fdbc5-fdb3-5a8b-9c55-49f43b37fe3f"))
-    (pin "2"
-      (uuid "bd8135fb-7fac-5160-9cc4-bf64370d7cb4")))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 134.62 128.27 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "cc166fc8-8a0f-59dd-9664-5673251b4623")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 134.62 128.27 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 134.62 189.23 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "164a7f87-a800-515d-b0ec-d959f374f9bf")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 134.62 189.23 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6502")
-    (at 228.6 106.68 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "9b5c5155-a348-5486-ad65-3b437511c7e4")
-    (property "Reference" "U6502"
-      (at 254 83.82 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G97DBVR"
-      (at 254 86.36 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Bootstrap logic mux OR"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "SOT* SC*"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G97DBVR"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 228.6 106.68 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
-          (reference "U6502")
-          (unit 1))))
-    (pin "3"
-      (uuid "8297479d-9a67-5602-a786-1b3c70e380e0"))
-    (pin "1"
-      (uuid "4b38bb19-f0dd-5d7f-97e1-f75f05a6dc9f"))
-    (pin "6"
-      (uuid "ec11142e-7588-581e-a20c-bd3b8a1a5448"))
-    (pin "5"
-      (uuid "e20deaf8-3c0c-56b8-8e06-5c2d16df265b"))
-    (pin "2"
-      (uuid "d723ac8c-c986-54cc-afe7-f3055a0b5048"))
-    (pin "4"
-      (uuid "0925d66f-1587-5dc4-9dbe-86f2f247e4cf")))
   (symbol
     (lib_id "Device:C")
     (at 254 93.98 0)
@@ -2613,7 +2581,7 @@
     (unit 1)
     (in_bom yes)
     (on_board yes)
-    (dnp yes)
+    (dnp no)
     (uuid "3e9a9d07-4928-59ce-ab86-fd056a0b4ea8")
     (property "Reference" "R6514"
       (at 95.25 359.41 0)
@@ -2621,7 +2589,7 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "TBD load current limit"
+    (property "Value" "1.24k 1%"
       (at 95.25 361.95 0)
       (effects
         (font
@@ -2657,6 +2625,12 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
+    (property "Implementation_Note" "TPS1H100 current limit, about 2.0 A (D-6.2, D-7.1)"
+      (at 91.44 360.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
@@ -2687,162 +2661,6 @@
         (size 1.4 1.4))
       (justify left))
     (uuid "23e89ae8-6911-5a08-8abc-1fc7a449b344"))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6503")
-    (at 287.02 279.4 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "33761103-32eb-5231-be71-cecde4c9de0d")
-    (property "Reference" "U6503"
-      (at 312.42 256.54 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G97DBVR"
-      (at 312.42 259.08 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Bootstrap logic mux OR"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "SOT* SC*"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G97DBVR"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 287.02 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
-          (reference "U6503")
-          (unit 1))))
-    (pin "3"
-      (uuid "be4a0f1d-6f88-5f7c-8b1e-7c8b4bba4ad6"))
-    (pin "1"
-      (uuid "2cbf97fc-85ec-58ec-bfd6-af5bf67757a2"))
-    (pin "6"
-      (uuid "ac2abf7f-eb0c-5d54-996d-7bc6da65ff69"))
-    (pin "5"
-      (uuid "c3acfba5-b7ed-56bd-be68-8f7a7ddbc34c"))
-    (pin "2"
-      (uuid "c9b18e68-686b-5da8-b567-b857a13c6b38"))
-    (pin "4"
-      (uuid "0769ed34-9725-5c39-bdb6-c05d1d327d10")))
-  (symbol
-    (lib_id "Device:C")
-    (at 312.42 266.7 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "d0a902c6-55e3-555e-8c1b-38d07eb39f47")
-    (property "Reference" "C6503"
-      (at 316.23 265.43 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 316.23 267.97 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 312.42 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f11e9b04-ff70-5739-858f-03f7090d699c"
-          (reference "C6503")
-          (unit 1))))
-    (pin "1"
-      (uuid "828a89fb-2f69-5145-9c01-c9a63eddb379"))
-    (pin "2"
-      (uuid "9ee24f7f-f462-5861-8cc0-da08719637eb")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 312.42 275.59 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "e2f0c7e1-b356-526a-b70e-f59b4f161816")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 312.42 275.59 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (symbol
     (lib_id "Device:R")
     (at 251.46 304.8 0)
@@ -3121,7 +2939,7 @@
         (font
           (size 1 1))
         (hide yes))))
-  (text "Load/pulse/no-fire evidence absent: energy link and timing/current-setting resistors DNP."
+  (text "Igniter values open: energy link R6510 stays DNP. R6514 1.24k sets the switch limit near 2.0 A; pulse length is set in firmware (D-6.2)."
     (at 15.24 411.48 0)
     (effects
       (font
@@ -3142,21 +2960,7 @@
         (size 1.05 1.05))
       (justify left))
     (uuid "105a5154-5034-577e-9a50-465a5fb3aa51"))
-  (global_label "PYRO3_TDIV"
-    (shape bidirectional)
-    (at 99.06 127.0 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "b64c2d99-2b9b-5324-adc2-202c8579d6c2")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 99.06 127.0 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO3_HS_REQUEST"
+  (global_label "PYRO3_FIRE"
     (shape bidirectional)
     (at 40.64 106.68 0)
     (effects
@@ -3166,20 +2970,6 @@
     (uuid "17426ca0-9179-5a3d-bf1e-2253c92cd5f5")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 40.64 106.68 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO3_TSET"
-    (shape bidirectional)
-    (at 83.82 127.0 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "0992d694-5412-54e2-9016-9c64a7368273")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 83.82 127.0 0)
       (effects
         (font
           (size 1 1))
@@ -3212,34 +3002,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 91.44 55.88 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "df0d6984-16b4-5c9a-807d-5930ccd29d19")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 55.88 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 287.02 254.0 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "83ee9806-2e62-5f30-bc18-3adf4b25fba2")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 287.02 254.0 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "GND"
     (shape bidirectional)
     (at 119.38 342.9 0)
@@ -3264,90 +3026,6 @@
     (uuid "918c195b-813b-59e2-aa83-c2f2d2393fb8")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 373.38 373.38 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 287.02 299.72 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "3501f9b3-dfeb-51a4-bcb1-f7e443ea9813")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 287.02 299.72 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 228.6 127.0 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "1f766a27-4238-569b-af4d-b1190da27084")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 228.6 127.0 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 91.44 132.08 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "ac73e65c-9cd4-5688-bd34-cbe78c4d69da")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 132.08 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO3_PULSE"
-    (shape bidirectional)
-    (at 111.76 106.68 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "481dabad-75da-5242-a5b9-64aade9c79a3")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 111.76 106.68 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "STAGING_HW_PERMIT"
-    (shape bidirectional)
-    (at 266.7 274.32 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "ccf0a8bc-22df-5cfb-bdbb-85e2972ceeeb")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 266.7 274.32 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "STAGING_HW_PERMIT"
-    (shape bidirectional)
-    (at 208.28 101.6 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "a1451558-e1e0-51dd-88f4-4254c9d0d371")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 208.28 101.6 0)
       (effects
         (font
           (size 1 1))
@@ -3464,7 +3142,7 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "PYRO3_LS_ENABLE"
+  (global_label "PYRO3_LS_SELECT"
     (shape bidirectional)
     (at 302.26 279.4 180)
     (effects
@@ -3508,52 +3186,12 @@
         (hide yes))))
   (wire
     (pts
-      (xy 91.44 55.88)
-      (xy 91.44 86.36))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "bdb90542-c3d3-514b-9e62-bb4304b30d9e"))
-  (wire
-    (pts
-      (xy 91.44 55.88)
-      (xy 119.38 55.88))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "26d85175-b8e1-547a-850b-13135be784c4"))
-  (wire
-    (pts
       (xy 111.76 281.94)
       (xy 111.76 287.02))
     (stroke
       (width 0)
       (type default))
     (uuid "9f01bcf6-759f-5751-b6c4-81e8f51550af"))
-  (wire
-    (pts
-      (xy 119.38 55.88)
-      (xy 119.38 64.77))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "5da52620-6180-51c7-a1c9-ffef13f6c3f0"))
-  (wire
-    (pts
-      (xy 134.62 128.27)
-      (xy 134.62 135.89))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9636b225-9b45-5eb1-a510-06ae3ae7edf0"))
-  (wire
-    (pts
-      (xy 228.6 81.28)
-      (xy 228.6 91.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "5db65677-ef8a-5039-8385-39de102a7e86"))
   (wire
     (pts
       (xy 228.6 81.28)
@@ -3572,52 +3210,12 @@
     (uuid "5da7310c-815a-59c7-8dd0-d8ab51708666"))
   (wire
     (pts
-      (xy 287.02 254.0)
-      (xy 287.02 264.16))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "fff0ce63-71f9-501d-924b-e98eb56c3f58"))
-  (wire
-    (pts
-      (xy 287.02 254.0)
-      (xy 312.42 254.0))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a2b21bc5-d286-5771-b4ed-8186ed9f23c2"))
-  (wire
-    (pts
-      (xy 312.42 254.0)
-      (xy 312.42 262.89))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "77fc39c0-95cb-5959-90e6-88af48173e79"))
-  (wire
-    (pts
       (xy 40.64 143.51)
       (xy 40.64 148.59))
     (stroke
       (width 0)
       (type default))
     (uuid "80222c77-b739-56c9-9751-97d1d3659693"))
-  (wire
-    (pts
-      (xy 71.12 161.29)
-      (xy 71.12 168.91))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f98d33d7-4035-51c1-80f6-ff7c2811247c"))
-  (wire
-    (pts
-      (xy 91.44 127.0)
-      (xy 91.44 132.08))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9cd8c56c-670f-591e-898b-21cd38c34ce6"))
   (wire
     (pts
       (xy 91.44 364.49)
@@ -3628,14 +3226,6 @@
     (uuid "80c16851-b569-58ee-8f57-462bbffcf593"))
   (wire
     (pts
-      (xy 119.38 72.39)
-      (xy 119.38 77.47))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "37c705a9-68ca-54a8-8408-813344f693d6"))
-  (wire
-    (pts
       (xy 119.38 337.82)
       (xy 119.38 342.9))
     (stroke
@@ -3644,28 +3234,12 @@
     (uuid "b32c6e1d-3866-5d92-aab3-8fc588461bf0"))
   (wire
     (pts
-      (xy 134.62 181.61)
-      (xy 134.62 189.23))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "441cd43f-c38c-5cc1-8aff-e0d6998e5afb"))
-  (wire
-    (pts
       (xy 185.42 293.37)
       (xy 185.42 298.45))
     (stroke
       (width 0)
       (type default))
     (uuid "bdc1df50-77af-5e57-9c3a-f124a46265c0"))
-  (wire
-    (pts
-      (xy 228.6 121.92)
-      (xy 228.6 127.0))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "59c081bd-2f17-590d-ac19-7da6b82f24a3"))
   (wire
     (pts
       (xy 251.46 308.61)
@@ -3690,22 +3264,6 @@
       (width 0)
       (type default))
     (uuid "040815e0-8d54-53a8-ac67-6741f6ae2ea9"))
-  (wire
-    (pts
-      (xy 287.02 294.64)
-      (xy 287.02 299.72))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a2317175-4297-5b11-8989-a11e62030430"))
-  (wire
-    (pts
-      (xy 312.42 270.51)
-      (xy 312.42 275.59))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "7a7f8fba-26f1-5ba4-8942-86b67355a772"))
   (wire
     (pts
       (xy 347.98 379.73)
@@ -3884,14 +3442,6 @@
     (uuid "0c50e2fb-a2b6-5899-ad29-79e5eeefb814"))
   (wire
     (pts
-      (xy 40.64 106.68)
-      (xy 71.12 106.68))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "cca540f4-3a8a-508b-be6b-421b4de4b335"))
-  (wire
-    (pts
       (xy 302.26 279.4)
       (xy 312.42 279.4))
     (stroke
@@ -3924,116 +3474,12 @@
     (uuid "07c1436c-4132-5aa5-8a92-60cb18d56e3f"))
   (wire
     (pts
-      (xy 251.46 284.48)
-      (xy 271.78 284.48))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2e78aadd-0e31-531e-8010-06cbc79b5267"))
-  (wire
-    (pts
-      (xy 111.76 106.68)
-      (xy 175.26 106.68))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "56e6fe12-8b82-5a62-94a2-be7874aa748e"))
-  (wire
-    (pts
-      (xy 175.26 106.68)
-      (xy 175.26 111.76))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a0184c2e-79fb-568f-932a-cb241f6e8b5e"))
-  (wire
-    (pts
-      (xy 175.26 111.76)
-      (xy 213.36 111.76))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "016e5a32-d498-5da8-b38a-c585a10a2c38"))
-  (wire
-    (pts
-      (xy 99.06 127.0)
-      (xy 99.06 157.48))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "7b215a2c-2391-5c47-8714-f704de699614"))
-  (wire
-    (pts
-      (xy 99.06 157.48)
-      (xy 134.62 157.48))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "0d3b88a3-0351-5b85-82f5-68c63e80284b"))
-  (wire
-    (pts
-      (xy 134.62 143.51)
-      (xy 134.62 157.48))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1ce7b848-79c5-5ac0-9337-2a8c73d82924"))
-  (wire
-    (pts
-      (xy 134.62 157.48)
-      (xy 134.62 173.99))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "65774a3e-4e00-5ef1-b720-384ad3a134eb"))
-  (wire
-    (pts
-      (xy 71.12 137.16)
-      (xy 71.12 153.67))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1e82e3b3-2b44-5f00-99ec-43a376c555e4"))
-  (wire
-    (pts
-      (xy 71.12 137.16)
-      (xy 83.82 137.16))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "8e985b5a-5871-56c0-a563-efca1c23fc3e"))
-  (wire
-    (pts
-      (xy 83.82 127.0)
-      (xy 83.82 137.16))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "ab9fa2fa-d34f-5a1f-8b16-97b116c6c361"))
-  (wire
-    (pts
       (xy 151.13 251.46)
       (xy 156.21 251.46))
     (stroke
       (width 0)
       (type default))
     (uuid "bb297744-e15c-5401-b433-12a1685e6d7f"))
-  (wire
-    (pts
-      (xy 208.28 101.6)
-      (xy 213.36 101.6))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "5b0922d1-bb81-5286-b3a3-6fda97a0d076"))
-  (wire
-    (pts
-      (xy 266.7 274.32)
-      (xy 271.78 274.32))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "22838f5b-4423-528f-af41-a845f9cd1518"))
   (junction
     (at 127 276.86)
     (diameter 0)
@@ -4044,12 +3490,7 @@
     (diameter 0)
     (color 0 0 0 0)
     (uuid "e0322d11-7f13-5cc2-82dd-d2a4b1a0a7e0"))
-  (junction
-    (at 134.62 157.48)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "fb2689f2-12f0-5045-89d2-cb5352490535"))
-  (text "What this does: Shows the two switched sides and bounded-pulse logic for the staging channel.\nConnects to: Staging permission and flight request -> J6601 load pair on 06b; current report -> 06c. Energy and load-setting parts remain DNP: do not connect an initiator."
+  (text "What this does: Shows the two switched sides for the staging channel: PE12 through the latch AND gate drives the high side, PD14 the low side.\nConnects to: STAGING_ARMED_VBAT (06a), STAGE_ELIGIBLE (06-outputs) and the flight MCU -> J6601 load pair on 06b; current report -> 06c. Energy link remains DNP: do not connect an initiator."
     (at 15.24 27.94 0.0)
     (effects
       (font

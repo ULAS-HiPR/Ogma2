@@ -619,6 +619,12 @@
             (effects
               (font
                 (size 1.0 1.0))))))))
+  (no_connect
+    (at 381 243.84)
+    (uuid "542a381d-8af7-5dc4-bc9d-edd2a9bd5ab4"))
+  (no_connect
+    (at 330.2 243.84)
+    (uuid "2fcd2baf-b474-5fd2-8e7f-8c301ac4dcab"))
   (embedded_fonts no)
   (text "RAIL VOLTAGE DIVIDERS / UNPOWERED ADC BOUNDARY"
     (at 15.24 16.51 0)
@@ -1494,266 +1500,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 86.36 243.84 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "7766cf41-7c92-55ce-86fd-fb936f394b17")
-    (property "Reference" "R8010"
-      (at 86.36 238.76 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "22.1k 0.1%"
-      (at 86.36 241.3 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 86.36 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 86.36 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 86.36 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 86.36 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 86.36 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/31e6d5d2-a64d-53ba-a4be-d13bcade6903"
-          (reference "R8010")
-          (unit 1))))
-    (pin "1"
-      (uuid "e9b15bcf-ef5a-5525-820a-a6de07b3c4fc"))
-    (pin "2"
-      (uuid "ff600362-8362-5f06-aebf-5c74b6b48ea6")))
-  (symbol
-    (lib_id "Device:R")
-    (at 139.7 243.84 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "729143d3-c7e9-5030-9924-cd13642c964a")
-    (property "Reference" "R8011"
-      (at 139.7 238.76 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "22.1k 0.1%"
-      (at 139.7 241.3 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 139.7 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 139.7 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 139.7 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 139.7 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 139.7 243.84 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/31e6d5d2-a64d-53ba-a4be-d13bcade6903"
-          (reference "R8011")
-          (unit 1))))
-    (pin "1"
-      (uuid "036206e0-9135-5503-a337-a32e90069e1e"))
-    (pin "2"
-      (uuid "4f8d36bf-372a-51a9-8f64-22c5050818c7")))
-  (global_label "SERVO_VBAT"
-    (shape bidirectional)
-    (at 57.15 243.84 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "b7d4fa0c-673b-56dd-af78-fa1a7dcd2adc")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 57.15 243.84 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 198.12 259.08 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "1a2bc82b-9a9d-5252-8060-b7a201575bb0")
-    (property "Reference" "R8012"
-      (at 201.93 257.81 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10k 0.1%"
-      (at 201.93 260.35 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 198.12 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 198.12 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 198.12 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 198.12 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 198.12 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/31e6d5d2-a64d-53ba-a4be-d13bcade6903"
-          (reference "R8012")
-          (unit 1))))
-    (pin "1"
-      (uuid "cd8033e6-ec06-5326-aa91-927652b45447"))
-    (pin "2"
-      (uuid "37748824-4ce6-5b77-b326-2ab8153a4923")))
-  (symbol
-    (lib_id "Device:C")
-    (at 236.22 259.08 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "b1dc31e3-15dd-5eeb-85e1-d56854209d41")
-    (property "Reference" "C8004"
-      (at 240.03 257.81 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10n 16V X7R"
-      (at 240.03 260.35 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 236.22 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 236.22 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 236.22 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 236.22 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 236.22 259.08 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/31e6d5d2-a64d-53ba-a4be-d13bcade6903"
-          (reference "C8004")
-          (unit 1))))
-    (pin "1"
-      (uuid "c4ee95c4-c064-534b-b110-d938231a0241"))
-    (pin "2"
-      (uuid "40f83d2c-06ce-5990-876d-4395976cd2e2")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 198.12 271.78 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "2893c1c0-6014-538e-8ad9-54972629cb6c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 198.12 271.78 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "FLIGHT_3V3"
     (shape bidirectional)
     (at 345.44 60.96 0)
@@ -1883,20 +1629,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "ADC_SERVO_RAIL"
-    (shape bidirectional)
-    (at 419.1 243.84 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "9989d70b-2513-5e0d-8a60-d0bc93867c80")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 419.1 243.84 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "GND"
     (shape bidirectional)
     (at 355.6 312.42 0)
@@ -1918,14 +1650,14 @@
         (size 1.2 1.2))
       (justify left))
     (uuid "f0d88b38-e73b-5244-9341-ebe20d9c43ff"))
-  (text "All four analog switches enable only with FLIGHT_3V3. Verify injection, leakage, settling and ADC calibration on the first PCBA."
+  (text "All four analog switches enable only with FLIGHT_3V3; the fourth (pins 11 / 12) is unused since the servos went (D-19Nov.2). Verify injection, leakage, settling and ADC calibration on the first PCBA."
     (at 15.24 307.34 0)
     (effects
       (font
         (size 1.2 1.2))
       (justify left))
     (uuid "63ae8caf-5b76-597e-a846-92ea0de4b66b"))
-  (text "Recovery-arm voltage and servo-rail voltage are evidence inputs. A low reading is not a physical isolation proof."
+  (text "Recovery-arm voltage is an evidence input. A low reading is not a physical isolation proof."
     (at 15.24 320.04 0)
     (effects
       (font
@@ -1942,20 +1674,6 @@
     (uuid "acfcea57-df32-52bc-891a-dfeb4d9db60d")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 198.12 180.34 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 198.12 271.78 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "8ad9c1d4-72af-5161-b362-5d4f4c49749a")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 198.12 271.78 0)
       (effects
         (font
           (size 1 1))
@@ -2002,20 +1720,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "SERVO_RAIL_SCALED"
-    (shape bidirectional)
-    (at 143.51 243.84 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "874aa416-855e-528a-9d37-aefd81dc1e4c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 143.51 243.84 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "VEHICLE_VBAT_MID"
     (shape bidirectional)
     (at 90.17 106.68 180)
@@ -2058,20 +1762,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "SERVO_RAIL_MID"
-    (shape bidirectional)
-    (at 90.17 243.84 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "b06e3234-d34f-50c6-ae4d-7a62dfe9c8a8")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 90.17 243.84 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (wire
     (pts
       (xy 381 152.4)
@@ -2088,14 +1778,6 @@
       (width 0)
       (type default))
     (uuid "866ca965-bcee-57fc-9ea2-1340b59b2ebb"))
-  (wire
-    (pts
-      (xy 381 243.84)
-      (xy 419.1 243.84))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "02c42499-2c54-586e-b06e-fb8401a3e902"))
   (wire
     (pts
       (xy 381 106.68)
@@ -2298,22 +1980,6 @@
     (uuid "edb9e9dd-6832-5560-bf51-1a99511176e5"))
   (wire
     (pts
-      (xy 198.12 262.89)
-      (xy 198.12 271.78))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "68eb4d97-6748-5681-8dd5-e98d9ef38519"))
-  (wire
-    (pts
-      (xy 198.12 271.78)
-      (xy 236.22 271.78))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "7c092787-b283-54e8-bba4-2b9afe5eb947"))
-  (wire
-    (pts
       (xy 236.22 125.73)
       (xy 236.22 134.62))
     (stroke
@@ -2336,14 +2002,6 @@
       (width 0)
       (type default))
     (uuid "26f76ef4-5325-5ddd-bb3e-616163493119"))
-  (wire
-    (pts
-      (xy 236.22 262.89)
-      (xy 236.22 271.78))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d2496ce9-68e1-5957-88bc-a9e06afeff08"))
   (wire
     (pts
       (xy 355.6 304.8)
@@ -2416,62 +2074,6 @@
       (width 0)
       (type default))
     (uuid "c2b1bcbc-8963-58c5-83d2-1aa9952cca7a"))
-  (wire
-    (pts
-      (xy 90.17 243.84)
-      (xy 135.89 243.84))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1d604c2d-8b78-5cc6-98f4-d4517264ccb0"))
-  (wire
-    (pts
-      (xy 143.51 243.84)
-      (xy 198.12 243.84))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1a2b0e6e-9d81-5d91-bde1-bdf4a27af75e"))
-  (wire
-    (pts
-      (xy 198.12 243.84)
-      (xy 198.12 255.27))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "290076ee-3bad-5466-b439-c44e51260152"))
-  (wire
-    (pts
-      (xy 198.12 243.84)
-      (xy 236.22 243.84))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2877e0f0-d3e8-575b-976b-6d3901112e91"))
-  (wire
-    (pts
-      (xy 236.22 243.84)
-      (xy 236.22 255.27))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "96360fdf-bb50-514c-b466-c2416324ad15"))
-  (wire
-    (pts
-      (xy 236.22 243.84)
-      (xy 330.2 243.84))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "367f9c2c-fe85-525c-baa3-f13b9fa93816"))
-  (wire
-    (pts
-      (xy 57.15 243.84)
-      (xy 82.55 243.84))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "0837732c-5c30-5456-a486-d05eb2de8575"))
   (wire
     (pts
       (xy 57.15 106.68)
@@ -2559,11 +2161,6 @@
     (color 0 0 0 0)
     (uuid "37c6b6ca-d48c-5741-84ff-c567dffe8045"))
   (junction
-    (at 198.12 243.84)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "96be4d38-2dd1-53ed-bf69-8adf3eb165b0"))
-  (junction
     (at 198.12 106.68)
     (diameter 0)
     (color 0 0 0 0)
@@ -2579,16 +2176,11 @@
     (color 0 0 0 0)
     (uuid "08c46d40-7c35-5a62-bdd1-7b6e6e8dd4df"))
   (junction
-    (at 236.22 243.84)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "f5feda79-169f-5b12-b18c-77751ce2a430"))
-  (junction
     (at 350.52 60.96)
     (diameter 0)
     (color 0 0 0 0)
     (uuid "63b81ead-5711-5c27-a7aa-8d9edec9fa54"))
-  (text "What this does: Lets the flight MCU read battery, flight-supply, recovery-arm and servo-supply voltages.\nConnects to: Four rails -> resistor dividers -> power-off signal switches -> flight ADC. Voltage readings are useful evidence, not permission to fire or proof of isolation."
+  (text "What this does: Lets the flight MCU read battery, flight-supply and recovery-arm voltages.\nConnects to: Three rails -> resistor dividers -> power-off signal switches -> flight ADC. Voltage readings are useful evidence, not permission to fire or proof of isolation."
     (at 15.24 27.94 0.0)
     (effects
       (font

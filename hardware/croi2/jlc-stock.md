@@ -28,11 +28,12 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 | WSLP2512R0050FEA (5 mΩ) | R7101 | RLP25FEGMR005 (C393074, 218,606): 5 mΩ 1% 3 W 2512 | Drop-in |
 | CRCW20104K70FKEF | R1012, R1013 | RC2010FK-074K7L (C513572, 4,716): 4.7 kΩ 1% 0.75 W 2010 | Drop-in |
 | Keystone 5000 (red test point) | 15 power test points | 5003 orange (C238124, 7,350) or 5002 white | Drop-in; colour only |
-| Molex 1053111102 | J101 | Nano-Fit 2-way header 1053091102 (C2938824, 11,457) | Settled with J101's footprint at step 8 |
+| Molex 1053111102 | J101 | None: the spec rules out a 105309 substitute | Global Sourcing or consign; footprint from Molex's drawing at step 8 |
 | Samtec MPT-08-01-01-L-RA-SD | J102 | None; must mate the bay's Samtec half | Global Sourcing or consign |
 | Amphenol 132134 (SMA, vertical) | J4501, J4601 | None (132203 is right-angle) | Global Sourcing or consign |
 | Seeed Wio-LR2021 | U4606 | Not carried (module) | Consign or hand-fit |
 | Harwin G125-MS10605M2P (Gecko-SL 2×3, step 5) | J501, J502 | None (G125-MS10605L3P: 2 in stock) | Global Sourcing or consign |
+| J6101 / J6102 arm-switch connectors (step 6) | J6101, J6102 | Part not chosen | Checked once the family is picked |
 | Nichicon PCW0J102MCO1GS (1000 µF polymer, step 3) | C1403 | None in SMD; JLC's stocked 1000 µF polymers are through-hole | Global Sourcing or consign |
 
 ## Stocked, but thin
@@ -51,7 +52,7 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 
 JLC can hold parts in an account's private library ahead of an order.
 
-The LTC6993 one-shots (U6301, U6401, U6501) are short too (1 stocked), but step 6 removes all three.
+The LTC6993 one-shots (U6301, U6401, U6501) were short too (1 stocked); step 6 removed all three.
 
 ## Parts added by capture
 
@@ -60,7 +61,8 @@ The LTC6993 one-shots (U6301, U6401, U6501) are short too (1 stocked), but step 
 | BAT54T1G, onsemi, SOD-123 | 1 | C152458, 60,607 |
 | 100 µF 6.3 V X5R 1206 (C219) | 1 | C15008 (Basic), 1,464,361 |
 | MMC5983MA | 4 | C404329, 14,167 |
-| SN74LVC1G08DBVR | 6 | C7666, 72,536 |
+| SN74LVC1G08DBVR (U6502) | 6 | C7666, 72,536 |
+| Littelfuse 0451004.MRL, 4 A NANO2 (F6101, F6102) | 6 | C27515, 20,383 |
 | TCAN3413DRBR (second, U505) | 5 | C22445415, 1,001 |
 | 470 µF aluminium hold capacitor | 2 | Many 6.3 × 7.7 mm parts stocked; a 6.3 V part's catalogue leakage (0.01CV ≈ 30 µA) meets the limit. Chosen at step 2 |
 

@@ -1006,334 +1006,661 @@
           (number "4"
             (effects
               (font
-                (size 0.9 0.9))))))))
+                (size 0.9 0.9)))))))
+    (symbol "Device:Fuse"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "F"
+        (at 2.032 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "Fuse"
+        (at -1.905 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at -1.778 0 90)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Fuse"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "fuse"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "*Fuse*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "Fuse_0_1"
+        (rectangle
+          (start -0.762 -2.54)
+          (end 0.762 2.54)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy 0 2.54)
+            (xy 0 -2.54))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "Fuse_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 1.27)
+          (name "~"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no))
+    (symbol "Connector_Generic:Conn_01x02"
+      (pin_names
+        (offset 1.016)
+        (hide yes))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "J"
+        (at 0 2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "Conn_01x02"
+        (at 0 -5.08 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "~"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "connector"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "Connector*:*_1x??_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "Conn_01x02_1_1"
+        (rectangle
+          (start -1.27 1.27)
+          (end 1.27 -3.81)
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type background)))
+        (rectangle
+          (start -1.27 0.127)
+          (end 0 -0.127)
+          (stroke
+            (width 0.1524)
+            (type default))
+          (fill
+            (type none)))
+        (rectangle
+          (start -1.27 -2.413)
+          (end 0 -2.667)
+          (stroke
+            (width 0.1524)
+            (type default))
+          (fill
+            (type none)))
+        (pin passive line
+          (at -5.08 0 0)
+          (length 3.81)
+          (name "Pin_1"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at -5.08 -2.54 0)
+          (length 3.81)
+          (name "Pin_2"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no)))
+  (symbol
+    (lib_id "Device:Fuse")
+    (at 63.5 83.82 90)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "789be433-fe87-553e-94df-415f337c8148")
+    (property "Reference" "F6101"
+      (at 63.5 78.74 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "4A fast"
+      (at 63.5 81.28 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Fuse:Fuse_Littelfuse-NANO2-451_453"
+      (at 63.5 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 63.5 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Fuse"
+      (at 63.5 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "fuse"
+      (at 63.5 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "*Fuse*"
+      (at 63.5 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "0451004.MRL"
+      (at 63.5 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Littelfuse"
+      (at 63.5 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "Recovery arm feed from ENERGY_TAP (D-6.1, D-2Nov.2). NANO2 451, 4 A fast-acting, 50 A breaking (JLC listing). A 2 A firing pulse is half the rating; breaking capacity against the pack fault current to check"
+      (at 63.5 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
+          (reference "F6101")
+          (unit 1))))
+    (pin "1"
+      (uuid "a1bcb484-8cbd-52dd-81ab-8c43b98d694e"))
+    (pin "2"
+      (uuid "48e6b17e-e561-59b9-817a-4f392f9b9fbd")))
+  (symbol
+    (lib_id "Connector_Generic:Conn_01x02")
+    (at 93.98 83.82 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "cb85087e-f8ab-568f-abab-8d7de93c8396")
+    (property "Reference" "J6101"
+      (at 97.79 82.55 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "Recovery arm switch (part open)"
+      (at 97.79 85.09 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" ""
+      (at 93.98 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 93.98 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+      (at 93.98 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "connector"
+      (at 93.98 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "Connector*:*_1x??_*"
+      (at 93.98 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "2-contact connector to the external recovery arm switch (D-6.1, D-2Nov.2); placeholder until the part is chosen: must not mate Churro J701 (Micro-Fit 430450200) or the GH enable loops"
+      (at 93.98 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
+          (reference "J6101")
+          (unit 1))))
+    (pin "1"
+      (uuid "3f4190c2-09eb-5603-86c3-eca2451966d7"))
+    (pin "2"
+      (uuid "ea8e93c1-b386-5206-95d2-c3940392ecd4")))
+  (global_label "ENERGY_TAP"
+    (shape bidirectional)
+    (at 50.8 83.82 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "7a344c0f-b600-5f22-a2f2-23de5cb3fd1c")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 50.8 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 50.8 83.82)
+      (xy 59.69 83.82))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "69518568-5f13-5bba-b0c3-a543d3d7e9b9"))
+  (wire
+    (pts
+      (xy 67.31 83.82)
+      (xy 69.85 83.82))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "863374db-3a21-5304-bf28-c3b98ef4f8e3"))
+  (wire
+    (pts
+      (xy 69.85 83.82)
+      (xy 88.9 83.82))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "07833881-e58d-505b-b2f0-1b9a49a36928"))
+  (label "RECOVERY_ARM_FEED"
+    (at 69.85 83.82 0)
+    (effects
+      (font
+        (size 1.016 1.016))
+      (justify left bottom))
+    (uuid "18c8bd22-9658-5ebc-8084-a0318b88bb0f"))
+  (wire
+    (pts
+      (xy 88.9 86.36)
+      (xy 83.82 86.36))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "5bb9afd7-52f7-5fcd-94e7-8f5d4d10825b"))
+  (wire
+    (pts
+      (xy 83.82 86.36)
+      (xy 83.82 93.98))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "32ec7ade-ded2-5572-b503-d87df98d1f76"))
+  (wire
+    (pts
+      (xy 83.82 93.98)
+      (xy 73.66 93.98))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "76b28570-9f4a-5078-886f-d9aa559c591b"))
+  (global_label "RECOVERY_ARMED_VBAT"
+    (shape bidirectional)
+    (at 73.66 93.98 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "f331114d-63de-5629-846f-1179fe04d805")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 73.66 93.98 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (symbol
+    (lib_id "Device:Fuse")
+    (at 63.5 114.3 90)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "ba35c505-bc20-5e8c-a3c5-32aa866eec3f")
+    (property "Reference" "F6102"
+      (at 63.5 109.22 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Value" "4A fast"
+      (at 63.5 111.76 90)
+      (effects
+        (font
+          (size 1.016 1.016))))
+    (property "Footprint" "Fuse:Fuse_Littelfuse-NANO2-451_453"
+      (at 63.5 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 63.5 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Fuse"
+      (at 63.5 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "fuse"
+      (at 63.5 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "*Fuse*"
+      (at 63.5 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "0451004.MRL"
+      (at 63.5 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Littelfuse"
+      (at 63.5 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "Staging arm feed from ENERGY_TAP (D-7.2, D-2Nov.2). NANO2 451, 4 A fast-acting, 50 A breaking (JLC listing). A 2 A firing pulse is half the rating; breaking capacity against the pack fault current to check"
+      (at 63.5 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
+          (reference "F6102")
+          (unit 1))))
+    (pin "1"
+      (uuid "ea5a6116-9a68-5c19-b302-64966f09100b"))
+    (pin "2"
+      (uuid "c6bf606d-c539-508f-81e4-e6124f6970ad")))
+  (symbol
+    (lib_id "Connector_Generic:Conn_01x02")
+    (at 93.98 114.3 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "9c0c9126-4943-50b0-b3c3-e2dd12b3f474")
+    (property "Reference" "J6102"
+      (at 97.79 113.03 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "Staging arm switch (part open)"
+      (at 97.79 115.57 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" ""
+      (at 93.98 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "~"
+      (at 93.98 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+      (at 93.98 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "connector"
+      (at 93.98 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "Connector*:*_1x??_*"
+      (at 93.98 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "2-contact connector to the external staging arm switch (D-7.2, D-2Nov.2); placeholder until the part is chosen: must not mate J6101, Churro J701 (Micro-Fit 430450200) or the GH enable loops"
+      (at 93.98 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
+          (reference "J6102")
+          (unit 1))))
+    (pin "1"
+      (uuid "3ef0ce13-f8d7-593a-a3d2-dbd7614b0691"))
+    (pin "2"
+      (uuid "7adae052-6a04-5211-a9d3-64b62e342bdc")))
+  (global_label "ENERGY_TAP"
+    (shape bidirectional)
+    (at 50.8 114.3 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "d91c5906-e224-5122-aa8d-2793d59d05fd")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 50.8 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 50.8 114.3)
+      (xy 59.69 114.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "863017dd-1baf-520a-b012-1dcedae76657"))
+  (wire
+    (pts
+      (xy 67.31 114.3)
+      (xy 69.85 114.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "d7c44964-e52d-5229-9e20-382fc1eee8ea"))
+  (wire
+    (pts
+      (xy 69.85 114.3)
+      (xy 88.9 114.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "db690ace-ef7f-5a67-8bf9-cc5b87402050"))
+  (label "STAGING_ARM_FEED"
+    (at 69.85 114.3 0)
+    (effects
+      (font
+        (size 1.016 1.016))
+      (justify left bottom))
+    (uuid "6e369624-5978-57de-9450-a02da07e3b26"))
+  (wire
+    (pts
+      (xy 88.9 116.84)
+      (xy 83.82 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "1643cd41-8bbf-56d6-a8fb-3e3182470edf"))
+  (wire
+    (pts
+      (xy 83.82 116.84)
+      (xy 83.82 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "1ee9496f-0dbb-5949-94c9-015ed48711e6"))
+  (wire
+    (pts
+      (xy 83.82 124.46)
+      (xy 73.66 124.46))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "457a7c93-04a7-5b08-a7f9-cc0e1854aca4"))
+  (global_label "STAGING_ARMED_VBAT"
+    (shape bidirectional)
+    (at 73.66 124.46 0)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "ae9c2007-3cc7-5459-a650-24a94849cceb")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 73.66 124.46 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (text "F6101 / F6102: Littelfuse 0451004.MRL, 4 A fast-acting NANO2, one per arm feed so a staging short cannot open recovery's fuse (D-2Nov.2).\nA 2 A firing pulse is half the rating and cannot open it; both recovery channels at once are 4 A, at the rating.\nJ6101 / J6102: 2-contact connectors to the external arm switches, placeholders until the part is chosen.\nNeither may mate Churro J701 (Micro-Fit 430450200), the GH enable loops or each other."
+    (exclude_from_sim no)
+    (at 40.64 137.16 0)
+    (effects
+      (font
+        (size 1.016 1.016))
+      (justify left))
+    (uuid "4a3daf93-70d0-5139-afd8-c3aeb9dc5b63"))
   (embedded_fonts no)
-  (text "PHYSICAL ARM BOUNDARY / UNRESOLVED ASSEMBLY"
+  (text "ARM FEEDS / ARM SENSE"
     (at 15.24 15.24 0)
     (effects
       (font
         (size 2.54 2.54))
       (justify left))
     (uuid "3921b1ec-e76e-5a32-8c26-10c25498b823"))
-  (text "1  STAGING AUTHORITY: ELIGIBLE LATCH + ARM/REQUEST + RESET"
+  (text "1  ARM FEEDS: FUSED ENERGY_TAP TO EACH EXTERNAL ARM SWITCH"
     (at 15.24 58.42 0)
     (effects
       (font
         (size 1.4 1.4))
       (justify left))
     (uuid "7cd4365d-15bd-5f96-9389-f25639770e94"))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6101")
-    (at 91.44 104.14 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "f5a57b51-0520-5dab-8c19-7444370e7397")
-    (property "Reference" "U6101"
-      (at 116.84 81.28 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G97DBVR"
-      (at 116.84 83.82 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-      (at 91.44 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-      (at 91.44 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Bootstrap logic mux OR"
-      (at 91.44 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-      (at 91.44 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "SOT* SC*"
-      (at 91.44 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G97DBVR"
-      (at 91.44 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 91.44 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 91.44 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
-          (reference "U6101")
-          (unit 1))))
-    (pin "3"
-      (uuid "63712088-e368-51b2-a8c5-18e50a95542c"))
-    (pin "1"
-      (uuid "15faea70-b2d1-5c93-8b61-9f9b4dd67c70"))
-    (pin "6"
-      (uuid "b77d824b-2f2f-5553-a1d7-03e5d8d5831b"))
-    (pin "5"
-      (uuid "04fbb1fb-0605-5606-a4c4-c41107ef4540"))
-    (pin "2"
-      (uuid "0257cf57-bb7d-574a-a370-9a958b187172"))
-    (pin "4"
-      (uuid "18d36369-ef22-5fbb-8f05-5cf8cbf53d25")))
-  (symbol
-    (lib_id "Device:C")
-    (at 116.84 91.44 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "eff0a693-9564-5cf8-a0c9-84a3b906ea5f")
-    (property "Reference" "C6101"
-      (at 120.65 90.17 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 120.65 92.71 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 116.84 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 116.84 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 116.84 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 116.84 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 116.84 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
-          (reference "C6101")
-          (unit 1))))
-    (pin "1"
-      (uuid "645ff7a4-fe0c-5258-8dfa-4f71ed3fedc2"))
-    (pin "2"
-      (uuid "a4bfc18b-fd50-5030-81e7-ad77912b473e")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 116.84 100.33 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "13fd6386-6c3f-5897-b47b-b44e9823e90b")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 116.84 100.33 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6102")
-    (at 251.46 104.14 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "5354dac9-8edd-5c03-a630-5b8dd5c9163b")
-    (property "Reference" "U6102"
-      (at 276.86 81.28 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G97DBVR"
-      (at 276.86 83.82 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-      (at 251.46 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-      (at 251.46 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Bootstrap logic mux OR"
-      (at 251.46 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-      (at 251.46 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "SOT* SC*"
-      (at 251.46 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G97DBVR"
-      (at 251.46 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 251.46 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 251.46 104.14 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
-          (reference "U6102")
-          (unit 1))))
-    (pin "3"
-      (uuid "3550b5d9-52d4-5c9d-bb33-3ab4eb1fc652"))
-    (pin "1"
-      (uuid "c9616dfd-d84d-5f06-a469-d27944a40786"))
-    (pin "6"
-      (uuid "7c76b898-191b-56fb-b750-00219142d7e8"))
-    (pin "5"
-      (uuid "3197d6d1-261a-500b-85e5-94a49f227f0f"))
-    (pin "2"
-      (uuid "9caa4485-00ac-58d5-8b8e-ea95bd8806e3"))
-    (pin "4"
-      (uuid "d21b7124-5d69-5414-a461-f2ff086dc940")))
-  (symbol
-    (lib_id "Device:C")
-    (at 276.86 91.44 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "25c1a66b-24f6-5d7c-81eb-1fe6b710f9f6")
-    (property "Reference" "C6102"
-      (at 280.67 90.17 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 280.67 92.71 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 276.86 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 276.86 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 276.86 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 276.86 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 276.86 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
-          (reference "C6102")
-          (unit 1))))
-    (pin "1"
-      (uuid "34186b96-b9a6-5140-86c7-2a5c62ba6c81"))
-    (pin "2"
-      (uuid "e1a51400-4064-5943-819f-2a122132adf5")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 276.86 100.33 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "75adcd06-3bc7-52f8-b63e-ea6bc4034003")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 276.86 100.33 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (text "2  ARMED-RAIL VOLTAGE INDICATION / NOT DISARM PROOF"
     (at 15.24 160.02 0)
     (effects
@@ -1981,162 +2308,6 @@
     (pin "2"
       (uuid "2edd6185-e66c-54ce-b5ce-9c4f385c3717")))
   (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6104")
-    (at 355.6 292.1 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "78fe2451-6ae9-54bf-9f70-c61f03d609ca")
-    (property "Reference" "U6104"
-      (at 381 269.24 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G97DBVR"
-      (at 381 271.78 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-      (at 355.6 292.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-      (at 355.6 292.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Bootstrap logic mux OR"
-      (at 355.6 292.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-      (at 355.6 292.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "SOT* SC*"
-      (at 355.6 292.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G97DBVR"
-      (at 355.6 292.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 355.6 292.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-      (at 355.6 292.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
-          (reference "U6104")
-          (unit 1))))
-    (pin "3"
-      (uuid "0a43965e-d0a5-549d-b32f-293d245dbeea"))
-    (pin "1"
-      (uuid "284ad3fe-1b4d-50c5-bf05-138f18775c0d"))
-    (pin "6"
-      (uuid "97357244-1c8b-58fe-a185-79ee07e71508"))
-    (pin "5"
-      (uuid "4d529186-6b53-5d1a-b2f2-ace27ae34b7b"))
-    (pin "2"
-      (uuid "b5e653cc-9b64-54d1-89e3-99a2bd5f4438"))
-    (pin "4"
-      (uuid "15333785-baaa-5fe6-af53-6cea0ea2f4d3")))
-  (symbol
-    (lib_id "Device:C")
-    (at 381 279.4 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "770ab7e8-7553-5112-b36a-5fc3a47164b7")
-    (property "Reference" "C6104"
-      (at 384.81 278.13 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 384.81 280.67 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 381 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 381 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 381 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 381 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 381 279.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/084b9b21-5eae-5dd1-a32e-8d25a5bd11ac"
-          (reference "C6104")
-          (unit 1))))
-    (pin "1"
-      (uuid "46367e6b-66da-505e-9074-7cd9fbfef719"))
-    (pin "2"
-      (uuid "a7c00bce-fbfc-5599-90e2-db6264879fdd")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 381 288.29 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "fa2db17a-98b1-5dbd-9d83-0e9101178f58")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 381 288.29 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
     (lib_id "Device:R")
     (at 388.62 292.1 90)
     (unit 1)
@@ -2200,14 +2371,14 @@
         (size 1.4 1.4))
       (justify left))
     (uuid "3c0cb16e-acd2-524d-a0c7-ab4e61f81963"))
-  (text "OPEN: keyed arm interface, real energy break, independent disarm proof contact, group protection."
+  (text "OPEN: the J6101 / J6102 connector parts and the arm switches; F6101 / F6102 breaking capacity against the pack."
     (at 15.24 342.9 0)
     (effects
       (font
         (size 1.05 1.05))
       (justify left))
     (uuid "07f1b813-74c3-52ca-92a1-9aa53b3f804f"))
-  (text "RECOVERY_ARMED_VBAT / STAGING_ARMED_VBAT have NO board source in this draft."
+  (text "STAGE_ARM_INVALID (U6103 OUTB) -> R6108 -> PE15, read inverted; it is also the staging latch D input on 06-outputs."
     (at 15.24 347.98 0)
     (effects
       (font
@@ -2221,48 +2392,6 @@
         (size 1.05 1.05))
       (justify left))
     (uuid "ffe2bee9-25fd-575d-9a27-6f4867193f40"))
-  (global_label "STAGE_ELIGIBLE"
-    (shape bidirectional)
-    (at 71.12 99.06 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "fce79994-ebea-5875-a496-499c1ad9f3d7")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 71.12 99.06 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 355.6 312.42 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "b2d5f392-22b6-5b64-939a-f60efb7fd96f")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 355.6 312.42 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 91.44 124.46 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "4fac3c79-38ff-532d-b83d-4243b60f6ea5")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 124.46 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "GND"
     (shape bidirectional)
     (at 213.36 271.78 0)
@@ -2277,34 +2406,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 251.46 124.46 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "435d5db5-909e-5ec7-920e-3d16264ae7f6")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 251.46 124.46 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "STAGE_PERMIT_ARM"
-    (shape bidirectional)
-    (at 71.12 109.22 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "5e12c17e-ecea-5f1e-a4de-3e75c1ffd585")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 71.12 109.22 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "FLIGHT_3V3"
     (shape bidirectional)
     (at 213.36 185.42 0)
@@ -2315,90 +2416,6 @@
     (uuid "d96748a6-21aa-5142-8af5-458275107ed8")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 213.36 185.42 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 355.6 266.7 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "8a8ab259-3665-5d26-acc3-35a5a899c7aa")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 355.6 266.7 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 91.44 78.74 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "1cf3f81d-82d6-561f-aeef-d2d3d8d0d8fe")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 78.74 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 251.46 78.74 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "7acab89b-8b7d-5089-94a7-8062066ee406")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 251.46 78.74 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "STAGE_PERMIT_ELIGIBLE"
-    (shape bidirectional)
-    (at 106.68 104.14 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "671cb229-83c4-55de-9642-44164fb77526")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 106.68 104.14 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_NRST"
-    (shape bidirectional)
-    (at 231.14 99.06 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "b34f2985-7582-53e4-b751-49565fb626cd")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 231.14 99.06 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "STAGING_HW_PERMIT"
-    (shape bidirectional)
-    (at 271.78 104.14 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "32d12a74-bfe9-5075-a952-7973d5a65004")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 271.78 104.14 0)
       (effects
         (font
           (size 1 1))
@@ -2473,19 +2490,19 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "STAGING_ARM_VALID"
+  (global_label "STAGE_ARM_INVALID"
     (shape bidirectional)
-    (at 370.84 292.1 180)
+    (at 370.84 292.1 0)
     (effects
       (font
         (size 0.9 0.9))
-      (justify left))
-    (uuid "fb41b823-fb1c-546b-a2a3-1dc12971a5ee")
+      (justify right))
+    (uuid "c08f882f-fe78-5f0a-a9fc-1c89f88b3ac4")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 370.84 292.1 0)
       (effects
         (font
-          (size 1 1))
+          (size 1.27 1.27))
         (hide yes))))
   (global_label "STAGING_ARM_SENSE"
     (shape bidirectional)
@@ -2501,30 +2518,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (wire
-    (pts
-      (xy 91.44 78.74)
-      (xy 91.44 88.9))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "83ba2ac0-301c-5068-a94c-b1492c2d18cf"))
-  (wire
-    (pts
-      (xy 91.44 78.74)
-      (xy 116.84 78.74))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "41b41700-571e-5541-8ed4-bfe3fe9062a8"))
-  (wire
-    (pts
-      (xy 116.84 78.74)
-      (xy 116.84 87.63))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2cf69cdb-bcf5-5ed2-ba6d-2e87f34d8b8d"))
   (wire
     (pts
       (xy 213.36 185.42)
@@ -2551,36 +2544,12 @@
     (uuid "fd7037ee-8c59-594d-85b8-17d6ff22c745"))
   (wire
     (pts
-      (xy 251.46 78.74)
-      (xy 251.46 88.9))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "629875d6-cd77-5b14-88f9-e83d9f309299"))
-  (wire
-    (pts
-      (xy 251.46 78.74)
-      (xy 276.86 78.74))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1867df03-1b77-520a-81f5-3edc67793d8a"))
-  (wire
-    (pts
       (xy 266.7 201.93)
       (xy 266.7 207.01))
     (stroke
       (width 0)
       (type default))
     (uuid "e280b8c2-9fdf-552a-8e46-15754e9540d4"))
-  (wire
-    (pts
-      (xy 276.86 78.74)
-      (xy 276.86 87.63))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "6012318d-53ce-5bc4-9316-9c0ddd20d835"))
   (wire
     (pts
       (xy 294.64 201.93)
@@ -2591,60 +2560,12 @@
     (uuid "fbad2f65-86d6-5be2-b7cf-3620759a978b"))
   (wire
     (pts
-      (xy 355.6 266.7)
-      (xy 355.6 276.86))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "3becca16-cc93-58b3-870a-667b699b7a1e"))
-  (wire
-    (pts
-      (xy 355.6 266.7)
-      (xy 381 266.7))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "7769bbd7-c7e0-5fbb-ab3d-e63d97d7e290"))
-  (wire
-    (pts
-      (xy 381 266.7)
-      (xy 381 275.59))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "05edb81b-e7be-5751-b200-b5826b655362"))
-  (wire
-    (pts
-      (xy 231.14 99.06)
-      (xy 236.22 99.06))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "81cbf173-b9a5-580c-9e7a-68ec21aaa7a8"))
-  (wire
-    (pts
       (xy 60.96 265.43)
       (xy 60.96 273.05))
     (stroke
       (width 0)
       (type default))
     (uuid "5a510d8e-f3af-5eb7-a847-49706544d59c"))
-  (wire
-    (pts
-      (xy 91.44 119.38)
-      (xy 91.44 124.46))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "c75b8c0a-a1cf-5b74-b9d4-ebb67e0b4397"))
-  (wire
-    (pts
-      (xy 116.84 95.25)
-      (xy 116.84 100.33))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d74608e9-9b61-5909-8a59-9a46cf9b40de"))
   (wire
     (pts
       (xy 127 275.59)
@@ -2669,38 +2590,6 @@
       (width 0)
       (type default))
     (uuid "4ad9c7e8-c210-53b2-b387-d2c4d827d470"))
-  (wire
-    (pts
-      (xy 251.46 119.38)
-      (xy 251.46 124.46))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "ffc8f67a-0160-5ebf-bc7b-97a8dc2f1dc0"))
-  (wire
-    (pts
-      (xy 276.86 95.25)
-      (xy 276.86 100.33))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a2091ed3-9a6a-5d55-813b-bf344c7bc462"))
-  (wire
-    (pts
-      (xy 355.6 307.34)
-      (xy 355.6 312.42))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "5a05175a-72a5-54f6-8784-12d129d42480"))
-  (wire
-    (pts
-      (xy 381 283.21)
-      (xy 381 288.29))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "361f6789-2112-5aa8-9f94-355e64b84f7e"))
   (wire
     (pts
       (xy 60.96 209.55)
@@ -2807,70 +2696,6 @@
     (uuid "fc051b67-4f8b-5420-a654-4e9f99f24435"))
   (wire
     (pts
-      (xy 294.64 251.46)
-      (xy 302.26 251.46))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "e2340b0e-a559-53ed-ab8e-9245eeaeba80"))
-  (wire
-    (pts
-      (xy 302.26 251.46)
-      (xy 302.26 297.18))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "66e5990c-c732-53b6-8751-25c54179ed3a"))
-  (wire
-    (pts
-      (xy 302.26 297.18)
-      (xy 340.36 297.18))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "92b77fc5-a61d-5f80-9d28-a94c76a4e66a"))
-  (wire
-    (pts
-      (xy 71.12 99.06)
-      (xy 76.2 99.06))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "fef2fc78-0eef-5777-a4d3-0bd1d4ac14ff"))
-  (wire
-    (pts
-      (xy 71.12 109.22)
-      (xy 76.2 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "72e273fe-aad9-5c98-b304-5940bfbea9c7"))
-  (wire
-    (pts
-      (xy 106.68 104.14)
-      (xy 170.18 104.14))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "5779dc8e-a129-586d-ba7e-0506628dc448"))
-  (wire
-    (pts
-      (xy 170.18 104.14)
-      (xy 170.18 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "dca1ed3b-d7ef-5dd2-b583-5da5b091800a"))
-  (wire
-    (pts
-      (xy 170.18 109.22)
-      (xy 236.22 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "db77a648-4720-58ff-ba42-128178ebfdc1"))
-  (wire
-    (pts
       (xy 127 219.71)
       (xy 127 227.33))
     (stroke
@@ -2893,19 +2718,6 @@
       (width 0)
       (type default))
     (uuid "850925bd-ef8d-59c5-ae15-5d34ae360f98"))
-  (wire
-    (pts
-      (xy 266.7 104.14)
-      (xy 271.78 104.14))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2eb39a8e-26de-5b2e-bc00-e8b08b81f103"))
-  (junction
-    (at 294.64 251.46)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "b39be19e-5fff-5de1-9348-365e04b6a2c5"))
   (junction
     (at 127 251.46)
     (diameter 0)
@@ -2921,7 +2733,7 @@
     (diameter 0)
     (color 0 0 0 0)
     (uuid "aab587c6-231b-5f47-8351-d4d498195053"))
-  (text "What this does: Senses armed-rail voltage and combines the conditions for the staging channel.\nConnects to: 06-outputs eligibility + flight requests + external arm indications -> channel permissions. The physical arm assembly and its proof contacts are still undefined."
+  (text "What this does: Feeds each pyro group from ENERGY_TAP through its own fuse and external arm switch, and senses the armed voltage.\nConnects to: ENERGY_TAP (01-power) -> F6101 / F6102 -> J6101 / J6102 -> RECOVERY_ARMED_VBAT (06pyro1, 06pyro2) and STAGING_ARMED_VBAT (06pyro3); arm sense -> PE13 / PE15."
     (at 15.24 27.94 0.0)
     (effects
       (font
