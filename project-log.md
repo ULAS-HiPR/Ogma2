@@ -3912,3 +3912,27 @@ tour's connector gallery.
 - Observed: the fitted sounder is 65 dB in JLC's listing against B-07's 76 dBA
   ambient. Everything else rests on datasheets and the 21 Nov stock scrape.
 - The CAD still shows the pre-decision parts; capturing these is the next step.
+
+## 21 November 2026 — Burrito step 9: the delegated calls captured
+
+- Step 9 drew D-21Nov.12–D-21Nov.20 into the CAD (one commit on main): J6101
+  Molex Mini-Fit Jr. 39281023 and J6102 JST B2P-VH on KiCad footprints, the
+  LSM6DSV32X, the stocked bulk capacitors, 32k and 75k 0.1% resistors, the seven
+  doubled pull-ups and `USB_CONFIG_OK`'s three resistors removed (U4303
+  channel 4 tied off, comms PA1 no-connect), and the magnetic sounder on an
+  AO3400A. R9005, the piezo's bleed resistor, went; D9002, the 1N4148W already
+  across the sounder, is the coil's flyback diode.
+- Observed: 581 → 570 parts; the netlist change matched the intended change
+  pin for pin (25 pins, 19 parts with new values or footprints); ERC unchanged,
+  three recorded exclusions. The checker gained A13 (the arm connector
+  families) and the sounder and `USB_CONFIG_OK` checks: 347 checks pass. All
+  70 generic passive lines now match a stocked JLC part.
+- Amended at capture: the sounder is PUI SMT-1028-T-2-R at 2.83 kHz, not CUI's
+  CMT-8504 at 4 kHz. KiCad's CMT-8504 footprint has four numbered pads and
+  CUI's datasheet wouldn't load in this session, so the coil's two couldn't be
+  identified. Claude's call under the delegation, recorded in D-21Nov.20.
+- KiCad's model library has no 3D model for the Mini-Fit, VH or PUI footprints
+  (nor the NANO2 fuse or Gecko).
+- Still open: J101's footprint (Molex's drawing), the MCU buy (Seán,
+  D-21Nov.19), the sounder's level at 3.3 V and B-07's panel test, then the PCB
+  update and layout.

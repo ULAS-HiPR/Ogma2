@@ -1803,79 +1803,6 @@
         (hide yes))))
   (symbol
     (lib_id "Device:R")
-    (at 295.91 184.15 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "d1fda8b6-7979-5608-a012-e3aa2ed49a2d")
-    (property "Reference" "R1206"
-      (at 299.72 182.88 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100k"
-      (at 299.72 185.42 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 295.91 184.15 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 295.91 184.15 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 295.91 184.15 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 295.91 184.15 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 295.91 184.15 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1a1c026a-4813-53f4-ba31-05bebceed320"
-          (reference "R1206")
-          (unit 1))))
-    (pin "1"
-      (uuid "96f51b72-6ecb-5443-814a-938cb4226aad"))
-    (pin "2"
-      (uuid "a5c6260a-2360-5167-b5a4-d8f1ca8adead")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 295.91 193.04 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "6e46d796-51dd-52fd-817f-a0232102a9b6")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 295.91 193.04 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
     (at 295.91 355.6 0)
     (unit 1)
     (in_bom yes)
@@ -2372,20 +2299,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "USB_CONFIG_OK"
-    (shape bidirectional)
-    (at 295.91 153.67 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "29651119-887e-57a1-8ea2-5903fe5ae3d0")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 295.91 153.67 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "CORE_INPUT_EN"
     (shape bidirectional)
     (at 381 146.05 180)
@@ -2698,14 +2611,6 @@
     (uuid "3883e3f6-a67a-51c7-83c7-44b8a6b86308"))
   (wire
     (pts
-      (xy 295.91 187.96)
-      (xy 295.91 193.04))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "86960233-6f1c-5611-8454-be6e55f8cc92"))
-  (wire
-    (pts
       (xy 295.91 359.41)
       (xy 295.91 364.49))
     (stroke
@@ -2744,14 +2649,6 @@
       (width 0)
       (type default))
     (uuid "6f44302d-b2fc-5cca-a07d-e19ca06dacf2"))
-  (wire
-    (pts
-      (xy 295.91 153.67)
-      (xy 295.91 180.34))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1b8c62b7-7cb2-5ce5-bda6-81998e668969"))
   (wire
     (pts
       (xy 160.02 331.47)

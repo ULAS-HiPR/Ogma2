@@ -3818,28 +3818,6 @@
         (hide yes))))
   (wire
     (pts
-      (xy 180.34 127)
-      (xy 185.42 127))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9eb23855-807a-580e-98da-cc3657fbda68"))
-  (global_label "CC_USB_CONFIG_OK"
-    (shape bidirectional)
-    (at 185.42 127 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "d52e6c47-ecc4-531a-ab33-f374f5e7c401")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 185.42 127 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (wire
-    (pts
       (xy 180.34 129.54)
       (xy 185.42 129.54))
     (stroke
@@ -4448,6 +4426,9 @@
         (size 1.016 1.016))
       (justify left))
     (uuid "2dbc4f0d-b7ee-560c-b44b-b21036a7e357"))
+  (no_connect
+    (at 180.34 127)
+    (uuid "4ebad2f5-30a0-577f-affb-a234ffc00c75"))
   (embedded_fonts no)
   (text "What this does: Handles radio, GNSS and USB service so those tasks cannot monopolise the flight MCU.\nConnects to: UART link to flight: 04b. USB: 04c. GNSS: 04d. Radio: 04e/04f. Local supplies/clocks: 04a; reset/debug: 02comms-reset-debug."
     (at 15.24 27.94 0.0)

@@ -1991,7 +1991,7 @@
       (effects
         (font
           (size 1.016 1.016))))
-    (property "Value" "2N7002"
+    (property "Value" "AO3400A"
       (at 160.02 464.82 0)
       (effects
         (font
@@ -2002,7 +2002,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF"
+    (property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf"
       (at 160.02 490.22 0)
       (effects
         (font
@@ -2021,6 +2021,30 @@
           (size 1.27 1.27))
         (hide yes)))
     (property "ki_fp_filters" "SOT?23*"
+      (at 160.02 490.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "AO3400A"
+      (at 160.02 490.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Alpha & Omega Semiconductor"
+      (at 160.02 490.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "AO3400A (D-21Nov.20): KiCad draws it and the 2N7002 symbol kept here from the same Q_NMOS_GSD base, SOT-23 gate 1, source 2, drain 3"
+      (at 160.02 490.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Implementation_Note" "Logic-level low-side switch for the sounder coil (D-21Nov.20)"
       (at 160.02 490.22 0)
       (effects
         (font
@@ -2194,18 +2218,18 @@
       (effects
         (font
           (size 1.016 1.016))))
-    (property "Value" "CPT-9019S-SMT-TR"
+    (property "Value" "SMT-1028-T-2-R"
       (at 160.02 407.67 0)
       (effects
         (font
           (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:CPT-9019S-SMT-TR"
+    (property "Footprint" "Buzzer_Beeper:MagneticBuzzer_PUI_SMT-1028-T-2-R"
       (at 160.02 427.99 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.sameskydevices.com/product/resource/cpt-9019s-smt-tr.pdf"
+    (property "Datasheet" "https://api.puiaudio.com/filename/SMT-1028-T-2-R.pdf"
       (at 160.02 427.99 0)
       (effects
         (font
@@ -2229,6 +2253,18 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
+    (property "MPN" "SMT-1028-T-2-R"
+      (at 160.02 427.99 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "PUI Audio"
+      (at 160.02 427.99 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/19f2a247-3d06-5066-a7d5-68c74944b77e"
@@ -2238,73 +2274,8 @@
       (uuid "b74e4a6c-df36-59d4-87e3-7d23a9d81a40"))
     (pin "2"
       (uuid "b7441c3f-20b2-541e-b7af-e3dff3170054"))
-    (property "Implementation_Note" "External-drive piezo, 9x9x1.9 mm. Pitch from PD6. No integrated oscillator. -30 to +70 C; nonessential indication only."
+    (property "Implementation_Note" "Magnetic transducer, 90 dBA at 10 cm at 3.6 Vpp, 2.83 kHz (KiCad footprint data); pad 1 is +; D9002 is its flyback diode (D-21Nov.20, B-07)"
       (at 160.02 427.99 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 218.44 427.99 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "c6cb8d80-d316-5d89-a821-2bd8e8fa9c59")
-    (property "Reference" "R9005"
-      (at 222.25 426.72 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "1k"
-      (at 222.25 429.26 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 218.44 427.99 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 218.44 427.99 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 218.44 427.99 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 218.44 427.99 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 218.44 427.99 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/19f2a247-3d06-5066-a7d5-68c74944b77e"
-          (reference "R9005")
-          (unit 1))))
-    (pin "1"
-      (uuid "d9b13da6-c616-503b-b231-d803d550cde1"))
-    (pin "2"
-      (uuid "fe62d26c-1740-5cc1-ae74-8ad17c48691e"))
-    (property "Implementation_Note" "Piezo discharge/bias return. 15.6us worst nominal RC with 15.6nF transducer."
-      (at 218.44 427.99 0)
       (effects
         (font
           (size 1.27 1.27))
@@ -2652,14 +2623,6 @@
   (wire
     (pts
       (xy 218.44 402.59)
-      (xy 218.44 424.18))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "76b19df1-ff02-5e91-9b68-9f76353116f6"))
-  (wire
-    (pts
-      (xy 218.44 402.59)
       (xy 281.94 402.59))
     (stroke
       (width 0)
@@ -2969,16 +2932,11 @@
     (color 0 0 0 0)
     (uuid "bcbaa972-3000-570b-baf2-aa5f8bf13fb8"))
   (junction
-    (at 218.44 402.59)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "4a46337d-ac9a-5c2c-8337-150d4882a8c8"))
-  (junction
     (at 114.3 490.22)
     (diameter 0)
     (color 0 0 0 0)
     (uuid "807c80e9-5466-5bc8-9e54-f1e6d3521c97"))
-  (text "What this does: Shows basic power/readiness status and provides audible bench/startup feedback without a display.\nConnects to: Flight PD7 -> complementary red/green LEDs; comms and hardware power have separate LEDs. Flight PD6 -> passive piezo. Green means checks passed, not armed."
+  (text "What this does: Shows basic power/readiness status and provides audible bench/startup feedback without a display.\nConnects to: Flight PD7 -> complementary red/green LEDs; comms and hardware power have separate LEDs. Flight PD6 -> magnetic sounder (D-21Nov.20). Green means checks passed, not armed."
     (at 15.24 27.94 0.0)
     (effects
       (font

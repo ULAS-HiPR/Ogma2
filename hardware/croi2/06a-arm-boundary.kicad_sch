@@ -1281,13 +1281,13 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "Recovery arm switch (part open)"
+    (property "Value" "39281023"
       (at 97.79 85.09 0)
       (effects
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Footprint" ""
+    (property "Footprint" "Connector_Molex:Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical"
       (at 93.98 83.82 0)
       (effects
         (font
@@ -1317,7 +1317,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "2-contact connector to the external recovery arm switch (D-6.1, D-2Nov.2); placeholder until the part is chosen: must not mate Churro J701 (Micro-Fit 430450200) or the GH enable loops"
+    (property "Implementation_Note" "Recovery arm switch: Mini-Fit Jr. 2-circuit vertical, 4.2 mm, 9 A, positive latch (D-21Nov.12). Can't take J6102's VH plug, J701's Micro-Fit, the GH loops or J101's Nano-Fit"
+      (at 93.98 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "39281023"
+      (at 93.98 83.82 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Molex"
       (at 93.98 83.82 0)
       (effects
         (font
@@ -1504,13 +1516,13 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "Staging arm switch (part open)"
+    (property "Value" "B2P-VH(LF)(SN)"
       (at 97.79 115.57 0)
       (effects
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Footprint" ""
+    (property "Footprint" "Connector_JST:JST_VH_B2P-VH_1x02_P3.96mm_Vertical"
       (at 93.98 114.3 0)
       (effects
         (font
@@ -1540,7 +1552,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "2-contact connector to the external staging arm switch (D-7.2, D-2Nov.2); placeholder until the part is chosen: must not mate J6101, Churro J701 (Micro-Fit 430450200) or the GH enable loops"
+    (property "Implementation_Note" "Staging arm switch: JST VH 2-pin vertical, 3.96 mm, 10 A, locking (D-21Nov.12). Can't take J6101's Mini-Fit plug, J701's Micro-Fit, the GH loops or J101's Nano-Fit"
+      (at 93.98 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "B2P-VH(LF)(SN)"
+      (at 93.98 114.3 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "JST"
       (at 93.98 114.3 0)
       (effects
         (font
@@ -1638,7 +1662,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (text "F6101 / F6102: Littelfuse 0451004.MRL, 4 A fast-acting NANO2, one per arm feed so a staging short cannot open recovery's fuse (D-2Nov.2).\nA 2 A firing pulse is half the rating and cannot open it; both recovery channels at once are 4 A, at the rating.\nJ6101 / J6102: 2-contact connectors to the external arm switches, placeholders until the part is chosen.\nNeither may mate Churro J701 (Micro-Fit 430450200), the GH enable loops or each other."
+  (text "F6101 / F6102: Littelfuse 0451004.MRL, 4 A fast-acting NANO2, one per arm feed so a staging short cannot open recovery's fuse (D-2Nov.2).\nA 2 A firing pulse is half the rating and cannot open it; both recovery channels at once are 4 A, at the rating.\nJ6101: Molex Mini-Fit Jr. 39281023 (4.2 mm, 9 A); J6102: JST VH B2P-VH (3.96 mm, 10 A) (D-21Nov.12).\nTwo families: neither takes the other's plug, Churro J701's Micro-Fit, the GH enable loops or J101's Nano-Fit."
     (exclude_from_sim no)
     (at 40.64 137.16 0)
     (effects
@@ -2371,7 +2395,7 @@
         (size 1.4 1.4))
       (justify left))
     (uuid "3c0cb16e-acd2-524d-a0c7-ab4e61f81963"))
-  (text "OPEN: the J6101 / J6102 connector parts and the arm switches; F6101 / F6102 breaking capacity against the pack."
+  (text "OPEN: the arm switches; F6101 / F6102 breaking capacity against the pack."
     (at 15.24 342.9 0)
     (effects
       (font

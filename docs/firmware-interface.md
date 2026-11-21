@@ -121,7 +121,7 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | Monitor bus | I²C4: PB8 SCL, PB9 SDA (AF6) | 100 kHz; INA228 0x40 (Croí), 0x41 (Churro PROP); ADS1115 0x48 |
 | Watchdog | PD4 `SUPERVISOR_WDI` | Toggled only on earned essential progress |
 | Readiness lamp | PD7 | Low or reset = red, high = green |
-| Sounder | PD6 through Q9001 | Magnetic transducer (D-21Nov.20): drive a 4 kHz square wave; ground only, silent in flight |
+| Sounder | PD6 through Q9001 | Magnetic transducer, PUI SMT-1028-T-2-R (D-21Nov.20): drive a 2.83 kHz square wave, its rated frequency; ground only, silent in flight |
 | Debug | PA13 SWDIO, PA14 SWCLK; BOOT0 pulled down | Service only |
 | Spare | None since D-5Nov.3 | PC13 stays quiet (LSE erratum) |
 

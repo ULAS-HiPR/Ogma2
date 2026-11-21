@@ -706,7 +706,7 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "47u 16V X7R"
+    (property "Value" "47u 16V X6S"
       (at 66.04 109.22 0)
       (effects
         (font
@@ -743,6 +743,18 @@
           (size 1.27 1.27))
         (hide yes)))
     (property "Implementation_Note" "Require >=10uF effective at installed bias/temperature"
+      (at 62.23 107.95 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "GRM32EC81C476KE15L"
+      (at 62.23 107.95 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Murata"
       (at 62.23 107.95 0)
       (effects
         (font
@@ -830,7 +842,7 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "31.9k 0.1%"
+    (property "Value" "32k 0.1%"
       (at 156.21 110.49 0)
       (effects
         (font
@@ -1123,7 +1135,7 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Value" "47u 16V X7R"
+    (property "Value" "47u 16V X6S"
       (at 205.74 110.49 0)
       (effects
         (font
@@ -1160,6 +1172,18 @@
           (size 1.27 1.27))
         (hide yes)))
     (property "Implementation_Note" "Require >=22uF effective at installed bias/temperature"
+      (at 201.93 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "GRM32EC81C476KE15L"
+      (at 201.93 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Murata"
       (at 201.93 109.22 0)
       (effects
         (font
@@ -1455,7 +1479,7 @@
           (unit 1))))
     (pin "1"
       (uuid "3bdefc50-110c-5461-a957-f60d281a2125")))
-  (text "3.352 V nominal; calculated corners 3.310-3.394 V. Feedback remains upstream of the removable 0-ohm link. 100 nF NR/SS capacitor; SS_CTRL tied to ground."
+  (text "3.360 V nominal; calculated corners 3.318-3.402 V (D-21Nov.18). Feedback remains upstream of the removable 0-ohm link. 100 nF NR/SS capacitor; SS_CTRL tied to ground."
     (at 15.24 185.42 0)
     (effects
       (font

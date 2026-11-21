@@ -24,11 +24,15 @@ ADDED = {
     'Fuse:Fuse_1206_3216Metric': f'{K9}, Fuse.pretty; capture step 5 (F501 / F502)',
     'Fuse:Fuse_Littelfuse-NANO2-451_453': f'{K9}, Fuse.pretty; capture step 6 (F6101 / F6102)',
     'Package_QFP:LQFP-64_10x10mm_P0.5mm': f'{K9}, Package_QFP.pretty; capture step 7 (U401)',
+    'Connector_Molex:Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical': f'{K9}, Connector_Molex.pretty; capture step 9 (J6101, D-21Nov.12)',
+    'Connector_JST:JST_VH_B2P-VH_1x02_P3.96mm_Vertical': f'{K9}, Connector_JST.pretty; capture step 9 (J6102, D-21Nov.12)',
+    'Buzzer_Beeper:MagneticBuzzer_PUI_SMT-1028-T-2-R': f'{K9}, Buzzer_Beeper.pretty; capture step 9 (BZ9001, D-21Nov.20)',
+    'Capacitor_SMD:C_0805_2012Metric': f'{K9}, Capacitor_SMD.pretty; capture step 9 (C4504, D-21Nov.17)',
 }
 MODEL_SOURCE = 'KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out'
 FETCHED = ['Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step',
            'Fuse.3dshapes/Fuse_1206_3216Metric.step', 'Package_LGA.3dshapes/LGA-16_3x3mm_P0.5mm.step',
-           'Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step']
+           'Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step', 'Capacitor_SMD.3dshapes/C_0805_2012Metric.step']
 
 
 def sha(p):
@@ -68,9 +72,8 @@ def main(netlist):
         'unavailable_model_references': missing_models, 'model_less_footprints': modelless,
         'model_sources': {m: MODEL_SOURCE for m in FETCHED},
         'scope': old['scope'], 'hashes': {str(p.relative_to(BOARD)): sha(p) for p in files},
-        'revision_note': ('2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-8. '
-                          'J101 still lacks its Nano-Fit footprint (Molex drawing not obtained); J6101 / J6102 are placeholders '
-                          'until their parts are chosen. ' + old['revision_note']),
+        'revision_note': ('2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9. '
+                          'J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). ' + old['revision_note'].split('2026-11-21: ')[-1].split('until their parts are chosen. ')[-1]),
         'symbol_count_definition': old['symbol_count_definition'],
     }
     assert all(f['source'] != 'unrecorded' for f in footprints), [f['id'] for f in footprints if f['source'] == 'unrecorded']

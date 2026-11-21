@@ -1697,79 +1697,6 @@
           (size 1 1))
         (hide yes))))
   (symbol
-    (lib_id "Device:R")
-    (at 69.85 222.25 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "b3c7ac31-0fd8-5470-900c-64f840e22cbb")
-    (property "Reference" "R3206"
-      (at 73.66 220.98 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "47k"
-      (at 73.66 223.52 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/1c3cb4e0-bdf0-5eaf-affb-698da15565f8"
-          (reference "R3206")
-          (unit 1))))
-    (pin "1"
-      (uuid "1d50eebf-a3c8-59ae-bf2c-b2d15290d20e"))
-    (pin "2"
-      (uuid "5a4bb4c8-ce54-55e5-aab0-ee5a840f2f63")))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 69.85 213.36 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "7c7bf525-6603-5c9f-bbfd-46575908d98b")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 69.85 213.36 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
     (lib_id "Device:C")
     (at 312.42 219.71 0)
     (unit 1)
@@ -2452,20 +2379,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "TDK_NCS"
-    (shape bidirectional)
-    (at 69.85 226.06 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "f4baebfb-b9ba-5903-b5be-a81afd981ba2")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 69.85 226.06 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "TDK_MISO"
     (shape bidirectional)
     (at 139.7 273.05 180)
@@ -2564,14 +2477,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (wire
-    (pts
-      (xy 69.85 213.36)
-      (xy 69.85 218.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "66e05e93-54c6-5efd-9ecc-17ebb0e666f7"))
   (wire
     (pts
       (xy 30.48 142.24)

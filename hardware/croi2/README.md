@@ -6,7 +6,7 @@
 Open [Croi2.kicad_pro](Croi2.kicad_pro), then its schematic and PCB from that project.
 Reopen old editors without saving stale in-memory drawings over these files.
 
-44 schematic pages, 581 physical symbols. Each circuit explains what it does and
+44 schematic pages, 570 physical symbols. Each circuit explains what it does and
 what it connects to. Follow the root index, then trace the local wires. Labels
 identify connections between sheets. The capture steps, their checks and what is
 still owed are in [schematic-status.md](schematic-status.md).

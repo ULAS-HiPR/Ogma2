@@ -425,9 +425,9 @@ powered-off injection. Preserve both series top resistors; no raw battery to PA0
 
 Place the four LEDs where they can actually be read through the service opening:
 PWR, FLIGHT, FAULT, COMMS. Place BZ9001 at a supported accessible edge away
-from MEMS, with its sound ports unobstructed and Q9001/R9005/D9002 nearby.
-It is a passive piezo, not a fixed-pitch active buzzer. Its new exact land pattern
-is provided; no exact 3D model is claimed. No LCD or NeoPixel is included.
+from MEMS, with its sound port unobstructed and Q9001/D9002 nearby.
+It is a PUI SMT-1028-T-2-R magnetic transducer driven at 2.83 kHz (D-21Nov.20), not a
+fixed-pitch active buzzer. Its land pattern is KiCad's; KiCad has no 3D model for it. No LCD or NeoPixel is included.
 
 ### C14. Output circuits: reserve now, route after their open circuit boundary closes
 

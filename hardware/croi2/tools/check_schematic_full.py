@@ -101,7 +101,8 @@ def check(project, netlist, erc):
             else:
                 require(got == row['net'], f"{ref}.{row['pad']}: as-captured allocation {row['net']}")
     for ref, mpn in [('U201', 'STM32H563VIT6'), ('U401', 'STM32H563RIT6'), ('U3604', 'MX66L2G45GMI00'),
-                     ('U4504', 'MAX-M10S-00B'), ('U4606', 'Wio-LR2021'), ('U3701', 'MMC5983MA'), ('U6502', 'SN74LVC1G08DBVR')]:
+                     ('U4504', 'MAX-M10S-00B'), ('U4606', 'Wio-LR2021'), ('U3701', 'MMC5983MA'), ('U6502', 'SN74LVC1G08DBVR'),
+                     ('U3104', 'LSM6DSV32XTR'), ('BZ9001', 'SMT-1028-T-2-R'), ('Q9001', 'AO3400A')]:
         require(value(ref) == mpn, f'{ref}: accepted exact device')
     require(set(parts) == {ref for ref in expected if not ref.startswith('#')}, 'Every native component covered')
     assert parts['U4606'].findtext("fields/field[@name='MPN']") == 'Wio-LR2021 / SKU 100058045', 'Stale radio procurement identity'
@@ -183,7 +184,12 @@ def check(project, netlist, erc):
     for pin, net in {'2': 'FLIGHT_STATUS_LED1', '3': 'GND', '4': 'FLIGHT_NOT_READY', '5': 'FLIGHT_3V3'}.items():
         require(actual[('U9101', pin)] == net, f'Inverter manufacturer DBV contact {pin}')
     require(value('U9101') == 'SN74LVC1G04DBVR' and actual[('R9102', '1')] == 'FLIGHT_STATUS_LED1' and value('R9102') == '47k', 'Readiness inverter and its default')
-    require('BZ9001' not in dnp and actual[('R9005', '1')] == '3V3_OPTIONAL' and actual[('R9005', '2')] == 'BUZZER_LOW', 'Piezo populated with discharge path')
+    require('BZ9001' not in dnp and actual[('D9002', '1')] == actual[('BZ9001', '1')] == '3V3_OPTIONAL'
+            and actual[('D9002', '2')] == actual[('BZ9001', '2')] == actual[('Q9001', '3')] == 'BUZZER_LOW'
+            and refs('BUZZER_LOW') == {'BZ9001', 'D9002', 'Q9001'} and actual[('Q9001', '2')] == 'GND',
+            'Magnetic sounder: one flyback diode (D9002) across its coil, no bleed resistor, AO3400A low side (D-21Nov.20)')
+    require(not [n for n in nets if 'USB_CONFIG_OK' in n] and actual[('U4303', '10')] == 'GND'
+            and actual[('U4303', '5')].startswith('unconnected-'), 'USB_CONFIG_OK dropped; its translator channel tied off (D-21Nov.14)')
     require(not [n for n in nets if 'SERVO' in n] and not [r for r in parts if r.startswith(('U68', 'J6602'))], 'No servo nets or parts (D-19Nov.2)')
 
     # ---- capture safety assertions (11-verification.md)
@@ -232,7 +238,7 @@ def check(project, netlist, erc):
     require(refs('USB_VBUS') == {'J4401', 'D4401', 'C4401', 'C4402', 'U4401', 'R1208'}, 'A18: USB VBUS only to its ESD, decoupling, U4401 and the R1208 divider')
     for ref in ('R1701', 'R1801', 'R1901'):
         bottom = next(r for r in refs(actual[(ref, '2')]) if r.startswith('R') and r != ref)
-        require(value(ref) == '31.9k 0.1%' and value(bottom).startswith('10k'), f'A19: {ref} 31.9k over {bottom} 10k')
+        require(value(ref) == '32k 0.1%' and value(bottom).startswith('10k'), f'A19: {ref} 32k over {bottom} 10k (D-21Nov.18)')
     require(actual[('U101', '11')] == 'GND', 'A19: U101 MODE tied to GND (auto-retry, D-6.3)')
     for j, r, f in (('J501', 'R516', 'F501'), ('J502', 'R517', 'F502')):
         ref_net = actual[(j, '3')]
@@ -243,7 +249,12 @@ def check(project, netlist, erc):
         require(value(f'R6{n + 2}14') == '1.24k 1%' and f'R6{n + 2}14' not in dnp, f'Channel {n} current limit fitted (about 2.0 A)')
     require(all(f'R69{i}{j}' not in dnp and value(f'R69{i}{j}') == '3.9k 1%' for i in (1, 2, 3) for j in (1, 2, 3, 4)), 'Continuity resistors 3.9k fitted (D-2Nov.14)')
     missing = sorted(r for r, c in parts.items() if not c.findtext('footprint'))
-    require(missing == ['J101', 'J6101', 'J6102'], 'Only J101 (Nano-Fit drawing) and the J6101 / J6102 placeholders lack footprints')
+    require(missing == ['J101'], 'Only J101 lacks a footprint (Nano-Fit drawing)')
+    fp = lambda ref: parts[ref].findtext('footprint')
+    families = {r: fp(r).split(':')[1].split('_')[1] for r in ('J6101', 'J6102', 'J103')}
+    require(fp('J6101').startswith('Connector_Molex:Molex_Mini-Fit_Jr') and fp('J6102').startswith('Connector_JST:JST_VH')
+            and len(set(families.values())) == 3 and not {'Micro-Fit', 'Nano-Fit', 'GH', 'Gecko'} & {families['J6101'], families['J6102']},
+            'A13: J6101 (Mini-Fit Jr.) and J6102 (JST VH): different families, neither Micro-Fit (J701), Nano-Fit (J101), GH or Gecko')
 
     # ---- negative tests exercise the checker, not a modified live schematic
     bad = copy.deepcopy(root)
@@ -273,8 +284,7 @@ def check(project, netlist, erc):
     return {'status': 'connectivity checks pass; engineering draft, not release',
             'physical_component_count': len(parts), 'checked_pin_count': pincount, 'architecture_checks': len(checks),
             'dnp_count': len(dnp), 'dnp_refs': dnp, 'missing_footprints': missing,
-            'not_checkable_here': {'A13': 'J6101 / J6102 parts not chosen; mating is mechanical',
-                                   'A17': 'KiCad 9 schematic has no BOM variants; J101 / J102 exclusivity is an assembly rule',
+            'not_checkable_here': {'A17': 'KiCad 9 schematic has no BOM variants; J101 / J102 exclusivity is an assembly rule',
                                    'A20': 'Churro', 'A21': 'Churro'},
             'erc_categories': dict(categories), 'checks': checks,
             'netlist_sha256': hashlib.sha256(netlist.read_bytes()).hexdigest(),

@@ -5,7 +5,7 @@ amended 6 October with D-6.1–D-6.10, 7 October with D-7.1 (three pyro channels
 three servos) and 2 November with D-2Nov.1–D-2Nov.11, D-2Nov.14, D-2Nov.15,
 D-2Nov.17, D-2Nov.18 and the acceptance of D1, D2, D3, D5 and D-7.2, and
 18 November with D-5Nov.3 (CAN bus 2 and its pin moves) and D-18Nov.4 (Gecko CAN
-connectors), all in [decisions.md](../../decisions.md). D-6.12 (two processors),
+connectors), and 21 November with D-21Nov.12–D-21Nov.20 (drawn at capture step 9), all in [decisions.md](../../decisions.md). D-6.12 (two processors),
 D-18Nov.3 (no I²C port) needs no capture change. D-18Nov.1's "no third Churro
 branch" is replaced: Churro gains the ACT branch (D-21Nov.1).
 
@@ -67,8 +67,8 @@ energetic outputs, or to fly.
 
 Also on the processors:
 
-- Comms PA1 / PA2 / PB5 keep `CC_USB_CONFIG_OK` / `CC_BAT_VALID` /
-  `CC_BRANCH_FAULT_N` and their boundary circuits.
+- Comms PA2 / PB5 keep `CC_BAT_VALID` / `CC_BRANCH_FAULT_N` and their boundary
+  circuits. PA1 is unused: `CC_USB_CONFIG_OK` is dropped (D-21Nov.14).
 - Comms VDDA/VREF+ pad 13 takes `COMMS_VDDA` through the existing R401 link.
   Flight VDDA/VREF+ keep `FLIGHT_VDDA`.
 - Keep each processor's HSE and SWD nets separate.
@@ -220,7 +220,7 @@ See the [output chapter](03-energetic-outputs.md).
 no-fire current; the continuity and return resistors are 3.9 kΩ for any no-fire
 current of 25 mA or more, D-2Nov.14); the fuse and
 arm-switch parts; the J6101 / J6102 and umbilical connector parts (draw them as
-reviewed placeholders); where the packs and arm switches sit in the vehicle
+reviewed placeholders; J6101 / J6102 decided D-21Nov.12, drawn at step 9); where the packs and arm switches sit in the vehicle
 (EuRoC access). Pyro energy links R6310 / R6410 / R6510 stay DNP until the
 igniter values close.
 

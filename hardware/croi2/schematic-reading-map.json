@@ -117,7 +117,7 @@
   {
     "file": "04b-uart-boundary.kicad_sch",
     "purpose": "Passes messages and a few control/status signals between the processors without feeding power through an off MCU.",
-    "connects_to": "U201 flight <-> U401 comms. Includes the flight-requested comms reset, battery-valid status and USB permission, not just UART data."
+    "connects_to": "U201 flight <-> U401 comms. Includes the flight-requested comms reset, battery-valid and USB-present status, not just UART data."
   },
   {
     "file": "04c-usb-service.kicad_sch",
@@ -207,7 +207,7 @@
   {
     "file": "09-indicators.kicad_sch",
     "purpose": "Shows basic power/readiness status and provides audible bench/startup feedback without a display.",
-    "connects_to": "Flight PD7 -> complementary red/green LEDs; comms and hardware power have separate LEDs. Flight PD6 -> passive piezo. Green means checks passed, not armed."
+    "connects_to": "Flight PD7 -> complementary red/green LEDs; comms and hardware power have separate LEDs. Flight PD6 -> magnetic sounder (D-21Nov.20). Green means checks passed, not armed."
   },
   {
     "file": "44-master-enable.kicad_sch",

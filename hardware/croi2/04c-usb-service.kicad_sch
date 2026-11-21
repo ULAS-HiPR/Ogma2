@@ -2774,93 +2774,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 241.3 224.79 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "723a6f3c-c46b-5cb8-9fbe-760da501fa30")
-    (property "Reference" "R4404"
-      (at 245.11 223.52 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100k"
-      (at 245.11 226.06 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 241.3 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 241.3 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 241.3 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 241.3 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 241.3 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/f8781a56-e45e-518e-bfc4-17362dd1c9a6"
-          (reference "R4404")
-          (unit 1))))
-    (pin "1"
-      (uuid "107f594d-d4af-5ce1-b522-e8ddbe0207c9"))
-    (pin "2"
-      (uuid "6294ff61-f13b-5abd-b441-4ad9ed75dea2")))
-  (global_label "USB_CONFIG_OK"
-    (shape bidirectional)
-    (at 241.3 208.28 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "262b78a6-38c6-515f-b866-24ec99597cb7")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 241.3 208.28 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 241.3 233.68 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "6663f42b-eb86-59aa-b352-e53e7e44583e")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 241.3 233.68 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (text "Both CC pins have their own 5.1k sink resistor. USB2 A/B data contacts join at the connector; SBU contacts are unused."
     (at 15.24 248.92 0)
     (effects
@@ -2868,7 +2781,7 @@
         (size 1.2 1.2))
       (justify left))
     (uuid "4b0f08dd-0e31-5dab-928d-3c776f43485e"))
-  (text "U4401 limit fixed by R4403 60.4k: 387-491 mA from attach (D-6.5); strict hosts may need a powered hub.\nUSB_CONFIG_OK keeps only its R4404 pull-down on this sheet."
+  (text "U4401 limit fixed by R4403 60.4k: 387-491 mA from attach (D-6.5); strict hosts may need a powered hub."
     (at 15.24 259.08 0)
     (effects
       (font
@@ -3062,14 +2975,6 @@
     (uuid "86356d40-6a32-576c-89ea-fb334b75987c"))
   (wire
     (pts
-      (xy 241.3 228.6)
-      (xy 241.3 233.68))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "4196ff29-c318-51d3-89ff-8f9ae8b9576d"))
-  (wire
-    (pts
       (xy 246.38 86.36)
       (xy 246.38 91.44))
     (stroke
@@ -3124,14 +3029,6 @@
       (width 0)
       (type default))
     (uuid "f22c009f-0181-59fc-9145-097eb7b662e2"))
-  (wire
-    (pts
-      (xy 241.3 208.28)
-      (xy 241.3 220.98))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "dc2dcb90-22e6-5840-bacb-30505b428b61"))
   (wire
     (pts
       (xy 217.17 132.08)

@@ -1558,79 +1558,6 @@
         (hide yes))))
   (symbol
     (lib_id "Device:R")
-    (at 39.37 224.79 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "6fb4fadd-4fe8-5301-83a9-0c5bd5ca8335")
-    (property "Reference" "R3507"
-      (at 43.18 223.52 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10k"
-      (at 43.18 226.06 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 39.37 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 39.37 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 39.37 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 39.37 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 39.37 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7386091d-0e3a-508b-9f12-65b13d57b48a"
-          (reference "R3507")
-          (unit 1))))
-    (pin "1"
-      (uuid "da21c6dd-6cd1-5b74-b634-1a710959f9d4"))
-    (pin "2"
-      (uuid "30b8134b-fd21-5a06-aec4-a5c34c66f9f6")))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 39.37 215.9 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "343efe66-25ce-5fa6-9f9a-fb77dab671f4")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 39.37 215.9 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
     (at 208.28 224.79 0)
     (unit 1)
     (in_bom yes)
@@ -1698,79 +1625,6 @@
     (uuid "11b4e74d-d9df-5493-a215-4dff12fce0ba")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 208.28 215.9 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 66.04 224.79 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "dd80bf46-8f19-59bb-999a-ff310036b6e7")
-    (property "Reference" "R3508"
-      (at 69.85 223.52 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10k"
-      (at 69.85 226.06 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 66.04 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 66.04 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 66.04 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 66.04 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 66.04 224.79 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/7386091d-0e3a-508b-9f12-65b13d57b48a"
-          (reference "R3508")
-          (unit 1))))
-    (pin "1"
-      (uuid "05c7cd4b-78f8-5bdb-a97d-ca8dd6dbbbb6"))
-    (pin "2"
-      (uuid "4d3a7373-79b7-571f-aee3-d25c18b0a065")))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 66.04 215.9 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "2ecc9388-d0d2-5fef-a338-1fe818f8a34a")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 66.04 215.9 0)
       (effects
         (font
           (size 1 1))
@@ -2147,20 +2001,6 @@
         (hide yes))))
   (global_label "TE_SCL"
     (shape bidirectional)
-    (at 39.37 228.6 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "678422e4-4b0b-580a-88bf-cc10ad29524e")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 39.37 228.6 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "TE_SCL"
-    (shape bidirectional)
     (at 180.34 228.6 0)
     (effects
       (font
@@ -2169,20 +2009,6 @@
     (uuid "4a197cee-4fb5-520d-b125-017d58d24d9b")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 180.34 228.6 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "TE_SDA"
-    (shape bidirectional)
-    (at 66.04 228.6 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "dc1429de-cbef-501e-a79e-cfe0001272de")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 66.04 228.6 0)
       (effects
         (font
           (size 1 1))
@@ -2201,22 +2027,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (wire
-    (pts
-      (xy 39.37 215.9)
-      (xy 39.37 220.98))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "cea8a549-baea-5160-87ca-8fb6a19ca752"))
-  (wire
-    (pts
-      (xy 66.04 215.9)
-      (xy 66.04 220.98))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "0c067500-be62-52ed-b7ec-490aa722eceb"))
   (wire
     (pts
       (xy 30.48 142.24)

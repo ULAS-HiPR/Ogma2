@@ -990,10 +990,6 @@
   "1": "FLIGHT_COMMS_EN",
   "2": "GND"
  },
- "R1206": {
-  "1": "USB_CONFIG_OK",
-  "2": "GND"
- },
  "R1207": {
   "1": "COMMS_BRANCH_EN",
   "2": "GND"
@@ -1178,10 +1174,6 @@
   "1": "FLIGHT_3V3",
   "2": "ST_NCS"
  },
- "R3106": {
-  "1": "FLIGHT_3V3",
-  "2": "ST_NCS"
- },
  "R3107": {
   "1": "ST_SCK",
   "2": "ST_SCK_DAMP"
@@ -1198,10 +1190,6 @@
   "1": "FLIGHT_3V3",
   "2": "TDK_NCS"
  },
- "R3206": {
-  "1": "FLIGHT_3V3",
-  "2": "TDK_NCS"
- },
  "R3207": {
   "1": "TDK_SCK",
   "2": "TDK_SCK_DAMP"
@@ -1215,10 +1203,6 @@
   "2": "HG_3V3"
  },
  "R3305": {
-  "1": "FLIGHT_3V3",
-  "2": "HG_NCS"
- },
- "R3306": {
   "1": "FLIGHT_3V3",
   "2": "HG_NCS"
  },
@@ -1242,14 +1226,6 @@
   "1": "FLIGHT_3V3",
   "2": "BMP_SDA"
  },
- "R3407": {
-  "1": "FLIGHT_3V3",
-  "2": "BMP_SCL"
- },
- "R3408": {
-  "1": "FLIGHT_3V3",
-  "2": "BMP_SDA"
- },
  "R3501": {
   "1": "FLIGHT_3V3",
   "2": "TE_3V3"
@@ -1259,14 +1235,6 @@
   "2": "TE_SCL"
  },
  "R3506": {
-  "1": "FLIGHT_3V3",
-  "2": "TE_SDA"
- },
- "R3507": {
-  "1": "FLIGHT_3V3",
-  "2": "TE_SCL"
- },
- "R3508": {
   "1": "FLIGHT_3V3",
   "2": "TE_SDA"
  },
@@ -1358,10 +1326,6 @@
   "1": "COMMS_3V3",
   "2": "CC_FLIGHT_TO_COMMS"
  },
- "R4304": {
-  "1": "CC_USB_CONFIG_OK",
-  "2": "GND"
- },
  "R4401": {
   "1": "USB_CC1",
   "2": "GND"
@@ -1372,10 +1336,6 @@
  },
  "R4403": {
   "1": "USB_ILIM",
-  "2": "GND"
- },
- "R4404": {
-  "1": "USB_CONFIG_OK",
   "2": "GND"
  },
  "R4405": {
@@ -1889,10 +1849,6 @@
  "R9004": {
   "1": "COMMS_3V3",
   "2": "CC_BRANCH_FAULT_N"
- },
- "R9005": {
-  "1": "3V3_OPTIONAL",
-  "2": "BUZZER_LOW"
  },
  "R9101": {
   "1": "FLIGHT_NOT_READY",
@@ -2536,7 +2492,7 @@
   "12": "GND",
   "13": "COMMS_VDDA",
   "14": "GNSS_PPS",
-  "15": "CC_USB_CONFIG_OK",
+  "15": null,
   "16": "CC_BAT_VALID",
   "17": null,
   "18": "GND",
@@ -2623,7 +2579,7 @@
  },
  "U4303": {
   "1": "BOOT_3V3",
-  "10": "CC_USB_CONFIG_OK",
+  "10": "GND",
   "11": null,
   "12": "USB_VBUS_PRESENT",
   "13": "CC_BAT_VALID",
@@ -2631,7 +2587,7 @@
   "2": "BAT_VALID",
   "3": "USB_PRESENT",
   "4": "GND",
-  "5": "USB_CONFIG_OK",
+  "5": null,
   "6": null,
   "7": "GND",
   "8": "BOOT_3V3",

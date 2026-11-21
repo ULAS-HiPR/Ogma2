@@ -2,8 +2,18 @@
   "project": "Croi2",
   "source_project": "hardware/Ogma2",
   "symbol_count": 81,
-  "physical_components": 581,
+  "physical_components": 570,
   "footprints": [
+    {
+      "id": "Buzzer_Beeper:MagneticBuzzer_PUI_SMT-1028-T-2-R",
+      "source": "KiCad 9.0.7 official library, Buzzer_Beeper.pretty; capture step 9 (BZ9001, D-21Nov.20)",
+      "models": [
+        "Buzzer_Beeper.3dshapes/MagneticBuzzer_PUI_SMT-1028-T-2-R.step"
+      ],
+      "refs": [
+        "BZ9001"
+      ]
+    },
     {
       "id": "Capacitor_SMD:CP_Elec_6.3x7.7",
       "source": "KiCad 9.0.7 official library, Capacitor_SMD.pretty; capture step 2 (C1007)",
@@ -139,7 +149,6 @@
         "C4501",
         "C4502",
         "C4503",
-        "C4504",
         "C4505",
         "C4506",
         "C4601",
@@ -182,6 +191,16 @@
       ]
     },
     {
+      "id": "Capacitor_SMD:C_0805_2012Metric",
+      "source": "KiCad 9.0.7 official library, Capacitor_SMD.pretty; capture step 9 (C4504, D-21Nov.17)",
+      "models": [
+        "Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+      ],
+      "refs": [
+        "C4504"
+      ]
+    },
+    {
       "id": "Capacitor_SMD:C_1206_3216Metric",
       "source": "/Applications/KiCad.app/Contents/SharedSupport/footprints/Capacitor_SMD.pretty/C_1206_3216Metric.kicad_mod",
       "models": [
@@ -221,6 +240,26 @@
       ],
       "refs": [
         "J103"
+      ]
+    },
+    {
+      "id": "Connector_JST:JST_VH_B2P-VH_1x02_P3.96mm_Vertical",
+      "source": "KiCad 9.0.7 official library, Connector_JST.pretty; capture step 9 (J6102, D-21Nov.12)",
+      "models": [
+        "Connector_JST.3dshapes/JST_VH_B2P-VH_1x02_P3.96mm_Vertical.step"
+      ],
+      "refs": [
+        "J6102"
+      ]
+    },
+    {
+      "id": "Connector_Molex:Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical",
+      "source": "KiCad 9.0.7 official library, Connector_Molex.pretty; capture step 9 (J6101, D-21Nov.12)",
+      "models": [
+        "Connector_Molex.3dshapes/Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical.step"
+      ],
+      "refs": [
+        "J6101"
       ]
     },
     {
@@ -306,16 +345,6 @@
       "models": [],
       "refs": [
         "U3403"
-      ]
-    },
-    {
-      "id": "Ogma2:CPT-9019S-SMT-TR",
-      "source": "Sensing/status revision: local manufacturer-derived or vendored footprint",
-      "models": [
-        "Same_Sky_CPT-9019S-SMT-TR.step"
-      ],
-      "refs": [
-        "BZ9001"
       ]
     },
     {
@@ -781,7 +810,6 @@
         "R1203",
         "R1204",
         "R1205",
-        "R1206",
         "R1207",
         "R1208",
         "R1209",
@@ -828,29 +856,22 @@
         "R2311",
         "R3101",
         "R3105",
-        "R3106",
         "R3107",
         "R3108",
         "R3201",
         "R3205",
-        "R3206",
         "R3207",
         "R3208",
         "R3301",
         "R3305",
-        "R3306",
         "R3307",
         "R3308",
         "R3401",
         "R3405",
         "R3406",
-        "R3407",
-        "R3408",
         "R3501",
         "R3505",
         "R3506",
-        "R3507",
-        "R3508",
         "R3601",
         "R3602",
         "R3603",
@@ -873,11 +894,9 @@
         "R4301",
         "R4302",
         "R4303",
-        "R4304",
         "R4401",
         "R4402",
         "R4403",
-        "R4404",
         "R4405",
         "R4406",
         "R4407",
@@ -1001,7 +1020,6 @@
         "R9002",
         "R9003",
         "R9004",
-        "R9005",
         "R9101",
         "R9102",
         "R9201",
@@ -1119,17 +1137,21 @@
     {
       "ref": "J101",
       "value": "1053111102"
-    },
-    {
-      "ref": "J6101",
-      "value": "Recovery arm switch (part open)"
-    },
-    {
-      "ref": "J6102",
-      "value": "Staging arm switch (part open)"
     }
   ],
   "unavailable_model_references": [
+    {
+      "footprint": "Buzzer_Beeper:MagneticBuzzer_PUI_SMT-1028-T-2-R",
+      "model": "Buzzer_Beeper.3dshapes/MagneticBuzzer_PUI_SMT-1028-T-2-R.step"
+    },
+    {
+      "footprint": "Connector_JST:JST_VH_B2P-VH_1x02_P3.96mm_Vertical",
+      "model": "Connector_JST.3dshapes/JST_VH_B2P-VH_1x02_P3.96mm_Vertical.step"
+    },
+    {
+      "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical",
+      "model": "Connector_Molex.3dshapes/Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical.step"
+    },
     {
       "footprint": "Fuse:Fuse_Littelfuse-NANO2-451_453",
       "model": "Fuse.3dshapes/Fuse_Littelfuse-NANO2-451_453.step"
@@ -1159,7 +1181,8 @@
     "Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
     "Fuse.3dshapes/Fuse_1206_3216Metric.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
     "Package_LGA.3dshapes/LGA-16_3x3mm_P0.5mm.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
-    "Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out"
+    "Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
+    "Capacitor_SMD.3dshapes/C_0805_2012Metric.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out"
   },
   "scope": "Portable snapshot, not footprint approval. No fabricated exact 3D models.",
   "hashes": {
@@ -1168,6 +1191,7 @@
     "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step": "c2a2efc3a0562b25c21f2b732dd2d6f0c3ff67148e12d40edff0e8fbdf71989b",
     "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step": "ae35c4f1043bc64d44be9822563a47867ce2b6bed1663a1144d81c9b58368562",
     "libraries/3d/Capacitor_SMD.3dshapes/C_0603_1608Metric.step": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
+    "libraries/3d/Capacitor_SMD.3dshapes/C_0805_2012Metric.step": "9a669c1a2f1ea25b88b401acef6efeaa80a067bd7da9db6993de719a7fbe155c",
     "libraries/3d/Capacitor_SMD.3dshapes/C_1206_3216Metric.step": "11e948c72c90e2b6322436b72745f40ff4e8ba0da64fb2a0df943dfa61e89c1a",
     "libraries/3d/Capacitor_SMD.3dshapes/C_1210_3225Metric.step": "f8510481c5044113cf49b0fa6dd54ddab9224508bd6808e1afab8ef0cefdefc9",
     "libraries/3d/Connector_JST.3dshapes/JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical.step": "ee7ec2a0c1138af960f93f73afae97ada5c28c61d6fbee99e7017c197f5e4996",
@@ -1208,15 +1232,19 @@
     "libraries/3d/TestPoint.3dshapes/TestPoint_Loop_D2.50mm_Drill1.0mm.step": "64f8bac881aa101399f811efde9aeb81d2db3fb7c79266742aab8da7ce987fdd",
     "libraries/3d/U.FL_Hirose_U.FL-R-SMT-1_Vertical.step": "bb861ac13b1fa3709690e81d82a64544b02d4420ea410f7334fc7a4b57f8e71a",
     "libraries/3d/Wio-LR2021.step": "2c9c47194bb2b6044c1d70d354a3863090b08743aafcd55d94a9661189d1da9c",
+    "libraries/Buzzer_Beeper.pretty/MagneticBuzzer_PUI_SMT-1028-T-2-R.kicad_mod": "839e375eab723efc97a666fa23f0f9b951b0d009e7f1a6a73fe3fc4132af7466",
     "libraries/Capacitor_SMD.pretty/CP_Elec_10x10.5.kicad_mod": "71e9c2fc4cb75a087ef3f90222870a3620ca13d414db613f96d21ea95bd4f4de",
     "libraries/Capacitor_SMD.pretty/CP_Elec_6.3x7.7.kicad_mod": "62aee941cf8542dcb83a2a2e94d2bc8c00faced287d9875b104a7dcba358c469",
     "libraries/Capacitor_SMD.pretty/CP_Elec_8x10.5.kicad_mod": "2d5f4cf81dd49af261f38c9452270999140f3b98b8bae143ca652f16f362265b",
     "libraries/Capacitor_SMD.pretty/C_0603_1608Metric.kicad_mod": "035a17aaaf5fa8adbfebefe62da311f82731bbe448f3e722b0535b7de4d82045",
+    "libraries/Capacitor_SMD.pretty/C_0805_2012Metric.kicad_mod": "d105923f079de198b07fae2017e773e4e67ef98ef1bb80500fe1179113a4a603",
     "libraries/Capacitor_SMD.pretty/C_1206_3216Metric.kicad_mod": "95e740f22a4e7424dc2f1c13b75c96dfaaa979cef54622b3ee736db505f10380",
     "libraries/Capacitor_SMD.pretty/C_1210_3225Metric.kicad_mod": "110dfa4e1a43a3ec9f1437196983c0c21864787023178cb2caf424d37c1aa505",
     "libraries/Connector.kicad_sym": "fe04822ac4b04de279d7d2a99d1c8a9f9038763ecfafae11c6809b7f78f44448",
     "libraries/Connector_Generic.kicad_sym": "8939c26da538c4aeb6b3df508e631d9dfd7b0bda8a7fc7b8f44c5a1c0a92c91f",
     "libraries/Connector_JST.pretty/JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical.kicad_mod": "976175260ff6b158bc74e69a4564fedb13ca848be660050dbdcd4fbf195fc8a5",
+    "libraries/Connector_JST.pretty/JST_VH_B2P-VH_1x02_P3.96mm_Vertical.kicad_mod": "f6c3f1da99ed1a032137124959b6e4efe84e9e75fcbebb053b5b91057ea0c56b",
+    "libraries/Connector_Molex.pretty/Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical.kicad_mod": "4f74d748250f6e12a6f9cd063f32101f2a84044045472c102d1bbdf07e79c7e1",
     "libraries/Device.kicad_sym": "e3a4bc4a19c7a55e936be10f9f1e8924df26301abf50254a4037773748e4ad10",
     "libraries/Diode_SMD.pretty/D_SOD-123.kicad_mod": "79ea090239f95ab7c861a510b787331de955bda70206edd3373edc726540ca40",
     "libraries/Fuse.pretty/Fuse_1206_3216Metric.kicad_mod": "e0ab749e3d6ce623bf1825905e13ab7aa8f2e9b361304d1cecbde3aa519a7c23",
@@ -1293,6 +1321,6 @@
     "libraries/Transistor_FET.kicad_sym": "271b8de6aefdc8439c47072dff35b7de19f54525a862a2c90255f5eb61b162f8",
     "libraries/power.kicad_sym": "0fb7aa46f140b400eb79e21b07681eef31d7dcaaa786a29c796d3be275d55536"
   },
-  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-8. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained); J6101 / J6102 are placeholders until their parts are chosen. 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
+  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
   "symbol_count_definition": "Distinct symbol library IDs used by physical components in the native XML; excludes ERC flags."
 }

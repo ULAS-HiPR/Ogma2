@@ -5,7 +5,7 @@
   (uuid "bf0fba95-e404-5368-b171-bbaafc5fecb5")
   (paper "User" 405 500.32)
   (title_block
-    (title "ST / LSM6DSV16XTR")
+    (title "ST / LSM6DSV32XTR")
     (date "2026-09-08")
     (rev "A-DRAFT")
     (company "HiPR")
@@ -1248,7 +1248,7 @@
               (font
                 (size 0.9 0.9))))))))
   (embedded_fonts no)
-  (text "ST / LSM6DSV16XTR"
+  (text "ST / LSM6DSV32XTR"
     (at 15.24 15.24 0)
     (effects
       (font
@@ -1426,7 +1426,7 @@
       (effects
         (font
           (size 1.016 1.016))))
-    (property "Value" "LSM6DSV16XTR"
+    (property "Value" "LSM6DSV32XTR"
       (at 292.1 229.87 0)
       (effects
         (font
@@ -1437,13 +1437,13 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.st.com/resource/en/datasheet/lsm6dsv16x.pdf"
+    (property "Datasheet" "https://www.st.com/resource/en/datasheet/lsm6dsv32x.pdf"
       (at 292.1 265.43 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "LSM6DSV16XTR"
+    (property "MPN" "LSM6DSV32XTR"
       (at 292.1 265.43 0)
       (effects
         (font
@@ -1461,7 +1461,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Library_Check" "transcribed and checked: ST DS13510 Rev4 Table2 p11; mode-dependent auxiliary pins; pending dimensional audit"
+    (property "Library_Check" "LSM6DSV32X (D-21Nov.16): LGA-14L 2.5 x 3.0 mm and Table 2 pin functions match the LSM6DSV16X symbol and footprint kept here (ST LSM6DSV32X datasheet); +-4/8/16/32 g"
       (at 292.1 265.43 0)
       (effects
         (font
@@ -1689,79 +1689,6 @@
     (uuid "15600876-fd60-5e4a-997b-82989bb664cd")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 242.57 213.36 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 69.85 222.25 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "29675a66-340e-58e9-945f-455b7140c45d")
-    (property "Reference" "R3106"
-      (at 73.66 220.98 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "47k"
-      (at 73.66 223.52 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 69.85 222.25 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/12f6be2c-cd81-5c18-a6c2-c9f149762673"
-          (reference "R3106")
-          (unit 1))))
-    (pin "1"
-      (uuid "8ffdd1a6-a086-5519-bf22-b8bf61b3d976"))
-    (pin "2"
-      (uuid "112084aa-4eee-51ae-9461-b51e29081a43")))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 69.85 213.36 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "a2ea1e28-13fa-5447-bbed-467d5335cfa5")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 69.85 213.36 0)
       (effects
         (font
           (size 1 1))
@@ -2376,20 +2303,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (global_label "ST_NCS"
-    (shape bidirectional)
-    (at 69.85 226.06 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "ae748b74-11c1-5540-b481-7591746c0aba")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 69.85 226.06 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
   (global_label "ST_MISO"
     (shape bidirectional)
     (at 139.7 273.05 180)
@@ -2488,14 +2401,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (wire
-    (pts
-      (xy 69.85 213.36)
-      (xy 69.85 218.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "3e001c1f-cc72-5d92-80b4-1b4d480ffb65"))
   (wire
     (pts
       (xy 30.48 142.24)
