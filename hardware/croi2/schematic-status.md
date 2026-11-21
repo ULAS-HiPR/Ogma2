@@ -44,7 +44,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 
 | Check | Where | Status |
 | --- | --- | --- |
-| JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Open |
+| JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Early pass done ([jlc-stock.md](jlc-stock.md)): 20 lines not in stock, alternatives listed; Seán's calls owed on the sensor, monitor and flash swaps |
 | Flight MCU alternate functions against ST's pin data | 0 | Done: all 29 AF rows match; FDCAN2 = AF9 on PA10/PB5; I²C3 = AF4 on PA8/PC9 |
 | Comms MCU alternate functions against ST's pin data | 7 | Open |
 | TPS2663 MODE: GND gives auto-retry (D-6.3) | 2 | Done: TI datasheet, section 8.4 |
