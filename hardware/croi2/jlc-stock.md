@@ -40,7 +40,7 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 
 | Part | Refs | In stock |
 | --- | --- | --- |
-| STM32H563RIT6 (comms, step 7) | U401 | 12 |
+| STM32H563RIT6 (comms, fitted at step 7; C20619634) | U401 | 12 |
 | STM32H563VIT6 | U201 | 43 |
 | CSD18540Q5B | Q101 | 26 |
 | TPS26630RGER | U101 | 48 |

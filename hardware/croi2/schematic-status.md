@@ -15,7 +15,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | 4 | Sensor sheets and the new magnetometer sheet | Done: 42 parts out (switches, isolators, their pull-downs, bleeders and bypass caps); links 47R; nets joined; new 03mag sheet, 10 parts; 3 findings closed |
 | 5 | 05-can: bus 2, Gecko connectors, B-39 | Done: bus 2 copied from bus 1 (17 parts); J501 / J502 Gecko-SL; B-39 R / F footprints on both references; 2 findings closed |
 | 6 | Output sheets and servo removal | Done: 65 parts out (one-shots, gates, their bypass caps, the whole servo block and sheet 06d, J6602, the 08 servo divider); F6101 / F6102 arm feeds, J6101 / J6102 placeholders, R6005, U6502 now SN74LVC1G08; R6x14 1.24k and the twelve continuity resistors 3.9k, fitted; 15 findings closed |
-| 7 | Comms MCU to LQFP64; inter-MCU link | — |
+| 7 | Comms MCU to LQFP64; inter-MCU link | Done: U401 redrawn as STM32H563RIT6 from the 64-pad map (same symbol UUID); USART3 on PC10 / PC11; C405 and C408 removed (no such pads); 2 findings closed |
 | 8 | Close-out: root sheet, full ERC, checkers, pin CSVs, J101 footprint | — |
 
 ## How each step is checked
@@ -39,7 +39,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | Pin-to-pin warnings on 03st and 03bmp (baseline): the IMU's aux pins and the BMP390's SDO are strapped to GND, a net with a PWR_FLAG. Correct as drawn; record as ERC exclusions with that note | 8 |
 | `CAN2_TX`, `CAN2_RX` dangling | 5: closed |
 | `PYRO1_FIRE`–`PYRO3_FIRE` dangling; pyro VS pins undriven (baseline); the servo block's findings (`SERVO*`, `ADC_SERVO_RAIL`, U6802, U6804) | 6: closed. VS: a PWR_FLAG on each `PYROn_ENERGY`, fed through its DNP link |
-| `LORA_RXEN`, `LORA_TXEN` dangling (baseline) | 7 |
+| `LORA_RXEN`, `LORA_TXEN` dangling (baseline) | 7: closed. PC3 / PC4 are the map's "MCU-only reservation, no external connection": no-connect flags and a note on the sheet |
 
 ## Checks owed for Burrito
 
@@ -47,7 +47,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | --- | --- | --- |
 | JLC stock for every BOM line, with substitutes where something isn't stocked (radio and GNSS modules, Samtec, Gecko, Nano-Fit first) | Early pass during capture; full pass at 8 | Early pass done ([jlc-stock.md](jlc-stock.md)): 21 lines not in stock, alternatives listed; Seán's calls owed on the sensor, monitor and flash swaps |
 | Flight MCU alternate functions against ST's pin data | 0 | Done: all 29 AF rows match; FDCAN2 = AF9 on PA10/PB5; I²C3 = AF4 on PA8/PC9 |
-| Comms MCU alternate functions against ST's pin data | 7 | Open |
+| Comms MCU alternate functions against ST's pin data | 7 | Done: all 64 pads and 11 AF rows match ST's open pin data (STM32H563RITx.xml, H56x GPIO modes); USART3 = AF7 on PC10 / PC11 (`s07_check.py`) |
 | TPS2663 MODE: GND gives auto-retry (D-6.3) | 2 | Done: TI datasheet, section 8.4 |
 | VBAT retention ≥1 s (D-6.4). C219 (100 µF 6.3 V X5R) keeps roughly a third of its value at 3.3 V, and BAT54 leakage rises steeply when hot. Fallback if short: 100 µF 10 V 1206, stocked | Bench, at temperature | Open |
 | Hold capacitor (470 µF) is aluminium electrolytic, leakage ≤30 µA, as D-2Nov.18's hold time assumes. A polymer part's ≈300 µA cuts Churro's hold to 0.33–0.45 s | 2 | Chosen: C1007 Panasonic EEEFKJ471XSP, 6.3 V; the standard 0.01CV limit gives 29.6 µA. Confirm on Panasonic's FK datasheet at G1 |
@@ -56,7 +56,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | F6101 / F6102 (Littelfuse 0451004.MRL, 4 A fast NANO2): pulse checked (a 2 A pulse is half the rating; both recovery channels together are 4 A, at the rating, 4 h minimum to open). Breaking capacity is 50 A (JLC's listing; Littelfuse's table, as read, is blank on this row) against the pack's fault current, which depends on the pack and harness | Pack chosen | Open |
 | D-19Nov.2 names F6801, U6802, U6803, U6804, J6602 and the bulk. The CAD had no F6801 or bulk: the servo feed was R6804 (DNP link). Capture removed the whole servo block: sheet 06d (with U6801, its caps and R6801–R6804), R6601–R6607 on 06b, and the 08 servo divider (TMUX1511 channel 4 left unused, pins NC) | 6 | Done |
 | Board AGENTS.md, README and `libraries/connector-servo-revision.md` still describe J6602 and the servos | 8 | Open |
-| Library provenance for parts added during capture (step 1: `Device:D_Schottky`; steps 2 and 3: `CP_Elec_6.3x7.7` and `CP_Elec_8x10.5`; step 4: `Ogma2:MMC5983MA` symbol and footprint; step 5: `Conn_02x03_Top_Bottom`, `Polyfuse`, `Fuse_1206_3216Metric` (new `Fuse` library) and `Ogma2:G125-MS10605M2P`; step 6: `Device:Fuse`, `Fuse_Littelfuse-NANO2-451_453` and `Ogma2:SN74LVC1G08DBVR` (from 74xGxx:74LVC1G08); 3D models still to collect; all from KiCad 9.0.7). Ogma2.kicad_sym also holds three copies each of `430451000` and `SN74LVC1G04DBVR` and the board library manifest | 8 | Open |
+| Library provenance for parts added during capture (step 1: `Device:D_Schottky`; steps 2 and 3: `CP_Elec_6.3x7.7` and `CP_Elec_8x10.5`; step 4: `Ogma2:MMC5983MA` symbol and footprint; step 5: `Conn_02x03_Top_Bottom`, `Polyfuse`, `Fuse_1206_3216Metric` (new `Fuse` library) and `Ogma2:G125-MS10605M2P`; step 6: `Device:Fuse`, `Fuse_Littelfuse-NANO2-451_453` and `Ogma2:SN74LVC1G08DBVR` (from 74xGxx:74LVC1G08); step 7: `Ogma2:STM32H563RIT6` (from MCU_ST_STM32H5:STM32H563RITx; VCAP pad 62 set passive, see its ERC_Model) and `LQFP-64_10x10mm_P0.5mm` (new `Package_QFP` library); 3D models still to collect; all from KiCad 9.0.7). Ogma2.kicad_sym also holds three copies each of `430451000` and `SN74LVC1G04DBVR` and the board library manifest | 8 | Open |
 | C1403 (Nichicon PCW0J102MCO1GS, 8 × 10.5 mm) land pattern against Nichicon's drawing; `CP_Elec_8x10.5` is KiCad's generic 8 mm can | G1 | Open |
 | `USB_CONFIG_OK` now drives nothing: its two loads (U1203, U4402) are gone, and the spec keeps comms PA1 and its boundary. Keep it, or drop the signal and its parts | 7 | Open: Seán's call |
 | Docs that still say the core input follows `BAT_VALID OR USB_CONFIG_OK` (pcb-layout-guide.md) | 8 | Open |

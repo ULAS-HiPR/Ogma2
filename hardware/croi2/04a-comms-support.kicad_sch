@@ -429,7 +429,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "MCU VDD pad 11"
+    (property "Implementation_Note" "MCU VDD pad 19"
       (at 35.56 77.47 0)
       (effects
         (font
@@ -494,7 +494,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "MCU VDD pad 28"
+    (property "Implementation_Note" "MCU VDD pad 32"
       (at 66.04 77.47 0)
       (effects
         (font
@@ -559,7 +559,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "MCU VDD pad 50"
+    (property "Implementation_Note" "MCU VDD pad 48"
       (at 96.52 77.47 0)
       (effects
         (font
@@ -624,7 +624,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "MCU VDD pad 75"
+    (property "Implementation_Note" "MCU VDD pad 64"
       (at 127 77.47 0)
       (effects
         (font
@@ -639,71 +639,6 @@
       (uuid "1053fb34-0920-5433-a021-431ac9b0f273"))
     (pin "2"
       (uuid "32448351-868d-53b3-8972-ff0d737e8fd4")))
-  (symbol
-    (lib_id "Device:C")
-    (at 157.48 77.47 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "aed47011-4b16-57ae-9792-1a0ad314b18b")
-    (property "Reference" "C405"
-      (at 161.29 76.2 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 161.29 78.74 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 157.48 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 157.48 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 157.48 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 157.48 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 157.48 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "MCU VDD pad 100"
-      (at 157.48 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/38244ecd-4998-5eff-a0bf-3ed50a907776"
-          (reference "C405")
-          (unit 1))))
-    (pin "1"
-      (uuid "a3ab779e-3dd5-5c6c-b44e-3129578e6b1c"))
-    (pin "2"
-      (uuid "06691a09-7058-5167-a20b-200a31b5a307")))
   (symbol
     (lib_id "Device:C")
     (at 187.96 77.47 0)
@@ -813,7 +748,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "MCU VBAT pad 6"
+    (property "Implementation_Note" "MCU VBAT pad 1"
       (at 218.44 77.47 0)
       (effects
         (font
@@ -828,71 +763,6 @@
       (uuid "02c2b560-ae46-555c-a1c2-8fc7695bc158"))
     (pin "2"
       (uuid "d4a1144b-9f08-58af-a1db-fcee0e9f7996")))
-  (symbol
-    (lib_id "Device:C")
-    (at 248.92 77.47 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "796f7875-8711-518e-9ca7-96da64b40a1b")
-    (property "Reference" "C408"
-      (at 252.73 76.2 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 252.73 78.74 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 248.92 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 248.92 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 248.92 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 248.92 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 248.92 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "MCU VDDUSB pad 73"
-      (at 248.92 77.47 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/38244ecd-4998-5eff-a0bf-3ed50a907776"
-          (reference "C408")
-          (unit 1))))
-    (pin "1"
-      (uuid "52d0c2aa-4b66-58e1-bbee-c72147f94381"))
-    (pin "2"
-      (uuid "8e30290d-f6d3-5822-8d39-19f22bb921b4")))
   (global_label "COMMS_3V3"
     (shape bidirectional)
     (at 20.32 64.77 0)
@@ -978,7 +848,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "At VCAP pad 48; verify effective value/ESR"
+    (property "Implementation_Note" "At VCAP pad 30; verify effective value/ESR"
       (at 35.56 135.89 0)
       (effects
         (font
@@ -1043,7 +913,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "At VCAP pad 98; same shared VCAP node"
+    (property "Implementation_Note" "At VCAP pad 62; same shared VCAP node"
       (at 66.04 135.89 0)
       (effects
         (font
@@ -1143,7 +1013,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "At VDDA pad 22"
+    (property "Implementation_Note" "At VDDA/VREF+ pad 13"
       (at 35.56 193.04 0)
       (effects
         (font
@@ -1208,7 +1078,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "At VDDA pad 22"
+    (property "Implementation_Note" "At VDDA/VREF+ pad 13"
       (at 66.04 193.04 0)
       (effects
         (font
@@ -1273,7 +1143,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "At VREF+ pad 21"
+    (property "Implementation_Note" "At VDDA/VREF+ pad 13 (VREF+ is double-bonded to VDDA in LQFP64)"
       (at 96.52 193.04 0)
       (effects
         (font
@@ -1338,7 +1208,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "At VREF+ pad 21"
+    (property "Implementation_Note" "At VDDA/VREF+ pad 13 (VREF+ is double-bonded to VDDA in LQFP64)"
       (at 127 193.04 0)
       (effects
         (font
@@ -1849,14 +1719,6 @@
   (wire
     (pts
       (xy 157.48 64.77)
-      (xy 157.48 73.66))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "ae96bfa9-2c3c-5708-8613-36be719eeb96"))
-  (wire
-    (pts
-      (xy 157.48 64.77)
       (xy 187.96 64.77))
     (stroke
       (width 0)
@@ -1886,22 +1748,6 @@
       (width 0)
       (type default))
     (uuid "ec5846fa-ca1a-5c1c-928a-c57b01b0e520"))
-  (wire
-    (pts
-      (xy 218.44 64.77)
-      (xy 248.92 64.77))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2cc55752-31d1-505c-b439-aaa874e14780"))
-  (wire
-    (pts
-      (xy 248.92 64.77)
-      (xy 248.92 73.66))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9de874cc-24f0-523f-8a0b-f6017f3b89ee"))
   (wire
     (pts
       (xy 334.01 90.17)
@@ -2224,14 +2070,6 @@
     (uuid "99b69add-6b44-5904-a7d3-6954fc8113e6"))
   (wire
     (pts
-      (xy 157.48 81.28)
-      (xy 157.48 90.17))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "c5cdf8e9-acf8-57ae-9d69-9ea5872d8fb4"))
-  (wire
-    (pts
       (xy 157.48 90.17)
       (xy 187.96 90.17))
     (stroke
@@ -2262,22 +2100,6 @@
       (width 0)
       (type default))
     (uuid "8f8a3b45-1b77-56e2-82e1-14114591220b"))
-  (wire
-    (pts
-      (xy 218.44 90.17)
-      (xy 248.92 90.17))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "0f07713d-26c1-5ec4-be8c-1b917474efb7"))
-  (wire
-    (pts
-      (xy 248.92 81.28)
-      (xy 248.92 90.17))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f5f76c17-3383-514d-bbda-33d6dbdf1538"))
   (wire
     (pts
       (xy 294.64 176.53)
@@ -2342,11 +2164,6 @@
     (color 0 0 0 0)
     (uuid "d5feaee5-a163-5742-a887-e4d47a922f11"))
   (junction
-    (at 157.48 64.77)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "c6451b51-d820-52b5-a125-286abcbe9fed"))
-  (junction
     (at 35.56 207.01)
     (diameter 0)
     (color 0 0 0 0)
@@ -2372,11 +2189,6 @@
     (color 0 0 0 0)
     (uuid "637df698-0804-5358-bb9a-091afe1829d8"))
   (junction
-    (at 218.44 64.77)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "b4420cca-21d4-5f98-aa76-42faf21a9dd0"))
-  (junction
     (at 314.96 190.5)
     (diameter 0)
     (color 0 0 0 0)
@@ -2396,16 +2208,6 @@
     (diameter 0)
     (color 0 0 0 0)
     (uuid "d9f96858-f762-5b5f-b6e2-89c3bd559036"))
-  (junction
-    (at 218.44 90.17)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "22f39803-140b-5f56-bcba-581770f4f5f2"))
-  (junction
-    (at 157.48 90.17)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "81902058-2921-59d8-9c59-8a57de1bffd4"))
   (junction
     (at 35.56 64.77)
     (diameter 0)
