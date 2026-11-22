@@ -109,10 +109,11 @@ FIXED = {
     'J502': dict(edge='right', at=110.0, rot=90, inset=0.3),                      # CAN bus 2, Salsa
     'J501': dict(edge='right', at=172.0, rot=90, inset=0.3),                      # CAN bus 1, Fajita
     'J103': dict(edge='right', at=200.0, rot=90, inset=0.3),                      # master-enable loop
+    'J101': dict(edge='left', at=203.0, rot=0, inset=0.3),                        # standalone 2S (Nano-Fit 105311-1102), latch to the edge
     'J2301': dict(xy=(4.0, 90.0), rot=90),     # flight Tag-Connect: left edge, 11 mm from hole (4, 79), clear of the L4 corridor [J]
     'J4201': dict(xy=(4.0, 136.0), rot=90),    # comms Tag-Connect: left edge, 16 mm from hole (4, 152) [J]
 }
-RESERVED = {'J101': (0.3, 192.0, 20.0, 214.0)}      # Nano-Fit 105311-1102, footprint waits for Molex's drawing
+RESERVED = {}      # J101's 20 x 22 mm block gave way to its footprint (capture step 15, D-22Nov.13)
 
 ANCHORS = {   # [J] placed before everything else, at these centres
     'U201': (40.0, 70.0, 0),                 # flight MCU, band 2

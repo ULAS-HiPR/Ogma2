@@ -4234,3 +4234,24 @@ tour's connector gallery.
   (D-19Nov.5), which can't exist either. That's Churro's call, for Seán.
 - The board isn't rebuilt in this commit: stage B re-places everything once the
   part changes are in.
+
+## 22 November 2026: stage A, capture step 15: J101's Nano-Fit footprint
+
+- `Ogma2:105311-1102` is drawn by the step script from Molex drawing
+  SD-105311-100 rev H: pin holes Ø1.20 at 2.50 mm, clip holes Ø1.60 C = 6.84 mm
+  apart on the row, peg hole Ø1.30 unplated, 1.34 mm off the row, midway.
+- The peg sits on the latch side. Two sources agree: the drawing's views (the
+  sweep's reading) and KiCad 9.0.7's footprint for the non-clip sister part
+  105309-xx02, whose housing numbers match. A text pull of the drawing today
+  gave the same hole sizes and offsets but doesn't say the side.
+- Pads are ours: pins Ø1.8, clips Ø2.1 with no net (0.22 mm from the pins), so
+  no ground sits beside the pack's positive pin. `s15_check.py` checks every
+  hole against the drawing and the gaps against the board minimums: copper to
+  the peg hole 0.28 mm, rings 0.30 and 0.25 mm.
+- The spec drops J101's 20 × 22 mm block and puts J101 on the left edge, latch
+  to the edge. Courtyard 7.3 × 9.9 mm; the plug's latch arm isn't drawn, since
+  no receptacle drawing was read.
+- Checks run: 0 pin changes; ERC unchanged; checker 354 checks, no part without
+  a footprint; manifest and PDF regenerated. The board is rebuilt in stage B.
+- Settles the peg side for good: the first 105311-1102 that arrives, laid on a
+  print of the footprint.

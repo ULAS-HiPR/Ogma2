@@ -8,10 +8,11 @@ KiCad 9.0.7's, vendored unchanged ([manifest](libraries/board-library-manifest.j
   (pad number, centre and size within 0.01 mm). A twin means the land is KiCad's IPC-7351 nominal for that
   package; the part's package was checked against the twin's name.
 - **Maker's drawing:** checked against the drawing named, when the footprint was made or on 22 Nov.
-- **Still open:** J101 (Molex SD-105311-100, not yet read).
+- **J101:** drawn in capture step 15 from Molex SD-105311-100 rev H; see its row.
 
 | Footprint | Parts | Copper checked against | Note |
 | --- | --- | --- | --- |
+| `Ogma2:105311-1102` | J101 | Molex SD-105311-100 rev H (LCSC copy): pin, clip and peg holes, pitch, C, the peg's offset; `s15_check.py` checks them | Drawn in capture step 15. Pads ours (sweep §10): clips no net, 0.22 mm from the pins; peg unplated, on the latch side (the drawing's views; KiCad's 105309-xx02 agrees) |
 | `Ogma2:430450600` | J6601 | KiCad `Connector_Molex:Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical`, pad for pad | Copper twin of KiCad's vertical 43045-0612 (same 3.0 mm grid); its body and courtyard (14.3 x 13.8 mm) are the right-angle part's |
 | `Ogma2:ABS07-32.768KHZ-7-T` | Y202 | Abracon ABS07 drawing (2022-08-10, p. 4) |  |
 | `Ogma2:ADXL375BCCZ` | U3304 | KiCad `Package_LGA:LGA-14_3x5mm_P0.8mm_LayoutBorder1x6y`, pad for pad |  |

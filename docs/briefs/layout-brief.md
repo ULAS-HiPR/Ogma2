@@ -65,8 +65,8 @@ behind the computed figures are in [tools/layout/phase2](../../tools/layout/phas
 | Fiducials | Three, 1 mm copper, 2 mm mask opening, at least 3.35 mm from the edge, on the edges ([JLC](https://jlcpcb.com/help/article/how-to-add-edge-rails-fiducials-for-pcb-assembly-order), updated 9 Sep 2026) | Economic doesn't need them. *[J]*: they cost only area and keep Standard open |
 | Plug heights | Within the ≈33 mm each side of the board | [R] D-21Nov.6 |
 
-*J101's footprint doesn't exist yet.* It waits for Molex's drawing (the footprint
-audit). Until then its place on the left edge is reserved at 20 × 15 mm *[J]*.
+*J101's footprint was drawn in capture step 15* from Molex's drawing SD-105311-100 (D-22Nov.13).
+It sits on the left edge with its latch to the edge; the reserved block is gone.
 
 ### 2. Stackup, layer use and return paths
 
@@ -454,7 +454,7 @@ This half of the brief is written once Seán accepts the review.
 | --- | --- | --- |
 | JLC offers Economic with JLC04161H-3313 | Seán, at upload | Order |
 | D4501's swap | Done 22 Nov: PESD5V0F1BL (D-22Nov.8) | — |
-| J101's footprint from Molex's drawing (the rest of the audit done 22 Nov, capture step 11) | Seán attaches SD-105311-100; Claude builds it | Before S5 |
+| J101's footprint from Molex's drawing (the rest of the audit done 22 Nov, capture step 11) | Done 22 Nov: capture step 15, from SD-105311-100 rev H | — |
 | Sensor datasheets' layout notes (LSM6DSV32X, ICM-42688-P, ADXL375, BMP390, MS5607, MMC5983MA), ST's AN2867, Tag-Connect's keep-out | Claude | Before S3's placement freezes |
 | Part masses for staking (B-33) | Claude | S3 |
 | ENIG, impedance control, via options: the money | Seán | Order |

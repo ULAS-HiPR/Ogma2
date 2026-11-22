@@ -28,7 +28,7 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 | WSLP2512R0050FEA (5 mΩ) | R7101 | RLP25FEGMR005 (C393074, 218,606): 5 mΩ 1% 3 W 2512 | Drop-in |
 | CRCW20104K70FKEF | R1012, R1013 | RC2010FK-074K7L (C513572, 4,716): 4.7 kΩ 1% 0.75 W 2010 | Drop-in |
 | Keystone 5000 (red test point) | 15 power test points | 5003 orange (C238124, 7,350) or 5002 white | Drop-in; colour only |
-| Molex 1053111102 | J101 | None: the spec rules out a 105309 substitute | Global Sourcing or consign; the footprint still waits on Molex's drawing |
+| Molex 1053111102 | J101 | None: the spec rules out a 105309 substitute | Global Sourcing or consign; footprint drawn in capture step 15 |
 | Samtec MPT-08-01-01-L-RA-SD | J102 | None; must mate the bay's Samtec half | Global Sourcing or consign |
 | Amphenol 132134 (SMA, vertical) | J4501, J4601 | None (132203 is right-angle) | Global Sourcing or consign |
 | Seeed Wio-LR2021 | U4606 | Not carried (module) | Consign or hand-fit |

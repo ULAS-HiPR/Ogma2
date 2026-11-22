@@ -274,8 +274,9 @@ def check(project, netlist, erc):
         require(value(f'R6{n + 2}14') == '1.24k 1%' and f'R6{n + 2}14' not in dnp, f'Channel {n} current limit fitted (about 2.0 A)')
     require(all(f'R69{i}{j}' not in dnp and value(f'R69{i}{j}') == '3.9k 1%' for i in (1, 2, 3) for j in (1, 2, 3, 4)), 'Continuity resistors 3.9k fitted (D-2Nov.14)')
     missing = sorted(r for r, c in parts.items() if not c.findtext('footprint'))
-    require(missing == ['J101'], 'Only J101 lacks a footprint (Nano-Fit drawing)')
+    require(missing == [], 'Every part has a footprint (J101 since capture step 15)')
     fp = lambda ref: parts[ref].findtext('footprint')
+    require(fp('J101') == 'Ogma2:105311-1102', 'J101 is Nano-Fit 105311-1102, from Molex drawing SD-105311-100 (step 15)')
     families = {r: fp(r).split(':')[1].split('_')[1] for r in ('J6101', 'J6102', 'J103')}
     require(fp('J6101').startswith('Connector_Molex:Molex_Mini-Fit_Jr') and fp('J6102').startswith('Connector_JST:JST_VH')
             and len(set(families.values())) == 3 and not {'Micro-Fit', 'Nano-Fit', 'GH', 'Gecko'} & {families['J6101'], families['J6102']},

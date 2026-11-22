@@ -2,7 +2,7 @@
 
 Every physical part on Burrito now has a 3D model. Footprints with no model are pads only: the three
 fiducials, the eight mounting holes, the two Tag-Connect TC2030 patterns (J2301, J4201) and the 25
-1.0 mm test pads. J101 has no footprint yet: it waits for Molex drawing SD-105311-100.
+1.0 mm test pads. J101's footprint came in capture step 15, from Molex drawing SD-105311-100; its model is drawn.
 
 Before this, 17 part types had no model: KiCad's library has none for them, or the footprint named a
 model that wasn't vendored. `tools/layout/fp_models.py` points the footprints at the files below.
@@ -49,6 +49,7 @@ They're for the 3D view and fit checks, not for tooling. **Status** says what wa
 | `Package_DFN_QFN.3dshapes/Texas_RDH0030A_TPSM63603.step` | U1301 | Black body | 1.9 mm | Checked: TI's drawing RDH0030A is titled “1.9 mm max height” (the features list says 1.8 mm) |
 | `Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step` | J102 | Black body with eight openings on its mating face, which projects 6.12 mm past the board edge (F.Fab); screw-down ears on the board around the two Ø3.56 mm NPTH holes at (±23.14, −6.15) | 6.28 mm | The height is marked REF on Samtec's drawing. The ear depth (to 3.6 mm in from the edge) is inferred |
 | `Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step` | J103 | Black shroud on the F.Fab outline (latch ramp included); 0.64 mm posts | 9.9 mm | Unverified. JLC's listing gives 9.65 and 9.9 mm unlabelled; 9.65 mm is the body's length on the F.Fab, so 9.9 mm is taken as the height. Check Molex's SD-43650-006 |
+| `Connector_Molex.3dshapes/Molex_Nano-Fit_105311-1102_1x02_P2.50mm_Vertical.step` | J101 | Black housing 3.48 × 5.94 mm with a cavity; the latch as a solid envelope on its side, 5.20 mm long, to 6.34 mm deep; tin clips and pins | 9.06 mm, latch 10.51 mm | Checked: Molex SD-105311-100 rev H gives 3.48, 6.34, 5.20, 9.06 and 10.51 mm. The latch's real shape, the clips and the pin size are drawn by eye |
 
 None of these drawn models is from a maker's CAD file. Before the avionics-bay fit check, replace each
 one with the maker's STEP file where one exists (Keystone, JST, Molex, Harwin, Littelfuse, PUI, u-blox,

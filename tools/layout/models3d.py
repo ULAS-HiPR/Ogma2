@@ -134,6 +134,27 @@ def mpt(name, rel, h):
     return a
 
 
+def nanofit(name, rel, h, latch_h, depth, length, latch_depth, latch_len, tail=3.2):
+    """Molex Nano-Fit vertical header with solder clips: a shroud on the pin row, the latch as a solid envelope
+    on its side (-x), posts at the pins, tin clips at the clip holes. Sizes from the footprint's maker drawing."""
+    (_, _, _, _), pads = fp_info(rel)
+    pins = [(x, y) for num, kind, x, y, sx, sy in pads if kind == 'thru_hole' and num not in ('', 'MP')]
+    clips = [(x, y) for num, kind, x, y, sx, sy in pads if num == 'MP']
+    cy = sum(y for _, y in pins) / len(pins)
+    y0, y1 = cy - length / 2, cy + length / 2
+    body = box(-depth / 2, y0, depth / 2, y1, 0, h).cut(box(-depth / 2 + 0.5, y0 + 0.5, depth / 2 - 0.5, y1 - 0.5, 1.0, h + 1))
+    a = cq.Assembly(name=name)
+    a.add(body, name='body', color=cq.Color(*C['black']))
+    a.add(box(-depth / 2 - latch_depth, cy - latch_len / 2, -depth / 2, cy + latch_len / 2, 0, latch_h),
+          name='latch', color=cq.Color(*C['black']))
+    for x, y in pins:
+        a.add(cq.Workplane('XY').box(0.64, 0.64, h - 2.0 + tail, centered=(True, True, False)).translate((x, -y, -tail)),
+              name=f'pin_{x}_{y}', color=cq.Color(*C['tin']))
+    for x, y in clips:
+        a.add(box(x - 0.2, y - 0.6, x + 0.2, y + 0.6, -1.6, 1.0), name=f'clip_{x}_{y}', color=cq.Color(*C['tin']))
+    return a
+
+
 MODELS = [
     # (output, builder, args)
     ('TestPoint.3dshapes/TestPoint_Keystone_5000-5004_Miniature.step', loop,
@@ -163,6 +184,9 @@ MODELS = [
     ('Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step', shroud,
      dict(name='Molex_43650-0215', rel='Connector_Molex.pretty/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.kicad_mod',
           h=9.9, wall=0.8, color='black', post=0.64, post_h=7.0)),
+    ('Connector_Molex.3dshapes/Molex_Nano-Fit_105311-1102_1x02_P2.50mm_Vertical.step', nanofit,
+     dict(name='Molex_105311-1102', rel='Ogma2.pretty/105311-1102.kicad_mod', h=9.06, latch_h=10.51,
+          depth=3.48, length=5.94, latch_depth=6.34 - 3.48, latch_len=5.20)),
 ]
 
 if __name__ == '__main__':

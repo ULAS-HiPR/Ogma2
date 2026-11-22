@@ -134,7 +134,7 @@ held off above 45 °C (D-22Nov.5).
 | Interface | Contract |
 | --- | --- |
 | Croí ↔ Foinse | Samtec MPT/MPS-08-01-01-L-RA-SD: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault, 8 `CROI_POWER_HOLD` |
-| Standalone 2S | Molex Nano-Fit 1053111102; footprint still to draw |
+| Standalone 2S | Molex Nano-Fit 1053111102; footprint from Molex drawing SD-105311-100 (capture step 15) |
 | Pyro arms J6101 / J6102 | Recovery / staging (D-7.2), each with its own fuse. 2-contact each, to external arm switches. Must not mate each other, Churro J701 (Micro-Fit 430450200, raw PROP) or the Gecko enable loops (D-19Nov.5). Proposed: single-row Micro-Fit 3.0, recovery 2-way, staging 3-way with one cavity empty |
 | Outputs J6601 | Micro-Fit 430450600: 1/2/3 high sides, 4/5/6 returns through each channel's low side |
 | Servos J6602 | Removed (D-19Nov.2) |
@@ -243,16 +243,15 @@ insulating standoffs or washers (D-22Nov.11).
 
 | Item | State |
 | --- | --- |
-| Croí CAD | Schematic: 44 pages, 559 parts, captured 21–22 Nov (steps 0–14); ERC clean with 3 recorded exclusions; 353 checks incl. the capture assertions. PCB: built and placed by script at 80 × 180 mm (S3, D-21Nov.21, D-22Nov.10): every part placed, J101's block reserved, 499 connections unrouted, DRC 0 errors; 4 layers, 1.6 mm, JLC04161H-3313, named, without paid impedance control (D-21Nov.26, D-22Nov.2), the routing brief's rules (D-22Nov.3), every part on top (D-21Nov.27), eight plated M3 holes with GND rings on insulated mounts (D-22Nov.11), J102's end aft (D-21Nov.24), both SMAs forward (D-21Nov.25), 47 test points (D-22Nov.9), the back silkscreen (D-22Nov.12). Decided on 22 Nov and not yet built: 0402 passives and a smaller J101 block, then a new length (D-22Nov.13); J102 without the screw-down (D-22Nov.14); L3 as ground with power islands (D-22Nov.15); J103 as a Micro-Fit (D-22Nov.18; on the schematic since step 14); function names on the top silk (D-22Nov.19). Next: the [execution brief](docs/briefs/burrito-execution-brief.md) |
+| Croí CAD | Schematic: 44 pages, 559 parts, captured 21–22 Nov (steps 0–15); ERC clean with 3 recorded exclusions; 354 checks incl. the capture assertions. PCB: built and placed by script at 80 × 180 mm (S3, D-21Nov.21, D-22Nov.10): every part placed, J101's block reserved (its footprint since step 15; the board is rebuilt in stage B), 499 connections unrouted, DRC 0 errors; 4 layers, 1.6 mm, JLC04161H-3313, named, without paid impedance control (D-21Nov.26, D-22Nov.2), the routing brief's rules (D-22Nov.3), every part on top (D-21Nov.27), eight plated M3 holes with GND rings on insulated mounts (D-22Nov.11), J102's end aft (D-21Nov.24), both SMAs forward (D-21Nov.25), 47 test points (D-22Nov.9), the back silkscreen (D-22Nov.12). Decided on 22 Nov and not yet built: 0402 passives and a smaller J101 block, then a new length (D-22Nov.13); J102 without the screw-down (D-22Nov.14); L3 as ground with power islands (D-22Nov.15); J103 as a Micro-Fit (D-22Nov.18; on the schematic since step 14); function names on the top silk (D-22Nov.19). Next: the [execution brief](docs/briefs/burrito-execution-brief.md) |
 | Foinse CAD | 12 pages, 113 parts, unrouted, 60 × 80 mm; ERC clean; DRC 24 + unrouted |
-| Known CAD gaps | Nano-Fit footprints on both boards (Burrito's J101 needs Molex's 1053111102 drawing); ten of Burrito's 3D models are drawn stand-ins and two are borrowed, several heights unverified ([list](hardware/croi2/libraries/3d/GENERATED.md)); Burrito's routing (S4, S5); Churro's capture |
+| Known CAD gaps | Churro's Nano-Fit footprint (Burrito's J101 drawn in capture step 15); ten of Burrito's 3D models are drawn stand-ins and two are borrowed, several heights unverified ([list](hardware/croi2/libraries/3d/GENERATED.md)); Burrito's routing (S4, S5); Churro's capture |
 | Firmware | [Firmware interface](docs/firmware-interface.md); build-pipeline brief v0.1.0 (Anav); no target code yet |
 | Tests | Host checkpoint model only (12 tests); no hardware tests. Gates and campaigns in [11 Verification](docs/architecture/11-verification.md) |
 
 ## Next
 
-1. Burrito: schematic captured (steps 0–9); what's still open (J101's footprint,
-   the MCU buy) is in [schematic-status.md](hardware/croi2/schematic-status.md). Next: the scripted
+1. Burrito: schematic captured (steps 0–15); what's still open (the MCU buy) is in [schematic-status.md](hardware/croi2/schematic-status.md). Next: the scripted
    layout (D-21Nov.21), then the JLC assembly files. Burrito limits each CAN
    reference (B-39, D-21Nov.11).
 2. Churro: the power review was accepted on 22 Nov (D-22Nov.4–7). Next: its

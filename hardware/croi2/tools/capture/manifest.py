@@ -32,6 +32,7 @@ ADDED = {
     'Capacitor_SMD:CP_Elec_8x10': f'{K9}, Capacitor_SMD.pretty, Nichicon 8 x 10 mm; capture step 11 (C1403, Nichicon PCW phi 8 x 10)',
     'TestPoint:TestPoint_Keystone_5010-5014_Multipurpose': f'{K9}, TestPoint.pretty; capture step 12 (GND loops, Keystone 5011, D-22Nov.9); 3D model not in the GitHub mirror',
     'Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical': f'{K9}, Connector_Molex.pretty, from Molex drawing 436500215; capture step 14 (J103, D-22Nov.18)',
+    'Ogma2:105311-1102': 'Drawn by capture step 15 (tools/capture/steps/s15_j101.py) from Molex drawing SD-105311-100 rev H (LCSC copy); pads per the Burrito sweep section 10 (J101, D-22Nov.13)',
 }
 MODEL_SOURCE = 'KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out'
 FETCHED = ['Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.step',
@@ -55,7 +56,8 @@ DRAWN = ['TestPoint.3dshapes/TestPoint_Keystone_5000-5004_Miniature.step',
          'Fuse.3dshapes/Fuse_Littelfuse-NANO2-451_453.step', 'Buzzer_Beeper.3dshapes/MagneticBuzzer_PUI_SMT-1028-T-2-R.step',
          'RF_GPS.3dshapes/ublox_MAX-M10S.step', 'Package_DFN_QFN.3dshapes/Texas_RDH0030A_TPSM63603.step',
          'Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step',
-         'Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step']
+         'Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step',
+         'Connector_Molex.3dshapes/Molex_Nano-Fit_105311-1102_1x02_P2.50mm_Vertical.step']
 
 
 def base_note(note):
@@ -103,7 +105,7 @@ def main(netlist):
         'scope': old['scope'], 'hashes': {str(p.relative_to(BOARD)): sha(p) for p in files},
         'revision_note': ('2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-13 (D4501, C1403, '
                           'test points); 22 Nov: a 3D model for every part (KiCad 9.0.7 package, or drawn: libraries/3d/GENERATED.md); '
-                          'step 14: J103 to Micro-Fit 3.0 43650-0215 (D-22Nov.18). J101 still lacks its Nano-Fit footprint. '
+                          'step 14: J103 to Micro-Fit 3.0 43650-0215 (D-22Nov.18); step 15: J101\'s Nano-Fit 105311-1102 footprint from SD-105311-100. '
                           + base_note(old['revision_note'])),
         'symbol_count_definition': old['symbol_count_definition'],
     }
