@@ -4716,3 +4716,5 @@ What the sheets show, read from the step-16 netlist:
   a 1.55 mm gap (too thin: four capacitors missed).
 - Three builds gave the same bytes (7451d7d4); DRC 0 errors and the 2 accepted
   warnings; schematic parity clean.
+- Correction to the first point: the name sits 1.6 mm behind J6601's
+  courtyard, where it was 0.25 mm, so it moved 1.35 mm aft, not 1.6 mm.
