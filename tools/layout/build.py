@@ -206,7 +206,7 @@ def labelled(ref, fp):
     return ref.startswith(('TP', 'J', 'U')) or (ref.startswith('D') and 'LED' in fp.GetFPIDAsString())
 
 
-def build(board, upto, length=None, out_dir=None, sets=()):
+def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
     spec = load_spec(board)
     for s in sets:                                    # trials only (--set): a statement run in the spec's namespace
         exec(s, vars(spec))
@@ -234,7 +234,7 @@ def build(board, upto, length=None, out_dir=None, sets=()):
         bd.board_only(str(lib), spec.FIDUCIAL_FP, f'FID{i}', x, y, value='Fiducial')
     report['stages'].append('setup')
 
-    comps, nets = netlist.load(str(hw / 'output' / 'full-netlist.xml'))
+    comps, nets = netlist.load(str(netlist_path or hw / 'output' / 'full-netlist.xml'))   # --netlist: trials only
     fps, missing = {}, []
     if STAGES.index(upto) >= 1:
         bd.nets(nets)
@@ -380,7 +380,6 @@ def build(board, upto, length=None, out_dir=None, sets=()):
         bdata = M.BoardData(B.K.LoadBoard(str(pcb)), spec.ORIGIN, (spec.W, spec.H))
         fo = FO.plan(bdata, M.plane_nets(bdata, set(spec.RAILS)), spec)
         m = M.measure(bdata, spec, fo)
-        m.pop('_grids')
         report['metrics'] = m
         (out / 'metrics.md').write_text(f'# {spec.NAME} at {spec.H:g} mm: placement yardsticks\n\n'
                                         'Written by tools/layout/build.py from engine/metrics.py. Board mm.\n\n' + M.markdown(m))
@@ -397,10 +396,11 @@ if __name__ == '__main__':
     ap.add_argument('--out', help='write the board and report here instead of the repository (trials)')
     ap.add_argument('--set', action='append', default=[],
                     help="trials: a statement run in the spec's namespace, e.g. \"ANCHORS['U401'] = (40.0, 126.0, 180)\"")
+    ap.add_argument('--netlist', help='trials: build from this netlist instead of output/full-netlist.xml')
     a = ap.parse_args()
-    if a.set and not a.out:
-        ap.error('--set is for trials: give --out too')
-    r = build(a.board, a.to, a.length, a.out, a.set)
+    if (a.set or a.netlist) and not a.out:
+        ap.error('--set and --netlist are for trials: give --out too')
+    r = build(a.board, a.to, a.length, a.out, a.set, a.netlist)
     keep = {k: v for k, v in r.items() if k != 'positions'}
     for k in ('jlc_spacing_exceptions',):
         if k in keep:

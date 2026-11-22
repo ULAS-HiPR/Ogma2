@@ -10,8 +10,10 @@ Reads a placed board and returns, all in board mm (x across from the left edge, 
   not a test point) is over 4 mm away and lies over 90 degrees round the package from the pin;
 - test point stubs: the distance from each test point (not GND) to the nearest pad on its net, and to the
   nearest segment of the spanning tree of its net's other pads;
-- plane pads without a via: the fanout planner's misses (fanout.py), within 1.5 mm of each pad;
-- congestion: RUDY demand on a 2 mm grid against the free copper on L1 and L4.
+- plane pads without a via: the fanout planner's misses (fanout.py), within 1.5 mm of each pad.
+
+A congestion map (RUDY on a 2 mm grid) was here until the meter's baseline: its heat did not sit where the router
+failed (project log, 22 Nov 2026), so the brief's rule deleted it.
 
 Signal nets are every net of two pads or more except the plane nets: GND (L2) and each rail that feeds four ICs
 or more (L3 islands, D-22Nov.15). A rail that feeds fewer is a signal net here, as it is routed as tracks.
@@ -27,8 +29,6 @@ import numpy as np
 
 WRONG_SIDE_MIN_MM = 4.0       # a partner this close is reached whatever the side
 IC_MIN_PINS = 16
-CELL = 2.0                    # congestion grid (mm)
-PITCH = 0.30                  # one track and its clearance (mm): 0.15 + 0.15
 ISLAND_MIN_LOADS = 4          # D-22Nov.15: a rail gets an L3 island if it feeds four or more loads (ICs here)
 
 
@@ -247,40 +247,6 @@ def measure(bd, spec, fanout_result=None):
         out['plane_pads_no_via_by_band'] = dict(sorted(fb.items()))
         out['plane_pads_no_via_list'] = [f"{f['ref']}.{f['num']}" for f in failed][:60]
 
-    # congestion (RUDY) against the free copper on L1 and L4
-    nx, ny = int(math.ceil(bd.W / CELL)), int(math.ceil(bd.H / CELL))
-    demand = np.zeros((ny, nx))
-    for n, ps in sig.items():
-        xs = [d['x'] for d in ps]; ys = [d['y'] for d in ps]
-        x0, x1 = min(xs) - 0.5, max(xs) + 0.5; y0, y1 = min(ys) - 0.5, max(ys) + 0.5
-        dens = net_len[n] / ((x1 - x0) * (y1 - y0))             # mm of track per mm2 of its box
-        for j in range(max(0, int(y0 // CELL)), min(ny, int(y1 // CELL) + 1)):
-            for i in range(max(0, int(x0 // CELL)), min(nx, int(x1 // CELL) + 1)):
-                ov = max(0.0, min(x1, (i + 1) * CELL) - max(x0, i * CELL)) * max(0.0, min(y1, (j + 1) * CELL) - max(y0, j * CELL))
-                demand[j, i] += dens * ov
-    from shapely.geometry import box as sbox
-    from shapely import STRtree
-    supply = np.zeros((ny, nx))
-    for lay in ('F', 'B'):
-        geoms = [d['poly'][lay] for d in bd.pads if lay in d['poly']]
-        if fanout_result is not None:
-            geoms += fanout_result.get('copper', {}).get(lay, [])
-        tree = STRtree(geoms)
-        for j in range(ny):
-            for i in range(nx):
-                c = sbox(i * CELL, j * CELL, min((i + 1) * CELL, bd.W), min((j + 1) * CELL, bd.H))
-                used = sum(geoms[k].intersection(c).area for k in tree.query(c))
-                supply[j, i] += max(0.0, c.area - used) / PITCH
-    util = np.divide(demand, supply, out=np.full_like(demand, 9.99), where=supply > 0.05)
-    hot = [(float(util[j, i]), i, j) for j in range(ny) for i in range(nx) if util[j, i] > 1.0]
-    hot.sort(reverse=True)
-    out['congestion'] = {'cell_mm': CELL, 'cells_over_1': len(hot), 'overflow_mm': round(float(np.maximum(demand - supply, 0).sum()), 1),
-                         'hot': [[round(u, 2), round((i + 0.5) * CELL, 1), round((j + 0.5) * CELL, 1)] for u, i, j in hot[:12]]}
-    bands = getattr(spec, 'BANDS', {})
-    out['congestion']['mean_util_by_band'] = {
-        k: round(float(np.mean([util[j, i] for j in range(ny) for i in range(nx) if y0 <= (j + 0.5) * CELL < y1 and supply[j, i] > 0.05])), 3)
-        for k, (y0, y1) in bands.items()}
-    out['_grids'] = {'demand': demand, 'supply': supply}
     return out
 
 
@@ -299,8 +265,6 @@ def markdown(m):
     L.append(f"| Test points over 10 / 20 mm from their route | {s['over_10_to_route']} / {s['over_20_to_route']} |")
     if 'plane_pads' in m:
         L.append(f"| Plane pads without a via spot (of {m['plane_pads']}) | {m['plane_pads_no_via']} |")
-    c = m['congestion']
-    L.append(f"| Congestion: cells over capacity / overflow (mm) | {c['cells_over_1']} / {c['overflow_mm']} |")
     return '\n'.join(L) + '\n'
 
 
@@ -328,7 +292,6 @@ if __name__ == '__main__':
     from engine import fanout as FO
     fr = FO.plan(bd, plane_nets(bd, set(spec.RAILS)), spec)
     m = measure(bd, spec, fr)
-    m.pop('_grids')
     if a.json:
         Path(a.json).write_text(json.dumps(m, indent=1) + '\n')
     if a.md:

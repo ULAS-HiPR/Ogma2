@@ -4507,3 +4507,42 @@ What the sheets show, read from the step-16 netlist:
 - The layout brief says U401 sits near the centre line; it is now 7 mm left
   of it. Two builds gave the same bytes; DRC 0 errors and the 2 accepted
   warnings; schematic parity clean.
+
+## 22 November 2026: stage B2 step 1, the meter's baseline
+
+- The router sets its clearance floor to the widest class in a call
+  (KiCadRoutingTools' `routing_config`), so with the fire rule passed in, one
+  call routed everything at 0.5 mm and left 260 of 328 nets open. The meter now
+  routes class by class, widest copper first, each pass on the last:
+  SRC_6A, PYRO_RAIL, FIRE, LOGIC_FEED, FIRE_LOGIC, USB_DIFF, CAN_DIFF,
+  RAIL_3V3, Default.
+- Baseline on step 1's board (f7e9e695), quick mode, the fire rule as written.
+  Two runs gave the same numbers:
+  - 111 of 328 signal nets open (33.8%), 169 connections; 777 router vias;
+    7455.2 mm of track; length over Manhattan, median 1.02 and 90th
+    percentile 1.77; about 8 minutes and 1.76 GB peak;
+  - open by class: Default 87 of 273, SRC_6A 2 of 2, PYRO_RAIL 4 of 4, FIRE
+    5 of 9, FIRE_LOGIC 7 of 9, LOGIC_FEED 3 of 5, USB_DIFF 2 of 4, CAN_DIFF
+    0 of 4, RAIL_3V3 1 of 18; by band: RF and fire 19, flight 44, comms 18,
+    power and harness 30;
+  - the plane fanout placed 535 vias for 596 pads;
+  - DRC: 11 clearance errors, all the fire rule at the output stage, where a
+    fire track leaves a pad within 0.5 mm of the same part's other pads
+    (Q6301 / Q6401 / Q6501, U6304 / U6404 / U6504). Stage C scripts that copper.
+- What it says: SRC_6A (4 mm) and PYRO_RAIL (2 mm) don't route as tracks at
+  all; stage C pours them. FIRE_LOGIC's nets start at U201's 0.5 mm pitch,
+  where a 0.5 mm clearance can't escape: for Stop 1b. Default's 87 open nets
+  are the placement's share.
+- Freerouting (optimiser off, 40 passes) ran 40 minutes without finishing, so
+  gave no count. The meter now takes `--fr-passes` and logs as it goes; a
+  10-pass run is going.
+- The congestion map is deleted, by the brief's rule: its heat doesn't sit
+  where the router fails. Across the 1186 cells five or more Default nets
+  cover, the rank correlation between a cell's use and the share of those
+  nets left open is 0.05. Its peak over a net's box predicts an open net no
+  better than the box's half-perimeter alone (AUC 0.80 against 0.81), and
+  within the two longest quartiles of nets, where 74 of the 87 failures are,
+  its mean separates open from routed at 0.53 and 0.55.
+- `build.py --netlist` builds a trial from another netlist (step 7).
+- Seán's bet (160 mm doesn't route without a re-place, 1/5) holds on this
+  run, and the model's (it routes with no part moved, 1/5) fails.

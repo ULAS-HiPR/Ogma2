@@ -36,6 +36,9 @@ KRT = Path('/krt')
 KRT_PY = '/opt/kipy/bin/python'
 FR_JAR = Path('/lab/bin/freerouting-2.5.0.jar')
 CU = {'F.Cu': 'F', 'In1.Cu': 'I1', 'In2.Cu': 'I2', 'B.Cu': 'B'}
+# the order the classes route in: power and fire copper first (stage C scripts these; here the router stands in),
+# then the pairs, the small rails and last the Default nets, which are the router's in S5 (D-22Nov.17)
+PASS_ORDER = ['SRC_6A', 'PYRO_RAIL', 'FIRE', 'LOGIC_FEED', 'FIRE_LOGIC', 'USB_DIFF', 'CAN_DIFF', 'RAIL_3V3', 'Default']
 
 
 def load_spec(board, length):
@@ -187,7 +190,10 @@ def main():
     ap.add_argument('--quick', default='1')
     ap.add_argument('--freerouting', action='store_true')
     ap.add_argument('--fr-minutes', type=float, default=40)
+    ap.add_argument('--fr-passes', type=int, default=40, help='Freerouting autorouter passes (it writes its result only at the end)')
     ap.add_argument('--skip-krt', action='store_true')
+    ap.add_argument('--fire-logic-clearance', type=float,
+                    help='route the FIRE_LOGIC class at this clearance instead of the 0.5 mm fire rule (a trial)')
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     b = K.LoadBoard(a.pcb)
@@ -203,6 +209,10 @@ def main():
     # router can't read from the custom rule
     pair = FO.clearances(spec)
     net_cl = {n: round(pair(n, '') - FO.EPS, 3) for n in bd.by_net if n}
+    if a.fire_logic_clearance is not None:      # trial: the fire rule on the logic class relaxed to this
+        for n in net_cl:
+            if M.net_class(n, spec.PATTERNS) == 'FIRE_LOGIC':
+                net_cl[n] = a.fire_logic_clearance
     t0 = time.time()
     fr = FO.plan(bd, planes, spec)
     FO.apply(b, spec.ORIGIN, fr)
@@ -214,28 +224,52 @@ def main():
             shutil.copy(src, out / f'fanned.{ext}')
     rep = {'board': a.pcb, 'length_mm': length, 'plane_nets': {M.short(n): l for n, l in sorted(planes.items())},
            'left_out': {'rf_scripted_in_stage_c': [M.short(n) for n in rf]},
+           'fire_logic_clearance': a.fire_logic_clearance if a.fire_logic_clearance is not None else 'the 0.5 mm fire rule',
            'fanout': {'pads': len(fr['done']) + len(fr['failed']), 'vias': len(fr['done']),
                       'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']], 'seconds': round(time.time() - t0, 1)},
            'ignores': 'rule areas other than the mounting holes; the copper stage C scripts by hand; the L3 islands\' shapes'}
     if not a.skip_krt:
+        # the router's clearance floor is the widest class in a call (KiCadRoutingTools' routing_config), so the
+        # classes route in passes, widest copper first, each on top of the last, as D-22Nov.17 routes in passes
+        (out / 'net-clearances.json').write_text(json.dumps(net_cl, indent=0))
+        passes = []
+        for cls in PASS_ORDER:
+            nets = [n for n in sig if M.net_class(n, spec.PATTERNS) == cls]
+            if nets:
+                passes.append((cls, nets))
+        src, t1, runs = fan, time.time(), []
+        for k, (cls, nets) in enumerate(passes, 1):
+            dst = out / f'pass{k}.kicad_pcb'
+            for ext in ('kicad_pro', 'kicad_dru'):
+                if (out / f'fanned.{ext}').exists():
+                    shutil.copy(out / f'fanned.{ext}', out / f'pass{k}.{ext}')
+            flags = ['--layers', 'F.Cu', 'B.Cu', '--grid-step', '0.1', '--no-bga-zones', '--escalation', 'off',
+                     '--net-clearances', str(out / 'net-clearances.json'),
+                     '--json-out', str(out / f'krt-pass{k}.json')] + (['--quick', a.quick] if a.quick != '0' else [])
+            cmd = [KRT_PY, 'py_router/route.py', str(src), str(dst), '--nets'] + [glob_escape(n) for n in nets] + flags
+            tp = time.time()
+            with open(out / f'krt-pass{k}.log', 'w') as log:
+                r = subprocess.run(cmd, cwd=str(KRT), stdout=log, stderr=subprocess.STDOUT)
+            runs.append({'class': cls, 'nets': len(nets), 'rc': r.returncode, 'seconds': round(time.time() - tp, 1)})
+            if r.returncode == 0 and dst.exists():
+                src = dst
         routed = out / 'routed.kicad_pcb'
+        shutil.copy(src, routed)
         for ext in ('kicad_pro', 'kicad_dru'):
             if (out / f'fanned.{ext}').exists():
                 shutil.copy(out / f'fanned.{ext}', out / f'routed.{ext}')
-        (out / 'net-clearances.json').write_text(json.dumps(net_cl, indent=0))
-        flags = ['--layers', 'F.Cu', 'B.Cu', '--grid-step', '0.1', '--no-bga-zones', '--escalation', 'off',
-                 '--net-clearances', str(out / 'net-clearances.json'),
-                 '--json-out', str(out / 'krt.json')] + (['--quick', a.quick] if a.quick != '0' else [])
-        cmd = [KRT_PY, 'py_router/route.py', str(fan), str(routed), '--nets'] + [glob_escape(n) for n in sig] + flags
-        t1 = time.time()
-        with open(out / 'krt.log', 'w') as log:
-            r = subprocess.run(cmd, cwd=str(KRT), stdout=log, stderr=subprocess.STDOUT)
-        rep['krt'] = {'rc': r.returncode, 'seconds': round(time.time() - t1, 1),
+        rep['krt'] = {'rc': max((x['rc'] for x in runs), default=0), 'seconds': round(time.time() - t1, 1),
                       'peak_rss_mb': round(resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss / 1024),
-                      'cmd_flags': flags}
-        if routed.exists():
-            rep['krt'].update(summarise(routed, spec, set(sig), len(fr['done']), 'krt'))
-            rep['krt']['drc_errors'] = drc(routed, out / 'routed-drc.json')
+                      'passes': runs, 'cmd_flags': flags}
+        rep['krt'].update(summarise(routed, spec, set(sig), len(fr['done']), 'krt'))
+        rep['krt']['drc_errors'] = drc(routed, out / 'routed-drc.json')
+        by = defaultdict(lambda: [0, 0])
+        for n in sig:
+            c = M.net_class(n, spec.PATTERNS)
+            by[c][1] += 1
+            if M.short(n) in rep['krt']['open']:
+                by[c][0] += 1
+        rep['krt']['open_by_class'] = {c: f'{o} of {n}' for c, (o, n) in by.items()}
     if a.freerouting:
         bf = K.LoadBoard(str(fan))
         bf.SetLayerType(K.In1_Cu, K.LT_POWER); bf.SetLayerType(K.In2_Cu, K.LT_POWER)
@@ -243,14 +277,14 @@ def main():
         assert K.ExportSpecctraDSN(bf, str(dsn))
         t2 = time.time()
         try:
-            r = subprocess.run(['java', '-Xmx3g', '-jar', str(FR_JAR), '-de', str(dsn), '-do', str(ses),
-                                '--gui.enabled=false', '--usage_and_diagnostic_data.disable_analytics=true',
-                                '--router.optimizer.enabled=false', '--router.autorouter.max_passes=40'],
-                               capture_output=True, text=True, timeout=a.fr_minutes * 60)
-            (out / 'fr.log').write_text(r.stdout + r.stderr)
-            frrep = {'rc': r.returncode, 'seconds': round(time.time() - t2, 1)}
+            with open(out / 'fr.log', 'w') as log:              # streamed, so a run cut off by the timeout still shows its passes
+                r = subprocess.run(['java', '-Xmx3g', '-jar', str(FR_JAR), '-de', str(dsn), '-do', str(ses),
+                                    '--gui.enabled=false', '--usage_and_diagnostic_data.disable_analytics=true',
+                                    '--router.optimizer.enabled=false', f'--router.autorouter.max_passes={a.fr_passes}'],
+                                   stdout=log, stderr=subprocess.STDOUT, timeout=a.fr_minutes * 60)
+            frrep = {'rc': r.returncode, 'seconds': round(time.time() - t2, 1), 'passes': a.fr_passes}
         except subprocess.TimeoutExpired:
-            frrep = {'rc': 'timeout', 'seconds': round(time.time() - t2, 1)}
+            frrep = {'rc': 'timeout', 'seconds': round(time.time() - t2, 1), 'passes': a.fr_passes}
         if ses.exists():
             K.ImportSpecctraSES(bf, str(ses))
             frb = out / 'fr-routed.kicad_pcb'
@@ -262,7 +296,8 @@ def main():
     (out / 'meter.json').write_text(json.dumps(rep, indent=1) + '\n')
     k = rep.get('krt', {})
     print(json.dumps({x: k.get(x) for x in ('rc', 'seconds', 'peak_rss_mb', 'signal_nets', 'nets_open', 'nets_open_pct',
-                                           'connections_open', 'router_vias', 'track_mm', 'length_ratio', 'drc_errors')}
+                                           'connections_open', 'router_vias', 'track_mm', 'length_ratio', 'drc_errors',
+                                           'open_by_class', 'nets_open_by_band')}
                      | {'fanout': {kk: rep['fanout'][kk] for kk in ('pads', 'vias', 'seconds')},
                         'freerouting': {kk: v for kk, v in rep.get('freerouting', {}).items() if kk not in ('open',)}}, indent=1))
 
