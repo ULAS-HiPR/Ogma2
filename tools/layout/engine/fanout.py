@@ -5,7 +5,8 @@ plan() checks every candidate against the board's copper in board mm and returns
 it on a pcbnew board. Rules: the brief's dense-spot via (0.5 mm pad, 0.3 mm hole), 0.15 mm copper clearance,
 0.25 mm hole to hole, 0.3 mm to the edge, nothing within Ø8 mm of a mounting hole (D-22Nov.11), and no via in a
 signal pad: a via sits at least 0.1 mm off every pad, except in an exposed pad (2 mm² or more), where it goes in
-the middle. A pad with no legal spot within `reach` of its edge is a miss.
+the middle. A pad with no legal spot within `reach` of its edge is a miss. in_pad=True (the layer test): every pad's
+via goes in the pad where its copper clears, as JLC's plated-over filled via allows (free from six layers).
 """
 import math
 
@@ -48,7 +49,7 @@ def clearances(spec):
     return pair
 
 
-def plan(bd, planes, spec, reach=1.5, step=0.1):
+def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False):
     vr = VIA_D / 2
     pair = clearances(spec)
     F = [(d['poly']['F'], d['net'], i) for i, d in enumerate(bd.pads) if 'F' in d['poly']]
@@ -130,7 +131,7 @@ def plan(bd, planes, spec, reach=1.5, step=0.1):
         d = bd.pads[i]
         net, g = d['net'], d['poly']['F']
         cx, cy = g.centroid.x, g.centroid.y
-        if g.area >= BIG_PAD_MM2:
+        if g.area >= BIG_PAD_MM2 or in_pad:
             if via_ok(cx, cy, net, i, in_pad=True):
                 vias.append((cx, cy, net)); done.append(dict(d, via=(cx, cy), stub=None)); continue
         fx, fy = bd.fp_xy[d['ref']]

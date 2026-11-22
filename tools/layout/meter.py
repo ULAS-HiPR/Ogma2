@@ -6,6 +6,8 @@
    more to its L3 island (D-22Nov.15). Each pad its own via.
 2. KiCadRoutingTools' route step (pinned at 1577fa3, /krt in the chroot) on L1 and L4 for every other net of two
    pads or more, at a 0.1 mm grid, in its placement-review mode (--quick 1: the main pass, no rescue laps).
+   The layer test (decisions.md, Open: four layers or six) adds --layers, --classes, --via-in-pad and
+   --krt-minutes; without them a run is the Stop 1b run.
 3. Our own connectivity check per signal net, KiCad DRC by type, vias, each net's length against its rectilinear
    spanning tree, time and peak memory.
 
@@ -35,7 +37,10 @@ from engine import metrics as M                  # noqa: E402
 KRT = Path('/krt')
 KRT_PY = '/opt/kipy/bin/python'
 FR_JAR = Path('/lab/bin/freerouting-2.5.0.jar')
-CU = {'F.Cu': 'F', 'In1.Cu': 'I1', 'In2.Cu': 'I2', 'B.Cu': 'B'}
+def cu_keys(b):
+    """The board's copper layers, top to bottom, as connectivity keys: F, I1, I2, ..., B."""
+    names = [b.GetLayerName(l) for l in b.GetEnabledLayers().CuStack()]
+    return {n: ('F' if n == 'F.Cu' else 'B' if n == 'B.Cu' else 'I' + n[2:-3]) for n in names}
 # the order the classes route in: power and fire copper first (stage C scripts these; here the router stands in),
 # then the pairs, the small rails and last the Default nets, which are the router's in S5 (D-22Nov.17)
 PASS_ORDER = ['SRC_6A', 'PYRO_RAIL', 'FIRE', 'LOGIC_FEED', 'FIRE_LOGIC', 'USB_DIFF', 'CAN_DIFF', 'RAIL_3V3', 'Default']
@@ -61,6 +66,8 @@ def connectivity(b, origin, nets):
     mm = lambda v: K.ToMM(v)
     items = defaultdict(list)          # net -> [(kind, layers, geom)]
     want = set(nets)
+    CU = cu_keys(b)
+    inner = [k for k in CU.values() if k.startswith('I')]
     for f in b.GetFootprints():
         for p in f.Pads():
             n = p.GetNetname()
@@ -78,7 +85,8 @@ def connectivity(b, origin, nets):
             if p.GetAttribute() in (K.PAD_ATTRIB_PTH,):
                 c = p.GetPosition()
                 ring = Point(mm(c.x) - ox, mm(c.y) - oy).buffer(mm(max(p.GetSize().x, p.GetSize().y)) / 2)
-                layers.setdefault('I1', ring); layers.setdefault('I2', ring)
+                for k in inner:
+                    layers.setdefault(k, ring)
             items[n].append(('pad', layers))
     for t in b.GetTracks():
         n = t.GetNetname()
@@ -87,7 +95,7 @@ def connectivity(b, origin, nets):
         if t.Type() == K.PCB_VIA_T:
             c = t.GetPosition()
             g = Point(mm(c.x) - ox, mm(c.y) - oy).buffer(mm(t.GetWidth(K.F_Cu)) / 2, 8)
-            items[n].append(('via', {l: g for l in ('F', 'I1', 'I2', 'B')}))
+            items[n].append(('via', {l: g for l in CU.values()}))
         else:
             pts = [t.GetStart(), t.GetEnd()]
             if t.Type() == K.PCB_ARC_T:
@@ -194,6 +202,13 @@ def main():
     ap.add_argument('--skip-krt', action='store_true')
     ap.add_argument('--fire-logic-clearance', type=float,
                     help='route the FIRE_LOGIC class at this clearance instead of the 0.5 mm fire rule (a trial)')
+    ap.add_argument('--layers', nargs='+', default=['F.Cu', 'B.Cu'], help='the router\'s layers (default L1 and L4)')
+    ap.add_argument('--classes', nargs='+', help='route only these net classes, in PASS_ORDER (default all)')
+    ap.add_argument('--via-in-pad', action='store_true',
+                    help='each plane pad\'s via in the pad itself where it fits (JLC\'s plated-over filled via)')
+    ap.add_argument('--krt-minutes', type=float, help='stop the router after this long; a pass cut off leaves its nets open')
+    ap.add_argument('--rails-as-tracks', action='store_true',
+                    help='GND is the only plane: the rails are routed as tracks (a six-layer plan with no power layer)')
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     b = K.LoadBoard(a.pcb)
@@ -201,6 +216,8 @@ def main():
     spec, hw = load_spec(a.board, length)
     bd = M.BoardData(b, spec.ORIGIN, (spec.W, spec.H))
     planes = M.plane_nets(bd, set(spec.RAILS))
+    if a.rails_as_tracks:
+        planes = {n: l for n, l in planes.items() if M.short(n) == 'GND'}
     allsig = sorted(M.signal_nets(bd, planes))
     # RF lines are scripted in stage C on L1 with no via (D-21Nov.25, D-22Nov.16): left out of the route
     rf = [n for n in allsig if M.net_class(n, spec.PATTERNS) == 'RF50']
@@ -214,7 +231,7 @@ def main():
             if M.net_class(n, spec.PATTERNS) == 'FIRE_LOGIC':
                 net_cl[n] = a.fire_logic_clearance
     t0 = time.time()
-    fr = FO.plan(bd, planes, spec)
+    fr = FO.plan(bd, planes, spec, in_pad=a.via_in_pad)
     FO.apply(b, spec.ORIGIN, fr)
     fan = out / 'fanned.kicad_pcb'
     K.SaveBoard(str(fan), b)
@@ -222,11 +239,15 @@ def main():
         src = hw / f'{spec.NAME}.{ext}'
         if src.exists():
             shutil.copy(src, out / f'fanned.{ext}')
-    rep = {'board': a.pcb, 'length_mm': length, 'plane_nets': {M.short(n): l for n, l in sorted(planes.items())},
+    rep = {'board': a.pcb, 'length_mm': length, 'copper_layers': b.GetCopperLayerCount(), 'router_layers': a.layers,
+           'classes': a.classes or 'all', 'via_in_pad': a.via_in_pad, 'krt_minutes': a.krt_minutes,
+           'rails_as_tracks': a.rails_as_tracks,
+           'plane_nets': {M.short(n): l for n, l in sorted(planes.items())},
            'left_out': {'rf_scripted_in_stage_c': [M.short(n) for n in rf]},
            'fire_logic_clearance': a.fire_logic_clearance if a.fire_logic_clearance is not None else 'the 0.5 mm fire rule',
            'fanout': {'pads': len(fr['done']) + len(fr['failed']), 'vias': len(fr['done']),
-                      'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']], 'seconds': round(time.time() - t0, 1)},
+                      'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']], 'in_pad': sum(1 for d in fr['done'] if d['stub'] is None),
+                      'seconds': round(time.time() - t0, 1)},
            'ignores': 'rule areas other than the mounting holes; the copper stage C scripts by hand; the L3 islands\' shapes'}
     if not a.skip_krt:
         # the router's clearance floor is the widest class in a call (KiCadRoutingTools' routing_config), so the
@@ -234,6 +255,8 @@ def main():
         (out / 'net-clearances.json').write_text(json.dumps(net_cl, indent=0))
         passes = []
         for cls in PASS_ORDER:
+            if a.classes and cls not in a.classes:
+                continue
             nets = [n for n in sig if M.net_class(n, spec.PATTERNS) == cls]
             if nets:
                 passes.append((cls, nets))
@@ -243,28 +266,40 @@ def main():
             for ext in ('kicad_pro', 'kicad_dru'):
                 if (out / f'fanned.{ext}').exists():
                     shutil.copy(out / f'fanned.{ext}', out / f'pass{k}.{ext}')
-            flags = ['--layers', 'F.Cu', 'B.Cu', '--grid-step', '0.1', '--no-bga-zones', '--escalation', 'off',
+            flags = ['--layers', *a.layers, '--grid-step', '0.1', '--no-bga-zones', '--escalation', 'off',
                      '--net-clearances', str(out / 'net-clearances.json'),
                      '--json-out', str(out / f'krt-pass{k}.json')] + (['--quick', a.quick] if a.quick != '0' else [])
             cmd = [KRT_PY, 'py_router/route.py', str(src), str(dst), '--nets'] + [glob_escape(n) for n in nets] + flags
             tp = time.time()
-            with open(out / f'krt-pass{k}.log', 'w') as log:
-                r = subprocess.run(cmd, cwd=str(KRT), stdout=log, stderr=subprocess.STDOUT)
-            runs.append({'class': cls, 'nets': len(nets), 'rc': r.returncode, 'seconds': round(time.time() - tp, 1)})
-            if r.returncode == 0 and dst.exists():
+            left = None if a.krt_minutes is None else a.krt_minutes * 60 - (tp - t1)
+            if left is not None and left <= 0:
+                runs.append({'class': cls, 'nets': len(nets), 'rc': 'not started: out of time', 'seconds': 0})
+                continue
+            try:
+                with open(out / f'krt-pass{k}.log', 'w') as log:
+                    r = subprocess.run(cmd, cwd=str(KRT), stdout=log, stderr=subprocess.STDOUT, timeout=left)
+                rc = r.returncode
+            except subprocess.TimeoutExpired:
+                rc = 'timeout'
+            runs.append({'class': cls, 'nets': len(nets), 'rc': rc, 'seconds': round(time.time() - tp, 1)})
+            if rc == 0 and dst.exists():
                 src = dst
         routed = out / 'routed.kicad_pcb'
         shutil.copy(src, routed)
         for ext in ('kicad_pro', 'kicad_dru'):
             if (out / f'fanned.{ext}').exists():
                 shutil.copy(out / f'fanned.{ext}', out / f'routed.{ext}')
-        rep['krt'] = {'rc': max((x['rc'] for x in runs), default=0), 'seconds': round(time.time() - t1, 1),
+        rcs = [x['rc'] for x in runs]
+        rep['krt'] = {'rc': next((x for x in rcs if not isinstance(x, int)), max(rcs, default=0)), 'seconds': round(time.time() - t1, 1),
                       'peak_rss_mb': round(resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss / 1024),
                       'passes': runs, 'cmd_flags': flags}
-        rep['krt'].update(summarise(routed, spec, set(sig), len(fr['done']), 'krt'))
+        routed_sig = {n for n in sig if not a.classes or M.net_class(n, spec.PATTERNS) in a.classes}
+        rep['krt'].update(summarise(routed, spec, routed_sig, len(fr['done']), 'krt'))
         rep['krt']['drc_errors'] = drc(routed, out / 'routed-drc.json')
         by = defaultdict(lambda: [0, 0])
         for n in sig:
+            if a.classes and M.net_class(n, spec.PATTERNS) not in a.classes:
+                continue
             c = M.net_class(n, spec.PATTERNS)
             by[c][1] += 1
             if M.short(n) in rep['krt']['open']:

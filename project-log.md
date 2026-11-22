@@ -4745,3 +4745,17 @@ What the sheets show, read from the step-16 netlist:
 - Not read: the six-layer stackup's dielectric heights. From memory its
   layers couple in close pairs (1–2, 3–4, 5–6), so signals on L3 over islands
   on L4 would repeat D-22Nov.15's problem. The test reads the stackup first.
+
+## 22 November 2026: layer test tooling
+
+- Seán: “Ok go. Plus ultra” (the layer test in the execution brief).
+- `tools/layout/meter.py` gains `--layers` (the router's layers), `--classes`
+  (route only some net classes), `--via-in-pad` (each plane pad's via in the
+  pad where its copper clears), `--krt-minutes` (a time cap; a pass cut off
+  leaves its nets open) and `--rails-as-tracks` (GND the only plane). Its
+  connectivity check reads every copper layer the board has. Without the new
+  options a run is the Stop 1b run: on board 7451d7d4 the old and new code
+  gave the same result, twice.
+- `engine/fanout.py`: `plan(..., in_pad=True)`.
+- `tools/layout/six_layer.py`: a six-layer copy of a placed board on JLC's
+  six-layer stackup, for trials only.
