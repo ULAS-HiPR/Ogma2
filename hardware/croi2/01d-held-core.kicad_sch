@@ -880,13 +880,13 @@
         (font
           (size 1.016 1.016))
         (justify left)))
-    (property "Footprint" "Capacitor_SMD:CP_Elec_8x10.5"
+    (property "Footprint" "Capacitor_SMD:CP_Elec_8x10"
       (at 340.36 120.65 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "~"
+    (property "Datasheet" "https://www.nichicon.com/getmedia/0a532687-d8ef-4eb6-a434-ae2de5ee9c3a/pcw_e.pdf"
       (at 340.36 120.65 0)
       (effects
         (font
@@ -910,7 +910,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Flight hold-up only. Nichicon PCW, polymer, AEC-Q200, 8 x 10.5 mm max; >=800 uF effective at -20%. Land pattern to check against Nichicon's drawing"
+    (property "Implementation_Note" "Flight hold-up only. Nichicon PCW, polymer, AEC-Q200, phi 8 x 10 mm (Nichicon PCW data, May 2024); >=800 uF effective at -20%. Land: KiCad CP_Elec_8x10, Nichicon 8 x 10 mm (capture step 11)"
       (at 340.36 120.65 0)
       (effects
         (font

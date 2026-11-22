@@ -70,7 +70,7 @@ continuity values close.
 | J6602 | Removed | Was three servos | D-19Nov.2 |
 | J501 | Harwin Gecko 3-contact (was JST GH) | CAN bus 1 H / L / reference, to Fajita | No power contact; series and lock chosen at capture; Fajita's end has to match (D-18Nov.4) |
 | Bus 2 (ref at capture) | Harwin Gecko 3-contact | CAN bus 2 H / L / reference, to the active board | No power contact (D-5Nov.3, D-18Nov.4) |
-| J4401 | GCT USB4105-GF-A | USB-C service | Footprint mismatch with the local library to fix |
+| J4401 | GCT USB4105-GF-A | USB-C service | Library footprint is KiCad's GCT USB4105 pad for pad; the regenerated PCB uses it (capture step 11) |
 | J4501 / J4601 | Amphenol 132134 SMA | GNSS / radio | Identical; can be swapped |
 | J2301 / J4201 | TC2030-NL-FP | Flight / comms debug | Development only |
 

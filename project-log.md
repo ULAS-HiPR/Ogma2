@@ -4053,3 +4053,20 @@ tour's connector gallery.
   footprint KiCad D_SOD-882, vendored. Netlist: 570 parts, 1831 pins, 0 pin
   changes; ERC unchanged (3 recorded exclusions); the full checker's 347 checks
   pass.
+- Footprint audit before placement (22 Nov), capture steps 11 and 11a:
+  - C1403 is a φ8 × 10 mm can (Nichicon PCW data, May 2024), not 8 × 10.5; its
+    footprint moves to KiCad's `CP_Elec_8x10`, made for Nichicon's 8 × 10.
+  - The MMC5983MA pads match MEMSIC's land pattern (Rev. A p. 20), read from the
+    drawing in LCSC's viewer.
+  - J4401's library footprint is KiCad's GCT USB4105 footprint pad for pad, so
+    the recorded "mismatch" was the September PCB's; the regenerated board
+    removes it.
+  - U4302 (TXU0101DCKR, SC-70-6) had lands ending at ±1.275 mm, barely past the
+    leads; they move to TI's DCK0006A pattern (0.9 × 0.4 mm at ±1.1 mm).
+  - Every custom footprint Burrito uses now has a recorded basis
+    (`hardware/croi2/footprint-audit.md`, from `tools/layout/phase3/fp_twins.py`):
+    a pad-for-pad KiCad twin or the maker's drawing.
+  - J101 (Molex 105311-1102) still waits for Molex's drawing, SD-105311-100.
+    The shell can't reach Molex, and the drawing wouldn't open in the browser
+    pane. Its place on the board is reserved.
+  - Netlist unchanged apart from C1403's footprint; 347 checks pass.

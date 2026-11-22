@@ -302,7 +302,7 @@ enough to need it *[J]*.
 - D-21Nov.23's beam estimate puts the first mode near 300 Hz on eight standoffs.
 - *[J]* MLCCs of 1206 and larger lie across the long axis, ≥ 5 mm from holes and
   plug footprints.
-- C1403 (8 × 10.5 mm can), C1007, BZ9001, the SMAs and the vertical plugs get
+- C1403 (φ8 × 10 mm can), C1007, BZ9001, the SMAs and the vertical plugs get
   staking or adhesive whatever their mass. Their masses aren't read yet; any
   over 7 g is staked by rule.
 - Nothing is supported by the Samtec mate (B-33): the y = 225 hole pair takes it.
@@ -430,7 +430,7 @@ This half of the brief is written once Seán accepts the review.
 | --- | --- | --- |
 | JLC offers Economic with JLC04161H-3313 | Seán, at upload | Order |
 | D4501's swap | Done 22 Nov: PESD5V0F1BL (D-22Nov.8) | — |
-| J101's footprint from Molex's drawing; the rest of the footprint audit | Claude | S3 |
+| J101's footprint from Molex's drawing (the rest of the audit done 22 Nov, capture step 11) | Seán attaches SD-105311-100; Claude builds it | Before S5 |
 | Sensor datasheets' layout notes (LSM6DSV32X, ICM-42688-P, ADXL375, BMP390, MS5607, MMC5983MA), ST's AN2867, Tag-Connect's keep-out | Claude | Before S3's placement freezes |
 | Part masses for staking (B-33) | Claude | S3 |
 | ENIG, impedance control, via options: the money | Seán | Order |

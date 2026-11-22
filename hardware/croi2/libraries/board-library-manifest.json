@@ -25,10 +25,10 @@
       ]
     },
     {
-      "id": "Capacitor_SMD:CP_Elec_8x10.5",
-      "source": "KiCad 9.0.7 official library, Capacitor_SMD.pretty; capture step 3 (C1403); land pattern to check against Nichicon",
+      "id": "Capacitor_SMD:CP_Elec_8x10",
+      "source": "KiCad 9.0.7 official library, Capacitor_SMD.pretty, Nichicon 8 x 10 mm; capture step 11 (C1403, Nichicon PCW phi 8 x 10)",
       "models": [
-        "Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step"
+        "Capacitor_SMD.3dshapes/CP_Elec_8x10.step"
       ],
       "refs": [
         "C1403"
@@ -277,6 +277,16 @@
       ]
     },
     {
+      "id": "Diode_SMD:D_SOD-882",
+      "source": "KiCad 9.0.7 official library, Diode_SMD.pretty; capture step 10 (D4501, D-22Nov.8); 3D model not in the GitHub mirror",
+      "models": [
+        "Diode_SMD.3dshapes/D_SOD-882.step"
+      ],
+      "refs": [
+        "D4501"
+      ]
+    },
+    {
       "id": "Fuse:Fuse_1206_3216Metric",
       "source": "KiCad 9.0.7 official library, Fuse.pretty; capture step 5 (F501 / F502)",
       "models": [
@@ -431,7 +441,7 @@
     },
     {
       "id": "Ogma2:MMC5983MA",
-      "source": "KiCad 9.0.7 official library, Package_LGA:LGA-16_3x3mm_P0.5mm (drawn from MEMSIC MMC5883MA); capture step 4; pads to check against the MMC5983MA drawing",
+      "source": "KiCad 9.0.7 official library, Package_LGA:LGA-16_3x3mm_P0.5mm; capture step 4; pads checked against MEMSIC MMC5983MA Rev. A p. 20 (step 11)",
       "models": [
         "Package_LGA.3dshapes/LGA-16_3x3mm_P0.5mm.step"
       ],
@@ -721,14 +731,6 @@
       "models": [],
       "refs": [
         "U4504"
-      ]
-    },
-    {
-      "id": "Ogma2_GNSS:TPD1E0B04DPYR",
-      "source": "2026-09-08 controlled addition; see installation-change-record.md",
-      "models": [],
-      "refs": [
-        "D4501"
       ]
     },
     {
@@ -1153,6 +1155,10 @@
       "model": "Connector_Molex.3dshapes/Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical.step"
     },
     {
+      "footprint": "Diode_SMD:D_SOD-882",
+      "model": "Diode_SMD.3dshapes/D_SOD-882.step"
+    },
+    {
       "footprint": "Fuse:Fuse_Littelfuse-NANO2-451_453",
       "model": "Fuse.3dshapes/Fuse_Littelfuse-NANO2-451_453.step"
     },
@@ -1172,13 +1178,13 @@
     "Ogma2:TPS7A9101DSKR",
     "Ogma2:TPSM63603RDHR",
     "Ogma2_GNSS:MAX-M10S-00B",
-    "Ogma2_GNSS:TPD1E0B04DPYR",
     "TestPoint:TestPoint_Keystone_5000-5004_Miniature",
     "TestPoint:TestPoint_Pad_D1.0mm"
   ],
   "model_sources": {
     "Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
     "Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
+    "Capacitor_SMD.3dshapes/CP_Elec_8x10.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
     "Fuse.3dshapes/Fuse_1206_3216Metric.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
     "Package_LGA.3dshapes/LGA-16_3x3mm_P0.5mm.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
     "Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step": "KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out",
@@ -1190,6 +1196,7 @@
     "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_10x10.5.step": "866051839e3e1f725ea48390ac881121e55ce86e5ba54077cf13470e18135884",
     "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step": "c2a2efc3a0562b25c21f2b732dd2d6f0c3ff67148e12d40edff0e8fbdf71989b",
     "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step": "ae35c4f1043bc64d44be9822563a47867ce2b6bed1663a1144d81c9b58368562",
+    "libraries/3d/Capacitor_SMD.3dshapes/CP_Elec_8x10.step": "eac826caddc87349153805510154d3cd62a11307d11e10b3761a8acf8712a37a",
     "libraries/3d/Capacitor_SMD.3dshapes/C_0603_1608Metric.step": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
     "libraries/3d/Capacitor_SMD.3dshapes/C_0805_2012Metric.step": "9a669c1a2f1ea25b88b401acef6efeaa80a067bd7da9db6993de719a7fbe155c",
     "libraries/3d/Capacitor_SMD.3dshapes/C_1206_3216Metric.step": "11e948c72c90e2b6322436b72745f40ff4e8ba0da64fb2a0df943dfa61e89c1a",
@@ -1236,6 +1243,7 @@
     "libraries/Capacitor_SMD.pretty/CP_Elec_10x10.5.kicad_mod": "71e9c2fc4cb75a087ef3f90222870a3620ca13d414db613f96d21ea95bd4f4de",
     "libraries/Capacitor_SMD.pretty/CP_Elec_6.3x7.7.kicad_mod": "62aee941cf8542dcb83a2a2e94d2bc8c00faced287d9875b104a7dcba358c469",
     "libraries/Capacitor_SMD.pretty/CP_Elec_8x10.5.kicad_mod": "2d5f4cf81dd49af261f38c9452270999140f3b98b8bae143ca652f16f362265b",
+    "libraries/Capacitor_SMD.pretty/CP_Elec_8x10.kicad_mod": "8f7a2eda0ee8f340ff3dbc673f83bf9a5f495558b5a2d9be5e5c566bed6422c5",
     "libraries/Capacitor_SMD.pretty/C_0603_1608Metric.kicad_mod": "035a17aaaf5fa8adbfebefe62da311f82731bbe448f3e722b0535b7de4d82045",
     "libraries/Capacitor_SMD.pretty/C_0805_2012Metric.kicad_mod": "d105923f079de198b07fae2017e773e4e67ef98ef1bb80500fe1179113a4a603",
     "libraries/Capacitor_SMD.pretty/C_1206_3216Metric.kicad_mod": "95e740f22a4e7424dc2f1c13b75c96dfaaa979cef54622b3ee736db505f10380",
@@ -1247,6 +1255,7 @@
     "libraries/Connector_Molex.pretty/Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical.kicad_mod": "4f74d748250f6e12a6f9cd063f32101f2a84044045472c102d1bbdf07e79c7e1",
     "libraries/Device.kicad_sym": "e3a4bc4a19c7a55e936be10f9f1e8924df26301abf50254a4037773748e4ad10",
     "libraries/Diode_SMD.pretty/D_SOD-123.kicad_mod": "79ea090239f95ab7c861a510b787331de955bda70206edd3373edc726540ca40",
+    "libraries/Diode_SMD.pretty/D_SOD-882.kicad_mod": "169ac5f9218dc1afa8d0520a9a61cfb2f43c188206349e99e609194aba77f975",
     "libraries/Fuse.pretty/Fuse_1206_3216Metric.kicad_mod": "e0ab749e3d6ce623bf1825905e13ab7aa8f2e9b361304d1cecbde3aa519a7c23",
     "libraries/Fuse.pretty/Fuse_Littelfuse-NANO2-451_453.kicad_mod": "501e5c76d8965dc098b251e071c3fe523638400ef5984e431c303d3e1c2356f2",
     "libraries/LED_SMD.pretty/LED_0603_1608Metric.kicad_mod": "e748e0f2590b7e36fffd755c6a96b2d1ee899ddd27c8cc0fff646192cd21d9a3",
@@ -1269,7 +1278,7 @@
     "libraries/Ogma2.pretty/LM73100RPWR.kicad_mod": "46ac974c58a2caa4953a8f4c3da6cb22339f1b6572465d4b84fc002cc13a475d",
     "libraries/Ogma2.pretty/LSM6DSV16XTR.kicad_mod": "ea8b86217eff4d51216244f0810bba80aa538b58417ea1fa83d5ff61978dc202",
     "libraries/Ogma2.pretty/LTC6993IS6-1_TRMPBF.kicad_mod": "9e261866e52ac7f3149b464336818ec1c24155241c70a4172aa7df0012b0957e",
-    "libraries/Ogma2.pretty/MMC5983MA.kicad_mod": "32629c4a0c5009fe8b8bcb481bd57023ed3643e8d46418fdddb10be6c9481687",
+    "libraries/Ogma2.pretty/MMC5983MA.kicad_mod": "ba39bd4d8d7c1cfc51e8c6814062406f199698761c331663c54fdd4c1b60e3a2",
     "libraries/Ogma2.pretty/MPT-08-01-01-L-RA-SD.kicad_mod": "b8ce6f7e0edc975bc352f8a8b34dd17d237c21c011b049a62d6d685bfaffcae1",
     "libraries/Ogma2.pretty/MS560702BA03-50.kicad_mod": "601ac0decc1c06cdf73217bdbae49977e080a48393ddc4e15948ab094f6f83d1",
     "libraries/Ogma2.pretty/MX66L2G45GMI00.kicad_mod": "299c3ed2377564cd02d7d3a8286db0750c0c8cc77324c1ab30a9124c5c0455a7",
@@ -1293,7 +1302,7 @@
     "libraries/Ogma2.pretty/TPS7A9101DSKR.kicad_mod": "fb246ee8f425acd49585cd27ef516f2f17e10f78056e713b4c91e6cabb4ded39",
     "libraries/Ogma2.pretty/TPSM63603RDHR.kicad_mod": "841081a3fc7bc9f279fa780389245e34d4fd63df005fb05f3d9387da36353e05",
     "libraries/Ogma2.pretty/TS5A3167DBVR.kicad_mod": "e68271cd31ce8e58648462d312a6ac5aa498e346d7b526effb7de3479c99fa4e",
-    "libraries/Ogma2.pretty/TXU0101DCKR.kicad_mod": "a23147c52dcd6e661eb3ace6b71f6d60254f0a9d2ca1e50e1e39ae745fc1ff7f",
+    "libraries/Ogma2.pretty/TXU0101DCKR.kicad_mod": "9476b6653fb537b3a4f1ae5dc29f34b7cfc94e1d2c8f6e1233713a40a3011f69",
     "libraries/Ogma2.pretty/TXU0202DCUR.kicad_mod": "8e26fcadddb67046602f1515af7c6ebd50d297f3c3b2f974262d643addbbe2b4",
     "libraries/Ogma2.pretty/TXU0304PWR.kicad_mod": "bffd86ba56882a0fef2b4dd422a56c8c919efabee0f8a5a6c32323e785be8077",
     "libraries/Ogma2.pretty/U.FL_Hirose_U.FL-R-SMT-1_Vertical.kicad_mod": "8b1a2bed875696e285d0cac5e94e463424ba6188b24afc5683f0bef744482f6f",
@@ -1321,6 +1330,6 @@
     "libraries/Transistor_FET.kicad_sym": "271b8de6aefdc8439c47072dff35b7de19f54525a862a2c90255f5eb61b162f8",
     "libraries/power.kicad_sym": "0fb7aa46f140b400eb79e21b07681eef31d7dcaaa786a29c796d3be275d55536"
   },
-  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
+  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
   "symbol_count_definition": "Distinct symbol library IDs used by physical components in the native XML; excludes ERC flags."
 }
