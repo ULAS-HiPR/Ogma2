@@ -118,7 +118,7 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | CAN bus 1, to Fajita | FDCAN1: PD1 TX, PD0 RX (AF9); PE10 standby, shared with bus 2 | Classical CAN, 500 kbit/s; TCAN3413 |
 | CAN bus 2, to the active board | FDCAN2: PA10 TX, PB5 RX (AF9, checked against ST's open pin data on 21 Nov); PE10 standby, shared | Classical CAN, 500 kbit/s; second TCAN3413 (D-5Nov.3) |
 | Spare test pads | PC6, PC7, PD10 | Inputs with pull-downs; PC7 never drives, because it neighbours channel 2's low side (D-19Nov.2, D-19Nov.3) |
-| Monitor bus | I²C4: PB8 SCL, PB9 SDA (AF6) | 100 kHz; INA228 0x40 (Croí), 0x41 (Churro PROP); ADS1115 0x48 |
+| Monitor bus | I²C4: PB8 SCL, PB9 SDA (AF6) | 100 kHz; INA228 0x40 (Croí), 0x41 (Churro PROP); INA237 0x44 (Churro ACT); ADS1115 0x48, 0x49; TCA9535 0x20 (Churro charger status) |
 | Watchdog | PD4 `SUPERVISOR_WDI` | Toggled only on earned essential progress |
 | Readiness lamp | PD7 | Low or reset = red, high = green |
 | Sounder | PD6 through Q9001 | Magnetic transducer, PUI SMT-1028-T-2-R (D-21Nov.20): drive a 2.83 kHz square wave, its rated frequency; ground only, silent in flight |
@@ -288,8 +288,17 @@ Event rules: [Recovery logic](architecture/10-recovery-logic.md). Format:
   identity and read back configuration. 5 mΩ shunts; ADCRANGE = 0; current LSB
   100 µA; `SHUNT_CAL` = 6554. Continuous shunt and bus conversions, 150 µs,
   averaging 16. Read current at 100 Hz. Sign-extend the 20-bit values
-  correctly. The Croí INA's bus voltage is `BAT_EFUSE_IN`.
-- **ADS1115** (0x48 on Churro): ±4.096 V, 128 SPS single-shot. Voltages at 10 Hz,
+  correctly. The Croí INA's bus voltage is `BAT_EFUSE_IN`. Churro PROP's INA228
+  moves onto its LM5069 stage's 2.5 mΩ shunt (D-22Nov.4): `SHUNT_CAL` = 3277 at
+  the same LSB.
+- **INA237** (Churro ACT 0x44, D-22Nov.4): the same 2.5 mΩ stage shunt. Its
+  configuration is written at Churro's capture, from its datasheet.
+- **TCA9535** (0x20 on Churro, D-22Nov.5): read the two input-port registers
+  only. Never write its configuration or output registers: every pin stays an
+  input (IR-7). Bits: each charger's STAT1, STAT2 and PG, each temperature
+  gate, the branch faults; the map is fixed at capture.
+- **ADS1115** (0x48 and 0x49 on Churro; 0x49 reads the CATS cell and ACT's key
+  state, D-22Nov.4): ±4.096 V, 128 SPS single-shot. Voltages at 10 Hz,
   temperatures at 2 Hz; wait 100 ms after the probe bias starts. The AV voltage
   channel now reads the AV pack (D-2Nov.7). The source is the umbilical when the
   Croí bus voltage sits clearly above the AV pack; set the threshold on the

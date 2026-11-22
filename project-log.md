@@ -4030,3 +4030,21 @@ tour's connector gallery.
   - 80 × 120 mm held until S6, with 140 mm as the fallback.
 
   Stock is from the 21 Nov jlcparts scrape (`tools/layout/phase2/jlc_find.py`).
+
+## 22 November 2026: S2 accepted
+
+- Seán accepted both S2 drafts: "how this all sounds great. go for it!! I
+  believe in you". Recorded as D-22Nov.2–7:
+  - Burrito's stackup and order options, amending D-21Nov.26's impedance
+    control (D-22Nov.2);
+  - Burrito's layout rules from the routing brief (D-22Nov.3);
+  - Churro's PROP and ACT stages (D-22Nov.4), chargers (D-22Nov.5), J801 with
+    its damping and the CATS lead (D-22Nov.6), and its outline (D-22Nov.7).
+- One correction at recording: the review had new INA237s at 0x44 and 0x45 on
+  both branches. PROP's INA228 0x41 is already in the interface contract, so
+  only ACT gets one (0x44). The review's tables now say so.
+- `churro.md` is frozen (D-21Nov.9). The new I²C4 devices (0x44, 0x49, 0x20) are
+  in both interface files, current-system and the firmware interface.
+- Next: D4501's swap (capture step 10), the footprint audit and the sensor
+  layout notes, then S3, Burrito's placement. Churro's capture runs while
+  Burrito waits at S3.

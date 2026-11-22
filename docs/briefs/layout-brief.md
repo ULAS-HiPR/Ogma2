@@ -1,6 +1,6 @@
 # Routing brief: Burrito and Churro (S2)
 
-**22 November 2026, draft for S2.** The layout rules both boards are built to, by
+**Accepted 22 November 2026** (D-22Nov.2, D-22Nov.3). **Drafted 22 November for S2.** The layout rules both boards are built to, by
 the KiCadRoutingTools hybrid (D-22Nov.1). Burrito's half is complete. Churro's half
 waits for its [power review](churro-power-review.md) (D-21Nov.22), drafted alongside. Seán's nine
 points come in his order.

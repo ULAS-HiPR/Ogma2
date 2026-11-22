@@ -26,7 +26,9 @@ tested hardware override it where they conflict.
   authority and doesn't edit the LTS project.
 - Current sensing (7 September, [revision](../docs/archive/sensing-indication-time-review-2026-09-07.md)):
   Croí owns the protected AV discharge shunt and INA228 0x40, standalone too;
-  Foinse keeps propulsion INA228 0x41 and ADS1115 0x48. `FOINSE_RETURN_EN` must
+  Foinse keeps propulsion INA228 0x41 and ADS1115 0x48, and adds ACT INA237 0x44,
+  ADS1115 0x49 and charger-status TCA9535 0x20, all only read by Croí
+  (D-22Nov.4, D-22Nov.5). `FOINSE_RETURN_EN` must
   also enable Croí-local monitoring when Foinse isn't there. No duplicate Foinse
   AV shunt; Croí logic takeoffs come after its shunt. Pyro and servo energy leave
   before U101 through their own fuses and bypass it (D-6.1); per-channel current

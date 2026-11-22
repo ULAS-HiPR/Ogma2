@@ -158,7 +158,9 @@ actuators are the active board's, powered through Foinse's ACT branch
 **Current sensing** (7 September, [revision](../docs/archive/sensing-indication-time-review-2026-09-07.md)):
 
 - Croí owns the protected AV discharge shunt and INA228 0x40, standalone too.
-  Foinse keeps propulsion INA228 0x41 and ADS1115 0x48.
+  Foinse keeps propulsion INA228 0x41 and ADS1115 0x48, and adds ACT INA237
+  0x44, ADS1115 0x49 and charger-status TCA9535 0x20, all only read by Croí
+  (D-22Nov.4, D-22Nov.5).
 - Power authority is unchanged. The Samtec pinout is unchanged except pin 8,
   now `CROI_POWER_HOLD`.
 - `FOINSE_RETURN_EN` must also enable Croí-local monitoring when Foinse isn't

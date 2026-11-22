@@ -1,5 +1,9 @@
 # Churro power review (S2)
 
+**Accepted 22 November 2026** (D-22Nov.4–7), with one correction recorded in
+D-22Nov.4: PROP keeps its INA228 at 0x41 (interface contract), so only ACT
+gets a new INA237, at 0x44; the tables below are corrected to match.
+
 **22 November 2026, draft for Seán.** A recommended answer for each open item
 in Churro's power design (D-21Nov.22). Each follows the
 [design-review procedure](../design-review-operating-procedure.md):
@@ -37,7 +41,7 @@ ratings stay his call; section 1 only proposes a setting.
 | Current limit | 2.5 mΩ: 19.4 A at the minimum threshold, 22 A typical, 24.6 A maximum. Above C-02's ≈ 15 A peaks at the minimum, with 29% margin. **The setting is Seán's call (C-02)** |
 | Power limit, timer | Sized with TI's procedure (pp. 18–23): start-up into Fajita's or Salsa's input capacitance finishes inside the timer with 50% margin. The FET handles 1.3× the hot-short power within its SOA, derated for case temperature |
 | FET | A 60 V part in a 5 × 6 mm package with a published SOA, picked at capture. The CSD18540Q5B fits, but JLC stocks only 26 genuine parts (C86513), and Burrito uses it |
-| Measurement | An INA237 per branch on the same shunt's Kelvin taps: 85 V common mode, on I²C4 at 0x44 (PROP) and 0x45 (ACT). JLC C2864837, 4,204 stocked. The INA228 isn't stocked (Burrito gets it through Global Sourcing) |
+| Measurement | On each stage shunt's Kelvin taps: PROP keeps its INA228 at 0x41 (moved onto the new shunt); ACT gets an INA237 at 0x44 (85 V common mode; JLC C2864837, 4,204 stocked). *Corrected 22 Nov: the draft had INA237s at 0x44 and 0x45 on both.* |
 | Enables | PROP: its Gecko enable loop pulls the LM5069's UVLO pin low (C-07). ACT: Salsa's key sits in series in the supply (C-03, LV-0700 per D-18Nov.1), ahead of the LM5069, so the controller takes the inrush when the key closes |
 | ORing | The two 6S sources (pack, umbilical) each have an LM74700 stage (D-2Nov.7), sized for both branches together: ≈ 29 A peaks (C-02). LM74700-Q1: JLC C2941042, 9,667 stocked |
 | Faults | Each branch's fault output wire-ORs onto the Samtec fault line (IR-2) |
@@ -217,16 +221,17 @@ and the cell holds.
 | Part | Address | Job |
 | --- | --- | --- |
 | ADS1115 | 0x48 (taken, existing) | Temperatures, AV pack side |
-| ADS1115 | 0x49 | CATS cell, 6S pack side (C-22), ACT key state |
-| INA237 | 0x44, 0x45 | PROP, ACT current and voltage |
+| ADS1115 | 0x49 | CATS cell, ACT key state (C-22 stays on 0x48, by moving R6111) |
+| INA228 | 0x41 (taken, existing; moved onto PROP's new shunt) | PROP current and voltage |
+| INA237 | 0x44 | ACT current and voltage |
 | TCA9535 (16 inputs) | 0x20 | The three chargers' STAT1, STAT2 and PG, the three temperature gates, the branch faults |
 
 - **Parts:** TCA9535PWR, JLC C130204, 8,437 stocked.
 - **IR-7:** the TCA9535 powers up with every pin an input. No output is wired
   to anything, so a Burrito reset switches nothing.
 - **Address clashes:** none with 0x40 and 0x41 (taken).
-- **AUX budget:** the new parts add ≈ 2 mA to AUX: two INA237 at ≈ 0.75 mA, an
-  ADS1115, a TCA9535. That is far inside IR-5's 109–152 mA.
+- **AUX budget:** the new parts add ≈ 1.5 mA to AUX: one INA237 at ≈ 0.75 mA,
+  an ADS1115, a TCA9535. That is far inside IR-5's 109–152 mA.
 
 **Reason:** it is all reads over the one bus Burrito already has (IR-1, IR-3).
 
