@@ -214,6 +214,33 @@ BIG_MLCC = ('Capacitor_SMD:C_1206', 'Capacitor_SMD:C_1210', 'Capacitor_SMD:C_181
 NET_WEIGHTS = [(r'LORA_RF_SUBG|GNSS_RF', 30.0), (r'OUTPUT\d_(HIGH|LOW)', 6.0), (r'PYRO\d_ENERGY', 3.0),
                (r'(RECOVERY|STAGING)_ARMED_VBAT|.*ARM_FEED', 0.1), (r'VBAT_CROI_INPUT|ENERGY_TAP', 4.0),
                (r'USB_D[PM](_CONN)?', 4.0), (r'CAN2?_[HL]', 3.0)]
+# distance rules (stage B2 step 6, the sweep's section 5): the build places these parts first and reports every miss
+# (build.json `metrics.near`). Distances are copper gaps, pad edge to pad edge.
+_SWEEP = 'burrito-sweep.md section 5'
+NEAR = [
+    dict(rule='supply_caps', ic='U201', value='100n', mm=3.0, src=f'{_SWEEP}: one 100 nF per supply pin, on its side; 3 mm [J]'),
+    dict(rule='supply_caps', ic='U401', value='100n', mm=3.0, src=f'{_SWEEP}: one 100 nF per supply pin, on its side; 3 mm [J]'),
+    dict(rule='net_caps', ic='U201', nets=('FLIGHT_VCAP',), mm=2.0, src=f'{_SWEEP}: VCAP capacitors within 2 mm'),
+    dict(rule='net_caps', ic='U401', nets=('COMMS_VCAP',), mm=2.0, src=f'{_SWEEP}: VCAP capacitors within 2 mm'),
+    dict(rule='part_to_pins', part='Y201', ic='U201', mm=5.0, src=f'{_SWEEP}: crystals within 5 mm of the pins'),
+    dict(rule='part_to_pins', part='Y202', ic='U201', mm=5.0, src=f'{_SWEEP}: crystals within 5 mm of the pins'),
+    dict(rule='part_to_pins', part='Y401', ic='U401', mm=5.0, src=f'{_SWEEP}: crystals within 5 mm of the pins'),
+    dict(rule='net_caps', ic='U1701', nets=('CORE_HELD_4V', 'FLIGHT_3V3_PRELINK'), mm=2.0,
+         src=f'{_SWEEP}: TPS7A91 input and output capacitors within 2 mm'),
+    dict(rule='net_caps', ic='U1801', nets=('COMMS_LDO_IN', 'COMMS_3V3_PRELINK'), mm=2.0,
+         src=f'{_SWEEP}: TPS7A91 input and output capacitors within 2 mm'),
+    dict(rule='net_caps', ic='U1901', nets=('OPTIONAL_LDO_IN', '3V3_OPTIONAL_PRELINK'), mm=2.0,
+         src=f'{_SWEEP}: TPS7A91 input and output capacitors within 2 mm'),
+    dict(rule='net_caps', ic='U1102', nets=('LOGIC_SELECTED', 'BOOT_3V3'), mm=2.0,
+         src=f'{_SWEEP}: TPS70933 input and output capacitors within 2 mm'),
+    *[dict(rule='part_to_pins', part=f'C660{n}', ic='J6601', mm=3.0, src="D-22Nov.20: each pyro output's 1 nF at J6601, 3 mm")
+      for n in range(1, 7)],
+    dict(rule='on_line', part='D4601', net='LORA_RF_SUBG', **{'from': 'J4601', 'to': 'U4606'}, mm=1.0,
+         src='D-22Nov.20: the LoRa ESD part on the line between connector and module; 1 mm [J]'),
+    dict(rule='on_line', part='D4501', net='GNSS_RF', **{'from': 'J4501', 'to': 'U4504'}, mm=1.0,
+         src='D-22Nov.8: the GNSS ESD part on the line between connector and module; 1 mm [J]'),
+]
+
 # test points (stage B2 step 5): each aims for its net's route. These probe sensitive nodes, so they go in with their
 # circuit, before the general parts, and their stub is 10 mm at most; every other one 20 mm (the brief's limits)
 PROBES_WITH_CIRCUIT = ('BAT_BLOCK_GATE', 'ADC_PYRO1_CURRENT', 'ADC_PYRO2_CURRENT', 'ADC_PYRO3_CURRENT',

@@ -108,17 +108,19 @@ class BoardData:
         self.pads = []            # dicts: ref, num, x, y, net, tht, fp, layers, poly {layer: shapely}, hole
         self.fp_xy = {}
         self.fp_lib = {}
+        self.value = {}
         from shapely.geometry import Polygon
         for f in board.GetFootprints():
             ref = f.GetReference()
             p0 = f.GetPosition()
             self.fp_xy[ref] = (K.ToMM(p0.x) - self.ox, K.ToMM(p0.y) - self.oy)
             self.fp_lib[ref] = f.GetFPID().GetLibItemName().wx_str()
+            self.value[ref] = f.GetValue()
             for p in f.Pads():
                 c = p.GetPosition()
                 d = dict(ref=ref, num=p.GetNumber(), x=K.ToMM(c.x) - self.ox, y=K.ToMM(c.y) - self.oy,
                          net=p.GetNetname(), tht=p.GetAttribute() in (K.PAD_ATTRIB_PTH, K.PAD_ATTRIB_NPTH),
-                         layers=[], poly={}, hole=None)
+                         layers=[], poly={}, hole=None, pinfn=p.GetPinFunction(), pintype=p.GetPinType())
                 for lay, name in ((K.F_Cu, 'F'), (K.B_Cu, 'B')):
                     if not p.IsOnLayer(lay):
                         continue
@@ -234,6 +236,9 @@ def measure(bd, spec, fanout_result=None):
                               'median_to_pad': pd_[len(pd_) // 2] if pd_ else None,
                               'over_10_to_route': sum(1 for v in rt if v > 10), 'over_20_to_route': sum(1 for v in rt if v > 20)}
 
+    out['near'] = near_rules(bd, spec)
+    out['near_misses'] = sum(len(r['misses']) for r in out['near'])
+
     # plane pads with no via spot
     if fanout_result is not None:
         done, failed = fanout_result['done'], fanout_result['failed']
@@ -247,6 +252,87 @@ def measure(bd, spec, fanout_result=None):
         out['plane_pads_no_via_by_band'] = dict(sorted(fb.items()))
         out['plane_pads_no_via_list'] = [f"{f['ref']}.{f['num']}" for f in failed][:60]
 
+    return out
+
+
+def _gap(a, b):
+    """Copper gap between two pads (edge to edge on a shared layer), else centre to centre."""
+    shared = [l for l in a['poly'] if l in b['poly']]
+    if shared:
+        return min(a['poly'][l].distance(b['poly'][l]) for l in shared)
+    return math.hypot(a['x'] - b['x'], a['y'] - b['y'])
+
+
+def _match(pins, caps, limit):
+    """Pins matched one to one to caps within limit (augmenting paths); returns the unmatched pins."""
+    edges = {i: [j for j, c in enumerate(caps) if _gap(p, c) <= limit] for i, p in enumerate(pins)}
+    owner = {}
+
+    def take(i, seen):
+        for j in edges[i]:
+            if j not in seen:
+                seen.add(j)
+                if j not in owner or take(owner[j], seen):
+                    owner[j] = i
+                    return True
+        return False
+    return [pins[i] for i in edges if not take(i, set())]
+
+
+def near_rules(bd, spec):
+    """The distance rules of stage B2 step 6 (spec.NEAR). Each row: the rule, the limit and its source; a miss lists
+    what is too far and by how much. Rules:
+      supply_caps  every supply pin of `ic` has its own cap of `value` on its net within `mm` (one to one);
+      net_caps     on each of `nets`, a cap pad within `mm` of `ic`'s pad on that net;
+      part_to_pins each pad of `part` within `mm` of `ic`'s pad on the same net;
+      on_line      `part`'s pad on `net` within `mm` of the line from `from`'s pad to `to`'s pad, between them."""
+    out = []
+    pads_of = defaultdict(list)
+    for d in bd.pads:
+        pads_of[d['ref']].append(d)
+    is_cap = lambda r: r.startswith('C') and r[1:].isdigit()
+    for row in getattr(spec, 'NEAR', []):
+        rule, mm, miss = row['rule'], row['mm'], []
+        if rule == 'supply_caps':
+            pins = [d for d in pads_of[row['ic']] if d['net'] and short(d['net']) != 'GND' and d['pintype'] == 'power_in'
+                    and 'VCAP' not in d['pinfn']]
+            for net in sorted({d['net'] for d in pins}):
+                caps = [d for d in bd.by_net[net] if is_cap(d['ref']) and row['value'] in bd.value.get(d['ref'], '')]
+                for d in _match([q for q in pins if q['net'] == net], caps, mm):
+                    near_c = min((_gap(d, c) for c in caps), default=None)
+                    miss.append(f"{row['ic']}.{d['num']} {short(net)}: nearest {row['value']} {near_c:.1f} mm" if near_c is not None
+                                else f"{row['ic']}.{d['num']} {short(net)}: no {row['value']}")
+        elif rule == 'net_caps':
+            for net in row['nets']:
+                full = next((n for n in bd.by_net if short(n) == net), None)
+                ic = [d for d in bd.by_net.get(full, []) if d['ref'] == row['ic']]
+                caps = [d for d in bd.by_net.get(full, []) if is_cap(d['ref'])]
+                g = min((_gap(a, c) for a in ic for c in caps), default=None)
+                if g is None or g > mm:
+                    miss.append(f"{row['ic']} {net}: nearest cap {g:.1f} mm" if g is not None else f"{row['ic']} {net}: no cap")
+        elif rule == 'part_to_pins':
+            for d in pads_of[row['part']]:
+                if not d['net'] or short(d['net']) == 'GND':
+                    continue
+                ic = [q for q in bd.by_net[d['net']] if q['ref'] == row['ic']]
+                if ic:
+                    g = min(_gap(d, q) for q in ic)
+                    if g > mm:
+                        miss.append(f"{row['part']}.{d['num']} to {row['ic']}: {g:.1f} mm")
+        elif rule == 'on_line':
+            full = next((n for n in bd.by_net if short(n) == row['net']), None)
+            on = {d['ref']: d for d in bd.by_net.get(full, [])}
+            a, b, d = on.get(row['from']), on.get(row['to']), on.get(row['part'])
+            if not (a and b and d):
+                miss.append(f"{row['part']}: not on {row['net']} with {row['from']} and {row['to']}")
+            else:
+                ax, ay, bx, by = a['x'], a['y'], b['x'], b['y']
+                L2 = (bx - ax) ** 2 + (by - ay) ** 2
+                t = ((d['x'] - ax) * (bx - ax) + (d['y'] - ay) * (by - ay)) / L2 if L2 else 0.0
+                off = seg_dist((d['x'], d['y']), (ax, ay), (bx, by))
+                if off > mm or not 0.0 <= t <= 1.0:
+                    miss.append(f"{row['part']}: {off:.1f} mm off the line, at {t:.2f} along it")
+        out.append({'rule': rule, 'what': row.get('part') or row.get('ic'), 'mm': mm, 'source': row['src'], 'misses': miss})
     return out
 
 

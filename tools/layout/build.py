@@ -206,6 +206,46 @@ def labelled(ref, fp):
     return ref.startswith(('TP', 'J', 'U')) or (ref.startswith('D') and 'LED' in fp.GetFPIDAsString())
 
 
+def near_plan(spec, comps, nets):
+    """The parts under a distance rule (spec.NEAR, stage B2 step 6), each with what it is pulled to: placed as soon as
+    what they're measured from is down, before the general parts."""
+    pins_of = {}
+    for n, nodes in nets.items():
+        for r, p in nodes:
+            pins_of.setdefault(r, {})[p] = n
+    short = lambda n: n.rsplit('/', 1)[-1]
+    is_cap = lambda r: r.startswith('C') and r[1:].isdigit()
+    full = lambda net: next(n for n in nets if short(n) == net)
+    plan = {}
+    for row in getattr(spec, 'NEAR', []):
+        rule = row['rule']
+        if rule == 'supply_caps':                      # the IC's own decoupling: placed first, pulled as usual
+            ic = row['ic']
+            ic_nets = {n for n in pins_of[ic].values() if short(n) != 'GND'}
+            for r in sorted(pins_of):
+                if (is_cap(r) and comps[r].sheet == comps[ic].sheet and row['value'] in comps[r].value
+                        and set(pins_of[r].values()) & ic_nets):
+                    plan.setdefault(r, dict(anchor=ic))
+        elif rule == 'net_caps':
+            ic = row['ic']
+            for net in row['nets']:
+                caps = [r for r, _ in nets[full(net)] if is_cap(r)]
+                for r in [c for c in caps if comps[c].sheet == comps[ic].sheet] or caps:
+                    cp = next(p for p, n in pins_of[r].items() if n == full(net))
+                    plan[r] = dict(anchor=ic, pulls=[(cp, ic, ip) for x, ip in nets[full(net)] if x == ic])
+        elif rule == 'part_to_pins':
+            part, ic = row['part'], row['ic']
+            plan[part] = dict(anchor=ic, pulls=[(pp, ic, ip) for pp, n in pins_of[part].items() if short(n) != 'GND'
+                                                for x, ip in nets[n] if x == ic])
+        elif rule == 'on_line':
+            n = full(row['net'])
+            pp = next(p for p, x in pins_of[row['part']].items() if x == n)
+            a = next((r, p) for r, p in nets[n] if r == row['from'])
+            z = next((r, p) for r, p in nets[n] if r == row['to'])
+            plan[row['part']] = dict(anchor=row['from'], also=row['to'], seg=(pp, a, z))
+    return plan
+
+
 def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
     spec = load_spec(board)
     for s in sets:                                    # trials only (--set): a statement run in the spec's namespace
@@ -287,10 +327,13 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
                 if r.startswith('TP') and any(pd.GetAttribute() == B.K.PAD_ATTRIB_PTH for pd in fp.Pads()):
                     pl.pad_keepout[r] = rows
         todo = [r for r in fps if r not in pl.placed]
+        plan = near_plan(spec, comps, nets)
+        pl.near = plan
         first = [r for r in spec.PRIORITY if r in todo]
+        near_wait = [r for r in plan if r in todo and r not in first]      # in the rules' order
         edge = sorted(r for r in todo if r in getattr(spec, 'REF_REGIONS', {}) and r not in first)  # GND loops claim their edge spots
         probes = sorted(r for r in todo if r.startswith('TP') and r not in first + edge)   # last: they fill what's left
-        rest = pl.order([r for r in todo if r not in first + edge + probes])
+        rest = pl.order([r for r in todo if r not in first + edge + probes + near_wait])
         unplaced, noregion = [], []
         def put(ref, rmax=40.0):
             reg, key = region_of(ref, comps, nets_of, spec)
@@ -307,8 +350,17 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
         with_circuit = sorted(r for r in probes if net1(r) in getattr(spec, 'PROBES_WITH_CIRCUIT', ()))
         probes = [r for r in probes if r not in with_circuit]
         pending = list(with_circuit)
+
+        def flush_near():                              # each rule's parts as soon as what they're measured from is down
+            for r in list(near_wait):
+                d = plan[r]
+                if d['anchor'] in pl.placed and d.get('also', d['anchor']) in pl.placed:
+                    put(r)
+                    near_wait.remove(r)
+        flush_near()
         for ref in first + edge + rest:
             put(ref)
+            flush_near()
             for tp in list(pending):
                 if all(r in pl.placed for r, _ in nets[net1(tp)] if not r.startswith('TP')):
                     pl.probe_look = 20.0               # these search further along their route: 10 mm is their limit
@@ -341,6 +393,7 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
                 far[ref] = round(math.hypot(x - tg[0][1][0], y - tg[0][1][1]), 1) if tg else None
         report['probes_far'] = far
         report['probes_with_circuit'] = with_circuit
+        report['near_parts'] = sorted(plan, key=lambda r: (re.sub(r'\d', '', r), int(re.sub(r'\D', '', r) or 0)))
         # loops whose pins would land in the back's test point legend: moved after everything else is placed,
         # so no other part sees them, and in x only, so their fore-to-aft numbers hold (Sean, 22 Nov)
         moves = {}

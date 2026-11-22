@@ -25,56 +25,56 @@ pin sits under the back's fixed blocks, so the legend fits without the hand move
 
 Stage B2 places each test point beside its net's route, the spanning tree of the net's other pads (step 5);
 the pads on the six pyro ADC nodes and `BAT_BLOCK_GATE` go in with their circuit. Stubs to the route
-(`output/layout/build.json`, `metrics.tp_stubs`): median 4.7 mm, 9 over 10 mm and 1 over 20 mm; misses against the brief's limits
-(10 mm for those with their circuit, 20 mm for the rest): TP37 21.5 mm. TP12–TP14, the spare pads,
+(`output/layout/build.json`, `metrics.tp_stubs`): median 4.2 mm, 6 over 10 mm and 1 over 20 mm; misses against the brief's limits
+(10 mm for those with their circuit, 20 mm for the rest): TP36 22.1 mm.5 mm. TP12–TP14, the spare pads,
 moved with their pins to PA9, PA11 and PA12 and took their names (D-22Nov.25).
 
 | TP | Net | Size | x, y (mm) | Sheet |
 | --- | --- | --- | --- | --- |
 | TP1 | `GND` | black loop (Keystone 5011) | 24.5, 6.5 | 10-test-points |
-| TP2 | `LORA_3V3` | yellow loop (Keystone 5194TR, surface mount) | 9.2, 29.5 | 04f-radio-module |
-| TP3 | `GNSS_3V3` | yellow loop (Keystone 5194TR, surface mount) | 60.5, 22.1 | 10-test-points |
+| TP2 | `LORA_3V3` | yellow loop (Keystone 5194TR, surface mount) | 8.4, 29.5 | 04f-radio-module |
+| TP3 | `GNSS_3V3` | yellow loop (Keystone 5194TR, surface mount) | 67.8, 26.1 | 10-test-points |
 | TP4 | `SUPERVISOR_WDI` | 1.0 mm pad | 17.3, 71.0 | 10-test-points |
 | TP5 | `ADC_PYRO3_CURRENT` | 1.0 mm pad | 29.1, 58.0 | 10-test-points |
 | TP6 | `ADC_PYRO1_CONTINUITY` | 1.0 mm pad | 27.6, 29.2 | 10-test-points |
-| TP7 | `ADC_PYRO3_CONTINUITY` | 1.0 mm pad | 29.2, 46.5 | 10-test-points |
+| TP7 | `ADC_PYRO3_CONTINUITY` | 1.0 mm pad | 35.8, 30.7 | 10-test-points |
 | TP8 | `NOR_3V3` | yellow loop (Keystone 5194TR, surface mount) | 10.7, 39.4 | 10-test-points |
 | TP9 | `ADC_PYRO1_CURRENT` | 1.0 mm pad | 48.3, 32.2 | 10-test-points |
 | TP10 | `ADC_PYRO2_CURRENT` | 1.0 mm pad | 44.4, 32.5 | 10-test-points |
 | TP11 | `ADC_PYRO2_CONTINUITY` | 1.0 mm pad | 29.1, 64.8 | 10-test-points |
-| TP12 | `TP_PA9` | 1.0 mm pad | 53.2, 59.1 | 02a-flight-support |
-| TP13 | `TP_PA12` | 1.0 mm pad | 52.3, 51.8 | 02a-flight-support |
-| TP14 | `TP_PA11` | 1.0 mm pad | 53.9, 55.5 | 02a-flight-support |
-| TP15 | `GNSS_PPS` | yellow loop (Keystone 5194TR, surface mount) | 50.3, 66.8 | 10-test-points |
+| TP12 | `TP_PA9` | 1.0 mm pad | 52.5, 55.4 | 02a-flight-support |
+| TP13 | `TP_PA12` | 1.0 mm pad | 50.8, 48.7 | 02a-flight-support |
+| TP14 | `TP_PA11` | 1.0 mm pad | 51.9, 52.0 | 02a-flight-support |
+| TP15 | `GNSS_PPS` | yellow loop (Keystone 5194TR, surface mount) | 49.5, 67.8 | 10-test-points |
 | TP16 | `GND` | black loop (Keystone 5011) | 10.1, 64.4 | 02flight-reset-debug |
 | TP17 | `FLIGHT_BOOT0` | 1.0 mm pad | 27.1, 68.2 | 02flight-reset-debug |
-| TP18 | `RESET_MEMORY` | 1.0 mm pad | 52.1, 62.5 | 02a-flight-support |
-| TP19 | `TP_STROBE_PAD` | yellow loop (Keystone 5194TR, surface mount) | 54.4, 67.2 | 02a-flight-support |
-| TP20 | `USB_VBUS` | yellow loop (Keystone 5194TR, surface mount) | 18.0, 75.8 | 10-test-points |
-| TP21 | `STAGING_ARM_SENSE` | 1.0 mm pad | 27.2, 72.4 | 10-test-points |
+| TP18 | `RESET_MEMORY` | 1.0 mm pad | 52.1, 63.5 | 02a-flight-support |
+| TP19 | `TP_STROBE_PAD` | yellow loop (Keystone 5194TR, surface mount) | 53.2, 59.6 | 02a-flight-support |
+| TP20 | `USB_VBUS` | yellow loop (Keystone 5194TR, surface mount) | 17.8, 75.9 | 10-test-points |
+| TP21 | `STAGING_ARM_SENSE` | 1.0 mm pad | 26.8, 72.4 | 10-test-points |
 | TP22 | `RECOVERY_ARM_SENSE` | 1.0 mm pad | 25.5, 92.2 | 10-test-points |
 | TP23 | `GND` | black loop (Keystone 5011) | 12.5, 84.5 | 02comms-reset-debug |
 | TP24 | `COMMS_BOOT0` | 1.0 mm pad | 20.6, 91.8 | 02comms-reset-debug |
-| TP25 | `FLIGHT_3V3` | yellow loop (Keystone 5194TR, surface mount) | 28.4, 96.6 | 01flight-ldo |
-| TP26 | `COMMS_LDO_PG` | 1.0 mm pad | 34.0, 98.5 | 10-test-points |
-| TP27 | `CORE_HELD_4V` | yellow loop (Keystone 5194TR, surface mount) | 32.4, 94.4 | 01d-held-core |
-| TP28 | `FC_POWER_HOLD` | 1.0 mm pad | 51.6, 107.3 | 10-test-points |
-| TP29 | `USB_LIMITED` | yellow loop (Keystone 5194TR, surface mount) | 24.4, 97.1 | 10-test-points |
-| TP30 | `BOOT_3V3` | yellow loop (Keystone 5194TR, surface mount) | 43.9, 88.5 | 10-test-points |
-| TP31 | `COMMS_3V3` | yellow loop (Keystone 5194TR, surface mount) | 38.2, 96.9 | 01comms-ldo |
-| TP32 | `OPTIONAL_LDO_PG` | 1.0 mm pad | 52.1, 110.7 | 10-test-points |
-| TP33 | `BRANCH_FAULT_N` | 1.0 mm pad | 30.9, 133.2 | 10-test-points |
+| TP25 | `FLIGHT_3V3` | yellow loop (Keystone 5194TR, surface mount) | 29.4, 92.8 | 01flight-ldo |
+| TP26 | `COMMS_LDO_PG` | 1.0 mm pad | 34.8, 101.2 | 10-test-points |
+| TP27 | `CORE_HELD_4V` | yellow loop (Keystone 5194TR, surface mount) | 29.7, 100.0 | 01d-held-core |
+| TP28 | `FC_POWER_HOLD` | 1.0 mm pad | 43.2, 87.8 | 10-test-points |
+| TP29 | `USB_LIMITED` | yellow loop (Keystone 5194TR, surface mount) | 25.6, 100.2 | 10-test-points |
+| TP30 | `BOOT_3V3` | yellow loop (Keystone 5194TR, surface mount) | 38.9, 100.5 | 10-test-points |
+| TP31 | `COMMS_3V3` | yellow loop (Keystone 5194TR, surface mount) | 37.9, 95.9 | 01comms-ldo |
+| TP32 | `OPTIONAL_LDO_PG` | 1.0 mm pad | 50.8, 106.7 | 10-test-points |
+| TP33 | `BRANCH_FAULT_N` | 1.0 mm pad | 54.6, 110.1 | 10-test-points |
 | TP34 | `CAN_3V3` | yellow loop (Keystone 5194TR, surface mount) | 62.9, 105.4 | 05-can |
-| TP35 | `3V3_OPTIONAL` | yellow loop (Keystone 5194TR, surface mount) | 59.0, 107.8 | 01optional-ldo |
-| TP36 | `BUCK_PG` | 1.0 mm pad | 55.1, 115.0 | 01c-preregulator |
-| TP37 | `LOGIC_SELECTED` | yellow loop (Keystone 5194TR, surface mount) | 57.3, 123.3 | 01c-preregulator |
-| TP38 | `FLIGHT_LDO_PG` | 1.0 mm pad | 14.3, 125.8 | 10-test-points |
-| TP39 | `4V_PRE` | yellow loop (Keystone 5194TR, surface mount) | 59.0, 112.3 | 01c-preregulator |
-| TP40 | `FOINSE_AUX_3V3` | yellow loop (Keystone 5194TR, surface mount) | 60.2, 145.7 | 10-test-points |
-| TP41 | `BAT_SOURCE_PG` | 1.0 mm pad | 39.1, 141.1 | 01-power |
+| TP35 | `3V3_OPTIONAL` | yellow loop (Keystone 5194TR, surface mount) | 58.9, 108.0 | 01optional-ldo |
+| TP36 | `BUCK_PG` | 1.0 mm pad | 23.9, 96.0 | 01c-preregulator |
+| TP37 | `LOGIC_SELECTED` | yellow loop (Keystone 5194TR, surface mount) | 33.8, 97.2 | 01c-preregulator |
+| TP38 | `FLIGHT_LDO_PG` | 1.0 mm pad | 20.6, 131.2 | 10-test-points |
+| TP39 | `4V_PRE` | yellow loop (Keystone 5194TR, surface mount) | 58.5, 113.3 | 01c-preregulator |
+| TP40 | `FOINSE_AUX_3V3` | yellow loop (Keystone 5194TR, surface mount) | 60.1, 145.7 | 10-test-points |
+| TP41 | `BAT_SOURCE_PG` | 1.0 mm pad | 30.8, 133.7 | 01-power |
 | TP42 | `VBAT_CROI_INPUT` | yellow loop (Keystone 5194TR, surface mount) | 14.0, 131.1 | 01-power |
 | TP43 | `BAT_BLOCK_GATE` | 1.0 mm pad | 25.9, 134.8 | 01-power |
-| TP44 | `BAT_SHDN_N` | 1.0 mm pad | 64.8, 134.9 | 10-test-points |
-| TP45 | `BAT_SOURCE_FAULT_N` | 1.0 mm pad | 26.5, 131.3 | 10-test-points |
-| TP46 | `VBAT_PROTECTED` | yellow loop (Keystone 5194TR, surface mount) | 46.0, 138.2 | 01-power |
+| TP44 | `BAT_SHDN_N` | 1.0 mm pad | 61.1, 136.3 | 10-test-points |
+| TP45 | `BAT_SOURCE_FAULT_N` | 1.0 mm pad | 26.8, 131.2 | 10-test-points |
+| TP46 | `VBAT_PROTECTED` | yellow loop (Keystone 5194TR, surface mount) | 53.0, 132.6 | 01-power |
 | TP47 | `GND` | black loop (Keystone 5011) | 69.0, 153.5 | 10-test-points |

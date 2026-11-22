@@ -153,6 +153,7 @@ class Placer:
         self.weights = []                      # (compiled regex, multiplier) on net names
         self.routes = {}                       # test point -> the segments of its net's route (stage B2 step 5)
         self.probe_look = 10.0                 # how far past its first fitting ring a test point's search goes
+        self.near = {}                         # part -> its distance rule's pulls (stage B2 step 6)
 
     # --- spatial index
     def _cells(self, box):
@@ -246,6 +247,17 @@ class Placer:
         return 1.0
 
     def targets(self, ref):
+        d = self.near.get(ref)
+        if d and d.get('seg'):                 # on the line from one pad to another (an RF line's ESD part)
+            pin, a, b = d['seg']
+            if a[0] in self.placed and b[0] in self.placed:
+                pa, pb = self.pad_pos(*a)[0], self.pad_pos(*b)[0]
+                self.routes[ref] = [(pa, pb)]
+                return [(pin, ((pa[0] + pb[0]) / 2, (pa[1] + pb[1]) / 2), 1.0)]
+        if d and d.get('pulls'):               # pins pulled hard to the pads the rule names
+            out = [(pp, self.pad_pos(ic, ip)[0], 10.0) for pp, ic, ip in d['pulls'] if ic in self.placed]
+            if out:
+                return out
         if ref.startswith('TP'):
             rt = self.probe_route(ref)
             if rt is None:

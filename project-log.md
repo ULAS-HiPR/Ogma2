@@ -4620,3 +4620,30 @@ What the sheets show, read from the step-16 netlist:
   (`LOGIC_SELECTED`, a yellow loop) at 21.5 mm, in the full power band.
 - Two builds gave the same bytes (f6f630f0); DRC 0 errors and the 2 accepted
   warnings; schematic parity clean.
+
+## 22 November 2026: stage B2 step 6, distance rules
+
+- The sweep's section 5 limits are `NEAR` rows in the spec, each with its
+  source: one 100 nF per MCU supply pin within 3 mm (matched one to one; the
+  3 mm is a judgement), VCAP capacitors within 2 mm, crystals within 5 mm, the
+  three TPS7A91s' and the TPS70933's input and output capacitors within 2 mm,
+  C6601–C6606 within 3 mm of their J6601 pins, D4501 and D4601 within 1 mm of
+  the line between connector and module. Gaps are pad edge to pad edge. The
+  yardsticks report every miss (`metrics.near`).
+- The build places each rule's parts as soon as what they're measured from is
+  down, before the general parts, pulled hard to the pads the rule names; the
+  ESD parts aim for their line.
+- Misses: 16 → 9. Fixed: both VCAP pairs (7.2 and 7.0 mm before), U1801's,
+  U1901's and U1102's capacitors. Left:
+  - U1701's output capacitor, 6.0 mm;
+  - C6601–C6606, 6.7–9.7 mm. J6601's top row of pins sits 4.3 mm inside its
+    courtyard, so 3 mm can't be met for the three HIGH capacitors with every
+    part on top; the LOW row could. A template below the connector is next;
+  - D4501 and D4601, 2.6 and 2.9 mm off their lines, at the module end.
+- Not done: stamping pyro channels 2 and 3 from channel 1.
+- Against step 5's board: wire 7432.2 → 7467.6 mm (+0.5%); crossings 2494 →
+  2437; wrong-side pins 54 → 52 (U201 25 → 26); plane pads without a via spot
+  62 → 59; stubs median 4.7 → 4.2 mm, one over 20 mm (TP36, 22.1 mm, where TP37
+  was); densest band 0.707 → 0.708. Kept.
+- Two builds gave the same bytes (bbab4a1a); DRC 0 errors and the 2 accepted
+  warnings; schematic parity clean.
