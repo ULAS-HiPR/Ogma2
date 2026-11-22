@@ -160,6 +160,9 @@ MODELS = [
      dict(name='TPSM63603RDH', rel='Ogma2.pretty/TPSM63603RDHR.kicad_mod', h=1.9, color='black')),
     ('Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step', mpt,
      dict(name='Samtec_MPT-08-01-01-L-RA-SD', rel='Ogma2.pretty/MPT-08-01-01-L-RA-SD.kicad_mod', h=6.28)),
+    ('Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step', shroud,
+     dict(name='Molex_43650-0215', rel='Connector_Molex.pretty/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.kicad_mod',
+          h=9.9, wall=0.8, color='black', post=0.64, post_h=7.0)),
 ]
 
 if __name__ == '__main__':

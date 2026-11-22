@@ -104,7 +104,8 @@ no LiPo. It alone covers ≥6 h on the rail plus the flight (D-2Nov.6). Pad-mode
 target ≤150 mA, to be measured.
 
 J103 is the FC battery enable: open means off, upstream circuits stay live. It
-is not an arm and not physical isolation. Churro has separate AV and PROP
+is not an arm and not physical isolation. It is a Molex Micro-Fit 3.0 header,
+single row, two circuits (43650-0215, D-22Nov.18). Churro has separate AV and PROP
 enables. Charging is on board, through the umbilical (D-20Nov.1, D-21Nov.2): a BQ25756
 per 2S and 6S pack and a BQ25185 for the CATS cell, from a 24 V charge pair,
 held off above 45 °C (D-22Nov.5).
@@ -158,7 +159,8 @@ Firmware: [firmware interface](docs/firmware-interface.md).
 - No external pyro board (D-19Nov.7). Paired e-matches, if Recovery wants two
   from Burrito, share one channel (D-19Nov.8).
 - The sounder beeps continuity and state at arming (D-19Nov.4).
-- JST GH leaves the vehicle harness for Gecko (D-19Nov.5). Batteries and
+- JST GH leaves the vehicle harness for Gecko (D-19Nov.5); Burrito's J103 is a
+  Micro-Fit instead, since no 2-contact Gecko exists (D-22Nov.18). Batteries and
   connectors get particular attention: they are where student vehicles fail.
 - One USB-C per programmable board; no firmware over CAN (D-19Nov.9). The ports
   stay at the av-bay (D-21Nov.4).
@@ -241,7 +243,7 @@ insulating standoffs or washers (D-22Nov.11).
 
 | Item | State |
 | --- | --- |
-| Croí CAD | Schematic: 44 pages, 559 parts, captured 21–22 Nov (steps 0–13); ERC clean with 3 recorded exclusions; 352 checks incl. the capture assertions. PCB: built and placed by script at 80 × 180 mm (S3, D-21Nov.21, D-22Nov.10): every part placed, J101's block reserved, 499 connections unrouted, DRC 0 errors; 4 layers, 1.6 mm, JLC04161H-3313, named, without paid impedance control (D-21Nov.26, D-22Nov.2), the routing brief's rules (D-22Nov.3), every part on top (D-21Nov.27), eight plated M3 holes with GND rings on insulated mounts (D-22Nov.11), J102's end aft (D-21Nov.24), both SMAs forward (D-21Nov.25), 47 test points (D-22Nov.9), the back silkscreen (D-22Nov.12). Decided on 22 Nov and not yet built: 0402 passives and a smaller J101 block, then a new length (D-22Nov.13); J102 without the screw-down (D-22Nov.14); L3 as ground with power islands (D-22Nov.15); J103 as a Micro-Fit (D-22Nov.18); function names on the top silk (D-22Nov.19). Next: the [execution brief](docs/briefs/burrito-execution-brief.md) |
+| Croí CAD | Schematic: 44 pages, 559 parts, captured 21–22 Nov (steps 0–14); ERC clean with 3 recorded exclusions; 353 checks incl. the capture assertions. PCB: built and placed by script at 80 × 180 mm (S3, D-21Nov.21, D-22Nov.10): every part placed, J101's block reserved, 499 connections unrouted, DRC 0 errors; 4 layers, 1.6 mm, JLC04161H-3313, named, without paid impedance control (D-21Nov.26, D-22Nov.2), the routing brief's rules (D-22Nov.3), every part on top (D-21Nov.27), eight plated M3 holes with GND rings on insulated mounts (D-22Nov.11), J102's end aft (D-21Nov.24), both SMAs forward (D-21Nov.25), 47 test points (D-22Nov.9), the back silkscreen (D-22Nov.12). Decided on 22 Nov and not yet built: 0402 passives and a smaller J101 block, then a new length (D-22Nov.13); J102 without the screw-down (D-22Nov.14); L3 as ground with power islands (D-22Nov.15); J103 as a Micro-Fit (D-22Nov.18; on the schematic since step 14); function names on the top silk (D-22Nov.19). Next: the [execution brief](docs/briefs/burrito-execution-brief.md) |
 | Foinse CAD | 12 pages, 113 parts, unrouted, 60 × 80 mm; ERC clean; DRC 24 + unrouted |
 | Known CAD gaps | Nano-Fit footprints on both boards (Burrito's J101 needs Molex's 1053111102 drawing); ten of Burrito's 3D models are drawn stand-ins and two are borrowed, several heights unverified ([list](hardware/croi2/libraries/3d/GENERATED.md)); Burrito's routing (S4, S5); Churro's capture |
 | Firmware | [Firmware interface](docs/firmware-interface.md); build-pipeline brief v0.1.0 (Anav); no target code yet |

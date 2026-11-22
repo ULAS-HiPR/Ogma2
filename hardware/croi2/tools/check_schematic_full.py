@@ -280,6 +280,9 @@ def check(project, netlist, erc):
     require(fp('J6101').startswith('Connector_Molex:Molex_Mini-Fit_Jr') and fp('J6102').startswith('Connector_JST:JST_VH')
             and len(set(families.values())) == 3 and not {'Micro-Fit', 'Nano-Fit', 'GH', 'Gecko'} & {families['J6101'], families['J6102']},
             'A13: J6101 (Mini-Fit Jr.) and J6102 (JST VH): different families, neither Micro-Fit (J701), Nano-Fit (J101), GH or Gecko')
+    require(fp('J103') == 'Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical' and value('J103') == '43650-0215',
+            'A13b: J103 is a single-row Micro-Fit 3.0 header (43650), which mates 43645 / 171850 only, not the dual-row '
+            '43025 plug of Churro J701 (D-22Nov.18)')
 
     # ---- negative tests exercise the checker, not a modified live schematic
     bad = copy.deepcopy(root)

@@ -802,36 +802,36 @@
       (effects
         (font
           (size 0.95 0.95))))
-    (property "Value" "BM02B-GHS-TBT(LF)(SN)"
+    (property "Value" "43650-0215"
       (at 289.56 101.14 0.0)
       (effects
         (font
           (size 0.95 0.95))))
-    (property "Footprint" "Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical"
+    (property "Footprint" "Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical"
       (at 25.4 220.98 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "~"
+    (property "Datasheet" "https://www.molex.com/en-us/products/part-detail/436500215"
       (at 25.4 220.98 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Description" "Resistor"
+    (property "Description" "Master-enable loop to the panel switch: Molex Micro-Fit 3.0 vertical header, single row, 2 circuits, polarizing peg (D-22Nov.18)"
       (at 25.4 220.98 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "ki_keywords" "R res resistor"
+    (property "ki_keywords" "connector"
       (at 25.4 220.98 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "ki_fp_filters" "R_*"
+    (property "ki_fp_filters" "Connector*:*_1x??_*"
       (at 25.4 220.98 0)
       (effects
         (font
@@ -841,12 +841,30 @@
       (uuid "9cac7bae-78f4-4a03-a061-3767c11e2f8d"))
     (pin "2"
       (uuid "23d03946-a0f2-478b-be92-cdd76c348b81"))
+    (property "Manufacturer" "Molex"
+      (at 289.56 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "LCSC" "C293740"
+      (at 289.56 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "Molex 0436500215: vertical, single row, 2 circuits, PCB polarizing peg; mates 43645 and 171850 (987650-5984 rev 6), not the dual-row 43025 of Churro J701; footprint KiCad 9.0.7 from Molex drawing 436500215; latch on the footprint +y side"
+      (at 289.56 104.14 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/62096935-b4a4-4c50-8b7f-1c9b0c843f73"
           (reference "J103")
           (unit 1.0))))
-    (property "MPN" "BM02B-GHS-TBT(LF)(SN)"
+    (property "MPN" "43650-0215"
       (at 0.0 20.32 0.0)
       (effects
         (font

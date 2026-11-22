@@ -48,6 +48,7 @@ They're for the 3D view and fit checks, not for tooling. **Status** says what wa
 | `RF_GPS.3dshapes/ublox_MAX-M10S.step` | U4504 | 0.8 mm green PCB with a tinned can | 2.5 mm | Checked: u-blox's data sheet UBX-20035208, table 21, gives 2.5 mm typical and 2.7 mm maximum. The can and PCB split is drawn by eye |
 | `Package_DFN_QFN.3dshapes/Texas_RDH0030A_TPSM63603.step` | U1301 | Black body | 1.9 mm | Checked: TI's drawing RDH0030A is titled “1.9 mm max height” (the features list says 1.8 mm) |
 | `Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step` | J102 | Black body with eight openings on its mating face, which projects 6.12 mm past the board edge (F.Fab); screw-down ears on the board around the two Ø3.56 mm NPTH holes at (±23.14, −6.15) | 6.28 mm | The height is marked REF on Samtec's drawing. The ear depth (to 3.6 mm in from the edge) is inferred |
+| `Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step` | J103 | Black shroud on the F.Fab outline (latch ramp included); 0.64 mm posts | 9.9 mm | Unverified. JLC's listing gives 9.65 and 9.9 mm unlabelled; 9.65 mm is the body's length on the F.Fab, so 9.9 mm is taken as the height. Check Molex's SD-43650-006 |
 
 None of these drawn models is from a maker's CAD file. Before the avionics-bay fit check, replace each
 one with the maker's STEP file where one exists (Keystone, JST, Molex, Harwin, Littelfuse, PUI, u-blox,

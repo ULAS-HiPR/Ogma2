@@ -233,16 +233,6 @@
       ]
     },
     {
-      "id": "Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical",
-      "source": "2026-09-08 controlled addition; see installation-change-record.md",
-      "models": [
-        "Connector_JST.3dshapes/JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical.step"
-      ],
-      "refs": [
-        "J103"
-      ]
-    },
-    {
       "id": "Connector_JST:JST_VH_B2P-VH_1x02_P3.96mm_Vertical",
       "source": "KiCad 9.0.7 official library, Connector_JST.pretty; capture step 9 (J6102, D-21Nov.12)",
       "models": [
@@ -250,6 +240,16 @@
       ],
       "refs": [
         "J6102"
+      ]
+    },
+    {
+      "id": "Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical",
+      "source": "KiCad 9.0.7 official library, Connector_Molex.pretty, from Molex drawing 436500215; capture step 14 (J103, D-22Nov.18)",
+      "models": [
+        "Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step"
+      ],
+      "refs": [
+        "J103"
       ]
     },
     {
@@ -1188,7 +1188,8 @@
     "Buzzer_Beeper.3dshapes/MagneticBuzzer_PUI_SMT-1028-T-2-R.step": "Drawn by tools/layout/models3d.py from the footprint F.Fab outline and the heights in libraries/3d/GENERATED.md, 22 Nov 2026; simplified, several heights unverified",
     "RF_GPS.3dshapes/ublox_MAX-M10S.step": "Drawn by tools/layout/models3d.py from the footprint F.Fab outline and the heights in libraries/3d/GENERATED.md, 22 Nov 2026; simplified, several heights unverified",
     "Package_DFN_QFN.3dshapes/Texas_RDH0030A_TPSM63603.step": "Drawn by tools/layout/models3d.py from the footprint F.Fab outline and the heights in libraries/3d/GENERATED.md, 22 Nov 2026; simplified, several heights unverified",
-    "Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step": "Drawn by tools/layout/models3d.py from the footprint F.Fab outline and the heights in libraries/3d/GENERATED.md, 22 Nov 2026; simplified, several heights unverified"
+    "Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step": "Drawn by tools/layout/models3d.py from the footprint F.Fab outline and the heights in libraries/3d/GENERATED.md, 22 Nov 2026; simplified, several heights unverified",
+    "Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step": "Drawn by tools/layout/models3d.py from the footprint F.Fab outline and the heights in libraries/3d/GENERATED.md, 22 Nov 2026; simplified, several heights unverified"
   },
   "scope": "Portable snapshot, not footprint approval. No fabricated exact 3D models.",
   "hashes": {
@@ -1209,6 +1210,7 @@
     "libraries/3d/Connector_JST.3dshapes/JST_VH_B2P-VH_1x02_P3.96mm_Vertical.step": "84bd34077f85a459f823099c2b5fec44ebbbae26da9f2b6ab7499298ce7d9e33",
     "libraries/3d/Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43045-0600_2x03_P3.00mm_Horizontal.step": "c02423d6265d78bf15cca762b1b1e2fef2de319fc8347580dc8e03035e8c5af9",
     "libraries/3d/Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43045-1000_2x05_P3.00mm_Horizontal.step": "2f54617f5d2cb5b7c8ba90c8713ed0afde9987505193969924e834ea39428d47",
+    "libraries/3d/Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step": "77623f97e3ca953f69ddde524bddf2a7d4749ec0638460436b85dd9c89e144fb",
     "libraries/3d/Connector_Molex.3dshapes/Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical.step": "e0e241ef56247e13238f9ad4c51ed43205ff2ea7eb825eeec97d540b993b89d3",
     "libraries/3d/Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step": "f09ef0a96311fb60bb41cb23c87e638630dc1fd95b76c3746d50963ab888f9d3",
     "libraries/3d/Connector_USB.3dshapes/USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal.step": "6338ce740fa231c2d3dcc6384e0576994a47240a312a21413cb85d76990a69a0",
@@ -1270,6 +1272,7 @@
     "libraries/Connector_Generic.kicad_sym": "8939c26da538c4aeb6b3df508e631d9dfd7b0bda8a7fc7b8f44c5a1c0a92c91f",
     "libraries/Connector_JST.pretty/JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical.kicad_mod": "976175260ff6b158bc74e69a4564fedb13ca848be660050dbdcd4fbf195fc8a5",
     "libraries/Connector_JST.pretty/JST_VH_B2P-VH_1x02_P3.96mm_Vertical.kicad_mod": "f6c3f1da99ed1a032137124959b6e4efe84e9e75fcbebb053b5b91057ea0c56b",
+    "libraries/Connector_Molex.pretty/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.kicad_mod": "38175494dfb2baf04e3e567f82152644c58cd3dcad839e04d8d9db25a16456d0",
     "libraries/Connector_Molex.pretty/Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical.kicad_mod": "4f74d748250f6e12a6f9cd063f32101f2a84044045472c102d1bbdf07e79c7e1",
     "libraries/Device.kicad_sym": "e3a4bc4a19c7a55e936be10f9f1e8924df26301abf50254a4037773748e4ad10",
     "libraries/Diode_SMD.pretty/D_SOD-123.kicad_mod": "79ea090239f95ab7c861a510b787331de955bda70206edd3373edc726540ca40",
@@ -1351,6 +1354,6 @@
     "libraries/Transistor_FET.kicad_sym": "271b8de6aefdc8439c47072dff35b7de19f54525a862a2c90255f5eb61b162f8",
     "libraries/power.kicad_sym": "0fb7aa46f140b400eb79e21b07681eef31d7dcaaa786a29c796d3be275d55536"
   },
-  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-13 (D4501, C1403, test points); 22 Nov: a 3D model for every part (KiCad 9.0.7 package, or drawn: libraries/3d/GENERATED.md). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
+  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-13 (D4501, C1403, test points); 22 Nov: a 3D model for every part (KiCad 9.0.7 package, or drawn: libraries/3d/GENERATED.md); step 14: J103 to Micro-Fit 3.0 43650-0215 (D-22Nov.18). J101 still lacks its Nano-Fit footprint. 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
   "symbol_count_definition": "Distinct symbol library IDs used by physical components in the native XML; excludes ERC flags."
 }

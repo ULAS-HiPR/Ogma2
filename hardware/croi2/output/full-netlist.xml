@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/work/hardware/croi2/Croi2.kicad_sch</source>
-    <date>2026-11-22T07:20:09+0000</date>
+    <date>2026-11-22T10:21:59+0000</date>
     <tool>Eeschema 9.0.8+dfsg-1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -12744,22 +12744,28 @@
       <tstamps>59c7823b-74ce-4a00-b644-b64b3b0880f2</tstamps>
     </comp>
     <comp ref="J103">
-      <value>BM02B-GHS-TBT(LF)(SN)</value>
-      <footprint>Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical</footprint>
-      <datasheet>~</datasheet>
-      <description>Resistor</description>
+      <value>43650-0215</value>
+      <footprint>Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical</footprint>
+      <datasheet>https://www.molex.com/en-us/products/part-detail/436500215</datasheet>
+      <description>Master-enable loop to the panel switch: Molex Micro-Fit 3.0 vertical header, single row, 2 circuits, polarizing peg (D-22Nov.18)</description>
       <fields>
-        <field name="ki_keywords">R res resistor</field>
-        <field name="ki_fp_filters">R_*</field>
-        <field name="MPN">BM02B-GHS-TBT(LF)(SN)</field>
-        <field name="Footprint">Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical</field>
-        <field name="Datasheet">~</field>
-        <field name="Description">Resistor</field>
+        <field name="ki_keywords">connector</field>
+        <field name="ki_fp_filters">Connector*:*_1x??_*</field>
+        <field name="Manufacturer">Molex</field>
+        <field name="LCSC">C293740</field>
+        <field name="Library_Check">Molex 0436500215: vertical, single row, 2 circuits, PCB polarizing peg; mates 43645 and 171850 (987650-5984 rev 6), not the dual-row 43025 of Churro J701; footprint KiCad 9.0.7 from Molex drawing 436500215; latch on the footprint +y side</field>
+        <field name="MPN">43650-0215</field>
+        <field name="Footprint">Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical</field>
+        <field name="Datasheet">https://www.molex.com/en-us/products/part-detail/436500215</field>
+        <field name="Description">Master-enable loop to the panel switch: Molex Micro-Fit 3.0 vertical header, single row, 2 circuits, polarizing peg (D-22Nov.18)</field>
       </fields>
       <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="ki_keywords" value="R res resistor"/>
-      <property name="ki_fp_filters" value="R_*"/>
-      <property name="MPN" value="BM02B-GHS-TBT(LF)(SN)"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <property name="Manufacturer" value="Molex"/>
+      <property name="LCSC" value="C293740"/>
+      <property name="Library_Check" value="Molex 0436500215: vertical, single row, 2 circuits, PCB polarizing peg; mates 43645 and 171850 (987650-5984 rev 6), not the dual-row 43025 of Churro J701; footprint KiCad 9.0.7 from Molex drawing 436500215; latch on the footprint +y side"/>
+      <property name="MPN" value="43650-0215"/>
       <property name="Sheetname" value="44-master-enable"/>
       <property name="Sheetfile" value="44-master-enable.kicad_sch"/>
       <property name="ki_keywords" value="connector"/>

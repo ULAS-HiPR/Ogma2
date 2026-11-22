@@ -24,6 +24,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | 11c | J4401 (USB4105-GF-A) NPTH layers | Done: the two locating holes on `*.Cu`, as KiCad 9 writes them, so the board copy matches the library (DRC lib_footprint_mismatch); no copper changes |
 | 12 | Test points in three sizes, the lean set (D-22Nov.9) | Done: new sheet `10-test-points` (P45), TP9501–TP9525 by global label: 7 orange 5003 loops (6 rails, GNSS PPS), 2 black 5011 GND loops, 16 pads; 13 resized (10 rail loops 5000 → 5003, TP2304 / TP4204 5001 → 5011, TP201 pad → 5003 loop); 36 cut with their wiring (sensor rails and buses, LoRa SPI, CAN logic, NRST, duplicate rail loops, TP502); 47 test points; every loop has its LCSC number; 559 parts, 1820 pins, 61 pin changes; ERC unchanged; checker TP1–TP5 new, all pass |
 | 13 | Test points renumbered TP1–TP47 fore to aft (D-22Nov.9) | Done: the order is from the 80 × 180 placement (D-22Nov.10), in 2.5 mm rows of y, then x; refs, instance paths and notes renamed; 94 pin changes (47 out, 47 in, same nets); ERC unchanged; checker passes; the rebuild moved no test point |
+| 14 | J103 to a Molex Micro-Fit 3.0, single row, two circuits (D-22Nov.18) | Done: 43650-0215, vertical through-hole with a polarizing peg, JLC C293740; KiCad 9.0.7 footprint vendored, model drawn (`models3d.py`); stray resistor fields from the old symbol fixed; 0 pin changes; ERC unchanged; checker A13b: J103 is single-row (43650), whose listed mates exclude J701's dual-row 43025 plug; 353 checks pass |
 
 ## How each step is checked
 

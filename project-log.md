@@ -4215,3 +4215,22 @@ tour's connector gallery.
   Monday 23 November.
 - Nothing was built in this entry: the board is still the 80 × 180 build of
   commit e67de42.
+
+## 22 November 2026: execution brief, stage A, capture step 14: J103 becomes a Micro-Fit (D-22Nov.18)
+
+- Harwin's Gecko G125 data sheet lists 6 to 50 contacts, and the jlcparts scrape
+  has nothing under 6, so no 2-contact Gecko exists and D-22Nov.18 stands.
+- J103 is now Molex 43650-0215: Micro-Fit 3.0 vertical header, single row, two
+  circuits, polarizing peg, through-hole (JLC C293740, 2,209 stocked on 21 Nov).
+  Vertical, as the GH was and as the other side-edge connectors are.
+- Molex lists 43650's mates as 43645 and 171850 only (Micro-Fit 3.0 overview
+  987650-5984 rev 6), so Churro J701's dual-row 43025 plug isn't a listed mate.
+  Nobody has tried it by hand yet: one plug and one header settle it.
+- Footprint: KiCad 9.0.7's, vendored. Model: drawn by `models3d.py`; the 9.9 mm
+  height is JLC's unlabelled figure, to check against Molex's drawing.
+- Checks run: 0 pin changes; ERC unchanged (3 recorded exclusions); checker
+  353 checks pass, including the new A13b; manifest regenerated.
+- Found on the way: Churro's J601 temperature probes were to be a 4-contact Gecko
+  (D-19Nov.5), which can't exist either. That's Churro's call, for Seán.
+- The board isn't rebuilt in this commit: stage B re-places everything once the
+  part changes are in.

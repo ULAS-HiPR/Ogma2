@@ -31,6 +31,7 @@ ADDED = {
     'Diode_SMD:D_SOD-882': f'{K9}, Diode_SMD.pretty; capture step 10 (D4501, D-22Nov.8); 3D model not in the GitHub mirror',
     'Capacitor_SMD:CP_Elec_8x10': f'{K9}, Capacitor_SMD.pretty, Nichicon 8 x 10 mm; capture step 11 (C1403, Nichicon PCW phi 8 x 10)',
     'TestPoint:TestPoint_Keystone_5010-5014_Multipurpose': f'{K9}, TestPoint.pretty; capture step 12 (GND loops, Keystone 5011, D-22Nov.9); 3D model not in the GitHub mirror',
+    'Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical': f'{K9}, Connector_Molex.pretty, from Molex drawing 436500215; capture step 14 (J103, D-22Nov.18)',
 }
 MODEL_SOURCE = 'KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out'
 FETCHED = ['Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.step',
@@ -53,7 +54,8 @@ DRAWN = ['TestPoint.3dshapes/TestPoint_Keystone_5000-5004_Miniature.step',
          'Connector_Harwin.3dshapes/Harwin_Gecko_G125-MS10605M2P_2x03_P1.25mm_Vertical.step',
          'Fuse.3dshapes/Fuse_Littelfuse-NANO2-451_453.step', 'Buzzer_Beeper.3dshapes/MagneticBuzzer_PUI_SMT-1028-T-2-R.step',
          'RF_GPS.3dshapes/ublox_MAX-M10S.step', 'Package_DFN_QFN.3dshapes/Texas_RDH0030A_TPSM63603.step',
-         'Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step']
+         'Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step',
+         'Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step']
 
 
 def base_note(note):
@@ -100,8 +102,9 @@ def main(netlist):
         'model_sources': {m: MODEL_SOURCE for m in FETCHED} | {m: DEB_SOURCE for m in FROM_DEB} | {m: DRAWN_SOURCE for m in DRAWN},
         'scope': old['scope'], 'hashes': {str(p.relative_to(BOARD)): sha(p) for p in files},
         'revision_note': ('2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-13 (D4501, C1403, '
-                          'test points); 22 Nov: a 3D model for every part (KiCad 9.0.7 package, or drawn: libraries/3d/GENERATED.md). '
-                          'J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). ' + base_note(old['revision_note'])),
+                          'test points); 22 Nov: a 3D model for every part (KiCad 9.0.7 package, or drawn: libraries/3d/GENERATED.md); '
+                          'step 14: J103 to Micro-Fit 3.0 43650-0215 (D-22Nov.18). J101 still lacks its Nano-Fit footprint. '
+                          + base_note(old['revision_note'])),
         'symbol_count_definition': old['symbol_count_definition'],
     }
     assert all(f['source'] != 'unrecorded' for f in footprints), [f['id'] for f in footprints if f['source'] == 'unrecorded']
