@@ -60,8 +60,8 @@ was, two builds the same bytes, DRC as today.
 - Each inner-row via must be able to leave between the outer row on L3 or L6. If the router can't find the gap,
   script that short breakout too.
 - After a pass is frozen, delete fanout vias and stubs the routes didn't use.
-- Exit: no net fails as "boxed in" at an MCU. My bet: 12 or fewer ordinary nets open after this step alone (26
-  today), 3/5.
+- Exit: no net fails as "boxed in" at an MCU. The count after this step alone settles a bet in the ledger (26
+  today).
 - **If the count is still above 26, stop and report.** The premise would be wrong, and more scripting on it would
   be sunk cost.
 
