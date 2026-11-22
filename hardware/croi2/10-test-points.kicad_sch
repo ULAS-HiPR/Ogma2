@@ -90,7 +90,7 @@
         (size 2.54 2.54))
       (justify left))
     (uuid "ca28736c-7f17-5a9e-9b5d-b48bfaacdb68"))
-  (text "What this does: test points on key nets not served elsewhere, in three sizes (D-22Nov.9). Silkscreen: TP number only.\nBlack Keystone 5011 loops on GND at the board edges; orange Keystone 5003 loops where a probe stays clipped on\n(rails, GNSS PPS); 1.0 mm round pads for nets you only touch. Each joins its net by global label.\nNo test point on a fire net or on a line that drives a fire switch: OUTPUTx_HIGH / LOW, PYROx_ENERGY, the armed rails,\nPYROx_FIRE / GATE / LS_SELECT, STAGE_ELIGIBLE, PYRO3_HS_ENABLE (B-02). Their scaled ADC nodes are under PYRO DIAGNOSTICS."
+  (text "What this does: test points on key nets not served elsewhere, in three sizes (D-22Nov.9). Silkscreen: TP number only.\nBlack Keystone 5011 loops on GND at the board edges; yellow Keystone 5194TR surface-mount loops where a probe stays clipped on\n(rails, GNSS PPS); 1.0 mm round pads for nets you only touch. Each joins its net by global label.\nNo test point on a fire net or on a line that drives a fire switch: OUTPUTx_HIGH / LOW, PYROx_ENERGY, the armed rails,\nPYROx_FIRE / GATE / LS_SELECT, STAGE_ELIGIBLE, PYRO3_HS_ENABLE (B-02). Their scaled ADC nodes are under PYRO DIAGNOSTICS."
     (exclude_from_sim no)
     (at 15.24 25.4 0)
     (effects
@@ -98,7 +98,7 @@
         (size 1.27 1.27))
       (justify left top))
     (uuid "c75cdf50-37a6-565c-acd4-1248b48f1b52"))
-  (text "ORANGE LOOPS: RAILS, PPS"
+  (text "YELLOW LOOPS: RAILS, PPS"
     (exclude_from_sim no)
     (at 25.4 55.88 0)
     (effects
@@ -127,13 +127,13 @@
           (size 1.016 1.016))
         (justify left)
         (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
       (at 60.96 63.5 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
       (at 60.96 63.5 0)
       (effects
         (font
@@ -157,7 +157,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5003"
+    (property "MPN" "5194TR"
       (at 60.96 63.5 0)
       (effects
         (font
@@ -169,13 +169,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "LCSC" "C238124"
+    (property "LCSC" "C22388408"
       (at 60.96 63.5 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Test point on BOOT_3V3: orange loop, Keystone 5003 (D-22Nov.9); silkscreen shows TP30 only"
+    (property "Implementation_Note" "Test point on BOOT_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP30 only"
+      (at 60.96 63.5 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
       (at 60.96 63.5 0)
       (effects
         (font
@@ -231,13 +237,13 @@
           (size 1.016 1.016))
         (justify left)
         (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
       (at 60.96 71.12 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
       (at 60.96 71.12 0)
       (effects
         (font
@@ -261,7 +267,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5003"
+    (property "MPN" "5194TR"
       (at 60.96 71.12 0)
       (effects
         (font
@@ -273,13 +279,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "LCSC" "C238124"
+    (property "LCSC" "C22388408"
       (at 60.96 71.12 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Test point on NOR_3V3: orange loop, Keystone 5003 (D-22Nov.9); silkscreen shows TP8 only"
+    (property "Implementation_Note" "Test point on NOR_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP8 only"
+      (at 60.96 71.12 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
       (at 60.96 71.12 0)
       (effects
         (font
@@ -335,13 +347,13 @@
           (size 1.016 1.016))
         (justify left)
         (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
       (at 60.96 78.74 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
       (at 60.96 78.74 0)
       (effects
         (font
@@ -365,7 +377,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5003"
+    (property "MPN" "5194TR"
       (at 60.96 78.74 0)
       (effects
         (font
@@ -377,13 +389,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "LCSC" "C238124"
+    (property "LCSC" "C22388408"
       (at 60.96 78.74 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Test point on GNSS_3V3: orange loop, Keystone 5003 (D-22Nov.9); silkscreen shows TP3 only"
+    (property "Implementation_Note" "Test point on GNSS_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP3 only"
+      (at 60.96 78.74 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
       (at 60.96 78.74 0)
       (effects
         (font
@@ -439,13 +457,13 @@
           (size 1.016 1.016))
         (justify left)
         (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
       (at 60.96 86.36 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
       (at 60.96 86.36 0)
       (effects
         (font
@@ -469,7 +487,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5003"
+    (property "MPN" "5194TR"
       (at 60.96 86.36 0)
       (effects
         (font
@@ -481,13 +499,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "LCSC" "C238124"
+    (property "LCSC" "C22388408"
       (at 60.96 86.36 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Test point on FOINSE_AUX_3V3: orange loop, Keystone 5003 (D-22Nov.9); silkscreen shows TP40 only"
+    (property "Implementation_Note" "Test point on FOINSE_AUX_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP40 only"
+      (at 60.96 86.36 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
       (at 60.96 86.36 0)
       (effects
         (font
@@ -543,13 +567,13 @@
           (size 1.016 1.016))
         (justify left)
         (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
       (at 60.96 93.98 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
       (at 60.96 93.98 0)
       (effects
         (font
@@ -573,7 +597,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5003"
+    (property "MPN" "5194TR"
       (at 60.96 93.98 0)
       (effects
         (font
@@ -585,13 +609,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "LCSC" "C238124"
+    (property "LCSC" "C22388408"
       (at 60.96 93.98 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Test point on USB_VBUS: orange loop, Keystone 5003 (D-22Nov.9); silkscreen shows TP20 only"
+    (property "Implementation_Note" "Test point on USB_VBUS: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP20 only"
+      (at 60.96 93.98 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
       (at 60.96 93.98 0)
       (effects
         (font
@@ -647,13 +677,13 @@
           (size 1.016 1.016))
         (justify left)
         (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
       (at 60.96 101.6 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
       (at 60.96 101.6 0)
       (effects
         (font
@@ -677,7 +707,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5003"
+    (property "MPN" "5194TR"
       (at 60.96 101.6 0)
       (effects
         (font
@@ -689,13 +719,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "LCSC" "C238124"
+    (property "LCSC" "C22388408"
       (at 60.96 101.6 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Test point on USB_LIMITED: orange loop, Keystone 5003 (D-22Nov.9); silkscreen shows TP29 only"
+    (property "Implementation_Note" "Test point on USB_LIMITED: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP29 only"
+      (at 60.96 101.6 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
       (at 60.96 101.6 0)
       (effects
         (font
@@ -751,13 +787,13 @@
           (size 1.016 1.016))
         (justify left)
         (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
       (at 60.96 109.22 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
       (at 60.96 109.22 0)
       (effects
         (font
@@ -781,7 +817,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5003"
+    (property "MPN" "5194TR"
       (at 60.96 109.22 0)
       (effects
         (font
@@ -793,13 +829,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "LCSC" "C238124"
+    (property "LCSC" "C22388408"
       (at 60.96 109.22 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Test point on GNSS_PPS: orange loop, Keystone 5003 (D-22Nov.9); silkscreen shows TP15 only"
+    (property "Implementation_Note" "Test point on GNSS_PPS: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP15 only"
+      (at 60.96 109.22 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
       (at 60.96 109.22 0)
       (effects
         (font

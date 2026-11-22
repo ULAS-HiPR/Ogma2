@@ -1,9 +1,32 @@
 # Croí2 insulated rail test points
 
+## 22 November 2026 (stage B2): the rail loops go surface-mount (D-22Nov.24)
+
+Seán agreed to surface-mount loops (“why do we have holes going the entire way
+through”). Keystone's SMT Test Points catalogue page (Mouser's copy,
+https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf, read 22 Nov 2026):
+
+| Family | Keystone says | Pad (mm) | Height (mm) | JLC (21 Nov scrape) |
+| --- | --- | --- | --- | --- |
+| 5015 / 5017 micro-miniature | miniature probes, clips and hooks | 3.4 × 1.8 | 1.5 | C2906768, 60,348 |
+| 5019 / 5029 miniature | most standard probes, clips and hooks | 3.0 × 1.6 | 1.8 | not listed |
+| 5190TR–5199TR colour keyed | most standard probes, clips and hooks | 3.0 × 1.5 | 2.5 | 5191TR black 616, 5194TR yellow 486, 5192TR white 282; orange not listed |
+| 5016 / 5018 compact | standard probes, clips and hooks | 4.7 × 3.4 | 2.3 | C238129, 4,917 |
+
+The pick: 5194TR, yellow (C22388408). Of the families that take a standard
+scope hook and JLC stocks, it has the smallest pad, and its base keeps a
+colour. Its footprint, `Ogma2:TestPoint_Keystone_5190TR_ColorKeyed`, is drawn
+by capture step 18 from the page: one 3.0 × 1.5 mm pad, the 3.0 × 2.4 mm base
+centred on it, courtyard 0.25 mm round the base (10.2 mm², against 11.5 mm² for
+the 5003). The four GND loops stay Keystone 5011, through-hole.
+
+Not checked: a standard hook and a mini-grabber on a real part; the base's
+exact outline (the page's view has a notch, drawn here as a rectangle).
+
 ## 22 November 2026: three sizes, 47 test points (D-22Nov.9)
 
 Supersedes the part choices below; the 7 September notes stay for the
-footprint and the model gap.
+footprint and the model gap. The orange loops are replaced above.
 
 | Size | Part | JLC | Where | Count |
 | --- | --- | --- | --- | --- |

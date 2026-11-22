@@ -4466,3 +4466,22 @@ What the sheets show, read from the step-16 netlist:
   the library (the file left in step 1's commit; the manifest drops it here).
 - Placement unchanged. Two builds gave the same bytes; DRC 0 errors and
   J6601's 2 accepted silk warnings; schematic parity clean.
+
+## 22 November 2026: stage B2 step 4, surface-mount loops (capture step 18, D-22Nov.24)
+
+- Seán: surface-mount loops, “absolutely”. Keystone's SMT Test Points page was
+  read in the built-in browser (Keystone's own site refuses fetchers; Mouser's
+  copy rendered): the colour-keyed 5190TR series suits “most standard probes,
+  clips and hooks”, pad 3.0 × 1.5 mm. Picked 5194TR, yellow (C22388408, 486 in
+  JLC's 21 Nov scrape); orange isn't in JLC's library. The micro-miniature 5015
+  is for miniature probes, 5019 isn't at JLC, and 5016 needs a 4.7 × 3.4 mm pad.
+  Harwin S1751 isn't in JLC's library either.
+- Capture step 18: 18 parts' footprint and fields, 0 pin changes, ERC unchanged,
+  checker 364 pass (TP3 follows). Footprint drawn by the step; model drawn.
+- Trial against the same placement with through-hole loops:
+  - test point stubs, median to route: 12.5 → 9.2 mm; over 10 mm: 28 → 21;
+    over 20 mm: 8 → 6; TP19 no longer needs the far fallback;
+  - wire 8032.5 → 7938.3 mm; crossings 3221 → 3149; congestion overflow
+    15.6 → 14.2 mm; densest band 0.735 → 0.731.
+  Kept. Two builds gave the same bytes; DRC 0 errors and the 2 accepted
+  warnings; schematic parity clean.

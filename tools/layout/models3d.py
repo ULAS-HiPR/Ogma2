@@ -21,7 +21,7 @@ from engine import sexpr as S                         # noqa: E402
 
 C = {'orange': (1.0, 0.42, 0.08), 'black': (0.08, 0.08, 0.09), 'ivory': (0.93, 0.90, 0.80),
      'tin': (0.80, 0.80, 0.82), 'gold': (0.86, 0.70, 0.30), 'pcb': (0.08, 0.32, 0.18), 'grey': (0.35, 0.35, 0.38),
-     'white': (0.95, 0.95, 0.93)}
+     'white': (0.95, 0.95, 0.93), 'yellow': (0.98, 0.82, 0.10)}
 
 
 def fp_info(rel):
@@ -68,6 +68,18 @@ def loop(name, body_d, body_h, top, wire, color, pin_len=3.0):
     ring = cq.Workplane('YZ').workplane(offset=-w).center(0, body_h * 0.6).circle(wire / 2).sweep(path)
     a.add(ring, name='loop', color=cq.Color(*C['tin']))
     a.add(cq.Workplane('XY').circle(wire / 2).extrude(-pin_len), name='pin', color=cq.Color(*C['tin']))
+    return a
+
+
+def smt_loop(name, base_w, base_d, base_h, top, strip_w, strip_t, color):
+    """Keystone colour-keyed SMT test point: an LCP base, and a phosphor-bronze strip arched over it in the XZ
+    plane, its feet on the pad."""
+    a = cq.Assembly(name=name)
+    a.add(box(-base_w / 2, -base_d / 2, base_w / 2, base_d / 2, 0.0, base_h), name='base', color=cq.Color(*C[color]))
+    w2, s2 = base_w / 2, strip_w / 2
+    for nm, (x0, x1, z0, z1) in (('leg_l', (-w2, -w2 + strip_t, 0.0, top)), ('leg_r', (w2 - strip_t, w2, 0.0, top)),
+                                 ('top', (-w2, w2, top - strip_t, top))):
+        a.add(box(x0, -s2, x1, s2, z0, z1), name=nm, color=cq.Color(*C['tin']))
     return a
 
 
@@ -159,6 +171,8 @@ MODELS = [
     # (output, builder, args)
     ('TestPoint.3dshapes/TestPoint_Keystone_5000-5004_Miniature.step', loop,
      dict(name='Keystone5003', body_d=2.5, body_h=1.6, top=4.6, wire=0.5, color='orange')),
+    ('TestPoint.3dshapes/TestPoint_Keystone_5190TR_ColorKeyed.step', smt_loop,
+     dict(name='Keystone5194TR', base_w=3.0, base_d=2.4, base_h=1.2, top=2.5, strip_w=1.2, strip_t=0.2, color='yellow')),
     ('TestPoint.3dshapes/TestPoint_Keystone_5010-5014_Multipurpose.step', loop,
      dict(name='Keystone5011', body_d=3.2, body_h=2.8, top=8.1, wire=0.8, color='black')),
     ('Connector_JST.3dshapes/JST_VH_B2P-VH_1x02_P3.96mm_Vertical.step', shroud,

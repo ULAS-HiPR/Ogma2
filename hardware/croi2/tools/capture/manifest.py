@@ -35,6 +35,7 @@ ADDED = {
     'Resistor_SMD:R_0402_1005Metric': f'{K9}, Resistor_SMD.pretty; capture step 16 (the 0402 swap, D-22Nov.13)',
     'Capacitor_SMD:C_0402_1005Metric': f'{K9}, Capacitor_SMD.pretty; capture step 16 (the 0402 swap, D-22Nov.13)',
     'Ogma2:105311-1102': 'Drawn by capture step 15 (tools/capture/steps/s15_j101.py) from Molex drawing SD-105311-100 rev H (LCSC copy); pads per the Burrito sweep section 10 (J101, D-22Nov.13)',
+    'Ogma2:TestPoint_Keystone_5190TR_ColorKeyed': 'Drawn by capture step 18 (tools/capture/steps/s18_smt_loops.py) from Keystone\'s SMT Test Points catalogue page (5190TR-5199TR pad layout and base; Mouser\'s copy, read 22 Nov 2026) (D-22Nov.24)',
 }
 MODEL_SOURCE = 'KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out'
 FETCHED = ['Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.step',
@@ -60,7 +61,8 @@ DRAWN = ['TestPoint.3dshapes/TestPoint_Keystone_5000-5004_Miniature.step',
          'RF_GPS.3dshapes/ublox_MAX-M10S.step', 'Package_DFN_QFN.3dshapes/Texas_RDH0030A_TPSM63603.step',
          'Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step',
          'Connector_Molex.3dshapes/Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical.step',
-         'Connector_Molex.3dshapes/Molex_Nano-Fit_105311-1102_1x02_P2.50mm_Vertical.step']
+         'Connector_Molex.3dshapes/Molex_Nano-Fit_105311-1102_1x02_P2.50mm_Vertical.step',
+         'TestPoint.3dshapes/TestPoint_Keystone_5190TR_ColorKeyed.step']
 
 
 def base_note(note):
@@ -108,7 +110,8 @@ def main(netlist):
         'scope': old['scope'], 'hashes': {str(p.relative_to(BOARD)): sha(p) for p in files},
         'revision_note': ('2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-13 (D4501, C1403, '
                           'test points); 22 Nov: a 3D model for every part (KiCad 9.0.7 package, or drawn: libraries/3d/GENERATED.md); '
-                          'step 14: J103 to Micro-Fit 3.0 43650-0215 (D-22Nov.18); step 15: J101\'s Nano-Fit 105311-1102 footprint from SD-105311-100; step 16: 200 passives to 0402 (passives-0402.md). '
+                          'step 14: J103 to Micro-Fit 3.0 43650-0215 (D-22Nov.18); step 15: J101\'s Nano-Fit 105311-1102 footprint from SD-105311-100; step 16: 200 passives to 0402 (passives-0402.md); step 17: D4601 and C6601-C6606 (no new footprint); '
+                          'step 18: the 18 orange through-hole loops to Keystone 5194TR surface-mount loops, footprint drawn by the step (D-22Nov.24). '
                           + base_note(old['revision_note'])),
         'symbol_count_definition': old['symbol_count_definition'],
     }

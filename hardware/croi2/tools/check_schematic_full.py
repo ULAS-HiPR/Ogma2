@@ -20,7 +20,7 @@ ENERGETIC = re.compile(r'PYRO|ARM|STAGE|OUTPUT\d|SERVO')
 OUTPUT_ENABLES = re.compile(r'^(PYRO\d_(FIRE|LS_SELECT|HS_ENABLE|GATE)|STAGE_ELIGIBLE|STAGE_INHIBIT_LATCHED|STAGE_ARM_INVALID)$')
 # Test points (D-22Nov.9): three sizes, by what the probe does there.
 TP_GND = ('TestPoint:TestPoint_Keystone_5010-5014_Multipurpose', '5011', 'C238127')     # black loop, board edge
-TP_LOOP = ('TestPoint:TestPoint_Keystone_5000-5004_Miniature', '5003', 'C238124')       # orange loop, probe stays on
+TP_LOOP = ('Ogma2:TestPoint_Keystone_5190TR_ColorKeyed', '5194TR', 'C22388408')         # yellow SMT loop, probe stays on (D-22Nov.24)
 TP_PAD = ('TestPoint:TestPoint_Pad_D1.0mm', None, None)                                  # 1.0 mm pad, probe touches
 TP_LOOP_NETS = frozenset({   # each regulator or switch output, the strobe, PPS
     'VBAT_CROI_INPUT', 'VBAT_PROTECTED', 'LOGIC_SELECTED', '4V_PRE', 'CORE_HELD_4V', 'FLIGHT_3V3', 'COMMS_3V3',
@@ -274,7 +274,7 @@ def check(project, netlist, erc):
             'TP2: no test point on a fire net or a fire-switch driver; only the scaled sense nodes')
     tier = lambda n: TP_GND if n == 'GND' else TP_LOOP if n in TP_LOOP_NETS else TP_PAD
     require(all((parts[r].findtext('footprint'), field(r, 'MPN'), field(r, 'LCSC')) == tier(n) for r, n in tps.items()),
-            'TP3: GND test points are black 5011 loops, rails / strobe / PPS orange 5003 loops, the rest 1.0 mm pads')
+            'TP3: GND test points are black 5011 loops, rails / strobe / PPS yellow surface-mount 5194TR loops, the rest 1.0 mm pads')
     require(not [n for n in set(tps.values()) if n in supplies and n != 'GND' and n not in TP_LOOP_NETS],
             'TP4: every rail with a test point has a loop')
     require(sum(n == 'GND' for n in tps.values()) == 4 and len(set(tps.values())) == len(tps) - 3,

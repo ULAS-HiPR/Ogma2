@@ -12,6 +12,7 @@ KiCad 9.0.7's, vendored unchanged ([manifest](libraries/board-library-manifest.j
 
 | Footprint | Parts | Copper checked against | Note |
 | --- | --- | --- | --- |
+| `Ogma2:TestPoint_Keystone_5190TR_ColorKeyed` | the 18 yellow loops (TP2 … TP46) | Keystone's SMT Test Points catalogue page, 5190TR–5199TR pad layout (.118 × .059 in) and base (.118 × .094 in) | Drawn in capture step 18 (D-22Nov.24). One pad; the base's notch drawn as a rectangle |
 | `Ogma2:105311-1102` | J101 | Molex SD-105311-100 rev H (LCSC copy): pin, clip and peg holes, pitch, C, the peg's offset; `s15_check.py` checks them | Drawn in capture step 15. Pads ours (sweep §10): clips no net, 0.22 mm from the pins; peg unplated, on the latch side (the drawing's views; KiCad's 105309-xx02 agrees) |
 | `Ogma2:430450600` | J6601 | KiCad `Connector_Molex:Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical`, pad for pad | Copper twin of KiCad's vertical 43045-0612 (same 3.0 mm grid); its body and courtyard (14.3 x 13.8 mm) are the right-angle part's |
 | `Ogma2:ABS07-32.768KHZ-7-T` | Y202 | Abracon ABS07 drawing (2022-08-10, p. 4) |  |

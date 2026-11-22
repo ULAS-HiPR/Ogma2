@@ -27,7 +27,7 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 | LM4040CEM3-3.0/NOPB | U1002 | LM4040CIM3-3.0/NOPB (C132056, 2,880): same TI part, rated to 85 °C instead of 125 °C | Drop-in |
 | WSLP2512R0050FEA (5 mΩ) | R7101 | RLP25FEGMR005 (C393074, 218,606): 5 mΩ 1% 3 W 2512 | Drop-in |
 | CRCW20104K70FKEF | R1012, R1013 | RC2010FK-074K7L (C513572, 4,716): 4.7 kΩ 1% 0.75 W 2010 | Drop-in |
-| Keystone 5000 (red test point) | 15 power test points | 5003 orange (C238124, 7,350) or 5002 white | Drop-in; colour only |
+| Keystone 5000 (red test point) | 15 power test points | 5003 orange (C238124, 7,350) or 5002 white | Drop-in; colour only. Since D-22Nov.24 the 18 loops are surface-mount Keystone 5194TR, yellow (C22388408, 486 in the 21 Nov scrape; Extended): confirm the stock at order |
 | Molex 1053111102 | J101 | None: the spec rules out a 105309 substitute | Global Sourcing or consign; footprint drawn in capture step 15 |
 | Samtec MPT-08-01-01-L-RA-SD | J102 | None; must mate the bay's Samtec half | Global Sourcing or consign. In stock on 22 Nov, read on each distributor's page: Mouser Ireland 706 (200-MPT080101LRASD, €7.02 each at 1, dispatch now); Arrow 32 in the Netherlands (2 days, €7.35). Farnell Ireland: none, 16 weeks. Samtec offers samples. Seán orders from Mouser (D-22Nov.22). The mate on Churro, MPS-08-01-01-L-RA-SD: Mouser Ireland 66 in stock and 160 due 21 Dec 2026, €7.24 at 1 (read 22 Nov). |
 | Amphenol 132134 (SMA, vertical) | J4501, J4601 | None (132203 is right-angle) | Global Sourcing or consign |
