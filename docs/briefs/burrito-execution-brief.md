@@ -156,6 +156,9 @@ on bbab4a1a, before D-22Nov.28 moved the pyro capacitors.
 
 ## Stage C: S4, the critical copper
 
+*The order of work for stages C and D, and when to stop, is in the [handoff](burrito-stage-cd-handoff.md) (22 November). Seán's go: “Let’s go phase C 6 layers and then run phase D
+full effort.”*
+
 Follow sweep §8 steps 3 to 5, with these fixed:
 
 - Six layers first (D-22Nov.29): JLC06161H-3313 in `spec.STACKUP`; the no-track rule on L2 and L4; the hole

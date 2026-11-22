@@ -4820,3 +4820,18 @@ What the sheets show, read from the step-16 netlist:
 - Ledger: his six-layer bet graded ok (the test favoured six at every effort
   level; it didn't show four couldn't close), with a dec line; the model's
   "ends on six" ok; a new model bet on stage D's first pass.
+
+## 22 November 2026: the go for stages C and D, and the handoff
+
+- Seán: “please look at Opus’ plan and write the handoff. I agree with its
+  general direction. Let’s go phase C 6 layers and then run phase D full
+  effort.”
+- [Handoff](docs/briefs/burrito-stage-cd-handoff.md), by Claude Fable. What it
+  adds to the plan: freeze the placement as data before any copper; fan the
+  MCUs' signal pins inward under the body and serve their supply pins through
+  their capacitors; draw the island rule as L6 keep-out rings; meter after
+  every step; via in pad only where both pads go to planes; two kill lines.
+- Read from the layer test's six-layer full-effort run for it: of the 26
+  ordinary nets left open, 20 touch U201 and 2 touch U401.
+- Stop 2 becomes a report, not a wait: Fable's reading of “and then run phase
+  D”, stated in the handoff for Seán to correct.
