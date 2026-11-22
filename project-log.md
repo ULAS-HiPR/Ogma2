@@ -4404,3 +4404,19 @@ What the sheets show, read from the step-16 netlist:
   connector and the switches. D-22Nov.20 wants them at the connector, so S4
   anchors them there. The first 12 mm of the board keep their spec positions
   at any length, so this doesn't bear on the length.
+
+## 22 November 2026: Seán's answers on the 160 mm board; stage B2 starts
+
+- Fable surveyed the placed 160 mm board and wrote the stage B2 brief
+  ([burrito-stage-b2-brief.md](docs/briefs/burrito-stage-b2-brief.md)): settle
+  the placement before any copper, measured by a routability meter.
+- Seán agreed with its calls and answered each:
+  - J102 keeps -SD and he orders from Mouser (D-22Nov.22). Mouser Ireland
+    holds 66 of the mate, MPS-08-01-01-L-RA-SD, with 160 due 21 Dec.
+  - Surface-mount test loops: yes, without another stop.
+  - MCU pin swaps: “yes you may swap any pin you want so long as it’s justified
+    and verified and documented”. ST's open pin data may be cloned.
+  - The S/N box goes on the top silk, in free space.
+  - His bet: 160 mm doesn't route without a re-place, 1/5.
+- `hardware/croi2/AGENTS.md`: J101's line updated; it has had its footprint
+  since capture step 15.

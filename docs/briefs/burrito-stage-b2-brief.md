@@ -238,3 +238,14 @@ One line each, skippable. Without an answer Opus takes the default.
 4. Your call: after the swaps, how many of U201's 39 wrong-side pins remain, and how sure, 1–5?
 5. The S/N box tells built boards apart in bring-up notes, calibration and flight records. Keep it, or
    delete it? Default: keep.
+
+## Seán's answers to the calls, 22 November (stated)
+
+1. Surface-mount loops without another stop: “absolutely”.
+2. Pin swaps: “yes you may swap any pin you want so long as it’s justified and verified and documented”.
+   This widens the class A and B split above: fire and arm pins may move too, each with its reason, a
+   check against the reference manual, and a line in the pin change table.
+3. ST's open pin data: “absolutely”.
+4. His call on U201's remaining wrong-side pins: “no clue. Let’s rip through and see”. No bet.
+5. The S/N box: “keep it. S/N is useful, put it in the free space up top, I’m seeing some in the
+   bottom right corner already”.

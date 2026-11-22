@@ -113,6 +113,7 @@ Seán's answers:
 2. **J102:** he had an agent look for earlier stock. Mouser Ireland holds 706 of
    MPT-08-01-01-L-RA-SD and Arrow 32 in the Netherlands (22 Nov,
    [jlc-stock.md](../../hardware/croi2/jlc-stock.md)). Whether J102 keeps -SD is still his call.
+   Later the same day: “Yes keep it and we’ll order from mouser.” (D-22Nov.22.)
 3. **A5:** “Yes absolutely add the esd protect and the 1nf caps.” Capture step 17 (D-22Nov.20).
 4. **Test point numbers:** kept.
 

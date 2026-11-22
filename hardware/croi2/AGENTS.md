@@ -20,9 +20,10 @@ This is a tracked engineering draft in the Ogma2 monorepo, not manufacturing or 
   never hand-edit the .kicad_pcb. Never overwrite manual schematic edits.
 - Keep active symbols, footprints and models local to this repo. Preserve
   provenance, update intentional library hashes, and rerun native checks.
-- J101 (Molex Nano-Fit 1053111102) has no footprint until Molex's drawing is in
-  hand: no invented pads and no 105309 substitute. C1403 is selected (Nichicon
-  PCW0J102MCO1GS); its land pattern still needs checking against Nichicon's drawing.
+- J101 (Molex Nano-Fit 105311-1102) uses `Ogma2:105311-1102`, drawn by script
+  from Molex's drawing SD-105311-100 rev H (capture step 15, D-22Nov.13); no
+  105309 substitute. C1403 is selected (Nichicon PCW0J102MCO1GS); its land
+  pattern still needs checking against Nichicon's drawing.
 - Preserve symbol UUID paths, DNP flags, pad nets and schematic-sheet groups.
 - Use the parent Ogma2 review branch; do not initialise a nested repository.
   Publication is not purchase, hazardous-test or flight authority.

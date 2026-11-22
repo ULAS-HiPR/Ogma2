@@ -12,6 +12,7 @@ Take Burrito from "placed at 80 × 180" to "routed, DRC clean, ready for Seán t
 | --- | --- | --- |
 | A | Parts and footprints: J102, J101, J103, the 0402 swap, schematic checks | – |
 | B | Re-place: connector labels, a length sweep, Seán's pick, the back refitted | **Stop 1** |
+| B2 | Settle the placement before copper: a routability meter, the MCUs turned, surface-mount loops, test points, distance rules, pin swaps ([brief](burrito-stage-b2-brief.md)) | **Stop 1b** |
 | C | S4: the critical copper, by script | **Stop 2** |
 | D | S5: route the rest, pours, outputs | **Stop 3** |
 
