@@ -236,3 +236,7 @@ Sources: JLC quote page (cart.jlcpcb.com/quote), read 22 November;
 [JLC six-layer page](https://jlcpcb.com/6-layer-pcb);
 [JLC assembly capabilities](https://jlcpcb.com/capabilities/pcb-assembly-capabilities);
 [JLC stackup FAQ](https://jlcpcb.com/quote/pcbOrderFaq/PCB%20Stackup).
+
+## Seán's answers (22 November)
+
+“I agree with all your calls.” Six layers on JLC06161H-3313, plan P1, the standard 7–8-day build: D-22Nov.29.

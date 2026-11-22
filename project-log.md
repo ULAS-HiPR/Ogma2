@@ -4807,3 +4807,16 @@ What the sheets show, read from the step-16 netlist:
   Not decided: three calls wait for Seán.
 - Ledger: the model's six-layer bet (42 or fewer) missed at 60; its
   full-effort bet (20 or more on four layers) held at 41.
+
+## 22 November 2026: six layers decided
+
+- Seán: “I agree with all your calls.” D-22Nov.29: six layers on
+  JLC06161H-3313, plan P1 (L1 signals, L2 GND, L3 signals, L4 GND, L5 power
+  islands in GND fill, L6 signals), standard 7–8-day build. The open row
+  leaves the Open table. Notes go on D-21Nov.26, D-22Nov.2, D-22Nov.15,
+  D-22Nov.3 and D-22Nov.16. The execution brief's stage C now starts with the
+  six-layer spec and rebuild.
+- The board file is still four layers until stage C rebuilds it.
+- Ledger: his six-layer bet graded ok (the test favoured six at every effort
+  level; it didn't show four couldn't close), with a dec line; the model's
+  "ends on six" ok; a new model bet on stage D's first pass.

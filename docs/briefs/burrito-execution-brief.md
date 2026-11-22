@@ -125,7 +125,8 @@ part, its job and its test.
 
 ## Layer test: before stage C
 
-*Run 22 November: [the report](burrito-layer-test.md). Stage C waits for Seán's answer to its calls.*
+*Run 22 November: [the report](burrito-layer-test.md). Seán agreed its calls the same night: six layers on JLC06161H-3313,
+plan P1, the standard build (D-22Nov.29).*
 
 Seán, 22 Nov: “Do we need to add more layers?” It's an open row in `decisions.md`. Stage C's first step writes the
 layer plan, so this comes first. It is compute, not design: no decision changes until Seán has read the table.
@@ -157,20 +158,24 @@ on bbab4a1a, before D-22Nov.28 moved the pyro capacitors.
 
 Follow sweep §8 steps 3 to 5, with these fixed:
 
-- L2 is never routed or cut.
-- L3 is ground with power islands, and no L4 track crosses an island's edge (D-22Nov.15). Write that
-  check before any copper.
+- Six layers first (D-22Nov.29): JLC06161H-3313 in `spec.STACKUP`; the no-track rule on L2 and L4; the hole
+  keep-outs on every inner layer; the plane map (GND on L2 and L4, islands on L5 in GND fill); the router's layers
+  L1, L3 and L6. Rebuild twice (same bytes) and DRC before any copper.
+- L2 and L4 are never routed or cut.
+- L5 is GND with power islands, and no L6 track crosses an island's edge (D-22Nov.15, moved by D-22Nov.29). Write
+  that check before any copper. Keep the islands under the circuits they feed, and run signals that cross between
+  bands on L3.
 - RF as D-22Nov.16 and sweep §3. No shield cans.
 - Thermal reliefs on every passive pad that meets a pour; solid on regulators, FETs and connectors.
 - `FIRE_LOGIC` keeps 0.5 mm. Draw its escape from U201 by script, with the fire rule waived only inside U201's
   courtyard (D-22Nov.26).
 - Pyro: draw channel 1's parts and copper, then stamp the block for channels 2 and 3 (D-22Nov.27).
 - C6603, channel 2's HIGH capacitor, sits behind J6601's LOW pins. A 1.0 mm fire track can't pass between those
-  pins at 0.5 mm (the gap is 1.5 mm). Join it to pin 2 through the pin's barrel on L4, or give that stub its own
+  pins at 0.5 mm (the gap is 1.5 mm). Join it to pin 2 through the pin's barrel on L3 or L6, or give that stub its own
   narrower rule, and show which at Stop 2 (D-22Nov.28). Seán, 22 Nov: “Make sure to take note of that one thing
   left for stage c.”
 - **Stop 2.** The usual set, plus each block's copper beside its datasheet's layout figure (the table in
-  sweep §5), the L3 map, and the list of nets left for the router.
+  sweep §5), the L5 map, and the list of nets left for the router.
 
 ## Stage D: S5, the rest
 
