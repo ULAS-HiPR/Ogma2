@@ -29,7 +29,7 @@ each LCSC number on jlcpcb.com before ordering. Quantities are per board, after 
 | CRCW20104K70FKEF | R1012, R1013 | RC2010FK-074K7L (C513572, 4,716): 4.7 kΩ 1% 0.75 W 2010 | Drop-in |
 | Keystone 5000 (red test point) | 15 power test points | 5003 orange (C238124, 7,350) or 5002 white | Drop-in; colour only |
 | Molex 1053111102 | J101 | None: the spec rules out a 105309 substitute | Global Sourcing or consign; footprint drawn in capture step 15 |
-| Samtec MPT-08-01-01-L-RA-SD | J102 | None; must mate the bay's Samtec half | Global Sourcing or consign |
+| Samtec MPT-08-01-01-L-RA-SD | J102 | None; must mate the bay's Samtec half | Global Sourcing or consign. In stock on 22 Nov, read on each distributor's page: Mouser Ireland 706 (200-MPT080101LRASD, €7.02 each at 1, dispatch now); Arrow 32 in the Netherlands (2 days, €7.35). Farnell Ireland: none, 16 weeks. Samtec offers samples. |
 | Amphenol 132134 (SMA, vertical) | J4501, J4601 | None (132203 is right-angle) | Global Sourcing or consign |
 | Seeed Wio-LR2021 | U4606 | Not carried (module) | Consign or hand-fit |
 | Harwin G125-MS10605M2P (Gecko-SL 2×3, step 5) | J501, J502 | None (G125-MS10605L3P: 2 in stock) | Global Sourcing or consign |

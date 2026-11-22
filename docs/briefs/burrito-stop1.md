@@ -102,3 +102,22 @@ under, the left edge can't hold its six connectors and the holes.
 - Thirteen silk refs at 180 found no clear spot and kept their default places. DRC shows no silk overlap.
 - Seven new Extended part types, each with JLC's loading fee.
 - The axes mark is the board's frame, not each chip's.
+
+## After stop 1, 22 November
+
+Seán's answers:
+
+1. **Length:** “Let’s try get 80x160”. Done: [D-22Nov.21](../../decisions.md). Every part and all 47
+   test points place; the densest band is 0.735. The S/N box moved to the back, under the parts list;
+   the rocket keeps its size.
+2. **J102:** he had an agent look for earlier stock. Mouser Ireland holds 706 of
+   MPT-08-01-01-L-RA-SD and Arrow 32 in the Netherlands (22 Nov,
+   [jlc-stock.md](../../hardware/croi2/jlc-stock.md)). Whether J102 keeps -SD is still his call.
+3. **A5:** “Yes absolutely add the esd protect and the 1nf caps.” Capture step 17 (D-22Nov.20).
+4. **Test point numbers:** kept.
+
+At 160 mm, TP19 sits at the left edge, 43 mm from its circuit, and the loops sit further from what they
+probe than at 180.
+
+Correction: the checks above say 499 connections are unrouted. That is where DRC's report stops; the
+netlist has about 1,376 connections, none routed.

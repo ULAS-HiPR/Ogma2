@@ -4356,3 +4356,42 @@ What the sheets show, read from the step-16 netlist:
   elsewhere. The interruption stopped it before it reported, so the question is
   open.
 - Next: his ask to fit 80 × 160 mm, with the S/N box and the rocket moved.
+
+## 22 November 2026: Burrito at 80 × 160 mm (D-22Nov.21); J102 stock
+
+- Seán: “Let’s try get 80x160”, with “the serial number thing can just all be
+  shifted down, the flying burrito too”. He took the S/N box to be on the back;
+  it was on the top silk (MK2). It now sits in the back's art, under the parts
+  list, and MARK_SERIAL stays in the library unused.
+- **Band areas** re-measured on the 230 mm board after step 17 and the box's
+  move: 2031, 1861, 1356, 3891 mm² (band 3 lost the box's 105 mm²).
+- **IF FOUND** now sits low enough for the rocket to keep its 180 mm size
+  (`art.found_at`): the first 160 mm build fitted it at 0.70, not 0.75. A
+  local name in `board_art` that shadowed `found_at` is renamed.
+- **TP19** (the timing strobe, an orange loop) found no room within 40 mm of
+  R203 and R205: at 160 mm the back's fixed blocks cover the board's middle,
+  and no loop pin goes under them. `build.py` now gives such a test point the
+  nearest spot anywhere, after the others, and reports it as `probes_far`.
+  TP19 sits at the left edge, 43 mm from its circuit. In the stage B sweep it
+  had already gone 29 mm away at 160.
+- **The 160 mm board** is in the repository. Checks run:
+  - 567 of 567 placed, with the axes mark; no JLC spacing breach;
+  - densest band 0.735 (power and harness); the others 0.672, 0.662, 0.625;
+  - the back: no misses; the S/N box at 117.45 mm, the rocket at 0.75;
+  - two builds gave the same bytes;
+  - DRC 0 errors, plus J6601's 2 accepted silk warnings; schematic parity clean;
+  - test-point positions refreshed: 43 of 47 are out of fore-to-aft order now.
+- **Correction to stop 1:** “499 connections unrouted” was DRC's count, and
+  DRC's report stops there. It was 499 at 180 before step 17 and is 499 at 160
+  with 14 more pins. The netlist has about 1,376 connections, none routed.
+- **Renders:** the front at 180, 170 and 165 mm (before step 17), and the
+  front and back at 160 mm, sent to Seán.
+- **J102 stock.** Seán had the agent rerun. It read each distributor's page on
+  22 Nov (using the built-in browser where the fetcher was blocked):
+  - Mouser Ireland: 706 of MPT-08-01-01-L-RA-SD, €7.02 each at 1, dispatch now;
+  - Arrow: 32 in the Netherlands, 2 days;
+  - Farnell Ireland: none, 16 weeks; Avnet none, 10 weeks;
+  - Samtec offers it as a sample.
+  Two notes it raised, not checked: Samtec's distributor table shows DigiKey
+  with 469, against the zero seen earlier; Master Electronics' page says the
+  part is no longer made, while Arrow lists it as active.

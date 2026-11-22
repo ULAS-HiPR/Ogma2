@@ -52,7 +52,7 @@ behind the computed figures are in [tools/layout/phase2](../../tools/layout/phas
 
 | Item | Rule | Tag |
 | --- | --- | --- |
-| Outline | 80 × 180 mm, 1.6 mm thick. The y values in this brief and in `spec.py` are written for the 230 mm reference board; `build.py` maps them to 180 | [R] B-35, D-22Nov.10 |
+| Outline | 80 × 160 mm, 1.6 mm thick. The y values in this brief and in `spec.py` are written for the 230 mm reference board; `build.py` maps them to 160 | [R] B-35, D-22Nov.21 |
 | Holes | Eight Ø3.2 mm unplated holes at x = 4 and 76, y = 6, 79, 152 and 225. No copper within Ø7 mm on any layer, no part within Ø8 mm | [R] D-21Nov.23 |
 | J102 | Origin at (40, 230), 0°, top side: where it sits on the 8 September draft, read from that file. Its mating face overhangs the aft edge; its courtyard spans x 13.2–66.9 | [R] IR-3, D-21Nov.24 |
 | Other connectors | On an edge, facing out. The right-angle ones open past their edge. The vertical ones stand at the edge, with latch and cable toward it | [R] D-21Nov.24 |

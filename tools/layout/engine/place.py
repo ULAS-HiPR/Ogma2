@@ -297,10 +297,10 @@ class Placer:
         self.commit(ref, best[1], best[2], best[3])
         return True
 
-    def place_grow(self, ref, region, grow=(0, 4, 8, 16)):
+    def place_grow(self, ref, region, grow=(0, 4, 8, 16), rmax=40.0):
         for g in grow:
             reg = (max(0, region[0] - g), max(0, region[1] - g), min(self.w, region[2] + g), min(self.h, region[3] + g))
-            if self.place(ref, reg):
+            if self.place(ref, reg, rmax=rmax):
                 if g:
                     self.spills.append((ref, g))
                 return True

@@ -533,6 +533,20 @@ def legend_rows(board, origin, size, legend, pitch=1.42, back=75.05, grow=1.8):
     return [(W - u1 - grow, a - grow, W - u0 + grow, c + grow) for u0, a, u1, c in rows]
 
 
+def found_at(place, sub_bottom, logo_top, lt):
+    """IF FOUND's line: where Seán liked it on the 180 mm board, moved up in proportion as the logo comes up, but
+    never so high that the rocket under the title can't keep the size he saw (Seán, 22 Nov: shift it down), as
+    long as HOUSTON still fits between it and the logo."""
+    seen_top = place['logo_seen'] + lt
+    v = sub_bottom + (place['found'] - sub_bottom) * (logo_top - sub_bottom) / (seen_top - sub_bottom)
+    rb = burrito_rocket(None, 0, 0, place.get('rocket', 0.75)).bounds
+    keep = sub_bottom + 1.6 + (rb[3] - rb[1]) + 1.6 + 0.5 + 0.5   # board_art's 1.6 mm round the ink each side of the
+    # rocket's own outline (its 1.2 mm halo included), IF FOUND's half height, and a raster cell or two
+    if v < keep and keep + 0.5 + 3.0 <= logo_top:
+        v = keep
+    return round(v, 2)
+
+
 def art_skeleton(board, origin, size, legend, name, lines, specs, logo, found, title_font, place, grow=1.8,
                  pitch=1.42, back=75.05, **_):
     """Where the back's fixed blocks sit before any pin is known, as boxes in board x, y grown by `grow` (a loop's
@@ -558,8 +572,7 @@ def art_skeleton(board, origin, size, legend, name, lines, specs, logo, found, t
     logo_top = logo_v + lt
     if logo_top >= sub_bottom + 1.5:
         out.append(affinity.translate(lp, W / 2, logo_v).bounds)
-        seen_top = place['logo_seen'] + lt
-        found_v = sub_bottom + (place['found'] - sub_bottom) * (logo_top - sub_bottom) / (seen_top - sub_bottom)
+        found_v = found_at(place, sub_bottom, logo_top, lt)
         fb = B.text_shape(W / 2, found_v, found, 1.0, justify='center')[1].bounds
         out.append(fb)
         hs = B.text_shape(W / 2, (fb[3] + logo_top) / 2, 'HOUSTON, WE HAVE A BURRITO', 1.0, bold=True, justify='center')[1].bounds
@@ -597,7 +610,7 @@ def legend_blockers(board, origin, size, legend, logo, place, pitch=1.42, back=7
 
 
 def board_art(board, origin, size, legend, name, version, lines, specs, logo, found, title_font, place,
-              ogham_text=None, reserved=()):
+              ogham_text=None, reserved=(), serial_box=None):
     """Draw the back and the top tag. Returns where each block went (bottom-view mm) and counts."""
     ox, oy = origin
     W, H = size
@@ -665,8 +678,7 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
         where['logo'] = {'v': logo_v, 'up_mm': round(logo_was - logo_v, 2), 'width': 58.0}
 
     # 2. IF FOUND, where Seán liked it on the 180 mm board, moved in proportion as the logo comes up
-    seen_top = place['logo_seen'] + lt
-    found_v = round(sub_bottom + (place['found'] - sub_bottom) * (logo_top - sub_bottom) / (seen_top - sub_bottom), 2)
+    found_v = found_at(place, sub_bottom, logo_top, lt)
     fi = None
     if found_v + 1.0 <= logo_top - 1.0:
         fi = B.text(W / 2, found_v, found, 1.0, justify='center')
@@ -734,6 +746,37 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
     else:
         misses.append('specs')
 
+    # 6c. a white box for a serial number (D-22Nov.19; on the back since Seán's 80 x 160 mm ask, 22 Nov): under the
+    # parts list first, then anywhere clear in the aft half, then anywhere
+    if serial_box:
+        bw, bh = serial_box
+        lab = B.text_shape(0.0, 0.0, 'S/N', 1.3, bold=True)
+        lw_ = lab[1].bounds[2] - lab[1].bounds[0]
+        inked = unary_union([*legend_ink, *spec_ink]).buffer(0.8)
+        top0 = where['specs']['end'] + 2.5 if 'specs' in where else H / 2
+        spot = None
+        for ua, ub, va, vb in ((30.0, W - 1.5, top0, H - 10.0), (1.5, W - 1.5, H / 2, H - 10.0), (1.5, W - 1.5, 10.0, H - 10.0)):
+            for v in np.arange(va, vb - bh, 0.5):
+                for u in np.arange(ua, ub - lw_ - 1.0 - bw, 0.5):
+                    g = unary_union([sbox(u + lw_ + 1.0, v, u + lw_ + 1.0 + bw, v + bh),
+                                     affinity.translate(lab[1], u - lab[1].bounds[0], v + bh / 2)])
+                    if clear(g.buffer(0.6)) and not inked.intersects(g):
+                        spot = (float(u), float(v))
+                        break
+                if spot:
+                    break
+            if spot:
+                break
+        if spot:
+            u, v = spot
+            B.text(u - lab[1].bounds[0], v + bh / 2, 'S/N', 1.3, bold=True)
+            box_ = sbox(u + lw_ + 1.0, v, u + lw_ + 1.0 + bw, v + bh)
+            B.polygon(box_)
+            B.bridges.append(box_.buffer(1.0))
+            where['serial_box'] = {'u': round(u, 2), 'v': round(v, 2), 'size': [bw, bh]}
+        else:
+            misses.append('serial box')
+
     # 6b. an inscription in Ogham across the top band, over the name: written along a line as in the
     # manuscripts, left to right, between feather marks (Claude's addition, 22 Nov, at Seán's invitation;
     # ogham_text=None drops it). The right-hand side, where a stone's edge would run, is J101's.
@@ -779,7 +822,7 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
     band = (sub_bottom, under)                         # under the subtitle, over IF FOUND
     windows = [('under the title', (1, 42, W - 1, under - 1.0), (W / 2, (band[0] + band[1]) / 2)),
                ('lower right', (30, H - 68, W - 1, H - 1), (56, H - 22)), ('top band', (1, 10, W - 1, 28), (W / 2, 18))]
-    found_at = {}
+    options = {}
     for nm, win, anc in windows:
         for s in np.arange(0.95, 0.38, -0.05):
             hit = None
@@ -792,10 +835,10 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
                     hit = (round(float(s), 2), tilt, c)
                     break
             if hit:
-                found_at[nm] = hit
+                options[nm] = hit
                 break
-    where['burrito_options'] = found_at
-    pick = found_at.get('under the title') or max(found_at.values(), key=lambda h: h[0], default=None)
+    where['burrito_options'] = options
+    pick = options.get('under the title') or max(options.values(), key=lambda h: h[0], default=None)
     if pick:
         s, tilt, (bu, bv) = pick
         out = burrito_rocket(None, bu, bv, s, tilt)

@@ -8,7 +8,8 @@ area, edge connectors slid clear of the holes. Rotations are KiCad's (counter-cl
 
 NAME = 'Croi2'
 W, H = 80.0, 230.0                     # D-21Nov.6, B-35: the reference board the y values are written for
-LENGTH = 180.0                         # D-22Nov.10: Burrito is 80 x 180 (sweep of 22 Nov, Sean's pick)
+LENGTH = 160.0                         # D-22Nov.21: Burrito is 80 x 160 (Seán, 22 Nov: "Let's try get 80x160");
+                                       # was 180 (D-22Nov.10)
 ORIGIN = (100.0, 50.0)                 # page offset, as the 8 September draft
 THICKNESS = 1.6
 
@@ -169,18 +170,20 @@ SILK_NAMES = {
     'D9001': 'CHECKS OK', 'D9101': 'NOT READY', 'D9201': 'COMMS', 'D9301': 'POWER',
 }
 # silk marks the placer finds room for, as board-only footprints (tools/layout/marks.py): the board axes with the
-# nose arrow, near the IMUs, and a white box for a serial number [J]
-MARKS = {'MK1': 'Ogma2:MARK_AXES', 'MK2': 'Ogma2:MARK_SERIAL'}
-REF_REGIONS.update({'MK1': (40, 44, 79, 104), 'MK2': (10, 98, 70, 152)})
+# nose arrow, near the IMUs [J]. The white S/N box moved to the back's art (Seán, 22 Nov, for 80 x 160 mm:
+# "I am assuming the serial thing is on the back"); MARK_SERIAL stays in the library unused.
+MARKS = {'MK1': 'Ogma2:MARK_AXES'}
+REF_REGIONS.update({'MK1': (40, 44, 79, 104)})
 # loops moved after placement (Sean, 22 Nov: "move 4 loops, keep layout"): x only, so y and the fore-to-aft numbers
 # hold. Since stage B (brief B4) no loop pin is placed under the back's fixed blocks in the first place
 # (art.art_skeleton), and build.py's clear_legend moves any that still block the legend, so this stays empty. [J]
 PROBE_MOVES = {}
 BANDS = {'1 RF and fire': B1, '2 Flight': B2, '3 Comms': B3, '4 Power and harness': B4}
 # courtyard area (mm2) per band on the 230 mm board, lean test points, silk labels, function names and marks counted
-# (re-measured after capture steps 14-16, 22 Nov; was [1880, 2083, 1443, 3846]): how build.py's stretch() shares a
-# shorter board's length between the bands
-BAND_AREA = [2002, 1847, 1460, 3891]
+# (re-measured after capture step 17 and the S/N box's move to the back, 22 Nov; was [2002, 1847, 1460, 3891] after
+# steps 14-16, and [1880, 2083, 1443, 3846] before): how build.py's stretch() shares a shorter board's length
+# between the bands
+BAND_AREA = [2031, 1861, 1356, 3891]
 
 # --- silkscreen art and legends (Sean, 22 Nov: name, version, "funny little vector memes ... both sides") [J]
 ART = dict(
@@ -200,7 +203,8 @@ ART = dict(
     place=dict(cap=7.0, title=32.1, lines=38.9, found=59.6, logo=95.41, logo_seen=92.04, at=180.0),
     # Claude's addition, 22 Nov, at Sean's invitation: "Burrito son of Ogma" in Ogham, the script the Ogam
     # Tract credits to Ogma, in the old stones' X MAQI Y form, across the top band. None drops it.
-    ogham_text='BURRITO MAQI OGMA')
+    ogham_text='BURRITO MAQI OGMA',
+    serial_box=(15.0, 4.5))       # the S/N box on the back, under the parts list (Seán, 22 Nov)
 
 # --- rotation limits: MLCCs of 1206 and larger lie across the long axis (B-33) [J]
 BIG_MLCC = ('Capacitor_SMD:C_1206', 'Capacitor_SMD:C_1210', 'Capacitor_SMD:C_1812', 'Capacitor_SMD:C_2220')

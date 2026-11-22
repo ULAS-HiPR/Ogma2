@@ -290,13 +290,15 @@ def build(board, upto, length=None, out_dir=None):
         probes = sorted(r for r in todo if r.startswith('TP') and r not in first + edge)   # last: they fill what's left
         rest = pl.order([r for r in todo if r not in first + edge + probes])
         unplaced, noregion = [], []
-        def put(ref):
+        def put(ref, rmax=40.0):
             reg, key = region_of(ref, comps, nets_of, spec)
             if reg is None:
                 noregion.append(ref)
                 reg = (1, 1, spec.W - 1, spec.H - 1)
-            if not pl.place_grow(ref, reg):
+            if not pl.place_grow(ref, reg, rmax=rmax):
                 unplaced.append(ref)
+                return False
+            return True
         for ref in first + edge + rest:
             put(ref)
         n_unplaced = len(unplaced)
@@ -310,8 +312,19 @@ def build(board, upto, length=None, out_dir=None):
             tg = pl.probe_target(ref)
             net = next(iter(pl.pin_nets.get(ref, {}).values()), '')
             return (round(tg[0][1][1], 3), round(tg[0][1][0], 3), net) if tg else (1e9, 1e9, net)
+        n_before = len(unplaced)
         for ref in sorted(probes, key=probe_key):
             put(ref)
+        # a test point with no room within 40 mm of its circuit: after the others, the nearest spot anywhere on the
+        # board (Seán, 22 Nov: no test point is deleted). Reported with its distance, since it's far from what it probes
+        far = {}
+        for ref in unplaced[n_before:]:
+            tg = pl.probe_target(ref)
+            unplaced.remove(ref)
+            if put(ref, rmax=max(spec.W, spec.H)):
+                x, y, _ = pl.placed[ref]
+                far[ref] = round(math.hypot(x - tg[0][1][0], y - tg[0][1][1]), 1) if tg else None
+        report['probes_far'] = far
         # loops whose pins would land in the back's test point legend: moved after everything else is placed,
         # so no other part sees them, and in x only, so their fore-to-aft numbers hold (Sean, 22 Nov)
         moves = {}
