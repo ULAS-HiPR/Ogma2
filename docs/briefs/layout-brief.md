@@ -157,7 +157,7 @@ step-9 netlist:
   - Each of those refs counts as courtyard while placing, so no part covers it.
   - Every other ref goes on F.Fab (the assembly drawing). Polarity marks stay on silk.
   - A pass after placement moves any visible ref to the nearest spot clear of pads, other parts' courtyards, other silk and the edge.
-  - The bottom carries the name, version, team, a burrito with sparkles, and the TP-to-net legend. The top carries the name and version, small.
+  - The bottom (D-22Nov.12) carries the name, subtitle, a burrito rocket, two lines of text, the team's logo, the TP-to-net legend in one column and the board's parts, with waves over the rest. The top carries the name and version, small.
 - **Mounting holes** (D-22Nov.11): plated, with an exposed GND ring and stitching vias. No track or via within Ø8 mm; the sled mounts Burrito on insulating standoffs or washers.
 
 *Unknown until S3:* whether band 3's ≈ 1,160 mm² and band 1's ≈ 1,660 mm² fit

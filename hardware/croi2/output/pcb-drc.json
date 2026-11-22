@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-11-22T07:22:34+0000",
+    "date": "2026-11-22T09:16:38+0000",
     "included_severities": [
         "error",
         "warning",
@@ -689,13 +689,28 @@
             "description": "Missing connection between items",
             "items": [
                 {
+                    "description": "Pad 1 [4V_PRE] of R1401 on F.Cu",
+                    "pos": {
+                        "x": 121.75,
+                        "y": 176.625
+                    },
+                    "uuid": "99504110-f259-5d2a-a243-dc99ba44cb72"
+                },
+                {
                     "description": "Pad 1 [4V_PRE] of C1501 on F.Cu",
                     "pos": {
                         "x": 124.5,
                         "y": 171.725
                     },
                     "uuid": "dd339927-7448-561b-8fda-4c168524bc06"
-                },
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
                 {
                     "description": "Pad 1 [4V_PRE] of R1401 on F.Cu",
                     "pos": {
@@ -703,6 +718,14 @@
                         "y": 176.625
                     },
                     "uuid": "99504110-f259-5d2a-a243-dc99ba44cb72"
+                },
+                {
+                    "description": "Pad 1 [4V_PRE] of U1501 on F.Cu",
+                    "pos": {
+                        "x": 134.55,
+                        "y": 181.0875
+                    },
+                    "uuid": "163ecc4b-0eb4-5198-98e8-4523c1db7020"
                 }
             ],
             "severity": "error",
@@ -804,6 +827,52 @@
             "description": "Missing connection between items",
             "items": [
                 {
+                    "description": "Pad 1 [4V_PRE] of U1601 on F.Cu",
+                    "pos": {
+                        "x": 134.15,
+                        "y": 186.2875
+                    },
+                    "uuid": "c6fc8eb5-008a-5e50-aae3-cbdc43ad8b7e"
+                },
+                {
+                    "description": "Pad 22 [4V_PRE] of U1301 on F.Cu",
+                    "pos": {
+                        "x": 135.7,
+                        "y": 190.25
+                    },
+                    "uuid": "ace4713a-86e4-5899-9a7f-fca862d4187b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [4V_PRE] of U1601 on F.Cu",
+                    "pos": {
+                        "x": 134.15,
+                        "y": 186.2875
+                    },
+                    "uuid": "c6fc8eb5-008a-5e50-aae3-cbdc43ad8b7e"
+                },
+                {
+                    "description": "Pad 1 [4V_PRE] of U1501 on F.Cu",
+                    "pos": {
+                        "x": 134.55,
+                        "y": 181.0875
+                    },
+                    "uuid": "163ecc4b-0eb4-5198-98e8-4523c1db7020"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
                     "description": "Pad 10 [4V_PRE] of U1301 on F.Cu",
                     "pos": {
                         "x": 134.2,
@@ -827,52 +896,6 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pad 1 [4V_PRE] of U1501 on F.Cu",
-                    "pos": {
-                        "x": 134.55,
-                        "y": 181.0875
-                    },
-                    "uuid": "163ecc4b-0eb4-5198-98e8-4523c1db7020"
-                },
-                {
-                    "description": "Pad 1 [4V_PRE] of U1601 on F.Cu",
-                    "pos": {
-                        "x": 134.15,
-                        "y": 186.2875
-                    },
-                    "uuid": "c6fc8eb5-008a-5e50-aae3-cbdc43ad8b7e"
-                }
-            ],
-            "severity": "error",
-            "type": "unconnected_items"
-        },
-        {
-            "description": "Missing connection between items",
-            "items": [
-                {
-                    "description": "Pad 1 [4V_PRE] of U1501 on F.Cu",
-                    "pos": {
-                        "x": 134.55,
-                        "y": 181.0875
-                    },
-                    "uuid": "163ecc4b-0eb4-5198-98e8-4523c1db7020"
-                },
-                {
-                    "description": "Pad 1 [4V_PRE] of R1401 on F.Cu",
-                    "pos": {
-                        "x": 121.75,
-                        "y": 176.625
-                    },
-                    "uuid": "99504110-f259-5d2a-a243-dc99ba44cb72"
-                }
-            ],
-            "severity": "error",
-            "type": "unconnected_items"
-        },
-        {
-            "description": "Missing connection between items",
-            "items": [
-                {
                     "description": "Pad 30 [4V_PRE] of U1301 on F.Cu",
                     "pos": {
                         "x": 134.7,
@@ -881,12 +904,12 @@
                     "uuid": "9cb10d95-63f8-5e37-a2a8-5f9413c5ecb7"
                 },
                 {
-                    "description": "Pad 12 [4V_PRE] of U1301 on F.Cu",
+                    "description": "Pad 10 [4V_PRE] of U1301 on F.Cu",
                     "pos": {
-                        "x": 135.2,
+                        "x": 134.2,
                         "y": 195.95
                     },
-                    "uuid": "a291a190-cf2e-58b8-909c-f252d9f8cd52"
+                    "uuid": "b8cd4a93-07ad-5472-a1f0-e1d6b558ceee"
                 }
             ],
             "severity": "error",
@@ -927,12 +950,12 @@
                     "uuid": "ace4713a-86e4-5899-9a7f-fca862d4187b"
                 },
                 {
-                    "description": "Pad 1 [4V_PRE] of U1601 on F.Cu",
+                    "description": "Pad 15 [4V_PRE] of U1301 on F.Cu",
                     "pos": {
-                        "x": 134.15,
-                        "y": 186.2875
+                        "x": 136.475,
+                        "y": 194.875
                     },
-                    "uuid": "c6fc8eb5-008a-5e50-aae3-cbdc43ad8b7e"
+                    "uuid": "9d309e68-5411-50b9-9c05-bde3d19e93f9"
                 }
             ],
             "severity": "error",
@@ -979,29 +1002,6 @@
                         "y": 195.525
                     },
                     "uuid": "eb04b843-6bbd-541b-9055-02a7a9b2fc71"
-                }
-            ],
-            "severity": "error",
-            "type": "unconnected_items"
-        },
-        {
-            "description": "Missing connection between items",
-            "items": [
-                {
-                    "description": "Pad 15 [4V_PRE] of U1301 on F.Cu",
-                    "pos": {
-                        "x": 136.475,
-                        "y": 194.875
-                    },
-                    "uuid": "9d309e68-5411-50b9-9c05-bde3d19e93f9"
-                },
-                {
-                    "description": "Pad 22 [4V_PRE] of U1301 on F.Cu",
-                    "pos": {
-                        "x": 135.7,
-                        "y": 190.25
-                    },
-                    "uuid": "ace4713a-86e4-5899-9a7f-fca862d4187b"
                 }
             ],
             "severity": "error",
@@ -1103,20 +1103,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pad 1 [4V_PRE] of C1401 on F.Cu",
-                    "pos": {
-                        "x": 150.2,
-                        "y": 179.775
-                    },
-                    "uuid": "c3029184-b195-58ab-8c95-5e4f02b32b61"
-                },
-                {
                     "description": "Pad 1 [4V_PRE] of R1301 on F.Cu",
                     "pos": {
                         "x": 150.625,
                         "y": 186.25
                     },
                     "uuid": "ab7e0cbf-2a11-5239-8420-b9ef3189d611"
+                },
+                {
+                    "description": "Pad 1 [4V_PRE] of R1210 on F.Cu",
+                    "pos": {
+                        "x": 153.85,
+                        "y": 187.475
+                    },
+                    "uuid": "b2fa5758-837d-5501-bc20-28fc79f1d7a6"
                 }
             ],
             "severity": "error",
@@ -1126,20 +1126,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pad 1 [4V_PRE] of R1210 on F.Cu",
-                    "pos": {
-                        "x": 153.85,
-                        "y": 187.475
-                    },
-                    "uuid": "b2fa5758-837d-5501-bc20-28fc79f1d7a6"
-                },
-                {
                     "description": "Pad 1 [4V_PRE] of R1301 on F.Cu",
                     "pos": {
                         "x": 150.625,
                         "y": 186.25
                     },
                     "uuid": "ab7e0cbf-2a11-5239-8420-b9ef3189d611"
+                },
+                {
+                    "description": "Pad 1 [4V_PRE] of C1401 on F.Cu",
+                    "pos": {
+                        "x": 150.2,
+                        "y": 179.775
+                    },
+                    "uuid": "c3029184-b195-58ab-8c95-5e4f02b32b61"
                 }
             ],
             "severity": "error",
@@ -1151,7 +1151,7 @@
                 {
                     "description": "PTH pad 1 [4V_PRE] of TP39",
                     "pos": {
-                        "x": 163.25,
+                        "x": 175.5,
                         "y": 191.1
                     },
                     "uuid": "528dd11b-ff4a-5f73-a938-73718724db65"
@@ -11506,7 +11506,7 @@
                         "x": 100.0,
                         "y": 50.0
                     },
-                    "uuid": "073799e3-b551-579a-a941-c6882eff74bc"
+                    "uuid": "adccd7e7-a215-5d58-ba61-2563c1ab2d6c"
                 },
                 {
                     "description": "Segment of J6601 on F.Silkscreen",
@@ -11529,7 +11529,7 @@
                         "x": 100.0,
                         "y": 50.0
                     },
-                    "uuid": "073799e3-b551-579a-a941-c6882eff74bc"
+                    "uuid": "adccd7e7-a215-5d58-ba61-2563c1ab2d6c"
                 },
                 {
                     "description": "Segment of J6601 on F.Silkscreen",

@@ -157,14 +157,35 @@ REF_REGIONS = {
     'TP23': (1, 126, 12, 148),             # left edge by the comms Tag-Connect
     'TP47': (50, 218, 72, 229),            # aft edge, right of J102
 }
+# loops moved out of the back's test point legend after placement (Sean, 22 Nov: "move 4 loops, keep layout").
+# x only (x isn't stretched), so y and the fore-to-aft numbers hold. TP37 and TP39 go to the free edge strip
+# between J501 and J103. TP34 and TP35 stay: only short legend lines (TP12-TP16) run beside them, as the art
+# stage picks the legend's pitch and start to clear them. [J]
+PROBE_MOVES = {'TP37': {'x': 75.5}, 'TP39': {'x': 75.5}}
 BANDS = {'1 RF and fire': B1, '2 Flight': B2, '3 Comms': B3, '4 Power and harness': B4}
 # courtyard area (mm2) per band on the 230 mm board, lean test points and silk labels counted (build of 22 Nov):
 # how build.py's stretch() shares a shorter board's length between the bands
 BAND_AREA = [1880, 2083, 1443, 3846]
 
 # --- silkscreen art and legends (Sean, 22 Nov: name, version, "funny little vector memes ... both sides") [J]
-ART = dict(name='BURRITO', version='R1.0',
-           lines=['OGMA 2 FLIGHT COMPUTER  R1.0  2026-11', 'ULAS HiPR  /  CROI2'])
+ART = dict(
+    name='BURRITO', version='R1.0',
+    lines=['OGMA 2 FLIGHT COMPUTER   R1.0   2026-11', 'ULAS HiPR'],
+    logo='layout/art/ulas-hipr-logo.png',          # the team's logo, from github.com/ULAS-HiPR/ulas-hipr.github.io
+    found='IF FOUND IN A FIELD, IT IS OURS: ULAS HiPR, UNIVERSITY OF LIMERICK',
+    specs=['FLIGHT  STM32H563VIT6', 'COMMS   STM32H563RIT6', 'IMU     LSM6DSV32X, ICM-42688-P',
+           'HIGH G  ADXL375', 'BARO    BMP390, MS5607', 'MAG     MMC5983MA', 'GNSS    u-blox MAX-M10S',
+           'RADIO   Wio-LR2021 LoRa', 'LOG     MX66L2G45G 2 Gbit NOR', 'CAN     2x TCAN3413',
+           'PYRO    3x TPS1H100 + CSD17318', 'MONITOR  INA228', '', 'POWER CHAIN', 'TPS26630 eFuse',
+           '> TPS2121 source mux', '> TPSM63603 buck, 4 V', '> LM73100 hold', '> 3x TPS7A91, 3.3 V',
+           'BOOT    TPS70933', 'WATCH   TPS3430, 2x TPS3808', '', '4 LAYERS, 1.6 mm, 80 x 180 mm'],
+    title_font='layout/art/fonts/texgyreheros-bold.otf',   # TeX Gyre Heros Bold, a free Helvetica clone (GUST licence)
+    # where Sean saw and liked the blocks on 22 Nov (bottom-view mm, v aft): BURRITO's centre and cap height,
+    # the subtitle's first line, IF FOUND, and the logo's centre then (it moves up from there)
+    place=dict(cap=7.0, title=32.1, lines=38.9, found=59.6, logo=95.41),
+    # Claude's addition, 22 Nov, at Sean's invitation: "Burrito son of Ogma" in Ogham, the script the Ogam
+    # Tract credits to Ogma, in the old stones' X MAQI Y form, across the top band. None drops it.
+    ogham_text='BURRITO MAQI OGMA')
 
 # --- rotation limits: MLCCs of 1206 and larger lie across the long axis (B-33) [J]
 BIG_MLCC = ('Capacitor_SMD:C_1206', 'Capacitor_SMD:C_1210', 'Capacitor_SMD:C_1812', 'Capacitor_SMD:C_2220')

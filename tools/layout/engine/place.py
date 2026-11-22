@@ -183,6 +183,16 @@ class Placer:
             raise RuntimeError(f'fixed part {ref} at ({x}, {y}, {a}) collides')
         self.commit(ref, x, y, a)
 
+    def move(self, ref, x, y):
+        """Lift a placed part and set it down at (x, y), same rotation, if it fits there; else leave it."""
+        old = self.placed[ref]
+        for c in self._cells(self.crt[ref]):
+            self.grid[c].remove(ref)
+        del self.placed[ref], self.crt[ref], self.env[ref]
+        fits = self.ok(ref, x, y, old[2], None)
+        self.commit(ref, *((x, y, old[2]) if fits else old))
+        return fits
+
     # --- what a part is pulled toward
     def owner(self, ref):
         """For a two-pin support part: the multi-pin part it serves, and the pin(s), on its non-GND net."""

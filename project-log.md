@@ -4135,3 +4135,45 @@ tour's connector gallery.
   - The Keystone loops have no 3D models.
   - "R1.0" is Claude's pick for the version.
   - The connector latch directions are still to check.
+
+## 22 November 2026: Burrito's back silkscreen and 3D models (D-22Nov.12)
+
+- Seán reviewed the back over three renders and set its content: the name in a
+  Helvetica-style bold, the subtitle "Ogma 2", an original burrito rocket, the
+  IF FOUND and HOUSTON lines, the team's logo, the test point legend in one
+  column, the board's parts, and waves that fade into dots near anything.
+  Sparkles, "PLUS ULTRA" and a moon were drawn and deleted at his word.
+- The first redraw listed only TP1–TP22. Under the logo, the legend's column was
+  blocked by four loop pins (TP34, TP35, TP37, TP39) and J501, and nowhere else in
+  the lower half is long enough. Seán picked "Move 4 loops, keep layout" from
+  three options. Two moves were enough:
+  - TP37 and TP39 go to x = 75.5 mm, the free edge strip between J501 and J103,
+    after everything else is placed (`PROBE_MOVES`). Their y and numbers hold.
+  - TP34 and TP35 stay: the art stage picks the legend's pitch (1.42 mm) and
+    start so that only short lines (TP12–TP16) pass them.
+- The logo moved up 3.4 mm, not his "couple": the column needs 68 mm above J102
+  and he asked for waves between the logo and the column heads.
+- Every wave is cut by distance from ink and copper, not by a box: solid beyond
+  2.1 mm, dashes that shorten, then dots down to 0.2 mm, nothing inside 0.45 mm.
+  Copper is taken at its real shape (rings, slots, holes), grown 0.55 mm.
+- The name is drawn as polygons from TeX Gyre Heros Bold (a free Helvetica
+  clone, vendored with its licence), so the board file holds no font name.
+- Claude's addition, at Seán's invitation and waiting for his yes: an Ogham line
+  across the top band, "BURRITO MAQI OGMA" (Burrito son of Ogma), since the Ogam
+  Tract credits the script to Ogma. `ogham_text=None` in the spec drops it.
+- 3D models: 17 part types had none. Seven now use KiCad 9.0.7's own files
+  (two as stand-ins: BMP390 and the SMA jacks); ten are drawn from the footprint
+  outlines by `tools/layout/models3d.py`. Checked heights: NANO2 2.69 mm
+  (Littelfuse), MAX-M10S 2.5 mm typical (u-blox), TPSM63603 1.9 mm maximum
+  (TI's drawing; the features list says 1.8). Unverified: the VH, Mini-Fit and
+  Gecko headers, the buzzer, the big loop and J102's ears. The basis of each
+  is in `hardware/croi2/libraries/3d/GENERATED.md`.
+- Checks: DRC 0 errors beside the 499 unrouted connections, the same two J6601
+  edge warnings and J101's missing footprint; three builds byte-identical;
+  every spec-column part number matched against the board's MPN fields.
+- Corrections to earlier text: current-system's Croí CAD row still said the PCB
+  was the 8 September draft with isolated holes; it now states the S3 build.
+  The library manifest's revision note had repeated itself on each run.
+- Still open: J101's footprint (Molex drawing SD-105311-100 unread); J103 is
+  still a JST GH in the schematic against D-19Nov.5; Samtec lists the MPT's -SD
+  option for existing business only.

@@ -439,6 +439,7 @@ Each gate is checked by a script or tool, and its output kept.
 - [x] Burrito D4501 swap: Nexperia PESD5V0F1BL, SOD882 (D-22Nov.8, capture step 10)
 - [x] Test points in three sizes, lean set of 47, TP1–TP47 fore to aft (D-22Nov.9; capture steps 12, 13)
 - [x] S3 Burrito placement at 80 × 180 (D-22Nov.10): every part placed, DRC 0 errors besides the 499 unrouted, deterministic; GND-ring holes (D-22Nov.11); silk refs only where used; bottom art and TP legend. Waits for Seán's review
+- [x] Back silkscreen (D-22Nov.12): legend in one column (TP37, TP39 moved in x), logo, waves; a 3D model for every part (libraries/3d/GENERATED.md), 22 Nov
 - [ ] S4 Burrito critical nets
 - [ ] S5 Burrito full route, outputs
 - [ ] Churro capture

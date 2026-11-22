@@ -246,6 +246,15 @@ def build(board, upto, length=None, out_dir=None):
             return (round(tg[0][1][1], 3), round(tg[0][1][0], 3), net) if tg else (1e9, 1e9, net)
         for ref in sorted(probes, key=probe_key):
             put(ref)
+        # loops whose pins would land in the back's test point legend: moved after everything else is placed,
+        # so no other part sees them, and in x only, so their fore-to-aft numbers hold (Sean, 22 Nov)
+        moves = {}
+        for ref, mv in getattr(spec, 'PROBE_MOVES', {}).items():
+            x, y, a = pl.placed[ref]
+            nx = mv['x'] if 'x' in mv else x + mv.get('dx', 0.0)
+            moves[ref] = {'from': [round(x, 3), round(y, 3)], 'to': [round(nx, 3), round(y, 3)],
+                          'done': pl.move(ref, round(nx, 3), y)}
+        report['probe_moves'] = moves
         pl.apply(bd)
         moved, stuck = SK.silk_pass(bd.b, spec.ORIGIN, (spec.W, spec.H))
         report['silk_refs_moved'] = {r: list(d) for r, d in sorted(moved.items())}
@@ -253,7 +262,9 @@ def build(board, upto, length=None, out_dir=None):
         if getattr(spec, 'ART', None):
             legend = sorted(((r, next(iter(nets_of.get(r, {'?'})))) for r in fps if r.startswith('TP')),
                             key=lambda rn: int(rn[0][2:]))
-            report['art'] = A.board_art(bd.b, spec.ORIGIN, (spec.W, spec.H), legend, **spec.ART)
+            art = dict(spec.ART, logo=str(hw / spec.ART['logo']), title_font=str(hw / spec.ART['title_font']))
+            report['art'] = A.board_art(bd.b, spec.ORIGIN, (spec.W, spec.H), legend,
+                                        reserved=list(spec.RESERVED.values()), **art)
         exc, bad = pl.spacing_report()
         per_band = {}
         for name, (y0, y1) in spec.BANDS.items():

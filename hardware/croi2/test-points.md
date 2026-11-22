@@ -54,9 +54,9 @@ the placement changes. The numbers don't change.
 | TP34 | `CAN_3V3` | orange loop (Keystone 5003) | 60.4, 121.3 | 05-can |
 | TP35 | `3V3_OPTIONAL` | orange loop (Keystone 5003) | 54.9, 124.8 | 01optional-ldo |
 | TP36 | `BUCK_PG` | 1.0 mm pad | 57.6, 130.0 | 01c-preregulator |
-| TP37 | `LOGIC_SELECTED` | orange loop (Keystone 5003) | 59.7, 135.8 | 01c-preregulator |
+| TP37 | `LOGIC_SELECTED` | orange loop (Keystone 5003) | 75.5, 135.8 | 01c-preregulator |
 | TP38 | `FLIGHT_LDO_PG` | 1.0 mm pad | 14.6, 141.7 | 10-test-points |
-| TP39 | `4V_PRE` | orange loop (Keystone 5003) | 63.2, 141.1 | 01c-preregulator |
+| TP39 | `4V_PRE` | orange loop (Keystone 5003) | 75.5, 141.1 | 01c-preregulator |
 | TP40 | `FOINSE_AUX_3V3` | orange loop (Keystone 5003) | 26.3, 150.8 | 10-test-points |
 | TP41 | `BAT_SOURCE_PG` | 1.0 mm pad | 30.4, 151.6 | 01-power |
 | TP42 | `VBAT_CROI_INPUT` | orange loop (Keystone 5003) | 22.2, 152.6 | 01-power |
