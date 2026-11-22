@@ -123,10 +123,11 @@ part, its job and its test.
 6. After his pick: set `LENGTH`, build twice (same bytes), run DRC, and update `test-points.md`,
    `decisions.md` (the length) and `current-system.md`. Test point numbers don't change.
 
-## Layer test: before stage C, on Seán's go
+## Layer test: before stage C
 
 Seán, 22 Nov: “Do we need to add more layers?” It's an open row in `decisions.md`. Stage C's first step writes the
 layer plan, so this comes first. It is compute, not design: no decision changes until Seán has read the table.
+He approved the test the same evening (“Second yes”), and called it: six layers, 4/5.
 
 What Stop 1b's number does and doesn't say. The quick meter left 108 of 328 signal nets open, 84 of them Default.
 It routed on L1 and L4 only, one pass with no rescue laps, the widest classes first as plain tracks standing in
@@ -138,9 +139,14 @@ on bbab4a1a, before D-22Nov.28 moved the pyro capacitors.
 3. Four layers, full effort: run 1 with the rescue laps on (`--quick 0`), stopped at two hours.
 4. Six layers: a copy of the board on JLC's six-layer 1.6 mm impedance stackup. Read its name and dielectric
    heights from JLC's page and cite them. L1 signal, L2 GND, L3 signal, L4 power, L5 GND, L6 signal; the router
-   gets L1, L3 and L6. Runs 1 and 2 again.
+   gets L1, L3 and L6. Runs 1 and 2 again. That plan is for counting only. Before proposing a real one, read which
+   layers the stackup couples closely: a signal layer 0.1 mm from a split power layer has D-22Nov.15's problem
+   again. Say which plan keeps every signal layer over unbroken ground, and how many signal layers it leaves.
 5. Read from JLC's calculator, with nothing ordered: four and six layers at 80 × 160 mm, 5 and 10 boards, the named
-   stackups, with assembly; whether via-in-pad comes with six layers; lead times.
+   stackups, with assembly; lead times. JLC's notice of 2 November 2022 makes via-in-pad (plated over filled via)
+   the free default on 6 to 20 layers and an extra on 4
+   (https://jlcpcb.com/news/free-via-in-pad-6-20-layer-pcbs-pofv): confirm it still holds, with its hole and pad
+   sizes. If it does, count the plane pads without a via spot again with a via allowed in the pad (59 today).
 6. Check that the 50 Ω and 90 Ω widths hold on the six-layer stackup. They depend on the prepreg under L1.
 7. One table: run, nets open by class and by band, vias, track length. Then the quotes, and what six layers would
    amend (D-21Nov.26, D-22Nov.2, D-22Nov.15). Stop for Seán.

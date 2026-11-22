@@ -4729,3 +4729,19 @@ What the sheets show, read from the step-16 netlist:
   before stage C on his go. No model verdict is recorded; his call comes first.
 - Read from `tools/layout/meter.py` for that brief section: Stop 1b's meter
   routed on L1 and L4 only, one pass with no rescue laps, widest classes first.
+
+## 22 November 2026: Seán's call on layers
+
+- Seán: “We need 6 layers. Intuition. 4/5. Second yes.” His bet and the
+  model's three (written before his) are in the taste ledger. The open row in
+  `decisions.md` now proposes six; it isn't decided until the layer test's
+  table is read. The test is approved and waits for Opus.
+- Claude Fable's view, asked for: six, at 3/5. There is no copper yet, so the
+  change is cheap now and rework after stage C; L3's island plan is the
+  four-layer board's weakest part; a four-layer route that fails late costs
+  days. Four layers could probably be forced to close, at a bad price.
+- Read on JLC's site, 22 Nov: the notice of 2 November 2022 makes via-in-pad
+  free by default on 6 to 20 layers and an extra on 4. To confirm it holds.
+- Not read: the six-layer stackup's dielectric heights. From memory its
+  layers couple in close pairs (1–2, 3–4, 5–6), so signals on L3 over islands
+  on L4 would repeat D-22Nov.15's problem. The test reads the stackup first.
