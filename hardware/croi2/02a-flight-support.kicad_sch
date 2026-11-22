@@ -1290,7 +1290,7 @@
     (on_board yes)
     (dnp no)
     (uuid "9bba431c-473f-5ae4-af45-ce59f5b65913")
-    (property "Reference" "TP205"
+    (property "Reference" "TP18"
       (at 227.33 179.07 0)
       (effects
         (font
@@ -1336,7 +1336,7 @@
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9036b035-7b90-5f59-9618-fda81bb1858e"
-          (reference "TP205")
+          (reference "TP18")
           (unit 1))))
     (pin "1"
       (uuid "356a90da-a585-508c-b686-e9e3f7547499")))
@@ -1587,7 +1587,7 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Implementation_Note" "Strobe series resistor: a probe or short at TP201 cannot load PB0 (D-19Nov.3)"
+    (property "Implementation_Note" "Strobe series resistor: a probe or short at TP19 cannot load PB0 (D-19Nov.3)"
       (at 166.37 240.03 0)
       (effects
         (font
@@ -1675,7 +1675,7 @@
     (on_board yes)
     (dnp no)
     (uuid "c8638f27-194f-579c-a091-488f697f1bf0")
-    (property "Reference" "TP201"
+    (property "Reference" "TP19"
       (at 204.47 236.22 0)
       (effects
         (font
@@ -1739,7 +1739,7 @@
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9036b035-7b90-5f59-9618-fda81bb1858e"
-          (reference "TP201")
+          (reference "TP19")
           (unit 1))))
     (pin "1"
       (uuid "f994093e-7d51-5ea1-bb2c-9d164137b8d2")))
@@ -1847,7 +1847,7 @@
     (on_board yes)
     (dnp no)
     (uuid "165eeabb-d459-5e1e-91a9-f68a7da005ca")
-    (property "Reference" "TP202"
+    (property "Reference" "TP13"
       (at 168.91 266.7 0)
       (effects
         (font
@@ -1893,7 +1893,7 @@
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9036b035-7b90-5f59-9618-fda81bb1858e"
-          (reference "TP202")
+          (reference "TP13")
           (unit 1))))
     (pin "1"
       (uuid "918fa90c-182f-5be7-8ba7-49a323670818")))
@@ -1927,7 +1927,7 @@
     (on_board yes)
     (dnp no)
     (uuid "9bc40af9-f725-5797-84f3-1adb74ade4d2")
-    (property "Reference" "TP203"
+    (property "Reference" "TP12"
       (at 199.39 266.7 0)
       (effects
         (font
@@ -1973,7 +1973,7 @@
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9036b035-7b90-5f59-9618-fda81bb1858e"
-          (reference "TP203")
+          (reference "TP12")
           (unit 1))))
     (pin "1"
       (uuid "491d011e-ae81-5a53-bf6f-7b5967adb1f7")))
@@ -2007,7 +2007,7 @@
     (on_board yes)
     (dnp no)
     (uuid "f08b6741-8602-5ac7-bd5b-dbe9419b5c54")
-    (property "Reference" "TP204"
+    (property "Reference" "TP14"
       (at 229.87 266.7 0)
       (effects
         (font
@@ -2053,7 +2053,7 @@
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9036b035-7b90-5f59-9618-fda81bb1858e"
-          (reference "TP204")
+          (reference "TP14")
           (unit 1))))
     (pin "1"
       (uuid "99840711-3640-5d82-85c6-c06a70d57836")))
@@ -2079,7 +2079,7 @@
       (width 0)
       (type default))
     (uuid "508375e9-9568-5e8b-95f7-0fb277ea2a65"))
-  (text "PB0 strobe to TP201 through R203; R205 holds it low at reset. PC6, PC7 and PD10 are spare pads:\ninputs with pull-downs in firmware. PC7 never drives: it neighbours PC8, channel 2's low side (D-19Nov.3)."
+  (text "PB0 strobe to TP19 through R203; R205 holds it low at reset. PC6, PC7 and PD10 are spare pads:\ninputs with pull-downs in firmware. PC7 never drives: it neighbours PC8, channel 2's low side (D-19Nov.3)."
     (exclude_from_sim no)
     (at 149.86 279.4 0)
     (effects

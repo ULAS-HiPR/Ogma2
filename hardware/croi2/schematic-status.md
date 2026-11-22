@@ -23,6 +23,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | 11b | U101 (TPS26630RGER) thermal vias | Done: nine 0.2 mm vias to 0.3 mm drill, 0.6 mm pads, same positions (JLC charges below 0.3 mm; D-22Nov.2); library only |
 | 11c | J4401 (USB4105-GF-A) NPTH layers | Done: the two locating holes on `*.Cu`, as KiCad 9 writes them, so the board copy matches the library (DRC lib_footprint_mismatch); no copper changes |
 | 12 | Test points in three sizes, the lean set (D-22Nov.9) | Done: new sheet `10-test-points` (P45), TP9501–TP9525 by global label: 7 orange 5003 loops (6 rails, GNSS PPS), 2 black 5011 GND loops, 16 pads; 13 resized (10 rail loops 5000 → 5003, TP2304 / TP4204 5001 → 5011, TP201 pad → 5003 loop); 36 cut with their wiring (sensor rails and buses, LoRa SPI, CAN logic, NRST, duplicate rail loops, TP502); 47 test points; every loop has its LCSC number; 559 parts, 1820 pins, 61 pin changes; ERC unchanged; checker TP1–TP5 new, all pass |
+| 13 | Test points renumbered TP1–TP47 fore to aft (D-22Nov.9) | Done: the order is from the 80 × 180 placement (D-22Nov.10), in 2.5 mm rows of y, then x; refs, instance paths and notes renamed; 94 pin changes (47 out, 47 in, same nets); ERC unchanged; checker passes; the rebuild moved no test point |
 
 ## How each step is checked
 
