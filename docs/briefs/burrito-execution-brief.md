@@ -123,6 +123,28 @@ part, its job and its test.
 6. After his pick: set `LENGTH`, build twice (same bytes), run DRC, and update `test-points.md`,
    `decisions.md` (the length) and `current-system.md`. Test point numbers don't change.
 
+## Layer test: before stage C, on Seán's go
+
+Seán, 22 Nov: “Do we need to add more layers?” It's an open row in `decisions.md`. Stage C's first step writes the
+layer plan, so this comes first. It is compute, not design: no decision changes until Seán has read the table.
+
+What Stop 1b's number does and doesn't say. The quick meter left 108 of 328 signal nets open, 84 of them Default.
+It routed on L1 and L4 only, one pass with no rescue laps, the widest classes first as plain tracks standing in
+for stage C's scripts. L3's power islands, which no L4 track may cross (D-22Nov.15), weren't on the board. It ran
+on bbab4a1a, before D-22Nov.28 moved the pyro capacitors.
+
+1. Today's board (7451d7d4), the Stop 1b run again, twice.
+2. Four layers, best case: the Default class alone, nothing routed before it.
+3. Four layers, full effort: run 1 with the rescue laps on (`--quick 0`), stopped at two hours.
+4. Six layers: a copy of the board on JLC's six-layer 1.6 mm impedance stackup. Read its name and dielectric
+   heights from JLC's page and cite them. L1 signal, L2 GND, L3 signal, L4 power, L5 GND, L6 signal; the router
+   gets L1, L3 and L6. Runs 1 and 2 again.
+5. Read from JLC's calculator, with nothing ordered: four and six layers at 80 × 160 mm, 5 and 10 boards, the named
+   stackups, with assembly; whether via-in-pad comes with six layers; lead times.
+6. Check that the 50 Ω and 90 Ω widths hold on the six-layer stackup. They depend on the prepreg under L1.
+7. One table: run, nets open by class and by band, vias, track length. Then the quotes, and what six layers would
+   amend (D-21Nov.26, D-22Nov.2, D-22Nov.15). Stop for Seán.
+
 ## Stage C: S4, the critical copper
 
 Follow sweep §8 steps 3 to 5, with these fixed:
@@ -135,6 +157,10 @@ Follow sweep §8 steps 3 to 5, with these fixed:
 - `FIRE_LOGIC` keeps 0.5 mm. Draw its escape from U201 by script, with the fire rule waived only inside U201's
   courtyard (D-22Nov.26).
 - Pyro: draw channel 1's parts and copper, then stamp the block for channels 2 and 3 (D-22Nov.27).
+- C6603, channel 2's HIGH capacitor, sits behind J6601's LOW pins. A 1.0 mm fire track can't pass between those
+  pins at 0.5 mm (the gap is 1.5 mm). Join it to pin 2 through the pin's barrel on L4, or give that stub its own
+  narrower rule, and show which at Stop 2 (D-22Nov.28). Seán, 22 Nov: “Make sure to take note of that one thing
+  left for stage c.”
 - **Stop 2.** The usual set, plus each block's copper beside its datasheet's layout figure (the table in
   sweep §5), the L3 map, and the list of nets left for the router.
 

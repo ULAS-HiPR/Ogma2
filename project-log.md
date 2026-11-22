@@ -4718,3 +4718,14 @@ What the sheets show, read from the step-16 netlist:
   warnings; schematic parity clean.
 - Correction to the first point: the name sits 1.6 mm behind J6601's
   courtyard, where it was 0.25 mm, so it moved 1.35 mm aft, not 1.6 mm.
+
+## 22 November 2026: two notes from Seán's evening message
+
+- Seán: “Make sure to take note of that one thing left for stage c.” C6603's
+  join to J6601 pin 2 is now a line in the execution brief's stage C, as well
+  as D-22Nov.28's last column.
+- Seán: “Do we need to add more layers?” Not answered: an open row in
+  `decisions.md`, and a layer test written into the execution brief, to run
+  before stage C on his go. No model verdict is recorded; his call comes first.
+- Read from `tools/layout/meter.py` for that brief section: Stop 1b's meter
+  routed on L1 and L4 only, one pass with no rescue laps, widest classes first.
