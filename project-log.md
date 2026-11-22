@@ -4660,3 +4660,18 @@ What the sheets show, read from the step-16 netlist:
   [2031, 1861, 1356, 3891], densities 0.684 / 0.634 / 0.702 / 0.708.
 - Step 8, the refinement pass (swapping like parts and flipping two-pin parts):
   not written. For Stop 1b.
+
+## 22 November 2026: stage B2 step 10 and Stop 1b
+
+- Final checks on bbab4a1a: two builds the same bytes; DRC 0 errors and the 2
+  accepted warnings; schematic parity, ERC and the checker (369) clean.
+- The meter, twice on the final board: 108 of 328 signal nets open (32.9%),
+  164 connections, 748 vias, 7596 mm, the same both times; 9 DRC errors, all the
+  fire rule at the output stage. Baseline was 111.
+- The length rule fired (over 5% open): 165 mm leaves 105 open, 170 mm 103.
+  Length isn't what holds the router back.
+- Freerouting gave no count in two tries (40 passes, 40 minutes; 10 passes,
+  stopped at 42 minutes inside its first routing pass); its fanout escaped 1518
+  of 1802 SMD pins.
+- Renders: front 3D, front copper and silk, back.
+- Report and calls: [Stop 1b](docs/briefs/burrito-stop1b.md).
