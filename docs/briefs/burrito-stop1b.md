@@ -108,3 +108,15 @@ Test points: TP36 (`BUCK_PG`) at 22.1 mm from its route (limit 20). All seven wi
 4. Pyro stamp and refinement pass: stamp the channels with the pyro copper in stage C, drop the refinement
    pass? Default: yes.
 5. Stage C on this placement? Default: wait for your word.
+
+## Seán's answers (22 November)
+
+“1.yes. 2.yes. 3.yes 4yes. 5.what is stage c?”
+
+1. 160 mm stays (noted on D-22Nov.21).
+2. `FIRE_LOGIC` keeps 0.5 mm; stage C scripts its escape from U201, with the rule waived only inside U201's
+   courtyard (D-22Nov.26).
+3. C6601–C6606 as close as J6601's courtyard allows: the next commit.
+4. The pyro channels are stamped in stage C; the refinement pass is dropped (D-22Nov.27).
+5. Stage C was explained in chat (the execution brief's stage C: the critical copper by script, ending at
+   Stop 2). It waits for his go.

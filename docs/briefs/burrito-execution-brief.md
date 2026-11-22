@@ -132,6 +132,9 @@ Follow sweep §8 steps 3 to 5, with these fixed:
   check before any copper.
 - RF as D-22Nov.16 and sweep §3. No shield cans.
 - Thermal reliefs on every passive pad that meets a pour; solid on regulators, FETs and connectors.
+- `FIRE_LOGIC` keeps 0.5 mm. Draw its escape from U201 by script, with the fire rule waived only inside U201's
+  courtyard (D-22Nov.26).
+- Pyro: draw channel 1's parts and copper, then stamp the block for channels 2 and 3 (D-22Nov.27).
 - **Stop 2.** The usual set, plus each block's copper beside its datasheet's layout figure (the table in
   sweep §5), the L3 map, and the list of nets left for the router.
 

@@ -4675,3 +4675,18 @@ What the sheets show, read from the step-16 netlist:
   of 1802 SMD pins.
 - Renders: front 3D, front copper and silk, back.
 - Report and calls: [Stop 1b](docs/briefs/burrito-stop1b.md).
+
+## 22 November 2026: Seán's answers at Stop 1b
+
+- Seán: “1.yes. 2.yes. 3.yes 4yes. 5.what is stage c?”
+- 160 mm stays (noted on D-22Nov.21). `FIRE_LOGIC` keeps 0.5 mm and stage C
+  scripts its escape from U201; U201's pads are 0.5 mm apart, so the rule is
+  waived only inside its courtyard (D-22Nov.26). The pyro channels are stamped
+  in stage C and the refinement pass is dropped (D-22Nov.27). Both are in the
+  execution brief's stage C.
+- C6601–C6606 to J6601's courtyard: next commit.
+- Stage C was explained in chat; it waits for his go.
+- Before any of this, everything was copied to Seán's Mac: the repo into his
+  clone as `origin/main`, and the session's scratch, the layout lab and the
+  transcript to `Claude outputs/2026-11-22-burrito/stop1b-backup/` beside it,
+  checksums verified there.
