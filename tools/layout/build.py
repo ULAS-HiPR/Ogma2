@@ -265,14 +265,14 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
     t0 = time.time()
 
     # stage 0: setup
-    bd = B.Board(str(pcb), spec.ORIGIN, thickness=spec.THICKNESS)
+    bd = B.Board(str(pcb), spec.ORIGIN, copper=getattr(spec, 'COPPER_LAYERS', 4), thickness=spec.THICKNESS)
     bd.outline(spec.W, spec.H)
     holes = []
     for i, (x, y) in enumerate(spec.HOLES, 1):
         holes.append(bd.board_only(str(lib), spec.HOLE_FP, f'H{i}', x, y, value='M3'))
         # under the washer: no track or via; the GND ring and the planes' pours are allowed (D-22Nov.11)
         bd.rule_area(f'HOLE{i}_WASHER', B.circle(x, y, spec.HOLE_TRACK_KEEPOUT_D),
-                     [B.K.F_Cu, B.K.In1_Cu, B.K.In2_Cu, B.K.B_Cu], tracks=True, vias=True, pads=False, pours=False)
+                     list(bd.b.GetEnabledLayers().CuStack()), tracks=True, vias=True, pads=False, pours=False)
     for i, (x, y) in enumerate(spec.FIDUCIALS, 1):
         bd.board_only(str(lib), spec.FIDUCIAL_FP, f'FID{i}', x, y, value='Fiducial')
     report['stages'].append('setup')

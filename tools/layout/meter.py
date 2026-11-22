@@ -202,7 +202,7 @@ def main():
     ap.add_argument('--skip-krt', action='store_true')
     ap.add_argument('--fire-logic-clearance', type=float,
                     help='route the FIRE_LOGIC class at this clearance instead of the 0.5 mm fire rule (a trial)')
-    ap.add_argument('--layers', nargs='+', default=['F.Cu', 'B.Cu'], help='the router\'s layers (default L1 and L4)')
+    ap.add_argument('--layers', nargs='+', help='the router\'s layers (default the spec\'s ROUTER_LAYERS, else F.Cu and B.Cu)')
     ap.add_argument('--classes', nargs='+', help='route only these net classes, in PASS_ORDER (default all)')
     ap.add_argument('--via-in-pad', action='store_true',
                     help='each plane pad\'s via in the pad itself where it fits (JLC\'s plated-over filled via)')
@@ -214,6 +214,7 @@ def main():
     b = K.LoadBoard(a.pcb)
     length = a.length or float(round(K.ToMM(b.GetBoardEdgesBoundingBox().GetHeight())))
     spec, hw = load_spec(a.board, length)
+    a.layers = a.layers or getattr(spec, 'ROUTER_LAYERS', ['F.Cu', 'B.Cu'])
     bd = M.BoardData(b, spec.ORIGIN, (spec.W, spec.H))
     planes = M.plane_nets(bd, set(spec.RAILS))
     if a.rails_as_tracks:

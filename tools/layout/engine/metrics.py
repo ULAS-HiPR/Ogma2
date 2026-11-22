@@ -155,11 +155,11 @@ def plane_nets(bd, rails):
     for net, ps in bd.by_net.items():
         s = short(net)
         if s == 'GND':
-            out[net] = 'L2'
+            out[net] = 'GND planes'
         elif s in rails:
             loads = {d['ref'] for d in ps if d['ref'].startswith('U')}
             if len(loads) >= ISLAND_MIN_LOADS:
-                out[net] = 'L3'
+                out[net] = 'island'
     return out
 
 

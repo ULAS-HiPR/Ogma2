@@ -4844,3 +4844,15 @@ What the sheets show, read from the step-16 netlist:
   reads it and places nothing itself.
 - The placer's build and the build from the file both give 7451d7d4. A build
   from the file takes 23 s against about 80 s.
+
+## 22 November 2026: stage C step 1, six layers in the spec
+
+- `spec.py`: JLC06161H-3313's stackup as JLC's quote page gives it (3313
+  0.0994, core 0.55, 2116 0.1088, core 0.55, 3313 0.0994 mm);
+  `COPPER_LAYERS = 6`; the router's layers L1, L3, L6; GND on L2 and L4;
+  islands on L5; the no-track rule on L2 and L4.
+- `build.py` makes the board with the spec's layer count, and the hole
+  washers' keep-outs cover every copper layer. The meter takes its default
+  layers from the spec.
+- Two builds give the same bytes (9d89841f). No part moved. DRC: 0 errors,
+  the 2 accepted warnings, schematic parity clean.

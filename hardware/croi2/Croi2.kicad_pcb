@@ -10,6 +10,8 @@
     (0 "F.Cu" signal)
     (4 "In1.Cu" signal)
     (6 "In2.Cu" signal)
+    (8 "In3.Cu" signal)
+    (10 "In4.Cu" signal)
     (2 "B.Cu" signal)
     (9 "F.Adhes" user "F.Adhesive")
     (11 "B.Adhes" user "B.Adhesive")
@@ -56,7 +58,7 @@
         (thickness 0.0152))
       (layer "dielectric 2"
         (type "core")
-        (thickness 1.265)
+        (thickness 0.55)
         (material "FR4")
         (epsilon_r 4.6)
         (loss_tangent 0.02))
@@ -64,6 +66,24 @@
         (type "copper")
         (thickness 0.0152))
       (layer "dielectric 3"
+        (type "prepreg")
+        (thickness 0.1088)
+        (material "2116")
+        (epsilon_r 4.25)
+        (loss_tangent 0.02))
+      (layer "In3.Cu"
+        (type "copper")
+        (thickness 0.0152))
+      (layer "dielectric 4"
+        (type "core")
+        (thickness 0.55)
+        (material "FR4")
+        (epsilon_r 4.6)
+        (loss_tangent 0.02))
+      (layer "In4.Cu"
+        (type "copper")
+        (thickness 0.0152))
+      (layer "dielectric 5"
         (type "prepreg")
         (thickness 0.0994)
         (material "3313")
@@ -170831,7 +170851,7 @@
   (zone
     (net 0)
     (net_name "")
-    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu")
     (uuid "b15f7894-41cc-5725-873f-9c536e3af6db")
     (name "HOLE1_WASHER")
     (hatch edge 0.5)
@@ -170888,7 +170908,7 @@
   (zone
     (net 0)
     (net_name "")
-    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu")
     (uuid "bbc71e56-6d51-524c-8edc-d1d132a84769")
     (name "HOLE2_WASHER")
     (hatch edge 0.5)
@@ -170945,7 +170965,7 @@
   (zone
     (net 0)
     (net_name "")
-    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu")
     (uuid "a1410868-f339-514a-b27c-1c9959a6481a")
     (name "HOLE3_WASHER")
     (hatch edge 0.5)
@@ -171002,7 +171022,7 @@
   (zone
     (net 0)
     (net_name "")
-    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu")
     (uuid "8d9db6ce-f8fc-5418-8a4a-7757767e224d")
     (name "HOLE4_WASHER")
     (hatch edge 0.5)
@@ -171059,7 +171079,7 @@
   (zone
     (net 0)
     (net_name "")
-    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu")
     (uuid "33396ebb-da3e-5da6-825a-21158cffdae4")
     (name "HOLE5_WASHER")
     (hatch edge 0.5)
@@ -171116,7 +171136,7 @@
   (zone
     (net 0)
     (net_name "")
-    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu")
     (uuid "aaebe1d1-f5b9-5646-8eff-0c892290b94f")
     (name "HOLE6_WASHER")
     (hatch edge 0.5)
@@ -171173,7 +171193,7 @@
   (zone
     (net 0)
     (net_name "")
-    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu")
     (uuid "144a18eb-637b-5445-a946-3f7fb8ee82c7")
     (name "HOLE7_WASHER")
     (hatch edge 0.5)
@@ -171230,7 +171250,7 @@
   (zone
     (net 0)
     (net_name "")
-    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+    (layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu")
     (uuid "39a23463-cac3-52ba-afde-fda01acbaae0")
     (name "HOLE8_WASHER")
     (hatch edge 0.5)
