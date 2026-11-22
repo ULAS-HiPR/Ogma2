@@ -49,8 +49,47 @@ def clearances(spec):
     return pair
 
 
-def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False):
+def existing(board, origin):
+    """The copper on the board before the fanout (stage C's scripted copper, D-22Nov.17): its vias [(x, y, net)], its
+    L1 tracks [(LineString, width, net)], and the (ref, num) of each pad one of them already joins (a track end in the
+    pad, or a via touching it): those pads need no fanout via of their own."""
+    import pcbnew as K
+    ox, oy = origin
+    mm = lambda v: K.ToMM(v)
+    vias, tracks = [], []
+    for t in board.GetTracks():
+        n = t.GetNetname()
+        if t.Type() == K.PCB_VIA_T:
+            c = t.GetPosition()
+            vias.append((mm(c.x) - ox, mm(c.y) - oy, n))
+        elif t.GetLayer() == K.F_Cu:
+            a, e = t.GetStart(), t.GetEnd()
+            tracks.append((LineString([(mm(a.x) - ox, mm(a.y) - oy), (mm(e.x) - ox, mm(e.y) - oy)]), mm(t.GetWidth()), n))
+    joined = set()
+    if vias or tracks:
+        for f in board.GetFootprints():
+            for p in f.Pads():
+                n = p.GetNetname()
+                if not n or not p.IsOnLayer(K.F_Cu):
+                    continue
+                c = p.GetPosition()
+                ps = K.SHAPE_POLY_SET()
+                p.TransformShapeToPolygon(ps, K.F_Cu, 0, K.FromMM(0.01), K.ERROR_INSIDE)
+                if not ps.OutlineCount():
+                    continue
+                o = ps.Outline(0)
+                from shapely.geometry import Polygon
+                g = Polygon([(mm(o.CPoint(i).x) - ox, mm(o.CPoint(i).y) - oy) for i in range(o.PointCount())]).buffer(0.002)
+                if any(tn == n and g.intersects(t) for t, w, tn in tracks) or \
+                        any(vn == n and g.distance(Point(x, y)) < VIA_D / 2 for x, y, vn in vias):
+                    joined.add((f.GetReference(), p.GetNumber()))
+    return {'vias': vias, 'tracks': tracks, 'joined': joined}
+
+
+def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None):
+    """existing: from existing(); its pads are skipped and its copper is kept clear of."""
     vr = VIA_D / 2
+    ex = existing or {'vias': [], 'tracks': [], 'joined': set()}
     pair = clearances(spec)
     F = [(d['poly']['F'], d['net'], i) for i, d in enumerate(bd.pads) if 'F' in d['poly']]
     Bk = [(d['poly']['B'], d['net'], i) for i, d in enumerate(bd.pads) if 'B' in d['poly']]
@@ -63,6 +102,8 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False):
     washer_r = spec.HOLE_TRACK_KEEPOUT_D / 2
     vias = []            # (x, y, net)
     stubs = []           # (LineString, net)
+    old_vias = ex['vias']
+    old_tracks = [(t.buffer(w / 2 - STUB_W / 2) if w > STUB_W else t, n) for t, w, n in ex['tracks']]   # as stubs
 
     def copper_ok(pt, net, own):
         """Other-net copper at its pair clearance from the via on F and B; every pad at least vr + MASK_WEB
@@ -85,12 +126,12 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False):
             return False
         if len(holes) and (np.hypot(holes[:, 0] - x, holes[:, 1] - y) < holes[:, 2] + DRILL / 2 + HOLE_GAP).any():
             return False
-        for vx, vy, vn in vias:
+        for vx, vy, vn in vias + old_vias:
             dd = math.hypot(vx - x, vy - y)
             if dd < DRILL + HOLE_GAP or (vn != net and dd < VIA_D + pair(net, vn)):
                 return False
         pt = Point(x, y)
-        for s, sn in stubs:
+        for s, sn in stubs + old_tracks:
             if sn != net and s.distance(pt) < vr + STUB_W / 2 + pair(net, sn):
                 return False
         if in_pad:
@@ -115,17 +156,17 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False):
         for (hx, hy, hr), hn in zip(holes, hole_net):
             if hn != net and s.distance(Point(hx, hy)) < hr + HOLE_CLEAR + STUB_W / 2 + EPS:
                 return False
-        for vx, vy, vn in vias:
+        for vx, vy, vn in vias + old_vias:
             if vn != net and s.distance(Point(vx, vy)) < vr + STUB_W / 2 + pair(net, vn):
                 return False
-        for t, tn in stubs:
+        for t, tn in stubs + old_tracks:
             if tn != net and s.distance(t) < STUB_W + pair(net, tn):
                 return False
         return True
 
     done, failed = [], []
     order = sorted((i for i, d in enumerate(bd.pads)
-                    if d['net'] in planes and 'F' in d['poly'] and not d['tht']),
+                    if d['net'] in planes and 'F' in d['poly'] and not d['tht'] and (d['ref'], d['num']) not in ex['joined']),
                    key=lambda i: (bd.pads[i]['ref'], bd.pads[i]['num']))
     for i in order:
         d = bd.pads[i]

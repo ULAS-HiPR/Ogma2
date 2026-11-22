@@ -135,6 +135,11 @@ FIXED = {
 # stage C step 0 (D-22Nov.30): the placement is data, written by build.py --replace and read by every other build
 PLACEMENT = 'placement.json'
 ESCAPE_AREAS = ['U201']       # named rule areas on U201's courtyard, for the fire-logic waiver (D-22Nov.26)
+# stage C step 3 stopped at kill line 1 (docs/briefs/burrito-stage-c-step3.md): fanning the MCUs' pins inward left 34
+# ordinary nets open against 17, and their plane pins alone 19. engine/copper.py's mcu_fanout keeps
+# both, off, for Seán's call. To draw one: {'U201': [the nets its pins leave for their own copper], ...}, with
+# MCU_FANOUT_SIGNALS = False for the plane and fire-logic pins only
+MCU_FANOUT = {}
 RESERVED = {}      # J101's 20 x 22 mm block gave way to its footprint (capture step 15, D-22Nov.13)
 
 ANCHORS = {   # [J] placed before everything else, at these centres

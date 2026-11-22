@@ -209,6 +209,14 @@ def main():
     ap.add_argument('--krt-minutes', type=float, help='stop the router after this long; a pass cut off leaves its nets open')
     ap.add_argument('--rails-as-tracks', action='store_true',
                     help='GND is the only plane: the rails are routed as tracks (a six-layer plan with no power layer)')
+    ap.add_argument('--waive-fire-logic', action='store_true',
+                    help='model the fire-logic waiver (D-22Nov.26): on the scratch copy, each fire-logic pad of a part '
+                         "in the spec's ESCAPE_AREAS joins a net of its own at the class's clearance, so the router "
+                         'keeps 0.2 mm from it and 0.5 mm from all other fire copper (those nets are not routed here)')
+    ap.add_argument('--net-clearance', action='append', default=[], metavar='NET=MM',
+                    help="trial: tell the router this net's clearance instead of its class's (e.g. GND=0.15)")
+    ap.add_argument('--krt-args', default='',
+                    help="extra router flags for every pass, one string (stage D's knobs), e.g. '--layer-costs 1 1 1'")
     ap.add_argument('--plane-rails', nargs='+', default=[],
                     help='with --rails-as-tracks: these rails stay planes (e.g. FLIGHT_3V3 as a whole L5 plane)')
     a = ap.parse_args()
@@ -217,6 +225,22 @@ def main():
     length = a.length or float(round(K.ToMM(b.GetBoardEdgesBoundingBox().GetHeight())))
     spec, hw = load_spec(a.board, length)
     a.layers = a.layers or getattr(spec, 'ROUTER_LAYERS', ['F.Cu', 'B.Cu'])
+    waived = {}
+    if a.waive_fire_logic:
+        fl_cl = next(c['clearance'] for c in spec.NETCLASSES if c['name'] == 'FIRE_LOGIC')
+        for ref in getattr(spec, 'ESCAPE_AREAS', ()):
+            fp = b.FindFootprintByReference(ref)
+            box = fp.GetBoundingBox(False, False)
+            for p in fp.Pads():
+                if M.net_class(p.GetNetname(), spec.PATTERNS) == 'FIRE_LOGIC':
+                    old_code, name = p.GetNetCode(), f'{ref}_{p.GetNumber()}_{M.short(p.GetNetname())}_WAIVED'
+                    ni = K.NETINFO_ITEM(b, name)
+                    b.Add(ni)
+                    p.SetNet(ni)
+                    waived[name] = fl_cl
+                    for t in b.GetTracks():              # its scripted escape under the body goes with it
+                        if t.GetNetCode() == old_code and box.Contains(t.GetStart()) and box.Contains(t.GetEnd()):
+                            t.SetNet(ni)
     bd = M.BoardData(b, spec.ORIGIN, (spec.W, spec.H))
     planes = M.plane_nets(bd, set(spec.RAILS))
     if a.rails_as_tracks:
@@ -229,12 +253,19 @@ def main():
     # router can't read from the custom rule
     pair = FO.clearances(spec)
     net_cl = {n: round(pair(n, '') - FO.EPS, 3) for n in bd.by_net if n}
+    net_cl.update(waived)
+    for kv in a.net_clearance:                 # trial overrides, by short net name
+        k_, v_ = kv.split('=')
+        for n in net_cl:
+            if M.short(n) == k_:
+                net_cl[n] = float(v_)
     if a.fire_logic_clearance is not None:      # trial: the fire rule on the logic class relaxed to this
         for n in net_cl:
             if M.net_class(n, spec.PATTERNS) == 'FIRE_LOGIC':
                 net_cl[n] = a.fire_logic_clearance
     t0 = time.time()
-    fr = FO.plan(bd, planes, spec, in_pad=a.via_in_pad)
+    ex = FO.existing(b, spec.ORIGIN)            # stage C's scripted copper: its pads need no fanout via
+    fr = FO.plan(bd, planes, spec, in_pad=a.via_in_pad, existing=ex)
     FO.apply(b, spec.ORIGIN, fr)
     fan = out / 'fanned.kicad_pcb'
     K.SaveBoard(str(fan), b)
@@ -244,10 +275,12 @@ def main():
             shutil.copy(src, out / f'fanned.{ext}')
     rep = {'board': a.pcb, 'length_mm': length, 'copper_layers': b.GetCopperLayerCount(), 'router_layers': a.layers,
            'classes': a.classes or 'all', 'via_in_pad': a.via_in_pad, 'krt_minutes': a.krt_minutes,
-           'rails_as_tracks': a.rails_as_tracks, 'plane_rails': a.plane_rails,
+           'rails_as_tracks': a.rails_as_tracks, 'plane_rails': a.plane_rails, 'krt_args': a.krt_args,
+           'fire_logic_waived_pads': sorted(waived), 'net_clearance_overrides': a.net_clearance,
            'plane_nets': {M.short(n): l for n, l in sorted(planes.items())},
            'left_out': {'rf_scripted_in_stage_c': [M.short(n) for n in rf]},
            'fire_logic_clearance': a.fire_logic_clearance if a.fire_logic_clearance is not None else 'the 0.5 mm fire rule',
+           'scripted': {'vias': len(ex['vias']), 'tracks': len(ex['tracks']), 'pads_joined': len(ex['joined'])},
            'fanout': {'pads': len(fr['done']) + len(fr['failed']), 'vias': len(fr['done']),
                       'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']], 'in_pad': sum(1 for d in fr['done'] if d['stub'] is None),
                       'seconds': round(time.time() - t0, 1)},
@@ -271,7 +304,8 @@ def main():
                     shutil.copy(out / f'fanned.{ext}', out / f'pass{k}.{ext}')
             flags = ['--layers', *a.layers, '--grid-step', '0.1', '--no-bga-zones', '--escalation', 'off',
                      '--net-clearances', str(out / 'net-clearances.json'),
-                     '--json-out', str(out / f'krt-pass{k}.json')] + (['--quick', a.quick] if a.quick != '0' else [])
+                     '--json-out', str(out / f'krt-pass{k}.json')] + (['--quick', a.quick] if a.quick != '0' else []) \
+                + a.krt_args.split()
             cmd = [KRT_PY, 'py_router/route.py', str(src), str(dst), '--nets'] + [glob_escape(n) for n in nets] + flags
             tp = time.time()
             left = None if a.krt_minutes is None else a.krt_minutes * 60 - (tp - t1)
@@ -297,7 +331,7 @@ def main():
                       'peak_rss_mb': round(resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss / 1024),
                       'passes': runs, 'cmd_flags': flags}
         routed_sig = {n for n in sig if not a.classes or M.net_class(n, spec.PATTERNS) in a.classes}
-        rep['krt'].update(summarise(routed, spec, routed_sig, len(fr['done']), 'krt'))
+        rep['krt'].update(summarise(routed, spec, routed_sig, len(fr['done']) + len(ex['vias']), 'krt'))
         rep['krt']['drc_errors'] = drc(routed, out / 'routed-drc.json')
         by = defaultdict(lambda: [0, 0])
         for n in sig:

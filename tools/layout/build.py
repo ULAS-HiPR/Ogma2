@@ -472,8 +472,13 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
                                        'parts': {r: list(v) for r, v in sorted(pl.placed.items())}}, indent=0) + '\n')
 
     if STAGES.index(upto) >= 3:                       # stage C (S4): the scripted copper, after the placement
-        from engine import copper as CU
+        from engine import copper as CU, metrics as M
         report['copper'] = {'escape_areas': CU.escape_areas(bd, spec, fps)}
+        data = M.BoardData(bd.b, spec.ORIGIN, (spec.W, spec.H))
+        cu = CU.Copper(data)                          # the copper scripted so far, which each step keeps clear of
+        report['copper']['mcu_fanout'] = CU.mcu_fanout(bd, spec, fps, cu, data)
+        if getattr(spec, 'CRYSTAL_NETS', None):
+            report['copper']['crystals'] = CU.crystals(bd, spec, fps, cu, data)
         report['stages'].append('copper')
 
     bd.save(str(pcb))

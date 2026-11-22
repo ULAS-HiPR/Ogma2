@@ -4884,3 +4884,26 @@ What the sheets show, read from the step-16 netlist:
   83; FLIGHT_3V3 the only plane, 90.
 - Two builds give the same bytes (b507a62c). DRC: 0 errors, the 2 accepted
   warnings, schematic parity clean.
+
+## 22 November 2026: stage C step 3, the MCU fanout, stopped at kill line 1
+
+- [Report](docs/briefs/burrito-stage-c-step3.md). Ordinary nets open at full effort, six layers, via in pad,
+  the fire-logic waiver modelled: every MCU pin fanned inward to a via under the body, 34, against 17 for the same
+  board without it. Kill line 1 is 26, so the step stopped. Nothing of it is on the board: two builds still give
+  b507a62c.
+- With the fire-logic waiver modelled exactly, the board as it stands leaves 17; with only the GND, supply and
+  fire-logic pins' vias moved under the bodies, 19. About nine of the layer test's 26 came from the meter telling
+  the router fire logic keeps 0.5 mm at U201's pins.
+- Why the signal fanout lost: the router crosses under U201 a lot, 553 mm of track without the fanout and 204 mm
+  with it, and it took only 35 of the 89 inward vias.
+- `engine/copper.py`: `mcu_fanout` (both versions, off: `MCU_FANOUT = {}`), the clearance model it shares, and a
+  small grid path finder for scripted L1 runs. `engine/fanout.py`: the meter's plane fanout skips pads that
+  scripted copper serves and keeps clear of it. `meter.py`: `--waive-fire-logic`, `--net-clearance`,
+  `--krt-args`.
+- With fire logic at 0.2 mm everywhere instead (too loose outside U201), the same three boards left 19, 34 and
+  15.
+- Two full-effort router runs at once ran out of memory (about 3.5 GB each): one run was killed and is discarded.
+  Runs go one at a time now.
+- Found for stage C's later steps: FLIGHT_HSE_IN can't reach Y201 on L1 while GND keeps 0.2 mm from its pads;
+  the USB and both CAN pairs each have to cross themselves once. A router trial with GND at 0.15 mm left 17 too,
+  so GND's clearance costs the router nothing. Four calls for Seán, in decisions.md's Open table.
