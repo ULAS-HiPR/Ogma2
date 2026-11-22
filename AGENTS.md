@@ -51,9 +51,9 @@ hardware, measurements, and tests outrank prose.
   interface or chapter, and append `project-log.md` in the same commit.
 - Never commit credentials, private correspondence, personal data, raw model
   output, temporary rendering trees, or machine metadata.
-- Reference images with unresolved reuse rights may remain in this private
-  repository for internal design review. Do not publish them without provenance
-  and permission.
+- The repository is public. Nothing goes in without the right to publish it:
+  no third-party photographs or screenshots without permission, no datasheets,
+  no private correspondence.
 
 ## Current architecture rules
 

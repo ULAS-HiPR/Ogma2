@@ -4759,3 +4759,20 @@ What the sheets show, read from the step-16 netlist:
 - `engine/fanout.py`: `plan(..., in_pad=True)`.
 - `tools/layout/six_layer.py`: a six-layer copy of a placed board on JLC's
   six-layer stackup, for trials only.
+
+## 22 November 2026: public, and the third-party images removed
+
+- Seán made the repository public so new members need no access, and asked
+  for what didn't fit a public repository to be fixed: "Fix all of the ogma2
+  weirdness. Delete them."
+- Removed `sources/inspiration/`: four CATS Vega and Fluctus photographs and
+  seven CATS Configurator screens, whose reuse rights were never established
+  (the old `sources/README.md` said so and kept them only because the
+  repository was private). The observations drawn from them stay in the
+  documents that cite them; `docs/archive/` and this log keep their dead links
+  as history.
+- `AGENTS.md`: the private-repository rule for reference images becomes a
+  public-repository rule.
+- The images remain in git history. Removing them from history means
+  rewriting main and force-pushing; not done.
+- Scanned the tree for keys, tokens and email addresses: none found.

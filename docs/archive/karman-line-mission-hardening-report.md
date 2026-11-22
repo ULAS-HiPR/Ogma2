@@ -1779,7 +1779,7 @@ Rejected. It can hide contamination, block sensors and contacts, change thermal 
 - [`ogma-rev1-flight-closure.md`](../../sources/project/ogma-rev1/ogma-rev1-flight-closure.md): Rev 1 flight evidence, including the unexplained T+14.976 s reset.
 - [`rev1-unified-learnings.md`](../../sources/project/ogma-rev1/rev1-unified-learnings.md): consolidated Rev 1 electrical, software, integration, and workflow evidence.
 - [`rev2-requirements.md`](../../sources/project/ogma-rev1/rev2-requirements.md): earlier requirements inherited where still compatible.
-- [Local CATS Vega and Fluctus photographs](../../sources/inspiration/hardware-comparison/README.md): geometry, access, connector, and stack observations only.
+- CATS Vega and Fluctus photographs (removed 22 Nov 2026, reuse rights unresolved): geometry, access, connector, and stack observations only.
 
 ### Recent design framing
 
