@@ -4647,3 +4647,16 @@ What the sheets show, read from the step-16 netlist:
   was); densest band 0.707 → 0.708. Kept.
 - Two builds gave the same bytes (bbab4a1a); DRC 0 errors and the 2 accepted
   warnings; schematic parity clean.
+
+## 22 November 2026: stage B2 steps 8 and 9, not kept
+
+- Step 9, the bands: six rounds of trial builds, each scaling every band's
+  `BAND_AREA` by its density over the mean. The spread between the densest and
+  sparsest band went 0.074 → 0.039 → 0.032 → 0.037 → 0.018 → 0.023, never the
+  brief's 0.01: each re-place moves the densities by about as much as the
+  correction. The round with the narrowest spread cost 3.5% more wire and 6%
+  more crossings; the last cost 2.3% more crossings and a second test point
+  over 20 mm. By the brief's 2% rule, reverted: `BAND_AREA` stays
+  [2031, 1861, 1356, 3891], densities 0.684 / 0.634 / 0.702 / 0.708.
+- Step 8, the refinement pass (swapping like parts and flipping two-pin parts):
+  not written. For Stop 1b.

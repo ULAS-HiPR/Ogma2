@@ -26,7 +26,7 @@ pin sits under the back's fixed blocks, so the legend fits without the hand move
 Stage B2 places each test point beside its net's route, the spanning tree of the net's other pads (step 5);
 the pads on the six pyro ADC nodes and `BAT_BLOCK_GATE` go in with their circuit. Stubs to the route
 (`output/layout/build.json`, `metrics.tp_stubs`): median 4.2 mm, 6 over 10 mm and 1 over 20 mm; misses against the brief's limits
-(10 mm for those with their circuit, 20 mm for the rest): TP36 22.1 mm.5 mm. TP12–TP14, the spare pads,
+(10 mm for those with their circuit, 20 mm for the rest): TP36 22.1 mm. TP12–TP14, the spare pads,
 moved with their pins to PA9, PA11 and PA12 and took their names (D-22Nov.25).
 
 | TP | Net | Size | x, y (mm) | Sheet |
