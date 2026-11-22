@@ -4195,3 +4195,23 @@ tour's connector gallery.
   20 × 22 mm to about 11 × 9 mm.
 - Open for Seán: J102's -SD option (existing business only on Samtec's
   drawing), J103's part, the long-lead buy, the Ogham line.
+
+## 22 November 2026: Seán accepts the sweep; execution brief written (D-22Nov.13 to D-22Nov.19)
+
+- Seán accepted the sweep's calls ("I trust your calls on everything above") and
+  made two of his own:
+  - one side stays, and the board gets shorter through 0402 passives and a
+    smaller J101 block ("Let's do this {...}", read as: do both now);
+  - J102 drops Samtec's screw-down option ("we must be able to get it").
+- Recorded as D-22Nov.13 (one side, 0402s, J101's block, length to re-pick),
+  .14 (J102), .15 (L3 as ground), .16 (RF fences, no cans), .17 (router fenced,
+  routes frozen), .18 (J103 as Micro-Fit, void if a 2-contact Gecko exists) and
+  .19 (function names on the top silk). The Ogham line is accepted.
+- The ordered work is in
+  [burrito-execution-brief.md](docs/briefs/burrito-execution-brief.md): stage A
+  (parts and footprints), B (re-place, stop 1: Seán picks the length), C (S4,
+  stop 2), D (S5, stop 3).
+- He skipped the call on GNSS loss with LoRa keyed. He starts the parts buy on
+  Monday 23 November.
+- Nothing was built in this entry: the board is still the 80 × 180 build of
+  commit e67de42.

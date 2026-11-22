@@ -441,6 +441,7 @@ Each gate is checked by a script or tool, and its output kept.
 - [x] S3 Burrito placement at 80 × 180 (D-22Nov.10): every part placed, DRC 0 errors besides the 499 unrouted, deterministic; GND-ring holes (D-22Nov.11); silk refs only where used; bottom art and TP legend. Waits for Seán's review
 - [x] Back silkscreen (D-22Nov.12): legend in one column (TP37, TP39 moved in x), logo, waves; a 3D model for every part (libraries/3d/GENERATED.md), 22 Nov
 - [x] Sweep before S4: verdicts and work orders in [burrito-sweep.md](burrito-sweep.md), 22 Nov (recommendations; Seán to accept)
+- [ ] Before S4 (D-22Nov.13–19, [execution brief](burrito-execution-brief.md)): J102 without -SD, J101's footprint, J103, the 0402 swap, a new length (stop 1), the back refitted
 - [ ] S4 Burrito critical nets
 - [ ] S5 Burrito full route, outputs
 - [ ] Churro capture

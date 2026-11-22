@@ -4,8 +4,10 @@
 two, RF shielding and stitching, datasheet layouts, the autorouter, and what may have been missed. It ends
 with work orders for the next model.
 
-**Status: recommendations, not decisions.** Nothing here is in `decisions.md`. Each call says how sure it
-is (1–5) and what would settle it.
+**Status:** written as recommendations. Seán accepted them on 22 November (“I trust your calls on
+everything above”) and chose to shorten the board with 0402s and a smaller J101 block: see D-22Nov.13 to
+D-22Nov.19 and the [execution brief](burrito-execution-brief.md). Verdict 2 below (freeze 180) is superseded
+by D-22Nov.13. Each call says how sure it is (1–5) and what would settle it.
 
 **Grounding.** Each claim is marked:
 
