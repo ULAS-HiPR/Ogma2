@@ -206,8 +206,10 @@ def labelled(ref, fp):
     return ref.startswith(('TP', 'J', 'U')) or (ref.startswith('D') and 'LED' in fp.GetFPIDAsString())
 
 
-def build(board, upto, length=None, out_dir=None):
+def build(board, upto, length=None, out_dir=None, sets=()):
     spec = load_spec(board)
+    for s in sets:                                    # trials only (--set): a statement run in the spec's namespace
+        exec(s, vars(spec))
     length = length or getattr(spec, 'LENGTH', None)
     if length:
         stretch(spec, length)
@@ -373,6 +375,15 @@ def build(board, upto, length=None, out_dir=None):
         post.project_rules(hw / f'{spec.NAME}.kicad_pro', spec.NETCLASSES, spec.PATTERNS, spec.RULES)
         post.dru(hw / f'{spec.NAME}.kicad_dru', spec.DRU)
     report['uuids'] = post.finish(pcb, spec.STACKUP, f'{board}')
+    if STAGES.index(upto) >= 2:                       # the stage B2 yardsticks (engine/metrics.py), from the saved board
+        from engine import fanout as FO, metrics as M
+        bdata = M.BoardData(B.K.LoadBoard(str(pcb)), spec.ORIGIN, (spec.W, spec.H))
+        fo = FO.plan(bdata, M.plane_nets(bdata, set(spec.RAILS)), spec)
+        m = M.measure(bdata, spec, fo)
+        m.pop('_grids')
+        report['metrics'] = m
+        (out / 'metrics.md').write_text(f'# {spec.NAME} at {spec.H:g} mm: placement yardsticks\n\n'
+                                        'Written by tools/layout/build.py from engine/metrics.py. Board mm.\n\n' + M.markdown(m))
     report['seconds'] = round(time.time() - t0, 1)
     (out / 'build.json').write_text(json.dumps(report, indent=1) + '\n')
     return report
@@ -384,8 +395,12 @@ if __name__ == '__main__':
     ap.add_argument('--to', choices=STAGES, default='place')
     ap.add_argument('--length', type=float, help='board length in mm (default: the spec\'s); see stretch()')
     ap.add_argument('--out', help='write the board and report here instead of the repository (trials)')
+    ap.add_argument('--set', action='append', default=[],
+                    help="trials: a statement run in the spec's namespace, e.g. \"ANCHORS['U401'] = (40.0, 126.0, 180)\"")
     a = ap.parse_args()
-    r = build(a.board, a.to, a.length, a.out)
+    if a.set and not a.out:
+        ap.error('--set is for trials: give --out too')
+    r = build(a.board, a.to, a.length, a.out, a.set)
     keep = {k: v for k, v in r.items() if k != 'positions'}
     for k in ('jlc_spacing_exceptions',):
         if k in keep:

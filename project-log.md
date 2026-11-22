@@ -4420,3 +4420,37 @@ What the sheets show, read from the step-16 netlist:
   - His bet: 160 mm doesn't route without a re-place, 1/5.
 - `hardware/croi2/AGENTS.md`: J101's line updated; it has had its footprint
   since capture step 15.
+
+## 22 November 2026: stage B2 step 1, yardsticks and a routability meter
+
+- `tools/layout/engine/metrics.py`, in seconds, written into `build.json` and
+  `output/layout/metrics.md` by every build:
+  - signal wire as spanning trees, by net class, and how often they cross;
+  - wrong-side pins on each IC of 16 pins or more;
+  - each test point's stub, to its net's nearest pad and to its route;
+  - plane pads with no legal via spot within 1.5 mm;
+  - a congestion map on a 2 mm grid.
+- `tools/layout/engine/fanout.py` plans a via for each surface-mount pad of a
+  plane net, one each, at each net pair's real clearance (0.5 mm by fire
+  copper). Plane nets: GND to L2, and each rail feeding four ICs or more to an
+  L3 island (D-22Nov.15): BOOT_3V3, CAN_3V3, COMMS_3V3, FLIGHT_3V3, LORA_3V3.
+  "Feeds four loads" is read as four ICs. Its vias pass KiCad DRC with no error.
+- `tools/layout/meter.py`: that fanout, then KiCadRoutingTools (1577fa3) on L1
+  and L4 for every other net, our own connectivity check, DRC by type, vias,
+  length ratios, time and memory. It passes the router each net's clearance,
+  since the router can't read the fire rule from the `.kicad_dru`, and leaves
+  out the two RF lines, which stage C scripts. Nothing it routes is kept.
+- `build.py --set` runs a statement in the spec for trial builds only.
+- Fast yardsticks on today's 160 mm board (f7e9e695):
+  - 330 signal nets;
+  - 8032.5 mm of spanning trees, with 3221 crossings;
+  - 81 wrong-side pins: U201 39 of 77, U401 19 of 28, U1301 10 of 20, U6404
+    5 of 5;
+  - test point stubs: median 12.5 mm to their route, 13.7 mm to the nearest
+    pad; 28 over 10 mm and 8 over 20 mm;
+  - 61 of 596 plane pads without a via spot: 28 in the flight band, ten of
+    them U201's;
+  - 47 congested cells, 15.6 mm of overflow.
+- A first meter run, before the router had the fire clearances, left 119 of
+  330 nets open and broke the 0.5 mm fire rule 463 times. The baseline is
+  being run again with them and is logged when it's done.
