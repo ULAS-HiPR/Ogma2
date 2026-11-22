@@ -4016,3 +4016,17 @@ tour's connector gallery.
 - Proposed for S2, not yet decided: order on 3313 without paid impedance
   control (amends D-21Nov.26), keep Economic, the four-band floorplan with an L4
   pyro corridor, the net classes, 0.3 mm plugged vias, ENIG.
+- Later, 22 Nov: `docs/briefs/churro-power-review.md` drafts Churro's power
+  review for S2, in the design-review format. Proposals:
+  - PROP and ACT: an LM5069-2 with an external 60 V FET and a 2.5 mΩ shunt
+    each (≈ 19 A minimum limit, Seán's call under C-02), and an INA237 per
+    branch at 0x44 / 0x45;
+  - 2S and 6S chargers: a BQ25756 each, autonomous, from a 24 V charge pair,
+    with a comparator gate at 45 / 40 °C;
+  - CATS 1S: a BQ25185 behind a small buck;
+  - per-pair electrolytic damping and a Mini-Fit Jr. 2 × 4 for J801;
+  - the CATS cell lead through a fused inline adapter;
+  - a TCA9535 at 0x20 and a second ADS1115 at 0x49;
+  - 80 × 120 mm held until S6, with 140 mm as the fallback.
+
+  Stock is from the 21 Nov jlcparts scrape (`tools/layout/phase2/jlc_find.py`).

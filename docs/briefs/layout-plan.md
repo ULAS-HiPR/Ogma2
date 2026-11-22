@@ -433,7 +433,8 @@ Each gate is checked by a script or tool, and its output kept.
 - [x] Open points decided (D-21Nov.21–27, 65512f1)
 - [x] S1 phase 1: bench, TB1, T1–T7, TB2, report (docs/briefs/layout-pipeline.md); Seán picked the KiCadRoutingTools hybrid (D-22Nov.1)
 - [x] access-panel brief's J6101 / J6102 line fixed
-- [ ] S2: Burrito's half of the routing brief drafted (docs/briefs/layout-brief.md, 22 Nov); Churro review and footprint audit next
+- [x] S2 drafts: Burrito's routing brief (docs/briefs/layout-brief.md) and Churro's power review (docs/briefs/churro-power-review.md), 22 Nov; waiting for Seán
+- [ ] Footprint audit (J101, USB-C, MMC5983MA, C1403) and the sensor datasheets' layout notes, before S3
 - [ ] Burrito D4501 swap (decision row and capture step), if Economic assembly is kept
 - [ ] S3 Burrito placement
 - [ ] S4 Burrito critical nets

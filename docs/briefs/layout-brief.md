@@ -2,7 +2,7 @@
 
 **22 November 2026, draft for S2.** The layout rules both boards are built to, by
 the KiCadRoutingTools hybrid (D-22Nov.1). Burrito's half is complete. Churro's half
-waits for its [power review](churro-power-review.md) (D-21Nov.22). Seán's nine
+waits for its [power review](churro-power-review.md) (D-21Nov.22), drafted alongside. Seán's nine
 points come in his order.
 
 Every line is tagged:
