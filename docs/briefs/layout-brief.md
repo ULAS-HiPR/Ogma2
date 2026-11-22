@@ -150,7 +150,9 @@ step-9 netlist:
   plugs.
 - **Test points** (D-22Nov.9):
   - The four black GND loops claim edge spots first, spread fore to aft.
-  - The 18 orange loops and 25 pads come last, each beside the circuit it probes, upright.
+  - The 18 yellow loops and 25 pads each aim for their net's route, the spanning tree of its other pads,
+    upright (stage B2 step 5). The pads on the six pyro ADC nodes and `BAT_BLOCK_GATE` go in with their
+    circuit, as soon as its parts are down, stub 10 mm at most; the rest come last, 20 mm at most.
   - They're numbered TP1 to TP47 fore to aft once the length is fixed.
 - **Silkscreen** (D-22Nov.9):
   - Refs go on silk only for test points, connectors, ICs and LEDs.

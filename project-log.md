@@ -4599,3 +4599,24 @@ What the sheets show, read from the step-16 netlist:
 - The library manifest now lists step 18's footprint, missed in that commit.
 - Two builds gave the same bytes (18bdb9f9); DRC 0 errors and the 2 accepted
   warnings; schematic parity clean.
+
+## 22 November 2026: stage B2 step 5, test points by route
+
+- A test point's cost is now its pad's distance to its net's route: the
+  spanning tree over the net's other pads, as the yardstick draws it
+  (`engine/place.py`, `probe_route`). The search starts at the point of the
+  route nearest the circuit and looks 10 mm past its first fitting ring.
+- The pads on the six pyro ADC nodes and `BAT_BLOCK_GATE` (TP5–TP7, TP9–TP11,
+  TP43) go in with their circuit, as soon as its parts are down, and look
+  20 mm past their first fit; the spec lists their nets (`PROBES_WITH_CIRCUIT`)
+  and the limits (`PROBE_STUB_MAX`, 10 and 20 mm). `build.json` reports misses.
+- A first trial with a 10 mm look for all left TP6 at 11.2 mm; a 20 mm look for
+  all sent TP27 to 32.4 mm. The split above gave the result kept.
+- Against step 7's board: stubs median 8.4 → 4.7 mm, over 10 mm 17 → 9, over
+  20 mm 3 → 1; wire 7545.1 → 7432.2 mm; crossings 2633 → 2494; wrong-side pins
+  55 → 54; densest band 0.724 → 0.707; plane pads without a via spot 61 → 62
+  (+1.6%). Kept.
+- All seven with their circuit are within 10 mm. One miss: TP37
+  (`LOGIC_SELECTED`, a yellow loop) at 21.5 mm, in the full power band.
+- Two builds gave the same bytes (f6f630f0); DRC 0 errors and the 2 accepted
+  warnings; schematic parity clean.

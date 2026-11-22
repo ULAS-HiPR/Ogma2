@@ -301,8 +301,21 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
                 unplaced.append(ref)
                 return False
             return True
+        # the test points on sensitive nodes go in with their circuit, as soon as its parts are down, before the
+        # general parts fill the space round it (stage B2 step 5); the rest come last
+        net1 = lambda r: next(iter(nets_of.get(r, {''})))
+        with_circuit = sorted(r for r in probes if net1(r) in getattr(spec, 'PROBES_WITH_CIRCUIT', ()))
+        probes = [r for r in probes if r not in with_circuit]
+        pending = list(with_circuit)
         for ref in first + edge + rest:
             put(ref)
+            for tp in list(pending):
+                if all(r in pl.placed for r, _ in nets[net1(tp)] if not r.startswith('TP')):
+                    pl.probe_look = 20.0               # these search further along their route: 10 mm is their limit
+                    put(tp)
+                    pl.probe_look = 10.0
+                    pending.remove(tp)
+        probes = pending + probes
         n_unplaced = len(unplaced)
         for ref in sorted(marks):                      # the axes and the serial box (D-22Nov.19), before the probes
             put(ref)
@@ -327,6 +340,7 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
                 x, y, _ = pl.placed[ref]
                 far[ref] = round(math.hypot(x - tg[0][1][0], y - tg[0][1][1]), 1) if tg else None
         report['probes_far'] = far
+        report['probes_with_circuit'] = with_circuit
         # loops whose pins would land in the back's test point legend: moved after everything else is placed,
         # so no other part sees them, and in x only, so their fore-to-aft numbers hold (Sean, 22 Nov)
         moves = {}
@@ -381,6 +395,10 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
         fo = FO.plan(bdata, M.plane_nets(bdata, set(spec.RAILS)), spec)
         m = M.measure(bdata, spec, fo)
         report['metrics'] = m
+        lim = getattr(spec, 'PROBE_STUB_MAX', (10.0, 20.0))  # with their circuit / every other (stage B2 step 5)
+        report['probe_stub_misses'] = {
+            r: v['to_route'] for r, v in sorted(m['tp_stubs'].items(), key=lambda kv: int(kv[0][2:]))
+            if v['to_route'] > (lim[0] if v['net'] in getattr(spec, 'PROBES_WITH_CIRCUIT', ()) else lim[1])}
         (out / 'metrics.md').write_text(f'# {spec.NAME} at {spec.H:g} mm: placement yardsticks\n\n'
                                         'Written by tools/layout/build.py from engine/metrics.py. Board mm.\n\n' + M.markdown(m))
     report['seconds'] = round(time.time() - t0, 1)

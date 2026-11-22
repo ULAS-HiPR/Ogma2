@@ -214,6 +214,11 @@ BIG_MLCC = ('Capacitor_SMD:C_1206', 'Capacitor_SMD:C_1210', 'Capacitor_SMD:C_181
 NET_WEIGHTS = [(r'LORA_RF_SUBG|GNSS_RF', 30.0), (r'OUTPUT\d_(HIGH|LOW)', 6.0), (r'PYRO\d_ENERGY', 3.0),
                (r'(RECOVERY|STAGING)_ARMED_VBAT|.*ARM_FEED', 0.1), (r'VBAT_CROI_INPUT|ENERGY_TAP', 4.0),
                (r'USB_D[PM](_CONN)?', 4.0), (r'CAN2?_[HL]', 3.0)]
+# test points (stage B2 step 5): each aims for its net's route. These probe sensitive nodes, so they go in with their
+# circuit, before the general parts, and their stub is 10 mm at most; every other one 20 mm (the brief's limits)
+PROBES_WITH_CIRCUIT = ('BAT_BLOCK_GATE', 'ADC_PYRO1_CURRENT', 'ADC_PYRO2_CURRENT', 'ADC_PYRO3_CURRENT',
+                       'ADC_PYRO1_CONTINUITY', 'ADC_PYRO2_CONTINUITY', 'ADC_PYRO3_CONTINUITY')
+PROBE_STUB_MAX = (10.0, 20.0)
 # placed right after the anchors, in this order [J]: the parts whose position the datasheets fix; and BZ9001, the
 # sounder, which found no room once the pin swaps moved its driver (D-22Nov.25)
 PRIORITY = ['U4606', 'U4504', 'D4501', 'Q6301', 'Q6401', 'Q6501',

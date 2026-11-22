@@ -100,6 +100,31 @@ def box_gap(a, b):
     return math.hypot(dx, dy) if dx and dy else max(dx, dy)
 
 
+def _mst(pts):
+    """Prim's spanning tree over points: [(i, j)]."""
+    n = len(pts)
+    if n < 2:
+        return []
+    inside, best, par, out = {0}, {}, {}, []
+    for j in range(1, n):
+        best[j] = math.hypot(pts[j][0] - pts[0][0], pts[j][1] - pts[0][1]); par[j] = 0
+    while best:
+        j = min(best, key=lambda k: (best[k], k))
+        out.append((par[j], j)); inside.add(j); del best[j]
+        for k in best:
+            d = math.hypot(pts[k][0] - pts[j][0], pts[k][1] - pts[j][1])
+            if d < best[k]:
+                best[k], par[k] = d, j
+    return out
+
+
+def _closest(p, a, b):
+    """The point of segment a-b nearest p."""
+    dx, dy = b[0] - a[0], b[1] - a[1]
+    t = 0.0 if not (dx or dy) else max(0.0, min(1.0, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy)))
+    return (a[0] + t * dx, a[1] + t * dy)
+
+
 class Placer:
     def __init__(self, fps, nets, comps, size, edge_margin=1.0, power_fanout=12):
         self.fps, self.nets, self.comps = fps, nets, comps
@@ -126,6 +151,8 @@ class Placer:
         self.rotset = {}                       # ref -> allowed rotations
         self.spills = []
         self.weights = []                      # (compiled regex, multiplier) on net names
+        self.routes = {}                       # test point -> the segments of its net's route (stage B2 step 5)
+        self.probe_look = 10.0                 # how far past its first fitting ring a test point's search goes
 
     # --- spatial index
     def _cells(self, box):
@@ -220,7 +247,12 @@ class Placer:
 
     def targets(self, ref):
         if ref.startswith('TP'):
-            return self.probe_target(ref)
+            rt = self.probe_route(ref)
+            if rt is None:
+                return self.probe_target(ref)
+            pin, segs, start = rt
+            self.routes[ref] = segs
+            return [(pin, start, 1.0)]
         out = []
         for pin, net in self.pin_nets.get(ref, {}).items():
             if net == 'GND':
@@ -256,7 +288,33 @@ class Placer:
             return []
         return [(pin, (sum(q[0] for q in pts) / len(pts), sum(q[1] for q in pts) / len(pts)), 1.0)]
 
+    def probe_route(self, ref):
+        """A test point sits beside its net's route (stage B2 step 5): the spanning tree over the placed pads of the
+        net's other parts, as the yardstick draws it. Returns its pin, the tree's segments and the point on them
+        nearest the circuit it probes (its sheet's pads, else all), where the search starts."""
+        pin, net = next(iter(self.pin_nets.get(ref, {}).items()), (None, None))
+        if net is None or net == 'GND':
+            return None
+        others = [(r, p) for r, p in self.nets[net] if r != ref and r in self.placed and not r.startswith('TP')]
+        pts = [q for r, p in others for q in self.pad_pos(r, p)]
+        if not pts:
+            return None
+        same = [q for r, p in others if self.comps[r].sheet == self.comps[ref].sheet for q in self.pad_pos(r, p)] or pts
+        c = (sum(q[0] for q in same) / len(same), sum(q[1] for q in same) / len(same))
+        segs = [(pts[i], pts[j]) for i, j in _mst(pts)] or [(pts[0], pts[0])]
+        start = min((_closest(c, a, b) for a, b in segs), key=lambda q: math.hypot(q[0] - c[0], q[1] - c[1]))
+        return pin, segs, start
+
     def cost(self, ref, x, y, a, tg):
+        if ref in self.routes:                 # a test point: its pad's distance to the nearest segment of the route
+            pin = tg[0][0]
+            px, py = self.geo[ref][a][2][pin][0]
+            q = (x + px, y + py)
+            best = math.inf
+            for s0, s1 in self.routes[ref]:
+                cx, cy = _closest(q, s0, s1)
+                best = min(best, math.hypot(cx - q[0], cy - q[1]))
+            return best
         c = 0.0
         pads = self.geo[ref][a][2]
         for pin, (tx, ty), wgt in tg:
@@ -264,8 +322,10 @@ class Placer:
             c += wgt * math.hypot(x + px - tx, y + py - ty)
         return c
 
-    def place(self, ref, region, start=None, step=0.25, rmax=40.0):
+    def place(self, ref, region, start=None, step=0.25, rmax=40.0, look=2.0):
         tg = self.targets(ref)
+        if ref in self.routes:
+            look = self.probe_look                 # the route runs away from the start: look further along it
         if start is None:
             if tg:
                 tw = sum(t[2] for t in tg)
@@ -289,8 +349,8 @@ class Placer:
                             best = (c, x, y, a)
             if best is not None:
                 found = found if found is not None else r
-                if r >= found + 2.0:
-                    break                  # look 2 mm past the first ring that fits, then take the cheapest
+                if r >= found + look:
+                    break                  # look this far past the first ring that fits, then take the cheapest
             r += step
         if best is None:
             return False
