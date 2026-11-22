@@ -112,8 +112,8 @@ class Board:
         """Refs on the silkscreen only where someone uses them on the board (D-22Nov.9): `labelled(ref, fp)`.
         Every other ref goes to the assembly drawing only (F.Fab): hidden if the footprint already prints
         ${REFERENCE} there, else moved there, centred and small. Run before placement (parts at the origin).
-        names: {ref: (text, (dx, dy), angle)}: a function name replaces the ref on the silk (D-22Nov.19), put
-        just outside the courtyard on the footprint's local side (dx, dy) at the local text angle given."""
+        names: {ref: (text, (dx, dy), angle, gap)}: a function name replaces the ref on the silk (D-22Nov.19), put
+        `gap` mm outside the courtyard on the footprint's local side (dx, dy) at the local text angle given."""
         names = names or {}
         for ref, fp in fps.items():
             pads = [p.GetBoundingBox() for p in fp.Pads()]
@@ -133,7 +133,8 @@ class Board:
                         g.SetPosition(K.VECTOR2I(int(q.x + vx / n * MM(0.1)), int(q.y + vy / n * MM(0.1))))
             f = fp.Reference()
             if ref in names:
-                self._name_label(fp, *names[ref])
+                text, side, angle, gap = names[ref]
+                self._name_label(fp, text, side, angle, gap=gap)
             elif labelled(ref, fp):
                 f.SetVisible(True)
                 f.SetLayer(K.F_SilkS)

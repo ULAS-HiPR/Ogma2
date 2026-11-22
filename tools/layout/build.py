@@ -158,14 +158,17 @@ def pack_edges(pl, fixed, spec, gap=1.0):
 
 
 def silk_names(spec):
-    """Function names that replace refs on the silk (D-22Nov.19): {ref: (text, local side, local text angle)}. A fixed
-    part's name goes on its inboard side and reads along its edge (side edges) or across the board (fore and aft
-    edges); any other part's goes above it, as a ref would."""
+    """Function names that replace refs on the silk (D-22Nov.19): {ref: (text, local side, local text angle, gap)}. A
+    fixed part's name goes on its inboard side and reads along its edge (side edges) or across the board (fore and aft
+    edges); any other part's goes above it, as a ref would. The gap from the courtyard is 0.25 mm, or
+    spec.SILK_NAME_GAP's where parts must sit between (D-22Nov.28)."""
     out = {}
+    gaps = getattr(spec, 'SILK_NAME_GAP', {})
     for ref, text in getattr(spec, 'SILK_NAMES', {}).items():
+        gap = gaps.get(ref, 0.25)
         f = spec.FIXED.get(ref)
         if f is None:
-            out[ref] = (text, (0, -1), 0)
+            out[ref] = (text, (0, -1), 0, gap)
             continue
         edge = f.get('edge')
         if edge is None:                                 # xy or datum: the nearest edge
@@ -174,7 +177,7 @@ def silk_names(spec):
         bx, by = {'left': (1, 0), 'right': (-1, 0), 'fwd': (0, 1), 'aft': (0, -1)}[edge]
         r = math.radians(f['rot'])
         side = (round(bx * math.cos(r) - by * math.sin(r)), round(bx * math.sin(r) + by * math.cos(r)))
-        out[ref] = (text, side, ((90 if edge in ('left', 'right') else 0) - f['rot']) % 360)
+        out[ref] = (text, side, ((90 if edge in ('left', 'right') else 0) - f['rot']) % 360, gap)
     return out
 
 
@@ -295,7 +298,8 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
         for n, nodes in nets.items():
             for r, _ in nodes:
                 nets_of.setdefault(r, set()).add(n)
-        pl = P.Placer({**fps, **marks}, nets, comps, (spec.W, spec.H))
+        pl = P.Placer({**fps, **marks}, nets, comps, (spec.W, spec.H),     # a name set off its part: a box of its own
+                      apart={r: spec.SILK_NAMES[r] for r in getattr(spec, 'SILK_NAME_GAP', {})})
         pl.circles = [(x, y, spec.HOLE_PART_KEEPOUT_D / 2) for x, y in spec.HOLES] + [(x, y, FIDUCIAL_R) for x, y in spec.FIDUCIALS]
         fixed = {ref: [*fixed_xy(pl, ref, f, spec), f['rot']] for ref, f in spec.FIXED.items()}
         if length:
@@ -329,6 +333,7 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
         todo = [r for r in fps if r not in pl.placed]
         plan = near_plan(spec, comps, nets)
         pl.near = plan
+        pl.step = {r: row['step'] for row in getattr(spec, 'NEAR', []) if 'step' in row for r in [row.get('part')] if r}
         first = [r for r in spec.PRIORITY if r in todo]
         near_wait = [r for r in plan if r in todo and r not in first]      # in the rules' order
         edge = sorted(r for r in todo if r in getattr(spec, 'REF_REGIONS', {}) and r not in first)  # GND loops claim their edge spots
@@ -424,6 +429,8 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
         for name, (y0, y1) in spec.BANDS.items():
             area = sum((pl.crt[r][2] - pl.crt[r][0]) * (pl.crt[r][3] - pl.crt[r][1]) for r in pl.placed
                        if y0 <= (pl.crt[r][1] + pl.crt[r][3]) / 2 < y1)
+            area += sum((b[2] - b[0]) * (b[3] - b[1]) for b in pl.apart_rect.values()   # names set off their parts
+                        if y0 <= (b[1] + b[3]) / 2 < y1)
             per_band[name] = round(area / (spec.W * (y1 - y0)), 3)
         crit = {k: [n for c, n in spec.PATTERNS if c == k] for k in ('RF50', 'FIRE', 'USB_DIFF', 'SRC_6A', 'PYRO_RAIL')}
         report.update(

@@ -121,9 +121,9 @@ ANCHORS = {   # [J] placed before everything else, at these centres
     'U201': (40.0, 70.0, 0),                 # flight MCU, band 2
     'U401': (33.0, 126.0, 180),              # comms MCU, band 3: turned so USB leaves on the side facing J4401, and
                                              #   7 mm left of centre (stage B2 step 3: its wrong-side pins 19 -> 9)
-    'U6304': (32.5, 24.0, 270),              # channel high sides in a row behind J6601, OUT pins (5-7) forward,
-    'U6404': (41.5, 24.0, 270),              #   VS pins (8-10) aft toward the armed rails
-    'U6504': (50.5, 24.0, 270),
+    'U6304': (32.5, 24.35, 270),             # channel high sides in a row behind J6601, OUT pins (5-7) forward,
+    'U6404': (41.5, 24.35, 270),             #   VS pins (8-10) aft toward the armed rails; at 24.35 (was 24.0) their
+    'U6504': (50.5, 24.35, 270),             #   refs clear J6601's name behind the capacitor row (D-22Nov.28)
     'U3304': (66.0, 72.0, 0),                # ADXL375 ~12 mm from hole (76, 79): near a hard mount (ADI Rev. B p. 26)
 }
 
@@ -170,6 +170,9 @@ SILK_NAMES = {
     'J4401': 'USB', 'J4501': 'GNSS', 'J4601': 'LORA', 'J2301': 'SWD FLIGHT', 'J4201': 'SWD COMMS',
     'D9001': 'CHECKS OK', 'D9101': 'NOT READY', 'D9201': 'COMMS', 'D9301': 'POWER',
 }
+# names set further off than 0.25 mm, so parts that must sit at the pins fit between; the name stays clear as a box of
+# its own (D-22Nov.28): J6601's leaves a strip for C6601-C6606, a row of 0603s on their side
+SILK_NAME_GAP = {'J6601': 1.6}
 # silk marks the placer finds room for, as board-only footprints (tools/layout/marks.py): the board axes with the
 # nose arrow, near the IMUs [J]. The white S/N box is drawn by art.board_art on the top silk after placing, in
 # space that's left (Seán, 22 Nov: "put it in the free space up top"); it never counts as courtyard.
@@ -233,8 +236,13 @@ NEAR = [
          src=f'{_SWEEP}: TPS7A91 input and output capacitors within 2 mm'),
     dict(rule='net_caps', ic='U1102', nets=('LOGIC_SELECTED', 'BOOT_3V3'), mm=2.0,
          src=f'{_SWEEP}: TPS70933 input and output capacitors within 2 mm'),
-    *[dict(rule='part_to_pins', part=f'C660{n}', ic='J6601', mm=3.0, src="D-22Nov.20: each pyro output's 1 nF at J6601, 3 mm")
-      for n in range(1, 7)],
+    # D-22Nov.28: as close as J6601's courtyard allows. The HIGH row (pins 1-3) sits 4.3 mm inside its aft edge, so about
+    # 4-5 mm; the LOW row (pins 4-6) 1.3 mm, so 3 mm holds. HIGH first: they have fewer places that fit. The strip
+    # between J6601 and its name leaves their centres 0.1 mm of play fore and aft, so they're searched at 0.05 mm
+    *[dict(rule='part_to_pins', part=f'C660{n}', ic='J6601', mm=5.0, step=0.05,
+           src="D-22Nov.28: each HIGH output's 1 nF at J6601's courtyard edge, 5 mm") for n in (1, 3, 5)],
+    *[dict(rule='part_to_pins', part=f'C660{n}', ic='J6601', mm=3.0, step=0.05,
+           src="D-22Nov.20, D-22Nov.28: each LOW output's 1 nF at J6601, 3 mm") for n in (2, 4, 6)],
     dict(rule='on_line', part='D4601', net='LORA_RF_SUBG', **{'from': 'J4601', 'to': 'U4606'}, mm=1.0,
          src='D-22Nov.20: the LoRa ESD part on the line between connector and module; 1 mm [J]'),
     dict(rule='on_line', part='D4501', net='GNSS_RF', **{'from': 'J4501', 'to': 'U4504'}, mm=1.0,

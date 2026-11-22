@@ -49,11 +49,13 @@ def jlc_gap(a, b):
     return JLC.get(key, OTHER)
 
 
-def geometry(fp, label=False, label_text=None):
+def geometry(fp, label=False, label_text=None, apart=None):
     """Per rotation: courtyard box, body+pad envelope box (local mm) and pad offsets.
     label: a reference visible on the silkscreen counts as courtyard, so no part covers it (D-22Nov.9).
     label_text: size that box for this text instead of the ref (test points: 'TP00', so renumbering them
-    can't change their boxes, and so can't move them)."""
+    can't change their boxes, and so can't move them).
+    apart: a silk text left out of the box (a name set further off than usual, with room for parts between; the
+    Placer keeps it clear as a box of its own)."""
     g = {}
     ref_text = fp.Reference().GetText()
     if label_text:
@@ -66,7 +68,8 @@ def geometry(fp, label=False, label_text=None):
         bb = cy.BBox() if cy.OutlineCount() else fp.GetBoundingBox(False, False)
         crt = (TOMM(bb.GetX()), TOMM(bb.GetY()), TOMM(bb.GetRight()), TOMM(bb.GetBottom()))
         texts = [f for f in fp.GetFields() if f.IsVisible() and f.GetLayer() == K.F_SilkS]
-        texts += [g for g in fp.GraphicalItems() if g.GetClass() == 'PCB_TEXT' and g.GetLayer() == K.F_SilkS]
+        texts += [g for g in fp.GraphicalItems() if g.GetClass() == 'PCB_TEXT' and g.GetLayer() == K.F_SilkS
+                  and g.GetText() != apart]
         for tx in texts if label else []:              # the ref and any pin-1 mark printed on silk
             tb = tx.GetBoundingBox()
             crt = (min(crt[0], TOMM(tb.GetX())), min(crt[1], TOMM(tb.GetY())),
@@ -87,6 +90,19 @@ def geometry(fp, label=False, label_text=None):
         g[a] = (crt, env, pads)
     fp.SetOrientationDegrees(0)
     fp.Reference().SetText(ref_text)
+    return g
+
+
+def text_boxes(fp, text):
+    """Per rotation: the local box of the footprint's top silk text `text`."""
+    g = {}
+    for a in ROTS:
+        fp.SetOrientationDegrees(a)
+        fp.SetPosition(K.VECTOR2I(0, 0))
+        tb = next(t for t in fp.GraphicalItems() if t.GetClass() == 'PCB_TEXT' and t.GetLayer() == K.F_SilkS
+                  and t.GetText() == text).GetBoundingBox()
+        g[a] = (TOMM(tb.GetX()), TOMM(tb.GetY()), TOMM(tb.GetRight()), TOMM(tb.GetBottom()))
+    fp.SetOrientationDegrees(0)
     return g
 
 
@@ -126,12 +142,15 @@ def _closest(p, a, b):
 
 
 class Placer:
-    def __init__(self, fps, nets, comps, size, edge_margin=1.0, power_fanout=12):
+    def __init__(self, fps, nets, comps, size, edge_margin=1.0, power_fanout=12, apart=None):
         self.fps, self.nets, self.comps = fps, nets, comps
         self.w, self.h = size
         self.edge_margin = edge_margin
-        self.geo = {r: geometry(f, label=True, label_text='TP00' if r.startswith('TP') else None)
+        apart = apart or {}                    # ref -> its silk name, kept clear as a box of its own
+        self.geo = {r: geometry(f, label=True, label_text='TP00' if r.startswith('TP') else None, apart=apart.get(r))
                     for r, f in fps.items()}                      # a visible silk ref counts as courtyard
+        self.apart = {r: text_boxes(fps[r], t) for r, t in apart.items() if r in fps}
+        self.apart_rect = {}                   # ref -> its name's placed box, in self.rects
         self.cls = {r: pkg_class(f.GetFPIDAsString()) for r, f in fps.items()}
         self.placed = {}                       # ref -> (x, y, rot)
         self.crt, self.env = {}, {}            # ref -> placed boxes
@@ -154,6 +173,7 @@ class Placer:
         self.routes = {}                       # test point -> the segments of its net's route (stage B2 step 5)
         self.probe_look = 10.0                 # how far past its first fitting ring a test point's search goes
         self.near = {}                         # part -> its distance rule's pulls (stage B2 step 6)
+        self.step = {}                         # part -> a finer search step than 0.25 mm, where its spot is a thin strip
 
     # --- spatial index
     def _cells(self, box):
@@ -210,6 +230,12 @@ class Placer:
         self.crt[ref], self.env[ref] = self.boxes_at(ref, x, y, a)
         for c in self._cells(self.crt[ref]):
             self.grid.setdefault(c, []).append(ref)
+        if ref in self.apart:                  # its name: no other courtyard on it
+            if ref in self.apart_rect:
+                self.rects.remove(self.apart_rect[ref])
+            t = self.apart[ref][a]
+            self.apart_rect[ref] = (x + t[0], y + t[1], x + t[2], y + t[3], f'{ref} name')
+            self.rects.append(self.apart_rect[ref])
 
     def fix(self, ref, x, y, a=0):
         if not self.ok(ref, x, y, a, None, fixed=True):
@@ -335,6 +361,7 @@ class Placer:
         return c
 
     def place(self, ref, region, start=None, step=0.25, rmax=40.0, look=2.0):
+        step = self.step.get(ref, step)
         tg = self.targets(ref)
         if ref in self.routes:
             look = self.probe_look                 # the route runs away from the start: look further along it

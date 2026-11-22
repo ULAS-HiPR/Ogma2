@@ -4690,3 +4690,29 @@ What the sheets show, read from the step-16 netlist:
   clone as `origin/main`, and the session's scratch, the layout lab and the
   transcript to `Claude outputs/2026-11-22-burrito/stop1b-backup/` beside it,
   checksums verified there.
+
+## 22 November 2026: C6601–C6606 at J6601 (Stop 1b call 3)
+
+- J6601's name filled the strip behind the connector, so the capacitors had
+  gone to its sides, 6.7–9.7 mm from their pins. The name now sits 1.6 mm
+  further aft (`spec.SILK_NAME_GAP`), and the placer keeps it clear as a box
+  of its own instead of folding it into J6601's courtyard. The three high-side
+  switches move 0.32 mm aft (anchor y 24.0 → 24.35 in the 230 mm frame) so
+  their refs clear the name.
+- The capacitors go in HIGH first, searched at 0.05 mm (`step` on their
+  `NEAR` rows): their centres have 0.1 mm of play in the strip, which the
+  usual 0.25 mm search kept missing.
+- Gaps, pad edge to pad edge: HIGH 3.7 / 3.9 / 3.7 mm (C6601 and C6605 beside
+  the connector, C6603 behind it), LOW 0.9 / 2.1 / 2.1 mm. Rules: 5 mm HIGH,
+  3 mm LOW (D-22Nov.28). Distance-rule misses 9 → 3: U1701's output capacitor
+  (6.0 mm), D4601 (2.9 mm off its line), D4501 (1.7 mm, was 2.6).
+- Band density now counts a set-off name's own box. Before, J6601's whole
+  union box was counted; band 1 reads 0.660 against 0.684.
+- Against bbab4a1a: wire 7467.6 → 7478.6 mm (+0.15%); crossings 2437 → 2470
+  (+1.4%); wrong-side pins 52 → 48; plane pads without a via 59 → 59; stubs
+  median 4.2 → 4.2 mm, over 10 mm 6 → 4, over 20 mm 1 → 1 (TP36, 22.1 mm);
+  densest band 0.708 → 0.708.
+- Tried and not kept: anchors at 24.5 (crossings +3.1%, TP19 out to 25.7 mm);
+  a 1.55 mm gap (too thin: four capacitors missed).
+- Three builds gave the same bytes (7451d7d4); DRC 0 errors and the 2 accepted
+  warnings; schematic parity clean.
