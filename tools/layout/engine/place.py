@@ -113,6 +113,7 @@ class Placer:
         self.grid = {}
         self.circles = []                      # (cx, cy, r): no courtyard inside
         self.rects = []                        # (x0, y0, x1, y1, name): no courtyard inside
+        self.pad_keepout = {}                  # ref -> boxes where none of its pad centres may fall
         self.fanout = {n: len(v) for n, v in nets.items()}
         self.power_fanout = power_fanout
         self.pin_nets = {}
@@ -163,6 +164,10 @@ class Placer:
         for k in self.rects:
             if overlap(crt, k):
                 return False
+        for b in self.pad_keepout.get(ref, ()):
+            for pts in self.geo[ref][a][2].values():
+                if any(b[0] < x + px < b[2] and b[1] < y + py < b[3] for px, py in pts):
+                    return False
         for o in self._near(crt):
             if overlap(crt, self.crt[o]):
                 return False

@@ -108,10 +108,13 @@ class Board:
             fps[ref] = fp
         return fps, missing
 
-    def silk_policy(self, fps, labelled):
+    def silk_policy(self, fps, labelled, names=None):
         """Refs on the silkscreen only where someone uses them on the board (D-22Nov.9): `labelled(ref, fp)`.
         Every other ref goes to the assembly drawing only (F.Fab): hidden if the footprint already prints
-        ${REFERENCE} there, else moved there, centred and small. Run before placement (parts at the origin)."""
+        ${REFERENCE} there, else moved there, centred and small. Run before placement (parts at the origin).
+        names: {ref: (text, (dx, dy), angle)}: a function name replaces the ref on the silk (D-22Nov.19), put
+        just outside the courtyard on the footprint's local side (dx, dy) at the local text angle given."""
+        names = names or {}
         for ref, fp in fps.items():
             pads = [p.GetBoundingBox() for p in fp.Pads()]
             for g in fp.GraphicalItems():              # silk text (pin-1 marks) at JLC's 1.0 mm minimum height,
@@ -129,7 +132,9 @@ class Board:
                         n = max(1.0, (vx * vx + vy * vy) ** 0.5)
                         g.SetPosition(K.VECTOR2I(int(q.x + vx / n * MM(0.1)), int(q.y + vy / n * MM(0.1))))
             f = fp.Reference()
-            if labelled(ref, fp):
+            if ref in names:
+                self._name_label(fp, *names[ref])
+            elif labelled(ref, fp):
                 f.SetVisible(True)
                 f.SetLayer(K.F_SilkS)
                 if not ref.startswith('TP'):           # outside its own courtyard and silk, above, centred
@@ -152,6 +157,38 @@ class Board:
                 f.SetPosition(fp.GetPosition())
                 f.SetTextSize(K.VECTOR2I(MM(0.5), MM(0.5)))
                 f.SetTextThickness(MM(0.08))
+
+    def _name_label(self, fp, text, side, angle, size=1.0, gap=0.25):
+        fp.BuildCourtyardCaches()
+        cy = fp.GetCourtyard(K.F_CrtYd)
+        bb = cy.BBox() if cy.OutlineCount() else fp.GetBoundingBox(False, False)
+        for g in fp.GraphicalItems():
+            if g.GetLayer() == K.F_SilkS:
+                bb.Merge(g.GetBoundingBox())
+        t = K.PCB_TEXT(fp)
+        t.SetText(text)
+        t.SetLayer(K.F_SilkS)
+        t.SetTextSize(K.VECTOR2I(MM(size), MM(size)))
+        t.SetTextThickness(MM(0.15))
+        t.SetTextAngleDegrees(angle)
+        t.SetPosition(bb.GetCenter())
+        fp.Add(t)
+        tb = t.GetBoundingBox()
+        hw, hh = tb.GetWidth() // 2, tb.GetHeight() // 2
+        c = bb.GetCenter()
+        dx, dy = side
+        x = c.x if not dx else (bb.GetRight() + MM(gap) + hw if dx > 0 else bb.GetLeft() - MM(gap) - hw)
+        y = c.y if not dy else (bb.GetBottom() + MM(gap) + hh if dy > 0 else bb.GetTop() - MM(gap) - hh)
+        t.SetPosition(K.VECTOR2I(int(x), int(y)))
+        r = fp.Reference()                                 # the ref goes to the assembly drawing
+        fab = [g for g in fp.GraphicalItems() if g.GetClass() == 'PCB_TEXT' and g.GetLayer() == K.F_Fab and '${REFERENCE}' in g.GetText()]
+        if fab:
+            r.SetVisible(False)
+        else:
+            r.SetLayer(K.F_Fab)
+            r.SetPosition(fp.GetPosition())
+            r.SetTextSize(K.VECTOR2I(MM(0.5), MM(0.5)))
+            r.SetTextThickness(MM(0.08))
 
     def save(self, path):
         K.SaveBoard(path, self.b)

@@ -4303,3 +4303,38 @@ What the sheets show, read from the step-16 netlist:
   KiCad 9 marks them exclusive (A17). Stage D writes the two variants.
 - Checked and not a fault: the magnetometer's CAP pin on `MAG_3V3` is MEMSIC's
   internal tie, as the capture spec records.
+
+## 22 November 2026: stage B to stop 1: silk names, band areas, the length sweep, the back refit
+
+- **Top silk (D-22Nov.19).** Function names replace the connector refs, and the
+  LEDs say what they mean. A board-axes mark (X to the nose) and a white S/N box
+  are board-only footprints from `tools/layout/marks.py`. Each counts as
+  courtyard while placing.
+- **Band areas** re-measured on the 230 mm board: 2002, 1847, 1460, 3891 mm². The
+  total barely moved (9200 against 9252): the names, the marks and the real J101
+  and J103 took back the 522 mm² the 0402s freed.
+- **The back follows the length.** The legend's window and IF FOUND move with
+  the aft end. Through-hole loops keep their pins out from under the back's fixed
+  blocks while placing (`art.art_skeleton`), so the spec's PROBE_MOVES is empty;
+  the build still moves any loop that blocks the legend (`clear_legend`). The
+  parts list now starts level with the legend (102.95 mm, was 115 mm).
+- **Placer fixes:** fiducials are keep-outs, which a placed mark and J2301 had
+  overlapped. FID3 moves to x = 12 mm, inboard of the left-edge column. The marks
+  stay upright.
+- **The sweep** (`tools/layout/sweep.py`, table in
+  `hardware/croi2/output/layout/length-sweep.md`) found the following:
+  - every part places at 180–165 mm, with the densest band at 0.648, 0.671,
+    0.691 and 0.718;
+  - at 160 mm the S/N box doesn't place;
+  - at 155 mm TP19 and TP39 don't place either;
+  - at 150 mm and below the left edge is full;
+  - the back fits at every length that builds.
+- **The 180 mm board was rebuilt** into the repository. Checks run:
+  - two builds gave the same bytes;
+  - DRC 0 errors, plus 2 accepted warnings for J6601's silk at the edge;
+  - schematic parity clean; 499 connections unrouted;
+  - test-point positions refreshed: 31 of 47 are now out of fore-to-aft order,
+    and the numbers are kept.
+- **Stop 1** is [burrito-stop1.md](docs/briefs/burrito-stop1.md). By the brief's
+  rule the length stays at 180 mm. Four calls are waiting for Seán: the length,
+  J102's -SD, the two A5 proposals, and test-point numbering.

@@ -1,0 +1,120 @@
+(footprint "MARK_AXES"
+  (version 20241229)
+  (generator "ogma2-marks")
+  (layer "F.Cu")
+  (descr "Board axes: X to the nose, Y left, Z out of the top (D-22Nov.19)")
+  (property "Reference" "MK**"
+    (at 0 0 0)
+    (layer "F.Fab")
+    (hide yes)
+    (effects
+      (font
+        (size 0.5 0.5)
+        (thickness 0.08))))
+  (property "Value" "MARK_AXES"
+    (at 0 0 0)
+    (layer "F.Fab")
+    (hide yes)
+    (effects
+      (font
+        (size 0.5 0.5)
+        (thickness 0.08))))
+  (attr board_only exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+  (fp_line
+    (start 0 -1.1)
+    (end 0 -6)
+    (stroke
+      (width 0.15)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start 0 -6)
+    (end 0.6 -4.8)
+    (stroke
+      (width 0.15)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start 0 -6)
+    (end -0.6 -4.8)
+    (stroke
+      (width 0.15)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start -1.1 0)
+    (end -6 0)
+    (stroke
+      (width 0.15)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start -6 0)
+    (end -4.8 -0.6)
+    (stroke
+      (width 0.15)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start -6 0)
+    (end -4.8 0.6)
+    (stroke
+      (width 0.15)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_circle
+    (center 0 0)
+    (end 0.9 0)
+    (stroke
+      (width 0.15)
+      (type solid))
+    (fill no)
+    (layer "F.SilkS"))
+  (fp_circle
+    (center 0 0)
+    (end 0.25 0)
+    (stroke
+      (width 0.15)
+      (type solid))
+    (fill yes)
+    (layer "F.SilkS"))
+  (fp_text user "X"
+    (at 1.9 -5 0)
+    (layer "F.SilkS")
+    (effects
+      (font
+        (size 1.0 1.0)
+        (thickness 0.15))
+      (justify left)))
+  (fp_text user "NOSE"
+    (at 0 -7.7 0)
+    (layer "F.SilkS")
+    (effects
+      (font
+        (size 1.0 1.0)
+        (thickness 0.15))))
+  (fp_text user "Y"
+    (at -5 1.9 0)
+    (layer "F.SilkS")
+    (effects
+      (font
+        (size 1.0 1.0)
+        (thickness 0.15))))
+  (fp_text user "Z"
+    (at 1.9 1.6 0)
+    (layer "F.SilkS")
+    (effects
+      (font
+        (size 1.0 1.0)
+        (thickness 0.15))
+      (justify left)))
+  (fp_rect
+    (start -6.9 -8.7)
+    (end 3.1 2.8)
+    (stroke
+      (width 0.05)
+      (type solid))
+    (fill no)
+    (layer "F.CrtYd"))
+  (embedded_fonts no)
+)

@@ -21,7 +21,8 @@ HOLE_NET = 'GND'
 HOLE_TRACK_KEEPOUT_D = 8.0             # no track or via under the washer; pours and the ring allowed
 HOLE_PART_KEEPOUT_D = 8.0
 FIDUCIAL_FP = 'Fiducial:Fiducial_1mm_Mask2mm'
-FIDUCIALS = [(6.0, 44.0), (74.0, 44.0), (6.0, 104.0)]     # [J] three, asymmetric, >= 3.35 mm from the edges
+FIDUCIALS = [(6.0, 44.0), (74.0, 44.0), (12.0, 104.0)]    # [J] three, asymmetric, >= 3.35 mm from the edges; the third
+                                                         # inboard of the left-edge connectors' column (stage B)
 
 # --- stackup: JLC04161H-3313 (JLC impedance calculator and order form, 22 Nov 2026; D-22Nov.2)
 STACKUP = [
@@ -158,15 +159,28 @@ REF_REGIONS = {
     'TP23': (1, 126, 12, 148),             # left edge by the comms Tag-Connect
     'TP47': (50, 218, 72, 229),            # aft edge, right of J102
 }
-# loops moved out of the back's test point legend after placement (Sean, 22 Nov: "move 4 loops, keep layout").
-# x only (x isn't stretched), so y and the fore-to-aft numbers hold. TP37 and TP39 go to the free edge strip
-# between J501 and J103. TP34 and TP35 stay: only short legend lines (TP12-TP16) run beside them, as the art
-# stage picks the legend's pitch and start to clear them. [J]
-PROBE_MOVES = {'TP37': {'x': 75.5}, 'TP39': {'x': 75.5}}
+# --- top silk (D-22Nov.19): function names replace refs at connectors and say what each LED means; checked
+# against current-system's interface table and the 09-indicators sheet ("Green means checks passed, not armed")
+SILK_NAMES = {
+    'J6601': 'PYRO 1 2 3\n+ PINS 1-3, - PINS 4-6',     # 1/2/3 high sides, 4/5/6 returns
+    'J501': 'CAN 1', 'J502': 'CAN 2',                   # bus 1 Fajita, bus 2 the active board
+    'J6101': 'RECOVERY ARM', 'J6102': 'STAGING ARM', 'J103': 'ENABLE', 'J101': '2S PACK',
+    'J4401': 'USB', 'J4501': 'GNSS', 'J4601': 'LORA', 'J2301': 'SWD FLIGHT', 'J4201': 'SWD COMMS',
+    'D9001': 'CHECKS OK', 'D9101': 'NOT READY', 'D9201': 'COMMS', 'D9301': 'POWER',
+}
+# silk marks the placer finds room for, as board-only footprints (tools/layout/marks.py): the board axes with the
+# nose arrow, near the IMUs, and a white box for a serial number [J]
+MARKS = {'MK1': 'Ogma2:MARK_AXES', 'MK2': 'Ogma2:MARK_SERIAL'}
+REF_REGIONS.update({'MK1': (40, 44, 79, 104), 'MK2': (10, 98, 70, 152)})
+# loops moved after placement (Sean, 22 Nov: "move 4 loops, keep layout"): x only, so y and the fore-to-aft numbers
+# hold. Since stage B (brief B4) no loop pin is placed under the back's fixed blocks in the first place
+# (art.art_skeleton), and build.py's clear_legend moves any that still block the legend, so this stays empty. [J]
+PROBE_MOVES = {}
 BANDS = {'1 RF and fire': B1, '2 Flight': B2, '3 Comms': B3, '4 Power and harness': B4}
-# courtyard area (mm2) per band on the 230 mm board, lean test points and silk labels counted (build of 22 Nov):
-# how build.py's stretch() shares a shorter board's length between the bands
-BAND_AREA = [1880, 2083, 1443, 3846]
+# courtyard area (mm2) per band on the 230 mm board, lean test points, silk labels, function names and marks counted
+# (re-measured after capture steps 14-16, 22 Nov; was [1880, 2083, 1443, 3846]): how build.py's stretch() shares a
+# shorter board's length between the bands
+BAND_AREA = [2002, 1847, 1460, 3891]
 
 # --- silkscreen art and legends (Sean, 22 Nov: name, version, "funny little vector memes ... both sides") [J]
 ART = dict(
@@ -179,11 +193,11 @@ ART = dict(
            'RADIO   Wio-LR2021 LoRa', 'LOG     MX66L2G45G 2 Gbit NOR', 'CAN     2x TCAN3413',
            'PYRO    3x TPS1H100 + CSD17318', 'MONITOR  INA228', '', 'POWER CHAIN', 'TPS26630 eFuse',
            '> TPS2121 source mux', '> TPSM63603 buck, 4 V', '> LM73100 hold', '> 3x TPS7A91, 3.3 V',
-           'BOOT    TPS70933', 'WATCH   TPS3430, 2x TPS3808', '', '4 LAYERS, 1.6 mm, 80 x 180 mm'],
+           'BOOT    TPS70933', 'WATCH   TPS3430, 2x TPS3808', '', '4 LAYERS, 1.6 mm, {W:g} x {H:g} mm'],
     title_font='layout/art/fonts/texgyreheros-bold.otf',   # TeX Gyre Heros Bold, a free Helvetica clone (GUST licence)
     # where Sean saw and liked the blocks on 22 Nov (bottom-view mm, v aft): BURRITO's centre and cap height,
     # the subtitle's first line, IF FOUND, and the logo's centre then (it moves up from there)
-    place=dict(cap=7.0, title=32.1, lines=38.9, found=59.6, logo=95.41),
+    place=dict(cap=7.0, title=32.1, lines=38.9, found=59.6, logo=95.41, logo_seen=92.04, at=180.0),
     # Claude's addition, 22 Nov, at Sean's invitation: "Burrito son of Ogma" in Ogham, the script the Ogam
     # Tract credits to Ogma, in the old stones' X MAQI Y form, across the top band. None drops it.
     ogham_text='BURRITO MAQI OGMA')

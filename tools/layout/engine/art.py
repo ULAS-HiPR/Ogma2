@@ -474,6 +474,128 @@ def waves(pen, hard, size, d0=0.45, d1=2.1, period=0.62, pitch=1.7, edge=1.0, cl
     return pen.n - n0
 
 
+LEGEND_U0, LEGEND_HEAD, LEGEND_LOGO, LEGEND_W = 7.8, 2.2, 4.0, 0.95   # u0, gap to the head, gap to the logo, letter width
+
+
+def back_copper(board, B):
+    """Exposed copper on the back at its real shape (pads, rings, holes), each with its part's ref."""
+    out = []
+    for fp in board.GetFootprints():
+        for p in fp.Pads():
+            if p.IsOnLayer(K.B_Cu) or p.GetAttribute() == K.PAD_ATTRIB_NPTH:
+                g = [uv_geom(p.GetEffectivePolygon(K.B_Cu, K.ERROR_INSIDE), B.UV)]
+                dr = p.GetDrillSize()
+                if max(dr.x, dr.y) > 0:
+                    g.append(Point(B.UV(p.GetPosition())).buffer(K.ToMM(max(dr.x, dr.y)) / 2))
+                out.append((fp.GetReference(), unary_union(g)))
+    return out
+
+
+def legend_shapes(B, legend):
+    labels = [B.text_shape(LEGEND_U0, 0.0, t, 1.0, wfac=LEGEND_W) for t, _ in legend]
+    tab = max(g.bounds[2] for _, g in labels) - LEGEND_U0 + 0.85     # every net starts in one column
+    names = [B.text_shape(LEGEND_U0 + tab, 0.0, n.rsplit('/', 1)[-1], 1.0, wfac=LEGEND_W) for _, n in legend]
+    head = B.text_shape(LEGEND_U0, 0.0, 'TEST POINTS', 1.3, bold=True)
+    boxes = [(a[1].bounds[0], min(a[1].bounds[1], b[1].bounds[1]), b[1].bounds[2], max(a[1].bounds[3], b[1].bounds[3]))
+             for a, b in zip(labels, names)]               # a row's box runs from its label to its net's end
+    return labels, names, head, boxes, tab
+
+
+def legend_fits(clear, boxes, hb, H, logo_was, lb):
+    """Every (pitch, first row, logo centre) where the whole column clears the pins: the pitch from 1.50 mm down,
+    and for each the lowest start, in a window that follows the aft end (100-115 mm on the 180 mm board)."""
+    cands = []
+    for p in np.arange(1.50, 1.355, -0.01):
+        p = round(float(p), 2)
+        for v1 in np.arange(H - 65.0, H - 80.0, -0.05):
+            v1 = round(float(v1), 2)
+            if v1 + (len(boxes) - 1) * p + boxes[-1][3] > H - 9.0:        # stays above J102's row
+                continue
+            if not clear(sbox(hb[0], hb[1] + v1 - LEGEND_HEAD, hb[2], hb[3] + v1 - LEGEND_HEAD)):
+                continue
+            if all(clear(sbox(b[0], b[1] + v1 + k * p, b[2], b[3] + v1 + k * p)) for k, b in enumerate(boxes)):
+                cands.append((p, v1, min(logo_was - 2.0, v1 - LEGEND_HEAD + hb[1] - LEGEND_LOGO - lb)))
+                break
+    return cands
+
+
+def legend_rows(board, origin, size, legend, pitch=1.42, back=75.05, grow=1.8):
+    """The legend's rows and head where they sat on the 180 mm board (pitch 1.42 mm, first row 75.05 mm from the aft
+    end), as boxes in board x, y grown by `grow` (a loop's pad radius plus GROW): no through-hole test point's pad
+    centre may fall in one, so the column always finds its strip."""
+    W, H = size
+    B = Pen(board, origin, size, K.B_SilkS)
+    labels, names, head, boxes, tab = legend_shapes(B, legend)
+    v1 = H - back
+    hb = head[1].bounds
+    rows = [(b[0], b[1] + v1 + k * pitch, b[2], b[3] + v1 + k * pitch) for k, b in enumerate(boxes)]
+    rows.append((hb[0], hb[1] + v1 - LEGEND_HEAD, hb[2], hb[3] + v1 - LEGEND_HEAD))
+    return [(W - u1 - grow, a - grow, W - u0 + grow, c + grow) for u0, a, u1, c in rows]
+
+
+def art_skeleton(board, origin, size, legend, name, lines, specs, logo, found, title_font, place, grow=1.8,
+                 pitch=1.42, back=75.05, **_):
+    """Where the back's fixed blocks sit before any pin is known, as boxes in board x, y grown by `grow` (a loop's
+    pad radius plus GROW): the legend at its usual place (pitch 1.42 mm, first row 75.05 mm from the aft end), its
+    head, the parts list beside it, BURRITO and its subtitle, the logo, IF FOUND and HOUSTON. No through-hole test
+    point's pad centre goes in one, so the back keeps them at any length (re-derives D-22Nov.12's PROBE_MOVES)."""
+    W, H = size
+    B = Pen(board, origin, size, K.B_SilkS)
+    out = []
+    labels, names, head, boxes, tab = legend_shapes(B, legend)
+    v1 = H - back
+    hb = head[1].bounds
+    out += [(b[0], b[1] + v1 + k * pitch, b[2], b[3] + v1 + k * pitch) for k, b in enumerate(boxes)]
+    out.append((hb[0], hb[1] + v1 - LEGEND_HEAD, hb[2], hb[3] + v1 - LEGEND_HEAD))
+    word = affinity.translate(word_polys(title_font, name, place['cap']), W / 2, place['title'])
+    out.append(word.bounds)
+    sub = [B.text_shape(W / 2, place['lines'] + 2.1 * i, l, 1.3, justify='center')[1].bounds for i, l in enumerate(lines)]
+    out += sub
+    sub_bottom = max(s[3] for s in sub) if sub else word.bounds[3]
+    lp, lh = logo_polys(logo, 58.0)
+    lt, lb = lp.bounds[1], lp.bounds[3]
+    logo_v = min(place['logo'] + H - place['at'] - 2.0, v1 - LEGEND_HEAD + hb[1] - LEGEND_LOGO - lb)
+    logo_top = logo_v + lt
+    if logo_top >= sub_bottom + 1.5:
+        out.append(affinity.translate(lp, W / 2, logo_v).bounds)
+        seen_top = place['logo_seen'] + lt
+        found_v = sub_bottom + (place['found'] - sub_bottom) * (logo_top - sub_bottom) / (seen_top - sub_bottom)
+        fb = B.text_shape(W / 2, found_v, found, 1.0, justify='center')[1].bounds
+        out.append(fb)
+        hs = B.text_shape(W / 2, (fb[3] + logo_top) / 2, 'HOUSTON, WE HAVE A BURRITO', 1.0, bold=True, justify='center')[1].bounds
+        out.append(hs)
+    v, su, sv = v1 - LEGEND_HEAD, 32.0, 40.7           # the parts list, its head level with the legend's
+    sbox_ = list(B.text_shape(su, v, 'THIS BOARD', 1.3, bold=True)[1].bounds)
+    for s in specs:
+        parts = re.split(r'\s{2,}', s.strip(), maxsplit=1) if s else []
+        v += 0.9 if not parts else 1.4
+        for u, txt in zip((su, sv), parts):
+            b = B.text_shape(u, v, txt, 1.0)[1].bounds
+            sbox_ = [min(sbox_[0], b[0]), min(sbox_[1], b[1]), max(sbox_[2], b[2]), max(sbox_[3], b[3])]
+    out.append(tuple(sbox_))
+    return [(W - u1 - grow, a - grow, W - u0 + grow, c + grow) for u0, a, u1, c in out]
+
+
+def legend_blockers(board, origin, size, legend, logo, place, pitch=1.42, back=75.05):
+    """[] if the test point legend fits on the back; else the refs whose exposed copper lies in its rows at the
+    pitch and place it took on the 180 mm board (pitch 1.42 mm, first row 75.05 mm from the aft end)."""
+    W, H = size
+    B = Pen(board, origin, size, K.B_SilkS)
+    cu = back_copper(board, B)
+    hp = prep(unary_union([g for _, g in cu]).buffer(GROW))
+    clear = lambda g: not hp.intersects(g)
+    labels, names, head, boxes, tab = legend_shapes(B, legend)
+    lp, lh = logo_polys(logo, 58.0)
+    if legend_fits(clear, boxes, head[1].bounds, H, place['logo'] + H - place['at'], lp.bounds[3]):
+        return []
+    v1 = H - back
+    rows = [sbox(b[0], b[1] + v1 + k * pitch, b[2], b[3] + v1 + k * pitch) for k, b in enumerate(boxes)]
+    hb = head[1].bounds
+    rows.append(sbox(hb[0], hb[1] + v1 - LEGEND_HEAD, hb[2], hb[3] + v1 - LEGEND_HEAD))
+    rows = unary_union(rows)
+    return sorted({ref for ref, g in cu if g.buffer(GROW).intersects(rows)})
+
+
 def board_art(board, origin, size, legend, name, version, lines, specs, logo, found, title_font, place,
               ogham_text=None, reserved=()):
     """Draw the back and the top tag. Returns where each block went (bottom-view mm) and counts."""
@@ -483,15 +605,7 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
     where = {}
 
     # exposed copper on the back, at its real shape: pads, rings and holes, grown by GROW
-    cu = []
-    for fp in board.GetFootprints():
-        for p in fp.Pads():
-            if p.IsOnLayer(K.B_Cu) or p.GetAttribute() == K.PAD_ATTRIB_NPTH:
-                cu.append(uv_geom(p.GetEffectivePolygon(K.B_Cu, K.ERROR_INSIDE), B.UV))
-                dr = p.GetDrillSize()
-                if max(dr.x, dr.y) > 0:
-                    cu.append(Point(B.UV(p.GetPosition())).buffer(K.ToMM(max(dr.x, dr.y)) / 2))
-    copper = unary_union(cu).buffer(GROW)
+    copper = unary_union([g for _, g in back_copper(board, B)]).buffer(GROW)
     rsv = [sbox(W - x1, y0, W - x0, y1) for x0, y0, x1, y1 in reserved]          # J101: its pins come later
     hard = unary_union([copper] + rsv)
     hp = prep(hard)
@@ -509,37 +623,15 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
     if not clear(wd) or not all(clear(g) for g in sub):
         misses.append('title')
 
-    # 2. IF FOUND, where Seán liked it
-    fi = B.text(W / 2, place['found'], found, 1.0, justify='center')
-    where['found'] = [W / 2, place['found']]
-    if not clear(fi):
-        misses.append('found')
-
     # 3. the test point legend: all of it, one column, one pitch; the pitch and the start are the biggest
     # and lowest that clear every pin, so the logo above moves up as little as it can
-    u0, gap_head, gap_logo, lw = 7.8, 2.2, 4.0, 0.95       # lw: the legend's letters 5% narrower, same height
-    labels = [B.text_shape(u0, 0.0, t, 1.0, wfac=lw) for t, _ in legend]
-    tab = max(g.bounds[2] for _, g in labels) - u0 + 0.85  # every net starts in one column
-    names = [B.text_shape(u0 + tab, 0.0, n.rsplit('/', 1)[-1], 1.0, wfac=lw) for _, n in legend]
-    head = B.text_shape(u0, 0.0, 'TEST POINTS', 1.3, bold=True)
-    boxes = [(a[1].bounds[0], min(a[1].bounds[1], b[1].bounds[1]), b[1].bounds[2], max(a[1].bounds[3], b[1].bounds[3]))
-             for a, b in zip(labels, names)]               # a row's box runs from its label to its net's end
+    u0, gap_head = LEGEND_U0, LEGEND_HEAD
+    labels, names, head, boxes, tab = legend_shapes(B, legend)
     hb = head[1].bounds
     lp, lh = logo_polys(logo, 58.0)
     lt, lb = lp.bounds[1], lp.bounds[3]                # the logo's ink above and below its centre
-    logo_was = place['logo']
-    cands = []
-    for p in np.arange(1.50, 1.355, -0.01):
-        p = round(float(p), 2)
-        for v1 in np.arange(115.0, 100.0, -0.05):
-            v1 = round(float(v1), 2)
-            if v1 + (len(boxes) - 1) * p + boxes[-1][3] > H - 9.0:        # stays above J102's row
-                continue
-            if not clear(sbox(hb[0], hb[1] + v1 - gap_head, hb[2], hb[3] + v1 - gap_head)):
-                continue
-            if all(clear(sbox(b[0], b[1] + v1 + k * p, b[2], b[3] + v1 + k * p)) for k, b in enumerate(boxes)):
-                cands.append((p, v1, min(logo_was - 2.0, v1 - gap_head + hb[1] - gap_logo - lb)))
-                break
+    logo_was = place['logo'] + H - place['at']          # where it was on the board Seán saw, moved with the aft end
+    cands = legend_fits(clear, boxes, hb, H, logo_was, lb)
     if not cands:
         raise RuntimeError('the test point legend fits nowhere on the back: check PROBE_MOVES')
     near = [c for c in cands if logo_was - c[2] <= 3.6]     # Sean: the logo up "a couple of millimetres"
@@ -562,20 +654,41 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
             break
     else:
         misses.append('logo')
-    B.polygon(affinity.translate(lp, W / 2, logo_v))
-    B.bridges.append(affinity.translate(lp, W / 2, logo_v).buffer(3.0).buffer(-3.0))   # no waves inside its letters
-    where['logo'] = {'v': logo_v, 'up_mm': round(logo_was - logo_v, 2), 'width': 58.0}
+    sub_bottom = max(g.bounds[3] for g in sub) if sub else wd.bounds[3]
+    logo_top = logo_v + lt
+    if logo_top < sub_bottom + 1.5:                    # no room under the subtitle: the legend wins (Seán's order)
+        misses.append('logo')
+        logo_top = H
+    else:
+        B.polygon(affinity.translate(lp, W / 2, logo_v))
+        B.bridges.append(affinity.translate(lp, W / 2, logo_v).buffer(3.0).buffer(-3.0))   # no waves inside its letters
+        where['logo'] = {'v': logo_v, 'up_mm': round(logo_was - logo_v, 2), 'width': 58.0}
 
-    # 5. HOUSTON: centred across the board, and midway between IF FOUND and the logo
-    mid = (fi.bounds[3] + logo_v + lt) / 2
-    for wfac in (1.0, 0.97, 0.94):
-        t, g = B.text_shape(W / 2, 0.0, 'HOUSTON, WE HAVE A BURRITO', 1.0, bold=True, justify='center', wfac=wfac)
-        gb = g.bounds
-        dv = mid - (gb[1] + gb[3]) / 2
-        if clear(affinity.translate(g, 0, dv)):
-            B.put(t, g, dv=dv)
-            where['houston'] = {'v': round(mid, 2), 'width_factor': wfac}
-            break
+    # 2. IF FOUND, where Seán liked it on the 180 mm board, moved in proportion as the logo comes up
+    seen_top = place['logo_seen'] + lt
+    found_v = round(sub_bottom + (place['found'] - sub_bottom) * (logo_top - sub_bottom) / (seen_top - sub_bottom), 2)
+    fi = None
+    if found_v + 1.0 <= logo_top - 1.0:
+        fi = B.text(W / 2, found_v, found, 1.0, justify='center')
+        where['found'] = [W / 2, found_v]
+        if not clear(fi):
+            misses.append('found')
+    else:
+        misses.append('found')
+
+    # 5. HOUSTON: centred across the board, and midway between IF FOUND and the logo, if there's room
+    if fi is not None and logo_top - fi.bounds[3] >= 3.0:
+        mid = (fi.bounds[3] + logo_top) / 2
+        for wfac in (1.0, 0.97, 0.94):
+            t, g = B.text_shape(W / 2, 0.0, 'HOUSTON, WE HAVE A BURRITO', 1.0, bold=True, justify='center', wfac=wfac)
+            gb = g.bounds
+            dv = mid - (gb[1] + gb[3]) / 2
+            if clear(affinity.translate(g, 0, dv)):
+                B.put(t, g, dv=dv)
+                where['houston'] = {'v': round(mid, 2), 'width_factor': wfac}
+                break
+        else:
+            misses.append('houston')
     else:
         misses.append('houston')
 
@@ -662,9 +775,10 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
     e = round(1.5 / rb)
     blk[:e, :] = blk[-e:, :] = 1
     blk[:, :e] = blk[:, -e:] = 1
-    band = (wd.bounds[3] if not sub else max(g.bounds[3] for g in sub), fi.bounds[1])   # under the subtitle, over IF FOUND
-    windows = [('under the title', (1, 42, W - 1, 58), (W / 2, (band[0] + band[1]) / 2)),
-               ('lower right', (30, 112, W - 1, H - 1), (56, 158)), ('top band', (1, 10, W - 1, 28), (W / 2, 18))]
+    under = fi.bounds[1] if fi is not None else logo_top
+    band = (sub_bottom, under)                         # under the subtitle, over IF FOUND
+    windows = [('under the title', (1, 42, W - 1, under - 1.0), (W / 2, (band[0] + band[1]) / 2)),
+               ('lower right', (30, H - 68, W - 1, H - 1), (56, H - 22)), ('top band', (1, 10, W - 1, 28), (W / 2, 18))]
     found_at = {}
     for nm, win, anc in windows:
         for s in np.arange(0.95, 0.38, -0.05):
