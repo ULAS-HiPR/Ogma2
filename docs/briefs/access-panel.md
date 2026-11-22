@@ -12,7 +12,7 @@ without a ladder: everything the pad crew touches (EuRoC LV-0260–0280, 0310,
 | Item | Requirement |
 | --- | --- |
 | Recovery and staging arm switches | Maintained, rated above their fuses at 8.4 V DC, operable from outside the airframe. Proposed: screw or key switches, not toggles, so vibration can't move them. Burrito reports each arm sense |
-| Their plugs at Burrito (J6101, J6102) | Proposed: single-row Micro-Fit 3.0, recovery 2-way, staging 3-way with one empty cavity, so they can't swap. Must not mate J701 (Micro-Fit 2-way, raw 6S) or the Gecko enable loops; confirm with real housings |
+| Their plugs at Burrito (J6101, J6102) | Decided D-21Nov.12: recovery Molex Mini-Fit Jr. 2-circuit (39281023 header), staging JST VH 2-pin (B2P-VH header), two families so they can't swap. Neither mates J701 (Micro-Fit, raw 6S), the GH enable loops or J101's Nano-Fit; confirm with real housings |
 | The active board's arm key | In Churro's ACT branch, in series (D-21Nov.1) |
 | The CATS Vega's switch, and its cell if batteries must be reachable | EuRoC LV-0310, 0470 |
 | Enable loops for Burrito and Churro (AV, PROP) | Gecko 2-contact (D-19Nov.5) |

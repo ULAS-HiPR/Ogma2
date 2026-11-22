@@ -3961,3 +3961,28 @@ tour's connector gallery.
   placement stop; Seán attaches the PDF only if that fails.
 - Next: the phase 1 test of scripting and routing approaches, then the routing
   brief (phase 2).
+
+## 22 November 2026 — Layout phase 1 (S1): pipeline tested
+
+- Tested on a 105-part cut of Burrito (TB1):
+  - `pcbnew` Python, our S-expression pass, `kicad-cli`, Freerouting 2.5.0,
+    KiCadRoutingTools, the IPC API under Xvfb, kiutils and kicad-skip.
+  - Scripts are in `tools/layout/phase1`; the report is
+    `docs/briefs/layout-pipeline.md`.
+- Observed on TB1:
+  - KiCadRoutingTools routed every connection with no KiCad DRC copper error,
+    exact widths and the GND plane unbroken, and kept 172 locked scripted items.
+  - Freerouting either routed across the L2 plane or, with L2 a plane, left 50
+    connections open; in every run it narrowed tracks to 0.075 mm.
+  - SWIG can't set the stackup; our S-expression pass can, losslessly.
+- TB2, all of Burrito, was placed by a crude script that left most connectors,
+  the USB-C among them, mid-board instead of on an edge facing out. Seán flagged
+  it on 22 Nov. Its route is a capacity hint only, and the Freerouting run on it
+  was stopped.
+- D-21Nov.24 amended: every connector sits on a board edge, facing out (Seán,
+  22 Nov), and its coordinates are written in the board spec before placement.
+- Recommendation, waiting for Seán's pick:
+  - `pcbnew` builds and places, the S-expression pass sets the stackup and
+    UUIDs, and the critical copper is scripted;
+  - KiCadRoutingTools routes the rest, with Freerouting as the fallback;
+  - KiCad DRC is the gate.

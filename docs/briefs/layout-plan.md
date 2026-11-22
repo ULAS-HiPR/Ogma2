@@ -116,7 +116,7 @@ D-21Nov.9 allows. Burrito keeps its dates.
   - `kicad-python` from PyPI, for the IPC test;
   - `cargo`, if KiCadRoutingTools is tested.
 - **Remount:** the chroot's bind mounts drop after a pause. A remount step goes
-  into `hardware/tools/layout/env.sh`, with a rebuild recipe in case the
+  into `tools/layout/env.sh`, with a rebuild recipe in case the
   container is replaced.
 
 ### 3.3 Test boards *(plan)*
@@ -251,7 +251,7 @@ The brief and the review go together. The accepted points become decision rows.
 
 ### 5.1 Where the code lives *(J)*
 
-- `hardware/tools/layout/` holds the engine, shared by both boards:
+- `tools/layout/` holds the engine (`/hardware/tools/` is ignored as old scratch), shared by both boards:
   - `build.py` is the entry point;
   - `board.py`, `place.py`, `route.py`, `pours.py`, `checks.py`, `outputs.py`;
   - `env.sh` sets up the environment.
@@ -259,7 +259,7 @@ The brief and the review go together. The accepted points become decision rows.
   - outline and holes, fixed parts, floorplan regions, net classes, rules;
   - the critical routes;
   - stored router results, such as an SES file.
-- `python3 hardware/tools/layout/build.py croi2 --to <stage>` writes
+- `python3 tools/layout/build.py croi2 --to <stage>` writes
   `Croi2.kicad_pcb` from the netlist and the spec, from nothing.
 - Reports go to `hardware/croi2/output/layout/`.
 - A router's result is stored in the repo and replayed by the build. Running the
@@ -276,12 +276,16 @@ The brief and the review go together. The accepted points become decision rows.
 | 3 Critical nets | Section 5.4, scripted, then locked | DRC on those nets → **S4** |
 | 4 Bulk | The S1 pipeline, under the net classes | Unrouted 0 |
 | 5 Pours | L2 solid GND; L3 rail pours; L1 and L4 GND fill; stitching and via fences | DRC; zones filled |
-| 6 Silkscreen | References, polarity, pin 1, connector labels, board name, revision and date | Text ≥ 1.0 mm (JLC) |
+| 6 Silkscreen | Polarity and pin-1 marks on every polarised part: JLC reads polarity from the silkscreen, emails if it can't, and follows the silkscreen over the CPL when they disagree ([JLC assembly FAQ 2](https://jlcpcb.com/help/article/pcb-assembly-faqs-part-2), updated 9 Sep 2026). References where they fit at JLC's 1.0 mm minimum, an assembly drawing (F.Fab) with every reference, connector labels, board name, revision and date | Every polarised part has a mark that matches its pad 1; text ≥ 1.0 mm |
 | 7 Outputs | DRC, per-layer renders, 3D render, Gerbers, drill, JLC BOM and CPL, STEP | Section 7 → **S5** |
 
 ### 5.3 Placement method *(plan; the floorplan itself is in the brief)*
 
-1. **Fix what is fixed:**
+1. **Fix what is fixed, before anything else moves.** Every connector sits on a
+   board edge, facing out (D-21Nov.24): right-angle ones (J102, J4401, J6601)
+   open past their edge; vertical ones stand at the edge with latch and cable
+   toward it. Their coordinates are written in the board spec, never chosen by
+   the optimiser:
    - the holes;
    - J102 centred on the aft edge, datum at the edge (IR-3);
    - the aft-third connectors (J101, J6101, J6102, J103, J501);
@@ -427,7 +431,8 @@ Each gate is checked by a script or tool, and its output kept.
 ## 11. Progress
 
 - [x] Open points decided (D-21Nov.21–27, 65512f1)
-- [ ] S1 phase 1: bench, TB1, T1–T7, TB2, report
+- [x] S1 phase 1: bench, TB1, T1–T7, TB2, report (docs/briefs/layout-pipeline.md); waiting for Seán's pick
+- [x] access-panel brief's J6101 / J6102 line fixed
 - [ ] S2 brief, Churro review, footprint audit started
 - [ ] Burrito D4501 swap (decision row and capture step), if Economic assembly is kept
 - [ ] S3 Burrito placement
