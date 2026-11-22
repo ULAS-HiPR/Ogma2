@@ -1,8 +1,8 @@
 # Layout pipeline: phase 1 result (S1)
 
 **21 November 2026.** The test of every realistic way to script Burrito's and
-Churro's layout, and the pipeline it recommends. It waits for Seán's pick
-(D-21Nov.21; [layout plan](layout-plan.md) section 3).
+Churro's layout, and the pipeline it recommends. Seán picked the recommended hybrid on 22 Nov (D-22Nov.1;
+D-21Nov.21; [layout plan](layout-plan.md) section 3).
 
 Each figure below is from a run on this machine, unless marked
 *(source)*. The scripts that produced them are in

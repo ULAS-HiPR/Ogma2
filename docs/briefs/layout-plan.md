@@ -431,7 +431,7 @@ Each gate is checked by a script or tool, and its output kept.
 ## 11. Progress
 
 - [x] Open points decided (D-21Nov.21–27, 65512f1)
-- [x] S1 phase 1: bench, TB1, T1–T7, TB2, report (docs/briefs/layout-pipeline.md); waiting for Seán's pick
+- [x] S1 phase 1: bench, TB1, T1–T7, TB2, report (docs/briefs/layout-pipeline.md); Seán picked the KiCadRoutingTools hybrid (D-22Nov.1)
 - [x] access-panel brief's J6101 / J6102 line fixed
 - [ ] S2 brief, Churro review, footprint audit started
 - [ ] Burrito D4501 swap (decision row and capture step), if Economic assembly is kept

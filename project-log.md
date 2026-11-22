@@ -3986,3 +3986,10 @@ tour's connector gallery.
     UUIDs, and the critical copper is scripted;
   - KiCadRoutingTools routes the rest, with Freerouting as the fallback;
   - KiCad DRC is the gate.
+- 22 Nov, later: Seán picked the KiCadRoutingTools hybrid (D-22Nov.1). He asked
+  why Freerouting used the inner layers. In the "alone" run L2 was left a signal
+  layer, so the DSN allowed it; L3 carries slow signals by design (D-21Nov.26).
+  Declaring L2 a plane fences it off, but then Freerouting left GND unconnected
+  until our scripted vias, and it narrowed tracks below JLC's minimum whatever
+  its neck-down settings. Impedance-controlled lines and each power block's
+  datasheet layout are scripted and locked before the router runs (phase 2 brief).
