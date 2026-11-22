@@ -1,4 +1,5 @@
-"""Silkscreen marks that aren't parts (D-22Nov.19): the board axes with the nose arrow, and the serial number box.
+"""Silkscreen marks that aren't parts (D-22Nov.19): the board axes with the nose arrow. (The S/N box is drawn by
+art.board_art on the top silk after placing, D-22Nov.23.)
 Written as board-only footprints in the project library, so the placer finds them room like any part.
 
     python3 tools/layout/marks.py      # writes hardware/croi2/libraries/Ogma2.pretty/MARK_*.kicad_mod
@@ -66,13 +67,8 @@ def axes():
     return footprint('MARK_AXES', 'Board axes: X to the nose, Y left, Z out of the top (D-22Nov.19)', body, (-L - 0.9, -L - 2.7, 3.1, 2.8))
 
 
-def serial():
-    w, h = 15.0, 4.5
-    body = text('S/N', (-1.6, h / 2), justify='right') + rect(0, 0, w, h, 'F.SilkS', W, fill=True)
-    return footprint('MARK_SERIAL', 'White box for a serial number, written by hand (D-22Nov.19)', body, (-4.5, -0.4, w + 0.4, h + 0.4))
-
 
 if __name__ == '__main__':
-    for name, txt in (('MARK_AXES', axes()), ('MARK_SERIAL', serial())):
+    for name, txt in (('MARK_AXES', axes()),):
         (LIB / f'{name}.kicad_mod').write_text(txt)
         print(LIB / f'{name}.kicad_mod')

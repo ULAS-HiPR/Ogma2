@@ -746,37 +746,6 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
     else:
         misses.append('specs')
 
-    # 6c. a white box for a serial number (D-22Nov.19; on the back since Seán's 80 x 160 mm ask, 22 Nov): under the
-    # parts list first, then anywhere clear in the aft half, then anywhere
-    if serial_box:
-        bw, bh = serial_box
-        lab = B.text_shape(0.0, 0.0, 'S/N', 1.3, bold=True)
-        lw_ = lab[1].bounds[2] - lab[1].bounds[0]
-        inked = unary_union([*legend_ink, *spec_ink]).buffer(0.8)
-        top0 = where['specs']['end'] + 2.5 if 'specs' in where else H / 2
-        spot = None
-        for ua, ub, va, vb in ((30.0, W - 1.5, top0, H - 10.0), (1.5, W - 1.5, H / 2, H - 10.0), (1.5, W - 1.5, 10.0, H - 10.0)):
-            for v in np.arange(va, vb - bh, 0.5):
-                for u in np.arange(ua, ub - lw_ - 1.0 - bw, 0.5):
-                    g = unary_union([sbox(u + lw_ + 1.0, v, u + lw_ + 1.0 + bw, v + bh),
-                                     affinity.translate(lab[1], u - lab[1].bounds[0], v + bh / 2)])
-                    if clear(g.buffer(0.6)) and not inked.intersects(g):
-                        spot = (float(u), float(v))
-                        break
-                if spot:
-                    break
-            if spot:
-                break
-        if spot:
-            u, v = spot
-            B.text(u - lab[1].bounds[0], v + bh / 2, 'S/N', 1.3, bold=True)
-            box_ = sbox(u + lw_ + 1.0, v, u + lw_ + 1.0 + bw, v + bh)
-            B.polygon(box_)
-            B.bridges.append(box_.buffer(1.0))
-            where['serial_box'] = {'u': round(u, 2), 'v': round(v, 2), 'size': [bw, bh]}
-        else:
-            misses.append('serial box')
-
     # 6b. an inscription in Ogham across the top band, over the name: written along a line as in the
     # manuscripts, left to right, between feather marks (Claude's addition, 22 Nov, at Seán's invitation;
     # ogham_text=None drops it). The right-hand side, where a stone's edge would run, is J101's.
@@ -866,6 +835,7 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
             tops.append(tv(cy.BBox(), 0.2))
         tops += [tv(g.GetBoundingBox(), 0.3) for g in list(fp.GraphicalItems()) + list(fp.GetFields())
                  if g.GetLayer() == K.F_SilkS and (g.GetClass() == 'PCB_SHAPE' or g.IsVisible())]
+    tops += [tv(g.GetBoundingBox(), 0.3) for g in board.GetDrawings() if g.GetLayer() == K.F_SilkS]   # function names
     topu = prep(unary_union(tops))
     w = 1.2 * 0.95 * len(tag)
     best = None
@@ -878,6 +848,36 @@ def board_art(board, origin, size, legend, name, version, lines, specs, logo, fo
     where['top_tag'] = best and [round(best[1], 1), round(best[2], 1)]
     if best:
         T.text(best[1], best[2], tag, 1.2, bold=True, justify='center')
+
+    # the S/N box on the top silk, in what's left after placing (Seán, 22 Nov: "put it in the free space up top"):
+    # under the tag first, else the nearest free spot, else a shorter box. It never counts as courtyard.
+    if serial_box:
+        bw, bh = serial_box
+        lab = T.text_shape(0.0, 0.0, 'S/N', 1.2, bold=True)
+        lb = lab[1].bounds
+        lw_ = lb[2] - lb[0]
+        taken = [sbox(best[1] - w / 2 - 0.5, best[2] - 1.7, best[1] + w / 2 + 0.5, best[2] + 1.7)] if best else []
+        free = prep(unary_union(tops + taken))
+        aim = (best[1], best[2] + 4.0) if best else (W * 0.8, H * 0.82)
+        spot = None
+        for bw_ in (bw, 8.0):
+            gw = lw_ + 0.8 + bw_
+            for i in range(int((W - gw - 2) / 0.25) + 1):
+                for j in range(int((H - bh - 2) / 0.25) + 1):
+                    x, y = 1 + i * 0.25, 1 + j * 0.25
+                    r = sbox(x, y, x + gw, y + bh)
+                    d = math.hypot(r.centroid.x - aim[0], r.centroid.y - aim[1])
+                    if (spot is None or d < spot[0]) and not free.intersects(r):
+                        spot = (d, x, y, bw_)
+            if spot:
+                break
+        if spot:
+            _, x, y, bw_ = spot
+            T.text(x - lb[0], y + bh / 2, 'S/N', 1.2, bold=True)
+            T.polygon(sbox(x + lw_ + 0.8, y, x + lw_ + 0.8 + bw_, y + bh))
+            where['serial_box'] = {'side': 'top', 'x': round(x, 2), 'y': round(y, 2), 'size': [bw_, bh]}
+        else:
+            misses.append('serial box')
     where['misses'] = misses
     where['items'] = B.n + T.n
     return where

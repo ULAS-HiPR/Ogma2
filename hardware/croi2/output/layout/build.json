@@ -249,14 +249,6 @@
    "head": 82.95,
    "end": 114.95
   },
-  "serial_box": {
-   "u": 30.0,
-   "v": 117.45,
-   "size": [
-    15.0,
-    4.5
-   ]
-  },
   "ogham": {
    "text": "BURRITO MAQI OGMA",
    "stem_v": 17.6,
@@ -272,6 +264,14 @@
      46.9,
      50.02
     ]
+   ],
+   "lower right": [
+    0.55,
+    0,
+    [
+     50.16,
+     124.28
+    ]
    ]
   },
   "burrito": {
@@ -282,13 +282,22 @@
    "scale": 0.75,
    "tilt": 0
   },
-  "wave_items": 8143,
+  "wave_items": 8269,
   "top_tag": [
    63.8,
    134.7
   ],
+  "serial_box": {
+   "side": "top",
+   "x": 58.5,
+   "y": 143.0,
+   "size": [
+    10.0,
+    3.0
+   ]
+  },
   "misses": [],
-  "items": 8921
+  "items": 9047
  },
  "placed": 567,
  "unplaced": [],
@@ -3297,6 +3306,728 @@
    270
   ]
  },
- "uuids": 19952,
- "seconds": 79.3
+ "uuids": 20078,
+ "metrics": {
+  "plane_nets": {
+   "BOOT_3V3": "L3",
+   "CAN_3V3": "L3",
+   "COMMS_3V3": "L3",
+   "FLIGHT_3V3": "L3",
+   "GND": "L2",
+   "LORA_3V3": "L3"
+  },
+  "signal_nets": 330,
+  "wire_mm": 8032.5,
+  "wire_by_class_mm": {
+   "CAN_DIFF": 68.4,
+   "Default": 5976.9,
+   "FIRE": 272.9,
+   "FIRE_LOGIC": 288.2,
+   "LOGIC_FEED": 289.1,
+   "PYRO_RAIL": 279.3,
+   "RAIL_3V3": 638.2,
+   "RF50": 27.5,
+   "SRC_6A": 112.1,
+   "USB_DIFF": 79.9
+  },
+  "crossings": 3221,
+  "crossings_worst_nets": [
+   [
+    "3V3_OPTIONAL",
+    153
+   ],
+   [
+    "BRANCH_FAULT_N",
+    117
+   ],
+   [
+    "CC_BAT_VALID",
+    116
+   ],
+   [
+    "RECOVERY_ARMED_VBAT",
+    89
+   ],
+   [
+    "GNSS_PPS",
+    87
+   ],
+   [
+    "FOINSE_SCL",
+    83
+   ],
+   [
+    "FOINSE_SDA",
+    82
+   ],
+   [
+    "STAGING_ARMED_VBAT",
+    79
+   ],
+   [
+    "ADC_PYRO3_CURRENT",
+    75
+   ],
+   [
+    "FOINSE_RETURN_EN",
+    75
+   ]
+  ],
+  "wrong_side": {
+   "U101": {
+    "far_pins": 11,
+    "wrong_side": 2,
+    "worst": [
+     [
+      "10",
+      "BAT_ILIM",
+      "R1005",
+      8.5,
+      132
+     ],
+     [
+      "9",
+      "BAT_SLEW",
+      "C1001",
+      10.3,
+      123
+     ]
+    ]
+   },
+   "U1301": {
+    "far_pins": 20,
+    "wrong_side": 10,
+    "worst": [
+     [
+      "4",
+      "LOGIC_SELECTED",
+      "U1101",
+      6.7,
+      172
+     ],
+     [
+      "3",
+      "LOGIC_SELECTED",
+      "U1101",
+      6.9,
+      169
+     ],
+     [
+      "2",
+      "LOGIC_SELECTED",
+      "U1101",
+      7.2,
+      153
+     ],
+     [
+      "14",
+      "4V_PRE",
+      "U1401",
+      7.3,
+      120
+     ],
+     [
+      "14",
+      "4V_PRE",
+      "U1401",
+      7.2,
+      116
+     ],
+     [
+      "14",
+      "4V_PRE",
+      "U1401",
+      7.1,
+      113
+     ]
+    ]
+   },
+   "U201": {
+    "far_pins": 77,
+    "wrong_side": 39,
+    "worst": [
+     [
+      "43",
+      "PYRO3_FIRE",
+      "U6502",
+      29.0,
+      178
+     ],
+     [
+      "60",
+      "NOR_IO3",
+      "U3602",
+      25.8,
+      177
+     ],
+     [
+      "72",
+      "FLIGHT_SWDIO",
+      "J2301",
+      48.5,
+      172
+     ],
+     [
+      "33",
+      "ADC_PYRO2_CONTINUITY",
+      "U6901",
+      25.0,
+      170
+     ],
+     [
+      "45",
+      "STAGE_INHIBIT_LATCHED",
+      "R6005",
+      23.6,
+      160
+     ],
+     [
+      "59",
+      "NOR_IO1",
+      "U3602",
+      23.8,
+      160
+     ]
+    ]
+   },
+   "U2302": {
+    "far_pins": 2,
+    "wrong_side": 0,
+    "worst": []
+   },
+   "U3604": {
+    "far_pins": 7,
+    "wrong_side": 3,
+    "worst": [
+     [
+      "7",
+      "NOR_NCS_ISO",
+      "R3605",
+      14.5,
+      124
+     ],
+     [
+      "15",
+      "NOR_IO0_ISO",
+      "U3602",
+      15.6,
+      109
+     ],
+     [
+      "9",
+      "NOR_IO2_ISO",
+      "R3607",
+      11.1,
+      100
+     ]
+    ]
+   },
+   "U3701": {
+    "far_pins": 1,
+    "wrong_side": 0,
+    "worst": []
+   },
+   "U401": {
+    "far_pins": 28,
+    "wrong_side": 19,
+    "worst": [
+     [
+      "27",
+      "LORA_EN",
+      "U4601",
+      47.5,
+      176
+     ],
+     [
+      "46",
+      "COMMS_SWDIO",
+      "J4201",
+      48.9,
+      175
+     ],
+     [
+      "25",
+      "GNSS_RESET_N",
+      "U4503",
+      49.5,
+      161
+     ],
+     [
+      "44",
+      "USB_DM",
+      "R4406",
+      18.4,
+      159
+     ],
+     [
+      "28",
+      "USB_VBUS_PRESENT",
+      "U4303",
+      17.8,
+      154
+     ],
+     [
+      "49",
+      "COMMS_SWCLK",
+      "J4201",
+      48.1,
+      153
+     ]
+    ]
+   },
+   "U4504": {
+    "far_pins": 6,
+    "wrong_side": 0,
+    "worst": []
+   },
+   "U4606": {
+    "far_pins": 8,
+    "wrong_side": 0,
+    "worst": []
+   },
+   "U6304": {
+    "far_pins": 5,
+    "wrong_side": 2,
+    "worst": [
+     [
+      "3",
+      "PYRO1_FIRE",
+      "R6303",
+      9.1,
+      136
+     ],
+     [
+      "13",
+      "PYRO1_CL",
+      "R6314",
+      6.9,
+      93
+     ]
+    ]
+   },
+   "U6404": {
+    "far_pins": 5,
+    "wrong_side": 5,
+    "worst": [
+     [
+      "3",
+      "PYRO2_FIRE",
+      "R6403",
+      19.3,
+      141
+     ],
+     [
+      "5",
+      "OUTPUT2_HIGH",
+      "R6922",
+      8.7,
+      121
+     ],
+     [
+      "6",
+      "OUTPUT2_HIGH",
+      "R6922",
+      8.4,
+      110
+     ],
+     [
+      "7",
+      "OUTPUT2_HIGH",
+      "R6922",
+      8.1,
+      100
+     ],
+     [
+      "13",
+      "PYRO2_CL",
+      "R6414",
+      13.1,
+      92
+     ]
+    ]
+   },
+   "U6504": {
+    "far_pins": 3,
+    "wrong_side": 1,
+    "worst": [
+     [
+      "3",
+      "PYRO3_HS_ENABLE",
+      "R6503",
+      20.2,
+      124
+     ]
+    ]
+   }
+  },
+  "wrong_side_total": 81,
+  "tp_stubs": {
+   "TP10": {
+    "net": "ADC_PYRO2_CURRENT",
+    "to_pad": 21.5,
+    "to_route": 20.5
+   },
+   "TP11": {
+    "net": "ADC_PYRO2_CONTINUITY",
+    "to_pad": 16.7,
+    "to_route": 12.3
+   },
+   "TP12": {
+    "net": "TP_PC7",
+    "to_pad": 12.5,
+    "to_route": 12.5
+   },
+   "TP13": {
+    "net": "TP_PC6",
+    "to_pad": 13.5,
+    "to_route": 13.5
+   },
+   "TP14": {
+    "net": "TP_PD10",
+    "to_pad": 14.0,
+    "to_route": 14.0
+   },
+   "TP15": {
+    "net": "GNSS_PPS",
+    "to_pad": 29.6,
+    "to_route": 28.5
+   },
+   "TP17": {
+    "net": "FLIGHT_BOOT0",
+    "to_pad": 25.5,
+    "to_route": 25.5
+   },
+   "TP18": {
+    "net": "RESET_MEMORY",
+    "to_pad": 15.9,
+    "to_route": 15.9
+   },
+   "TP19": {
+    "net": "TP_STROBE_PAD",
+    "to_pad": 42.4,
+    "to_route": 42.4
+   },
+   "TP2": {
+    "net": "LORA_3V3",
+    "to_pad": 5.5,
+    "to_route": 4.6
+   },
+   "TP20": {
+    "net": "USB_VBUS",
+    "to_pad": 8.4,
+    "to_route": 8.4
+   },
+   "TP21": {
+    "net": "STAGING_ARM_SENSE",
+    "to_pad": 18.9,
+    "to_route": 4.1
+   },
+   "TP22": {
+    "net": "RECOVERY_ARM_SENSE",
+    "to_pad": 17.0,
+    "to_route": 7.5
+   },
+   "TP24": {
+    "net": "COMMS_BOOT0",
+    "to_pad": 3.3,
+    "to_route": 3.3
+   },
+   "TP25": {
+    "net": "FLIGHT_3V3",
+    "to_pad": 13.7,
+    "to_route": 13.7
+   },
+   "TP26": {
+    "net": "COMMS_LDO_PG",
+    "to_pad": 11.8,
+    "to_route": 11.8
+   },
+   "TP27": {
+    "net": "CORE_HELD_4V",
+    "to_pad": 8.4,
+    "to_route": 8.4
+   },
+   "TP28": {
+    "net": "FC_POWER_HOLD",
+    "to_pad": 20.7,
+    "to_route": 1.7
+   },
+   "TP29": {
+    "net": "USB_LIMITED",
+    "to_pad": 13.6,
+    "to_route": 13.1
+   },
+   "TP3": {
+    "net": "GNSS_3V3",
+    "to_pad": 3.2,
+    "to_route": 0.4
+   },
+   "TP30": {
+    "net": "BOOT_3V3",
+    "to_pad": 5.8,
+    "to_route": 5.8
+   },
+   "TP31": {
+    "net": "COMMS_3V3",
+    "to_pad": 5.4,
+    "to_route": 4.5
+   },
+   "TP32": {
+    "net": "OPTIONAL_LDO_PG",
+    "to_pad": 10.9,
+    "to_route": 10.9
+   },
+   "TP33": {
+    "net": "BRANCH_FAULT_N",
+    "to_pad": 15.0,
+    "to_route": 13.5
+   },
+   "TP34": {
+    "net": "CAN_3V3",
+    "to_pad": 10.6,
+    "to_route": 10.6
+   },
+   "TP35": {
+    "net": "3V3_OPTIONAL",
+    "to_pad": 27.5,
+    "to_route": 27.5
+   },
+   "TP36": {
+    "net": "BUCK_PG",
+    "to_pad": 19.9,
+    "to_route": 19.9
+   },
+   "TP37": {
+    "net": "LOGIC_SELECTED",
+    "to_pad": 17.9,
+    "to_route": 17.9
+   },
+   "TP38": {
+    "net": "FLIGHT_LDO_PG",
+    "to_pad": 3.9,
+    "to_route": 3.9
+   },
+   "TP39": {
+    "net": "4V_PRE",
+    "to_pad": 6.7,
+    "to_route": 6.7
+   },
+   "TP4": {
+    "net": "SUPERVISOR_WDI",
+    "to_pad": 12.9,
+    "to_route": 12.9
+   },
+   "TP40": {
+    "net": "FOINSE_AUX_3V3",
+    "to_pad": 20.4,
+    "to_route": 20.4
+   },
+   "TP41": {
+    "net": "BAT_SOURCE_PG",
+    "to_pad": 11.4,
+    "to_route": 11.2
+   },
+   "TP42": {
+    "net": "VBAT_CROI_INPUT",
+    "to_pad": 3.0,
+    "to_route": 1.7
+   },
+   "TP43": {
+    "net": "BAT_BLOCK_GATE",
+    "to_pad": 31.2,
+    "to_route": 31.2
+   },
+   "TP44": {
+    "net": "BAT_SHDN_N",
+    "to_pad": 3.2,
+    "to_route": 2.8
+   },
+   "TP45": {
+    "net": "BAT_SOURCE_FAULT_N",
+    "to_pad": 15.4,
+    "to_route": 15.4
+   },
+   "TP46": {
+    "net": "VBAT_PROTECTED",
+    "to_pad": 21.4,
+    "to_route": 21.4
+   },
+   "TP5": {
+    "net": "ADC_PYRO3_CURRENT",
+    "to_pad": 20.1,
+    "to_route": 19.6
+   },
+   "TP6": {
+    "net": "ADC_PYRO1_CONTINUITY",
+    "to_pad": 11.0,
+    "to_route": 10.8
+   },
+   "TP7": {
+    "net": "ADC_PYRO3_CONTINUITY",
+    "to_pad": 15.6,
+    "to_route": 15.6
+   },
+   "TP8": {
+    "net": "NOR_3V3",
+    "to_pad": 4.7,
+    "to_route": 4.7
+   },
+   "TP9": {
+    "net": "ADC_PYRO1_CURRENT",
+    "to_pad": 21.6,
+    "to_route": 18.8
+   }
+  },
+  "tp_stub_summary": {
+   "n": 43,
+   "median_to_route": 12.5,
+   "median_to_pad": 13.7,
+   "over_10_to_route": 28,
+   "over_20_to_route": 8
+  },
+  "plane_pads": 596,
+  "plane_pads_no_via": 61,
+  "plane_pads_no_via_by_band": {
+   "1 RF and fire": 11,
+   "2 Flight": 28,
+   "3 Comms": 10,
+   "4 Power and harness": 12
+  },
+  "plane_pads_no_via_list": [
+   "C1204.1",
+   "C1804.1",
+   "C508.1",
+   "C509.2",
+   "C510.1",
+   "C8005.1",
+   "Q6301.4",
+   "Q6301.7",
+   "Q6401.4",
+   "Q6401.7",
+   "Q6501.4",
+   "Q6501.7",
+   "R4302.1",
+   "R6302.2",
+   "U101.25",
+   "U1301.28",
+   "U1401.8",
+   "U201.10",
+   "U201.100",
+   "U201.11",
+   "U201.19",
+   "U201.20",
+   "U201.27",
+   "U201.28",
+   "U201.49",
+   "U201.50",
+   "U201.73",
+   "U201.74",
+   "U201.75",
+   "U201.99",
+   "U2302.3",
+   "U2302.5",
+   "U2302.6",
+   "U3104.2",
+   "U3104.3",
+   "U3104.6",
+   "U3104.7",
+   "U3204.6",
+   "U3204.7",
+   "U3701.11",
+   "U3701.9",
+   "U401.12",
+   "U401.18",
+   "U401.19",
+   "U401.31",
+   "U401.32",
+   "U401.47",
+   "U401.48",
+   "U401.63",
+   "U401.64",
+   "U4301.2",
+   "U4301.3",
+   "U503.3",
+   "U6001.4",
+   "U6304.12",
+   "U6304.2",
+   "U6404.2",
+   "U7101.2",
+   "U7101.7",
+   "Y201.4"
+  ],
+  "congestion": {
+   "cell_mm": 2.0,
+   "cells_over_1": 47,
+   "overflow_mm": 15.6,
+   "hot": [
+    [
+     9.99,
+     77.0,
+     157.0
+    ],
+    [
+     9.99,
+     77.0,
+     155.0
+    ],
+    [
+     9.99,
+     77.0,
+     153.0
+    ],
+    [
+     9.99,
+     77.0,
+     113.0
+    ],
+    [
+     9.99,
+     77.0,
+     103.0
+    ],
+    [
+     9.99,
+     77.0,
+     93.0
+    ],
+    [
+     9.99,
+     77.0,
+     91.0
+    ],
+    [
+     9.99,
+     77.0,
+     89.0
+    ],
+    [
+     9.99,
+     77.0,
+     79.0
+    ],
+    [
+     9.99,
+     77.0,
+     69.0
+    ],
+    [
+     9.99,
+     77.0,
+     61.0
+    ],
+    [
+     9.99,
+     77.0,
+     59.0
+    ]
+   ],
+   "mean_util_by_band": {
+    "1 RF and fire": 0.07,
+    "2 Flight": 0.23,
+    "3 Comms": 0.145,
+    "4 Power and harness": 0.077
+   }
+  }
+ },
+ "seconds": 113.1
 }

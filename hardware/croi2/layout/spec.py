@@ -170,8 +170,8 @@ SILK_NAMES = {
     'D9001': 'CHECKS OK', 'D9101': 'NOT READY', 'D9201': 'COMMS', 'D9301': 'POWER',
 }
 # silk marks the placer finds room for, as board-only footprints (tools/layout/marks.py): the board axes with the
-# nose arrow, near the IMUs [J]. The white S/N box moved to the back's art (Seán, 22 Nov, for 80 x 160 mm:
-# "I am assuming the serial thing is on the back"); MARK_SERIAL stays in the library unused.
+# nose arrow, near the IMUs [J]. The white S/N box is drawn by art.board_art on the top silk after placing, in
+# space that's left (Seán, 22 Nov: "put it in the free space up top"); it never counts as courtyard.
 MARKS = {'MK1': 'Ogma2:MARK_AXES'}
 REF_REGIONS.update({'MK1': (40, 44, 79, 104)})
 # loops moved after placement (Sean, 22 Nov: "move 4 loops, keep layout"): x only, so y and the fore-to-aft numbers
@@ -204,7 +204,7 @@ ART = dict(
     # Claude's addition, 22 Nov, at Sean's invitation: "Burrito son of Ogma" in Ogham, the script the Ogam
     # Tract credits to Ogma, in the old stones' X MAQI Y form, across the top band. None drops it.
     ogham_text='BURRITO MAQI OGMA',
-    serial_box=(15.0, 4.5))       # the S/N box on the back, under the parts list (Seán, 22 Nov)
+    serial_box=(10.0, 3.0))       # the S/N box on the top silk, 10 x 3 mm, in leftover space (Seán, 22 Nov)
 
 # --- rotation limits: MLCCs of 1206 and larger lie across the long axis (B-33) [J]
 BIG_MLCC = ('Capacitor_SMD:C_1206', 'Capacitor_SMD:C_1210', 'Capacitor_SMD:C_1812', 'Capacitor_SMD:C_2220')

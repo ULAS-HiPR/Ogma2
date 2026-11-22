@@ -4454,3 +4454,15 @@ What the sheets show, read from the step-16 netlist:
 - A first meter run, before the router had the fire clearances, left 119 of
   330 nets open and broke the 0.5 mm fire rule 463 times. The baseline is
   being run again with them and is logged when it's done.
+
+## 22 November 2026: stage B2 step 2, the S/N box on the top silk (D-22Nov.23)
+
+- Seán: “keep it. S/N is useful, put it in the free space up top”. `art.py`
+  now draws "S/N" and a filled 10 × 3 mm box on the top silk after placing,
+  under the name tag first, clear of every pad, courtyard and top silk item
+  (the function names included). It never counts as courtyard. At 160 mm it
+  lands at (58.5, 143.0) mm, in the bottom right.
+- The back no longer carries it, and `MARK_SERIAL` is gone from `marks.py` and
+  the library (the file left in step 1's commit; the manifest drops it here).
+- Placement unchanged. Two builds gave the same bytes; DRC 0 errors and
+  J6601's 2 accepted silk warnings; schematic parity clean.
