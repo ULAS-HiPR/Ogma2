@@ -249,7 +249,7 @@ def near_plan(spec, comps, nets):
     return plan
 
 
-def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
+def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, replace=False):
     spec = load_spec(board)
     for s in sets:                                    # trials only (--set): a statement run in the spec's namespace
         exec(s, vars(spec))
@@ -330,72 +330,93 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
             for r, fp in fps.items():
                 if r.startswith('TP') and any(pd.GetAttribute() == B.K.PAD_ATTRIB_PTH for pd in fp.Pads()):
                     pl.pad_keepout[r] = rows
-        todo = [r for r in fps if r not in pl.placed]
-        plan = near_plan(spec, comps, nets)
-        pl.near = plan
-        pl.step = {r: row['step'] for row in getattr(spec, 'NEAR', []) if 'step' in row for r in [row.get('part')] if r}
-        first = [r for r in spec.PRIORITY if r in todo]
-        near_wait = [r for r in plan if r in todo and r not in first]      # in the rules' order
-        edge = sorted(r for r in todo if r in getattr(spec, 'REF_REGIONS', {}) and r not in first)  # GND loops claim their edge spots
-        probes = sorted(r for r in todo if r.startswith('TP') and r not in first + edge)   # last: they fill what's left
-        rest = pl.order([r for r in todo if r not in first + edge + probes + near_wait])
-        unplaced, noregion = [], []
-        def put(ref, rmax=40.0):
-            reg, key = region_of(ref, comps, nets_of, spec)
-            if reg is None:
-                noregion.append(ref)
-                reg = (1, 1, spec.W - 1, spec.H - 1)
-            if not pl.place_grow(ref, reg, rmax=rmax):
-                unplaced.append(ref)
-                return False
-            return True
-        # the test points on sensitive nodes go in with their circuit, as soon as its parts are down, before the
-        # general parts fill the space round it (stage B2 step 5); the rest come last
-        net1 = lambda r: next(iter(nets_of.get(r, {''})))
-        with_circuit = sorted(r for r in probes if net1(r) in getattr(spec, 'PROBES_WITH_CIRCUIT', ()))
-        probes = [r for r in probes if r not in with_circuit]
-        pending = list(with_circuit)
+        # stage C step 0 (D-22Nov.30): the placement is data. The placer runs only when there's no placement file or
+        # --replace asks for it, and then writes the file; otherwise every part goes exactly where the file says
+        pfile = (hw / 'layout' / spec.PLACEMENT) if getattr(spec, 'PLACEMENT', None) else None
+        frozen = None
+        if pfile is not None and pfile.exists() and not replace:
+            frozen = {r: tuple(v) for r, v in json.loads(pfile.read_text())['parts'].items()}
+        if frozen is None:
+            todo = [r for r in fps if r not in pl.placed]
+            plan = near_plan(spec, comps, nets)
+            pl.near = plan
+            pl.step = {r: row['step'] for row in getattr(spec, 'NEAR', []) if 'step' in row for r in [row.get('part')] if r}
+            first = [r for r in spec.PRIORITY if r in todo]
+            near_wait = [r for r in plan if r in todo and r not in first]      # in the rules' order
+            edge = sorted(r for r in todo if r in getattr(spec, 'REF_REGIONS', {}) and r not in first)  # GND loops claim their edge spots
+            probes = sorted(r for r in todo if r.startswith('TP') and r not in first + edge)   # last: they fill what's left
+            rest = pl.order([r for r in todo if r not in first + edge + probes + near_wait])
+            unplaced, noregion = [], []
+            def put(ref, rmax=40.0):
+                reg, key = region_of(ref, comps, nets_of, spec)
+                if reg is None:
+                    noregion.append(ref)
+                    reg = (1, 1, spec.W - 1, spec.H - 1)
+                if not pl.place_grow(ref, reg, rmax=rmax):
+                    unplaced.append(ref)
+                    return False
+                return True
+            # the test points on sensitive nodes go in with their circuit, as soon as its parts are down, before the
+            # general parts fill the space round it (stage B2 step 5); the rest come last
+            net1 = lambda r: next(iter(nets_of.get(r, {''})))
+            with_circuit = sorted(r for r in probes if net1(r) in getattr(spec, 'PROBES_WITH_CIRCUIT', ()))
+            probes = [r for r in probes if r not in with_circuit]
+            pending = list(with_circuit)
 
-        def flush_near():                              # each rule's parts as soon as what they're measured from is down
-            for r in list(near_wait):
-                d = plan[r]
-                if d['anchor'] in pl.placed and d.get('also', d['anchor']) in pl.placed:
-                    put(r)
-                    near_wait.remove(r)
-        flush_near()
-        for ref in first + edge + rest:
-            put(ref)
+            def flush_near():                              # each rule's parts as soon as what they're measured from is down
+                for r in list(near_wait):
+                    d = plan[r]
+                    if d['anchor'] in pl.placed and d.get('also', d['anchor']) in pl.placed:
+                        put(r)
+                        near_wait.remove(r)
             flush_near()
-            for tp in list(pending):
-                if all(r in pl.placed for r, _ in nets[net1(tp)] if not r.startswith('TP')):
-                    pl.probe_look = 20.0               # these search further along their route: 10 mm is their limit
-                    put(tp)
-                    pl.probe_look = 10.0
-                    pending.remove(tp)
-        probes = pending + probes
-        n_unplaced = len(unplaced)
-        for ref in sorted(marks):                      # the axes and the serial box (D-22Nov.19), before the probes
-            put(ref)
-        marks_unplaced = unplaced[n_unplaced:]
-        del unplaced[n_unplaced:]
-        # test points last, fore to aft by the circuit each probes: the order doesn't depend on their refs,
-        # so renumbering them can't move them
-        def probe_key(ref):
-            tg = pl.probe_target(ref)
-            net = next(iter(pl.pin_nets.get(ref, {}).values()), '')
-            return (round(tg[0][1][1], 3), round(tg[0][1][0], 3), net) if tg else (1e9, 1e9, net)
-        n_before = len(unplaced)
-        for ref in sorted(probes, key=probe_key):
-            put(ref)
-        # a test point with no room within 40 mm of its circuit: after the others, the nearest spot anywhere on the
-        # board (Seán, 22 Nov: no test point is deleted). Reported with its distance, since it's far from what it probes
-        far = {}
-        for ref in unplaced[n_before:]:
-            tg = pl.probe_target(ref)
-            unplaced.remove(ref)
-            if put(ref, rmax=max(spec.W, spec.H)):
-                x, y, _ = pl.placed[ref]
-                far[ref] = round(math.hypot(x - tg[0][1][0], y - tg[0][1][1]), 1) if tg else None
+            for ref in first + edge + rest:
+                put(ref)
+                flush_near()
+                for tp in list(pending):
+                    if all(r in pl.placed for r, _ in nets[net1(tp)] if not r.startswith('TP')):
+                        pl.probe_look = 20.0               # these search further along their route: 10 mm is their limit
+                        put(tp)
+                        pl.probe_look = 10.0
+                        pending.remove(tp)
+            probes = pending + probes
+            n_unplaced = len(unplaced)
+            for ref in sorted(marks):                      # the axes and the serial box (D-22Nov.19), before the probes
+                put(ref)
+            marks_unplaced = unplaced[n_unplaced:]
+            del unplaced[n_unplaced:]
+            # test points last, fore to aft by the circuit each probes: the order doesn't depend on their refs,
+            # so renumbering them can't move them
+            def probe_key(ref):
+                tg = pl.probe_target(ref)
+                net = next(iter(pl.pin_nets.get(ref, {}).values()), '')
+                return (round(tg[0][1][1], 3), round(tg[0][1][0], 3), net) if tg else (1e9, 1e9, net)
+            n_before = len(unplaced)
+            for ref in sorted(probes, key=probe_key):
+                put(ref)
+            # a test point with no room within 40 mm of its circuit: after the others, the nearest spot anywhere on the
+            # board (Seán, 22 Nov: no test point is deleted). Reported with its distance, since it's far from what it probes
+            far = {}
+            for ref in unplaced[n_before:]:
+                tg = pl.probe_target(ref)
+                unplaced.remove(ref)
+                if put(ref, rmax=max(spec.W, spec.H)):
+                    x, y, _ = pl.placed[ref]
+                    far[ref] = round(math.hypot(x - tg[0][1][0], y - tg[0][1][1]), 1) if tg else None
+        else:
+            for ref, (x, y, a) in sorted(frozen.items()):
+                if ref in pl.placed:                   # fixed parts and anchors: the spec must agree with the file
+                    px, py, pa = pl.placed[ref]
+                    if abs(px - x) > 1e-6 or abs(py - y) > 1e-6 or pa != a:
+                        raise RuntimeError(f'{ref}: the spec puts it at {pl.placed[ref]}, placement.json at {(x, y, a)}')
+                    continue
+                pl.commit(ref, x, y, a)
+            missing = sorted(r for r in {**fps, **marks} if r not in pl.placed)
+            extra = sorted(r for r in frozen if r not in fps and r not in marks)
+            if missing or extra:
+                raise RuntimeError(f'placement.json is out of date (missing {missing[:6]}, extra {extra[:6]}): '
+                                   'build with --replace to run the placer')
+            unplaced, noregion, marks_unplaced, plan, with_circuit, far = [], [], [], {}, [], {}
         report['probes_far'] = far
         report['probes_with_circuit'] = with_circuit
         report['near_parts'] = sorted(plan, key=lambda r: (re.sub(r'\d', '', r), int(re.sub(r'\D', '', r) or 0)))
@@ -443,6 +464,12 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None):
             jlc_spacing_exceptions=[{'a': a, 'b': b, 'gap': g, 'needs': n} for a, b, g, n in exc],
             positions={r: [round(x, 3), round(y, 3), a] for r, (x, y, a) in sorted(pl.placed.items())})
         report['stages'].append('place')
+        report['placement'] = 'placer' if frozen is None else f'file {pfile.name}'
+        if frozen is None and pfile is not None:      # full precision, so a build from the file gives the same bytes
+            dst = (out / pfile.name) if out_dir else pfile
+            dst.write_text(json.dumps({'note': 'Written by tools/layout/build.py --replace (D-22Nov.30); x, y in mm on the '
+                                               'board, rotation in degrees', 'length_mm': spec.H,
+                                       'parts': {r: list(v) for r, v in sorted(pl.placed.items())}}, indent=0) + '\n')
 
     bd.save(str(pcb))
     if not out_dir:
@@ -475,10 +502,11 @@ if __name__ == '__main__':
     ap.add_argument('--set', action='append', default=[],
                     help="trials: a statement run in the spec's namespace, e.g. \"ANCHORS['U401'] = (40.0, 126.0, 180)\"")
     ap.add_argument('--netlist', help='trials: build from this netlist instead of output/full-netlist.xml')
+    ap.add_argument('--replace', action='store_true', help='run the placer and rewrite layout/placement.json (D-22Nov.30)')
     a = ap.parse_args()
     if (a.set or a.netlist) and not a.out:
         ap.error('--set and --netlist are for trials: give --out too')
-    r = build(a.board, a.to, a.length, a.out, a.set, a.netlist)
+    r = build(a.board, a.to, a.length, a.out, a.set, a.netlist, a.replace)
     keep = {k: v for k, v in r.items() if k != 'positions'}
     for k in ('jlc_spacing_exceptions',):
         if k in keep:

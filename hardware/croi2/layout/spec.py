@@ -115,6 +115,8 @@ FIXED = {
     'J2301': dict(xy=(4.0, 90.0), rot=90),     # flight Tag-Connect: left edge, 11 mm from hole (4, 79), clear of the L4 corridor [J]
     'J4201': dict(xy=(4.0, 136.0), rot=90),    # comms Tag-Connect: left edge, 16 mm from hole (4, 152) [J]
 }
+# stage C step 0 (D-22Nov.30): the placement is data, written by build.py --replace and read by every other build
+PLACEMENT = 'placement.json'
 RESERVED = {}      # J101's 20 x 22 mm block gave way to its footprint (capture step 15, D-22Nov.13)
 
 ANCHORS = {   # [J] placed before everything else, at these centres

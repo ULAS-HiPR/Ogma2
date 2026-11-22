@@ -4835,3 +4835,12 @@ What the sheets show, read from the step-16 netlist:
   ordinary nets left open, 20 touch U201 and 2 touch U401.
 - Stop 2 becomes a report, not a wait: Fable's reading of “and then run phase
   D”, stated in the handoff for Seán to correct.
+
+## 22 November 2026: stage C step 0, the placement as data
+
+- Seán, on the stage C and D handoff: “Go. I believe in you. Do your best”.
+- D-22Nov.30: `layout/placement.json` holds every part's position, written by
+  `build.py --replace` from the placer at full precision. Every other build
+  reads it and places nothing itself.
+- The placer's build and the build from the file both give 7451d7d4. A build
+  from the file takes 23 s against about 80 s.
