@@ -153,6 +153,19 @@ step-9 netlist:
 their bands with routing room. The S3 metrics (density per band, wire length)
 test it. The bands may shift by a few mm; the order doesn't change.
 
+### 3a. Placement rules from the datasheets (read 22 Nov)
+
+| Parts | Rule | Source |
+| --- | --- | --- |
+| All six LGA sensors (U3104, U3204, U3304, U3403, U3503, U3701) | No track or via on L1 under the package: a keep-out. Traces to the pads symmetric; GND reaches the pads by trace, not by pour. ≥ 2 mm from screw holes (ours ≥ 10 mm), between fasteners, ≥ 10 mm from where a force lands (mated plugs, the Tag-Connect pads), away from heat sources | ST TN0018 Rev 8 (Mar 2025), §3.1–3.11, §6.1–6.5 |
+| U3701 (MMC5983MA) | No current-carrying track under it or on the far side of the board; nothing magnetic nearby; 10 µF at CAP (pin 10), close | MEMSIC MMC5983MA Rev. A, pp. 11–12 |
+| U3304 (ADXL375) | Close to a hard mounting point: within ≈ 15 mm of a hole *[J]*, still ≥ 2 mm per ST. 1 µF at VS and 0.1 µF at VDD I/O, close | ADI ADXL375 Rev. B, p. 26 |
+| U3403 (BMP390) | 100 nF at each supply; ≥ 0.1 mm clear above the lid; out of strong light (the bay is dark) | Bosch BST-BMP390-DS002 Rev 1.7, pp. 47–52 |
+| Y201, Y401 (16 MHz), Y202 (32.768 kHz) | As close to the MCU pins as possible; GND under the oscillator tied to the nearest MCU VSS; a GND guard ring round crystal and load capacitors; load capacitors symmetric; fast signals routed away. AN2867 also recommends conformal coating over the oscillator | ST AN2867 Rev 25 (Oct 2026), §7.1–7.2 |
+| J2301, J4201 (TC2030-NL) | The footprint's 7 × 4 mm courtyard stays clear (Tag-Connect's keep-out, in KiCad's footprint), with its three Ø0.99 mm locating holes | KiCad 9.0.7 `Tag-Connect_TC2030-IDC-NL` |
+
+*Not read:* TDK's own layout section for the ICM-42688-P (its URL returned an index page) and TE's MS5607 data sheet (the site refuses fetches). ST's LGA rules above cover both packages.
+
 ### 4. Power
 
 **The paths** (netlist, step 9):
