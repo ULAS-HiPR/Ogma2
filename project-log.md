@@ -4070,3 +4070,32 @@ tour's connector gallery.
     The shell can't reach Molex, and the drawing wouldn't open in the browser
     pane. Its place on the board is reserved.
   - Netlist unchanged apart from C1403's footprint; 347 checks pass.
+
+## 22 November 2026: test points in three sizes (capture step 12, D-22Nov.9)
+
+- Seán, from a DAQ board photo: big black loops on GND at the edges, orange
+  loops between, 1.0 mm round pads for the rest, and only the TP number on the
+  silkscreen.
+- The first pass put 108 test points on the board. Seeing them placed, he picked
+  the lean set: 47 test points.
+  - 4 black Keystone 5011 loops on GND.
+  - 18 orange Keystone 5003 loops: each regulator or switch output, the strobe and
+    GNSS PPS.
+  - 25 pads: BOOT0, the reset memory, the spare pins, power status, and the pyro
+    ADC and arm-sense nodes.
+  - A cut test point's net already had a probe point: a bus firmware reads, a
+    Tag-Connect pin, a connector, or a 47 Ω / 0 Ω link to a rail with a loop.
+- Keystone 5000 (red) isn't in JLC's assembly library, so the rail loops move
+  to 5003 (C238124); 5011 is C238127.
+- No test point goes on a fire net or a line that drives a fire switch.
+- Netlist: 559 parts, 1820 pins, 61 pin changes; ERC unchanged.
+- The full checker treats a test point as a probe, not a conductor: test points
+  are out of the exact-net checks and have their own (TP1–TP5). TP2 (no fire net)
+  and TP3 (size by net) were negative-tested on corrupted netlists.
+- Steps 11b and 11c, footprints only:
+  - U101's thermal vias go to 0.3 mm drill, since JLC charges extra below that.
+  - J4401's two NPTH holes now sit on `*.Cu`, as KiCad 9 writes them. The step 11
+    note was wrong: the regenerated board still showed J4401 differing from its
+    library, and this was why.
+- The refs become TP1–TP47 fore to aft in a later step, once the board's length
+  is fixed.

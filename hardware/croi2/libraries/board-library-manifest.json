@@ -2,7 +2,7 @@
   "project": "Croi2",
   "source_project": "hardware/Ogma2",
   "symbol_count": 81,
-  "physical_components": 570,
+  "physical_components": 559,
   "footprints": [
     {
       "id": "Buzzer_Beeper:MagneticBuzzer_PUI_SMT-1028-T-2-R",
@@ -1075,18 +1075,29 @@
         "TP1701",
         "TP1801",
         "TP1901",
-        "TP2303",
-        "TP2304",
-        "TP3101",
-        "TP3201",
-        "TP3301",
-        "TP3401",
-        "TP3501",
-        "TP4203",
-        "TP4204",
+        "TP201",
         "TP4601",
         "TP501",
-        "TP502"
+        "TP9501",
+        "TP9502",
+        "TP9503",
+        "TP9504",
+        "TP9505",
+        "TP9506",
+        "TP9507"
+      ]
+    },
+    {
+      "id": "TestPoint:TestPoint_Keystone_5010-5014_Multipurpose",
+      "source": "KiCad 9.0.7 official library, TestPoint.pretty; capture step 12 (GND loops, Keystone 5011, D-22Nov.9); 3D model not in the GitHub mirror",
+      "models": [
+        "TestPoint.3dshapes/TestPoint_Keystone_5010-5014_Multipurpose.step"
+      ],
+      "refs": [
+        "TP2304",
+        "TP4204",
+        "TP9508",
+        "TP9509"
       ]
     },
     {
@@ -1097,41 +1108,28 @@
         "TP1003",
         "TP1004",
         "TP1303",
-        "TP201",
         "TP202",
         "TP203",
         "TP204",
         "TP205",
         "TP2301",
-        "TP2302",
-        "TP3102",
-        "TP3103",
-        "TP3104",
-        "TP3105",
-        "TP3106",
-        "TP3202",
-        "TP3203",
-        "TP3204",
-        "TP3205",
-        "TP3206",
-        "TP3302",
-        "TP3303",
-        "TP3304",
-        "TP3305",
-        "TP3306",
-        "TP3402",
-        "TP3403",
-        "TP3502",
-        "TP3503",
         "TP4201",
-        "TP4202",
-        "TP4602",
-        "TP4603",
-        "TP4604",
-        "TP503",
-        "TP504",
-        "TP505",
-        "TP506"
+        "TP9510",
+        "TP9511",
+        "TP9512",
+        "TP9513",
+        "TP9514",
+        "TP9515",
+        "TP9516",
+        "TP9517",
+        "TP9518",
+        "TP9519",
+        "TP9520",
+        "TP9521",
+        "TP9522",
+        "TP9523",
+        "TP9524",
+        "TP9525"
       ]
     }
   ],
@@ -1165,6 +1163,10 @@
     {
       "footprint": "Ogma2:G125-MS10605M2P",
       "model": "Connector_Harwin.3dshapes/Harwin_Gecko_G125-MS10605M2P_2x03_P1.25mm_Vertical.step"
+    },
+    {
+      "footprint": "TestPoint:TestPoint_Keystone_5010-5014_Multipurpose",
+      "model": "TestPoint.3dshapes/TestPoint_Keystone_5010-5014_Multipurpose.step"
     }
   ],
   "model_less_footprints": [
@@ -1256,9 +1258,11 @@
     "libraries/Device.kicad_sym": "e3a4bc4a19c7a55e936be10f9f1e8924df26301abf50254a4037773748e4ad10",
     "libraries/Diode_SMD.pretty/D_SOD-123.kicad_mod": "79ea090239f95ab7c861a510b787331de955bda70206edd3373edc726540ca40",
     "libraries/Diode_SMD.pretty/D_SOD-882.kicad_mod": "169ac5f9218dc1afa8d0520a9a61cfb2f43c188206349e99e609194aba77f975",
+    "libraries/Fiducial.pretty/Fiducial_1mm_Mask2mm.kicad_mod": "29e594ae82708ad5fdea54aa9943eaa2d4454a6eacca9abcff90d2d93d9ca0e2",
     "libraries/Fuse.pretty/Fuse_1206_3216Metric.kicad_mod": "e0ab749e3d6ce623bf1825905e13ab7aa8f2e9b361304d1cecbde3aa519a7c23",
     "libraries/Fuse.pretty/Fuse_Littelfuse-NANO2-451_453.kicad_mod": "501e5c76d8965dc098b251e071c3fe523638400ef5984e431c303d3e1c2356f2",
     "libraries/LED_SMD.pretty/LED_0603_1608Metric.kicad_mod": "e748e0f2590b7e36fffd755c6a96b2d1ee899ddd27c8cc0fff646192cd21d9a3",
+    "libraries/MountingHole.pretty/MountingHole_3.2mm_M3.kicad_mod": "cc750d0642395484822f31781adba0266171b0899821c6cb0ed30a5e675a2b90",
     "libraries/Ogma2.kicad_sym": "508e6cbed131287dd8a3dfac7af313a1e81a6d375fd80a254feb4cdda7b9cc20",
     "libraries/Ogma2.pretty/430450600.kicad_mod": "a90faecfa4458517157aa3b1354088ed32f7f4e750d9c384d0c6fcc74fb85f4e",
     "libraries/Ogma2.pretty/430450800.kicad_mod": "137ee79986b0da0caf2e4bf02a86240e9dab709e51116620cce47a796b7ce819",
@@ -1294,7 +1298,7 @@
     "libraries/Ogma2.pretty/TPS2121RUXR.kicad_mod": "c469e4e3c7010cd552a11e8920bb5dcf6a64966b80cb1b09ca1fc461afb3320e",
     "libraries/Ogma2.pretty/TPS22918DBVR.kicad_mod": "556b38f255eb9a563a93a28a405b9fb6f74b22738dec9bbab0db766572f24215",
     "libraries/Ogma2.pretty/TPS2553DBVR-1.kicad_mod": "efae1b5e974353714b2f14800e41ca4fe67b662451b470eab378c56a3f7c1904",
-    "libraries/Ogma2.pretty/TPS26630RGER.kicad_mod": "789dd94dd9bba485e7a1049bc38b02b0438e2f63b0d6134c676d7bd8ae444566",
+    "libraries/Ogma2.pretty/TPS26630RGER.kicad_mod": "181c1f449a323235f4584f8a1d5238ebcb07493df2c1bc20889d57005be5dab6",
     "libraries/Ogma2.pretty/TPS3430WDRCR.kicad_mod": "f2e1180fb9edde26b95cf8245726e0cf33a6362345da3869c58339c74c1f3f4f",
     "libraries/Ogma2.pretty/TPS3700DDCR.kicad_mod": "4c64c3f6307da43ff457caa43d8306a8ad6d6ddda8ba7fae594ffa60741ce1fd",
     "libraries/Ogma2.pretty/TPS3808G33DBVR.kicad_mod": "f7d46e782bdc9fda6ceb3a05434d233457753dd9e93b2cf982f7ca93450af979",
@@ -1306,7 +1310,7 @@
     "libraries/Ogma2.pretty/TXU0202DCUR.kicad_mod": "8e26fcadddb67046602f1515af7c6ebd50d297f3c3b2f974262d643addbbe2b4",
     "libraries/Ogma2.pretty/TXU0304PWR.kicad_mod": "bffd86ba56882a0fef2b4dd422a56c8c919efabee0f8a5a6c32323e785be8077",
     "libraries/Ogma2.pretty/U.FL_Hirose_U.FL-R-SMT-1_Vertical.kicad_mod": "8b1a2bed875696e285d0cac5e94e463424ba6188b24afc5683f0bef744482f6f",
-    "libraries/Ogma2.pretty/USB4105-GF-A.kicad_mod": "4e5cc81a588e12043b1938e6d8b733fb2b0053eb5b3117e3efc281bf01c338de",
+    "libraries/Ogma2.pretty/USB4105-GF-A.kicad_mod": "94a1c2fdf368e099d04a2b176e4809dbf17edd61b4f96d97b529e28338d7ffad",
     "libraries/Ogma2.pretty/Wio-LR2021.kicad_mod": "054411674b2387882b9fc28e5108fb88a530757c626d6e280ca2051f8f01f8af",
     "libraries/Ogma2_Circuit.kicad_sym": "379f16fcaa9cb7c55bb40d0bf7aff26eb10fffdaf2cff0795e68882f67cab30a",
     "libraries/Ogma2_GNSS.kicad_sym": "2e5f88b5e1fc74a5459d9f5c466b616cad35c1c741ad91dab3486715a2a2dad7",
@@ -1325,11 +1329,12 @@
     "libraries/Resistor_SMD.pretty/R_2010_5025Metric.kicad_mod": "86d618c8fd28dbec25b5fb7fb7fd69483b50b9fbadf8e4d437648ebce82d7c33",
     "libraries/Resistor_SMD.pretty/R_2512_6332Metric.kicad_mod": "2a1db1ef52fc49628caaca71bf6506c56008dc3b4aa6e25f4e025f9358b58b0c",
     "libraries/TestPoint.pretty/TestPoint_Keystone_5000-5004_Miniature.kicad_mod": "b5afcfee4f2c454a62b44c9e240c7724c166aa6ca552d87f3d110c86d049851b",
+    "libraries/TestPoint.pretty/TestPoint_Keystone_5010-5014_Multipurpose.kicad_mod": "cb1b0454c4111c4075a11d66d2f85a9391f2e9a24d1c1081213403528a6ece5a",
     "libraries/TestPoint.pretty/TestPoint_Loop_D2.50mm_Drill1.0mm.kicad_mod": "3090fbf88ecbe9bf2953c6eb3934ffa4c6bd29393832aaa568967b738fbb9442",
     "libraries/TestPoint.pretty/TestPoint_Pad_D1.0mm.kicad_mod": "f880d5795689693b57a201ea07dcbf1ddb35efa90ffd121e2cc1d4e2425d0250",
     "libraries/Transistor_FET.kicad_sym": "271b8de6aefdc8439c47072dff35b7de19f54525a862a2c90255f5eb61b162f8",
     "libraries/power.kicad_sym": "0fb7aa46f140b400eb79e21b07681eef31d7dcaaa786a29c796d3be275d55536"
   },
-  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
+  "revision_note": "2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). schematic capture (capture specification, D-21Nov.9), steps 0-9. J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). 2026-09-08: readable connected schematics, external master-enable loops; Croi external MAX-M10S GNSS. Existing CAD identity/placement preserved; new parts staged. Exact models are not complete.",
   "symbol_count_definition": "Distinct symbol library IDs used by physical components in the native XML; excludes ERC flags."
 }

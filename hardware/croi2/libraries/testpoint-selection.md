@@ -1,6 +1,28 @@
 # Croí2 insulated rail test points
 
-7 September 2026. Selected under Seán's request for a small cylindrical plastic
+## 22 November 2026: three sizes, 47 test points (D-22Nov.9)
+
+Supersedes the part choices below; the 7 September notes stay for the
+footprint and the model gap.
+
+| Size | Part | JLC | Where | Count |
+| --- | --- | --- | --- | --- |
+| Big black loop | Keystone 5011, multipurpose, 1.6 mm hole | C238127 | GND, at the board edges | 4 |
+| Orange loop | Keystone 5003, miniature, 1.0 mm hole | C238124 | Each regulator or switch output, the strobe, GNSS PPS | 18 |
+| 1.0 mm pad | `TestPoint_Pad_D1.0mm` (copper only) | none | BOOT0, reset memory, spare pins, power status, pyro ADC and arm sense | 25 |
+
+- Keystone 5000 (red) is not in JLC's assembly library (jlcparts scrape,
+  21 Nov 2026; LCSC C5199900 only), so the rail loops are 5003, orange.
+- 5011's footprint is KiCad 9.0.7's `TestPoint_Keystone_5010-5014_Multipurpose`
+  (2.8 mm pad, 1.6 mm hole, 4.0 mm courtyard), vendored in step 12. Its height
+  (about 8 mm, 0.320 in per DigiKey) isn't checked against Keystone's drawing,
+  which refuses automated fetches.
+- The silkscreen shows only each test point's TP number.
+- No test point goes on a fire net or a line that drives a fire switch (B-02).
+
+## 7 September 2026
+
+Selected under Seán's request for a small cylindrical plastic
 body with a short exposed loop. Replaces all 20 previously assigned bare-loop
 footprints. No new probe nodes or electrical changes.
 

@@ -3479,122 +3479,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (symbol
-    (lib_id "Connector:TestPoint")
-    (at 160.02 375.92 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "c5f18860-fb4b-51aa-81e8-3dcd74505c18")
-    (property "Reference" "TP505"
-      (at 163.83 372.11 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "CAN2_TX_ISO"
-      (at 163.83 372.11 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)
-        (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-      (at 160.02 375.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 160.02 375.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "test point"
-      (at 160.02 375.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "test point tp"
-      (at 160.02 375.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "Pin* Test*"
-      (at 160.02 375.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b5ed7167-bc4d-5c34-91fe-eb8111c7a144"
-          (reference "TP505")
-          (unit 1))))
-    (pin "1"
-      (uuid "11912e0d-05b4-591d-977b-340b033a258f")))
-  (symbol
-    (lib_id "Connector:TestPoint")
-    (at 160.02 406.4 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "c53bfadb-434b-5159-a59d-edc503feb0f5")
-    (property "Reference" "TP506"
-      (at 163.83 402.59 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "CAN2_RX_ISO"
-      (at 163.83 402.59 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)
-        (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-      (at 160.02 406.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 160.02 406.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "test point"
-      (at 160.02 406.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "test point tp"
-      (at 160.02 406.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "Pin* Test*"
-      (at 160.02 406.4 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b5ed7167-bc4d-5c34-91fe-eb8111c7a144"
-          (reference "TP506")
-          (unit 1))))
-    (pin "1"
-      (uuid "497b8b31-2b6c-55e6-8d44-a5928c0e0448")))
   (global_label "CAN2_TX_ISO"
     (shape bidirectional)
     (at 172.72 369.57 0)
@@ -4693,13 +4577,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5000"
+    (property "MPN" "5003"
       (at 246.38 78.74 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
     (property "Manufacturer" "Keystone Electronics"
+      (at 246.38 78.74 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "LCSC" "C238124"
       (at 246.38 78.74 0)
       (effects
         (font
@@ -4712,76 +4602,6 @@
           (unit 1))))
     (pin "1"
       (uuid "3bd8c624-0d11-53c8-8fbc-f9b11333ed80")))
-  (symbol
-    (lib_id "Connector:TestPoint")
-    (at 246.38 134.62 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "1faf8849-8303-5e81-95db-dc950a3955e4")
-    (property "Reference" "TP502"
-      (at 250.19 130.81 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "GND"
-      (at 250.19 130.81 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)
-        (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
-      (at 246.38 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
-      (at 246.38 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "test point"
-      (at 246.38 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "test point tp"
-      (at 246.38 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "Pin* Test*"
-      (at 246.38 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "5001"
-      (at 246.38 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Keystone Electronics"
-      (at 246.38 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b5ed7167-bc4d-5c34-91fe-eb8111c7a144"
-          (reference "TP502")
-          (unit 1))))
-    (pin "1"
-      (uuid "1a83682b-2b77-59a3-9f10-03a4cf847298")))
   (symbol
     (lib_id "power:PWR_FLAG")
     (at 236.22 78.74 0)
@@ -5963,122 +5783,6 @@
         (font
           (size 1 1))
         (hide yes))))
-  (symbol
-    (lib_id "Connector:TestPoint")
-    (at 160.02 210.82 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "6bb7eadb-9fda-51dd-a1ec-c2905fc00eff")
-    (property "Reference" "TP503"
-      (at 163.83 207.01 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "CAN_TX_ISO"
-      (at 163.83 207.01 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)
-        (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-      (at 160.02 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 160.02 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "test point"
-      (at 160.02 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "test point tp"
-      (at 160.02 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "Pin* Test*"
-      (at 160.02 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b5ed7167-bc4d-5c34-91fe-eb8111c7a144"
-          (reference "TP503")
-          (unit 1))))
-    (pin "1"
-      (uuid "b72cb79f-6179-5451-a937-eb3d57987f47")))
-  (symbol
-    (lib_id "Connector:TestPoint")
-    (at 160.02 241.3 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "d9739055-fad2-572c-bf65-6c3acbbe3388")
-    (property "Reference" "TP504"
-      (at 163.83 237.49 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "CAN_RX_ISO"
-      (at 163.83 237.49 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)
-        (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-      (at 160.02 241.3 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 160.02 241.3 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "test point"
-      (at 160.02 241.3 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "test point tp"
-      (at 160.02 241.3 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "Pin* Test*"
-      (at 160.02 241.3 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b5ed7167-bc4d-5c34-91fe-eb8111c7a144"
-          (reference "TP504")
-          (unit 1))))
-    (pin "1"
-      (uuid "880cebec-9735-58fa-a6d0-601c121e81eb")))
   (text "120 ohms is the fixed endpoint termination. Keep CAN H/L twisted up to the connector; the third conductor is the reference return.\nEach reference contact reaches GND only through R516 / F501 (bus 1) or R517 / F502 (bus 2): footprints for a\nresistor and a resettable fuse, 0R until the bench sets values inside the TCAN3413 common-mode range (B-39)."
     (at 15.24 472.44 0)
     (effects
@@ -6785,14 +6489,6 @@
     (uuid "e2d85f14-1932-5da1-bd29-208baadf83f5"))
   (wire
     (pts
-      (xy 223.52 134.62)
-      (xy 246.38 134.62))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9cc6b47e-1a91-538b-aba2-542b4880cb14"))
-  (wire
-    (pts
       (xy 254 256.54)
       (xy 254 264.16))
     (stroke
@@ -6868,11 +6564,6 @@
     (diameter 0)
     (color 0 0 0 0)
     (uuid "2c44610a-d780-518d-abca-9ce91a4ebbee"))
-  (junction
-    (at 223.52 134.62)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "bb86fa7a-4346-5135-af3a-5c3e78c0d0a0"))
   (junction
     (at 172.72 210.82)
     (diameter 0)

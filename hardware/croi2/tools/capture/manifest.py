@@ -30,6 +30,7 @@ ADDED = {
     'Capacitor_SMD:C_0805_2012Metric': f'{K9}, Capacitor_SMD.pretty; capture step 9 (C4504, D-21Nov.17)',
     'Diode_SMD:D_SOD-882': f'{K9}, Diode_SMD.pretty; capture step 10 (D4501, D-22Nov.8); 3D model not in the GitHub mirror',
     'Capacitor_SMD:CP_Elec_8x10': f'{K9}, Capacitor_SMD.pretty, Nichicon 8 x 10 mm; capture step 11 (C1403, Nichicon PCW phi 8 x 10)',
+    'TestPoint:TestPoint_Keystone_5010-5014_Multipurpose': f'{K9}, TestPoint.pretty; capture step 12 (GND loops, Keystone 5011, D-22Nov.9); 3D model not in the GitHub mirror',
 }
 MODEL_SOURCE = 'KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out'
 FETCHED = ['Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.step',

@@ -18,6 +18,16 @@ import xml.etree.ElementTree as ET
 HW = Path(__file__).resolve().parents[1]
 ENERGETIC = re.compile(r'PYRO|ARM|STAGE|OUTPUT\d|SERVO')
 OUTPUT_ENABLES = re.compile(r'^(PYRO\d_(FIRE|LS_SELECT|HS_ENABLE|GATE)|STAGE_ELIGIBLE|STAGE_INHIBIT_LATCHED|STAGE_ARM_INVALID)$')
+# Test points (D-22Nov.9): three sizes, by what the probe does there.
+TP_GND = ('TestPoint:TestPoint_Keystone_5010-5014_Multipurpose', '5011', 'C238127')     # black loop, board edge
+TP_LOOP = ('TestPoint:TestPoint_Keystone_5000-5004_Miniature', '5003', 'C238124')       # orange loop, probe stays on
+TP_PAD = ('TestPoint:TestPoint_Pad_D1.0mm', None, None)                                  # 1.0 mm pad, probe touches
+TP_LOOP_NETS = frozenset({   # each regulator or switch output, the strobe, PPS
+    'VBAT_CROI_INPUT', 'VBAT_PROTECTED', 'LOGIC_SELECTED', '4V_PRE', 'CORE_HELD_4V', 'FLIGHT_3V3', 'COMMS_3V3',
+    '3V3_OPTIONAL', 'LORA_3V3', 'CAN_3V3', 'BOOT_3V3', 'NOR_3V3', 'GNSS_3V3', 'FOINSE_AUX_3V3', 'USB_VBUS',
+    'USB_LIMITED', 'TP_STROBE_PAD', 'GNSS_PPS'})
+TP_SENSE_ONLY = frozenset({f'ADC_PYRO{n}_{k}' for n in (1, 2, 3) for k in ('CONTINUITY', 'CURRENT')}
+                          | {'RECOVERY_ARM_SENSE', 'STAGING_ARM_SENSE', 'ADC_PYRO_RAIL'})
 
 
 def node_map(root):
@@ -62,7 +72,9 @@ def check(project, netlist, erc):
     parts = {c.get('ref'): c for c in root.findall('components/comp')}
     nets = defaultdict(set)
     for key, net in actual.items():
-        nets[net].add(key)
+        if not key[0].startswith('TP'):          # a test point is a probe, not a conductor: checked on its own below
+            nets[net].add(key)
+    tps = {r: actual[(r, '1')] for r in parts if r.startswith('TP')}
     ptype = {(n.get('ref'), n.get('pin')): n.get('pintype', '') for net in root.findall('nets/net') for n in net.findall('node')}
     pfunc = {(n.get('ref'), n.get('pin')): n.get('pinfunction', '') for net in root.findall('nets/net') for n in net.findall('node')}
     supplies = {net for net, keys in nets.items() if net == 'GND' or any(ptype[k].startswith(('power_in', 'power_out')) for k in keys)}
@@ -243,6 +255,19 @@ def check(project, netlist, erc):
     for j, r, f in (('J501', 'R516', 'F501'), ('J502', 'R517', 'F502')):
         ref_net = actual[(j, '3')]
         require(refs(ref_net) == {j, r} and refs(actual[(r, '2')]) == {r, f} and actual[(f, '2')] == 'GND', f'A22: {j} reference reaches GND only through {r} / {f}')
+
+    # ---- test points (D-22Nov.9)
+    field = lambda ref, k: parts[ref].findtext(f"fields/field[@name='{k}']")
+    require(all(len([k for k in actual if k[0] == r]) == 1 for r in tps), 'TP1: every test point is a single pin')
+    require(not [n for n in tps.values() if OUTPUT_ENABLES.match(n) or (ENERGETIC.search(n) and n not in TP_SENSE_ONLY)],
+            'TP2: no test point on a fire net or a fire-switch driver; only the scaled sense nodes')
+    tier = lambda n: TP_GND if n == 'GND' else TP_LOOP if n in TP_LOOP_NETS else TP_PAD
+    require(all((parts[r].findtext('footprint'), field(r, 'MPN'), field(r, 'LCSC')) == tier(n) for r, n in tps.items()),
+            'TP3: GND test points are black 5011 loops, rails / strobe / PPS orange 5003 loops, the rest 1.0 mm pads')
+    require(not [n for n in set(tps.values()) if n in supplies and n != 'GND' and n not in TP_LOOP_NETS],
+            'TP4: every rail with a test point has a loop')
+    require(sum(n == 'GND' for n in tps.values()) == 4 and len(set(tps.values())) == len(tps) - 3,
+            'TP5: four GND loops; one test point per other net')
 
     # ---- population
     for n in (1, 2, 3):

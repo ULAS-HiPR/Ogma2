@@ -49,6 +49,6 @@ KiCad 9.0.7's, vendored unchanged ([manifest](libraries/board-library-manifest.j
 | `Ogma2:TXU0101DCKR` | U4302 | TI DCK0006A land pattern 4214835/D (fixed 22 Nov, step 11a) |  |
 | `Ogma2:TXU0202DCUR` | U4301 | KiCad `Package_SO:VSSOP-8_2.3x2mm_P0.5mm`, pad for pad |  |
 | `Ogma2:TXU0304PWR` | U4303, U502, U504 | KiCad `Package_SO:TSSOP-14_4.4x5mm_P0.65mm`, pad for pad |  |
-| `Ogma2:USB4105-GF-A` | J4401 | KiCad `Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal`, pad for pad |  |
+| `Ogma2:USB4105-GF-A` | J4401 | KiCad `Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal`, pad for pad | NPTH layers written `*.Cu` (step 11c, 22 Nov) |
 | `Ogma2:Wio-LR2021` | U4606 | Seeed's official KiCad library, corrected locally for KiCad 9 |  |
 | `Ogma2_GNSS:MAX-M10S-00B` | U4504 | u-blox UBX-20053088 R05 p. 82 (copper); also KiCad RF_GPS:ublox_MAX, pad for pad |  |

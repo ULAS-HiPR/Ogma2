@@ -1461,134 +1461,6 @@
         (hide yes))))
   (symbol
     (lib_id "Connector:TestPoint")
-    (at 336.55 149.86 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "c2c9424c-9061-56ad-b002-7fa4645d36db")
-    (property "Reference" "TP4202"
-      (at 340.36 146.05 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "COMMS_NRST"
-      (at 340.36 146.05 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)
-        (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-      (at 336.55 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 336.55 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "test point"
-      (at 336.55 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "test point tp"
-      (at 336.55 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "Pin* Test*"
-      (at 336.55 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/65009b16-2a06-50e6-b31d-005a16b07828"
-          (reference "TP4202")
-          (unit 1))))
-    (pin "1"
-      (uuid "e5b87253-6b6f-5284-a8ce-1f410eb93639")))
-  (symbol
-    (lib_id "Connector:TestPoint")
-    (at 388.62 121.92 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "cf71c453-0956-52d4-8e1c-f167def388e6")
-    (property "Reference" "TP4203"
-      (at 392.43 118.11 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "COMMS_3V3"
-      (at 392.43 118.11 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)
-        (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
-      (at 388.62 121.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
-      (at 388.62 121.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "test point"
-      (at 388.62 121.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "test point tp"
-      (at 388.62 121.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "Pin* Test*"
-      (at 388.62 121.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "5000"
-      (at 388.62 121.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Keystone Electronics"
-      (at 388.62 121.92 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/65009b16-2a06-50e6-b31d-005a16b07828"
-          (reference "TP4203")
-          (unit 1))))
-    (pin "1"
-      (uuid "8b62ac84-03e9-5ed0-8747-f865abef7d6f")))
-  (symbol
-    (lib_id "Connector:TestPoint")
     (at 388.62 201.93 0)
     (unit 1)
     (in_bom yes)
@@ -1608,13 +1480,13 @@
           (size 1.016 1.016))
         (justify left)
         (hide yes)))
-    (property "Footprint" "TestPoint:TestPoint_Keystone_5000-5004_Miniature"
+    (property "Footprint" "TestPoint:TestPoint_Keystone_5010-5014_Multipurpose"
       (at 388.62 201.93 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1309"
+    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1319"
       (at 388.62 201.93 0)
       (effects
         (font
@@ -1638,13 +1510,19 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "5001"
+    (property "MPN" "5011"
       (at 388.62 201.93 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
     (property "Manufacturer" "Keystone Electronics"
+      (at 388.62 201.93 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "LCSC" "C238127"
       (at 388.62 201.93 0)
       (effects
         (font
