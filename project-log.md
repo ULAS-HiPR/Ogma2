@@ -4395,3 +4395,12 @@ What the sheets show, read from the step-16 netlist:
   Two notes it raised, not checked: Samtec's distributor table shows DigiKey
   with 469, against the zero seen earlier; Master Electronics' page says the
   part is no longer made, while Arrow lists it as active.
+
+## 22 November 2026: C6601–C6606 sit away from J6601
+
+- Checked after the 160 mm build: the six 1 nF capacitors landed 14–20 mm from
+  their J6601 pins (C6602 nearest at 14.5 mm, C6603 furthest at 20.2 mm). The
+  general placer pulls them toward each output net's centre, between the
+  connector and the switches. D-22Nov.20 wants them at the connector, so S4
+  anchors them there. The first 12 mm of the board keep their spec positions
+  at any length, so this doesn't bear on the length.
