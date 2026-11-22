@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/work/hardware/croi2/Croi2.kicad_sch</source>
-    <date>2026-11-22T10:40:08+0000</date>
+    <date>2026-11-22T11:43:52+0000</date>
     <tool>Eeschema 9.0.8+dfsg-1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -8850,6 +8850,36 @@
       <sheetpath names="/04f-radio-module/" tstamps="/54913143-31a3-5c14-9626-89e466cdfe5c/"/>
       <tstamps>8ade3943-8a5d-53e2-9e4f-809027639985</tstamps>
     </comp>
+    <comp ref="D4601">
+      <value>PESD5V0F1BL,315</value>
+      <footprint>Diode_SMD:D_SOD-882</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BL.pdf</datasheet>
+      <description>LoRa RF ESD at J4601: bidirectional TVS, 0.4 pF typ, 5.5 V standoff (D-22Nov.20)</description>
+      <fields>
+        <field name="ki_keywords">diode TVS thyrector</field>
+        <field name="ki_fp_filters">TO-???* *_Diode_* *SingleDiode* D_*</field>
+        <field name="MPN">PESD5V0F1BL,315</field>
+        <field name="Manufacturer">Nexperia</field>
+        <field name="LCSC">C45961</field>
+        <field name="Library_Check">as D4501 (step 10): PESD5V0F1BL is bidirectional, so the TPD1E0B04 symbol's pin 1 (IO) and pin 2 (GND) map to either SOD882 pad; footprint KiCad D_SOD-882</field>
+        <field name="Footprint">Diode_SMD:D_SOD-882</field>
+        <field name="Datasheet">https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BL.pdf</field>
+        <field name="Description">LoRa RF ESD at J4601: bidirectional TVS, 0.4 pF typ, 5.5 V standoff (D-22Nov.20)</field>
+      </fields>
+      <libsource lib="Ogma2_GNSS" part="TPD1E0B04DPYR" description="Bidirectional RF ESD candidate, DPY 0402, 0.15 pF typical; board ESD unqualified"/>
+      <property name="ki_keywords" value="diode TVS thyrector"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <property name="MPN" value="PESD5V0F1BL,315"/>
+      <property name="Manufacturer" value="Nexperia"/>
+      <property name="LCSC" value="C45961"/>
+      <property name="Library_Check" value="as D4501 (step 10): PESD5V0F1BL is bidirectional, so the TPD1E0B04 symbol's pin 1 (IO) and pin 2 (GND) map to either SOD882 pad; footprint KiCad D_SOD-882"/>
+      <property name="Sheetname" value="04f-radio-module"/>
+      <property name="Sheetfile" value="04f-radio-module.kicad_sch"/>
+      <property name="ki_keywords" value="diode TVS thyrector"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/04f-radio-module/" tstamps="/54913143-31a3-5c14-9626-89e466cdfe5c/"/>
+      <tstamps>dd0de93c-272a-5683-8953-a1e3868f3db5</tstamps>
+    </comp>
     <comp ref="J4601">
       <value>132134</value>
       <footprint>Ogma2:SMA_Amphenol_132134_Vertical</footprint>
@@ -11305,6 +11335,150 @@
       <property name="Sheetfile" value="06pyro3.kicad_sch"/>
       <sheetpath names="/06pyro3/" tstamps="/f11e9b04-ff70-5739-858f-03f7090d699c/"/>
       <tstamps>0393c8cb-7563-53ad-8a71-5114f9953ad7</tstamps>
+    </comp>
+    <comp ref="C6601">
+      <value>1n 50V C0G</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="ki_keywords">cap capacitor</field>
+        <field name="ki_fp_filters">C_*</field>
+        <field name="Implementation_Note">RF bypass on OUTPUT1_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">~</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <property name="Implementation_Note" value="RF bypass on OUTPUT1_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"/>
+      <property name="Sheetname" value="06b-output-harness"/>
+      <property name="Sheetfile" value="06b-output-harness.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/06b-output-harness/" tstamps="/9cc140c7-4b49-5686-9319-135458861ae2/"/>
+      <tstamps>68e15025-dd84-5893-88a3-a9595a3d2386</tstamps>
+    </comp>
+    <comp ref="C6602">
+      <value>1n 50V C0G</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="ki_keywords">cap capacitor</field>
+        <field name="ki_fp_filters">C_*</field>
+        <field name="Implementation_Note">RF bypass on OUTPUT1_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">~</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <property name="Implementation_Note" value="RF bypass on OUTPUT1_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"/>
+      <property name="Sheetname" value="06b-output-harness"/>
+      <property name="Sheetfile" value="06b-output-harness.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/06b-output-harness/" tstamps="/9cc140c7-4b49-5686-9319-135458861ae2/"/>
+      <tstamps>4194b4f2-5c5a-5eab-81fc-a3ed1fa300a3</tstamps>
+    </comp>
+    <comp ref="C6603">
+      <value>1n 50V C0G</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="ki_keywords">cap capacitor</field>
+        <field name="ki_fp_filters">C_*</field>
+        <field name="Implementation_Note">RF bypass on OUTPUT2_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">~</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <property name="Implementation_Note" value="RF bypass on OUTPUT2_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"/>
+      <property name="Sheetname" value="06b-output-harness"/>
+      <property name="Sheetfile" value="06b-output-harness.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/06b-output-harness/" tstamps="/9cc140c7-4b49-5686-9319-135458861ae2/"/>
+      <tstamps>4b55d160-c6da-5616-86b9-8dd42f56d139</tstamps>
+    </comp>
+    <comp ref="C6604">
+      <value>1n 50V C0G</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="ki_keywords">cap capacitor</field>
+        <field name="ki_fp_filters">C_*</field>
+        <field name="Implementation_Note">RF bypass on OUTPUT2_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">~</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <property name="Implementation_Note" value="RF bypass on OUTPUT2_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"/>
+      <property name="Sheetname" value="06b-output-harness"/>
+      <property name="Sheetfile" value="06b-output-harness.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/06b-output-harness/" tstamps="/9cc140c7-4b49-5686-9319-135458861ae2/"/>
+      <tstamps>8a04d379-e761-5056-84bd-c4a8f4bcdbd6</tstamps>
+    </comp>
+    <comp ref="C6605">
+      <value>1n 50V C0G</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="ki_keywords">cap capacitor</field>
+        <field name="ki_fp_filters">C_*</field>
+        <field name="Implementation_Note">RF bypass on OUTPUT3_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">~</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <property name="Implementation_Note" value="RF bypass on OUTPUT3_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"/>
+      <property name="Sheetname" value="06b-output-harness"/>
+      <property name="Sheetfile" value="06b-output-harness.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/06b-output-harness/" tstamps="/9cc140c7-4b49-5686-9319-135458861ae2/"/>
+      <tstamps>086aed66-f254-5435-8bf8-075cd951227f</tstamps>
+    </comp>
+    <comp ref="C6606">
+      <value>1n 50V C0G</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="ki_keywords">cap capacitor</field>
+        <field name="ki_fp_filters">C_*</field>
+        <field name="Implementation_Note">RF bypass on OUTPUT3_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">~</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <property name="Implementation_Note" value="RF bypass on OUTPUT3_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"/>
+      <property name="Sheetname" value="06b-output-harness"/>
+      <property name="Sheetfile" value="06b-output-harness.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/06b-output-harness/" tstamps="/9cc140c7-4b49-5686-9319-135458861ae2/"/>
+      <tstamps>f7895806-7bc7-5155-b9bc-331c571b7d14</tstamps>
     </comp>
     <comp ref="J6601">
       <value>430450600</value>
@@ -17866,6 +18040,12 @@
       <node ref="C6404" pin="2" pintype="passive"/>
       <node ref="C6502" pin="2" pintype="passive"/>
       <node ref="C6504" pin="2" pintype="passive"/>
+      <node ref="C6601" pin="2" pintype="passive"/>
+      <node ref="C6602" pin="2" pintype="passive"/>
+      <node ref="C6603" pin="2" pintype="passive"/>
+      <node ref="C6604" pin="2" pintype="passive"/>
+      <node ref="C6605" pin="2" pintype="passive"/>
+      <node ref="C6606" pin="2" pintype="passive"/>
       <node ref="C6701" pin="2" pintype="passive"/>
       <node ref="C6711" pin="2" pintype="passive"/>
       <node ref="C6721" pin="2" pintype="passive"/>
@@ -17883,6 +18063,7 @@
       <node ref="C9101" pin="2" pintype="passive"/>
       <node ref="D4401" pin="2" pinfunction="GND" pintype="passive"/>
       <node ref="D4501" pin="2" pinfunction="A2" pintype="passive"/>
+      <node ref="D4601" pin="2" pinfunction="A2" pintype="passive"/>
       <node ref="D501" pin="3" pinfunction="GND" pintype="passive"/>
       <node ref="D502" pin="3" pinfunction="GND" pintype="passive"/>
       <node ref="D9001" pin="1" pinfunction="K" pintype="passive"/>
@@ -18376,6 +18557,7 @@
       <node ref="U4606" pin="3" pinfunction="RESET" pintype="input"/>
     </net>
     <net code="187" name="LORA_RF_SUBG" class="Default">
+      <node ref="D4601" pin="1" pinfunction="A1" pintype="passive"/>
       <node ref="J4601" pin="1" pinfunction="In" pintype="passive"/>
       <node ref="U4606" pin="10" pinfunction="Sub-G_RF" pintype="passive"/>
     </net>
@@ -18612,6 +18794,7 @@
       <node ref="U1901" pin="5" pinfunction="PG" pintype="open_collector"/>
     </net>
     <net code="234" name="OUTPUT1_HIGH" class="Default">
+      <node ref="C6601" pin="1" pintype="passive"/>
       <node ref="J6601" pin="1" pinfunction="1" pintype="passive"/>
       <node ref="R6912" pin="2" pintype="passive"/>
       <node ref="U6304" pin="5" pinfunction="OUT_[5,6,7]" pintype="power_out"/>
@@ -18619,6 +18802,7 @@
       <node ref="U6304" pin="7" pintype="passive"/>
     </net>
     <net code="235" name="OUTPUT1_LOW" class="Default">
+      <node ref="C6602" pin="1" pintype="passive"/>
       <node ref="J6601" pin="4" pinfunction="4" pintype="passive"/>
       <node ref="Q6301" pin="1" pinfunction="D/D_EP_[1,2,5,6,8]" pintype="passive"/>
       <node ref="Q6301" pin="2" pintype="passive"/>
@@ -18629,6 +18813,7 @@
       <node ref="R6915" pin="1" pintype="passive"/>
     </net>
     <net code="236" name="OUTPUT2_HIGH" class="Default">
+      <node ref="C6603" pin="1" pintype="passive"/>
       <node ref="J6601" pin="2" pinfunction="2" pintype="passive"/>
       <node ref="R6922" pin="2" pintype="passive"/>
       <node ref="U6404" pin="5" pinfunction="OUT_[5,6,7]" pintype="power_out"/>
@@ -18636,6 +18821,7 @@
       <node ref="U6404" pin="7" pintype="passive"/>
     </net>
     <net code="237" name="OUTPUT2_LOW" class="Default">
+      <node ref="C6604" pin="1" pintype="passive"/>
       <node ref="J6601" pin="5" pinfunction="5" pintype="passive"/>
       <node ref="Q6401" pin="1" pinfunction="D/D_EP_[1,2,5,6,8]" pintype="passive"/>
       <node ref="Q6401" pin="2" pintype="passive"/>
@@ -18646,6 +18832,7 @@
       <node ref="R6925" pin="1" pintype="passive"/>
     </net>
     <net code="238" name="OUTPUT3_HIGH" class="Default">
+      <node ref="C6605" pin="1" pintype="passive"/>
       <node ref="J6601" pin="3" pinfunction="3" pintype="passive"/>
       <node ref="R6932" pin="2" pintype="passive"/>
       <node ref="U6504" pin="5" pinfunction="OUT_[5,6,7]" pintype="power_out"/>
@@ -18653,6 +18840,7 @@
       <node ref="U6504" pin="7" pintype="passive"/>
     </net>
     <net code="239" name="OUTPUT3_LOW" class="Default">
+      <node ref="C6606" pin="1" pintype="passive"/>
       <node ref="J6601" pin="6" pinfunction="6" pintype="passive"/>
       <node ref="Q6501" pin="1" pinfunction="D/D_EP_[1,2,5,6,8]" pintype="passive"/>
       <node ref="Q6501" pin="2" pintype="passive"/>

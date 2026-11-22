@@ -150,7 +150,7 @@ def check(project, netlist, erc):
         require(actual[('U4606', pin)] == net, f'Wio manufacturer pin {pin}: {net}')
     for pin in ['13', '16', '17', '18', '19', '21', '22']:
         require(actual[('U4606', pin)].startswith('unconnected-'), f'Wio unused RF/DIO pin {pin} NC')
-    require(nets['LORA_RF_SUBG'] == {('U4606', '10'), ('J4601', '1')} and actual[('J4601', '2')] == 'GND', 'Single sub-GHz host RF path')
+    require(nets['LORA_RF_SUBG'] == {('U4606', '10'), ('J4601', '1'), ('D4601', '1')} and actual[('J4601', '2')] == 'GND', 'Single sub-GHz host RF path with ESD (D4601, D-22Nov.20)')
     require(value('J4601') == '132134' and parts['J4601'].findtext('footprint') == 'Ogma2:SMA_Amphenol_132134_Vertical', 'Approved vertical SMA')
     require(actual[('R4621', '1')] == 'LORA_3V3' and actual[('R4621', '2')] == 'LORA_BUSY_MOD', 'Open-drain BUSY pulled to switched rail')
     for i, sig in enumerate(['SCK', 'MOSI', 'MISO', 'NCS', 'RESET_N', 'BUSY', 'DIO1']):
@@ -218,7 +218,7 @@ def check(project, netlist, erc):
         sp = pfunc[next(k for k in nets[f'PYRO{n}_LS_SELECT'] if k[0] == 'U201')][:2]
         require(fp != sp, f'A2: channel {n} fire ({fp}) and low-side select ({sp}) on different ports')
         low = refs(f'OUTPUT{n}_LOW')
-        require(low == {'J6601', sel, f'R69{n}3', f'R69{n}5'} and actual[('J6601', str(n + 3))] == f'OUTPUT{n}_LOW', f'A3: OUTPUT{n}_LOW only on its low-side drain, continuity network and J6601')
+        require(low == {'J6601', sel, f'R69{n}3', f'R69{n}5', f'C660{2 * n}'} and actual[('J6601', str(n + 3))] == f'OUTPUT{n}_LOW', f'A3: OUTPUT{n}_LOW only on its low-side drain, continuity network, its RF bypass and J6601')
     require(refs('ENERGY_TAP') == {'Q101', 'U101', 'F6101', 'F6102', 'R7104', 'C1004', 'C1005'}, 'A4: ENERGY_TAP only Q101 drain, U101 IN, F6101 / F6102, its sense tap and decoupling')
     for f, j in (('F6101', 'J6101'), ('F6102', 'J6102')):
         require(refs(actual[(f, '2')]) == {f, j}, f'A5: {f} feeds only {j}')
@@ -229,7 +229,7 @@ def check(project, netlist, erc):
     require(actual[('U6001', '6')] == 'FLIGHT_NRST' and actual[('U6001', '2')] == 'STAGE_ARM_INVALID' and actual[('U6001', '1')] == 'NEW_FLIGHT_CLEAR_REQUEST'
             and pfunc[('U201', '62')].startswith('PD15') and 'R6001' in refs('NEW_FLIGHT_CLEAR_REQUEST') and value('R6001') == '100k',
             'A8: U6001 CLR = FLIGHT_NRST, D = STAGE_ARM_INVALID, CLK = PD15 with pull-down')
-    require(all(refs(f'OUTPUT{n}_HIGH') == {'J6601', f'U6{n + 2}04', f'R69{n}2'} and refs(f'PYRO{n}_ENERGY') == {f'U6{n + 2}04', f'R6{n + 2}10', f'C6{n + 2}04'}
+    require(all(refs(f'OUTPUT{n}_HIGH') == {'J6601', f'U6{n + 2}04', f'R69{n}2', f'C660{2 * n - 1}'} and refs(f'PYRO{n}_ENERGY') == {f'U6{n + 2}04', f'R6{n + 2}10', f'C6{n + 2}04'}
                 and actual[(f'R69{n}1', '1')] == '3V3_OPTIONAL' and refs(actual[(f'R69{n}1', '2')]) == {f'R69{n}1', f'R69{n}2'} for n in (1, 2, 3)),
             'A9: no logic rail on an armed rail; the only logic-rail path to J6601 is R69x1 / R69x2')
     for ref in ['R6310', 'R6410', 'R6510']:
@@ -256,6 +256,13 @@ def check(project, netlist, erc):
         bottom = next(r for r in refs(actual[(ref, '2')]) if r.startswith('R') and r != ref)
         require(value(ref) == '32k 0.1%' and value(bottom).startswith('10k'), f'A19: {ref} 32k over {bottom} 10k (D-21Nov.18)')
     require(actual[('U101', '11')] == 'GND', 'A19: U101 MODE tied to GND (auto-retry, D-6.3)')
+    for n in (1, 2, 3):                                 # A23 (D-22Nov.20): a 1 nF C0G from each pyro output to GND at J6601
+        for side, c in (('HIGH', f'C660{2 * n - 1}'), ('LOW', f'C660{2 * n}')):
+            require(value(c) == '1n 50V C0G' and {actual[(c, '1')], actual[(c, '2')]} == {f'OUTPUT{n}_{side}', 'GND'},
+                    f'A23: OUTPUT{n}_{side} has its 1 nF C0G RF bypass ({c}) to GND')
+    require(refs('LORA_RF_SUBG') == {'J4601', 'U4606', 'D4601'} and actual[('D4601', '2')] == 'GND'
+            and refs('GNSS_RF') == {'J4501', 'U4504', 'D4501'} and actual[('D4501', '2')] == 'GND',
+            'A23: each antenna port has its ESD part to GND and nothing else on the line (D4501, D4601)')
     for j, r, f in (('J501', 'R516', 'F501'), ('J502', 'R517', 'F502')):
         ref_net = actual[(j, '3')]
         require(refs(ref_net) == {j, r} and refs(actual[(r, '2')]) == {r, f} and actual[(f, '2')] == 'GND', f'A22: {j} reference reaches GND only through {r} / {f}')

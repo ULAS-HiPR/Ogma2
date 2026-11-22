@@ -955,7 +955,236 @@
           (number "22"
             (effects
               (font
-                (size 1.27 1.27))))))))
+                (size 1.27 1.27)))))))
+    (symbol "Ogma2_GNSS:TPD1E0B04DPYR"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 1.016)
+        (hide yes))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "D"
+        (at 0 2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "TPD1E0B04DPYR"
+        (at 0 -2.54 0)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" "Ogma2_GNSS:TPD1E0B04DPYR"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tpd1e0b04.pdf"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "Description" "Bidirectional RF ESD candidate, DPY 0402, 0.15 pF typical; board ESD unqualified"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_keywords" "diode TVS thyrector"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1.27 1.27))
+          (hide yes)))
+      (symbol "TPD1E0B04DPYR_0_1"
+        (polyline
+          (pts
+            (xy -2.54 1.27)
+            (xy -2.54 -1.27)
+            (xy 2.54 1.27)
+            (xy 2.54 -1.27)
+            (xy -2.54 1.27))
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy 0.508 1.27)
+            (xy 0 1.27)
+            (xy 0 -1.27)
+            (xy -0.508 -1.27))
+          (stroke
+            (width 0.254)
+            (type default))
+          (fill
+            (type none)))
+        (polyline
+          (pts
+            (xy 1.27 0)
+            (xy -1.27 0))
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "TPD1E0B04DPYR_1_1"
+        (pin passive line
+          (at -3.81 0 0)
+          (length 2.54)
+          (name "A1"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27)))))
+        (pin passive line
+          (at 3.81 0 180)
+          (length 2.54)
+          (name "A2"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "2"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no)))
+  (symbol
+    (lib_id "Ogma2_GNSS:TPD1E0B04DPYR")
+    (at 314.96 157.48 270)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "dd0de93c-272a-5683-8953-a1e3868f3db5")
+    (property "Reference" "D4601"
+      (at 317.5 156.21 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "PESD5V0F1BL,315"
+      (at 317.5 158.75 0)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Diode_SMD:D_SOD-882"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tpd1e0b04.pdf"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Description" "LoRa RF ESD at J4601: bidirectional TVS, 0.4 pF typ, 5.5 V standoff (D-22Nov.20)"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_keywords" "diode TVS thyrector"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BL.pdf"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "MPN" "PESD5V0F1BL,315"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Manufacturer" "Nexperia"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "LCSC" "C45961"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (property "Library_Check" "as D4501 (step 10): PESD5V0F1BL is bidirectional, so the TPD1E0B04 symbol's pin 1 (IO) and pin 2 (GND) map to either SOD882 pad; footprint KiCad D_SOD-882"
+      (at 314.96 157.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+          (reference "D4601")
+          (unit 1))))
+    (pin "1"
+      (uuid "866d80ae-2bf6-509c-a828-920e0f7e6631"))
+    (pin "2"
+      (uuid "b99556d5-ad13-53e3-b655-7e0e96ae16b6")))
+  (global_label "LORA_RF_SUBG"
+    (shape bidirectional)
+    (at 314.96 153.67 90)
+    (effects
+      (font
+        (size 0.9 0.9)))
+    (uuid "bd37a87c-6de6-5a12-b842-9f0d4a7c5743")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 314.96 153.67 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 314.96 161.29 270)
+    (effects
+      (font
+        (size 0.9 0.9)))
+    (uuid "203812cc-e5b7-59f8-a78f-e3e546c4a61c")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 314.96 161.29 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (text "D4601: ESD on the LoRa port, as D4501 on GNSS (D-22Nov.20).\nA path for static the antenna collects; 0.4 pF."
+    (exclude_from_sim no)
+    (at 302.26 167.64 0)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left top))
+    (uuid "cf6f682c-d0cf-5372-a331-5815ed91d1e6"))
   (embedded_fonts no)
   (text "RADIO MODULE / SIGNAL DAMPING / EXTERNAL ANTENNA"
     (at 15.24 16.51 0)

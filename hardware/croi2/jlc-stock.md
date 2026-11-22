@@ -74,6 +74,8 @@ The LTC6993 one-shots (U6301, U6401, U6501) were short too (1 stocked); step 6 r
 | Samsung CL21B106KOQNNNE, 10 µF X7R 0805 (C4504) | 9 | C95841, 242,583 |
 | AO3400A (Q9001) | 9 | C20917 (Basic), 757,862 |
 | Nexperia PESD5V0F1BL,315 (D4501, D-22Nov.8) | 10 | C45961, 54,327 (jlcparts scrape, deployed 21 Nov 2026) |
+| Nexperia PESD5V0F1BL,315 (D4601, D-22Nov.20) | 17 | C45961, as D4501 |
+| 1 nF 50 V C0G 0603 ×6 (C6601–C6606, D-22Nov.20) | 17 | The matcher's pick: C106246 (CC0603JRNPO9BN102, Extended), 1,344,064 |
 
 ## Stocked with margin
 

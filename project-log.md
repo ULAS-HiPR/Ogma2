@@ -4338,3 +4338,21 @@ What the sheets show, read from the step-16 netlist:
 - **Stop 1** is [burrito-stop1.md](docs/briefs/burrito-stop1.md). By the brief's
   rule the length stays at 180 mm. Four calls are waiting for Seán: the length,
   J102's -SD, the two A5 proposals, and test-point numbering.
+
+## 22 November 2026: Seán's answers at stop 1; capture step 17 (D-22Nov.20)
+
+- Seán, on the A5 proposals: “Yes absolutely add the esd protect and the 1nf
+  caps.” Step 17 adds them:
+  - D4601 (PESD5V0F1BL,315) on `LORA_RF_SUBG` at J4601;
+  - C6601–C6606, 1 nF 50 V C0G 0603, on each pyro output at J6601.
+- Checks run:
+  - 566 parts, 14 pin changes (exactly the 7 new parts' pins);
+  - ERC unchanged;
+  - checker A3 and A9 amended and A23 added: 364 checks pass;
+  - expected pins, manifest and PDF regenerated.
+- Seán, on test points: “We are not deleting any test points so don’t worry about
+  renumbering”. The numbers stay.
+- J102: Seán asked for an agent to look for earlier stock at Mouser, Arrow and
+  elsewhere. The interruption stopped it before it reported, so the question is
+  open.
+- Next: his ask to fit 80 × 160 mm, with the S/N box and the rocket moved.
