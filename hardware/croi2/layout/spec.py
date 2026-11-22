@@ -119,7 +119,8 @@ RESERVED = {}      # J101's 20 x 22 mm block gave way to its footprint (capture 
 
 ANCHORS = {   # [J] placed before everything else, at these centres
     'U201': (40.0, 70.0, 0),                 # flight MCU, band 2
-    'U401': (40.0, 126.0, 0),                # comms MCU, band 3
+    'U401': (33.0, 126.0, 180),              # comms MCU, band 3: turned so USB leaves on the side facing J4401, and
+                                             #   7 mm left of centre (stage B2 step 3: its wrong-side pins 19 -> 9)
     'U6304': (32.5, 24.0, 270),              # channel high sides in a row behind J6601, OUT pins (5-7) forward,
     'U6404': (41.5, 24.0, 270),              #   VS pins (8-10) aft toward the armed rails
     'U6504': (50.5, 24.0, 270),

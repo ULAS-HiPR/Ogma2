@@ -4485,3 +4485,25 @@ What the sheets show, read from the step-16 netlist:
     15.6 → 14.2 mm; densest band 0.735 → 0.731.
   Kept. Two builds gave the same bytes; DRC 0 errors and the 2 accepted
   warnings; schematic parity clean.
+
+## 22 November 2026: stage B2 step 3, the comms MCU turned
+
+- U401 at each of four angles (trial builds, fast yardsticks): only 180° puts
+  its USB pins on the side facing J4401, and it cut U401's wrong-side pins from
+  19 to 10, but BZ9001 and D9001 found no room. 7 mm left of centre (x = 33 in
+  the spec) fixed that and helped everything else. Against step 4's board:
+  - U401 wrong-side pins 19 of 28 → 9 of 26; all ICs 81 → 65;
+  - wire 7938.3 → 7814.6 mm; crossings 3149 → 3015;
+  - test points over 20 mm from their route 6 → 4; densest band 0.731 → 0.710;
+  - plane pads without a via spot 61 → 58;
+  - congestion overflow 14.2 → 15.6 mm. Every trial has the same 47
+    over-capacity cells, so the map may be measuring fixed obstacles; the
+    meter's baseline will say whether to keep it.
+  x = 30 cut wire further but pushed the densest band to 0.745; x = 36 with a
+  bigger indicator region was close, with more crossings.
+- U201 at 90°, 180° or 270° each left BZ9001 unplaced and added 2–4% of
+  wire; 180° would have cut its wrong-side pins to 27 of 78. It stays at 0°;
+  pin swaps (step 7) are its lever.
+- The layout brief says U401 sits near the centre line; it is now 7 mm left
+  of it. Two builds gave the same bytes; DRC 0 errors and the 2 accepted
+  warnings; schematic parity clean.
