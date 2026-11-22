@@ -4255,3 +4255,25 @@ tour's connector gallery.
   a footprint; manifest and PDF regenerated. The board is rebuilt in stage B.
 - Settles the peg side for good: the first 105311-1102 that arrives, laid on a
   print of the footprint.
+
+## 22 November 2026: stage A, capture step 16: the 0402 swap
+
+- 200 of the 387 0603 resistors and capacitors move to 0402: 105 resistors and
+  95 capacitors, 522 mm² of courtyard. Each swapped part carries its JLC part
+  (MPN and LCSC fields): 22 types, 15 Basic (187 parts) and 7 Extended
+  (13 parts).
+- The script (`s16_0402.py`) classifies every 0603 part by its nets against the
+  brief's rules and writes each part's reason to `passives-0402.md`. How each rule
+  was read is in the script's header. Three readings are mine and stricter than
+  the brief's words:
+  - the whole of the 06 sheets counts as fire path (76 parts stay);
+  - a capacitor's stated voltage stays a floor, so the fifteen 1 µF X7R 16 V parts
+    stay: JLC's best 0402 1 µF X7R is 10 V;
+  - 0 Ω links aren't in the swap list and stay.
+- One assumption: the six sensor rail links (47 Ω, 22 Ω) carry under 20 mA, so
+  under 19 mW. The sensor supply currents weren't re-read today.
+- Checks run: 0 pin changes; ERC unchanged; checker 354 pass; the step's check
+  re-asserts the rules on the result; `jlc_passives.py` still matches every
+  generic value line left; manifest and PDF regenerated. The placer already
+  had JLC's 0402 spacing (0.15 mm chip to chip, 0.18 mm to an 0603), cited in
+  `engine/place.py`; checked, not changed.

@@ -32,6 +32,8 @@ ADDED = {
     'Capacitor_SMD:CP_Elec_8x10': f'{K9}, Capacitor_SMD.pretty, Nichicon 8 x 10 mm; capture step 11 (C1403, Nichicon PCW phi 8 x 10)',
     'TestPoint:TestPoint_Keystone_5010-5014_Multipurpose': f'{K9}, TestPoint.pretty; capture step 12 (GND loops, Keystone 5011, D-22Nov.9); 3D model not in the GitHub mirror',
     'Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical': f'{K9}, Connector_Molex.pretty, from Molex drawing 436500215; capture step 14 (J103, D-22Nov.18)',
+    'Resistor_SMD:R_0402_1005Metric': f'{K9}, Resistor_SMD.pretty; capture step 16 (the 0402 swap, D-22Nov.13)',
+    'Capacitor_SMD:C_0402_1005Metric': f'{K9}, Capacitor_SMD.pretty; capture step 16 (the 0402 swap, D-22Nov.13)',
     'Ogma2:105311-1102': 'Drawn by capture step 15 (tools/capture/steps/s15_j101.py) from Molex drawing SD-105311-100 rev H (LCSC copy); pads per the Burrito sweep section 10 (J101, D-22Nov.13)',
 }
 MODEL_SOURCE = 'KiCad kicad-packages3D, master branch (GitHub mirror), fetched 21 Nov 2026 at capture close-out'
@@ -45,7 +47,8 @@ FROM_DEB = ['Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step', 'Crystal.3d
             'Package_SO.3dshapes/Texas_HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3.155x3.255mm.step',
             'Package_SON.3dshapes/WSON-10-1EP_2.5x2.5mm_P0.5mm_EP1.2x2mm.step',
             'Package_LGA.3dshapes/ST_HLGA-10_2x2mm_P0.5mm_LayoutBorder3x2y.step',
-            'Connector_Coaxial.3dshapes/SMA_Amphenol_132291_Vertical.step']
+            'Connector_Coaxial.3dshapes/SMA_Amphenol_132291_Vertical.step',
+            'Resistor_SMD.3dshapes/R_0402_1005Metric.step', 'Capacitor_SMD.3dshapes/C_0402_1005Metric.step']
 DRAWN_SOURCE = ('Drawn by tools/layout/models3d.py from the footprint F.Fab outline and the heights in '
                 'libraries/3d/GENERATED.md, 22 Nov 2026; simplified, several heights unverified')
 DRAWN = ['TestPoint.3dshapes/TestPoint_Keystone_5000-5004_Miniature.step',
@@ -105,7 +108,7 @@ def main(netlist):
         'scope': old['scope'], 'hashes': {str(p.relative_to(BOARD)): sha(p) for p in files},
         'revision_note': ('2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-13 (D4501, C1403, '
                           'test points); 22 Nov: a 3D model for every part (KiCad 9.0.7 package, or drawn: libraries/3d/GENERATED.md); '
-                          'step 14: J103 to Micro-Fit 3.0 43650-0215 (D-22Nov.18); step 15: J101\'s Nano-Fit 105311-1102 footprint from SD-105311-100. '
+                          'step 14: J103 to Micro-Fit 3.0 43650-0215 (D-22Nov.18); step 15: J101\'s Nano-Fit 105311-1102 footprint from SD-105311-100; step 16: 200 passives to 0402 (passives-0402.md). '
                           + base_note(old['revision_note'])),
         'symbol_count_definition': old['symbol_count_definition'],
     }

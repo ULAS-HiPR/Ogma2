@@ -82,6 +82,10 @@ SN74LVC1G04/74/97, TMUX1511, TPS2121, TPS22918, TPS2553-1, TPS3700, TPS3808G33,
 TPS70933, TPS7A9101, USB4105-GF-A, USBLC6-2SC6, BAS116, ICM-42688-P, MS5607,
 ABS07-32.768KHZ-7-T, JST GH BM02B, Molex 430450600 / 430451000, Keystone 5001.
 
+## The 0402 swap (capture step 16, 22 Nov)
+
+200 parts moved to 0402 carry a pinned JLC part (MPN and LCSC fields), so `jlc_passives.py` skips them: 22 part types, 15 Basic (187 parts) and 7 Extended (13 parts: C137973 RC0402FR-0747RL ×5, C526972 CC0402BRNPO9BN9R1 ×2, C2909332 FRC0402F2701TS ×2, C880605 TCC0402X7R473K500AT ×1, C163478 RC0402FR-0722K1L ×1, C3013155 FRC0402F1652TS ×1, C2906871 FRC0402F4703TS ×1). Each Extended type adds JLC's per-type loading fee. Every part, with its reason, is in [passives-0402.md](passives-0402.md). The generic table below predates the swap; rerun on the step-16 netlist, every remaining value line still matches.
+
 ## Generic passives (full pass, step 8; rerun at step 9)
 
 70 value lines, 396 parts, from the as-captured netlist, matched by
