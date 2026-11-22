@@ -4177,3 +4177,21 @@ tour's connector gallery.
 - Still open: J101's footprint (Molex drawing SD-105311-100 unread); J103 is
   still a JST GH in the schematic against D-19Nov.5; Samtec lists the MPT's -SD
   option for existing business only.
+
+## 22 November 2026: sweep before S4, written as verdicts and work orders
+
+- At Seán's request, a reasoning pass over the whole board, kept to text to save
+  usage: [burrito-sweep.md](docs/briefs/burrito-sweep.md). Recommendations, not
+  decisions. No requirement document was re-read, and no placed block was
+  compared with its datasheet figure; the file lists those as work.
+- Its calls: stay one-sided at 80 × 180 (a second side buys about 20 mm, and the
+  bay needs Jay's Rev 2 either way); no shield cans, but fenced feed lines and
+  scripted stitching; L3 as a second ground plane with power islands (amends
+  D-21Nov.26, needs Seán's yes); keep KiCadRoutingTools for the non-critical
+  nets and freeze its output as route files the build replays.
+- J101: Molex drawing SD-105311-100 rev H was read on LCSC's copy. Hole sizes
+  and positions are in the file's section 10. One feature, the peg's side, is
+  to confirm before the footprint is built. The reserved block can shrink from
+  20 × 22 mm to about 11 × 9 mm.
+- Open for Seán: J102's -SD option (existing business only on Samtec's
+  drawing), J103's part, the long-lead buy, the Ogham line.
