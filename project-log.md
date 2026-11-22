@@ -4048,3 +4048,8 @@ tour's connector gallery.
 - Next: D4501's swap (capture step 10), the footprint audit and the sensor
   layout notes, then S3, Burrito's placement. Churro's capture runs while
   Burrito waits at S3.
+- Capture step 10 (22 Nov): D4501 is now Nexperia's PESD5V0F1BL,315 in SOD882
+  (D-22Nov.8), which Economic PCBA can place. Symbol kept (bidirectional part);
+  footprint KiCad D_SOD-882, vendored. Netlist: 570 parts, 1831 pins, 0 pin
+  changes; ERC unchanged (3 recorded exclusions); the full checker's 347 checks
+  pass.

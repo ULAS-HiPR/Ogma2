@@ -18,6 +18,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | 7 | Comms MCU to LQFP64; inter-MCU link | Done: U401 redrawn as STM32H563RIT6 from the 64-pad map (same symbol UUID); USART3 on PC10 / PC11; C405 and C408 removed (no such pads); 2 findings closed |
 | 8 | Close-out: root sheet, full ERC, checkers, pin CSVs, J101 footprint | Root renumbered; ERC clean with 3 recorded exclusions; checker rewritten with the capture assertions (342 checks pass); as-captured pin maps; fresh exports; library manifest and 5 of 7 missing 3D models. J101 footprint blocked: Molex drawing not obtained |
 | 9 | The nine calls decided after close-out (D-21Nov.12–20), on 18 sheets and the root index | Done: 11 parts out (the seven doubled pull-ups; R1206, R4404 and R4304 with `USB_CONFIG_OK`; R9005, the piezo's bleed resistor, with D9002 kept as the coil's flyback diode); U4303 channel 4 input tied to GND, its output and comms PA1 no-connect; J6101 / J6102, U3104, BZ9001, Q9001, the bulk capacitors and the 0.1% resistors set (19 parts); 25 pins; ERC unchanged; A13 and the sounder added to the checker (347 checks pass). Sounder amended at capture to PUI SMT-1028-T-2-R (D-21Nov.20) |
+| 10 | D4501 to a part Economic PCBA places (D-22Nov.3, D-22Nov.8) | Done: Nexperia PESD5V0F1BL,315, SOD882 (KiCad D_SOD-882, vendored); symbol kept, bidirectional; 0 pin changes; ERC unchanged; 347 checks pass |
 
 ## How each step is checked
 

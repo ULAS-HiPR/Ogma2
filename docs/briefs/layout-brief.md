@@ -338,7 +338,7 @@ enough to need it *[J]*.
   aren't needed. Castellations and SPI aren't offered
   ([assembly capabilities](https://jlcpcb.com/capabilities/pcb-assembly-capabilities),
   read 22 Nov).
-- **D4501** (0.6 × 0.3 mm) is below 0402: swap it, or go Standard.
+- **D4501** (0.6 × 0.3 mm) was below 0402. It is now Nexperia's PESD5V0F1BL in SOD882 (D-22Nov.8, capture step 10).
 
 **Spacing:** JLC's recommended minimums between parts, measured between the
 nearest pad or body edges (updated 9 Sep 2026,
@@ -429,7 +429,7 @@ This half of the brief is written once Seán accepts the review.
 | Item | Who | By |
 | --- | --- | --- |
 | JLC offers Economic with JLC04161H-3313 | Seán, at upload | Order |
-| D4501's swap (decision row, capture step) | Claude drafts, Seán decides | S3 |
+| D4501's swap | Done 22 Nov: PESD5V0F1BL (D-22Nov.8) | — |
 | J101's footprint from Molex's drawing; the rest of the footprint audit | Claude | S3 |
 | Sensor datasheets' layout notes (LSM6DSV32X, ICM-42688-P, ADXL375, BMP390, MS5607, MMC5983MA), ST's AN2867, Tag-Connect's keep-out | Claude | Before S3's placement freezes |
 | Part masses for staking (B-33) | Claude | S3 |

@@ -2659,24 +2659,24 @@
       (effects
         (font
           (size 1.016 1.016))))
-    (property "Value" "TPD1E0B04DPYR"
+    (property "Value" "PESD5V0F1BL,315"
       (at 335.28 224.79 270)
       (effects
         (font
           (size 1.016 1.016))))
-    (property "Footprint" "Ogma2_GNSS:TPD1E0B04DPYR"
+    (property "Footprint" "Diode_SMD:D_SOD-882"
       (at 335.28 233.68 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tpd1e0b04.pdf"
+    (property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BL.pdf"
       (at 335.28 233.68 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Description" "RF ESD candidate; verify installed clamping and receiver survival"
+    (property "Description" "GNSS RF ESD at J4501: bidirectional TVS, 0.4 pF typ, 5.5 V standoff (D-22Nov.8)"
       (at 335.28 233.68 0)
       (effects
         (font
@@ -2694,6 +2694,12 @@
         (font
           (size 1.27 1.27))
         (hide yes)))
+    (property "Library_Check" "PESD5V0F1BL (D-22Nov.8): bidirectional, so the kept TPD1E0B04 symbol's pin 1 (IO) and pin 2 (GND) map to either SOD882 pad; footprint KiCad D_SOD-882 from Nexperia's SOD882 drawing"
+      (at 335.28 233.68 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))
     (instances
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/adde216c-dc4d-51de-96fc-27a8ca7e017d"
@@ -2703,13 +2709,13 @@
       (uuid "a4e2543c-c84c-5a5c-847e-4e030988b353"))
     (pin "2"
       (uuid "b7e85b37-f702-50f0-acf3-53a229e60db3"))
-    (property "MPN" "TPD1E0B04DPYR"
+    (property "MPN" "PESD5V0F1BL,315"
       (at 335.28 233.68 0)
       (effects
         (font
           (size 1.016 1.016))
         (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
+    (property "Manufacturer" "Nexperia"
       (at 335.28 233.68 0)
       (effects
         (font
@@ -3288,7 +3294,7 @@
         (size 1.05 1.05))
       (justify left))
     (uuid "eebd81e1-6e70-5f52-a115-939d3d2b6d57"))
-  (text "Same U4504 symbol UUID and hierarchy path. New J4501/D4501 require explicit PCB update; live PCB untouched by this candidate."
+  (text "Same U4504 symbol UUID and hierarchy path. D4501 is Nexperia PESD5V0F1BL (SOD882), placeable by Economic PCBA (D-22Nov.8)."
     (at 15.24 287.02 0)
     (effects
       (font

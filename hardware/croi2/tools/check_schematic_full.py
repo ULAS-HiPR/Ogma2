@@ -131,7 +131,7 @@ def check(project, netlist, erc):
         require(actual[('U4504', pin)].startswith('unconnected-'), f'MAX unused pin {pin}; SAFEBOOT18 and backup6 unloaded')
     require(nets['GNSS_RF'] == {('U4504', '11'), ('J4501', '1'), ('D4501', '1')}, 'Single passive GNSS RF path with ESD; no bias supply')
     require(actual[('J4501', '2')] == actual[('D4501', '2')] == 'GND', 'GNSS SMA and ESD returns')
-    require(value('J4501') == '132134' and value('D4501') == 'TPD1E0B04DPYR', 'GNSS SMA and low-capacitance ESD selections')
+    require(value('J4501') == '132134' and value('D4501') == 'PESD5V0F1BL,315', 'GNSS SMA and low-capacitance ESD selections (D-22Nov.8)')
     for pin, net in {'1': 'LORA_3V3', '2': 'LORA_DIO1_MOD', '3': 'LORA_RESET_N_MOD', '4': 'LORA_MISO_MOD', '5': 'LORA_MOSI_MOD',
                      '6': 'LORA_SCK_MOD', '7': 'LORA_NCS_MOD', '8': 'LORA_BUSY_MOD', '9': 'GND', '10': 'LORA_RF_SUBG',
                      '11': 'GND', '12': 'GND', '14': 'GND', '15': 'GND', '20': 'GND'}.items():

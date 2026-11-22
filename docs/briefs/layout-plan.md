@@ -435,7 +435,7 @@ Each gate is checked by a script or tool, and its output kept.
 - [x] access-panel brief's J6101 / J6102 line fixed
 - [x] S2: Burrito's routing brief and Churro's power review, accepted 22 Nov (D-22Nov.2–7); churro.md frozen
 - [ ] Footprint audit (J101, USB-C, MMC5983MA, C1403) and the sensor datasheets' layout notes, before S3
-- [ ] Burrito D4501 swap (decision row and capture step), if Economic assembly is kept
+- [x] Burrito D4501 swap: Nexperia PESD5V0F1BL, SOD882 (D-22Nov.8, capture step 10)
 - [ ] S3 Burrito placement
 - [ ] S4 Burrito critical nets
 - [ ] S5 Burrito full route, outputs
