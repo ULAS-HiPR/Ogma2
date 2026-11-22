@@ -213,8 +213,10 @@ Target vehicles, as said at the 14 October requirements meeting:
   switch and logging, and no wires to Ogma. The canard servos and their leads
   keep clear of its hot module.
 
-Every board is 80 mm wide (D-21Nov.6). Ériú's av-bay must grow to hold the
-stack: about 400–420 mm between lug faces, or a two-sided sled.
+Every board is 80 mm wide (D-21Nov.6). Burrito is 80 × 180 mm (D-22Nov.10).
+Ériú's av-bay must grow to hold the stack: about 400–420 mm between lug faces, or
+a two-sided sled. Burrito's mounting holes have GND rings; the sled mounts it on
+insulating standoffs or washers (D-22Nov.11).
 
 ## Fault and software policy
 
@@ -257,7 +259,7 @@ stack: about 400–420 mm between lug faces, or a two-sided sled.
    D-2Nov.1.
 4. Jay and James: Ériú av-bay Rev 2 length (end-to-end mating, or an adapter at
    J102 on a two-sided sled; J102 stays where it sits, aft, D-21Nov.24); the sled
-   and its standoffs for Burrito's eight M3 holes (D-21Nov.23); the e-reg's
+   and its insulating standoffs or washers for Burrito's eight M3 holes (D-22Nov.11); the e-reg's
    readings and PTs (D-21Nov.10); actuator and valve specs, and each
    valve's unpowered state; where the panel, packs, switches, Churro and the CATS Vega
    sit; the run length; how far the charges are from Burrito (the external pyro

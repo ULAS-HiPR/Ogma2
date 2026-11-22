@@ -437,7 +437,8 @@ Each gate is checked by a script or tool, and its output kept.
 - [x] Footprint audit (capture steps 11, 11a; hardware/croi2/footprint-audit.md): C1403 to CP_Elec_8x10, MMC5983MA checked, USB-C closed, TXU0101 lands fixed; J101 waits for Molex's drawing
 - [x] Sensor, crystal and Tag-Connect layout notes in the brief (§3a), 22 Nov
 - [x] Burrito D4501 swap: Nexperia PESD5V0F1BL, SOD882 (D-22Nov.8, capture step 10)
-- [ ] S3 Burrito placement
+- [x] Test points in three sizes, lean set of 47, TP1–TP47 fore to aft (D-22Nov.9; capture steps 12, 13)
+- [x] S3 Burrito placement at 80 × 180 (D-22Nov.10): every part placed, DRC 0 errors besides the 499 unrouted, deterministic; GND-ring holes (D-22Nov.11); silk refs only where used; bottom art and TP legend. Waits for Seán's review
 - [ ] S4 Burrito critical nets
 - [ ] S5 Burrito full route, outputs
 - [ ] Churro capture

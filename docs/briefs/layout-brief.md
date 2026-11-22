@@ -52,7 +52,7 @@ behind the computed figures are in [tools/layout/phase2](../../tools/layout/phas
 
 | Item | Rule | Tag |
 | --- | --- | --- |
-| Outline | 80 × 230 mm, 1.6 mm thick | [R] B-35, D-21Nov.6 |
+| Outline | 80 × 180 mm, 1.6 mm thick. The y values in this brief and in `spec.py` are written for the 230 mm reference board; `build.py` maps them to 180 | [R] B-35, D-22Nov.10 |
 | Holes | Eight Ø3.2 mm unplated holes at x = 4 and 76, y = 6, 79, 152 and 225. No copper within Ø7 mm on any layer, no part within Ø8 mm | [R] D-21Nov.23 |
 | J102 | Origin at (40, 230), 0°, top side: where it sits on the 8 September draft, read from that file. Its mating face overhangs the aft edge; its courtyard spans x 13.2–66.9 | [R] IR-3, D-21Nov.24 |
 | Other connectors | On an edge, facing out. The right-angle ones open past their edge. The vertical ones stand at the edge, with latch and cable toward it | [R] D-21Nov.24 |
@@ -148,6 +148,17 @@ step-9 netlist:
 - **IMUs** share one orientation, axes square to the board edges.
 - **Heavy and tall parts** sit near a hole row: C1403, C1007, BZ9001, the vertical
   plugs.
+- **Test points** (D-22Nov.9):
+  - The four black GND loops claim edge spots first, spread fore to aft.
+  - The 18 orange loops and 25 pads come last, each beside the circuit it probes, upright.
+  - They're numbered TP1 to TP47 fore to aft once the length is fixed.
+- **Silkscreen** (D-22Nov.9):
+  - Refs go on silk only for test points, connectors, ICs and LEDs.
+  - Each of those refs counts as courtyard while placing, so no part covers it.
+  - Every other ref goes on F.Fab (the assembly drawing). Polarity marks stay on silk.
+  - A pass after placement moves any visible ref to the nearest spot clear of pads, other parts' courtyards, other silk and the edge.
+  - The bottom carries the name, version, team, a burrito with sparkles, and the TP-to-net legend. The top carries the name and version, small.
+- **Mounting holes** (D-22Nov.11): plated, with an exposed GND ring and stitching vias. No track or via within Ø8 mm; the sled mounts Burrito on insulating standoffs or washers.
 
 *Unknown until S3:* whether band 3's ≈ 1,160 mm² and band 1's ≈ 1,660 mm² fit
 their bands with routing room. The S3 metrics (density per band, wire length)

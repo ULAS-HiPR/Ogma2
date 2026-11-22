@@ -4099,3 +4099,39 @@ tour's connector gallery.
     library, and this was why.
 - The refs become TP1–TP47 fore to aft in a later step, once the board's length
   is fixed.
+
+## 22 November 2026: S3, Burrito placed at 80 × 180 mm (D-22Nov.10, D-22Nov.11)
+
+- Seán saw the first placement and asked for a shorter board, the same width.
+  Before the sweep he called 150–170 mm at 3/5.
+- The sweep placed Burrito at every 10 mm from 210 to 150 mm with the same rules
+  (`build.py --length`: each band's span in proportion to its parts' area, edge
+  connectors slid clear of the holes):
+  - every part places down to 170 mm; at 160, three parts don't fit;
+  - the densest band is 0.60 at 190, 0.66 at 180 and 0.72 at 170.
+  His call is half settled: placement fits inside his band only at its top
+  (170), and routing room is still S5's to show. Seán chose 180.
+- At 180, all 558 parts are placed and J101's block is reserved. No JLC spacing
+  breach; 4 support-to-IC exceptions; 18 parts sit 4 mm outside their region.
+  Band densities are 0.57, 0.60, 0.65 and 0.63.
+- DRC: 0 errors beside the 499 unrouted connections. Two warnings: J6601's silk
+  outline follows its body past the forward edge, as designed. Parity: J101 has
+  no footprint yet. Two builds are byte-identical.
+- Mounting holes: plated, with an exposed GND ring and stitching vias. The sled
+  mounts Burrito on insulating standoffs or washers, so GND never touches the
+  sled (IR-6). Seán picked this over bonding to the sled.
+- Silkscreen:
+  - Refs appear only on test points, connectors, ICs and LEDs. Each counts as
+    courtyard while placing, and a pass after placement clears it of pads,
+    courtyards, other silk and the edge. Every ref is on the assembly drawing.
+  - The pin-1 marks of the custom footprints are 1.0 mm and clear their pads.
+  - The bottom carries BURRITO, the version and team, a burrito with sparkles and
+    steam, and the test point legend. The top carries "BURRITO R1.0", small.
+- Capture step 13 numbers the test points TP1–TP47 fore to aft. Their label
+  boxes are sized for "TP00" and they are placed in an order set by their circuits,
+  so the renumbered rebuild moved nothing. The map is `hardware/croi2/test-points.md`.
+- Doubts carried to S4/S5:
+  - J4201 slid 17 mm aft past a hole row, to 21 mm from U401.
+  - The Keystone loops have no 3D models.
+  - "R1.0" is Claude's pick for the version.
+  - The connector latch directions are still to check.
