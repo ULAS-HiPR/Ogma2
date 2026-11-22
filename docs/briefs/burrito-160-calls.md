@@ -1,5 +1,8 @@
 # Burrito at 160 mm: calls before S4
 
+*Seán answered these the same day. The work order below is replaced by
+[burrito-stage-b2-brief.md](burrito-stage-b2-brief.md), which also puts the S/N box on the top.*
+
 **22 November 2026.** Claude Fable, for Seán, then for Opus to execute. These are a model's calls and
 proposals. Nothing here is decided until Seán says so, except the two items marked as his.
 
