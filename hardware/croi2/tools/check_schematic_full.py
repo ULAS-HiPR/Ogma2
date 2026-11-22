@@ -210,6 +210,10 @@ def check(project, netlist, erc):
             pulls = [r for r in refs(net) if r.startswith('R') and value(r) == '100k' and 'GND' in {actual[(r, '1')], actual[(r, '2')]}]
             drivers = {k for k in nets[net] if k[0] == 'U201' or ptype[k].startswith(('output', 'bidirectional', 'tri_state', 'power_out', 'open'))}
             require(len(pulls) == 1 and {k[0] for k in drivers} == {'U201'}, f'A1: {net} has one 100k pull-down and no driver but its MCU pin')
+        gate, series = f'PYRO{n}_GATE', f'R6{n + 2}04'
+        gp = [r for r in refs(gate) if r.startswith('R') and value(r) == '100k' and 'GND' in {actual[(r, '1')], actual[(r, '2')]}]
+        require(len(gp) == 1 and refs(gate) == {sel, series, gp[0]} and {actual[(series, '1')], actual[(series, '2')]} == {gate, f'PYRO{n}_LS_SELECT'},
+                f'A1b: {gate} has one 100k pull-down and is driven only through {series} from PYRO{n}_LS_SELECT (safe with both MCUs in reset)')
         fp = pfunc[next(k for k in nets[f'PYRO{n}_FIRE'] if k[0] == 'U201')][:2]
         sp = pfunc[next(k for k in nets[f'PYRO{n}_LS_SELECT'] if k[0] == 'U201')][:2]
         require(fp != sp, f'A2: channel {n} fire ({fp}) and low-side select ({sp}) on different ports')

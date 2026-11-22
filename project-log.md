@@ -4277,3 +4277,29 @@ tour's connector gallery.
   generic value line left; manifest and PDF regenerated. The placer already
   had JLC's 0402 spacing (0.15 mm chip to chip, 0.18 mm to an 0603), cited in
   `engine/place.py`; checked, not changed.
+
+## 22 November 2026: stage A, A5: the schematic checks (sweep §7.5–7.9)
+
+What the sheets show, read from the step-16 netlist:
+
+- **LoRa port:** `LORA_RF_SUBG` joins J4601 and the Wio-LR2021's RF pin, and
+  nothing else: no ESD part and no DC path to ground on the board. Proposed for
+  stop 1: the GNSS port's PESD5V0F1BL,315 (C45961) at J4601 too.
+- **GNSS antenna supply:** none. The sheet is for a passive antenna and the
+  MAX-M10S's VCC_RF is open, so there's nothing to limit.
+- **Pyro outputs:** no capacitor on `OUTPUTn_HIGH` or `OUTPUTn_LOW`. Proposed for
+  stop 1: 1 nF C0G to ground on each of the six (C106246). Checker A3 and A9
+  would change with them.
+- **USB:** USBLC6-2SC6 (D4401) on D+, D− and VBUS at J4401. CC1 and CC2 reach
+  only their 5.1 kΩ Rd resistors, so no IC sits on them.
+- **CAN:** ESD2CAN24 at each connector (D501 at J501, D502 at J502).
+- **Safe in reset:** every pyro switch input and low-side gate has a 100 kΩ
+  pull-down: the three FIRE and LS_SELECT nets, `PYRO3_HS_ENABLE` (behind the
+  U6502 AND), and the three GATE nets. The checker named eight of those
+  eleven. It missed the gate pull-downs (R6305, R6405, R6505). New assertion
+  A1b names them, and a negative test (R6505 left open) is rejected. The
+  checker is at 357 checks.
+- **BOM variants:** J101 and J102 are both fitted on the schematic; nothing in
+  KiCad 9 marks them exclusive (A17). Stage D writes the two variants.
+- Checked and not a fault: the magnetometer's CAP pin on `MAG_3V3` is MEMSIC's
+  internal tie, as the capture spec records.
