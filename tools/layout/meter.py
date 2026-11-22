@@ -209,6 +209,8 @@ def main():
     ap.add_argument('--krt-minutes', type=float, help='stop the router after this long; a pass cut off leaves its nets open')
     ap.add_argument('--rails-as-tracks', action='store_true',
                     help='GND is the only plane: the rails are routed as tracks (a six-layer plan with no power layer)')
+    ap.add_argument('--plane-rails', nargs='+', default=[],
+                    help='with --rails-as-tracks: these rails stay planes (e.g. FLIGHT_3V3 as a whole L5 plane)')
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     b = K.LoadBoard(a.pcb)
@@ -218,7 +220,7 @@ def main():
     bd = M.BoardData(b, spec.ORIGIN, (spec.W, spec.H))
     planes = M.plane_nets(bd, set(spec.RAILS))
     if a.rails_as_tracks:
-        planes = {n: l for n, l in planes.items() if M.short(n) == 'GND'}
+        planes = {n: l for n, l in planes.items() if M.short(n) == 'GND' or M.short(n) in a.plane_rails}
     allsig = sorted(M.signal_nets(bd, planes))
     # RF lines are scripted in stage C on L1 with no via (D-21Nov.25, D-22Nov.16): left out of the route
     rf = [n for n in allsig if M.net_class(n, spec.PATTERNS) == 'RF50']
@@ -242,7 +244,7 @@ def main():
             shutil.copy(src, out / f'fanned.{ext}')
     rep = {'board': a.pcb, 'length_mm': length, 'copper_layers': b.GetCopperLayerCount(), 'router_layers': a.layers,
            'classes': a.classes or 'all', 'via_in_pad': a.via_in_pad, 'krt_minutes': a.krt_minutes,
-           'rails_as_tracks': a.rails_as_tracks,
+           'rails_as_tracks': a.rails_as_tracks, 'plane_rails': a.plane_rails,
            'plane_nets': {M.short(n): l for n, l in sorted(planes.items())},
            'left_out': {'rf_scripted_in_stage_c': [M.short(n) for n in rf]},
            'fire_logic_clearance': a.fire_logic_clearance if a.fire_logic_clearance is not None else 'the 0.5 mm fire rule',

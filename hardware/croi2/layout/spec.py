@@ -103,6 +103,9 @@ DRU = '''(version 1)
 (rule "Fire copper keeps 0.5 mm from other nets, except between pads of one part"
   (condition "(A.NetClass == 'FIRE' || A.NetClass == 'FIRE_LOGIC' || A.NetClass == 'PYRO_RAIL') && A.Net != B.Net && !(A.Type == 'Pad' && B.Type == 'Pad' && A.Parent.Reference == B.Parent.Reference)")
   (constraint clearance (min 0.5mm)))
+(rule "Fire logic leaves U201's pins at its class clearance, inside U201's courtyard only (D-22Nov.26)"
+  (condition "A.NetClass == 'FIRE_LOGIC' && A.enclosedByArea('U201_ESCAPE') && A.Net != B.Net")
+  (constraint clearance (min 0.2mm)))
 (rule "RF lines take no via (D-21Nov.25)"
   (condition "A.Type == 'Via' && A.NetClass == 'RF50'")
   (constraint disallow via))
@@ -131,6 +134,7 @@ FIXED = {
 }
 # stage C step 0 (D-22Nov.30): the placement is data, written by build.py --replace and read by every other build
 PLACEMENT = 'placement.json'
+ESCAPE_AREAS = ['U201']       # named rule areas on U201's courtyard, for the fire-logic waiver (D-22Nov.26)
 RESERVED = {}      # J101's 20 x 22 mm block gave way to its footprint (capture step 15, D-22Nov.13)
 
 ANCHORS = {   # [J] placed before everything else, at these centres

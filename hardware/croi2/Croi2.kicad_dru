@@ -11,6 +11,9 @@
 (rule "Fire copper keeps 0.5 mm from other nets, except between pads of one part"
   (condition "(A.NetClass == 'FIRE' || A.NetClass == 'FIRE_LOGIC' || A.NetClass == 'PYRO_RAIL') && A.Net != B.Net && !(A.Type == 'Pad' && B.Type == 'Pad' && A.Parent.Reference == B.Parent.Reference)")
   (constraint clearance (min 0.5mm)))
+(rule "Fire logic leaves U201's pins at its class clearance, inside U201's courtyard only (D-22Nov.26)"
+  (condition "A.NetClass == 'FIRE_LOGIC' && A.enclosedByArea('U201_ESCAPE') && A.Net != B.Net")
+  (constraint clearance (min 0.2mm)))
 (rule "RF lines take no via (D-21Nov.25)"
   (condition "A.Type == 'Via' && A.NetClass == 'RF50'")
   (constraint disallow via))

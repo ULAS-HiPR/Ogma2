@@ -23,7 +23,7 @@ from engine import place as P                        # noqa: E402
 from engine import silk as SK                        # noqa: E402
 from engine import art as A                          # noqa: E402
 
-STAGES = ('setup', 'parts', 'place')
+STAGES = ('setup', 'parts', 'place', 'copper')          # copper: stage C's scripted copper (engine/copper.py)
 FIDUCIAL_R = 1.25      # Fiducial_1mm_Mask2mm's courtyard radius: no other courtyard inside
 
 
@@ -471,6 +471,11 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
                                                'board, rotation in degrees', 'length_mm': spec.H,
                                        'parts': {r: list(v) for r, v in sorted(pl.placed.items())}}, indent=0) + '\n')
 
+    if STAGES.index(upto) >= 3:                       # stage C (S4): the scripted copper, after the placement
+        from engine import copper as CU
+        report['copper'] = {'escape_areas': CU.escape_areas(bd, spec, fps)}
+        report['stages'].append('copper')
+
     bd.save(str(pcb))
     if not out_dir:
         post.project_rules(hw / f'{spec.NAME}.kicad_pro', spec.NETCLASSES, spec.PATTERNS, spec.RULES)
@@ -496,7 +501,7 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('board')
-    ap.add_argument('--to', choices=STAGES, default='place')
+    ap.add_argument('--to', choices=STAGES, default='copper')
     ap.add_argument('--length', type=float, help='board length in mm (default: the spec\'s); see stretch()')
     ap.add_argument('--out', help='write the board and report here instead of the repository (trials)')
     ap.add_argument('--set', action='append', default=[],

@@ -4856,3 +4856,31 @@ What the sheets show, read from the step-16 netlist:
   layers from the spec.
 - Two builds give the same bytes (9d89841f). No part moved. DRC: 0 errors,
   the 2 accepted warnings, schematic parity clean.
+
+## 22 November 2026: stage C step 2, the rules before copper
+
+- The fire-logic waiver (D-22Nov.26) is in `spec.DRU`: fire logic keeps its
+  class's 0.2 mm only while it lies inside `U201_ESCAPE`. That is a rule area
+  on U201's courtyard, L1 to L6, restricting nothing itself, drawn by the
+  build's new copper stage (`engine/copper.py`). Outside it, and on any item
+  crossing its edge, the 0.5 mm fire rule holds.
+- `tools/layout/rules_check.py` plants one violation per custom rule on a copy
+  of the board and reads KiCad's DRC. All seven pass: a track on L2, a track
+  on L4, fire logic 0.3 mm from another net on L3 outside U201 (0.5 mm rule),
+  fire logic 0.25 mm from another net under U201 (no error), the same at
+  0.15 mm (the waiver's 0.2 mm), fire logic crossing the courtyard edge at
+  0.25 mm (0.5 mm rule), an RF via. An earlier probe put a LoRa RF via at
+  (40, 125) and KiCad reported only the unconnected via; at two other spots it
+  reported the rule. Not understood. RF copper is scripted with no via, so no
+  route depends on it.
+- `meter.py --plane-rails`: with `--rails-as-tracks`, the named rails stay
+  planes.
+- Not done: the L5 island outlines as L6 keep-out rings. P1's islands can't
+  each sit under the pads they feed: FLIGHT_3V3 has 98 pads across the whole
+  board, mixed in with COMMS_3V3's round U401 and BOOT_3V3's round the power
+  stage. Changing the plan is Seán's call (it amends D-22Nov.29). Quick meter,
+  every class, via in pad, on 9d89841f: every rail a plane, 75 nets open;
+  FLIGHT_3V3, COMMS_3V3, CAN_3V3 and LORA_3V3 planes and BOOT_3V3 as tracks,
+  83; FLIGHT_3V3 the only plane, 90.
+- Two builds give the same bytes (b507a62c). DRC: 0 errors, the 2 accepted
+  warnings, schematic parity clean.
