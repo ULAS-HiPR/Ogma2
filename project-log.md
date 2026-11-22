@@ -4776,3 +4776,34 @@ What the sheets show, read from the step-16 netlist:
 - The images remain in git history. Removing them from history means
   rewriting main and force-pushing; not done.
 - Scanned the tree for keys, tokens and email addresses: none found.
+
+## 22 November 2026: the layer test
+
+- Seán: “Ok go. Plus ultra”. Report: [burrito-layer-test.md](docs/briefs/burrito-layer-test.md).
+- 15 meter runs on board 7451d7d4 and a six-layer copy on JLC06161H-3313's
+  stackup, plus the fanout counted with via in pad. Ordinary (Default) nets
+  open, of 273, four layers → six:
+  - as Stop 1b: 100 → 60;
+  - via in pad: 79 → 60;
+  - alone: 60 → 41;
+  - alone at full effort: 41 → 26 (43 → 26 with via in pad).
+  Six layers with four signal layers: 50. Six layers with the rails as tracks:
+  74.
+- The same board gave the same result twice. Four nearly identical placements
+  left 84, 100, 92 and 91 open, so gaps under about 10 are noise.
+- Run 3 was meant as every class at full effort with a two-hour cap. Its first
+  ten minutes went on the six power nets, so it was stopped and run on the
+  ordinary nets alone (10 minutes).
+- Read on JLC's quote page, nothing ordered:
+  - 18 six-layer stackups; only JLC06161H-3313 keeps economic assembly.
+  - Its inner layers pair up 0.1 mm apart (1–2, 3–4, 5–6). It finishes at
+    1.5384 mm.
+  - 5 boards: $59.40 on six layers against $51.00 on four; 7–8 days against
+    3–4.
+  - Via in pad is free on six layers and $21.60 more on four.
+- Plane pads with no via spot: 59 → 48 with a 0.5 mm via in the pad, → 17
+  with a 0.25 mm via (that hole costs about $57 more per order).
+- The layer row in decisions.md now proposes six on JLC06161H-3313, plan P1.
+  Not decided: three calls wait for Seán.
+- Ledger: the model's six-layer bet (42 or fewer) missed at 60; its
+  full-effort bet (20 or more on four layers) held at 41.

@@ -125,6 +125,8 @@ part, its job and its test.
 
 ## Layer test: before stage C
 
+*Run 22 November: [the report](burrito-layer-test.md). Stage C waits for Seán's answer to its calls.*
+
 Seán, 22 Nov: “Do we need to add more layers?” It's an open row in `decisions.md`. Stage C's first step writes the
 layer plan, so this comes first. It is compute, not design: no decision changes until Seán has read the table.
 He approved the test the same evening (“Second yes”), and called it: six layers, 4/5.
