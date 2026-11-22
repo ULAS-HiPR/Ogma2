@@ -3993,3 +3993,26 @@ tour's connector gallery.
   until our scripted vias, and it narrowed tracks below JLC's minimum whatever
   its neck-down settings. Impedance-controlled lines and each power block's
   datasheet layout are scripted and locked before the router runs (phase 2 brief).
+
+## 22 November 2026: layout phase 2, Burrito's routing brief (S2 draft)
+
+- `docs/briefs/layout-brief.md` drafts Burrito's half of the routing brief:
+  Seán's nine points, each line tagged [R] (requirement or decision) or [J]
+  (Claude's judgement). Churro's half waits for its power review.
+- Observed in JLC's impedance calculator and order form (22 Nov):
+  - JLC04161H-3313 (L1–L2 prepreg 0.0994 mm, core 1.265 mm, finished 1.56 mm)
+    carries no stackup fee, like 7628 and 1080; 3313A and 7628G each added
+    $50.45. Economic PCBA takes "standard" stack-ups only. The PCBA tier shows
+    only after a Gerber upload, so 3313 under Economic is checked at upload.
+  - On 3313: 50 Ω microstrip 0.151 mm; 50 Ω coplanar 0.142 mm with a 0.203 mm
+    gap; 90 Ω pair 0.154 mm with a 0.203 mm gap. IPC-2141 estimates give 49.9 Ω
+    and 92.0 Ω for the first and the last.
+  - Tested impedance control, vias below 0.3 mm and filled vias are paid options.
+- JLC's SMD spacing table is now text (updated 9 Sep 2026); its minimums are in
+  the brief.
+- J102's origin on the 8 September draft is (40, 230), 0°, top: the IR-3 datum.
+- Burrito's inventory (step-9 netlist): 569 footprinted parts plus J101, whose
+  footprint waits for Molex's drawing; 7,186 mm² of courtyard bounding boxes.
+- Proposed for S2, not yet decided: order on 3313 without paid impedance
+  control (amends D-21Nov.26), keep Economic, the four-band floorplan with an L4
+  pyro corridor, the net classes, 0.3 mm plugged vias, ENIG.

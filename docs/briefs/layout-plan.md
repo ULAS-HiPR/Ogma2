@@ -66,7 +66,7 @@ How the grind runs:
     ([releases](https://github.com/freerouting/freerouting/releases)).
   - KiCadRoutingTools is an A* router for KiCad 9 and 10 with
     differential pairs, length matching and QFN fanout. It works on the file
-    ([repo](https://github.com/atomic14/KiCadRoutingTools)).
+    ([repo](https://github.com/drandyhaas/KiCadRoutingTools)).
   - DeepPCB and Quilter are cloud services that take an upload of the design.
 
 ## 2. Stops and timeline
@@ -433,7 +433,7 @@ Each gate is checked by a script or tool, and its output kept.
 - [x] Open points decided (D-21Nov.21–27, 65512f1)
 - [x] S1 phase 1: bench, TB1, T1–T7, TB2, report (docs/briefs/layout-pipeline.md); Seán picked the KiCadRoutingTools hybrid (D-22Nov.1)
 - [x] access-panel brief's J6101 / J6102 line fixed
-- [ ] S2 brief, Churro review, footprint audit started
+- [ ] S2: Burrito's half of the routing brief drafted (docs/briefs/layout-brief.md, 22 Nov); Churro review and footprint audit next
 - [ ] Burrito D4501 swap (decision row and capture step), if Economic assembly is kept
 - [ ] S3 Burrito placement
 - [ ] S4 Burrito critical nets
