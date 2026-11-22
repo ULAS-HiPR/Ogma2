@@ -2,7 +2,7 @@
 
 Generated expectations (full-expected-pins.json) check netlist parity pin by pin. The fixed
 assertions check architectural boundaries: the capture assertions of
-docs/architecture/11-verification.md (numbered A1-A22) and the board's retained checks.
+docs/architecture/11-verification.md (numbered A1-A26) and the board's retained checks.
 Neither is an analog simulation or qualification. Rewritten at capture close-out, 21 Nov 2026.
 """
 import argparse
@@ -28,6 +28,43 @@ TP_LOOP_NETS = frozenset({   # each regulator or switch output, the strobe, PPS
     'USB_LIMITED', 'TP_STROBE_PAD', 'GNSS_PPS'})
 TP_SENSE_ONLY = frozenset({f'ADC_PYRO{n}_{k}' for n in (1, 2, 3) for k in ('CONTINUITY', 'CURRENT')}
                           | {'RECOVERY_ARM_SENSE', 'STAGING_ARM_SENSE', 'ADC_PYRO_RAIL'})
+
+
+# Reset-state rules for the MCU pins (D-22Nov.25, stage B2 brief step 7.9).
+# DS14258 rev 6 (STM32H562/563 datasheet), table 14, note 7: after reset the debug pins are alternate functions, with
+# internal pull-ups on PA13, PA15 and PB4 (30-50 kohm, table 58) and a pull-down on PA14, until firmware changes them.
+DEBUG_PULL_UPS = frozenset({'PA13', 'PA15', 'PB4'})
+# AN2606 rev 70, table 137 (STM32H562/563/573): the pins the ROM bootloader drives (USART TX, SPI MISO, I2C and I3C,
+# FDCAN2 TX, USB) and the ones it only reads (USART RX, SPI SCK / MOSI / NSS, FDCAN2 RX).
+BOOT_DRIVES = frozenset({'PA9', 'PA2', 'PD8', 'PA6', 'PB14', 'PC11', 'PA8', 'PC9', 'PD12', 'PD13', 'PB6', 'PB7',
+                         'PB13', 'PA11', 'PA12'})
+BOOT_PINS = BOOT_DRIVES | {'PA10', 'PA3', 'PD9', 'PA4', 'PA5', 'PA7', 'PB10', 'PB12', 'PC1', 'PA15', 'PC10', 'PC12', 'PB5'}
+# U201's pins with an output something other than a running GPIO can drive: trace data and the debug trigger (a
+# debugger), the backup domain's tamper, RTC_OUT and LSCO outputs (they outlive a system reset). ST's pin data,
+# STM32H563VITx.xml (STM32_open_pin_data 45c0459, libraries/inputs/st-open-pin-data).
+FLIGHT_SPECIAL_PINS = frozenset({'PE2', 'PE3', 'PE4', 'PE5', 'PE6', 'PC13', 'PC1', 'PA0', 'PA1', 'PA2', 'PB2', 'PC7', 'PC8',
+                                 'PC12', 'PD2'})
+FIRE_OR_ARM = re.compile(r'^(PYRO\d_(FIRE|LS_SELECT)|RECOVERY_ARM_SENSE|STAGING_ARM_SENSE|STAGE_INHIBIT_LATCHED|NEW_FLIGHT_CLEAR_REQUEST)$')
+
+
+def reset_pin_faults(root):
+    """(A24, A25) on a netlist: off-by-default nets on a pulled-up or bootloader-driven pin; fire or arm nets on a
+    bootloader pin."""
+    actual = node_map(root)
+    port = {(n.get('ref'), n.get('pin')): re.match(r'P[A-K]\d+', n.get('pinfunction') or '')
+            for net in root.findall('nets/net') for n in net.findall('node')}
+    pulled_down = {net for (r, p), net in actual.items() if r.startswith('R') and net != 'GND'
+                   and actual.get((r, '1' if p == '2' else '2')) == 'GND'}
+    a24, a25 = [], []
+    for (r, p), net in sorted(actual.items()):
+        m = port.get((r, p)) if r in ('U201', 'U401') else None
+        if not m:
+            continue
+        if (m.group(0) in DEBUG_PULL_UPS or m.group(0) in BOOT_DRIVES) and net in pulled_down:
+            a24.append(f'{r} {m.group(0)} {net}')
+        if m.group(0) in BOOT_PINS and FIRE_OR_ARM.match(net):
+            a25.append(f'{r} {m.group(0)} {net}')
+    return a24, a25
 
 
 def node_map(root):
@@ -130,8 +167,9 @@ def check(project, netlist, erc):
     require(actual[('U201', '6')] == 'FLIGHT_VBAT' and actual[('D201', '1')] == 'FLIGHT_VBAT' and actual[('D201', '2')] == 'FLIGHT_3V3',
             'Flight VBAT fed from FLIGHT_3V3 through D201, never the vehicle battery (D-6.4)')
     require(actual[('U401', '1')] == 'COMMS_3V3', 'Comms backup pin on COMMS_3V3')
-    require(actual[('U401', '51')] == actual[('U4301', '1')] == 'CC_COMMS_TO_FLIGHT'
-            and actual[('U401', '52')] == actual[('U4301', '8')] == 'CC_FLIGHT_TO_COMMS', 'Inter-MCU USART3 on PC10 / PC11 through U4301')
+    require(actual[('U401', '29')] == actual[('U4301', '1')] == 'CC_COMMS_TO_FLIGHT'
+            and actual[('U401', '52')] == actual[('U4301', '8')] == 'CC_FLIGHT_TO_COMMS',
+            'Inter-MCU USART3 on PB10 / PC11 through U4301 (TX from PC10, D-22Nov.25)')
     require(actual[('U4302', '4')] == 'COMMS_MR_N', 'Flight reset buffer drives comms supervisor MR, not NRST bus')
     require(actual[('U201', '14')] != actual[('U401', '7')], 'No cross-reset net short')
 
@@ -190,7 +228,8 @@ def check(project, netlist, erc):
         require(value(j) == 'G125-MS10605M2P' and all(actual[(j, p)].startswith('unconnected-') for p in '456'), f'{j}: Gecko-SL, spare contacts NC')
     require(actual[('U502', '1')] != actual[('U502', '14')], 'CAN translator supply domains remain separate')
     require(actual[('U503', '3')] == actual[('U503', '5')] == actual[('U505', '3')] == actual[('U505', '5')] == 'CAN_3V3', 'Both transceivers on the switched CAN rail')
-    require(refs('CAN_STB') == {'U201', 'R505', 'U502', 'U504'}, 'One standby line (PE10) for both buses (D-5Nov.3)')
+    require(refs('CAN_STB') == {'U201', 'R505', 'U502', 'U504'} and actual[('U201', '62')] == 'CAN_STB',
+            'One standby line (PD15) for both buses (D-5Nov.3, D-22Nov.25)')
 
     # ---- status and service
     for pin, net in {'2': 'FLIGHT_STATUS_LED1', '3': 'GND', '4': 'FLIGHT_NOT_READY', '5': 'FLIGHT_3V3'}.items():
@@ -227,8 +266,9 @@ def check(project, netlist, erc):
     require(refs(actual[('U6504', '3')]) == {'U6504', 'U6502', 'R6503'} and actual[('U6502', '1')] == 'PYRO3_FIRE'
             and actual[('U6502', '2')] == 'STAGE_ELIGIBLE', 'A7: U6504 IN only from U6502 (PYRO3_FIRE AND STAGE_ELIGIBLE)')
     require(actual[('U6001', '6')] == 'FLIGHT_NRST' and actual[('U6001', '2')] == 'STAGE_ARM_INVALID' and actual[('U6001', '1')] == 'NEW_FLIGHT_CLEAR_REQUEST'
-            and pfunc[('U201', '62')].startswith('PD15') and 'R6001' in refs('NEW_FLIGHT_CLEAR_REQUEST') and value('R6001') == '100k',
-            'A8: U6001 CLR = FLIGHT_NRST, D = STAGE_ARM_INVALID, CLK = PD15 with pull-down')
+            and actual[('U201', '88')] == 'NEW_FLIGHT_CLEAR_REQUEST' and pfunc[('U201', '88')].startswith('PD7')
+            and 'R6001' in refs('NEW_FLIGHT_CLEAR_REQUEST') and value('R6001') == '100k',
+            'A8: U6001 CLR = FLIGHT_NRST, D = STAGE_ARM_INVALID, CLK = PD7 with pull-down (PD15 until D-22Nov.25)')
     require(all(refs(f'OUTPUT{n}_HIGH') == {'J6601', f'U6{n + 2}04', f'R69{n}2', f'C660{2 * n - 1}'} and refs(f'PYRO{n}_ENERGY') == {f'U6{n + 2}04', f'R6{n + 2}10', f'C6{n + 2}04'}
                 and actual[(f'R69{n}1', '1')] == '3V3_OPTIONAL' and refs(actual[(f'R69{n}1', '2')]) == {f'R69{n}1', f'R69{n}2'} for n in (1, 2, 3)),
             'A9: no logic rail on an armed rail; the only logic-rail path to J6601 is R69x1 / R69x2')
@@ -249,8 +289,9 @@ def check(project, netlist, erc):
         ups = [r for r in refs(net) if r.startswith('R') and ({actual[(r, '1')], actual[(r, '2')]} - {net}) & supplies]
         require(ups and all({actual[(r, '1')], actual[(r, '2')]} - {net} == {'FLIGHT_3V3'} for r in ups), f'A15: {net} pull-ups on FLIGHT_3V3')
     mag_mcu = {pfunc[k][:3] for n in ('MAG_SCL', 'MAG_SDA', 'MAG_INT') for k in nets[n] if k[0] == 'U201'}
-    require(mag_mcu == {'PA8', 'PC9', 'PE6'} and refs('MAG_INT') == {'U201', 'U3701'}
-            and all(refs(n) <= {'U201', 'R3702', 'R3703', 'R3704', 'R3705'} for n in ('MAG_SCL', 'MAG_SDA')), 'A16: magnetometer nets land on PA8, PC9 and PE6 only')
+    require(mag_mcu == {'PA8', 'PC9', 'PD3'} and refs('MAG_INT') == {'U201', 'U3701'}
+            and all(refs(n) <= {'U201', 'R3702', 'R3703', 'R3704', 'R3705'} for n in ('MAG_SCL', 'MAG_SDA')),
+            'A16: magnetometer nets land on PA8, PC9 and PD3 only (INT on PE6 until D-22Nov.25)')
     require(refs('USB_VBUS') == {'J4401', 'D4401', 'C4401', 'C4402', 'U4401', 'R1208'}, 'A18: USB VBUS only to its ESD, decoupling, U4401 and the R1208 divider')
     for ref in ('R1701', 'R1801', 'R1901'):
         bottom = next(r for r in refs(actual[(ref, '2')]) if r.startswith('R') and r != ref)
@@ -266,6 +307,27 @@ def check(project, netlist, erc):
     for j, r, f in (('J501', 'R516', 'F501'), ('J502', 'R517', 'F502')):
         ref_net = actual[(j, '3')]
         require(refs(ref_net) == {j, r} and refs(actual[(r, '2')]) == {r, f} and actual[(f, '2')] == 'GND', f'A22: {j} reference reaches GND only through {r} / {f}')
+
+    chain = {}                                          # fire-chain net -> (pad, port) on U201
+    for n in [f'PYRO{k}_{x}' for k in (1, 2, 3) for x in ('FIRE', 'LS_SELECT')] + ['NEW_FLIGHT_CLEAR_REQUEST', 'RECOVERY_ARM_SENSE',
+                                                                              'STAGING_ARM_SENSE', 'STAGE_INHIBIT_LATCHED']:
+        pad = next(k[1] for k in nets[n] if k[0] == 'U201')
+        chain[n] = (int(pad), re.match(r'P[A-K]\d+', pfunc[('U201', pad)]).group(0))
+    fire = [chain[f'PYRO{k}_FIRE'] for k in (1, 2, 3)]
+    low = [chain[f'PYRO{k}_LS_SELECT'] for k in (1, 2, 3)]
+    side = lambda pad: (pad - 1) // 25
+    beside = lambda a, b: abs(a - b) == 1 and side(a) == side(b)
+    require(all(p[1] == 'E' for _, p in fire) and all(p[1] != 'E' for _, p in low) and len({p[1] for _, p in low}) == 3,
+            'A26: fire pins on port E; the three low-side selects on three other ports (03-energetic-outputs.md)')
+    require(not [1 for a, _ in fire + low for b, _ in fire + low if beside(a, b)],
+            'A26: no fire pin or low-side select beside another (one solder bridge never joins two inhibits, D-22Nov.25)')
+    require(not [n for n, (_, p) in chain.items() if p in FLIGHT_SPECIAL_PINS],
+            'A26: fire, low-side, new-flight, arm-sense and latch pins carry no trace, debug-trigger, tamper, RTC_OUT or LSCO '
+            'output (D-22Nov.25)')
+    a24, a25 = reset_pin_faults(root)
+    require(not a24, 'A24: no pulled-down net (an output off by default) on a debug pin pulled up from reset (PA13, PA15, PB4) '
+                     'or a pin the ROM bootloader drives (D-22Nov.25)')
+    require(not a25, 'A25: no fire, low-side, arm-sense or staging-latch net on a pin the ROM bootloader drives or reads (D-22Nov.25)')
 
     # ---- test points (D-22Nov.9)
     field = lambda ref, k: parts[ref].findtext(f"fields/field[@name='{k}']")

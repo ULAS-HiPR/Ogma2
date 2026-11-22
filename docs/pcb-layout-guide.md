@@ -44,7 +44,7 @@ Where this guide and [decisions.md](../decisions.md) disagree, the decisions win
   J4501 (SMA). The SAM-M10Q patch geometry in C03 is history; see the note there.
 - **Power (C04):** the energy tap sits at `BAT_EFUSE_IN`, after Q101 (D-2Nov.5),
   with its 100 nF and 10 µF at Q101's drain (D-2Nov.15). The hold RC (330 Ω,
-  470 µF) sits between PE5 and the SHDN diodes; PE5's pull-down is 1 MΩ
+  470 µF) sits between PE14 (`FC_POWER_HOLD`) and the SHDN diodes; its pull-down is 1 MΩ
   (D-2Nov.4, D-2Nov.18).
 - **Churro:** a ground umbilical connector J801 and four ideal-diode stages
   ahead of the eFuses (D-2Nov.7).
@@ -344,7 +344,7 @@ which is the top end, away from the power and output corridor.
   side. No ferromagnetic part close by: no steel screws or standoffs, no shield
   cans, and no battery behind it in the bay.
 - R3701 (22 Ω), C3701 (10 µF on CAP) and the decoupling go at its pins. Route
-  I²C3 (PA8 / PC9) and INT (PE6) as a short group over solid ground, with the
+  I²C3 (PA8 / PC9) and INT (PD3) as a short group over solid ground, with the
   22 Ω damping at the MCU end.
 - Record its axes in board coordinates for Anav, like the IMUs. It's calibrated
   in the assembled bay, so the bay hardware near it should be final before
@@ -413,8 +413,8 @@ volume and through-hole legs on both faces. The exact STEP remains missing.
 ### C13. Optional monitoring, voltage ADCs and status
 
 Readiness revision: keep U9101 and C9101 together, C9101 at supply pin 5/GND;
-R9102 pulls the PD7 control low. Keep both red/green LEDs visible. PD10 is now
-servo 3, not the red LED. J6602 is ten-contact 430451000; its complete new
+R9102 pulls the PB12 control low (PD7 until D-22Nov.25). Keep both red/green LEDs visible. Servo 3
+and its PD10 are gone (D-19Nov.2). J6602 is ten-contact 430451000; its complete new
 pinout is in the [revision](archive/connector-servo-readiness-revision-2026-09-07.md).
 R6602/R6603 moved locally to clear the larger header; route all three PWM
 series resistors at the buffer boundary. USB-C placement remains untouched.
@@ -428,7 +428,7 @@ U8001 and the voltage-divider filter bottoms sit near the MCU ADC side, away
 from switching edges. Keep raw battery routing out of that quiet area by
 splitting the divider placement sensibly: high-side resistors at the source,
 scaled/filter/switch near ADC, with the full path audited for pickup and
-powered-off injection. Preserve both series top resistors; no raw battery to PA0.
+powered-off injection. Preserve both series top resistors; no raw battery to PC5 (PA0 until D-22Nov.25).
 
 Place the four LEDs where they can actually be read through the service opening:
 PWR, FLIGHT, FAULT, COMMS. Place BZ9001 at a supported accessible edge away

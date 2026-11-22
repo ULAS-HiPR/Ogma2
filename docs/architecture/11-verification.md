@@ -108,7 +108,7 @@ population variant.
 7. U6504's IN comes only from U6502, whose inputs are `PYRO3_FIRE` and
    `STAGE_ELIGIBLE`.
 8. U6001's CLR̄ is `FLIGHT_NRST`, its D is `STAGE_ARM_INVALID`, and its CLK is
-   PD15 with a pull-down.
+   PD7 with a pull-down (PD15 until D-22Nov.25).
 9. No logic-rail net connects to an armed rail. The only
    logic-rail paths to J6601 are the continuity resistors R69x1 / R69x2.
 10. R6310, R6410 and R6510 are DNP until the igniter values close.
@@ -119,7 +119,7 @@ population variant.
     the D-2Nov.4 RC values.
 15. Each of the five flight sensors is fed through its 47 Ω link and the
     magnetometer through 22 Ω; their I²C pull-ups sit on `FLIGHT_3V3`.
-16. The magnetometer's nets land on PA8, PC9 and PE6 and nowhere else.
+16. The magnetometer's nets land on PA8, PC9 and PD3 and nowhere else.
 17. J101 and J102 sit in mutually exclusive BOM variants.
 18. USB VBUS reaches only its connector's ESD diode (D4401) and decoupling, the
     logic mux through U4401, the USB-present divider R1208 / R1209 into the
@@ -132,6 +132,17 @@ population variant.
 21. Churro: R6101's top is on `AV_PACK`; R1006 stays 22.1 kΩ.
 22. Burrito: each CAN connector's reference contact reaches board GND only
     through its series parts (B-39).
+23. Burrito: each pyro output has its 1 nF C0G to GND at J6601, and each antenna
+    port its ESD part and nothing else (D-22Nov.20).
+24. Burrito: no pulled-down net (an output off by default) sits on a debug pin
+    pulled up from reset (PA13, PA15, PB4) or on a pin the ROM bootloader drives
+    (D-22Nov.25).
+25. Burrito: no fire, low-side, arm-sense or staging-latch net sits on a pin the
+    ROM bootloader drives or reads (AN2606, table 137; D-22Nov.25).
+26. Burrito: fire pins on port E, the low-side selects on three other ports; no
+    fire pin or low-side select beside another, an arm sense, the staging latch,
+    the new-flight request or a supply pad; none of the fire chain or arm senses
+    on a pin with a trace, debug-trigger, tamper, RTC_OUT or LSCO output (D-22Nov.25).
 
 ## Records
 

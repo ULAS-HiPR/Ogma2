@@ -56,9 +56,9 @@ the MCU doesn't feed it through the 22 Ω damping. The magnetometer's link is
 22 Ω because its minimum supply is 2.8 V. The NOR keeps its own limiter (U3601)
 and boundaries.
 
-**Pins:** ST PA5/PA6/PA7; TDK PB13/PB14/PB15; ADXL PC10/PC11/PC12; BMP PB6/PB7;
-TE PB10/PB3; magnetometer PA8 (SCL) / PC9 (SDA), INT on PE6. NOR: PB2 clock,
-PE11 select, PD11 IO0, PD12 IO1, PE2 IO2, PD13 IO3. Interrupts and the rest:
+**Pins** (since D-22Nov.25)**:** ST PA5/PA6/PA7, select PD14; TDK PB13/PB14/PB15, select PC8; ADXL
+PC10/PC11/PC12, select PD2; BMP PB6/PB7; TE PB10/PB3; magnetometer PA8 (SCL) / PC9 (SDA), INT on
+PD3. NOR: PA3 clock, PE11 select, PD11 IO0, PD12 IO1, PE2 IO2, PD13 IO3. Interrupts and the rest:
 [firmware interface](../firmware-interface.md#flight-mcu-pins).
 
 ## Recording

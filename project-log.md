@@ -4546,3 +4546,56 @@ What the sheets show, read from the step-16 netlist:
 - `build.py --netlist` builds a trial from another netlist (step 7).
 - Seán's bet (160 mm doesn't route without a re-place, 1/5) holds on this
   run, and the model's (it routes with no part moved, 1/5) fails.
+
+## 22 November 2026: stage B2 step 7, MCU pin swaps (capture step 19, D-22Nov.25)
+
+- The possible fault, checked first: it holds. ST's datasheet (DS14258 rev 6,
+  table 14 note 7; table 58) puts a 30–50 kΩ pull-up on PA15 from reset, as
+  on PA13 and PB4. Against R7002's 100 kΩ that held `FOINSE_RETURN_EN` at
+  2.2–2.5 V until firmware drove it: over the TPS2553's 1.1 V enable threshold
+  (TI SLVS841G) and the TMUX1511's 1.2 V select threshold (SCDS390B). So U7001
+  powered Foinse's aux rail, and U7002 joined its I²C and fault lines, at every
+  power-up. RM0481 itself wasn't reachable (st.com refuses the fetch); the
+  datasheet states the same reset pulls.
+- AN2606 rev 70 table 137: the ROM bootloader drives PA9 (USART1 TX), which
+  held `PYRO1_LS_SELECT`, and PA11 / PA12 (USB), which held `NOR_EN` and
+  `FLIGHT_COMMS_EN`.
+- `tools/layout/pinswap.py` moves nets only where ST's pin data says the new
+  pin carries the function (cloned STM32_open_pin_data 45c0459, kept in
+  `libraries/inputs/st-open-pin-data`). Rules it keeps, with the checker's new
+  A24–A26: no pulled-down output on PA13, PA15, PB4 or a pin the bootloader
+  drives; no fire, low-side, arm-sense or staging-latch net on any bootloader
+  pin; fire pins on port E and the low sides on three other ports; no fire pin
+  or low side beside another, an arm sense, the staging latch, the new-flight
+  request or a supply pad; none of the fire chain or arm senses on a pin with a
+  trace, debug-trigger, tamper, RTC_OUT or LSCO output. As captured, channel 3's
+  fire pin (PE12) sat beside the recovery arm sense and its low side (PD14)
+  beside the new-flight request; a bridge there would show only when armed.
+  The spare test pads take the three driven pins and are renamed `TP_PA9`,
+  `TP_PA11`, `TP_PA12`.
+- Search: nets that must move go first, then best single swaps until none saves
+  1 mm. Two rounds with a re-place between; the second only tidied (7 flight
+  and 5 comms nets). The first versions put a low side on PB2 (RTC_OUT2 and
+  LSCO, which outlive a reset), the staging arm sense on a bootloader pin and
+  a fire pin beside VCAP; the rules above came from those.
+- Result: 36 flight and 12 comms nets moved; 56 pin changes; ERC unchanged;
+  51 AF and ADC rows match ST; checker 369 pass. A24 and A25 fail on step 18's
+  netlist (PA9, PA11, PA12, PA15) and pass now. Every move is in the
+  [firmware interface](docs/firmware-interface.md#pin-changes-d-22nov25) for
+  Anav. No peripheral instance changed.
+- Against step 3's board: wire 7814.6 → 7545.1 mm; crossings 3015 → 2633;
+  wrong-side pins 65 → 55 (U201 35 → 25, the gate; U401 9 → 6); test point
+  stubs median 9.2 → 8.4 mm, over 10 mm 21 → 17, over 20 mm 4 → 3; densest
+  band 0.710 → 0.724 (+2.0%); plane pads without a via spot 58 → 61 (+5%).
+  The last breaks the brief's 2% rule. Kept: four of the moves were required
+  whatever the routing, and the gains are large. Builds of the same swaps from
+  netlists that differ only in net names gave 57–61 such pads and 7545–7656 mm
+  of wire, so a 2% rule on small counts sits inside the placer's own scatter.
+- Not done: the flash group to one side of U201. Only the bottom side has every
+  OCTOSPI1 signal, and IO3's pin there (PA6) is one the bootloader drives. A
+  forced bottom-left group cut its spans from about 119 to 79 mm but left an
+  ADC input and a low side without a legal pin; for Stop 1b.
+- BZ9001 joins the spec's placement priority: it found no room after the swaps.
+- The library manifest now lists step 18's footprint, missed in that commit.
+- Two builds gave the same bytes (18bdb9f9); DRC 0 errors and the 2 accepted
+  warnings; schematic parity clean.

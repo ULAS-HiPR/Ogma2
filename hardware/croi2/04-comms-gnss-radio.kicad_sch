@@ -3596,7 +3596,7 @@
       (width 0)
       (type default))
     (uuid "373b3415-92ca-53b0-9981-72f1f9cfadc1"))
-  (global_label "LORA_RESET_N"
+  (global_label "COMMS_STATUS_LED"
     (shape bidirectional)
     (at 124.46 147.32 0)
     (effects
@@ -3618,7 +3618,7 @@
       (width 0)
       (type default))
     (uuid "65733cb0-60c9-5cd2-91c0-4d5d44830527"))
-  (global_label "LORA_BUSY"
+  (global_label "CC_BRANCH_FAULT_N"
     (shape bidirectional)
     (at 124.46 149.86 0)
     (effects
@@ -3640,7 +3640,7 @@
       (width 0)
       (type default))
     (uuid "d5cd776f-eba4-53ee-b29c-6f088233c731"))
-  (global_label "LORA_DIO1"
+  (global_label "CC_BAT_VALID"
     (shape bidirectional)
     (at 124.46 152.4 0)
     (effects
@@ -3668,7 +3668,7 @@
       (width 0)
       (type default))
     (uuid "674883bc-0abc-50b9-816c-3f2645281ce8"))
-  (global_label "GNSS_RESET_N"
+  (global_label "GNSS_EN"
     (shape bidirectional)
     (at 124.46 160.02 0)
     (effects
@@ -3694,28 +3694,6 @@
   (no_connect
     (at 129.54 170.18)
     (uuid "58ed2997-3a82-5f7b-b7cf-fd34bcd37e12"))
-  (wire
-    (pts
-      (xy 129.54 172.72)
-      (xy 124.46 172.72))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1c849474-722f-5622-af3b-6aeefee129c4"))
-  (global_label "CC_COMMS_TO_FLIGHT"
-    (shape bidirectional)
-    (at 124.46 172.72 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "2faaed06-7ecd-5852-b74a-065d1e5df0e6")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 124.46 172.72 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
   (wire
     (pts
       (xy 129.54 175.26)
@@ -3818,38 +3796,13 @@
         (hide yes))))
   (wire
     (pts
-      (xy 180.34 129.54)
-      (xy 185.42 129.54))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "b2043d01-0513-5a7e-a38e-24975760ed66"))
-  (global_label "CC_BAT_VALID"
-    (shape bidirectional)
-    (at 185.42 129.54 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "02b5cba9-c20e-57a2-8e5f-e40c35474beb")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 185.42 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (no_connect
-    (at 180.34 132.08)
-    (uuid "f8f47f2a-914d-5898-af9b-14c275fe8e66"))
-  (wire
-    (pts
       (xy 180.34 134.62)
       (xy 185.42 134.62))
     (stroke
       (width 0)
       (type default))
     (uuid "54eca72b-8a25-5ac3-bcdd-c89d874dbf12"))
-  (global_label "LORA_NCS"
+  (global_label "LORA_BUSY"
     (shape bidirectional)
     (at 185.42 134.62 180)
     (effects
@@ -3956,28 +3909,6 @@
         (hide yes))))
   (wire
     (pts
-      (xy 180.34 149.86)
-      (xy 185.42 149.86))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "6d4193db-0eb6-5be8-b25c-37838a465659"))
-  (global_label "GNSS_RX"
-    (shape bidirectional)
-    (at 185.42 149.86 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "d40cd4bd-f779-5d48-b187-d30a4b9bb66c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 185.42 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (wire
-    (pts
       (xy 180.34 152.4)
       (xy 185.42 152.4))
     (stroke
@@ -4075,7 +4006,7 @@
       (width 0)
       (type default))
     (uuid "ad846df7-a130-51c9-8546-b061bd097995"))
-  (global_label "GNSS_EN"
+  (global_label "LORA_DIO1"
     (shape bidirectional)
     (at 185.42 167.64 180)
     (effects
@@ -4119,7 +4050,7 @@
       (width 0)
       (type default))
     (uuid "e04d639a-f44d-5919-a0ce-db2618153d06"))
-  (global_label "USB_VBUS_PRESENT"
+  (global_label "LORA_RESET_N"
     (shape bidirectional)
     (at 185.42 172.72 180)
     (effects
@@ -4155,50 +4086,6 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (wire
-    (pts
-      (xy 180.34 177.8)
-      (xy 185.42 177.8))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "af144034-52af-5f2a-bc19-ed4db6f18a07"))
-  (global_label "COMMS_STATUS_LED"
-    (shape bidirectional)
-    (at 185.42 177.8 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "8a6a2c20-8158-5d8e-babd-80d0439c5ed7")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 185.42 177.8 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (wire
-    (pts
-      (xy 180.34 180.34)
-      (xy 185.42 180.34))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2b9ecaa5-eca2-596a-9b2a-c855bfb678c1"))
-  (global_label "CC_BRANCH_FAULT_N"
-    (shape bidirectional)
-    (at 185.42 180.34 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "61fa9e3b-5768-5100-84ee-3c678f393c09")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 185.42 180.34 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
   (no_connect
     (at 180.34 182.88)
     (uuid "07ba276b-0998-5b15-8d0c-b98c81d95bb0"))
@@ -4209,20 +4096,11 @@
     (at 180.34 187.96)
     (uuid "e11ecba1-53f5-5671-8e04-dcb129b75ec7"))
   (no_connect
-    (at 180.34 190.5)
-    (uuid "ea6bd3d8-db5c-5884-aa78-b5b742414251"))
-  (no_connect
-    (at 180.34 193.04)
-    (uuid "e7203dd5-72f2-5ac4-9006-91348ef92d33"))
-  (no_connect
     (at 180.34 195.58)
     (uuid "c5b9e0a2-5357-5116-9f31-ff06fee2fbc5"))
   (no_connect
     (at 180.34 198.12)
     (uuid "a1b5d134-ba48-5c58-b921-fc705d311aec"))
-  (no_connect
-    (at 180.34 200.66)
-    (uuid "51c03f77-a435-57be-86be-b4daa64e785b"))
   (wire
     (pts
       (xy 149.86 116.84)
@@ -4426,9 +4304,131 @@
         (size 1.016 1.016))
       (justify left))
     (uuid "2dbc4f0d-b7ee-560c-b44b-b21036a7e357"))
+  (wire
+    (pts
+      (xy 180.34 127)
+      (xy 185.42 127))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "ebbd037b-73f8-5878-ae0d-e7671d2d75f2"))
+  (global_label "USB_VBUS_PRESENT"
+    (shape bidirectional)
+    (at 185.42 127 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "06b96fa2-2be8-58ea-8b88-caa6b061fbe3")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 185.42 127 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
   (no_connect
-    (at 180.34 127)
-    (uuid "4ebad2f5-30a0-577f-affb-a234ffc00c75"))
+    (at 180.34 129.54)
+    (uuid "e03ebc25-c20a-5fc5-93f1-05e02e6e68c8"))
+  (wire
+    (pts
+      (xy 180.34 132.08)
+      (xy 185.42 132.08))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3e7d9e52-ad51-548a-ba8f-adc62bd00bec"))
+  (global_label "GNSS_RESET_N"
+    (shape bidirectional)
+    (at 185.42 132.08 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "93102e2a-f546-5cd0-9598-85cbe7164cad")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 185.42 132.08 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 180.34 190.5)
+      (xy 185.42 190.5))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "48b9a20c-634c-583e-8ac6-7040fbd52a60"))
+  (global_label "CC_COMMS_TO_FLIGHT"
+    (shape bidirectional)
+    (at 185.42 190.5 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "786fbf1c-c8ad-5036-a16b-c2441f3106e0")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 185.42 190.5 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 180.34 193.04)
+      (xy 185.42 193.04))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "8310cffd-8c39-55c1-ac68-9d4393f7fd51"))
+  (global_label "LORA_NCS"
+    (shape bidirectional)
+    (at 185.42 193.04 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "8d870a2f-9bcd-5277-874e-8a3743921cdc")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 185.42 193.04 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (wire
+    (pts
+      (xy 180.34 200.66)
+      (xy 185.42 200.66))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "1b8c3fe8-b913-550e-8e6b-0545978fc26a"))
+  (global_label "GNSS_RX"
+    (shape bidirectional)
+    (at 185.42 200.66 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify left))
+    (uuid "ca1408c9-ff7d-5cbf-9898-46c5dc7d113c")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 185.42 200.66 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes))))
+  (no_connect
+    (at 180.34 149.86)
+    (uuid "bb317ab0-4ba1-5463-be57-233af935b7e8"))
+  (no_connect
+    (at 129.54 172.72)
+    (uuid "6bcdd45b-0a7a-5d2c-a9d1-0f1481d29b60"))
+  (no_connect
+    (at 180.34 177.8)
+    (uuid "d109ebb3-49f9-59e7-abb2-9829e08537a3"))
+  (no_connect
+    (at 180.34 180.34)
+    (uuid "b2929902-01ff-5783-9666-44bcd7c2bba5"))
   (embedded_fonts no)
   (text "What this does: Handles radio, GNSS and USB service so those tasks cannot monopolise the flight MCU.\nConnects to: UART link to flight: 04b. USB: 04c. GNSS: 04d. Radio: 04e/04f. Local supplies/clocks: 04a; reset/debug: 02comms-reset-debug."
     (at 15.24 27.94 0.0)

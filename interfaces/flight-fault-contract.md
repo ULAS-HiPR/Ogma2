@@ -106,7 +106,7 @@ threshold or circuit is chosen here.
   (D-2Nov.1): one stuck pin or one shorted switch can't fire it once armed, and
   the pad checks can see both failures.
 - The stage latch: any flight reset clears it asynchronously; its data input is
-  the hardware staging-disarmed signal; a deliberate new-flight request (PD15)
+  the hardware staging-disarmed signal; a deliberate new-flight request (PD7, PD15 until D-22Nov.25)
   clocks it. Channel 3 fires only while it is set. Reset propagation and inert
   traces still need proof.
 - Firmware and a valid checkpoint can't silently defeat physical inhibits.

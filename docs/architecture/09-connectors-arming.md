@@ -11,7 +11,7 @@ flowchart TB
 open = off"] --> B["U101 battery entry on"]
   U["USB service power"] --> C["Computer powered"]
   B --> C
-  HOLD["PE5 FC_POWER_HOLD
+  HOLD["PE14 FC_POWER_HOLD
 after launch detect"] -.->|"keeps U101 on"| B
   C --> D["Firmware readiness
 red / green lamp"]
@@ -19,7 +19,7 @@ red / green lamp"]
   F --> S["U6103 A → PE13
 over USB and telemetry"]
   E3["J6102 · staging arm"] --> F3["Energy at channel 3"]
-  F3 --> S3["U6103 B → PE15
+  F3 --> S3["U6103 B → PD6
 over USB and telemetry"]
 ```
 
@@ -48,7 +48,7 @@ powers down, even if firmware is holding the enable.
 | Staging (D-7.2, D-2Nov.2) | Its own fuse and arm: `ENERGY_TAP` → F6102 → J6102 → `STAGING_ARMED_VBAT` → channel 3. J6102 is 2-contact, keyed so it can't mate J6101, J701 or the GH loops |
 | Open or unplugged | No energy at the output switches, whatever firmware does |
 | Servos | None on Burrito (D-19Nov.2) |
-| Indication | Arm sense U6103 → PE13 (recovery, D-5Nov.3) and PE15 (staging), over USB and the 1 Hz pad telemetry (D-2Nov.10); no lamp |
+| Indication | Arm sense U6103 → PE13 (recovery, D-5Nov.3) and PD6 (staging, D-22Nov.25), over USB and the 1 Hz pad telemetry (D-2Nov.10); no lamp |
 | Switch parts | Open: maintained, rated above the fuses at 8.4 V DC, operable from outside the airframe |
 | Where they go | EuRoC: on the airframe, reachable from the ground with the rocket on the rail, no ladders or stools, on the side away from the rail (LV-0260–0280, 0540–0550). The av-bay sits above the tanks, so the switches may need to sit low with a harness up to Burrito; open with Jay. The active board's arm key (D-18Nov.1) and the CATS Vega's switch and cell (D-18Nov.2) go with them |
 

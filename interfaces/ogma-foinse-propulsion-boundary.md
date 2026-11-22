@@ -68,7 +68,7 @@ operator UI is disconnected.
   pin 1 CAN H, pin 2 CAN L, pin 3 reference. No power pin. Connector: Ogma
   moves J501 from JST GH to Harwin Gecko (D-18Nov.4), so Fajita's end
   has to match, which is ours to design in since D-20Nov.2.
-- Croí's two transceivers share one standby line (PE10) and one supply limiter
+- Croí's two transceivers share one standby line (PD15, D-22Nov.25) and one supply limiter
   (D-5Nov.3): one fault there quiets this link and bus 2 together. Propulsion's
   safe response to a missing link covers it.
 - Exact messages and installed cable and bonding evidence still need doing

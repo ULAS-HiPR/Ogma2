@@ -137,7 +137,7 @@ downstream fault may never clear the source fuse.
 
 Two buses, each a TCAN3413 behind a TXU0304 boundary (D-5Nov.3). Bus 1 to
 Fajita on FDCAN1 (PD1 TX, PD0 RX); bus 2 to the active board on FDCAN2 (PA10
-TX, PB5 RX). One standby line, PE10, and the PB1 CAN limiter serve both
+TX, PB5 RX). One standby line, PD15, and the PD10 CAN limiter serve both
 transceivers, so one fault there quiets both buses; each receiver goes safe
 when messages stop.
 
@@ -162,8 +162,8 @@ same pinout"]
 120 Ω at each end"]
   H2 <--> A["Active board
 own loop, ACT feed from Churro"]
-  S["PE10 standby
-PB1 CAN limiter"] -.-> T
+  S["PD15 standby
+PD10 CAN limiter"] -.-> T
   S -.-> T2
 ```
 

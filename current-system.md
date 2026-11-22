@@ -114,7 +114,7 @@ held off above 45 °C (D-22Nov.5).
 
 | Block | Selection |
 | --- | --- |
-| MCUs | STM32H563VIT6 flight; STM32H563RIT6 comms (D1; fitted at capture step 7) |
+| MCUs | STM32H563VIT6 flight; STM32H563RIT6 comms (D1; fitted at capture step 7). Pins: the maps in `hardware/croi2/libraries/inputs`, re-allocated for the placement (D-22Nov.25): no off-by-default output on a pin pulled up from reset or driven by the ROM bootloader, no fire or arm net on a bootloader pin, no fire-chain pin beside another or a supply |
 | Low-g IMUs | ST LSM6DSV32XTR (D-21Nov.16), TDK ICM-42688-P |
 | High-g | ADI ADXL375BCCZ, ±200 g nominal |
 | Pressure | Bosch BMP390, TE MS560702BA03-50, separate buses |
@@ -126,7 +126,7 @@ held off above 45 °C (D-22Nov.5).
 | Current | Croí INA228 0x40 (logic path); Churro: PROP INA228 0x41, ACT INA237 0x44, ADS1115 0x48 and 0x49, charger status TCA9535 0x20 (D-22Nov.4, D-22Nov.5) |
 | Outputs | Per channel a TPS1H100 high side and a CSD17318 low side (2 recovery + 1 staging); U6001 staging latch with an SN74LVC1G08 AND; no servo outputs (D-19Nov.2) |
 | Churro rail power | Four LM74700-Q1-class ideal-diode stages, fuse and TVS (D-2Nov.7); J801 a Mini-Fit Jr. 2 × 4 with electrolytic damping per pair (D-21Nov.3, D-22Nov.6); PROP and ACT each an LM5069-2 stage, 19.4 A minimum limit (D-22Nov.4); chargers (D-22Nov.5) |
-| CAN | Two TCAN3413 transceivers, each behind a TXU0304 boundary: bus 1 on FDCAN1 (PD1 / PD0), bus 2 on FDCAN2 (PA10 TX, PB5 RX); one standby line on PE10 and the PB1 CAN limiter for both (D-5Nov.3) |
+| CAN | Two TCAN3413 transceivers, each behind a TXU0304 boundary: bus 1 on FDCAN1 (PD1 / PD0), bus 2 on FDCAN2 (PA10 TX, PB5 RX); one standby line on PD15 and the PD10 CAN limiter for both (D-5Nov.3, D-22Nov.25) |
 | Indication | Red/green readiness, comms amber, hardware power LED, magnetic sounder, PUI SMT-1028-T-2-R at 2.83 kHz (D-21Nov.20) |
 
 ## Interfaces
@@ -155,7 +155,7 @@ Firmware: [firmware interface](docs/firmware-interface.md).
   with the RCS (two cold-gas solenoids) into one module that one active board
   drives (D-19Nov.6). The 14 October stack above is kept as history.
 - Burrito has no servo outputs (D-19Nov.2). The freed pins are test pads: a
-  timing strobe on PB0 and a reset memory on PA3 (D-19Nov.3).
+  timing strobe on PE10 and a reset memory on PA4 (D-19Nov.3; pins D-22Nov.25).
 - No external pyro board (D-19Nov.7). Paired e-matches, if Recovery wants two
   from Burrito, share one channel (D-19Nov.8).
 - The sounder beeps continuity and state at arming (D-19Nov.4).
@@ -243,7 +243,7 @@ insulating standoffs or washers (D-22Nov.11).
 
 | Item | State |
 | --- | --- |
-| Croí CAD | Schematic: 44 pages, 566 parts, captured 21–22 Nov (steps 0–18; 200 passives in 0402 since step 16; the LoRa ESD part and pyro RF bypass capacitors since step 17, D-22Nov.20); ERC clean with 3 recorded exclusions; 364 checks incl. the capture assertions. PCB: built and placed by script at 80 × 160 mm (S3, D-21Nov.21, D-22Nov.21; rebuilt in stage B with steps 14–17, the function names and the axes mark): every part placed, J101 on the left edge, nothing routed (the netlist has about 1,376 connections; DRC's report stops at 499), DRC 0 errors and schematic parity clean; 4 layers, 1.6 mm, JLC04161H-3313, named, without paid impedance control (D-21Nov.26, D-22Nov.2), the routing brief's rules (D-22Nov.3), every part on top (D-21Nov.27), eight plated M3 holes with GND rings on insulated mounts (D-22Nov.11), J102's end aft (D-21Nov.24), both SMAs forward (D-21Nov.25), 47 test points (D-22Nov.9; the 18 rail loops surface-mount, D-22Nov.24), the back silkscreen (D-22Nov.12). Built in stage B: 0402 passives and J101's footprint (D-22Nov.13), J103 as a Micro-Fit (D-22Nov.18), function names, LED meanings, the board axes and the S/N box on the top silk (D-22Nov.19, D-22Nov.23). J102 keeps its screw-down part, bought from Mouser (D-22Nov.22). Not yet built: L3 as ground with power islands (D-22Nov.15). Next: stage B2 of the [execution brief](docs/briefs/burrito-execution-brief.md), which settles the placement before any copper ([brief](docs/briefs/burrito-stage-b2-brief.md)), then stage C |
+| Croí CAD | Schematic: 44 pages, 566 parts, captured 21–22 Nov (steps 0–19; 200 passives in 0402 since step 16; the LoRa ESD part and pyro RF bypass capacitors since step 17, D-22Nov.20; the MCU pins re-allocated for the placement at step 19, D-22Nov.25); ERC clean with 3 recorded exclusions; 369 checks incl. the capture assertions and the reset-state pin rules (A24–A26). PCB: built and placed by script at 80 × 160 mm (S3, D-21Nov.21, D-22Nov.21; rebuilt in stage B with steps 14–17, the function names and the axes mark): every part placed, J101 on the left edge, nothing routed (the netlist has about 1,376 connections; DRC's report stops at 499), DRC 0 errors and schematic parity clean; 4 layers, 1.6 mm, JLC04161H-3313, named, without paid impedance control (D-21Nov.26, D-22Nov.2), the routing brief's rules (D-22Nov.3), every part on top (D-21Nov.27), eight plated M3 holes with GND rings on insulated mounts (D-22Nov.11), J102's end aft (D-21Nov.24), both SMAs forward (D-21Nov.25), 47 test points (D-22Nov.9; the 18 rail loops surface-mount, D-22Nov.24), the back silkscreen (D-22Nov.12). Built in stage B: 0402 passives and J101's footprint (D-22Nov.13), J103 as a Micro-Fit (D-22Nov.18), function names, LED meanings, the board axes and the S/N box on the top silk (D-22Nov.19, D-22Nov.23). J102 keeps its screw-down part, bought from Mouser (D-22Nov.22). Not yet built: L3 as ground with power islands (D-22Nov.15). Next: stage B2 of the [execution brief](docs/briefs/burrito-execution-brief.md), which settles the placement before any copper ([brief](docs/briefs/burrito-stage-b2-brief.md)), then stage C |
 | Foinse CAD | 12 pages, 113 parts, unrouted, 60 × 80 mm; ERC clean; DRC 24 + unrouted |
 | Known CAD gaps | Churro's Nano-Fit footprint (Burrito's J101 drawn in capture step 15); ten of Burrito's 3D models are drawn stand-ins and two are borrowed, several heights unverified ([list](hardware/croi2/libraries/3d/GENERATED.md)); Burrito's routing (S4, S5); Churro's capture |
 | Firmware | [Firmware interface](docs/firmware-interface.md); build-pipeline brief v0.1.0 (Anav); no target code yet |

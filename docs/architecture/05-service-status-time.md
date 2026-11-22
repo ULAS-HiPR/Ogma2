@@ -10,12 +10,12 @@ flowchart TB
 read · write · reboot · read back"] <-->|"USB FS"| J["J4401 USB4105-GF-A"]
   J <-->|"PA11 / PA12"| C["Comms MCU
 identity, GNSS, radio, USB"]
-  C -->|"PB4"| A["Amber comms lamp"]
+  C -->|"PC0"| A["Amber comms lamp"]
   C <-->|"UART"| F["Flight MCU
 config, sensors, logger, CAN"]
-  F -->|"PD7"| L["SN74LVC1G04
+  F -->|"PB12"| L["SN74LVC1G04
 red / green readiness"]
-  F -->|"PD6 / Q9001"| B["CPT-9019S piezo"]
+  F -->|"PD5 / Q9001"| B["CPT-9019S piezo"]
   P["FLIGHT_3V3"] --> H["D9301 power lamp"]
 ```
 

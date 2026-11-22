@@ -20,9 +20,9 @@ flowchart LR
 128 KiB staging in RAM"]
   F <-->|"FDCAN1"| V["CAN bus 1 to Fajita"]
   F <-->|"FDCAN2"| V2["CAN bus 2 to the active board"]
-  F -.->|"PB0 strobe · PA3 reset memory"| P["Test pads (D-19Nov.3)"]
-  F -->|"fire PE7/PE9/PE12
-low sides PA9/PC8/PD14"| O["3 pyro outputs"]
+  F -.->|"PE10 strobe · PA4 reset memory"| P["Test pads (D-19Nov.3)"]
+  F -->|"fire PE7/PE15/PE9
+low sides PD4/PB1/PC6"| O["3 pyro outputs"]
   F <-->|"USART3 · 2 Mbaud
 TXU0202 boundary"| C["Comms · H563RIT6
 event loop and DMA queues"]
@@ -69,11 +69,12 @@ measured resource budget. Sources: [pin audit](../archive/mcu-pin-capacity-audit
 
 | Function | Pads / ports | Change from CAD |
 | --- | --- | --- |
-| Flight UART | 51 PC10 TX, 52 PC11 RX, USART3 AF7 | Moves from PD8/PD9; flight end unchanged |
-| GNSS | 42 PA9 TX, 43 PA10 RX; 14 PA0 PPS; 25 PC5 reset; 26 PB0 enable | Same ports |
-| Radio | 20–23 PA4–PA7 SPI; 8 PC0 reset, 9 PC1 BUSY, 10 PC2 IRQ, 27 PB1 enable | Same ports |
-| USB | 44 PA11 DM, 45 PA12 DP; 28 PB2 VBUS sense | Same ports |
-| Source/config status | 15 PA1, 16 PA2 | Same ports |
+| Flight UART | 29 PB10 TX, 52 PC11 RX, USART3 AF7 | Moves from PD8/PD9; flight end unchanged; TX on PB10 since D-22Nov.25 |
+| GNSS | 42 PA9 TX, 36 PB15 RX (AF4); 14 PA0 PPS; 17 PA3 reset; 25 PC5 enable | RX, reset and enable moved (D-22Nov.25) |
+| Radio | 21–23 PA5–PA7 SPI, 33 PB12 NSS; 28 PB2 reset, 20 PA4 BUSY, 26 PB0 IRQ, 27 PB1 enable | NSS, reset, BUSY and IRQ moved (D-22Nov.25) |
+| USB | 44 PA11 DM, 45 PA12 DP; 15 PA1 VBUS sense | VBUS sense moved (D-22Nov.25) |
+| Source status | 10 PC2 `CC_BAT_VALID`, 9 PC1 `CC_BRANCH_FAULT_N` | Moved from PA2 / PB5 (D-22Nov.25) |
+| Status lamp | 8 PC0 | Moved from PB4 (D-22Nov.25) |
 | Debug / clock | 46 PA13, 49 PA14, optional 55 PB3; HSE 5 PH0, 6 PH1 | Same |
 
 - LQFP64 has no VDDUSB pad; VDDUSB is tied to VDD inside, so COMMS_3V3 must
@@ -81,8 +82,8 @@ measured resource budget. Sources: [pin audit](../archive/mcu-pin-capacity-audit
 - VCAP pads 30 and 62 each need 2.2 µF.
 - PC3/PC4 radio reservations need no connection. Comms LSE stays DNP.
 - Flight PC13 stays quiet (LSE erratum).
-- The CSV `net` column is the electrical net name: comms PC10/PC11 use
-  `CC_COMMS_TO_FLIGHT`/`CC_FLIGHT_TO_COMMS` through U4301; PA1/PA2/PB5 keep their
+- The CSV `net` column is the electrical net name: comms PB10/PC11 use
+  `CC_COMMS_TO_FLIGHT`/`CC_FLIGHT_TO_COMMS` through U4301; PC1/PC2 keep their
   `CC_` nodes; analog supplies keep `COMMS_VDDA`/`FLIGHT_VDDA`; ADC inputs keep
   their `ADC_` front-end nodes. `NC` means unconnected, never a shared net.
 
@@ -95,19 +96,20 @@ in the [firmware interface](../firmware-interface.md#flight-mcu-pins)):
 
 | Pad | Port | Now | Decision |
 | --- | --- | --- | --- |
-| 4 | PE5 | `FC_POWER_HOLD` | D-6.3, D-2Nov.4 |
-| 38 / 40 / 43 | PE7 / PE9 / PE12 | `PYRO1_FIRE` / `PYRO2_FIRE` straight to the TPS1H100s; `PYRO3_FIRE` through the staging latch AND gate | D-7.1, D-7.2 |
-| 68 / 65 / 61 | PA9 / PC8 / PD14 | `PYRO1_LS_SELECT` / `PYRO2_LS_SELECT` / `PYRO3_LS_SELECT`, on ports A, C and D, away from the port-E fire pins (channel 2 moved from PA10) | D-2Nov.1, D-5Nov.3 |
+| 45 | PE14 | `FC_POWER_HOLD` | D-6.3, D-2Nov.4, D-22Nov.25 |
+| 38 / 46 / 40 | PE7 / PE15 / PE9 | `PYRO1_FIRE` / `PYRO2_FIRE` straight to the TPS1H100s; `PYRO3_FIRE` through the staging latch AND gate | D-7.1, D-7.2, D-22Nov.25 |
+| 85 / 36 / 63 | PD4 / PB1 / PC6 | `PYRO1_LS_SELECT` / `PYRO2_LS_SELECT` / `PYRO3_LS_SELECT`, on ports D, B and C, away from the port-E fire pins | D-2Nov.1, D-5Nov.3, D-22Nov.25 |
 | 91 / 69 | PB5 / PA10 | FDCAN2 RX / TX, CAN bus 2 to the active board | D-5Nov.3 |
 | 67 / 66 | PA8 / PC9 | Magnetometer I²C3 SCL / SDA, AF4 | D-2Nov.11 |
-| 5 | PE6 | Magnetometer INT (optional data-ready) | D-2Nov.11 |
-| 45 / 46 | PE14 / PE15 | Staging latch readback (through 1 kΩ) / staging arm sense | D-7.2 |
-| 62 | PD15 | New-flight latch set | D-7.2 |
+| 84 | PD3 | Magnetometer INT (optional data-ready) | D-2Nov.11, D-22Nov.25 |
+| 97 / 87 | PE0 / PD6 | Staging latch readback (through 1 kΩ) / staging arm sense | D-7.2, D-22Nov.25 |
+| 88 | PD7 | New-flight latch set | D-7.2, D-22Nov.25 |
 | 44 | PE13 | Recovery arm sense (moved from PC8) | D-7.2, D-5Nov.3 |
 | 39 | PE8 | `SERVICE_POWER_EN` (moved from PD10) | D-7.1 |
-| 57 / 63 / 64 | PD10 / PC6 / PC7 | Spare test pads, inputs with pull-downs (servos removed) | D-19Nov.2, D-19Nov.3 |
-| 35 / 26 | PB0 / PA3 | `TP_STROBE` timing strobe / `RESET_MEMORY` read at boot | D-19Nov.3 |
-| 41 | PE10 | `CAN_STB` for both transceivers (moved from PB5) | D-5Nov.3 |
+| 68 / 70 / 71 | PA9 / PA11 / PA12 | Spare test pads `TP_PA9` / `TP_PA11` / `TP_PA12`, inputs with pull-downs; the bootloader drives these pins, so a pad and nothing else | D-19Nov.3, D-22Nov.25 |
+| 41 / 29 | PE10 / PA4 | `TP_STROBE` timing strobe / `RESET_MEMORY` read at boot | D-19Nov.3, D-22Nov.25 |
+| 62 | PD15 | `CAN_STB` for both transceivers | D-5Nov.3, D-22Nov.25 |
+| — | — | 36 flight nets in all moved for the placement and four reset-state faults: each in the [firmware interface](../firmware-interface.md#pin-changes-d-22nov25) | D-22Nov.25 |
 
 PA9 and PC9 are also the H563's UCPD dead-battery pins: until firmware sets
 `UCPD_DBDIS`, a high level on them switches pull-downs onto PB13 / PB14, the TDK

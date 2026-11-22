@@ -14,10 +14,10 @@ TPD1E0B04 ESD shunt"]
   GS --> G["U4504 MAX-M10S"]
   SW --> G
   SW --> R
-  G <-->|"USART1 PA9/PA10
-PPS PA0 · reset PC5"| C["Comms MCU"]
-  C <-->|"SPI1 PA4–PA7
-BUSY PC1 · DIO5 → PC2 · reset PC0"| R["U4606 Wio-LR2021
+  G <-->|"USART1 PA9/PB15
+PPS PA0 · reset PA3"| C["Comms MCU"]
+  C <-->|"SPI1 PA5–PA7 · NSS PB12
+BUSY PA4 · DIO5 → PB0 · reset PB2"| R["U4606 Wio-LR2021
 Seeed 100058045"]
   R --> S["J4601 SMA 132134"] --> RA["Radio antenna
 installed link untested"]

@@ -43,7 +43,7 @@ staging channel + reset latch"]
 387–491 mA"] --> MUX
   J103["J103 enable loop
 open = off"] -.-> U101
-  HOLD["PE5 FC_POWER_HOLD
+  HOLD["PE14 FC_POWER_HOLD
 launch detect to LANDED
 RC carries it ≈1 s"] -.-> U101
   HOLD -.-> CHU["Churro AV eFuse U1001
@@ -54,11 +54,11 @@ via Samtec pin 8"]
   nominal. Tolerance and sag set the real range; 2S doesn't promise a 6 V start.
 - **J103** is the FC battery enable. Open means off, but upstream circuits stay
   live and USB can still power logic. It is not a disarm.
-- **Enable hold (D-6.3, D-2Nov.4, D-2Nov.18):** after launch detect, PE5 holds
+- **Enable hold (D-6.3, D-2Nov.4, D-2Nov.18):** after launch detect, PE14 holds
   `BAT_SHDN_N` and, over Samtec pin 8, Churro's `AV_SHDN_N` high, so a broken
   enable wire or plug can't switch the computer off in flight. An RC (330 Ω,
-  470 µF, with PE5's 1 MΩ pull-down) keeps both above 2 V for about 1 s after
-  PE5 lets go (≥0.75 s worst case), longer than Burrito's worst-case 550 ms
+  470 µF, with the hold line's 1 MΩ pull-down) keeps both above 2 V for about 1 s after
+  PE14 lets go (≥0.75 s worst case), longer than Burrito's worst-case 550 ms
   restart; firmware re-asserts within 50 ms of a reset when the checkpoint says
   in flight. Released at LANDED plus a delay, or at a maximum flight time.
 - **Auto-retry (D-6.3):** U101 and Churro U1001 restart after an over-current
@@ -132,7 +132,7 @@ over-voltage protection: a shorted regulator pass element needs its own check.
 | Comms branch logic | Keep `COMMS_BRANCH_EN = BAT_VALID ? FLIGHT_COMMS_EN : USB_PRESENT` |
 | Hold-up | C1403 = Nichicon PCW0J102MCO1GS, 1000 µF / 6.3 V |
 | U101, U1001 | MODE to GND (auto-retry) |
-| Enable hold | 330 Ω + 470 µF ≥6.3 V, PE5 pull-down 1 MΩ: SHDN above 2 V for about 1 s (≥0.75 s worst case) with both 22.1 kΩ pull-downs (D-2Nov.4, D-2Nov.18) |
+| Enable hold | 330 Ω + 470 µF ≥6.3 V, `FC_POWER_HOLD` (PE14) pull-down 1 MΩ: SHDN above 2 V for about 1 s (≥0.75 s worst case) with both 22.1 kΩ pull-downs (D-2Nov.4, D-2Nov.18) |
 | Energy tap | 100 nF + 10 µF ≥16 V at Q101's drain (D-2Nov.15) |
 | Staging fuse | F6102 for the staging arm; F6101 for recovery only (D-2Nov.2) |
 

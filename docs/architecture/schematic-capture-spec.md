@@ -58,6 +58,8 @@ energetic outputs, or to fly.
 
 ### Processors
 
+*After capture, D-22Nov.25 (capture step 19) moved 36 flight and 12 comms nets for the placement and four reset-state faults. The pads below are as captured; the pin maps in `hardware/croi2/libraries/inputs` and the [firmware interface](../firmware-interface.md#pin-changes-d-22nov25) are current.*
+
 | Block | Instruction | Why |
 | --- | --- | --- |
 | Flight U201 | Keep STM32H563VIT6 LQFP100. Use the [100-pad map](proposed-flight-pinout.csv), amended by the next row | The CSV still holds 22 September nets so the proposal checker keeps passing; its PD10 `SERVICE_POWER_EN` row is superseded by the next row |

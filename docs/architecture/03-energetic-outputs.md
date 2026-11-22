@@ -19,12 +19,12 @@ after Q101, before U101"] --> F1["F6101 recovery fuse"]
   F1 --> J1["J6101 · recovery arm switch"]
   F2 --> J2["J6102 · staging arm switch"]
   J1 --> H1["U6304 high side · PE7"]
-  J1 --> H2["U6404 high side · PE9"]
+  J1 --> H2["U6404 high side · PE15"]
   J2 --> H3["U6504 high side
-PE12 AND latch U6001"]
-  H1 --> I1["igniter 1"] --> L1["Q6301 low side · PA9"]
-  H2 --> I2["igniter 2"] --> L2["Q6401 low side · PC8"]
-  H3 --> I3["igniter 3"] --> L3["Q6501 low side · PD14"]
+PE9 AND latch U6001"]
+  H1 --> I1["igniter 1"] --> L1["Q6301 low side · PD4"]
+  H2 --> I2["igniter 2"] --> L2["Q6401 low side · PB1"]
+  H3 --> I3["igniter 3"] --> L3["Q6501 low side · PC6"]
   L1 --> G["GND"]
   L2 --> G
   L3 --> G
@@ -48,7 +48,7 @@ services rail"] -->|"R6911 + R6912
 test current"| HI
   HI --> IGN["igniter"] --> LO(("OUTPUT1_LOW
 J6601.4"))
-  LO --> LS["Q6301 low side · PA9"] --> G["GND"]
+  LO --> LS["Q6301 low side · PD4"] --> G["GND"]
   LO -->|"R6913 + R6914"| G
   LO -->|"÷ 5.86 · U6901"| ADC["PC3 continuity ADC"]
 ```
@@ -57,8 +57,8 @@ The services rail pushes a small test current through R6911 and R6912 into the
 igniter. It comes back through R6913 and R6914 to ground, and the return node is
 divided down to the ADC: 22.1 kΩ + 22.1 kΩ over 10 kΩ, with R6714's 100 kΩ
 pull-down on the ADC side in parallel while U6901 is on, so ÷5.86, not the ÷5.42
-of the rail dividers. Channel 2 uses R692x and PC4; channel 3 uses R693x and
-PC5. With the return grounded (the 6 October design), that node would always
+of the rail dividers. Channel 2 uses R692x and PA1; channel 3 uses R693x and
+PA0 (pins since D-22Nov.25). With the return grounded (the 6 October design), that node would always
 have read 0 V, which is why the low side came back.
 
 | Return node reads | Meaning |
@@ -75,8 +75,8 @@ have read 0 V, which is why the low side came back.
 | F6101 / F6102 | Clear a shorted switch or harness, recovery and staging separately | TPS1H100 failed short; short to structure; a staging fault can't take recovery's fuse |
 | TPS1H100 high side, R6314 / R6414 / R6514 = 1.24 kΩ | Switches the battery side; limits to ≈2.0 A (1.233 V × 2000 / 1240 Ω); thermal shutdown | Shorted igniter after firing; harness short during a pulse |
 | CSD17318 low side, gate from its own GPIO through 100 Ω, 100 kΩ pull-downs | Switches the return. Off at reset and power-off | One stuck GPIO or one shorted high side can't fire alone. Brings back continuity sensing |
-| U6001 latch + U6502 AND (SN74LVC1G08) | Channel 3's high side works only while the latch is set. Any flight reset or power-up clears it; only PD15 can set it again, and only while staging is disarmed | A reset mid-flight re-lighting a motor ([FF-03](../../interfaces/flight-fault-contract.md)) |
-| U6103 arm sense | Reports recovery (PE13, D-5Nov.3) and staging (PE15) energy present | Firmware sees disarmed vs armed, not a guess |
+| U6001 latch + U6502 AND (SN74LVC1G08) | Channel 3's high side works only while the latch is set. Any flight reset or power-up clears it; only PD7 can set it again, and only while staging is disarmed | A reset mid-flight re-lighting a motor ([FF-03](../../interfaces/flight-fault-contract.md)) |
+| U6103 arm sense | Reports recovery (PE13) and staging (PD6) energy present | Firmware sees disarmed vs armed, not a guess |
 | 06c current sense | Per-channel current to ADC | Evidence that current flowed; not proof the charge fired |
 | 06e / 06f continuity | Small test current through the igniter, read at the return node | Open igniter or harness; a dead low side; a leaking high side |
 
@@ -87,8 +87,8 @@ One fault, armed, and what happens:
 | High-side fire pin stuck high, or a TPS1H100 shorted | No fire: the low side is open and R6913 / R6914 limit the current. The return node reads near the rail, so firmware sees it |
 | Low-side GPIO stuck high, or a CSD17318 shorted | No fire: the high side is off. Continuity reads zero, so firmware sees it |
 | Low side fails open | That channel can't fire. The pre-arm self-test catches it |
-| One bad write to GPIO port E | Only the high sides and the CAN standby change (both buses go quiet and their receivers go safe); the low sides sit on ports A, C and D |
-| A solder bridge between neighbouring pads | No fire pin neighbours its own low-side select (pads 38 / 68, 40 / 65, 43 / 61). A bridge to a fire pin turns that high side on alone, which the armed check sees; since D-5Nov.3 the fire pins' neighbours include the CAN standby (PE10, beside PE9) and the recovery arm sense (PE13, beside PE12). Two low sides now sit beside toggling signals, PA9 beside bus 2's TX (PA10) and PC8 beside servo 2's PWM (PC7), so the self-test runs with CAN transmitting and servo 2 pulsing and checks that no channel's reading moves |
+| One bad write to GPIO port E | No fire: the low sides sit on ports D, B and C. Port E's outputs change: the three high sides, the power hold (rewritten every loop), the service, comms, NOR and Foinse enables, the NOR reset request and the watchdog line (one edge can't keep a hung loop alive). Since D-22Nov.25 the CAN standby is on PD15 |
+| A solder bridge between neighbouring pads | No fire pin or low-side select sits beside another, an arm sense, the staging latch, the new-flight request or a supply pad (D-22Nov.25; the checker's A26). A bridge to a fire pin turns that high side on alone, which the armed check sees: PE7 sits between the comms reset request (PB2, idle high) and the service enable (PE8), PE9 between PE8 and the timing strobe (PE10), PE15 between the power hold (PE14) and the MS5607's I²C clock (PB10). A bridge to a low side shows only while its neighbour is high, so the pre-arm self-test runs with every neighbour live and checks that no channel's reading moves: PD4 sits between the magnetometer's data-ready (PD3) and the sounder (PD5), PB1 between the comms enable (PB0) and the comms reset request (PB2), PC6 between the CAN standby (PD15) and the LSM6DSV32X's data-ready (PC7). Sensors streaming, sounder on, comms powered, CAN both in standby and awake |
 
 ## Firing and checks
 
@@ -133,8 +133,8 @@ reasons above. They were never deleted from the CAD.
 - Bound each firing pulse in the per-flight configuration.
 - Channels 1 and 2 are recovery hardware, channel 3 staging hardware. A flight
   profile can't put ignition on 1 or 2 to dodge the reset inhibit.
-- Set a new flight (PD15 edge) only on the pad, with staging disarmed. Read the
-  latch on PE14 and report it.
+- Set a new flight (PD7 edge) only on the pad, with staging disarmed. Read the
+  latch on PE0 and report it.
 - After an in-flight reset: channel 3 stays inhibited in hardware; recovery
   resumes only through the phase-specific path in the
   [recovery logic](10-recovery-logic.md).

@@ -214,7 +214,8 @@ BIG_MLCC = ('Capacitor_SMD:C_1206', 'Capacitor_SMD:C_1210', 'Capacitor_SMD:C_181
 NET_WEIGHTS = [(r'LORA_RF_SUBG|GNSS_RF', 30.0), (r'OUTPUT\d_(HIGH|LOW)', 6.0), (r'PYRO\d_ENERGY', 3.0),
                (r'(RECOVERY|STAGING)_ARMED_VBAT|.*ARM_FEED', 0.1), (r'VBAT_CROI_INPUT|ENERGY_TAP', 4.0),
                (r'USB_D[PM](_CONN)?', 4.0), (r'CAN2?_[HL]', 3.0)]
-# placed right after the anchors, in this order [J]: the parts whose position the datasheets fix
+# placed right after the anchors, in this order [J]: the parts whose position the datasheets fix; and BZ9001, the
+# sounder, which found no room once the pin swaps moved its driver (D-22Nov.25)
 PRIORITY = ['U4606', 'U4504', 'D4501', 'Q6301', 'Q6401', 'Q6501',
             'Q101', 'U101', 'R7101', 'U7101', 'U1101', 'U1301', 'U1401', 'C1403', 'U1701', 'U1801', 'U1901',
-            'Y201', 'Y202', 'Y401', 'U4402', 'D4401']
+            'Y201', 'Y202', 'Y401', 'U4402', 'D4401', 'BZ9001']

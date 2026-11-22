@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/work/hardware/croi2/Croi2.kicad_sch</source>
-    <date>2026-11-22T13:16:26+0000</date>
+    <date>2026-11-22T15:11:36+0000</date>
     <tool>Eeschema 9.0.8+dfsg-1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -4901,7 +4901,7 @@
       <tstamps>ca3b3edf-8db9-5244-8e4c-f9172ab6e6d2</tstamps>
     </comp>
     <comp ref="TP12">
-      <value>TP_PC7</value>
+      <value>TP_PA9</value>
       <footprint>TestPoint:TestPoint_Pad_D1.0mm</footprint>
       <datasheet>~</datasheet>
       <description>test point</description>
@@ -4923,7 +4923,7 @@
       <tstamps>9bc40af9-f725-5797-84f3-1adb74ade4d2</tstamps>
     </comp>
     <comp ref="TP13">
-      <value>TP_PC6</value>
+      <value>TP_PA12</value>
       <footprint>TestPoint:TestPoint_Pad_D1.0mm</footprint>
       <datasheet>~</datasheet>
       <description>test point</description>
@@ -4945,7 +4945,7 @@
       <tstamps>165eeabb-d459-5e1e-91a9-f68a7da005ca</tstamps>
     </comp>
     <comp ref="TP14">
-      <value>TP_PD10</value>
+      <value>TP_PA11</value>
       <footprint>TestPoint:TestPoint_Pad_D1.0mm</footprint>
       <datasheet>~</datasheet>
       <description>test point</description>
@@ -17076,7 +17076,7 @@
       <node ref="U1601" pin="1" pinfunction="IN" pintype="power_in"/>
     </net>
     <net code="10" name="ADC_FLIGHT_3V3" class="Default">
-      <node ref="U201" pin="24" pinfunction="PA1" pintype="bidirectional"/>
+      <node ref="U201" pin="33" pinfunction="PC4" pintype="bidirectional"/>
       <node ref="U8001" pin="6" pinfunction="D2" pintype="passive"/>
     </net>
     <net code="11" name="ADC_PYRO1_CONTINUITY" class="Default">
@@ -17093,7 +17093,7 @@
     <net code="13" name="ADC_PYRO2_CONTINUITY" class="Default">
       <node ref="R6724" pin="1" pintype="passive"/>
       <node ref="TP11" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="33" pinfunction="PC4" pintype="bidirectional"/>
+      <node ref="U201" pin="24" pinfunction="PA1" pintype="bidirectional"/>
       <node ref="U6901" pin="6" pinfunction="D2" pintype="passive"/>
     </net>
     <net code="14" name="ADC_PYRO2_CURRENT" class="Default">
@@ -17104,7 +17104,7 @@
     <net code="15" name="ADC_PYRO3_CONTINUITY" class="Default">
       <node ref="R6734" pin="1" pintype="passive"/>
       <node ref="TP7" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="34" pinfunction="PC5" pintype="bidirectional"/>
+      <node ref="U201" pin="23" pinfunction="PA0" pintype="bidirectional"/>
       <node ref="U6901" pin="8" pinfunction="D3" pintype="passive"/>
     </net>
     <net code="16" name="ADC_PYRO3_CURRENT" class="Default">
@@ -17117,7 +17117,7 @@
       <node ref="U8001" pin="8" pinfunction="D3" pintype="passive"/>
     </net>
     <net code="18" name="ADC_VEHICLE_VBAT" class="Default">
-      <node ref="U201" pin="23" pinfunction="PA0" pintype="bidirectional"/>
+      <node ref="U201" pin="34" pinfunction="PC5" pintype="bidirectional"/>
       <node ref="U8001" pin="3" pinfunction="D1" pintype="passive"/>
     </net>
     <net code="19" name="BAT_BLOCK_DRV" class="Default">
@@ -17243,7 +17243,7 @@
       <node ref="TP33" pin="1" pinfunction="1" pintype="passive"/>
       <node ref="U1501" pin="4" pinfunction="~{FAULT}" pintype="open_collector"/>
       <node ref="U1601" pin="4" pinfunction="~{FAULT}" pintype="open_collector"/>
-      <node ref="U201" pin="86" pinfunction="PD5" pintype="bidirectional"/>
+      <node ref="U201" pin="4" pinfunction="PE5" pintype="bidirectional"/>
       <node ref="U3601" pin="4" pinfunction="~{FAULT}" pintype="open_collector"/>
       <node ref="U501" pin="4" pinfunction="~{FAULT}" pintype="open_collector"/>
       <node ref="U7001" pin="4" pinfunction="~{FAULT}" pintype="open_collector"/>
@@ -17269,7 +17269,7 @@
     </net>
     <net code="44" name="BUZZER_DRIVE" class="Default">
       <node ref="R9002" pin="1" pintype="passive"/>
-      <node ref="U201" pin="87" pinfunction="PD6" pintype="bidirectional"/>
+      <node ref="U201" pin="86" pinfunction="PD5" pintype="bidirectional"/>
     </net>
     <net code="45" name="BUZZER_GATE" class="Default">
       <node ref="Q9001" pin="1" pinfunction="G" pintype="input"/>
@@ -17357,7 +17357,7 @@
     </net>
     <net code="58" name="CAN_POWER_EN" class="Default">
       <node ref="R503" pin="1" pintype="passive"/>
-      <node ref="U201" pin="36" pinfunction="PB1" pintype="bidirectional"/>
+      <node ref="U201" pin="57" pinfunction="PD10" pintype="bidirectional"/>
       <node ref="U501" pin="3" pinfunction="EN" pintype="input"/>
       <node ref="U502" pin="8" pinfunction="OE" pintype="input"/>
       <node ref="U504" pin="8" pinfunction="OE" pintype="input"/>
@@ -17373,7 +17373,7 @@
     </net>
     <net code="61" name="CAN_STB" class="Default">
       <node ref="R505" pin="2" pintype="passive"/>
-      <node ref="U201" pin="41" pinfunction="PE10" pintype="bidirectional"/>
+      <node ref="U201" pin="62" pinfunction="PD15" pintype="bidirectional"/>
       <node ref="U502" pin="3" pinfunction="A2" pintype="input"/>
       <node ref="U504" pin="3" pinfunction="A2" pintype="input"/>
     </net>
@@ -17397,17 +17397,17 @@
       <node ref="U503" pin="1" pinfunction="TXD" pintype="input"/>
     </net>
     <net code="66" name="CC_BAT_VALID" class="Default">
-      <node ref="U401" pin="16" pinfunction="PA2" pintype="bidirectional"/>
+      <node ref="U401" pin="10" pinfunction="PC2" pintype="bidirectional"/>
       <node ref="U4303" pin="13" pinfunction="B1Y" pintype="output"/>
       <node ref="U4501" pin="3" pinfunction="IN0" pintype="input"/>
       <node ref="U4601" pin="3" pinfunction="IN0" pintype="input"/>
     </net>
     <net code="67" name="CC_BRANCH_FAULT_N" class="Default">
       <node ref="R9004" pin="2" pintype="passive"/>
-      <node ref="U401" pin="57" pinfunction="PB5" pintype="bidirectional"/>
+      <node ref="U401" pin="9" pinfunction="PC1" pintype="bidirectional"/>
     </net>
     <net code="68" name="CC_COMMS_TO_FLIGHT" class="Default">
-      <node ref="U401" pin="51" pinfunction="PC10" pintype="bidirectional"/>
+      <node ref="U401" pin="29" pinfunction="PB10" pintype="bidirectional"/>
       <node ref="U4301" pin="1" pinfunction="B2" pintype="input"/>
     </net>
     <net code="69" name="CC_FLIGHT_TO_COMMS" class="Default">
@@ -17530,12 +17530,12 @@
     </net>
     <net code="84" name="COMMS_RESET_REQUEST" class="Default">
       <node ref="R4301" pin="2" pintype="passive"/>
-      <node ref="U201" pin="90" pinfunction="PB4(NJTRST)" pintype="bidirectional"/>
+      <node ref="U201" pin="37" pinfunction="PB2" pintype="bidirectional"/>
       <node ref="U4302" pin="3" pinfunction="A" pintype="input"/>
     </net>
     <net code="85" name="COMMS_STATUS_LED" class="Default">
       <node ref="R9201" pin="1" pintype="passive"/>
-      <node ref="U401" pin="56" pinfunction="PB4(NJTRST)" pintype="bidirectional"/>
+      <node ref="U401" pin="8" pinfunction="PC0" pintype="bidirectional"/>
     </net>
     <net code="86" name="COMMS_STATUS_LED_A" class="Default">
       <node ref="D9201" pin="2" pinfunction="A" pintype="passive"/>
@@ -17648,7 +17648,7 @@
       <node ref="R1014" pin="1" pintype="passive"/>
       <node ref="R1015" pin="1" pintype="passive"/>
       <node ref="TP28" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="4" pinfunction="PE5" pintype="bidirectional"/>
+      <node ref="U201" pin="45" pinfunction="PE14" pintype="bidirectional"/>
     </net>
     <net code="107" name="FLIGHT_3V3" class="Default">
       <node ref="C1704" pin="1" pintype="passive"/>
@@ -17776,7 +17776,7 @@
     <net code="112" name="FLIGHT_COMMS_EN" class="Default">
       <node ref="R1205" pin="1" pintype="passive"/>
       <node ref="U1202" pin="3" pinfunction="IN0" pintype="input"/>
-      <node ref="U201" pin="71" pinfunction="PA12" pintype="bidirectional"/>
+      <node ref="U201" pin="35" pinfunction="PB0" pintype="bidirectional"/>
     </net>
     <net code="113" name="FLIGHT_HSE_IN" class="Default">
       <node ref="C215" pin="1" pintype="passive"/>
@@ -17834,7 +17834,7 @@
     <net code="123" name="FLIGHT_STATUS_LED1" class="Default">
       <node ref="R9001" pin="1" pintype="passive"/>
       <node ref="R9102" pin="1" pintype="passive"/>
-      <node ref="U201" pin="88" pinfunction="PD7" pintype="bidirectional"/>
+      <node ref="U201" pin="51" pinfunction="PB12" pintype="bidirectional"/>
       <node ref="U9101" pin="2" pinfunction="A" pintype="input"/>
     </net>
     <net code="124" name="FLIGHT_STATUS_LED1_A" class="Default">
@@ -17904,7 +17904,7 @@
     </net>
     <net code="136" name="FOINSE_RETURN_EN" class="Default">
       <node ref="R7002" pin="1" pintype="passive"/>
-      <node ref="U201" pin="77" pinfunction="PA15(JTDI)" pintype="bidirectional"/>
+      <node ref="U201" pin="43" pinfunction="PE12" pintype="bidirectional"/>
       <node ref="U7001" pin="3" pinfunction="EN" pintype="input"/>
       <node ref="U7002" pin="1" pinfunction="SEL1/SEL2/SEL3_[1,4,10]" pintype="input"/>
       <node ref="U7002" pin="10" pintype="input"/>
@@ -18371,7 +18371,7 @@
     </net>
     <net code="144" name="GNSS_EN" class="Default">
       <node ref="R4501" pin="1" pintype="passive"/>
-      <node ref="U401" pin="26" pinfunction="PB0" pintype="bidirectional"/>
+      <node ref="U401" pin="25" pinfunction="PC5" pintype="bidirectional"/>
       <node ref="U4501" pin="6" pinfunction="IN2" pintype="input"/>
     </net>
     <net code="145" name="GNSS_POWER_EN" class="Default">
@@ -18393,7 +18393,7 @@
       <node ref="U4504" pin="4" pinfunction="TIMEPULSE" pintype="output"/>
     </net>
     <net code="148" name="GNSS_RESET_N" class="Default">
-      <node ref="U401" pin="25" pinfunction="PC5" pintype="bidirectional"/>
+      <node ref="U401" pin="17" pinfunction="PA3" pintype="bidirectional"/>
       <node ref="U4503" pin="12" pinfunction="S4" pintype="passive"/>
     </net>
     <net code="149" name="GNSS_RESET_N_ISO" class="Default">
@@ -18407,7 +18407,7 @@
       <node ref="U4504" pin="11" pinfunction="RF_IN" pintype="input"/>
     </net>
     <net code="151" name="GNSS_RX" class="Default">
-      <node ref="U401" pin="43" pinfunction="PA10" pintype="bidirectional"/>
+      <node ref="U401" pin="36" pinfunction="PB15" pintype="bidirectional"/>
       <node ref="U4503" pin="5" pinfunction="S2" pintype="passive"/>
     </net>
     <net code="152" name="GNSS_RX_ISO" class="Default">
@@ -18436,7 +18436,7 @@
       <node ref="U3304" pin="6" pintype="power_in"/>
     </net>
     <net code="157" name="HG_INT1" class="Default">
-      <node ref="U201" pin="3" pinfunction="PE4" pintype="bidirectional"/>
+      <node ref="U201" pin="90" pinfunction="PB4(NJTRST)" pintype="bidirectional"/>
       <node ref="U3304" pin="8" pinfunction="INT1" pintype="output"/>
     </net>
     <net code="158" name="HG_MISO" class="Default">
@@ -18497,7 +18497,7 @@
       <node ref="U4606" pin="1" pinfunction="VCC_IN" pintype="power_in"/>
     </net>
     <net code="166" name="LORA_BUSY" class="Default">
-      <node ref="U401" pin="9" pinfunction="PC1" pintype="bidirectional"/>
+      <node ref="U401" pin="20" pinfunction="PA4" pintype="bidirectional"/>
       <node ref="U4604" pin="5" pinfunction="S2" pintype="passive"/>
     </net>
     <net code="167" name="LORA_BUSY_ISO" class="Default">
@@ -18510,7 +18510,7 @@
       <node ref="U4606" pin="8" pinfunction="BUSY" pintype="open_collector"/>
     </net>
     <net code="169" name="LORA_DIO1" class="Default">
-      <node ref="U401" pin="10" pinfunction="PC2" pintype="bidirectional"/>
+      <node ref="U401" pin="26" pinfunction="PB0" pintype="bidirectional"/>
       <node ref="U4604" pin="9" pinfunction="S3" pintype="passive"/>
     </net>
     <net code="170" name="LORA_DIO1_ISO" class="Default">
@@ -18555,7 +18555,7 @@
       <node ref="U4606" pin="5" pinfunction="MOSI" pintype="input"/>
     </net>
     <net code="180" name="LORA_NCS" class="Default">
-      <node ref="U401" pin="20" pinfunction="PA4" pintype="bidirectional"/>
+      <node ref="U401" pin="33" pinfunction="PB12" pintype="bidirectional"/>
       <node ref="U4603" pin="9" pinfunction="S3" pintype="passive"/>
     </net>
     <net code="181" name="LORA_NCS_ISO" class="Default">
@@ -18580,7 +18580,7 @@
       <node ref="U4604" pin="4" pinfunction="SEL2" pintype="input"/>
     </net>
     <net code="184" name="LORA_RESET_N" class="Default">
-      <node ref="U401" pin="8" pinfunction="PC0" pintype="bidirectional"/>
+      <node ref="U401" pin="28" pinfunction="PB2" pintype="bidirectional"/>
       <node ref="U4604" pin="2" pinfunction="S1" pintype="passive"/>
     </net>
     <net code="185" name="LORA_RESET_N_ISO" class="Default">
@@ -18625,7 +18625,7 @@
       <node ref="U3701" pin="4" pinfunction="SPI_CS" pintype="input"/>
     </net>
     <net code="193" name="MAG_INT" class="Default">
-      <node ref="U201" pin="5" pinfunction="PE6" pintype="bidirectional"/>
+      <node ref="U201" pin="84" pinfunction="PD3" pintype="bidirectional"/>
       <node ref="U3701" pin="15" pinfunction="INT" pintype="output"/>
     </net>
     <net code="194" name="MAG_SCL" class="Default">
@@ -18675,7 +18675,7 @@
     </net>
     <net code="204" name="NEW_FLIGHT_CLEAR_REQUEST" class="Default">
       <node ref="R6001" pin="1" pintype="passive"/>
-      <node ref="U201" pin="62" pinfunction="PD15" pintype="bidirectional"/>
+      <node ref="U201" pin="88" pinfunction="PD7" pintype="bidirectional"/>
       <node ref="U6001" pin="1" pinfunction="CLK" pintype="input"/>
     </net>
     <net code="205" name="NOR_3V3" class="Default">
@@ -18704,7 +18704,7 @@
       <node ref="U3601" pin="6" pinfunction="OUT" pintype="power_out"/>
     </net>
     <net code="208" name="NOR_CLK" class="Default">
-      <node ref="U201" pin="37" pinfunction="PB2" pintype="bidirectional"/>
+      <node ref="U201" pin="26" pinfunction="PA3" pintype="bidirectional"/>
       <node ref="U3603" pin="2" pinfunction="S1" pintype="passive"/>
     </net>
     <net code="209" name="NOR_CLK_DAMP" class="Default">
@@ -18717,7 +18717,7 @@
     </net>
     <net code="211" name="NOR_EN" class="Default">
       <node ref="R3602" pin="1" pintype="passive"/>
-      <node ref="U201" pin="70" pinfunction="PA11" pintype="bidirectional"/>
+      <node ref="U201" pin="2" pinfunction="PE3" pintype="bidirectional"/>
       <node ref="U3601" pin="3" pinfunction="EN" pintype="input"/>
       <node ref="U3602" pin="1" pinfunction="SEL1/SEL2/SEL3/SEL4_[1,4,10,13]" pintype="input"/>
       <node ref="U3602" pin="10" pintype="input"/>
@@ -18777,7 +18777,7 @@
     </net>
     <net code="223" name="NOR_RESET_REQUEST" class="Default">
       <node ref="R3610" pin="2" pintype="passive"/>
-      <node ref="U201" pin="84" pinfunction="PD3" pintype="bidirectional"/>
+      <node ref="U201" pin="5" pinfunction="PE6" pintype="bidirectional"/>
       <node ref="U3603" pin="9" pinfunction="S3" pintype="passive"/>
     </net>
     <net code="224" name="Net-(D202-K)" class="Default">
@@ -18938,7 +18938,7 @@
     <net code="250" name="PYRO1_LS_SELECT" class="Default">
       <node ref="R6302" pin="1" pintype="passive"/>
       <node ref="R6304" pin="1" pintype="passive"/>
-      <node ref="U201" pin="68" pinfunction="PA9" pintype="bidirectional"/>
+      <node ref="U201" pin="85" pinfunction="PD4" pintype="bidirectional"/>
     </net>
     <net code="251" name="PYRO1_RETURN_MID" class="Default">
       <node ref="R6913" pin="2" pintype="passive"/>
@@ -18985,7 +18985,7 @@
     </net>
     <net code="260" name="PYRO2_FIRE" class="Default">
       <node ref="R6403" pin="1" pintype="passive"/>
-      <node ref="U201" pin="40" pinfunction="PE9" pintype="bidirectional"/>
+      <node ref="U201" pin="46" pinfunction="PE15" pintype="bidirectional"/>
       <node ref="U6404" pin="3" pinfunction="IN" pintype="input"/>
     </net>
     <net code="261" name="PYRO2_GATE" class="Default">
@@ -18996,7 +18996,7 @@
     <net code="262" name="PYRO2_LS_SELECT" class="Default">
       <node ref="R6402" pin="1" pintype="passive"/>
       <node ref="R6404" pin="1" pintype="passive"/>
-      <node ref="U201" pin="65" pinfunction="PC8" pintype="bidirectional"/>
+      <node ref="U201" pin="36" pinfunction="PB1" pintype="bidirectional"/>
     </net>
     <net code="263" name="PYRO2_RETURN_MID" class="Default">
       <node ref="R6923" pin="2" pintype="passive"/>
@@ -19043,7 +19043,7 @@
     </net>
     <net code="272" name="PYRO3_FIRE" class="Default">
       <node ref="R6501" pin="1" pintype="passive"/>
-      <node ref="U201" pin="43" pinfunction="PE12" pintype="bidirectional"/>
+      <node ref="U201" pin="40" pinfunction="PE9" pintype="bidirectional"/>
       <node ref="U6502" pin="1" pintype="input"/>
     </net>
     <net code="273" name="PYRO3_GATE" class="Default">
@@ -19059,7 +19059,7 @@
     <net code="275" name="PYRO3_LS_SELECT" class="Default">
       <node ref="R6502" pin="1" pintype="passive"/>
       <node ref="R6504" pin="1" pintype="passive"/>
-      <node ref="U201" pin="61" pinfunction="PD14" pintype="bidirectional"/>
+      <node ref="U201" pin="63" pinfunction="PC6" pintype="bidirectional"/>
     </net>
     <net code="276" name="PYRO3_RETURN_MID" class="Default">
       <node ref="R6933" pin="2" pintype="passive"/>
@@ -19106,7 +19106,7 @@
       <node ref="D202" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="R202" pin="2" pintype="passive"/>
       <node ref="TP18" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="26" pinfunction="PA3" pintype="bidirectional"/>
+      <node ref="U201" pin="29" pinfunction="PA4" pintype="bidirectional"/>
     </net>
     <net code="285" name="SERVICE_POWER_EN" class="Default">
       <node ref="R1602" pin="1" pintype="passive"/>
@@ -19130,7 +19130,7 @@
     </net>
     <net code="289" name="STAGE_INHIBIT_LATCHED" class="Default">
       <node ref="R6005" pin="2" pintype="passive"/>
-      <node ref="U201" pin="45" pinfunction="PE14" pintype="bidirectional"/>
+      <node ref="U201" pin="97" pinfunction="PE0" pintype="bidirectional"/>
     </net>
     <net code="290" name="STAGING_ARMED_VBAT" class="Default">
       <node ref="J6102" pin="2" pinfunction="Pin_2" pintype="passive"/>
@@ -19140,7 +19140,7 @@
     <net code="291" name="STAGING_ARM_SENSE" class="Default">
       <node ref="R6108" pin="2" pintype="passive"/>
       <node ref="TP21" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="46" pinfunction="PE15" pintype="bidirectional"/>
+      <node ref="U201" pin="87" pinfunction="PD6" pintype="bidirectional"/>
     </net>
     <net code="292" name="ST_3V3" class="Default">
       <node ref="C3102" pin="1" pintype="passive"/>
@@ -19152,7 +19152,7 @@
       <node ref="U3104" pin="8" pintype="power_in"/>
     </net>
     <net code="293" name="ST_DRDY" class="Default">
-      <node ref="U201" pin="97" pinfunction="PE0" pintype="bidirectional"/>
+      <node ref="U201" pin="64" pinfunction="PC7" pintype="bidirectional"/>
       <node ref="U3104" pin="4" pinfunction="INT1" pintype="output"/>
     </net>
     <net code="294" name="ST_MISO" class="Default">
@@ -19169,7 +19169,7 @@
     </net>
     <net code="297" name="ST_NCS" class="Default">
       <node ref="R3105" pin="2" pintype="passive"/>
-      <node ref="U201" pin="29" pinfunction="PA4" pintype="bidirectional"/>
+      <node ref="U201" pin="61" pinfunction="PD14" pintype="bidirectional"/>
       <node ref="U3104" pin="12" pinfunction="CS" pintype="input"/>
     </net>
     <net code="298" name="ST_SCK" class="Default">
@@ -19183,7 +19183,7 @@
     <net code="300" name="SUPERVISOR_WDI" class="Default">
       <node ref="R2311" pin="1" pintype="passive"/>
       <node ref="TP4" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="85" pinfunction="PD4" pintype="bidirectional"/>
+      <node ref="U201" pin="3" pinfunction="PE4" pintype="bidirectional"/>
       <node ref="U2302" pin="7" pinfunction="WDI" pintype="input"/>
     </net>
     <net code="301" name="TDK_3V3" class="Default">
@@ -19196,7 +19196,7 @@
       <node ref="U3204" pin="8" pintype="power_in"/>
     </net>
     <net code="302" name="TDK_DRDY" class="Default">
-      <node ref="U201" pin="2" pinfunction="PE3" pintype="bidirectional"/>
+      <node ref="U201" pin="77" pinfunction="PA15(JTDI)" pintype="bidirectional"/>
       <node ref="U3204" pin="4" pinfunction="INT1_INT" pintype="output"/>
     </net>
     <net code="303" name="TDK_MISO" class="Default">
@@ -19213,7 +19213,7 @@
     </net>
     <net code="306" name="TDK_NCS" class="Default">
       <node ref="R3205" pin="2" pintype="passive"/>
-      <node ref="U201" pin="51" pinfunction="PB12" pintype="bidirectional"/>
+      <node ref="U201" pin="65" pinfunction="PC8" pintype="bidirectional"/>
       <node ref="U3204" pin="12" pinfunction="AP_CS" pintype="input"/>
     </net>
     <net code="307" name="TDK_SCK" class="Default">
@@ -19241,21 +19241,21 @@
       <node ref="U201" pin="89" pinfunction="PB3(JTDO" pintype="bidirectional"/>
       <node ref="U3503" pin="7" pinfunction="SDI/SDA" pintype="bidirectional"/>
     </net>
-    <net code="312" name="TP_PC6" class="Default">
-      <node ref="TP13" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="63" pinfunction="PC6" pintype="bidirectional"/>
-    </net>
-    <net code="313" name="TP_PC7" class="Default">
+    <net code="312" name="TP_PA9" class="Default">
       <node ref="TP12" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="64" pinfunction="PC7" pintype="bidirectional"/>
+      <node ref="U201" pin="68" pinfunction="PA9" pintype="bidirectional"/>
     </net>
-    <net code="314" name="TP_PD10" class="Default">
+    <net code="313" name="TP_PA11" class="Default">
       <node ref="TP14" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U201" pin="57" pinfunction="PD10" pintype="bidirectional"/>
+      <node ref="U201" pin="70" pinfunction="PA11" pintype="bidirectional"/>
+    </net>
+    <net code="314" name="TP_PA12" class="Default">
+      <node ref="TP13" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U201" pin="71" pinfunction="PA12" pintype="bidirectional"/>
     </net>
     <net code="315" name="TP_STROBE" class="Default">
       <node ref="R203" pin="1" pintype="passive"/>
-      <node ref="U201" pin="35" pinfunction="PB0" pintype="bidirectional"/>
+      <node ref="U201" pin="41" pinfunction="PE10" pintype="bidirectional"/>
     </net>
     <net code="316" name="USB_CC1" class="Default">
       <node ref="J4401" pin="A5" pinfunction="CC1" pintype="bidirectional"/>
@@ -19326,7 +19326,7 @@
       <node ref="U4401" pin="3" pinfunction="EN" pintype="input"/>
     </net>
     <net code="328" name="USB_VBUS_PRESENT" class="Default">
-      <node ref="U401" pin="28" pinfunction="PB2" pintype="bidirectional"/>
+      <node ref="U401" pin="15" pinfunction="PA1" pintype="bidirectional"/>
       <node ref="U4303" pin="12" pinfunction="B2Y" pintype="output"/>
     </net>
     <net code="329" name="VBAT_CROI_INPUT" class="Default">
@@ -19427,32 +19427,32 @@
     <net code="351" name="unconnected-(U201-PC13-Pad7)" class="Default">
       <node ref="U201" pin="7" pinfunction="PC13" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="352" name="unconnected-(U401-PA1-Pad15)" class="Default">
-      <node ref="U401" pin="15" pinfunction="PA1" pintype="bidirectional+no_connect"/>
+    <net code="352" name="unconnected-(U401-PA2-Pad16)" class="Default">
+      <node ref="U401" pin="16" pinfunction="PA2" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="353" name="unconnected-(U401-PA3-Pad17)" class="Default">
-      <node ref="U401" pin="17" pinfunction="PA3" pintype="bidirectional+no_connect"/>
-    </net>
-    <net code="354" name="unconnected-(U401-PA8-Pad41)" class="Default">
+    <net code="353" name="unconnected-(U401-PA8-Pad41)" class="Default">
       <node ref="U401" pin="41" pinfunction="PA8" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="354" name="unconnected-(U401-PA10-Pad43)" class="Default">
+      <node ref="U401" pin="43" pinfunction="PA10" pintype="bidirectional+no_connect"/>
     </net>
     <net code="355" name="unconnected-(U401-PA15(JTDI)-Pad50)" class="Default">
       <node ref="U401" pin="50" pinfunction="PA15(JTDI)" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="356" name="unconnected-(U401-PB6-Pad58)" class="Default">
+    <net code="356" name="unconnected-(U401-PB4(NJTRST)-Pad56)" class="Default">
+      <node ref="U401" pin="56" pinfunction="PB4(NJTRST)" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="357" name="unconnected-(U401-PB5-Pad57)" class="Default">
+      <node ref="U401" pin="57" pinfunction="PB5" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="358" name="unconnected-(U401-PB6-Pad58)" class="Default">
       <node ref="U401" pin="58" pinfunction="PB6" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="357" name="unconnected-(U401-PB7-Pad59)" class="Default">
+    <net code="359" name="unconnected-(U401-PB7-Pad59)" class="Default">
       <node ref="U401" pin="59" pinfunction="PB7" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="358" name="unconnected-(U401-PB8-Pad61)" class="Default">
+    <net code="360" name="unconnected-(U401-PB8-Pad61)" class="Default">
       <node ref="U401" pin="61" pinfunction="PB8" pintype="bidirectional+no_connect"/>
-    </net>
-    <net code="359" name="unconnected-(U401-PB10-Pad29)" class="Default">
-      <node ref="U401" pin="29" pinfunction="PB10" pintype="bidirectional+no_connect"/>
-    </net>
-    <net code="360" name="unconnected-(U401-PB12-Pad33)" class="Default">
-      <node ref="U401" pin="33" pinfunction="PB12" pintype="bidirectional+no_connect"/>
     </net>
     <net code="361" name="unconnected-(U401-PB13-Pad34)" class="Default">
       <node ref="U401" pin="34" pinfunction="PB13" pintype="bidirectional+no_connect"/>
@@ -19460,26 +19460,26 @@
     <net code="362" name="unconnected-(U401-PB14-Pad35)" class="Default">
       <node ref="U401" pin="35" pinfunction="PB14" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="363" name="unconnected-(U401-PB15-Pad36)" class="Default">
-      <node ref="U401" pin="36" pinfunction="PB15" pintype="bidirectional+no_connect"/>
-    </net>
-    <net code="364" name="unconnected-(U401-PC3-Pad11)" class="Default">
+    <net code="363" name="unconnected-(U401-PC3-Pad11)" class="Default">
       <node ref="U401" pin="11" pinfunction="PC3" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="365" name="unconnected-(U401-PC4-Pad24)" class="Default">
+    <net code="364" name="unconnected-(U401-PC4-Pad24)" class="Default">
       <node ref="U401" pin="24" pinfunction="PC4" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="366" name="unconnected-(U401-PC6-Pad37)" class="Default">
+    <net code="365" name="unconnected-(U401-PC6-Pad37)" class="Default">
       <node ref="U401" pin="37" pinfunction="PC6" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="367" name="unconnected-(U401-PC7-Pad38)" class="Default">
+    <net code="366" name="unconnected-(U401-PC7-Pad38)" class="Default">
       <node ref="U401" pin="38" pinfunction="PC7" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="368" name="unconnected-(U401-PC8-Pad39)" class="Default">
+    <net code="367" name="unconnected-(U401-PC8-Pad39)" class="Default">
       <node ref="U401" pin="39" pinfunction="PC8" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="369" name="unconnected-(U401-PC9-Pad40)" class="Default">
+    <net code="368" name="unconnected-(U401-PC9-Pad40)" class="Default">
       <node ref="U401" pin="40" pinfunction="PC9" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="369" name="unconnected-(U401-PC10-Pad51)" class="Default">
+      <node ref="U401" pin="51" pinfunction="PC10" pintype="bidirectional+no_connect"/>
     </net>
     <net code="370" name="unconnected-(U401-PC12-Pad53)" class="Default">
       <node ref="U401" pin="53" pinfunction="PC12" pintype="bidirectional+no_connect"/>
