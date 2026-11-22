@@ -36,6 +36,30 @@ MODEL_SOURCE = 'KiCad kicad-packages3D, master branch (GitHub mirror), fetched 2
 FETCHED = ['Capacitor_SMD.3dshapes/CP_Elec_6.3x7.7.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.5.step', 'Capacitor_SMD.3dshapes/CP_Elec_8x10.step',
            'Fuse.3dshapes/Fuse_1206_3216Metric.step', 'Package_LGA.3dshapes/LGA-16_3x3mm_P0.5mm.step',
            'Package_QFP.3dshapes/LQFP-64_10x10mm_P0.5mm.step', 'Capacitor_SMD.3dshapes/C_0805_2012Metric.step']
+DEB_SOURCE = ('KiCad 9.0.7 3D library, Ubuntu package kicad-packages3d_9.0.7-1_all.deb fetched with apt, 22 Nov 2026; '
+              'copied unchanged (see libraries/3d/GENERATED.md)')
+FROM_DEB = ['Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step', 'Crystal.3dshapes/Crystal_SMD_2016-4Pin_2.0x1.6mm.step',
+            'Diode_SMD.3dshapes/D_SOD-882.step',
+            'Package_SO.3dshapes/Texas_HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3.155x3.255mm.step',
+            'Package_SON.3dshapes/WSON-10-1EP_2.5x2.5mm_P0.5mm_EP1.2x2mm.step',
+            'Package_LGA.3dshapes/ST_HLGA-10_2x2mm_P0.5mm_LayoutBorder3x2y.step',
+            'Connector_Coaxial.3dshapes/SMA_Amphenol_132291_Vertical.step']
+DRAWN_SOURCE = ('Drawn by tools/layout/models3d.py from the footprint F.Fab outline and the heights in '
+                'libraries/3d/GENERATED.md, 22 Nov 2026; simplified, several heights unverified')
+DRAWN = ['TestPoint.3dshapes/TestPoint_Keystone_5000-5004_Miniature.step',
+         'TestPoint.3dshapes/TestPoint_Keystone_5010-5014_Multipurpose.step',
+         'Connector_JST.3dshapes/JST_VH_B2P-VH_1x02_P3.96mm_Vertical.step',
+         'Connector_Molex.3dshapes/Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical.step',
+         'Connector_Harwin.3dshapes/Harwin_Gecko_G125-MS10605M2P_2x03_P1.25mm_Vertical.step',
+         'Fuse.3dshapes/Fuse_Littelfuse-NANO2-451_453.step', 'Buzzer_Beeper.3dshapes/MagneticBuzzer_PUI_SMT-1028-T-2-R.step',
+         'RF_GPS.3dshapes/ublox_MAX-M10S.step', 'Package_DFN_QFN.3dshapes/Texas_RDH0030A_TPSM63603.step',
+         'Connector_Samtec.3dshapes/Samtec_MPT-08-01-01-L-RA-SD.step']
+
+
+def base_note(note):
+    """The note from before capture (2026-09-08), once: earlier runs appended the whole old note each time."""
+    k = note.rfind('2026-09-08: ')
+    return note[k:] if k >= 0 else note
 
 
 def sha(p):
@@ -73,10 +97,11 @@ def main(netlist):
         'project': 'Croi2', 'source_project': old['source_project'], 'symbol_count': len(libids),
         'physical_components': len(comps), 'footprints': footprints, 'components_without_footprints': nofp,
         'unavailable_model_references': missing_models, 'model_less_footprints': modelless,
-        'model_sources': {m: MODEL_SOURCE for m in FETCHED},
+        'model_sources': {m: MODEL_SOURCE for m in FETCHED} | {m: DEB_SOURCE for m in FROM_DEB} | {m: DRAWN_SOURCE for m in DRAWN},
         'scope': old['scope'], 'hashes': {str(p.relative_to(BOARD)): sha(p) for p in files},
-        'revision_note': ('2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-11 (D4501, C1403). '
-                          'J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). ' + old['revision_note'].split('2026-11-21: ')[-1].split('until their parts are chosen. ')[-1]),
+        'revision_note': ('2026-11-21: schematic capture (capture specification, D-21Nov.9), steps 0-9; 22 Nov: steps 10-13 (D4501, C1403, '
+                          'test points); 22 Nov: a 3D model for every part (KiCad 9.0.7 package, or drawn: libraries/3d/GENERATED.md). '
+                          'J101 still lacks its Nano-Fit footprint (Molex drawing not obtained). ' + base_note(old['revision_note'])),
         'symbol_count_definition': old['symbol_count_definition'],
     }
     assert all(f['source'] != 'unrecorded' for f in footprints), [f['id'] for f in footprints if f['source'] == 'unrecorded']
