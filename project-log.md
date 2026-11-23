@@ -5288,3 +5288,22 @@ What the sheets show, read from the step-16 netlist:
   taps were islands.
 - Board 0f9363d1: DRC 0, rules check 9 of 9. Its full-effort budget run is done (fb-0f9363d1); the count waits with
   take 2's for Seán's call.
+
+## 23 November 2026: take 3, JLC's table as the rule set (D-23Nov.27)
+
+- spec.JLC holds JLC's multilayer table as read on 23 Nov (jlcpcb.com/capabilities/pcb-capabilities and the order
+  page); the board's minimums, the DRU and the Default class come from it: 0.09 mm track and space, pad to track 0.1,
+  SMD pad to pad 0.15, plated hole to track 0.28, unplated 0.2, plated hole to hole 0.45, a plated ring 0.15, via
+  ring 0.05, hole gaps 0.2, copper to edge 0.2, silk 0.15. The signal via is 0.45 / 0.2, free on six layers (amends
+  D-23Nov.4). Fire copper, impedance widths and the scripted vias don't change.
+- Rule order matters in KiCad's DRU, the later rule winning: JLC's minimums go ahead of the fire rules, and the
+  one-part pad rule goes last. The first build had the JLC pad rule after the escape-area rule and DRC flagged
+  U6001's pins 5 and 6 (fire logic beside the reset line, 0.2 mm asked inside the area). A price-warning rule for
+  costly vias didn't evaluate as written (it flagged 0.5 / 0.3 vias), so it's gone; no via here costs extra.
+- DRC 0 errors; three new silk warnings at JLC's 0.15 mm silk rules, for the silkscreen pass. Rules check 9 of 9.
+- Price: the order page's text shows no option or surcharge for 3.5 mil track and space; no priced quote yet.
+- The first full-effort run routed at 0.09 mm clearance and its copper broke JLC's pad-to-track rule in 19 places
+  (0.091-0.097 mm from a pad): it doesn't count. The router keeps one clearance per net, so the Default class and the
+  3.3 V rails now route at 0.1, JLC's pad-to-track figure, with 0.09 mm tracks; track to track 0.09 stays the board's
+  minimum. The fanout follows. Rerun (fb-t3b): its routed copper is DRC-clean but for the waiver model's own twins;
+  the count waits with the others for Seán's call.

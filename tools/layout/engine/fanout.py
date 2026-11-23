@@ -14,13 +14,13 @@ import numpy as np
 from shapely import STRtree
 from shapely.geometry import LineString, Point
 
-VIA_D, DRILL = 0.5, 0.3
-CLEAR, HOLE_GAP, EDGE, STUB_W, MASK_WEB = 0.15, 0.25, 0.3, 0.3, 0.1
+VIA_D, DRILL = 0.45, 0.2          # spec.SIGNAL_VIA: JLC's smallest via at no extra cost (D-23Nov.17)
+CLEAR, HOLE_GAP, EDGE, STUB_W, MASK_WEB = 0.1, 0.2, 0.2, 0.3, 0.1    # JLC's table (spec.JLC): pad to track, hole gap, edge
 BIG_PAD_MM2 = 2.0
 
 
 FIRE_CLASSES = ('FIRE', 'FIRE_LOGIC', 'PYRO_RAIL')     # the brief's custom rule: 0.5 mm to other nets
-FIRE_CLEAR, HOLE_CLEAR = 0.5, 0.25
+FIRE_CLEAR, HOLE_CLEAR = 0.5, 0.2
 EPS = 0.01
 
 
