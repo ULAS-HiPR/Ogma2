@@ -99,6 +99,9 @@ While a router runs, the work that needs none: the six-layer outputs and Stop 2'
 
 ## Needs Seán
 
+**Answered, 23 November:** “Yes to 1, 5, 7, I nod at 3 indicating yes.” Calls 1, 5, 7 and 3 are D-23Nov.1 to
+D-23Nov.4. The order of work starts at step 0.
+
 - Yes or no: the capacitors to their pins (call 1); L5 (call 5); U4606's turn (call 7).
 - A nod: 0.5 mm signal vias as the board's default (call 3).
 - Going ahead unless he says no: step 3 off, FLIGHT_HSE_IN's two vias, the USB and CAN via pairs.

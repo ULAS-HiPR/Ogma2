@@ -4934,3 +4934,14 @@ What the sheets show, read from the step-16 netlist:
   nets open; then copper, biggest first; then stage D by seeds.
 - Three more rows in decisions.md's Open table for Seán (the capacitors, U4606's turn, the signal via), and the
   L5 row now gives both models' pick.
+
+## 23 November 2026: Seán's four yeses on the review
+
+- “Yes to 1, 5, 7, I nod at 3 indicating yes.” Recorded as D-23Nov.1 (the MCUs' capacitors to their pins before
+  any copper), D-23Nov.2 (L5 one FLIGHT_3V3 plane, GND under the corridor, four rails as tracks; amends
+  D-22Nov.29), D-23Nov.3 (U4606 turns to face J4601) and D-23Nov.4 (signal vias 0.5 mm with a 0.3 mm hole).
+- Nothing is built yet for any of them: the board is still b507a62c, and the spec still gives the Default class a
+  0.6 mm via and calls L5 the island layer. The [review](docs/briefs/burrito-stage-cd-review.md)'s order of work
+  starts at step 0, the near check per pin.
+- Step 3 off, FLIGHT_HSE_IN's two vias and the USB and CAN via pairs go ahead unless Seán says no; they stay in
+  the Open table until he does or they're built.

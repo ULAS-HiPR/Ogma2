@@ -276,7 +276,7 @@ read 21 Nov; ours set above them *[J]*):
 | Rule | JLC minimum | Ours |
 | --- | --- | --- |
 | Track and space, 1 oz | 0.09 / 0.09 mm | 0.15 / 0.15 mm |
-| Via | 0.15 mm hole, 0.25 mm pad | 0.3 mm hole, 0.6 mm pad. 0.5 mm pad in dense spots and thermal arrays |
+| Via | 0.15 mm hole, 0.25 mm pad | 0.3 mm hole, 0.5 mm pad for signals, with teardrops (D-23Nov.4; 0.6 mm until then). 0.6 mm pad for the power classes |
 | Annular ring (PTH) | 0.15 mm (0.20 recommended) | 0.20 mm |
 | Hole to track | 0.2 mm via, 0.28 mm PTH | 0.25 / 0.3 mm |
 | Copper to edge | 0.2 mm | 0.3 mm. Pours 0.5 mm |
