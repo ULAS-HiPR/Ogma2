@@ -2,11 +2,12 @@
 
 ## Read order
 
-1. `decisions.md`
-2. `current-system.md`
-3. The relevant interface under `interfaces/` and chapter under `docs/architecture/`
-4. `project-log.md`, newest entries last
-5. The specific source, implementation, CAD, or test evidence needed
+1. [`standing-rules.md`](standing-rules.md): Seán's standing rules, in his words. Read it before starting any session.
+2. `decisions.md`
+3. `current-system.md`
+4. The relevant interface under `interfaces/` and chapter under `docs/architecture/`
+5. `project-log.md`, newest entries last
+6. The specific source, implementation, CAD, or test evidence needed
 
 `docs/archive/` holds superseded reviews and studies: evidence, not instructions.
 

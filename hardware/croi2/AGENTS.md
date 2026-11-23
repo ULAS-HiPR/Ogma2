@@ -7,10 +7,11 @@ This is a tracked engineering draft in the Ogma2 monorepo, not manufacturing or 
   21 November 2026 (capture specification, D-21Nov.9) and re-allocated for the
   placement on 22 November (capture step 19, D-22Nov.25), with exact native net
   names: flight STM32H563VIT6 (LQFP100), comms STM32H563RIT6 (LQFP64). The
-  7 September versions are in history/baseline-2026-09-08/inputs. Change a pin
-  only through a recorded decision, check it against ST's pin data in
-  libraries/inputs/st-open-pin-data and the checker's A24–A26, and tell Anav
-  through the firmware interface; do not take over his firmware.
+  7 September versions are in history/baseline-2026-09-08/inputs. Pin functions
+  may change once the check passes (D-23Nov.16, standing-rules.md): record the
+  decision and check it against ST's pin data in
+  libraries/inputs/st-open-pin-data and the checker's A24–A26. The firmware
+  interface is not a constraint.
 - Croí must operate standalone. Flight must complete with comms held in reset.
   The processors separate responsibilities; they are not redundant.
 - Preserve the accepted Samtec, CAN and output pinouts. No servo outputs

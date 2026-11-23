@@ -5231,3 +5231,12 @@ What the sheets show, read from the step-16 netlist:
   U201's bottom edge, 9 of 9 pass.
 - Board 957f7273: DRC 0, two builds the same bytes, every fire-logic net one piece, near misses 2, JLC spacing 0,
   silk labels stuck 17. The budget run at full effort with it drawn leaves 27 of 271 ordinary nets open (0 of 22 rails, 669 s, peak 5.2 GB), over the gate of 25 (21 with the fire logic as the budget's boxes, quick 43 against 40): stopped there for Seán's call on the lever. The drain-pin bridges came after that run, inside the FETs' footprints; board 353763ea.
+
+## 23 November 2026: the standing rules file (D-23Nov.16 to D-23Nov.18)
+
+- Seán asked for `standing-rules.md` at the repo root, read first by every session (AGENTS.md's read order), each
+  standing rule in his words with its date and number, to fold into the hipr-avionics skill in one go when Burrito
+  closes. The first three: pin functions may change once the check passes, the firmware interface no constraint
+  (D-23Nov.16); JLC's published capabilities are the rule set, the fire copper's widths and gaps excepted
+  (D-23Nov.17); Claude picks levers inside the rules and stops only for a fire or safety rule or a stage boundary
+  (D-23Nov.18). The board's AGENTS.md pin line follows D-23Nov.16.
