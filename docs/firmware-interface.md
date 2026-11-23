@@ -101,6 +101,21 @@ Now unused (no-connect, set to analog): PA2 (16), PA10 (43), PC10 (51), PB4 (56)
 
 PA15 and PB4 come out of reset as JTDI and NJTRST with internal pull-ups (DS14258 table 14, note 7). Set them to GPIO inputs before reading `TDK_DRDY` and `HG_INT1`; both lines are driven by their sensors, so the pull-ups do no harm. PA9, PA11 and PA12 now carry only the spare pads: in the bootloader they may be driven, and nothing else is there.
 
+## Pin changes (D-23Nov.25)
+
+Take 2 of the fire logic, 23 Nov: U201's fire-logic pins re-dealt so the runs to the output stage don't cross. The
+fire pins can't face the output stage (the top row's one port-E pin, PE0, sits beside VCAP), so channel 3's low side
+does. Six nets on the flight MCU; the comms MCU doesn't change.
+
+| Net | Was | Now | Function | Why |
+| --- | --- | --- | --- | --- |
+| `PYRO2_FIRE` | PE15 (46) | PE9 (40) | GPIO | its run passes under U201 west of channel 3's |
+| `PYRO3_FIRE` | PE9 (40) | PE15 (46) | GPIO | the fire pin nearest U6502 |
+| `PYRO3_LS_SELECT` | PC6 (63) | PD4 (85) | GPIO | PD4 faces the output stage |
+| `PYRO1_LS_SELECT` | PD4 (85) | PC4 (33) | GPIO | joins channel 2's low side west of the fire pins |
+| `ADC_FLIGHT_3V3` | PC4 (33) | PB0 (35) | ADC1_INP9 (was ADC1_INP4) | a low side takes PC4 |
+| `FLIGHT_COMMS_EN` | PB0 (35) | PC6 (63) | GPIO | a low side takes PD4 |
+
 ## Build target
 
 Both MCUs are STM32H563: Cortex-M33, single-precision FPU, 2 MiB flash,
@@ -138,11 +153,11 @@ listed are supplies, ground, VCAP or unused.
 | Signal | Pin | Direction | Notes |
 | --- | --- | --- | --- |
 | `PYRO1_FIRE` | PE7 (38) | Out | Channel 1 high side, straight to U6304 IN |
-| `PYRO2_FIRE` | PE15 (46) | Out | Channel 2 high side, U6404 IN |
-| `PYRO3_FIRE` | PE9 (40) | Out | Channel 3 high side, through the AND with the staging latch |
-| `PYRO1_LS_SELECT` | PD4 (85) | Out | Channel 1 low side Q6301 |
+| `PYRO2_FIRE` | PE9 (40) | Out | Channel 2 high side, U6404 IN |
+| `PYRO3_FIRE` | PE15 (46) | Out | Channel 3 high side, through the AND with the staging latch |
+| `PYRO1_LS_SELECT` | PC4 (33) | Out | Channel 1 low side Q6301 |
 | `PYRO2_LS_SELECT` | PB1 (36) | Out | Channel 2 low side Q6401 |
-| `PYRO3_LS_SELECT` | PC6 (63) | Out | Channel 3 low side Q6501 |
+| `PYRO3_LS_SELECT` | PD4 (85) | Out | Channel 3 low side Q6501 |
 | `RECOVERY_ARM_SENSE` | PE13 (44) | In | High = recovery energy present (armed) |
 | `STAGING_ARM_SENSE` | PD6 (87) | In | `STAGE_ARM_INVALID`: high = staging disarmed, low = armed |
 | `STAGE_INHIBIT_LATCHED` | PE0 (97) | In | Latch Q̄ through 1 kΩ: high = channel 3 inhibited |
@@ -158,7 +173,7 @@ listed are supplies, ground, VCAP or unused.
 | `CAN_POWER_EN` | PD10 (57) | Out | CAN local limiter |
 | `FOINSE_RETURN_EN` | PE12 (43) | Out | Monitoring domain (Croí INA228 and Churro); enable standalone too |
 | `TP_STROBE` | PE10 (41) | Out | Timing strobe: toggle at loop start, at reset recovery and at each firing step (D-19Nov.3) |
-| `FLIGHT_COMMS_EN` | PB0 (35) | Out | Comms branch, on battery |
+| `FLIGHT_COMMS_EN` | PC6 (63) | Out | Comms branch, on battery |
 | `COMMS_RESET_REQUEST` | PB2 (37) | Out, open drain | Resets the comms MCU only |
 | `NOR_RESET_REQUEST` | PE6 (5) | Out, open drain | NOR reset |
 | `BRANCH_FAULT_N` | PE5 (4) | In, EXTI5 | Wired-OR fault from the local limiters: says something tripped, not which |
@@ -197,7 +212,7 @@ Check every AF number against ST DS14258 when the clock tree is built.
 | Signal | Pin | Channel |
 | --- | --- | --- |
 | Battery after the eFuse and shunt (÷5.42) | PC5 (34) | ADC1_INP8 |
-| `FLIGHT_3V3` | PC4 (33) | ADC1_INP4 |
+| `FLIGHT_3V3` | PB0 (35) | ADC1_INP9 |
 | Recovery armed rail (`RECOVERY_ARMED_VBAT`, ÷5.42; staging has no ADC, only its arm sense) / reset memory `RESET_MEMORY` | PA2 (25) / PA4 (29) | ADC1_INP14 / digital input, read at boot (D-19Nov.3) |
 | Pyro current, channels 1–3 | PC0 / PC1 / PC2 (15–17) | ADC2_INP10–12 |
 | Continuity, channels 1–3 | PC3 / PA1 / PA0 (18, 24, 23) | ADC1_INP13 / INP1 / INP0 |
@@ -246,11 +261,12 @@ switches open (expect the mid-level reading), close the low side alone (expect
 closed, the other channels' readings must not move; if one drops too, its low
 side is bridged or shorted to the one under test. A bridge from a neighbouring
 pad shows only while that neighbour is high, so run the check with every
-neighbour live (D-22Nov.25): channel 1's low side (PD4) sits between the
-magnetometer's data-ready (PD3) and the sounder (PD5), channel 2's (PB1)
-between the comms enable (PB0) and the comms reset request (PB2), channel 3's
-(PC6) between the CAN standby (PD15) and the LSM6DSV32X's data-ready (PC7). So:
-sensors streaming, sounder on, comms powered, and CAN both in standby and awake.
+neighbour live (D-22Nov.25, D-23Nov.25): channel 1's low side (PC4) sits between
+the LSM6DSV32X's SPI data out (PA7) and the battery reading (PC5, analog),
+channel 2's (PB1) between the 3.3 V reading (PB0, analog) and the comms reset
+request (PB2), channel 3's (PD4) between the magnetometer's data-ready (PD3) and
+the sounder (PD5). So: sensors streaming, sounder on, both analog readings
+taken, and the comms reset request held both ways.
 An igniter that reads open makes that channel's check inconclusive; report it.
 
 **After arming:** a return node above its disarmed reading, anywhere up to the

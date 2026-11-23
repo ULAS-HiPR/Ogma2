@@ -5254,3 +5254,27 @@ What the sheets show, read from the step-16 netlist:
   (D-23Nov.24). The file now runs in the order the rules were given.
 - Left out as decisions rather than standing rules: the board's size, layers and one side, the router choice, and the
   requirements calls. AGENTS.md's public-repository rule stays there; it isn't in Seán's words.
+
+## 23 November 2026: take 2, the fire-logic pins re-dealt (D-23Nov.25)
+
+- Seán's take 2: swap U201's pins so the fire pins face the output stage, check them against ST's pin data, redraw the
+  fire logic inside the budget's lanes with R6502 next to R6504, one full-effort run, kill line 25.
+- The fire pins can't face the output stage. A26 keeps them on port E, and U201's top row has one port-E pin, PE0
+  (pad 98 is VCAP on this package, not PE1; PE2-PE6 carry trace outputs). PE0 sits beside VCAP, and D-22Nov.25's
+  neighbour rule bars a fire pin beside a supply pad. A first deal put `PYRO1_FIRE` on PE0 and passed the checker,
+  because A26 held only the fire-to-fire part of that rule; caught against 03-energetic-outputs.md before any commit,
+  and that deal's full run was stopped. A26 now holds the whole rule; a planted case (channel 1's fire pin on PE0)
+  fails it.
+- What can face north does: channel 3's low side takes PD4. Capture step 20 moves six flight nets so that, west to
+  east on L3, no fire-logic run crosses another: channels 1 and 2's low sides from PC4 and PB1, `PYRO1_FIRE` up the
+  lane under U201 from PE7, `PYRO3_LS_SELECT` north from PD4, `PYRO2_FIRE` from PE9 and `PYRO3_FIRE` from PE15 under
+  U201 to its east side. `ADC_FLIGHT_3V3` goes to PB0 (ADC1 input 9) and `FLIGHT_COMMS_EN` to PC6. Checker 370 of 370;
+  ERC unchanged; step 20's check holds A24, A25 and A26 and the six pin changes exactly.
+- R6502 can't sit beside R6504: J6601's courtyard ends at R6504's west side and Q6501 is below it. It goes past R6505,
+  4 mm east on the top edge, joined to R6504's pad by a track 0.5 mm in from the edge.
+- The runs, routed on L3 in two stages so the fire pins and channel 3's low side go first: KiCadRoutingTools between
+  the escapes (trials fl9, fl10), frozen in spec.FIRE_LOGIC_L3. For the two west low sides, straight north beside
+  `PYRO1_FIRE` beat crossing under U201 to its west side on the quick budget run (trial fl11 for the other), so it
+  stays.
+- Board b80b5012: DRC 0, rules check 9 of 9, every fire-logic net one piece.
+- The one full-effort budget run on b80b5012 is done (run fb-b80b5012); its count waits for Seán's call on it.

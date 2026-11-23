@@ -278,7 +278,7 @@
  "marks_unplaced": [],
  "no_region": [],
  "spills": [],
- "hpwl_mm": 9122.7,
+ "hpwl_mm": 9128.6,
  "hpwl_by_class_mm": {
   "RF50": 19.6,
   "FIRE": 146.0,
@@ -2221,9 +2221,9 @@
    0
   ],
   "R6502": [
-   56.0,
-   27.25,
-   90
+   51.95,
+   1.45,
+   0
   ],
   "R6503": [
    54.8,
@@ -3427,12 +3427,12 @@
   },
   "mcu_fanout": {},
   "pyro": {
-   "tracks": 267,
+   "tracks": 233,
    "vias": 35,
-   "mm": 472.4
+   "mm": 471.6
   }
  },
- "uuids": 20537,
+ "uuids": 20503,
  "metrics": {
   "plane_nets": {
    "BOOT_3V3": "island",
@@ -3443,12 +3443,12 @@
    "LORA_3V3": "island"
   },
   "signal_nets": 330,
-  "wire_mm": 7336.1,
+  "wire_mm": 7349.6,
   "wire_by_class_mm": {
    "CAN_DIFF": 64.4,
-   "Default": 5540.5,
+   "Default": 5547.8,
    "FIRE": 155.2,
-   "FIRE_LOGIC": 298.6,
+   "FIRE_LOGIC": 304.7,
    "LOGIC_FEED": 267.6,
    "PYRO_RAIL": 275.9,
    "RAIL_3V3": 556.4,
@@ -3456,19 +3456,19 @@
    "SRC_6A": 113.5,
    "USB_DIFF": 45.2
   },
-  "crossings": 2329,
+  "crossings": 2304,
   "crossings_worst_nets": [
    [
     "3V3_OPTIONAL",
     109
    ],
    [
-    "RECOVERY_ARMED_VBAT",
+    "BRANCH_FAULT_N",
     85
    ],
    [
-    "BRANCH_FAULT_N",
-    83
+    "RECOVERY_ARMED_VBAT",
+    85
    ],
    [
     "CC_BAT_VALID",
@@ -3476,11 +3476,11 @@
    ],
    [
     "FOINSE_SDA",
-    62
+    63
    ],
    [
     "FOINSE_SCL",
-    59
+    58
    ],
    [
     "FLIGHT_SWCLK",
@@ -3496,7 +3496,7 @@
    ],
    [
     "STAGING_ARMED_VBAT",
-    54
+    55
    ]
   ],
   "wrong_side": {
@@ -3570,7 +3570,7 @@
    },
    "U201": {
     "far_pins": 76,
-    "wrong_side": 21,
+    "wrong_side": 22,
     "worst": [
      [
       "60",
@@ -3601,18 +3601,18 @@
       161
      ],
      [
+      "40",
+      "PYRO2_FIRE",
+      "R6403",
+      33.2,
+      160
+     ],
+     [
       "95",
       "FOINSE_SCL",
       "U7002",
       80.0,
       160
-     ],
-     [
-      "58",
-      "NOR_IO0",
-      "U3602",
-      25.8,
-      158
      ]
     ]
    },
@@ -3745,7 +3745,7 @@
     ]
    }
   },
-  "wrong_side_total": 42,
+  "wrong_side_total": 43,
   "tp_stubs": {
    "TP10": {
     "net": "ADC_PYRO2_CURRENT",

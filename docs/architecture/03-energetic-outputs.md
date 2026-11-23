@@ -19,12 +19,12 @@ after Q101, before U101"] --> F1["F6101 recovery fuse"]
   F1 --> J1["J6101 · recovery arm switch"]
   F2 --> J2["J6102 · staging arm switch"]
   J1 --> H1["U6304 high side · PE7"]
-  J1 --> H2["U6404 high side · PE15"]
+  J1 --> H2["U6404 high side · PE9"]
   J2 --> H3["U6504 high side
-PE9 AND latch U6001"]
-  H1 --> I1["igniter 1"] --> L1["Q6301 low side · PD4"]
+PE15 AND latch U6001"]
+  H1 --> I1["igniter 1"] --> L1["Q6301 low side · PC4"]
   H2 --> I2["igniter 2"] --> L2["Q6401 low side · PB1"]
-  H3 --> I3["igniter 3"] --> L3["Q6501 low side · PC6"]
+  H3 --> I3["igniter 3"] --> L3["Q6501 low side · PD4"]
   L1 --> G["GND"]
   L2 --> G
   L3 --> G
@@ -48,7 +48,7 @@ services rail"] -->|"R6911 + R6912
 test current"| HI
   HI --> IGN["igniter"] --> LO(("OUTPUT1_LOW
 J6601.4"))
-  LO --> LS["Q6301 low side · PD4"] --> G["GND"]
+  LO --> LS["Q6301 low side · PC4"] --> G["GND"]
   LO -->|"R6913 + R6914"| G
   LO -->|"÷ 5.86 · U6901"| ADC["PC3 continuity ADC"]
 ```
@@ -88,7 +88,7 @@ One fault, armed, and what happens:
 | Low-side GPIO stuck high, or a CSD17318 shorted | No fire: the high side is off. Continuity reads zero, so firmware sees it |
 | Low side fails open | That channel can't fire. The pre-arm self-test catches it |
 | One bad write to GPIO port E | No fire: the low sides sit on ports D, B and C. Port E's outputs change: the three high sides, the power hold (rewritten every loop), the service, comms, NOR and Foinse enables, the NOR reset request and the watchdog line (one edge can't keep a hung loop alive). Since D-22Nov.25 the CAN standby is on PD15 |
-| A solder bridge between neighbouring pads | No fire pin or low-side select sits beside another, an arm sense, the staging latch, the new-flight request or a supply pad (D-22Nov.25; the checker's A26). A bridge to a fire pin turns that high side on alone, which the armed check sees: PE7 sits between the comms reset request (PB2, idle high) and the service enable (PE8), PE9 between PE8 and the timing strobe (PE10), PE15 between the power hold (PE14) and the MS5607's I²C clock (PB10). A bridge to a low side shows only while its neighbour is high, so the pre-arm self-test runs with every neighbour live and checks that no channel's reading moves: PD4 sits between the magnetometer's data-ready (PD3) and the sounder (PD5), PB1 between the comms enable (PB0) and the comms reset request (PB2), PC6 between the CAN standby (PD15) and the LSM6DSV32X's data-ready (PC7). Sensors streaming, sounder on, comms powered, CAN both in standby and awake |
+| A solder bridge between neighbouring pads | No fire pin or low-side select sits beside another, an arm sense, the staging latch, the new-flight request or a supply pad (D-22Nov.25; the checker's A26, which holds the whole rule since D-23Nov.25). A bridge to a fire pin turns that high side on alone, which the armed check sees: PE7 sits between the comms reset request (PB2, idle high) and the service enable (PE8), PE9 between PE8 and the timing strobe (PE10), PE15 between the power hold (PE14) and the MS5607's I²C clock (PB10). A bridge to a low side shows only while its neighbour is high, so the pre-arm self-test runs with every neighbour live and checks that no channel's reading moves: PC4 (channel 1) sits between the LSM6DSV32X's SPI data out (PA7) and the battery reading (PC5, analog), PB1 (channel 2) between the 3.3 V reading (PB0, analog) and the comms reset request (PB2), PD4 (channel 3) between the magnetometer's data-ready (PD3) and the sounder (PD5) (D-23Nov.25). Sensors streaming, sounder on, both readings taken, the comms reset request held both ways |
 
 ## Firing and checks
 

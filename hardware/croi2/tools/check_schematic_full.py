@@ -321,6 +321,14 @@ def check(project, netlist, erc):
             'A26: fire pins on port E; the three low-side selects on three other ports (03-energetic-outputs.md)')
     require(not [1 for a, _ in fire + low for b, _ in fire + low if beside(a, b)],
             'A26: no fire pin or low-side select beside another (one solder bridge never joins two inhibits, D-22Nov.25)')
+    # the rest of D-22Nov.25's neighbour rule: nor beside an arm sense, the staging latch, the new-flight request or a
+    # supply pad (VDD, VSS, VCAP, VBAT, VREF, VDDA, VDDUSB)
+    supply = re.compile(r'^(VDD|VSS|VCAP|VBAT|VREF|VDDA|VSSA|VDDUSB)')
+    held = {chain[n][0] for n in ('RECOVERY_ARM_SENSE', 'STAGING_ARM_SENSE', 'STAGE_INHIBIT_LATCHED', 'NEW_FLIGHT_CLEAR_REQUEST')}
+    held |= {int(p) for (r, p), f in pfunc.items() if r == 'U201' and p.isdigit() and supply.match(f)}
+    require(not [(a, b) for a, _ in fire + low for b in held if beside(a, b)],
+            'A26: no fire pin or low-side select beside an arm sense, the staging latch, the new-flight request or a supply '
+            'pad (D-22Nov.25)')
     require(not [n for n, (_, p) in chain.items() if p in FLIGHT_SPECIAL_PINS],
             'A26: fire, low-side, new-flight, arm-sense and latch pins carry no trace, debug-trigger, tamper, RTC_OUT or LSCO '
             'output (D-22Nov.25)')

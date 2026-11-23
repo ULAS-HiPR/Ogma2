@@ -21,8 +21,8 @@ flowchart LR
   F <-->|"FDCAN1"| V["CAN bus 1 to Fajita"]
   F <-->|"FDCAN2"| V2["CAN bus 2 to the active board"]
   F -.->|"PE10 strobe · PA4 reset memory"| P["Test pads (D-19Nov.3)"]
-  F -->|"fire PE7/PE15/PE9
-low sides PD4/PB1/PC6"| O["3 pyro outputs"]
+  F -->|"fire PE7/PE9/PE15
+low sides PC4/PB1/PD4"| O["3 pyro outputs"]
   F <-->|"USART3 · 2 Mbaud
 TXU0202 boundary"| C["Comms · H563RIT6
 event loop and DMA queues"]
@@ -97,8 +97,8 @@ in the [firmware interface](../firmware-interface.md#flight-mcu-pins)):
 | Pad | Port | Now | Decision |
 | --- | --- | --- | --- |
 | 45 | PE14 | `FC_POWER_HOLD` | D-6.3, D-2Nov.4, D-22Nov.25 |
-| 38 / 46 / 40 | PE7 / PE15 / PE9 | `PYRO1_FIRE` / `PYRO2_FIRE` straight to the TPS1H100s; `PYRO3_FIRE` through the staging latch AND gate | D-7.1, D-7.2, D-22Nov.25 |
-| 85 / 36 / 63 | PD4 / PB1 / PC6 | `PYRO1_LS_SELECT` / `PYRO2_LS_SELECT` / `PYRO3_LS_SELECT`, on ports D, B and C, away from the port-E fire pins | D-2Nov.1, D-5Nov.3, D-22Nov.25 |
+| 38 / 40 / 46 | PE7 / PE9 / PE15 | `PYRO1_FIRE` / `PYRO2_FIRE` straight to the TPS1H100s; `PYRO3_FIRE` through the staging latch AND gate | D-7.1, D-7.2, D-22Nov.25, D-23Nov.25 |
+| 33 / 36 / 85 | PC4 / PB1 / PD4 | `PYRO1_LS_SELECT` / `PYRO2_LS_SELECT` / `PYRO3_LS_SELECT`, on ports C, B and D, away from the port-E fire pins | D-2Nov.1, D-5Nov.3, D-22Nov.25, D-23Nov.25 |
 | 91 / 69 | PB5 / PA10 | FDCAN2 RX / TX, CAN bus 2 to the active board | D-5Nov.3 |
 | 67 / 66 | PA8 / PC9 | Magnetometer I²C3 SCL / SDA, AF4 | D-2Nov.11 |
 | 84 | PD3 | Magnetometer INT (optional data-ready) | D-2Nov.11, D-22Nov.25 |

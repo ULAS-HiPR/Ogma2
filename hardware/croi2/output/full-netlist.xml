@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/work/hardware/croi2/Croi2.kicad_sch</source>
-    <date>2026-11-22T15:11:36+0000</date>
+    <date>2026-11-23T19:37:01+0000</date>
     <tool>Eeschema 9.0.8+dfsg-1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -17076,7 +17076,7 @@
       <node ref="U1601" pin="1" pinfunction="IN" pintype="power_in"/>
     </net>
     <net code="10" name="ADC_FLIGHT_3V3" class="Default">
-      <node ref="U201" pin="33" pinfunction="PC4" pintype="bidirectional"/>
+      <node ref="U201" pin="35" pinfunction="PB0" pintype="bidirectional"/>
       <node ref="U8001" pin="6" pinfunction="D2" pintype="passive"/>
     </net>
     <net code="11" name="ADC_PYRO1_CONTINUITY" class="Default">
@@ -17776,7 +17776,7 @@
     <net code="112" name="FLIGHT_COMMS_EN" class="Default">
       <node ref="R1205" pin="1" pintype="passive"/>
       <node ref="U1202" pin="3" pinfunction="IN0" pintype="input"/>
-      <node ref="U201" pin="35" pinfunction="PB0" pintype="bidirectional"/>
+      <node ref="U201" pin="63" pinfunction="PC6" pintype="bidirectional"/>
     </net>
     <net code="113" name="FLIGHT_HSE_IN" class="Default">
       <node ref="C215" pin="1" pintype="passive"/>
@@ -18938,7 +18938,7 @@
     <net code="250" name="PYRO1_LS_SELECT" class="Default">
       <node ref="R6302" pin="1" pintype="passive"/>
       <node ref="R6304" pin="1" pintype="passive"/>
-      <node ref="U201" pin="85" pinfunction="PD4" pintype="bidirectional"/>
+      <node ref="U201" pin="33" pinfunction="PC4" pintype="bidirectional"/>
     </net>
     <net code="251" name="PYRO1_RETURN_MID" class="Default">
       <node ref="R6913" pin="2" pintype="passive"/>
@@ -18985,7 +18985,7 @@
     </net>
     <net code="260" name="PYRO2_FIRE" class="Default">
       <node ref="R6403" pin="1" pintype="passive"/>
-      <node ref="U201" pin="46" pinfunction="PE15" pintype="bidirectional"/>
+      <node ref="U201" pin="40" pinfunction="PE9" pintype="bidirectional"/>
       <node ref="U6404" pin="3" pinfunction="IN" pintype="input"/>
     </net>
     <net code="261" name="PYRO2_GATE" class="Default">
@@ -19043,7 +19043,7 @@
     </net>
     <net code="272" name="PYRO3_FIRE" class="Default">
       <node ref="R6501" pin="1" pintype="passive"/>
-      <node ref="U201" pin="40" pinfunction="PE9" pintype="bidirectional"/>
+      <node ref="U201" pin="46" pinfunction="PE15" pintype="bidirectional"/>
       <node ref="U6502" pin="1" pintype="input"/>
     </net>
     <net code="273" name="PYRO3_GATE" class="Default">
@@ -19059,7 +19059,7 @@
     <net code="275" name="PYRO3_LS_SELECT" class="Default">
       <node ref="R6502" pin="1" pintype="passive"/>
       <node ref="R6504" pin="1" pintype="passive"/>
-      <node ref="U201" pin="63" pinfunction="PC6" pintype="bidirectional"/>
+      <node ref="U201" pin="85" pinfunction="PD4" pintype="bidirectional"/>
     </net>
     <net code="276" name="PYRO3_RETURN_MID" class="Default">
       <node ref="R6933" pin="2" pintype="passive"/>
