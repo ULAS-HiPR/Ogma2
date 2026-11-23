@@ -4907,3 +4907,14 @@ What the sheets show, read from the step-16 netlist:
 - Found for stage C's later steps: FLIGHT_HSE_IN can't reach Y201 on L1 while GND keeps 0.2 mm from its pads;
   the USB and both CAN pairs each have to cross themselves once. A router trial with GND at 0.15 mm left 17 too,
   so GND's clearance costs the router nothing. Four calls for Seán, in decisions.md's Open table.
+
+## 23 November 2026: stage D's knobs, and the plan from here
+
+- One router run at a time on step 1's board (9d89841f), Default class, full effort, fire-logic waiver modelled
+  (17 open as it stands): one harmless via added in a corner, the same 17 nets; equal layer costs, 16; 0.05 mm
+  grid, 18; rip-up 5, 19; router vias 0.5 mm with a 0.3 mm hole, 9 (7 at U201, 2 at U401). GND at 0.15 mm for the
+  router, 17. Without the waiver modelled, 23.
+- The RF trial (not committed): the GNSS line routes, 8.5 mm with its ESD stub; the LoRa line's only path ran
+  30 mm under U4606's body.
+- [Plan](docs/briefs/burrito-stage-cd-plan.md), with the model's calls. Two need Seán: L5 as FLIGHT_3V3 over the
+  whole layer with GND under the corridor (amends D-22Nov.29), and turning U4606 90°.
