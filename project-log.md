@@ -5000,3 +5000,23 @@ What the sheets show, read from the step-16 netlist:
 - U4606's ref is a box of its own too (`REFS_APART`), else it would have spanned the side the RF pin faces.
 - Board 88c9b948: two builds the same bytes, DRC 0 errors. Near check: D4601 now on its line; D4501 1.7 mm off its
   line and U1701's output capacitor 6.0 mm stay, as at Stop 1b.
+
+## 23 November 2026: the MCUs' capacitors to their pins (D-23Nov.1, D-23Nov.5; the review's step 1, batch 1a)
+
+- Inside D-23Nov.1 (the MCUs' capacitors, the crystals with their load capacitors, other parts 1 mm at most), 18 of
+  the 22 capacitor slots reached their pins. Seán let TP4, TP5, TP11, R2303, R2311, R4406 and R4407 move up to 8 mm
+  for the rest: “yes to all the above you ask” (D-23Nov.5, `spec.DECOUPLING_ROOM`). That brought one more.
+- Built: 19 of 22 slots within their distance (VCAP 2 mm, the rest 3 mm). Near misses 22 → 5: the three slots below,
+  U1701's output capacitor and D4501, as at Stop 1b. 27 parts moved: 23 capacitors, the LSE crystal Y202 1.3 mm,
+  TP11 1.6 mm, TP4 0.67 mm and R2303 0.5 mm. VCAP: AN5711 section 2.2, “each pin must be connected to a 2.2 μF
+  (typical) capacitor”; ST's reference schematics there pair a 1 µF with the 100 nF at VDDA.
+- Three slots have no room on this board, now in decisions.md's Open table for Seán:
+  - U201 pin 11 (VDD) sits between the LSE and HSE crystals' lanes. Its capacitor needs the HSE crystal 1.6 mm further
+    out with its load capacitors below it, where TP5 is; TP5 has no free spot within 20 mm (a scan found none).
+  - U201's second 1 µF at VDDA and VREF+ (pins 21 and 22, one net, 0.5 mm apart), while TP5 stays.
+  - U401 pin 48 (VDD): its only spots sit in front of the USB pins (PA11, PA12), with R4406 moved 6.8 mm, or under
+    U4201. Left open rather than put a capacitor in the USB pair's way.
+- The mover (`caps_to_pins.py`) now counts the allowances of D-23Nov.5, keeps a test point beside its net's route,
+  lets a part stay where it is, and can leave the room parts out (`--no-room`, as for U401 here).
+- Board f33aa2c0: two builds the same bytes, DRC 0 errors, the same two silk warnings as before. The silk pass now
+  can't clear four labels (TP4, TP13, TP28, U4301), each within 0.15 mm of a neighbour's silk; finishing tidies them.

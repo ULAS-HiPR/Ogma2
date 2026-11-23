@@ -204,6 +204,9 @@ SILK_NAME_GAP = {'J6601': 1.6}
 REFS_APART = ('U201', 'U401', 'U4606')
 # where each MCU's own decoupling capacitors are drawn, for tools/layout/caps_to_pins.py (D-23Nov.1)
 DECOUPLING_SHEETS = {'U201': ('/02a-flight-support/',), 'U401': ('/04a-comms-support/',)}
+# parts that may move this far, mm, to make room for those capacitors (D-23Nov.5): test points and pull resistors
+# beside U201, the USB side's resistors beside U401. A test point keeps its stub limit (PROBE_STUB_MAX)
+DECOUPLING_ROOM = {r: 8.0 for r in ('TP4', 'TP5', 'TP11', 'R2303', 'R2311', 'R4406', 'R4407')}
 # silk marks the placer finds room for, as board-only footprints (tools/layout/marks.py): the board axes with the
 # nose arrow, near the IMUs [J]. The white S/N box is drawn by art.board_art on the top silk after placing, in
 # space that's left (Seán, 22 Nov: "put it in the free space up top"); it never counts as courtyard.
