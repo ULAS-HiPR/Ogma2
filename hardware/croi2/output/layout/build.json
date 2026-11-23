@@ -157,7 +157,8 @@
   "U3403",
   "U4301",
   "U4501",
-  "U4606"
+  "U4606",
+  "U6502"
  ],
  "art": {
   "title": {
@@ -277,7 +278,7 @@
  "marks_unplaced": [],
  "no_region": [],
  "spills": [],
- "hpwl_mm": 9136.4,
+ "hpwl_mm": 9122.7,
  "hpwl_by_class_mm": {
   "RF50": 19.6,
   "FIRE": 146.0,
@@ -2215,9 +2216,9 @@
    270
   ],
   "R6501": [
-   56.65,
-   30.75,
-   90
+   49.0,
+   36.8,
+   0
   ],
   "R6502": [
    56.0,
@@ -3426,12 +3427,12 @@
   },
   "mcu_fanout": {},
   "pyro": {
-   "tracks": 65,
-   "vias": 16,
-   "mm": 124.8
+   "tracks": 267,
+   "vias": 35,
+   "mm": 472.4
   }
  },
- "uuids": 20316,
+ "uuids": 20537,
  "metrics": {
   "plane_nets": {
    "BOOT_3V3": "island",
@@ -3442,12 +3443,12 @@
    "LORA_3V3": "island"
   },
   "signal_nets": 330,
-  "wire_mm": 7345.7,
+  "wire_mm": 7336.1,
   "wire_by_class_mm": {
    "CAN_DIFF": 64.4,
    "Default": 5540.5,
    "FIRE": 155.2,
-   "FIRE_LOGIC": 308.2,
+   "FIRE_LOGIC": 298.6,
    "LOGIC_FEED": 267.6,
    "PYRO_RAIL": 275.9,
    "RAIL_3V3": 556.4,
@@ -3455,7 +3456,7 @@
    "SRC_6A": 113.5,
    "USB_DIFF": 45.2
   },
-  "crossings": 2339,
+  "crossings": 2329,
   "crossings_worst_nets": [
    [
     "3V3_OPTIONAL",
@@ -4393,5 +4394,5 @@
  "probe_stub_misses": {
   "TP36": 22.1
  },
- "seconds": 25.0
+ "seconds": 24.6
 }

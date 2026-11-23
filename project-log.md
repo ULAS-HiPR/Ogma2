@@ -5198,3 +5198,36 @@ What the sheets show, read from the step-16 netlist:
 - Rerun with the fixed meter on e897779c: the board passes DRC after the fanout and after routing (0 errors, was 25).
   Quick: 40 of 271 open, 1 of 22. Full effort: 21 of 271, 0 of 22, 725 s, peak 4.5 GB. The same count with a
   different set of open nets.
+
+## 23 November 2026: the fire logic from U201 drawn (D-23Nov.15); the meter's waiver modelled by area
+
+- The ends by hand, each inside its part's escape area (0.2 mm): U201's pins 36, 38, 40 and 46 inward from the bottom
+  row to vias under the body, pin 85 inward and west of PYRO1_FIRE's run (its first via, east of it, boxed it in:
+  the router left PYRO1_LS_SELECT open), pin 63 inward from the right side; each high side's IN pin north off its tip,
+  along the tips of pins 2 and 1, and out east to a via. Straight off the tip didn't fit: the track needs 0.39 mm past
+  the tips and its own half width (0.075) before it is 0.5 mm from pins 2 and 4, and the area gives 0.44. My sum for
+  D-23Nov.13 left the half width out. The resistors (R6303, R6403, R6503, R6502, R6504, R6304, R6302, R6402/R6404) each
+  have a via beside the fire-logic pad.
+- The runs: KiCadRoutingTools on L3 alone between those vias, 0.5 mm from everything, frozen in `spec.FIRE_LOGIC_L3`.
+  Trials fl1 to fl5: STAGE_ELIGIBLE's run on L3 between vias under the latch and the gate walled off the trunk and
+  pushed PYRO2_FIRE through the gate's pins, so it runs on L1 straight from the latch to the gate, 0.54 mm from the
+  latch's pin 6 where it leaves the area. 307 mm of fire logic on L3; PYRO1/2_LS_SELECT run up the left side at
+  x 23 to 27, PYRO3_LS_SELECT up the right to R6502 and R6504. Each FET's drain pins (1, 2, 5, 6) now join its pad
+  on L1 (they were islands of the drain net).
+- The budget's fire-logic boxes give way to the copper. The first budget run on it voided at the fanout's DRC (rule 7
+  working): PYRO3_FIRE's via north of the AND gate sat in the armed rails' crossing on L6. The via moved under the
+  gate's body, R6501 on L1 across the crossing, and the router redrew PYRO2_FIRE and PYRO3_FIRE (fl5).
+- The meter's waiver had stopped modelling the rule: with the fire logic drawn, its pads (whose copper leaves the part)
+  were no longer renamed, so the router kept 0.5 mm at U201's pins where DRC asks 0.2. Quick: 54 of 271. Now the
+  waiver is modelled as DRC applies it: fire logic wholly inside an escape area moves to a twin net at 0.2 mm, the rest
+  keeps 0.5 mm, the twins stay FIRE_LOGIC for DRC, and DRC's errors between a net and its own twin are dropped and
+  counted. STAGE_ELIGIBLE keeps its own name throughout (both its pads are inside areas, and KiCad would give the copper
+  between them the twin's net on saving). Quick: 43 of 271 (40 with the boxes on e897779c).
+- Two KiCad behaviours found on the way: DRC's report listed exactly 499 unconnected items on every board today, routed
+  or not, and missed a fire-logic net the router had left open, so the list looks capped and the meter's own
+  connectivity check is the one to trust until the count is near zero. And a track or via whose pads all move to
+  another net takes that net when the board is saved.
+- `rules_check.py`'s courtyard-edge test planted its tracks on top of PYRO3_LS_SELECT's run and failed; moved to
+  U201's bottom edge, 9 of 9 pass.
+- Board 957f7273: DRC 0, two builds the same bytes, every fire-logic net one piece, near misses 2, JLC spacing 0,
+  silk labels stuck 17. The budget run at full effort with it drawn leaves 27 of 271 ordinary nets open (0 of 22 rails, 669 s, peak 5.2 GB), over the gate of 25 (21 with the fire logic as the budget's boxes, quick 43 against 40): stopped there for Seán's call on the lever. The drain-pin bridges came after that run, inside the FETs' footprints; board 353763ea.

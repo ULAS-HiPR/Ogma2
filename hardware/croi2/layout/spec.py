@@ -345,6 +345,9 @@ PYRO_PARTS = {      # placed before anything else in the region, at these spots
     'R6304': (28.6, 6.4, 90), 'R6305': (29.45, 3.5, 180),
     'R6404': (28.0, 11.6, 0), 'R6405': (28.0, 13.4, 180),
     'R6504': (47.95, 2.55, 270), 'R6505': (49.6, 2.55, 90),
+    # the parts the fire logic's frozen copper lands on (D-23Nov.15); R6303, R6403 and R6503 come with the stamp
+    'R6302': (23.95, 11.45, 90), 'R6402': (25.55, 11.65, 90), 'R6502': (56.0, 27.25, 90),
+    'R6501': (49.0, 36.8, 0), 'U6502': (48.4, 39.75, 0), 'U6001': (43.1, 39.85, 0),
 }
 HS_Y = 25.011       # the three high sides' centre line (placement.json), 1.7 mm further aft than at 23 Nov's region
 
@@ -385,6 +388,10 @@ def _pyro_copper():
         t(net, B, 1.0, (vx, py - 0.7), (vx, py + 0.7))
         t(net, B, 0.95, (px, py), (vx, py))
         v(net, (vx, round(py - 0.7, 3)), (vx, round(py + 0.7, 3)), (px, py))
+        # the drain pins (1, 2 above pad 8, 5, 6 below) joined to it on L1; the lower bridge starts at pin 5's inner
+        # edge, 0.5 mm from the source pin 4 (GND); the upper one passes the gate pin 3 at 0.38 mm, inside the waiver
+        t(net, F, 0.25, (px - 0.325, py - 0.975), (px + 0.325, py - 0.975), (px + 0.325, py - 0.4))
+        t(net, F, 0.25, (px - 0.195, py + 0.975), (px + 0.325, py + 0.975), (px + 0.325, py + 0.4))
     # each FET's source (pins 7 and 4) to GND through a via beside each pin; the 0.2 mm tracks end 0.52 mm from the
     # drain pads (the fire rule) and the vias sit 0.57 mm from the gate parts' pads
     for x, y7, y4, gx in ((30.5, 6.295, 7.175, 29.95), (30.65, 12.995, 13.875, 30.1), (48.2, 6.095, 6.975, 47.65)):
@@ -398,7 +405,98 @@ def _pyro_copper():
     return out
 
 
-PYRO_COPPER = _pyro_copper()
+def _fire_logic_escapes():
+    """The fire logic's ends (D-22Nov.26, D-23Nov.8, D-23Nov.13): each pin leaves on L1 inside its part's escape area
+    (0.2 mm), to a 0.5 mm via; the runs between are on L3, between the GND planes, at 0.5 mm."""
+    F, out = 'F.Cu', []
+    t = lambda net, *path: out.append(dict(net=net, layer=F, w=0.15, path=[(round(x, 3), round(y, 3)) for x, y in path]))
+    v = lambda net, *xy: out.extend(dict(net=net, via=p, d=0.5) for p in xy)
+    # U201: four bottom-row pins and pin 85 leave inward to vias under the body, pin 63 inward from the right side
+    for net, x in (('PYRO2_LS_SELECT', 39.0), ('PYRO1_FIRE', 40.0), ('PYRO3_FIRE', 41.0), ('PYRO2_FIRE', 44.0)):
+        t(net, (x, 61.8), (x, 60.9)); v(net, (x, 60.9))
+    # pin 85 leaves its via west of PYRO1_FIRE's run north, the side its resistors are on
+    t('PYRO1_LS_SELECT', (41.5, 47.85), (41.5, 49.2), (38.5, 49.2)); v('PYRO1_LS_SELECT', (38.5, 49.2))
+    t('PYRO3_LS_SELECT', (46.95, 54.812), (46.05, 54.812)); v('PYRO3_LS_SELECT', (46.05, 54.812))
+    # each high side's IN pin (3): off its tip, along the tips of pins 2 and 1 inside the area, then out to a via. A
+    # track straight off the tip can't cross the area's edge 0.5 mm from pins 2 and 4: it needs 0.39 mm past the tips
+    # plus its half width, and the area gives 0.44
+    for net, x in (('PYRO1_FIRE', 33.15), ('PYRO2_FIRE', 42.15), ('PYRO3_HS_ENABLE', 51.15)):
+        t(net, (x, 21.6), (x, 21.02), (x + 2.15, 21.02), (x + 2.95, 21.02)); v(net, (x + 2.95, 21.02))
+    # the staging latch's Q (U6001 pin 5) straight to the AND gate's pin 2 on L1: out of the latch's area 0.54 mm
+    # from its pin 6, into the gate's 0.66 mm from its pins 1 and 3 (a run on L3 would wall off the trunk); the AND
+    # gate's output (pin 4) east to a via
+    t('STAGE_ELIGIBLE', (44.6, 40.6), (45.45, 40.8), (46.25, 39.75), (47.2, 39.75))
+    # PYRO3_FIRE's via under the gate's body: north of it is the armed rails' crossing on L6, no via (spec.BUDGET);
+    # R6501 on L1 across it
+    t('PYRO3_FIRE', (47.85, 38.8), (48.4, 38.8), (48.4, 39.75)); v('PYRO3_FIRE', (48.4, 39.75))
+    t('PYRO3_FIRE', (47.262, 38.6), (47.262, 37.4), (47.95, 36.86))
+    t('PYRO3_HS_ENABLE', (49.75, 40.7), (50.75, 40.7)); v('PYRO3_HS_ENABLE', (50.75, 40.7))
+    # the pull-downs and gate resistors, each pad to a via beside it
+    t('PYRO1_FIRE', (36.8, 28.75), (36.8, 29.5)); v('PYRO1_FIRE', (36.8, 28.75))                  # R6303
+    t('PYRO2_FIRE', (45.8, 28.75), (45.8, 29.5)); v('PYRO2_FIRE', (45.8, 28.75))                  # R6403
+    t('PYRO3_HS_ENABLE', (54.6, 28.75), (54.7, 29.45)); v('PYRO3_HS_ENABLE', (54.6, 28.75))       # R6503
+    t('PYRO3_LS_SELECT', (56.2, 29.1), (56.0, 28.3)); v('PYRO3_LS_SELECT', (56.2, 29.1))          # R6502
+    t('PYRO3_LS_SELECT', (46.6, 1.725), (47.6, 1.725)); v('PYRO3_LS_SELECT', (46.6, 1.725))       # R6504, 1 mm clear of Q6501's source vias
+    t('PYRO1_LS_SELECT', (28.6, 8.45), (28.6, 7.45)); v('PYRO1_LS_SELECT', (28.6, 8.45))          # R6304
+    t('PYRO1_LS_SELECT', (22.7, 12.3), (23.7, 12.3)); v('PYRO1_LS_SELECT', (22.7, 12.3))          # R6302
+    t('PYRO2_LS_SELECT', (26.9, 11.7), (26.3, 11.95), (25.85, 12.3)); v('PYRO2_LS_SELECT', (26.3, 11.95))  # R6404, R6402
+    return out
+
+
+# The fire logic's runs on L3, between the GND planes: KiCadRoutingTools on L3 alone between the escapes above, at
+# 0.5 mm from everything (trials fl3, and fl5 for PYRO2_FIRE and PYRO3_FIRE, 23 Nov), frozen here as data. 0.15 mm
+# wide; board mm; each list one run.
+FIRE_LOGIC_L3 = {
+    'PYRO1_FIRE': [
+        [(36.1, 21), (36.1, 28.05), (36.8, 28.75), (36.8, 29.7), (40, 32.9), (40, 60.9)],
+    ],
+    'PYRO1_LS_SELECT': [
+        [(23.95, 12.6), (24.2, 12.85), (26.4, 12.85), (26.45, 12.8), (26.6, 12.8), (26.65, 12.75), (26.7, 12.75),
+         (26.75, 12.7), (26.8, 12.7), (28.6, 10.9), (28.6, 8.45)],
+        [(38.5, 49.2), (23.95, 34.65), (23.95, 12.4), (23.2, 12.4), (23.15, 12.35), (23.1, 12.35), (23.05, 12.3),
+         (22.7, 12.3)],
+    ],
+    'PYRO2_FIRE': [
+        [(45.1, 21), (45.1, 28.05), (45.8, 28.75), (45.8, 29.7), (44, 31.5), (44, 60.9)],
+    ],
+    'PYRO2_LS_SELECT': [
+        [(39, 60.9), (26.3, 48.2), (26.3, 37.95), (23.4, 35.05), (23.4, 35), (23.35, 34.95), (23.35, 34.9),
+         (23.3, 34.85), (23.3, 14.15), (21.8, 12.65), (21.8, 11.95), (22.2, 11.55), (22.25, 11.55), (22.3, 11.5),
+         (22.35, 11.5), (22.4, 11.45), (22.55, 11.45), (22.6, 11.4), (22.8, 11.4), (22.85, 11.45), (23, 11.45),
+         (23.05, 11.5), (23.1, 11.5), (23.15, 11.55), (23.2, 11.55), (23.4, 11.75), (23.5, 11.75), (23.55, 11.7),
+         (23.6, 11.7), (23.65, 11.65), (23.75, 11.65), (23.8, 11.6), (24.1, 11.6), (24.15, 11.65), (24.25, 11.65),
+         (24.55, 11.95), (26.3, 11.95)],
+    ],
+    'PYRO3_FIRE': [
+        [(48.4, 39.75), (44.65, 43.5), (44.65, 60.375), (44.85, 60.575), (44.85, 61.25), (44.575, 61.525),
+         (44.55, 61.525), (44.475, 61.6), (44.45, 61.6), (44.4, 61.65), (44.375, 61.65), (44.35, 61.675),
+         (44.325, 61.675), (44.3, 61.7), (44.25, 61.7), (44.225, 61.725), (44.125, 61.725), (44.1, 61.75),
+         (43.9, 61.75), (43.875, 61.725), (43.775, 61.725), (43.75, 61.7), (43.7, 61.7), (43.675, 61.675),
+         (43.65, 61.675), (43.625, 61.65), (43.6, 61.65), (43.55, 61.6), (43.525, 61.6), (43.45, 61.525),
+         (43.425, 61.525), (42.8, 60.9), (41, 60.9)],
+    ],
+    'PYRO3_HS_ENABLE': [
+        [(54.1, 21), (54.1, 28.25), (54.8, 28.95), (54.8, 36.65), (50.75, 40.7)],
+    ],
+    'PYRO3_LS_SELECT': [
+        [(46.7, 1.7), (46.7, 7.25), (46.75, 7.3), (46.75, 7.35), (46.8, 7.4), (46.8, 7.45), (46.85, 7.5),
+         (46.85, 7.55), (47.1, 7.8), (47.15, 7.8), (47.5, 8.15), (47.55, 8.15), (47.7, 8.3), (47.75, 8.3),
+         (47.8, 8.35), (47.85, 8.35), (47.95, 8.45), (47.95, 13.6), (54.9, 20.55), (54.9, 20.6), (54.95, 20.65),
+         (54.95, 20.75), (55, 20.8), (55, 21.2), (54.95, 21.25), (54.95, 21.35), (54.9, 21.4), (54.9, 21.45),
+         (54.75, 21.6), (54.75, 26.85), (56, 28.1), (56, 28.9), (56.2, 29.1), (56.15, 29.15), (56.1, 29.15),
+         (55.45, 29.8), (55.45, 36.85), (55.4, 36.9), (55.4, 36.95), (55.35, 37), (55.35, 37.05), (51.65, 40.75),
+         (51.65, 40.8), (51.6, 40.85), (51.6, 41), (51.55, 41.05), (51.55, 41.1), (51.5, 41.15), (51.5, 41.2),
+         (46.95, 45.75), (46.95, 54.2), (46.8, 54.35), (46.75, 54.35), (46.65, 54.45), (46.6, 54.45),
+         (46.45, 54.6), (46.4, 54.6), (46.3, 54.7), (46.25, 54.7)],
+    ],
+}
+
+
+def _fire_logic_runs():
+    return [dict(net=n, layer='In2.Cu', w=0.15, path=[tuple(p) for p in c]) for n, cs in FIRE_LOGIC_L3.items() for c in cs]
+
+
+PYRO_COPPER = _pyro_copper() + _fire_logic_escapes() + _fire_logic_runs()
 
 # The hard copper's floor plan, as keep-outs for the budget run (stage C/D review, call 9; meter.py --budget): where
 # stage C will draw it, each area with the copper's own clearance to other nets. Board mm, (x0, y0, x1, y1) boxes or
@@ -417,12 +515,7 @@ BUDGET = [
     dict(name='6 A, J101 down', layers=['F.Cu'], box=(7.0, 131.8, 11.0, 149.5)),
     dict(name='6 A, J101 across', layers=['F.Cu'], box=(7.0, 145.5, 13.6, 149.5)),
     dict(name='6 A tap', layers=['F.Cu'], box=(12.6, 137.6, 23.0, 144.6)),
-    # FIRE_LOGIC (D-22Nov.26, D-23Nov.8): the escape under U201 at 0.2 mm, the trunk up to the high sides at 0.5 mm,
-    # and up between the chips to their IN pins and on to the FETs' gates
-    dict(name='fire logic, under U201', layers=['In2.Cu'], box=(39.9, 47.5, 41.8, 62.2)),
-    dict(name='fire logic', layers=['In2.Cu'], box=(38.8, 31.0, 43.2, 47.5)),
-    dict(name='fire logic, left', layers=['In2.Cu'], box=(35.5, 20.5, 38.5, 31.0)),
-    dict(name='fire logic, right', layers=['In2.Cu'], box=(44.5, 20.5, 47.5, 31.0)),
+    # FIRE_LOGIC: drawn (spec.FIRE_LOGIC_L3 and its escapes), on the board itself since 23 Nov
     # RF lines (D-21Nov.25, D-22Nov.16) on L1 with their gaps and fences
     dict(name='GNSS line', layers=['F.Cu'], box=(60.4, 2.2, 68.3, 6.0)),
     dict(name='LoRa line', layers=['F.Cu'], box=(11.0, 4.2, 14.6, 16.8)),

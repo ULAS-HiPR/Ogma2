@@ -165,12 +165,19 @@ def rect_mst(pts):
     return tot
 
 
-def drc(pcb, out_json):
+def drc(pcb, out_json, twin_of=None):
+    """KiCad DRC's errors by type, less those between a fire-logic net and its own twin (the waiver's model, main())."""
+    import re
     subprocess.run(['kicad-cli', 'pcb', 'drc', '--format', 'json', '--severity-error', '--units', 'mm', '-o', str(out_json), str(pcb)],
                    capture_output=True, text=True)
     d = json.loads(Path(out_json).read_text())
     by = defaultdict(int)
     for v in d.get('violations', []):
+        if twin_of:
+            nets = {M.short(m.group(1)) for i in v['items'] for m in [re.search(r'\[([^\]]*)\]', i['description'])] if m}
+            if nets and any(n in twin_of for n in nets) and len({twin_of.get(n, n) for n in nets}) == 1:
+                by['(the waiver model: a net against its twin, dropped)'] += 1
+                continue
         by[v['type']] += 1
     return dict(sorted(by.items()))
 
@@ -235,9 +242,9 @@ def main():
     ap.add_argument('--rails-as-tracks', action='store_true',
                     help='GND is the only plane: the rails are routed as tracks (a six-layer plan with no power layer)')
     ap.add_argument('--waive-fire-logic', action='store_true',
-                    help='model the fire-logic waiver (D-22Nov.26): on the scratch copy, each fire-logic pad of a part '
-                         "in the spec's ESCAPE_AREAS joins a net of its own at the class's clearance, so the router "
-                         'keeps 0.2 mm from it and 0.5 mm from all other fire copper (those nets are not routed here)')
+                    help='model the fire-logic waiver (D-22Nov.26, D-23Nov.8, D-23Nov.13) as DRC applies it: on the scratch '
+                         "copy, fire logic wholly inside a part's escape area moves to a twin net at the class's 0.2 mm, "
+                         'the rest keeps 0.5 mm (those nets are not routed here)')
     ap.add_argument('--net-clearance', action='append', default=[], metavar='NET=MM',
                     help="trial: tell the router this net's clearance instead of its class's (e.g. GND=0.15)")
     ap.add_argument('--krt-args', default='',
@@ -253,26 +260,62 @@ def main():
     length = a.length or float(round(K.ToMM(b.GetBoardEdgesBoundingBox().GetHeight())))
     spec, hw = load_spec(a.board, length)
     a.layers = a.layers or getattr(spec, 'ROUTER_LAYERS', ['F.Cu', 'B.Cu'])
-    waived = {}
+    waived, twin_of = {}, {}
     if a.waive_fire_logic:
+        # the waiver as DRC applies it (D-22Nov.26, D-23Nov.8, D-23Nov.13): fire logic wholly inside a part's escape
+        # area keeps 0.2 mm, elsewhere 0.5. Each fire-logic net's pads, tracks and vias that sit wholly inside an area
+        # move to a twin net at the class's 0.2 mm, so the router keeps 0.2 mm from them and 0.5 mm from the rest of
+        # the net. A twin touches its own net where the copper leaves the area; DRC's errors between a net and its own
+        # twin are the model's, and drc() drops them.
+        from shapely.geometry import LineString, Point, Polygon
         fl_cl = next(c['clearance'] for c in spec.NETCLASSES if c['name'] == 'FIRE_LOGIC')
-        for ref in getattr(spec, 'ESCAPE_AREAS', ()):
-            fp = b.FindFootprintByReference(ref)
-            box = fp.GetBoundingBox(False, False)
-            for p in fp.Pads():
-                # a net whose scripted copper leaves the part is drawn already: renaming the pad would split it
-                if any(t.GetNetCode() == p.GetNetCode() and not (box.Contains(t.GetStart()) and box.Contains(t.GetEnd()))
-                       for t in b.GetTracks()):
-                    continue
-                if M.net_class(p.GetNetname(), spec.PATTERNS) == 'FIRE_LOGIC':
-                    old_code, name = p.GetNetCode(), f'{ref}_{p.GetNumber()}_{M.short(p.GetNetname())}_WAIVED'
-                    ni = K.NETINFO_ITEM(b, name)
-                    b.Add(ni)
-                    p.SetNet(ni)
-                    waived[name] = fl_cl
-                    for t in b.GetTracks():              # its scripted escape under the body goes with it
-                        if t.GetNetCode() == old_code and box.Contains(t.GetStart()) and box.Contains(t.GetEnd()):
-                            t.SetNet(ni)
+        mm_ = K.ToMM
+        areas = []
+        for z in b.Zones():
+            if z.GetIsRuleArea() and z.GetZoneName().endswith('_ESCAPE'):
+                o = z.Outline()
+                for k in range(o.OutlineCount()):
+                    ol = o.Outline(k)
+                    areas.append(Polygon([(mm_(ol.CPoint(q).x), mm_(ol.CPoint(q).y)) for q in range(ol.PointCount())]).buffer(1e-4))
+        twins, moved = {}, defaultdict(list)
+
+        def to_twin(item):
+            n = item.GetNetname()
+            if n not in twins:
+                name = f'{M.short(n)}_WAIVED'
+                ni = K.NETINFO_ITEM(b, name)
+                b.Add(ni)
+                twins[n], waived[name], twin_of[name] = ni, fl_cl, M.short(n)
+            moved[n].append((item, item.GetNet()))
+            item.SetNet(twins[n])
+        is_fl = lambda n: M.net_class(n, spec.PATTERNS) == 'FIRE_LOGIC'
+        for f in b.GetFootprints():
+            for p in f.Pads():
+                if is_fl(p.GetNetname()):
+                    ps = K.SHAPE_POLY_SET()
+                    p.TransformShapeToPolygon(ps, K.F_Cu if p.IsOnLayer(K.F_Cu) else K.B_Cu, 0, K.FromMM(0.005), K.ERROR_INSIDE)
+                    if ps.OutlineCount():
+                        ol = ps.Outline(0)
+                        g = Polygon([(mm_(ol.CPoint(q).x), mm_(ol.CPoint(q).y)) for q in range(ol.PointCount())])
+                        if any(ar.contains(g) for ar in areas):
+                            to_twin(p)
+        for t in list(b.GetTracks()):
+            if is_fl(t.GetNetname()):
+                if t.Type() == K.PCB_VIA_T:
+                    c = t.GetPosition()
+                    g = Point(mm_(c.x), mm_(c.y)).buffer(mm_(t.GetWidth(K.F_Cu)) / 2, 16)
+                else:
+                    g = LineString([(mm_(t.GetStart().x), mm_(t.GetStart().y)), (mm_(t.GetEnd().x), mm_(t.GetEnd().y))]).buffer(mm_(t.GetWidth()) / 2, 16)
+                if any(ar.contains(g) for ar in areas):
+                    to_twin(t)
+        # a net with every pad inside an area keeps its own name throughout: KiCad would give the copper between the
+        # areas the twin's net when it saves the board (STAGE_ELIGIBLE, U6001 to U6502), so it keeps 0.5 mm there too
+        for n, items in moved.items():
+            if not any(p.GetNetname() == n for f in b.GetFootprints() for p in f.Pads()):
+                for item, ni in items:
+                    item.SetNet(ni)
+                name = twins[n].GetNetname()
+                waived.pop(name, None); twin_of.pop(name, None)
     bd = M.BoardData(b, spec.ORIGIN, (spec.W, spec.H))
     planes = M.plane_nets(bd, set(spec.RAILS))
     if a.rails_as_tracks:
@@ -280,7 +323,7 @@ def main():
     allsig = sorted(M.signal_nets(bd, planes))
     # RF lines are scripted in stage C on L1 with no via (D-21Nov.25, D-22Nov.16): left out of the route
     rf = [n for n in allsig if M.net_class(n, spec.PATTERNS) == 'RF50']
-    sig = [n for n in allsig if n not in rf]
+    sig = [n for n in allsig if n not in rf and M.short(n) not in twin_of]     # fire logic's twins are drawn, not routed
     # each net's clearance as KiCad will check it: its class's, and 0.5 mm for fire copper (spec.DRU), which the
     # router can't read from the custom rule
     pair = FO.clearances(spec)
@@ -306,15 +349,20 @@ def main():
         src = hw / f'{spec.NAME}.{ext}'
         if src.exists():
             shutil.copy(src, out / f'fanned.{ext}')
+    if twin_of:                                  # the twins stay FIRE_LOGIC for DRC, so its waiver rule reads them
+        pro = json.loads((out / 'fanned.kicad_pro').read_text())
+        pro['net_settings'].setdefault('netclass_patterns', []).append({'netclass': 'FIRE_LOGIC', 'pattern': '*_WAIVED'})
+        (out / 'fanned.kicad_pro').write_text(json.dumps(pro, indent=2) + '\n')
     # the input board and the meter's own steps (the waiver, the keep-outs, the fanout) must leave a board DRC passes
     # before any routing; an error here is the input's or the instrument's, so the run is void and the router never
     # starts. Planted test (23 Nov): a GND via 0.15 mm from OUTPUT1_LOW on L6 voids the run. (A via planted on the
     # track itself doesn't test it: KiCad gives a free via the net of the track it sits on when it saves the board.)
-    fan_drc = drc(fan, out / 'fanned-drc.json')
+    fan_drc = drc(fan, out / 'fanned-drc.json', twin_of)
+    dropped_fan = fan_drc.pop('(the waiver model: a net against its twin, dropped)', 0)
     rep = {'board': a.pcb, 'length_mm': length, 'copper_layers': b.GetCopperLayerCount(), 'router_layers': a.layers,
            'classes': a.classes or 'all', 'via_in_pad': a.via_in_pad, 'krt_minutes': a.krt_minutes,
            'rails_as_tracks': a.rails_as_tracks, 'plane_rails': a.plane_rails, 'krt_args': a.krt_args,
-           'fire_logic_waived_pads': sorted(waived), 'net_clearance_overrides': a.net_clearance,
+           'fire_logic_twins': sorted(waived), 'net_clearance_overrides': a.net_clearance,
            'plane_nets': {M.short(n): l for n, l in sorted(planes.items())},
            'left_out': {'rf_scripted_in_stage_c': [M.short(n) for n in rf]},
            'fire_logic_clearance': a.fire_logic_clearance if a.fire_logic_clearance is not None else 'the 0.5 mm fire rule',
@@ -324,7 +372,7 @@ def main():
                       'seconds': round(time.time() - t0, 1)},
            'ignores': 'the L3 islands\' shapes',
            'budget': [it['name'] for it in spec.BUDGET] if a.budget else None,
-           'fanned_drc_errors': fan_drc}
+           'fanned_drc_errors': fan_drc, 'fanned_drc_twin_errors_dropped': dropped_fan}
     if fan_drc:
         rep['VOID'] = 'the board fails DRC after the fanout, before routing (%s): an input or instrument error; no count' % fan_drc
         (out / 'meter.json').write_text(json.dumps(rep, indent=1) + '\n')
@@ -379,7 +427,7 @@ def main():
                       'passes': runs, 'cmd_flags': flags}
         routed_sig = {n for n in sig if not a.classes or M.net_class(n, spec.PATTERNS) in a.classes}
         rep['krt'].update(summarise(routed, spec, routed_sig, len(fr['done']) + len(ex['vias']), 'krt'))
-        rep['krt']['drc_errors'] = drc(routed, out / 'routed-drc.json')
+        rep['krt']['drc_errors'] = drc(routed, out / 'routed-drc.json', twin_of)
         by = defaultdict(lambda: [0, 0])
         for n in sig:
             if a.classes and M.net_class(n, spec.PATTERNS) not in a.classes:

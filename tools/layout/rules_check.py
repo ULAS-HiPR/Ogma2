@@ -22,7 +22,8 @@ tests = [
  ('fire logic 0.3 mm from another net on L3, outside U201', lambda b: (track(b, 'PYRO1_FIRE', K.In2_Cu, (20, 100), (24, 100)), track(b, 'NOR_EN', K.In2_Cu, (20, 100.45), (24, 100.45))), "Fire copper keeps 0.5 mm"),
  ('fire logic 0.25 mm from another net under U201', lambda b: (track(b, 'PYRO1_FIRE', K.F_Cu, (38, 52), (38, 56)), track(b, 'NOR_EN', K.F_Cu, (38.4, 52), (38.4, 56))), None),
  ('fire logic 0.15 mm from another net under U201', lambda b: (track(b, 'PYRO1_FIRE', K.F_Cu, (38, 52), (38, 56)), track(b, 'NOR_EN', K.F_Cu, (38.3, 52), (38.3, 56))), "Fire logic keeps 0.2 mm inside"),
- ('fire logic crossing the courtyard edge, 0.25 mm from another net', lambda b: (track(b, 'PYRO1_FIRE', K.In2_Cu, (44, 55), (52, 55)), track(b, 'NOR_EN', K.In2_Cu, (44, 55.4), (52, 55.4))), "Fire copper keeps 0.5 mm"),
+ # across U201's bottom edge (y 63.74), clear of the fire logic drawn on L3 since 23 Nov
+ ('fire logic crossing the courtyard edge, 0.25 mm from another net', lambda b: (track(b, 'PYRO1_FIRE', K.In2_Cu, (34, 60), (34, 66)), track(b, 'NOR_EN', K.In2_Cu, (34.4, 60), (34.4, 66))), "Fire copper keeps 0.5 mm"),
  ('RF via', lambda b: via(b, 'GNSS_RF', 20, 120), 'RF lines take no via'),
  # D-23Nov.13: U6304's escape area is its courtyard (outline at x 29.755) and 0.2 mm; fire logic keeps 0.2 mm inside it
  ('fire logic 0.25 mm from another net on L3, 0.1 mm past U6304\'s courtyard (inside its margin)', lambda b: (track(b, 'PYRO1_FIRE', K.In2_Cu, (29.65, 22), (29.65, 24)), track(b, 'NOR_EN', K.In2_Cu, (30.05, 22), (30.05, 24))), None),
