@@ -5307,3 +5307,10 @@ What the sheets show, read from the step-16 netlist:
   3.3 V rails now route at 0.1, JLC's pad-to-track figure, with 0.09 mm tracks; track to track 0.09 stays the board's
   minimum. The fanout follows. Rerun (fb-t3b): its routed copper is DRC-clean but for the waiver model's own twins;
   the count waits with the others for Seán's call.
+
+## 23 November 2026: the three budget runs' counts, and the VCAP call
+
+- Seán skipped his calls on the counts. Full-effort budget runs, ordinary nets open of 271 (gate 25), 0 of 22 rails
+  open in each: take 2 (fb-b80b5012) 19; the taps trial on top of it (fb-0f9363d1) 25; take 3 on top of that
+  (fb-t3b) 6. Before take 2 it was 27. Take 2 and the taps trial are at or under the gate, so the pyro band freezes.
+- A fire pin beside VCAP: Seán, "I think it should be a no." D-22Nov.25's neighbour rule stands as A26 holds it.
