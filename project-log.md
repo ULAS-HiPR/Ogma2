@@ -5087,3 +5087,22 @@ What the sheets show, read from the step-16 netlist:
 - So the floor plan's cost is mostly parts standing where the hard copper goes and areas drawn wider than the
   copper. Next: the floor plan to the copper's real size, the parts it displaces moved (D-23Nov.7), and the run
   again; the gate (25 open) applies to that run.
+
+## 23 November 2026: Fable's midpoint review
+
+- [Midpoint review](docs/briefs/burrito-midpoint-review.md), at Seán's ask: where the work stuck, what worked,
+  and the method from here. It changes no decision.
+- Its reading: placement is right for the first time; no copper is on the board; for two days the steering number
+  (wrong-side pins and wire length, then the router's count with no hard copper) answered an easier question than
+  the one that decides the board. Four instruments failed open: the near check per part, the meter's 0.5 mm at
+  U201, and a killed router run printing a count on 22 and again on 23 November.
+- The method it returns: floor plan before placement; distance rules per pin before placing; parts down in order of
+  constraint, a region at a time; the budget run in the router's quick mode as the steering number, with the noise
+  measured first; a region finished (placement, hard copper, DRC, budget run) before the next starts; instruments
+  that fail closed; a trial and a kill line for every lever; exceptions to Seán as rules, batched at the stage
+  boundary. Churro starts from its current-path floor plan.
+- Flagged for stage D: the router peaks at 3.1 to 4.8 GB on the empty board and the container stops a process at
+  about 6 GB; one trial of routing by band before stage D.
+- Three rows in decisions.md's Open table for Seán: the fire-logic waiver as one rule for the output stage's
+  fine-pitch parts; OUTPUT2_HIGH through a 0.5 mm neck between J6601's LOW pins, with C6603 on it; and
+  PYRO3_HS_ENABLE, which is in class Default.
