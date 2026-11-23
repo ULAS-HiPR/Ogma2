@@ -5240,3 +5240,17 @@ What the sheets show, read from the step-16 netlist:
   (D-23Nov.16); JLC's published capabilities are the rule set, the fire copper's widths and gaps excepted
   (D-23Nov.17); Claude picks levers inside the rules and stops only for a fire or safety rule or a stage boundary
   (D-23Nov.18). The board's AGENTS.md pin line follows D-23Nov.16.
+
+## 23 November 2026: every earlier standing rule into the file (D-23Nov.19 to D-23Nov.24)
+
+- Seán asked for all his earlier standing rules in `standing-rules.md` too, and for "our entire philosophy of one sub
+  circuit at a time", with the file growing by appended entries that can supersede older ones. His messages in this
+  chat since 18 Nov (and two to Fable on 23 Nov) were searched in his Stream for rules he set for the work, and each
+  was copied in his words. Rules that already had a decision keep their numbers: one and done (D-21Nov.2), the board
+  as script output (D-21Nov.21), connectors at the edge facing out (D-21Nov.24), pin swaps (D-22Nov.25, widened by
+  D-23Nov.16), moving parts (D-23Nov.7) and its two conditions (D-23Nov.11). New rows record the rest: commits,
+  posting, checkpoints and sunk cost (D-23Nov.19); the 21 Nov layout ground rules (D-23Nov.20); no test point deleted
+  (D-23Nov.21); learning from every stop (D-23Nov.22); one sub-circuit at a time (D-23Nov.23); and how the file works
+  (D-23Nov.24). The file now runs in the order the rules were given.
+- Left out as decisions rather than standing rules: the board's size, layers and one side, the router choice, and the
+  requirements calls. AGENTS.md's public-repository rule stays there; it isn't in Seán's words.
