@@ -5124,3 +5124,14 @@ What the sheets show, read from the step-16 netlist:
   natively it would swap where the container kills, and be faster per core. The router ran for 33 minutes of
   today's work (four runs), so its speed isn't where the day goes. Not taken up: quick mode for steering (1.3 GB,
   2 minutes) and the by-band trial come first; if that trial fails, the need is a machine with 16 GB or more.
+
+## 23 November 2026: a void run prints no count; the quick baseline three times (midpoint review, step 1)
+
+- `meter.py`: when a router pass doesn't finish (a timeout, an error, a kill for memory), meter.json drops every
+  count and says VOID, and the printout's counts are null. Planted: a run cut off after 12 s (`--krt-minutes 0.2`)
+  printed `"rc": "timeout"`, `VOID`, `nets_open: null`.
+- The quick baseline (the router's main pass only) on board 5b85ff73, three times: 19 of 271 ordinary nets open each
+  time, the same 19 nets, 83–88 s, 1.32 GB at peak. The router is deterministic on one board, so a re-run's spread is
+  nil; the noise that matters is a placement's (the quick meter moved about 10 nets between near-identical
+  placements on 22 November). 271, not 273: PYRO3_HS_ENABLE and STAGE_ELIGIBLE are fire logic now (D-23Nov.10,
+  D-23Nov.12).

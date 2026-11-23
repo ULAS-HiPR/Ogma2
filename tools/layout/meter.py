@@ -374,6 +374,10 @@ def main():
             if M.short(n) in rep['krt']['open']:
                 by[c][0] += 1
         rep['krt']['open_by_class'] = {c: f'{o} of {n}' for c, (o, n) in by.items()}
+        if rep['krt']['rc']:     # a pass that didn't finish: its nets were never tried, so the counts mean nothing
+            for x in ('nets_open', 'nets_open_pct', 'connections_open', 'open', 'open_by_class', 'nets_open_by_band'):
+                rep['krt'].pop(x, None)
+            rep['krt']['VOID'] = 'a router pass did not finish (rc %s); no count is a result' % rep['krt']['rc']
     if a.freerouting:
         bf = K.LoadBoard(str(fan))
         bf.SetLayerType(K.In1_Cu, K.LT_POWER); bf.SetLayerType(K.In2_Cu, K.LT_POWER)
@@ -399,7 +403,7 @@ def main():
         rep['freerouting'] = frrep
     (out / 'meter.json').write_text(json.dumps(rep, indent=1) + '\n')
     k = rep.get('krt', {})
-    print(json.dumps({x: k.get(x) for x in ('rc', 'seconds', 'peak_rss_mb', 'signal_nets', 'nets_open', 'nets_open_pct',
+    print(json.dumps({x: k.get(x) for x in ('rc', 'VOID', 'seconds', 'peak_rss_mb', 'signal_nets', 'nets_open', 'nets_open_pct',
                                            'connections_open', 'router_vias', 'track_mm', 'length_ratio', 'drc_errors',
                                            'open_by_class', 'nets_open_by_band')}
                      | {'fanout': {kk: rep['fanout'][kk] for kk in ('pads', 'vias', 'seconds')},
