@@ -246,10 +246,19 @@ NET_WEIGHTS = [(r'LORA_RF_SUBG|GNSS_RF', 30.0), (r'OUTPUT\d_(HIGH|LOW)', 6.0), (
 # (build.json `metrics.near`). Distances are copper gaps, pad edge to pad edge.
 _SWEEP = 'burrito-sweep.md section 5'
 NEAR = [
-    dict(rule='supply_caps', ic='U201', value='100n', mm=3.0, src=f'{_SWEEP}: one 100 nF per supply pin, on its side; 3 mm [J]'),
-    dict(rule='supply_caps', ic='U401', value='100n', mm=3.0, src=f'{_SWEEP}: one 100 nF per supply pin, on its side; 3 mm [J]'),
-    dict(rule='net_caps', ic='U201', nets=('FLIGHT_VCAP',), mm=2.0, src=f'{_SWEEP}: VCAP capacitors within 2 mm'),
-    dict(rule='net_caps', ic='U401', nets=('COMMS_VCAP',), mm=2.0, src=f'{_SWEEP}: VCAP capacitors within 2 mm'),
+    # each MCU supply pin measured on its own, one capacitor to one pin (D-23Nov.1)
+    dict(rule='supply_caps', ic='U201', nets=('FLIGHT_3V3', 'FLIGHT_VBAT'), value='100n', mm=3.0,
+         src=f'{_SWEEP}: one 100 nF per supply pin, on its side; 3 mm [J]; D-23Nov.1'),
+    dict(rule='supply_caps', ic='U201', nets=('FLIGHT_VDDA',), value='100n', mm=3.0,
+         src=f'{_SWEEP}: one 100 nF per supply pin; VDDA and VREF+ each; 3 mm [J]; D-23Nov.1'),
+    dict(rule='supply_caps', ic='U201', nets=('FLIGHT_VCAP',), value='2.2u', mm=2.0,
+         src=f'{_SWEEP}: VCAP capacitors within 2 mm, one at each VCAP pin; D-23Nov.1'),
+    dict(rule='supply_caps', ic='U401', nets=('COMMS_3V3',), value='100n', mm=3.0,
+         src=f'{_SWEEP}: one 100 nF per supply pin, on its side; 3 mm [J]; D-23Nov.1'),
+    dict(rule='supply_caps', ic='U401', nets=('COMMS_VDDA',), value='100n', mm=3.0,
+         src=f'{_SWEEP}: one 100 nF per supply pin; 3 mm [J]; D-23Nov.1'),
+    dict(rule='supply_caps', ic='U401', nets=('COMMS_VCAP',), value='2.2u', mm=2.0,
+         src=f'{_SWEEP}: VCAP capacitors within 2 mm, one at each VCAP pin; D-23Nov.1'),
     dict(rule='part_to_pins', part='Y201', ic='U201', mm=5.0, src=f'{_SWEEP}: crystals within 5 mm of the pins'),
     dict(rule='part_to_pins', part='Y202', ic='U201', mm=5.0, src=f'{_SWEEP}: crystals within 5 mm of the pins'),
     dict(rule='part_to_pins', part='Y401', ic='U401', mm=5.0, src=f'{_SWEEP}: crystals within 5 mm of the pins'),

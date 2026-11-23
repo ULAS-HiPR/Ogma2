@@ -4945,3 +4945,14 @@ What the sheets show, read from the step-16 netlist:
   starts at step 0, the near check per pin.
 - Step 3 off, FLIGHT_HSE_IN's two vias and the USB and CAN via pairs go ahead unless Seán says no; they stay in
   the Open table until he does or they're built.
+
+## 23 November 2026: the near check measures each MCU supply pin (the review's step 0)
+
+- The check's `supply_caps` rule found an IC's supply pins by pin type, and the board's pads carry none, so it
+  found no pins and couldn't miss: it measured nothing on either MCU before today. Rows now name their nets, and
+  VCAP and VDDA are measured per pin like VDD (D-23Nov.1).
+- Today's misses, copper gap to the nearest capacitor of the value the pin needs, one capacitor to one pin:
+  U201 VDD pins 11, 28, 50, 75 and 100 at 6.0, 5.2, 3.1, 2.3 and 12.5 mm (3 mm allowed), VBAT 12.5 mm, VDDA and
+  VREF+ 5.9 and 6.4 mm, VCAP pin 98 18.0 mm (2 mm allowed); U401 VDD pins 1, 19, 32, 48 and 64 at 5.0, 3.1, 4.7,
+  11.3 and 7.5 mm, VDDA 12.2 mm, VCAP pin 62 12.5 mm. 16 at the MCUs, 19 in all.
+- Board unchanged (b507a62c); only the build's report changes.

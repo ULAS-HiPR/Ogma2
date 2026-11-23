@@ -282,7 +282,9 @@ def _match(pins, caps, limit):
 def near_rules(bd, spec):
     """The distance rules of stage B2 step 6 (spec.NEAR). Each row: the rule, the limit and its source; a miss lists
     what is too far and by how much. Rules:
-      supply_caps  every supply pin of `ic` has its own cap of `value` on its net within `mm` (one to one);
+      supply_caps  every supply pin of `ic` has its own cap of `value` on its net within `mm` (one to one). The pins
+                   are `ic`'s pads on `nets` when the row names them: the board's pads carry no pin types, so a row
+                   without `nets` finds no pins and can't miss (it measured nothing before 23 November);
       net_caps     on each of `nets`, a cap pad within `mm` of `ic`'s pad on that net;
       part_to_pins each pad of `part` within `mm` of `ic`'s pad on the same net;
       on_line      `part`'s pad on `net` within `mm` of the line from `from`'s pad to `to`'s pad, between them."""
@@ -294,8 +296,11 @@ def near_rules(bd, spec):
     for row in getattr(spec, 'NEAR', []):
         rule, mm, miss = row['rule'], row['mm'], []
         if rule == 'supply_caps':
-            pins = [d for d in pads_of[row['ic']] if d['net'] and short(d['net']) != 'GND' and d['pintype'] == 'power_in'
-                    and 'VCAP' not in d['pinfn']]
+            if 'nets' in row:
+                pins = [d for d in pads_of[row['ic']] if d['net'] and short(d['net']) in row['nets']]
+            else:
+                pins = [d for d in pads_of[row['ic']] if d['net'] and short(d['net']) != 'GND'
+                        and d['pintype'] == 'power_in' and 'VCAP' not in d['pinfn']]
             for net in sorted({d['net'] for d in pins}):
                 caps = [d for d in bd.by_net[net] if is_cap(d['ref']) and row['value'] in bd.value.get(d['ref'], '')]
                 for d in _match([q for q in pins if q['net'] == net], caps, mm):

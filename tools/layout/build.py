@@ -224,7 +224,7 @@ def near_plan(spec, comps, nets):
         rule = row['rule']
         if rule == 'supply_caps':                      # the IC's own decoupling: placed first, pulled as usual
             ic = row['ic']
-            ic_nets = {n for n in pins_of[ic].values() if short(n) != 'GND'}
+            ic_nets = {n for n in pins_of[ic].values() if short(n) != 'GND' and short(n) in row.get('nets', (short(n),))}
             for r in sorted(pins_of):
                 if (is_cap(r) and comps[r].sheet == comps[ic].sheet and row['value'] in comps[r].value
                         and set(pins_of[r].values()) & ic_nets):

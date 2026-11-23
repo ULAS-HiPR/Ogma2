@@ -3767,29 +3767,65 @@
     "rule": "supply_caps",
     "what": "U201",
     "mm": 3.0,
-    "source": "burrito-sweep.md section 5: one 100 nF per supply pin, on its side; 3 mm [J]",
-    "misses": []
+    "source": "burrito-sweep.md section 5: one 100 nF per supply pin, on its side; 3 mm [J]; D-23Nov.1",
+    "misses": [
+     "U201.11 FLIGHT_3V3: nearest 100n 6.0 mm",
+     "U201.28 FLIGHT_3V3: nearest 100n 5.2 mm",
+     "U201.50 FLIGHT_3V3: nearest 100n 3.1 mm",
+     "U201.75 FLIGHT_3V3: nearest 100n 2.3 mm",
+     "U201.100 FLIGHT_3V3: nearest 100n 12.5 mm",
+     "U201.6 FLIGHT_VBAT: nearest 100n 12.5 mm"
+    ]
+   },
+   {
+    "rule": "supply_caps",
+    "what": "U201",
+    "mm": 3.0,
+    "source": "burrito-sweep.md section 5: one 100 nF per supply pin; VDDA and VREF+ each; 3 mm [J]; D-23Nov.1",
+    "misses": [
+     "U201.21 FLIGHT_VDDA: nearest 100n 6.4 mm",
+     "U201.22 FLIGHT_VDDA: nearest 100n 5.9 mm"
+    ]
+   },
+   {
+    "rule": "supply_caps",
+    "what": "U201",
+    "mm": 2.0,
+    "source": "burrito-sweep.md section 5: VCAP capacitors within 2 mm, one at each VCAP pin; D-23Nov.1",
+    "misses": [
+     "U201.98 FLIGHT_VCAP: nearest 2.2u 18.0 mm"
+    ]
    },
    {
     "rule": "supply_caps",
     "what": "U401",
     "mm": 3.0,
-    "source": "burrito-sweep.md section 5: one 100 nF per supply pin, on its side; 3 mm [J]",
-    "misses": []
+    "source": "burrito-sweep.md section 5: one 100 nF per supply pin, on its side; 3 mm [J]; D-23Nov.1",
+    "misses": [
+     "U401.1 COMMS_3V3: nearest 100n 5.0 mm",
+     "U401.19 COMMS_3V3: nearest 100n 3.1 mm",
+     "U401.32 COMMS_3V3: nearest 100n 4.7 mm",
+     "U401.48 COMMS_3V3: nearest 100n 11.3 mm",
+     "U401.64 COMMS_3V3: nearest 100n 7.5 mm"
+    ]
    },
    {
-    "rule": "net_caps",
-    "what": "U201",
-    "mm": 2.0,
-    "source": "burrito-sweep.md section 5: VCAP capacitors within 2 mm",
-    "misses": []
+    "rule": "supply_caps",
+    "what": "U401",
+    "mm": 3.0,
+    "source": "burrito-sweep.md section 5: one 100 nF per supply pin; 3 mm [J]; D-23Nov.1",
+    "misses": [
+     "U401.13 COMMS_VDDA: nearest 100n 12.2 mm"
+    ]
    },
    {
-    "rule": "net_caps",
+    "rule": "supply_caps",
     "what": "U401",
     "mm": 2.0,
-    "source": "burrito-sweep.md section 5: VCAP capacitors within 2 mm",
-    "misses": []
+    "source": "burrito-sweep.md section 5: VCAP capacitors within 2 mm, one at each VCAP pin; D-23Nov.1",
+    "misses": [
+     "U401.62 COMMS_VCAP: nearest 2.2u 12.5 mm"
+    ]
    },
    {
     "rule": "part_to_pins",
@@ -3903,7 +3939,7 @@
     ]
    }
   ],
-  "near_misses": 3,
+  "near_misses": 19,
   "plane_pads": 601,
   "plane_pads_no_via": 59,
   "plane_pads_no_via_by_band": {
@@ -3977,5 +4013,5 @@
  "probe_stub_misses": {
   "TP36": 22.1
  },
- "seconds": 23.6
+ "seconds": 25.7
 }
