@@ -5106,3 +5106,21 @@ What the sheets show, read from the step-16 netlist:
 - Three rows in decisions.md's Open table for Seán: the fire-logic waiver as one rule for the output stage's
   fine-pitch parts; OUTPUT2_HIGH through a 0.5 mm neck between J6601's LOW pins, with C6603 on it; and
   PYRO3_HS_ENABLE, which is in class Default.
+
+## 23 November 2026: Seán's answers on the midpoint review (D-23Nov.8 to D-23Nov.11); the router on his Mac
+
+- Seán: “A. Yes.” “B. Your option fable, i prefer it:” “C, yes.” “D, yup. Assuming the edge connectors remain at
+  edges and the holes remain lying on a rectangle”.
+- D-23Nov.8: fire logic keeps 0.2 mm inside the courtyard of any part whose own pads sit closer than the fire rule
+  allows (U201, the three high sides, the three low-side FETs, U6502); 0.5 mm everywhere else. D-23Nov.9:
+  OUTPUT2_HIGH on L1 through a 0.5 mm neck between J6601's LOW pins 4 and 5, C6603 on the trace before it.
+  D-23Nov.10: PYRO3_HS_ENABLE joins FIRE_LOGIC. D-23Nov.11: the edge connectors, holes and J102 may move, the
+  connectors staying on an edge and the holes on a rectangle. The spec is unchanged: stage C writes them in.
+- Checked for D-23Nov.10: U6502 is an SN74LVC1G08 (AND of PYRO3_FIRE and STAGE_ELIGIBLE). STAGE_ELIGIBLE, the staging
+  latch's Q, is in class Default as well; a new Open row asks Seán whether it joins FIRE_LOGIC.
+- He asked: “Why don’t we run the router on my Mac? Would that make any difference?” Looked at: the sandbox the
+  session reaches on his Mac has 3.9 GB and 4 cores (aarch64, Python 3.10, no Rust toolchain), less than a
+  finished full-effort run's 3.1 to 4.8 GB, and the laptop itself has no more memory than the container. Run
+  natively it would swap where the container kills, and be faster per core. The router ran for 33 minutes of
+  today's work (four runs), so its speed isn't where the day goes. Not taken up: quick mode for steering (1.3 GB,
+  2 minutes) and the by-band trial come first; if that trial fails, the need is a machine with 16 GB or more.

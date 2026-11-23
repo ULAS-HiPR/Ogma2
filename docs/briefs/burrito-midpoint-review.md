@@ -125,9 +125,16 @@ artefact is the current-path floor plan, not a placement.
    the pairs.
 5. **Before stage D, one trial of routing by band:** each band's own nets, then the nets that cross, with count and
    peak memory against a whole-board run. [M] It is the cheap answer to the 6 GB limit.
+   Seán asked whether the router could run on his Mac instead. It wouldn't lift the limit: the laptop has no more
+   memory than the container, and the sandbox reachable on it has 3.9 GB and 4 cores [O], less than a finished
+   full-effort run needs. It would be faster per core, but the router ran for 33 minutes of 23 November [O].
 6. Stage D, the finish, Stop 3.
 
 ## Calls for Seán
+
+**Answered, 23 November:** “A. Yes.” “B. Your option fable, i prefer it:” “C, yes.” “D, yup. Assuming the edge
+connectors remain at edges and the holes remain lying on a rectangle”. They are D-23Nov.8 to D-23Nov.11. His yes on A
+covers the courtyard; an area past it goes back to him.
 
 **A. One rule for fire logic leaving a fine-pitch part.** D-22Nov.26 waives the 0.5 mm fire rule for fire logic
 inside U201's courtyard. The same geometry holds at U6304, U6404 and U6504 (IN pin 0.2 mm from its neighbours [O]),
