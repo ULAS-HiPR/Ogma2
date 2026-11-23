@@ -351,6 +351,10 @@ PYRO_PARTS = {      # placed before anything else in the region, at these spots
     # so the nearest free spot is past R6505, along the board's top edge
     'R6502': (51.95, 1.45, 0),
     'R6501': (49.0, 36.8, 0), 'U6502': (48.4, 39.75, 0), 'U6001': (43.1, 39.85, 0),
+    # the nine taps on the fire outputs, each beside its own copper, the fire pad facing it (taps trial, 23 Nov)
+    'R6912': (33.1, 15.22, 0), 'R6913': (31.8, 3.2, 90), 'R6915': (37.0, 16.4, 270),
+    'R6922': (37.2, 18.82, 0), 'R6923': (31.15, 10.62, 180), 'R6925': (40.75, 17.42, 0),
+    'R6932': (45.05, 16.62, 0), 'R6933': (51.05, 7.2, 270), 'R6935': (51.25, 4.0, 90),
 }
 HS_Y = 25.011       # the three high sides' centre line (placement.json), 1.7 mm further aft than at 23 Nov's region
 
@@ -497,7 +501,23 @@ def _fire_logic_runs():
     return [dict(net=n, layer='In2.Cu', w=0.15, path=[tuple(p) for p in c]) for n, cs in FIRE_LOGIC_L3.items() for c in cs]
 
 
-PYRO_COPPER = _pyro_copper() + _fire_logic_escapes() + _fire_logic_runs()
+
+def _tap_stubs():
+    """Each fire-output tap's fire pad to its own copper on L1, 0.3 mm (taps trial, 23 Nov); a pad that sits on its
+    copper needs none."""
+    nets = {'R6912': 'OUTPUT1_HIGH', 'R6913': 'OUTPUT1_LOW', 'R6915': 'OUTPUT1_LOW', 'R6922': 'OUTPUT2_HIGH',
+            'R6923': 'OUTPUT2_LOW', 'R6925': 'OUTPUT2_LOW', 'R6932': 'OUTPUT3_HIGH', 'R6933': 'OUTPUT3_LOW',
+            'R6935': 'OUTPUT3_LOW'}
+    return [dict(net=nets[r], layer='F.Cu', w=0.3, path=[a, b]) for r, a, b in (
+        ('R6913', (31.8, 4.025), (31.8, 5.2)),
+        ('R6915', (37.0, 15.575), (37.0, 14.35)),
+        ('R6923', (31.975, 10.624), (31.975, 11.9)),
+        ('R6925', (39.925, 17.424), (39.925, 16.025)),
+        ('R6933', (51.054, 6.375), (50.35, 6.375)),
+        ('R6935', (51.254, 4.825), (50.34, 5.258)),
+    )]
+
+PYRO_COPPER = _pyro_copper() + _fire_logic_escapes() + _fire_logic_runs() + _tap_stubs()
 
 # The hard copper's floor plan, as keep-outs for the budget run (stage C/D review, call 9; meter.py --budget): where
 # stage C will draw it, each area with the copper's own clearance to other nets. Board mm, (x0, y0, x1, y1) boxes or

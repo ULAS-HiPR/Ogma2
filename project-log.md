@@ -5278,3 +5278,13 @@ What the sheets show, read from the step-16 netlist:
   stays.
 - Board b80b5012: DRC 0, rules check 9 of 9, every fire-logic net one piece.
 - The one full-effort budget run on b80b5012 is done (run fb-b80b5012); its count waits for Seán's call on it.
+
+## 23 November 2026: the taps trial (D-23Nov.26)
+
+- The nine taps on the fire outputs (R69x2, R69x3, R69x5) moved beside their own copper, from a search over the band:
+  each fire pad on its track or stubbed to its copper on L1 (0.3 mm, at most 1.2 mm), each sense pad 0.5 mm clear of
+  all fire copper, its own included (the search's first pass missed that, and DRC caught two: R6922's sense pad on
+  OUTPUT2_HIGH's track, R6933's 0.3 mm from OUTPUT3_LOW). Every fire net is now one piece; before, each output's
+  taps were islands.
+- Board 0f9363d1: DRC 0, rules check 9 of 9. Its full-effort budget run is done (fb-0f9363d1); the count waits with
+  take 2's for Seán's call.
