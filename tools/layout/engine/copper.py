@@ -257,7 +257,7 @@ def mcu_fanout(bd, spec, fps, cu=None, data=None):
     return report
 
 
-def l1_path(cu, net, a, b, w, pair, margin=3.0, step=0.025, bend=0.1, tight=False):
+def l1_path(cu, net, a, b, w, pair, margin=3.0, step=0.025, bend=0.1, tight=False, extra=()):
     """A short L1 route for one scripted net, from point a to point b (board mm), or None: an A* search on a grid
     of `step` mm over the pair's box plus `margin`, eight directions, each 45-degree turn costing `bend` mm, through
     cells where a track of width w keeps its clearance from every other net's pad, track and via. The grid's cells
@@ -274,6 +274,7 @@ def l1_path(cu, net, a, b, w, pair, margin=3.0, step=0.025, bend=0.1, tight=Fals
     obs = [g.buffer(w / 2 + pair(net, n) + pad, 8) for g, n in cu.F if n != net and g.intersects(area.buffer(1.0))]
     obs += [Point(x, y).buffer(VIA_D / 2 + w / 2 + pair(net, n) + pad, 8) for x, y, n in cu.vias if n != net]
     obs += [s.buffer(sw / 2 + w / 2 + pair(net, n) + pad, 8) for s, sw, n in cu.segs if n != net]
+    obs += [g.buffer(w / 2 + pad, 8) for g in extra]          # areas no copper of this net may enter
     blocked_shape = unary_union([o for o in obs if o.intersects(area)])
     nx, ny = int(round((x1 - x0) / step)) + 1, int(round((y1 - y0) / step)) + 1
     xs, ys = x0 + np.arange(nx) * step, y0 + np.arange(ny) * step
@@ -308,7 +309,7 @@ def l1_path(cu, net, a, b, w, pair, margin=3.0, step=0.025, bend=0.1, tight=Fals
                 prev[(n_, k)] = (c, d)
                 heapq.heappush(q, (g2 + h(n_), g2, n_, k))
     if end is None:
-        return None if tight else l1_path(cu, net, a, b, w, pair, margin, step, bend, tight=True)
+        return None if tight else l1_path(cu, net, a, b, w, pair, margin, step, bend, tight=True, extra=extra)
     cells = [end]
     while cells[-1] in prev:
         cells.append(prev[cells[-1]])
@@ -322,9 +323,9 @@ def l1_path(cu, net, a, b, w, pair, margin=3.0, step=0.025, bend=0.1, tight=Fals
     out.append(pts[-1])
     out[0], out[-1] = a, b
     line = LineString(out)
-    if cu.seg_ok(line, w, net, pair):
+    if cu.seg_ok(line, w, net, pair) and not any(line.intersects(g) for g in extra):
         return line
-    return None if tight else l1_path(cu, net, a, b, w, pair, margin, step, bend, tight=True)
+    return None if tight else l1_path(cu, net, a, b, w, pair, margin, step, bend, tight=True, extra=extra)
 
 
 def add_track(b, origin, line, w, net_item, layer=K.F_Cu):
@@ -363,4 +364,78 @@ def crystals(bd, spec, fps, cu, data):
         cu.segs.append((line, w, net))
         add_track(bd.b, spec.ORIGIN, line, w, fps[p['ref']].FindPadByNumber(p['num']).GetNet())
         out[M.short(net)].append(f'{tag}: {line.length:.2f} mm')
+    return out
+
+
+def rf_lines(bd, spec, fps, cu, data):
+    """Stage C step 6, the RF feed lines (D-21Nov.25, D-22Nov.16, the layout brief's RF50 row): each a grounded
+    coplanar line on L1 with no via, pad to pad along the spec's chain (module pin, ESD part, connector), keeping its
+    gap from GND and `keep` mm from every other net's copper and out from under any part's body, then a fence of GND
+    vias each side at `pitch` mm or less. A hop with no path is reported, not forced. Off on Burrito until the
+    LoRa line has a way (the plan of 23 November, call 7): spec.RF_LINES is unset."""
+    from engine import metrics as M
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    base = clearance(spec)
+    courts = {r: Polygon(courtyard_poly(f, spec.ORIGIN)) for r, f in fps.items()}
+    gnd = next((d['net'] for d in data.pads if M.short(d['net']) == 'GND'), None)
+    gnd_item = bd.b.FindNet(gnd) if gnd else None
+    out = {}
+    for net_s, c in getattr(spec, 'RF_LINES', {}).items():
+        w, gap, keep, pitch = c['width'], c['gap'], c.get('keep', 1.0), c.get('pitch', 2.0)
+        pads = [next(d for d in data.pads if d['ref'] == r and d['num'] == n and 'F' in d['poly']) for r, n in c['chain']]
+        net = pads[0]['net']
+        item = fps[pads[0]['ref']].FindPadByNumber(pads[0]['num']).GetNet()
+
+        def pair(n1, n2, net=net, gap=gap, keep=keep):
+            if n1 == n2 and n1:
+                return 0.0
+            other = n2 if n1 == net else n1
+            return (gap if M.short(other) == 'GND' else keep) + EPS
+
+        # no line under a part's body: every other part's courtyard blocks it, and so does the module's (the chain's
+        # first part) less a 0.6 mm reach round its RF pad; the ESD part and the connector are the line's own
+        chain = {r for r, n in c['chain']}
+        bodies = [cp for r, cp in courts.items() if r not in chain]
+        bodies.append(courts[c['chain'][0][0]].difference(pads[0]['poly']['F'].buffer(0.6)))
+        rep, lines = [], []
+        for p, q in zip(pads, pads[1:]):
+            line = l1_path(cu, net, (p['x'], p['y']), (q['x'], q['y']), w, pair, margin=8.0, step=0.05, bend=0.2,
+                           extra=[g for g in bodies if not g.is_empty])
+            tag = f"{p['ref']}.{p['num']}-{q['ref']}.{q['num']}"
+            if line is None:
+                rep.append(f'{tag}: no path')
+                continue
+            cu.segs.append((line, w, net))
+            add_track(bd.b, spec.ORIGIN, line, w, item)
+            lines.append(line)
+            rep.append(f'{tag}: {line.length:.2f} mm')
+        # the fence: GND vias each side, the via's edge 0.15 mm beyond the gap, every pitch along the line or as near
+        # as the copper allows; none in a part's courtyard
+        d_off = w / 2 + gap + 0.15 + VIA_D / 2
+        fence = 0
+        if gnd_item is not None:
+            for line in lines:
+                n_steps = max(1, int(math.ceil(line.length / pitch)))
+                for side in (1, -1):
+                    off = line.offset_curve(side * d_off, join_style=2)
+                    if off.is_empty or off.length == 0:
+                        continue
+                    for k in range(n_steps + 1):
+                        for nudge in (0.0, 0.3, -0.3, 0.6, -0.6):
+                            s_ = min(max(k * off.length / n_steps + nudge, 0.0), off.length)
+                            pt_ = off.interpolate(s_)
+                            x, y = round(pt_.x, 3), round(pt_.y, 3)
+                            if any(cp.contains(Point(x, y)) for cp in courts.values()):
+                                continue
+                            if cu.via_ok(x, y, gnd, base) and Point(x, y).distance(line) >= d_off - 0.01:
+                                cu.vias.append((x, y, gnd))
+                                v = K.PCB_VIA(bd.b)
+                                v.SetPosition(K.VECTOR2I(MM(x + spec.ORIGIN[0]), MM(y + spec.ORIGIN[1])))
+                                v.SetWidth(MM(VIA_D)); v.SetDrill(MM(DRILL)); v.SetViaType(K.VIATYPE_THROUGH)
+                                v.SetNet(gnd_item); v.SetLocked(True)
+                                bd.b.Add(v)
+                                fence += 1
+                                break
+        out[net_s] = {'hops': rep, 'length_mm': round(sum(l.length for l in lines), 2), 'fence_vias': fence}
     return out

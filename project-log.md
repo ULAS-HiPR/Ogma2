@@ -4914,7 +4914,9 @@ What the sheets show, read from the step-16 netlist:
   (17 open as it stands): one harmless via added in a corner, the same 17 nets; equal layer costs, 16; 0.05 mm
   grid, 18; rip-up 5, 19; router vias 0.5 mm with a 0.3 mm hole, 9 (7 at U201, 2 at U401). GND at 0.15 mm for the
   router, 17. Without the waiver modelled, 23.
-- The RF trial (not committed): the GNSS line routes, 8.5 mm with its ESD stub; the LoRa line's only path ran
-  30 mm under U4606's body.
+- The RF trial: the GNSS line routes, 8.5 mm with its ESD stub; the LoRa line's only path ran 30 mm under
+  U4606's body. `engine/copper.py`'s `rf_lines` now keeps a line out from under any part but its own ESD part and
+  connector, and reports the LoRa hop as having no path. It's committed off (`RF_LINES` unset): the board is
+  still b507a62c.
 - [Plan](docs/briefs/burrito-stage-cd-plan.md), with the model's calls. Two need Seán: L5 as FLIGHT_3V3 over the
   whole layer with GND under the corridor (amends D-22Nov.29), and turning U4606 90°.

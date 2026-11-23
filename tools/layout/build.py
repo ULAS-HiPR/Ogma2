@@ -479,6 +479,8 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
         report['copper']['mcu_fanout'] = CU.mcu_fanout(bd, spec, fps, cu, data)
         if getattr(spec, 'CRYSTAL_NETS', None):
             report['copper']['crystals'] = CU.crystals(bd, spec, fps, cu, data)
+        if getattr(spec, 'RF_LINES', None):
+            report['copper']['rf_lines'] = CU.rf_lines(bd, spec, fps, cu, data)
         report['stages'].append('copper')
 
     bd.save(str(pcb))
