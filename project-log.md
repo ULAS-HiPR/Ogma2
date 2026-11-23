@@ -5020,3 +5020,39 @@ What the sheets show, read from the step-16 netlist:
   lets a part stay where it is, and can leave the room parts out (`--no-room`, as for U401 here).
 - Board f33aa2c0: two builds the same bytes, DRC 0 errors, the same two silk warnings as before. The silk pass now
   can't clear four labels (TP4, TP13, TP28, U4301), each within 0.15 mm of a neighbour's silk; finishing tidies them.
+
+## 23 November 2026: the pyro band and both MCUs re-placed as a region (D-23Nov.6, D-23Nov.7; batch 2)
+
+- After batch 1 the baseline meter left 5 of 273 ordinary nets open (was 9): ADC_PYRO2_CONTINUITY, CAN2_TX,
+  FOINSE_SDA, GNSS_RX, ST_NCS.
+- Measured before, copper gap pad to pad: each pyro channel's supply capacitor sat 23 to 27 mm from its high side's
+  supply pins, the current-limit resistors 10 to 15 mm from pin 13, the IN pull-downs 9 to 24 mm from pin 3, and the
+  gate parts up to 30 mm from their FETs' gates. The space under the three high sides held continuity and
+  diagnostics resistors and test points, and the board had no free room to push them into; the three MCU capacitor
+  slots still short had the same problem.
+- Seán: “Yes you may” (D-23Nov.6), and for all future work “I permit you to move things however you like. We have
+  to make this work.” (D-23Nov.7).
+- `tools/layout/replace_region.py` lifts every movable small part whose courtyard centre lies in the boxes given
+  (ICs, connectors, the spec's fixed parts, anchors, edge-region parts and J6601's output capacitors stay), then sets
+  them down in order: the stamp, the MCUs' capacitors (caps_to_pins.py's rules), the crystals and their load
+  capacitors, everything else in the placer's order and by its pulls with the crystal lanes closed, test points on
+  sensitive nodes with their circuits and the rest last, and finally any part under a distance rule still out of
+  reach. `caps_to_pins.py` is split into steps the new tool reuses, and checks crystal lanes against pads, not
+  courtyards, so a 0402 fits between two lanes 1 mm apart.
+- `spec.PYRO_STAMP` (D-22Nov.27): one row of 0603s 5.5 mm below each high side's centre: energy link, supply
+  capacitor, limit resistor, sense resistor, IN pull-down. New near rows check it: the supply capacitor, limit and
+  sense resistors within 1 mm of their pins, the gate resistor and gate pull-down within 2 mm of the FET's gate.
+- Run on the pyro band (x 21–62 mm, y 0–42) and 6 mm round each MCU: 164 parts lifted, 148 moved, none left
+  without a spot. Now, on all three channels: supply capacitor 0.6 mm from its pins, link 0.9, limit 0.6, sense 0.7,
+  IN pull-down 7.2 (on the FIRE line below the chip); low-side FETs 6.1, 7.2 and 6.5 mm from their J6601 pins.
+- Checks, against the board before: DRC 0 errors, the same two silk warnings; near misses 5 → 3: every MCU slot
+  served, U1701's output capacitor and D4501 as at Stop 1b, and the new rule's one miss, R6505, channel 3's gate
+  pull-down, 4.8 mm from Q6501's gate (Q6501 sits between J6601, C6605 and U4504 with no room by its gate). Probe
+  stubs unchanged (TP36 only). Wire 7470 → 7461 mm, crossings 2460 → 2459, wrong-side pins 45 → 46, plane pads
+  without a via 58 → 59. Meter at full effort: 4 of 273 open (5 before): ADC_PYRO3_CURRENT, FOINSE_SDA, HG_NCS,
+  NOR_IO3.
+- Board 5b85ff73: two builds the same bytes, and the same as the trial build. The silk pass's stuck labels change
+  (TP18, TP7, TP9, U3104 in; TP12, TP13, TP15, TP17, TP28, TP4 out); finishing tidies them.
+- Open: channel 3's low side (R6505), and where the three FETs sit for their fire paths: channel 2's LOW pin is the
+  middle one of J6601's back row, so its 1 mm path leaves on L3 or L6 wherever its FET goes. Both come with the
+  pyro copper.

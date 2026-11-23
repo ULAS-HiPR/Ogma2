@@ -12,8 +12,9 @@ the fewest, unless it is in reach of one already.
 
 Each capacitor goes to the spot beyond its pin's tip that disturbs least: a free one if there is one, else one whose
 occupants can move out of the way, nearest first. Nothing it moves, but the crystals and their load capacitors, may
-sit in front of a crystal pin within 2.5 mm of its tip, so the oscillators keep their short lanes on L1; and a
-capacitor sits between the lanes either side of its own pin, so the pin reaches it on L1 without crossing one.
+sit with its pads or body in front of a crystal pin, 0.25 mm either side of its centre and within 2.5 mm of its tip,
+so the oscillators keep their short lanes on L1; and a capacitor's pads sit between the lanes either side of its own
+pin, so the pin reaches it on L1 without crossing one.
 
 What may move, counted from where it stood before the run: the MCU's own capacitors and its crystals with their load
 capacitors (D-23Nov.1), up to 4 mm when in the way, a crystal staying within its near rule; the parts in
@@ -156,7 +157,7 @@ class Run:
                 return None
         if any(P.overlap(crt, k) for k in pl.rects):
             return None
-        if ref not in self.xtal and any(P.overlap(crt, k) for k in self.lanes):
+        if ref not in self.xtal and any(P.overlap(env, k) for k in self.lanes):     # copper, not courtyard
             return None
         for b in pl.pad_keepout.get(ref, ()):
             for pts in pl.geo[ref][a][2].values():
@@ -215,6 +216,8 @@ class Run:
                 self.pl.commit(ref, *pos)
 
     def allowance(self, ref):
+        if getattr(self, 'anywhere', False):                          # replace_region.py: lifted parts go anywhere
+            return 30.0
         if ref in self.approved:
             return APPROVED_MAX
         if ref in self.room:
@@ -342,8 +345,8 @@ class Run:
                     g = pads[npin].distance(pg)
                     if g > limit - 0.02:
                         continue
-                    crt = pl.boxes_at(cap, x, y, rot)[0]
-                    c_lo, c_hi = (crt[1], crt[3]) if along[0] == 0 else (crt[0], crt[2])
+                    env = pl.boxes_at(cap, x, y, rot)[1]
+                    c_lo, c_hi = (env[1], env[3]) if along[0] == 0 else (env[0], env[2])
                     if c_lo < lo - 1e-6 or c_hi > hi + 1e-6:
                         continue
                     hits = self.conflicts(cap, x, y, rot)
@@ -392,42 +395,28 @@ class Run:
         return out
 
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    ap.add_argument('board')
-    ap.add_argument('--refs', nargs='+', default=['U201', 'U401'])
-    ap.add_argument('--others', type=float, default=None, help='let other parts move up to this far, mm (a plan)')
-    ap.add_argument('--plan', help='write the moves here as JSON')
-    ap.add_argument('--depth', type=int, default=DEPTH, help='how many sets of parts deep a move may push (2)')
-    ap.add_argument('--no-room', action='store_true', help="leave spec.DECOUPLING_ROOM's parts to the 1 mm nudge")
-    ap.add_argument('--write', action='store_true')
-    ap.add_argument('--yes', action='store_true', help="Seán has said yes to the moves that need him")
-    a = ap.parse_args()
-    run = Run(a)
-    run.depth = a.depth
-    if a.no_room:
-        run.room = {}
+def is_cap(r):
+    return r.startswith('C') and r[1:].isdigit()
+
+
+def prepare(run, refs):
+    """The supply rows of the named MCUs; what may move for them (D-23Nov.1); their crystals' lanes; the room
+    parts' probe routes (D-23Nov.5). Returns the rows, tightest distance first."""
     pl, spec, comps = run.pl, run.spec, run.comps
     sheets = getattr(spec, 'DECOUPLING_SHEETS', {})
-    rows = [r for r in getattr(spec, 'NEAR', []) if r['rule'] == 'supply_caps' and r['ic'] in a.refs and 'nets' in r]
-    is_cap = lambda r: r.startswith('C') and r[1:].isdigit()
-
-    def pool(ic, net, value):
-        return sorted(r for r in pl.placed if is_cap(r) and comps[r].sheet in sheets.get(ic, ())
-                      and value in comps[r].value and any(run.net(r, q) == net for q in ('1', '2')))
-    # approved to move (D-23Nov.1): each MCU's own capacitors on its supply nets, its crystals and their load caps
-    for ic in a.refs:
+    rows = [r for r in getattr(spec, 'NEAR', []) if r['rule'] == 'supply_caps' and r['ic'] in refs and 'nets' in r]
+    every = sorted(run.orig)
+    for ic in refs:                                        # each MCU's own capacitors, its crystals and load caps
         nets = {n for row in rows if row['ic'] == ic for n in row['nets']}
-        run.approved |= {r for r in pl.placed if is_cap(r) and comps[r].sheet in sheets.get(ic, ())
+        run.approved |= {r for r in every if is_cap(r) and comps[r].sheet in sheets.get(ic, ())
                          and any(run.net(r, q) in nets for q in ('1', '2'))}
         for row in run.near_rows:
             if row['ic'] == ic and row['part'].startswith('Y'):
                 y = row['part']
                 xnets = {run.net(y, p) for p in run.board_pads(y)} - {'', 'GND'}
-                run.approved |= {y} | {r for r in pl.placed
+                run.approved |= {y} | {r for r in every
                                        if is_cap(r) and any(run.net(r, q) in xnets for q in ('1', '2'))}
-    # the crystals' lanes: in front of each MCU pin on a crystal's net, nothing this run moves but the crystal parts
-    for ic in a.refs:
+    for ic in refs:                                        # the crystals' lanes
         ic_pads = run.board_pads(ic)
         cx, cy, _ = pl.placed[ic]
         for row in run.near_rows:
@@ -435,7 +424,7 @@ def main():
                 continue
             y = row['part']
             xnets = {run.net(y, p) for p in run.board_pads(y)} - {'', 'GND'}
-            run.xtal |= {y} | {r for r in pl.placed if is_cap(r) and any(run.net(r, q) in xnets for q in ('1', '2'))}
+            run.xtal |= {y} | {r for r in every if is_cap(r) and any(run.net(r, q) in xnets for q in ('1', '2'))}
             for p, g in ic_pads.items():
                 if run.net(ic, p) not in xnets:
                     continue
@@ -451,17 +440,26 @@ def main():
                     run.lanes.append((px - 0.25, min(t, t + LANE * (1 if py > cy else -1)),
                                       px + 0.25, max(t, t + LANE * (1 if py > cy else -1))))
                     run.lane_side.append((ic, (0, 1 if py > cy else -1), (px - 0.25, px + 0.25)))
-    report, settled = [], set()
     lim = getattr(spec, 'PROBE_STUB_MAX', (10.0, 20.0))
     for r in run.room:                                     # test points stay beside their nets' routes
         route = pl.probe_route(r) if r.startswith('TP') and r in pl.placed else None
         if route:
             pin, segs, _ = route
             run.stub[r] = (pin, segs, lim[0] if run.net(r, pin) in getattr(spec, 'PROBES_WITH_CIRCUIT', ()) else lim[1])
+    return sorted(rows, key=lambda r: (refs.index(r['ic']), r['mm']))
+
+
+def serve_caps(run, rows, report, settled):
+    """Each supply pin its own capacitor, one row at a time: what's in reach stays, the rest go to their pins."""
+    pl, spec, comps = run.pl, run.spec, run.comps
+    sheets = getattr(spec, 'DECOUPLING_SHEETS', {})
     where = lambda r: pl.placed[r] if r in pl.placed else run.orig[r]
     have = {}
 
-    def serve(row):
+    def pool(ic, net, value):                              # placed or lifted
+        return sorted(r for r in run.orig if is_cap(r) and comps[r].sheet in sheets.get(ic, ())
+                      and value in comps[r].value and any(run.net(r, q) == net for q in ('1', '2')))
+    for row in rows:
         ic, limit = row['ic'], row['mm']
         ic_pads = run.board_pads(ic)
         for net in row['nets']:
@@ -512,9 +510,33 @@ def main():
                     settled.add(r)
                     have[key(p)] = have.get(key(p), 0) + 1
 
-    ordered = sorted(rows, key=lambda r: (a.refs.index(r['ic']), r['mm']))
-    for row in ordered:
-        serve(row)
+
+def write_moves(run, moves):
+    pfile = run.hw / 'layout' / run.spec.PLACEMENT
+    data = json.loads(pfile.read_text())
+    for r, m in moves.items():
+        data['parts'][r] = m['to']
+    pfile.write_text(json.dumps(data, indent=0) + '\n')
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
+    ap.add_argument('board')
+    ap.add_argument('--refs', nargs='+', default=['U201', 'U401'])
+    ap.add_argument('--others', type=float, default=None, help='let other parts move up to this far, mm (a plan)')
+    ap.add_argument('--plan', help='write the moves here as JSON')
+    ap.add_argument('--depth', type=int, default=DEPTH, help='how many sets of parts deep a move may push (2)')
+    ap.add_argument('--no-room', action='store_true', help="leave spec.DECOUPLING_ROOM's parts to the 1 mm nudge")
+    ap.add_argument('--write', action='store_true')
+    ap.add_argument('--yes', action='store_true', help="Seán has said yes to the moves that need him")
+    a = ap.parse_args()
+    run = Run(a)
+    run.depth = a.depth
+    if a.no_room:
+        run.room = {}
+    rows = prepare(run, a.refs)
+    report, settled = [], set()
+    serve_caps(run, rows, report, settled)
     moves = run.moves()
     print('@@' + json.dumps({'moves': moves, 'report': report}))
     if a.plan:
@@ -523,11 +545,7 @@ def main():
         ask = sorted(r for r, m in moves.items() if m['class'] == 'needs Seán')
         if ask and not a.yes:
             sys.exit(f'not written: {", ".join(ask)} move more than {NUDGE} mm and need Seán\'s yes (--yes)')
-        pfile = run.hw / 'layout' / spec.PLACEMENT
-        data = json.loads(pfile.read_text())
-        for r, m in moves.items():
-            data['parts'][r] = m['to']
-        pfile.write_text(json.dumps(data, indent=0) + '\n')
+        write_moves(run, moves)
 
 
 if __name__ == '__main__':

@@ -294,7 +294,25 @@ NEAR = [
          src='D-22Nov.20: the LoRa ESD part on the line between connector and module; 1 mm [J]'),
     dict(rule='on_line', part='D4501', net='GNSS_RF', **{'from': 'J4501', 'to': 'U4504'}, mm=1.0,
          src='D-22Nov.8: the GNSS ESD part on the line between connector and module; 1 mm [J]'),
+    # the pyro output stage (D-22Nov.27's stamp, PYRO_STAMP below): each channel's supply capacitor, limit and sense
+    # resistors at their high side's pins, Kelvin (sweep section 5); its low side's gate parts at the FET's gate [J]
+    *[dict(rule='part_to_pins', part=p, ic=f'U6{c}04', mm=1.0, src=f'{_SWEEP}: at the pins, Kelvin; D-22Nov.27')
+      for c in (3, 4, 5) for p in (f'C6{c}04', f'R6{c}14', f'R67{c - 2}1')],
+    *[dict(rule='part_to_pins', part=f'R6{c}0{k}', ic=f'Q6{c}01', mm=2.0,
+           src='the gate resistor and gate pull-down at the FET gate, so the gate stays low with its line open [J]')
+      for c in (3, 4, 5) for k in (4, 5)],
 ]
+# D-22Nov.27: the three output stages placed as one block, at the same offsets from each high side (a TPS1H100 at
+# 270 degrees). One row of 0603s under its pin row 8-14: the energy link and the supply capacitor under the supply
+# pins (8-10), the current-limit resistor under pin 13, the sense resistor under pin 14, the IN pull-down beside them
+PYRO_STAMP = {
+    'anchors': ('U6304', 'U6404', 'U6504'),
+    'rows': [('energy link', ('R6310', 'R6410', 'R6510'), (-3.1, 5.5), 90),
+             ('supply capacitor', ('C6304', 'C6404', 'C6504'), (-1.3, 5.5), 270),
+             ('current limit', ('R6314', 'R6414', 'R6514'), (1.0, 5.5), 270),
+             ('current sense', ('R6711', 'R6721', 'R6731'), (2.6, 5.5), 270),
+             ('IN pull-down', ('R6303', 'R6403', 'R6503'), (4.3, 5.5), 270)],
+}
 
 # test points (stage B2 step 5): each aims for its net's route. These probe sensitive nodes, so they go in with their
 # circuit, before the general parts, and their stub is 10 mm at most; every other one 20 mm (the brief's limits)
