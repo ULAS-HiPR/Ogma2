@@ -5169,3 +5169,32 @@ What the sheets show, read from the step-16 netlist:
   plane): 37 of 271 ordinary nets open, 1 of 22 rail nets, 154 s, 1.8 GB; the same run on the region placed with only
   the crossing closed left 43 (U4601 then stood in the corridor). The gate is 25; a quick count above it is
   inconclusive, so the full-effort budget run decides.
+
+## 23 November 2026: the budget gate passed; the block's current paths checked; the meter's fanout made its own errors
+
+- The budget run at full effort (the floor plan as keep-outs, FLIGHT_3V3 the only plane, the rails routed as tracks)
+  on board 7b1fd46a: 21 of 271 ordinary nets open, 0 of 22 rail nets, 635 s, peak 5.2 GB. The gate is 25, so step 2
+  of the midpoint review passes. It settles the ledger's bet of 15 to 30 open.
+- Checking the output stage path by path for Seán's current-path table found two faults in the copper drawn at
+  D-23Nov.14. Channel 3's L6 track stopped at the first of its two column vias, and no drain's via in pad 8 was
+  joined on L6, so channel 3's drain current had one 0.3 mm via, channels 1 and 2 two. Each drain's column now spans
+  both vias on L6 and reaches the one in the pad: three vias each, as the decision says. The FETs' sources (pins 7
+  and 4) had no copper: the fanout found no via spot 0.5 mm from the drain pads, and the meter listed them among its
+  misses. Each source now has two 0.2 mm tracks to two GND vias beside the pins, drawn with the block: the tracks end
+  0.52 mm from the drain pads, the vias sit 0.57 mm from the gate parts. Board e897779c: DRC 0, two builds the same
+  bytes, near misses 2, `rules_check.py` 9 of 9.
+- Modelled from the measured copper (35 µm outer copper, 20 µm via plating assumed, 20 °C): the supply stub 1.3 mΩ,
+  HIGH 8.2, 7.7 and 8.2 mΩ (the neck 1.8 of channel 2's), LOW 4.1, 7.8 and 5.9 mΩ, each source to GND 1.3 mΩ; the
+  loop's copper 15, 18 and 17 mΩ, 30 to 36 mV at the 2 A pulse and 81 to 98 mV at D-19Nov.8's 5.4 A.
+- The meter's fanout saw only L1 copper and only the budget's keep-outs. Every budget run's routed board held 25 DRC
+  errors of the meter's own: GND vias on the LOW tracks on L6 (4 shorts and clearances), fanout stubs in the budget's
+  L1 keep-outs (7), vias in J2301's and J4201's keep-outs (3), and the fire-logic waiver renaming the FETs' gate pads
+  under their drawn gate tracks (12). Nothing voided a run for them, so instrument rule 7 failed. Fixed: the fanout
+  keeps clear of scripted copper on every layer and of every rule area on the board or in a footprint; the waiver
+  leaves alone a pad whose net's drawn copper leaves the part; and the board must pass DRC after the fanout or the run
+  is void before the router starts. Planted test: a GND via 0.15 mm from OUTPUT1_LOW on L6 voids the run (rc 3). The
+  first plant, a via on the track itself, didn't test anything: KiCad gives a free via the net of the track under it
+  when it saves the board.
+- Rerun with the fixed meter on e897779c: the board passes DRC after the fanout and after routing (0 errors, was 25).
+  Quick: 40 of 271 open, 1 of 22. Full effort: 21 of 271, 0 of 22, 725 s, peak 4.5 GB. The same count with a
+  different set of open nets.

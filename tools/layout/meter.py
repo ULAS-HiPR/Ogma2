@@ -11,9 +11,9 @@
 3. Our own connectivity check per signal net, KiCad DRC by type, vias, each net's length against its rectilinear
    spanning tree, time and peak memory.
 
-None of its copper is kept: it answers "will our pipeline route this placement", nothing more. It ignores rule areas
-other than the mounting holes' (none are on the board yet), the copper stage C scripts by hand (RF, pairs, fire,
-crystals, regulator loops) and the shapes of the L3 islands (a rail's vias count as joined).
+None of its copper is kept: it answers "will our pipeline route this placement", nothing more. The fanout keeps
+clear of the board's scripted copper on every layer and of its rule areas; the fanned board must pass DRC before the
+router starts, or the run is void (23 Nov). It ignores the shapes of the L3 islands (a rail's vias count as joined).
 With --freerouting it also runs Freerouting 2.5.0, optimiser off, on the same fanned board, for a completion count.
 """
 import argparse
@@ -260,6 +260,10 @@ def main():
             fp = b.FindFootprintByReference(ref)
             box = fp.GetBoundingBox(False, False)
             for p in fp.Pads():
+                # a net whose scripted copper leaves the part is drawn already: renaming the pad would split it
+                if any(t.GetNetCode() == p.GetNetCode() and not (box.Contains(t.GetStart()) and box.Contains(t.GetEnd()))
+                       for t in b.GetTracks()):
+                    continue
                 if M.net_class(p.GetNetname(), spec.PATTERNS) == 'FIRE_LOGIC':
                     old_code, name = p.GetNetCode(), f'{ref}_{p.GetNumber()}_{M.short(p.GetNetname())}_WAIVED'
                     ni = K.NETINFO_ITEM(b, name)
@@ -302,6 +306,11 @@ def main():
         src = hw / f'{spec.NAME}.{ext}'
         if src.exists():
             shutil.copy(src, out / f'fanned.{ext}')
+    # the input board and the meter's own steps (the waiver, the keep-outs, the fanout) must leave a board DRC passes
+    # before any routing; an error here is the input's or the instrument's, so the run is void and the router never
+    # starts. Planted test (23 Nov): a GND via 0.15 mm from OUTPUT1_LOW on L6 voids the run. (A via planted on the
+    # track itself doesn't test it: KiCad gives a free via the net of the track it sits on when it saves the board.)
+    fan_drc = drc(fan, out / 'fanned-drc.json')
     rep = {'board': a.pcb, 'length_mm': length, 'copper_layers': b.GetCopperLayerCount(), 'router_layers': a.layers,
            'classes': a.classes or 'all', 'via_in_pad': a.via_in_pad, 'krt_minutes': a.krt_minutes,
            'rails_as_tracks': a.rails_as_tracks, 'plane_rails': a.plane_rails, 'krt_args': a.krt_args,
@@ -313,8 +322,14 @@ def main():
            'fanout': {'pads': len(fr['done']) + len(fr['failed']), 'vias': len(fr['done']),
                       'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']], 'in_pad': sum(1 for d in fr['done'] if d['stub'] is None),
                       'seconds': round(time.time() - t0, 1)},
-           'ignores': 'rule areas other than the mounting holes; the copper stage C scripts by hand; the L3 islands\' shapes',
-           'budget': [it['name'] for it in spec.BUDGET] if a.budget else None}
+           'ignores': 'the L3 islands\' shapes',
+           'budget': [it['name'] for it in spec.BUDGET] if a.budget else None,
+           'fanned_drc_errors': fan_drc}
+    if fan_drc:
+        rep['VOID'] = 'the board fails DRC after the fanout, before routing (%s): an input or instrument error; no count' % fan_drc
+        (out / 'meter.json').write_text(json.dumps(rep, indent=1) + '\n')
+        print(json.dumps({'VOID': rep['VOID'], 'fanout': {kk: rep['fanout'][kk] for kk in ('pads', 'vias', 'seconds')}}, indent=1))
+        sys.exit(3)
     if not a.skip_krt:
         # the router's clearance floor is the widest class in a call (KiCadRoutingTools' routing_config), so the
         # classes route in passes, widest copper first, each on top of the last, as D-22Nov.17 routes in passes

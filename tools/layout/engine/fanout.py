@@ -51,20 +51,32 @@ def clearances(spec):
 
 def existing(board, origin):
     """The copper on the board before the fanout (stage C's scripted copper, D-22Nov.17): its vias [(x, y, net)], its
-    L1 tracks [(LineString, width, net)], and the (ref, num) of each pad one of them already joins (a track end in the
-    pad, or a via touching it): those pads need no fanout via of their own."""
+    L1 tracks [(LineString, width, net)], its tracks on every other layer ('under': a via passes through them), the
+    board's and the footprints' rule areas that forbid vias or L1 tracks ('areas'), and the (ref, num) of each pad one
+    of them already joins (a track end in the pad, or a via touching it): those pads need no fanout via of their own."""
     import pcbnew as K
+    from shapely.geometry import Polygon
     ox, oy = origin
     mm = lambda v: K.ToMM(v)
-    vias, tracks = [], []
+    vias, tracks, under, areas = [], [], [], []
     for t in board.GetTracks():
         n = t.GetNetname()
         if t.Type() == K.PCB_VIA_T:
             c = t.GetPosition()
             vias.append((mm(c.x) - ox, mm(c.y) - oy, n))
-        elif t.GetLayer() == K.F_Cu:
+        else:
             a, e = t.GetStart(), t.GetEnd()
-            tracks.append((LineString([(mm(a.x) - ox, mm(a.y) - oy), (mm(e.x) - ox, mm(e.y) - oy)]), mm(t.GetWidth()), n))
+            ls = LineString([(mm(a.x) - ox, mm(a.y) - oy), (mm(e.x) - ox, mm(e.y) - oy)])
+            (tracks if t.GetLayer() == K.F_Cu else under).append((ls, mm(t.GetWidth()), n))
+    for z in list(board.Zones()) + [z for f in board.GetFootprints() for z in f.Zones()]:
+        if not z.GetIsRuleArea() or not (z.GetDoNotAllowVias() or z.GetDoNotAllowTracks()):
+            continue
+        o = z.Outline()
+        for i in range(o.OutlineCount()):
+            ol = o.Outline(i)
+            g = Polygon([(mm(ol.CPoint(j).x) - ox, mm(ol.CPoint(j).y) - oy) for j in range(ol.PointCount())]).buffer(0)
+            areas.append({'poly': g, 'no_via': bool(z.GetDoNotAllowVias()),
+                          'no_track_f': bool(z.GetDoNotAllowTracks()) and z.IsOnLayer(K.F_Cu)})
     joined = set()
     if vias or tracks:
         for f in board.GetFootprints():
@@ -78,12 +90,11 @@ def existing(board, origin):
                 if not ps.OutlineCount():
                     continue
                 o = ps.Outline(0)
-                from shapely.geometry import Polygon
                 g = Polygon([(mm(o.CPoint(i).x) - ox, mm(o.CPoint(i).y) - oy) for i in range(o.PointCount())]).buffer(0.002)
                 if any(tn == n and g.intersects(t) for t, w, tn in tracks) or \
                         any(vn == n and g.distance(Point(x, y)) < VIA_D / 2 for x, y, vn in vias):
                     joined.add((f.GetReference(), p.GetNumber()))
-    return {'vias': vias, 'tracks': tracks, 'joined': joined}
+    return {'vias': vias, 'tracks': tracks, 'under': under, 'areas': areas, 'joined': joined}
 
 
 def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_via=()):
@@ -105,6 +116,10 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
     stubs = []           # (LineString, net)
     old_vias = ex['vias']
     old_tracks = [(t.buffer(w / 2 - STUB_W / 2) if w > STUB_W else t, n) for t, w, n in ex['tracks']]   # as stubs
+    # scripted copper on the other layers: a via passes through it, an L1 stub doesn't
+    old_under = [(t.buffer(w / 2 - STUB_W / 2) if w > STUB_W else t, n) for t, w, n in ex.get('under', [])]
+    area_via = [a['poly'] for a in ex.get('areas', []) if a['no_via']]
+    area_trk = [a['poly'] for a in ex.get('areas', []) if a['no_track_f']]
 
     def copper_ok(pt, net, own):
         """Other-net copper at its pair clearance from the via on F and B; every pad at least vr + MASK_WEB
@@ -127,6 +142,8 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
             return False
         if no_via and any(k.distance(Point(x, y)) < vr for k in no_via):
             return False
+        if any(k.distance(Point(x, y)) < vr for k in area_via):          # the board's own keep-outs
+            return False
         if len(holes) and (np.hypot(holes[:, 0] - x, holes[:, 1] - y) < holes[:, 2] + DRILL / 2 + HOLE_GAP).any():
             return False
         for vx, vy, vn in vias + old_vias:
@@ -134,7 +151,7 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
             if dd < DRILL + HOLE_GAP or (vn != net and dd < VIA_D + pair(net, vn)):
                 return False
         pt = Point(x, y)
-        for s, sn in stubs + old_tracks:
+        for s, sn in stubs + old_tracks + old_under:
             if sn != net and s.distance(pt) < vr + STUB_W / 2 + pair(net, sn):
                 return False
         if in_pad:
@@ -150,6 +167,8 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
 
     def stub_ok(a, b, net, own):
         s = LineString([a, b])
+        if any(k.distance(s) < STUB_W / 2 for k in area_trk):
+            return False
         for name in ('F',):
             tree, items = trees[name]
             for k in tree.query(s, predicate='dwithin', distance=STUB_W / 2 + FIRE_CLEAR):

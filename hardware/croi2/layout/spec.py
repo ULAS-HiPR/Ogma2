@@ -335,7 +335,8 @@ PYRO_STAMP = {
 # 8-10) and OUT stub (pins 7, 6 and the outer 0.15 mm of 5) are stamped; the paths to J6601 are per channel. HIGH 1
 # and 3 go round the ends of J6601's LOW row on L1; HIGH 2 passes between LOW pins 4 and 5 through a 0.5 mm neck
 # (D-23Nov.9), C6603 on it below the neck. The LOW pins leave on L6 through their barrels to the three FETs, whose
-# drains face J6601, each through three vias. Board mm; L1 F.Cu, L6 B.Cu. Copper keeps 0.5 mm from NC pins 4 and 11.
+# drains face J6601, each through three vias; each source reaches GND through two. Board mm; L1 F.Cu, L6 B.Cu. Copper
+# keeps 0.5 mm from NC pins 4 and 11.
 PYRO_PARTS = {      # placed before anything else in the region, at these spots
     'Q6301': (31.15, 6.2, 270), 'Q6401': (31.3, 12.9, 270), 'Q6501': (48.85, 6.0, 270),
     'C6601': (31.35, 8.95, 180), 'C6605': (48.65, 8.95, 0),
@@ -380,7 +381,16 @@ def _pyro_copper():
         # from pad 8's outer half to just short of the column: 0.5 mm clear of the source pin 7 and of HIGH 1
         t(net, F, 0.95, (px + sx * 0.275, py), (vx - sx * 0.2, py))
         t(net, F, 0.6, (vx, py - 0.7), (vx, py + 0.7))
+        # on L6 the column spans both its vias and reaches the one in pad 8, so all three carry the fire current
+        t(net, B, 1.0, (vx, py - 0.7), (vx, py + 0.7))
+        t(net, B, 0.95, (px, py), (vx, py))
         v(net, (vx, round(py - 0.7, 3)), (vx, round(py + 0.7, 3)), (px, py))
+    # each FET's source (pins 7 and 4) to GND through a via beside each pin; the 0.2 mm tracks end 0.52 mm from the
+    # drain pads (the fire rule) and the vias sit 0.57 mm from the gate parts' pads
+    for x, y7, y4, gx in ((30.5, 6.295, 7.175, 29.95), (30.65, 12.995, 13.875, 30.1), (48.2, 6.095, 6.975, 47.65)):
+        for y in (y7, y4):
+            t('GND', F, 0.2, (gx, y), (x - 0.12, y))
+        v('GND', (gx, y7), (gx, y4))
     t('OUTPUT1_LOW', B, 1.0, (37.0, 11.97), (35.3, 10.27), (32.3, 7.27), (32.3, 5.5))
     t('OUTPUT2_LOW', B, 1.0, (40.0, 11.97), (40.0, 16.6), (33.4, 16.6), (32.3, 15.5), (32.3, 12.2))
     v('OUTPUT2_LOW', (40.0, 15.75))                                                  # C6604's pad 1
