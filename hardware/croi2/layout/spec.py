@@ -199,8 +199,9 @@ SILK_NAMES = {
 # its own (D-22Nov.28): J6601's leaves a strip for C6601-C6606, a row of 0603s on their side
 SILK_NAME_GAP = {'J6601': 1.6}
 # refs kept clear as boxes of their own, not merged into the courtyard's box: an MCU's ref above its pins made that box
-# 1.9 mm deeper along the whole side, so no capacitor could sit at a pin there (D-23Nov.1). The refs stay where they were
-REFS_APART = ('U201', 'U401')
+# 1.9 mm deeper along the whole side, so no capacitor could sit at a pin there (D-23Nov.1); U4606's, turned, would
+# have spanned the side its RF pin faces (D-23Nov.3). The refs stay where they were
+REFS_APART = ('U201', 'U401', 'U4606')
 # where each MCU's own decoupling capacitors are drawn, for tools/layout/caps_to_pins.py (D-23Nov.1)
 DECOUPLING_SHEETS = {'U201': ('/02a-flight-support/',), 'U401': ('/04a-comms-support/',)}
 # silk marks the placer finds room for, as board-only footprints (tools/layout/marks.py): the board axes with the

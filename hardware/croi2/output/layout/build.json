@@ -277,16 +277,16 @@
  "marks_unplaced": [],
  "no_region": [],
  "spills": [],
- "hpwl_mm": 9295.3,
+ "hpwl_mm": 9264.5,
  "hpwl_by_class_mm": {
-  "RF50": 33.3,
+  "RF50": 19.9,
   "FIRE": 263.1,
   "USB_DIFF": 46.8,
   "SRC_6A": 99.5,
   "PYRO_RAIL": 277.1
  },
  "density_by_band": {
-  "1 RF and fire": 0.66,
+  "1 RF and fire": 0.651,
   "2 Flight": 0.623,
   "3 Comms": 0.687,
   "4 Power and harness": 0.708
@@ -955,7 +955,7 @@
    0
   ],
   "C4613": [
-   16.0,
+   16.55,
    28.1,
    0
   ],
@@ -1185,9 +1185,9 @@
    90
   ],
   "D4601": [
-   19.6,
-   23.55,
-   0
+   12.25,
+   12.05,
+   270
   ],
   "D501": [
    69.2,
@@ -1981,7 +1981,7 @@
   ],
   "R4614": [
    13.55,
-   31.25,
+   32.35,
    90
   ],
   "R4615": [
@@ -1990,18 +1990,18 @@
    90
   ],
   "R4616": [
-   14.65,
+   14.7,
    31.5,
    90
   ],
   "R4617": [
-   12.9,
-   28.5,
+   12.5,
+   32.4,
    90
   ],
   "R4618": [
    11.1,
-   28.35,
+   32.35,
    90
   ],
   "R4619": [
@@ -2015,8 +2015,8 @@
    180
   ],
   "R4621": [
-   12.6,
-   27.0,
+   15.2,
+   25.9,
    0
   ],
   "R501": [
@@ -3020,9 +3020,9 @@
    90
   ],
   "U4606": [
-   9.9,
-   17.75,
-   180
+   7.65,
+   22.5,
+   270
   ],
   "U501": [
    55.95,
@@ -3229,20 +3229,20 @@
    "LORA_3V3": "island"
   },
   "signal_nets": 330,
-  "wire_mm": 7478.6,
+  "wire_mm": 7467.3,
   "wire_by_class_mm": {
    "CAN_DIFF": 64.4,
-   "Default": 5510.8,
+   "Default": 5510.0,
    "FIRE": 237.1,
    "FIRE_LOGIC": 346.2,
    "LOGIC_FEED": 267.6,
    "PYRO_RAIL": 279.2,
    "RAIL_3V3": 585.7,
-   "RF50": 29.5,
+   "RF50": 19.1,
    "SRC_6A": 113.5,
    "USB_DIFF": 44.7
   },
-  "crossings": 2470,
+  "crossings": 2469,
   "crossings_worst_nets": [
    [
     "3V3_OPTIONAL",
@@ -3486,7 +3486,7 @@
     "worst": []
    },
    "U4606": {
-    "far_pins": 6,
+    "far_pins": 8,
     "wrong_side": 0,
     "worst": []
    },
@@ -3944,9 +3944,7 @@
     "what": "D4601",
     "mm": 1.0,
     "source": "D-22Nov.20: the LoRa ESD part on the line between connector and module; 1 mm [J]",
-    "misses": [
-     "D4601: 2.9 mm off the line, at 1.05 along it"
-    ]
+    "misses": []
    },
    {
     "rule": "on_line",
@@ -3958,7 +3956,7 @@
     ]
    }
   ],
-  "near_misses": 22,
+  "near_misses": 21,
   "plane_pads": 601,
   "plane_pads_no_via": 59,
   "plane_pads_no_via_by_band": {
@@ -4032,5 +4030,5 @@
  "probe_stub_misses": {
   "TP36": 22.1
  },
- "seconds": 25.7
+ "seconds": 26.3
 }

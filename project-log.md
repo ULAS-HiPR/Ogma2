@@ -4981,3 +4981,22 @@ What the sheets show, read from the step-16 netlist:
   crystal parts, may sit in front of a crystal pin within 2.5 mm of its tip, and each capacitor sits between the
   crystal lanes either side of its own pin, so every pin reaches its capacitor on L1. `spec.DECOUPLING_SHEETS`
   names each MCU's capacitor sheet.
+
+## 23 November 2026: U4606 turned 90° to face J4601 (D-23Nov.3; the review's step 1, batch 1b)
+
+- `tools/layout/turn_part.py` tries a part's turns as edits to `placement.json`: centres on a 0.25 mm grid within
+  7 mm, the shortest straight line from its pin to the connector's pad first, what's in the way moved by
+  caps_to_pins.py's machinery (passives and test points up to 4 mm), and the ESD part placed on the line with its
+  pad within 1 mm of it, between the two pads (spec.NEAR's on_line row). A centre where the ESD part can't go is
+  passed over.
+- 270° (a 90° turn) fits: U4606 at (7.65, 22.5), 5.3 mm down and left, its pins 1–11 on its right side and the RF
+  pin second from the top; D4601 at (12.25, 12.05), between the module and J4601. Displaced by the turn: R4617
+  3.9 mm, R4618 4.0, R4621 2.8, R4614 1.1 (the module's SPI resistors), C4613 0.55, R4616 0.05.
+- 0° (180°) doesn't: the twenty centres with the shortest line (9 mm straight) each had 14 to 17 parts in the way,
+  more than could move 4 mm. It would also have put the SPI pins on the side facing the board's edge.
+- Trial build with both RF lines drawn (rf_lines, RF50's 0.151 mm and 0.203 mm gap): LoRa 12.9 mm (U4606 to D4601
+  6.1 mm, D4601 to J4601 6.8 mm), 10 fence vias; GNSS 8.5 mm, as before. DRC clean. The lines stay undrawn on the
+  board until the small copper (the review's step 4).
+- U4606's ref is a box of its own too (`REFS_APART`), else it would have spanned the side the RF pin faces.
+- Board 88c9b948: two builds the same bytes, DRC 0 errors. Near check: D4601 now on its line; D4501 1.7 mm off its
+  line and U1701's output capacitor 6.0 mm stay, as at Stop 1b.
