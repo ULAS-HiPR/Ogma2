@@ -4920,3 +4920,17 @@ What the sheets show, read from the step-16 netlist:
   still b507a62c.
 - [Plan](docs/briefs/burrito-stage-cd-plan.md), with the model's calls. Two need Seán: L5 as FLIGHT_3V3 over the
   whole layer with GND under the corridor (amends D-22Nov.29), and turning U4606 90°.
+
+## 23 November 2026: Fable's review of the plan
+
+- [Review and plan](docs/briefs/burrito-stage-cd-review.md), at Seán's ask. It agrees with Opus's plan on step 3
+  off, 0.5 mm signal vias, FLIGHT_HSE_IN's two vias, the USB and CAN via pairs and L5 as one FLIGHT_3V3 plane.
+- Found: the MCUs' capacitors aren't at their pins. Nearest capacitor on the same net, pad centre to pad centre:
+  U201 VCAP pin 98, 19.3 mm; VDD pin 100, 13.6 mm; pins 11 and 28, 6.8 and 5.9 mm; VDDA, about 7 mm. U401 VCAP
+  pin 62, 13.8 mm; VDD pin 48, 12.4 mm; VDDA, 13.2 mm. The build's near check reports no misses for either MCU,
+  so it isn't measuring each pin.
+- The order it returns: the near check per pin; placement fixes in two batches (capacitors and U4606, then the
+  pyro stamp), with the baseline run again after each; a budget run with the hard copper as keep-outs, gated at 25
+  nets open; then copper, biggest first; then stage D by seeds.
+- Three more rows in decisions.md's Open table for Seán (the capacitors, U4606's turn, the signal via), and the
+  L5 row now gives both models' pick.
