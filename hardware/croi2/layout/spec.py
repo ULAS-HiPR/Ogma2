@@ -314,6 +314,43 @@ PYRO_STAMP = {
              ('IN pull-down', ('R6303', 'R6403', 'R6503'), (4.3, 5.5), 270)],
 }
 
+# The hard copper's floor plan, as keep-outs for the budget run (stage C/D review, call 9; meter.py --budget): where
+# stage C will draw it, each area with the copper's own clearance to other nets. Board mm, (x0, y0, x1, y1) boxes or
+# (path, width) bands; layers L1 F.Cu, L3 In2.Cu, L6 B.Cu. Not modelled: the arm feeds (fuse to plug), the logic
+# feeds (LOGIC_FEED), the USB and CAN pairs and the crystals, which are short or small.
+_FIRE = 1.0 + 2 * 0.5                     # a 1.0 mm fire track with 0.5 mm to other nets either side
+BUDGET = [
+    # the armed rails (D-22Nov.3, D-23Nov.2): two 2.0 mm rails and the 1 mm GND strip between, x 9-16 along the left
+    # edge on L6 from the arm plugs, then across under band 1's aft edge to the three energy links
+    dict(name='corridor', layers=['B.Cu'], box=(9.0, 30.0, 16.0, 113.5)),
+    dict(name='corridor, plugs', layers=['B.Cu'], box=(2.0, 106.0, 16.0, 123.5)),
+    dict(name='corridor, to the links', layers=['B.Cu'], box=(9.0, 30.0, 48.5, 37.0)),
+    # SRC_6A (4.0 mm): J102 and the umbilical J101 to Q101's drain; Q101's tab to U101 and the two arm fuses
+    dict(name='6 A in', layers=['F.Cu'], box=(12.0, 145.5, 23.9, 158.0)),
+    dict(name='6 A, J101', layers=['F.Cu'], box=(5.5, 131.8, 11.0, 135.6)),
+    dict(name='6 A, J101 down', layers=['F.Cu'], box=(7.0, 131.8, 11.0, 149.5)),
+    dict(name='6 A, J101 across', layers=['F.Cu'], box=(7.0, 145.5, 13.6, 149.5)),
+    dict(name='6 A tap', layers=['F.Cu'], box=(12.6, 137.6, 23.9, 144.6)),
+    # FIRE_LOGIC (D-22Nov.26): six nets at 0.5 mm, from under U201 up to the output stages, then across them
+    dict(name='fire logic', layers=['In2.Cu'], box=(38.5, 20.0, 44.5, 63.0)),
+    dict(name='fire logic, across', layers=['In2.Cu'], box=(23.0, 16.0, 51.0, 19.6)),
+    # RF lines (D-21Nov.25, D-22Nov.16) on L1 with their gaps and fences
+    dict(name='GNSS line', layers=['F.Cu'], box=(60.4, 2.2, 68.3, 6.0)),
+    dict(name='LoRa line', layers=['F.Cu'], box=(11.0, 4.2, 14.6, 16.8)),
+    # fire copper: each supply between link, capacitor and pins; HIGH 1 and 3 round the ends of J6601's LOW row on L1,
+    # HIGH 2 round it on L6 (its pin sits behind the LOW row); the LOW pins down to the three FETs between J6601 and
+    # the high sides
+    *[dict(name=f'supply {c}', layers=['F.Cu'], box=(28.8 + 9 * k, 25.7, 32.4 + 9 * k, 28.6))
+      for k, c in enumerate((1, 2, 3))],
+    dict(name='HIGH 1', layers=['F.Cu'], w=_FIRE, path=[(31.2, 19.9), (31.2, 18.0), (34.3, 15.0), (34.3, 9.0),
+                                                        (32.1, 9.0), (37.0, 9.0)]),
+    dict(name='HIGH 3', layers=['F.Cu'], w=_FIRE, path=[(49.2, 19.9), (49.2, 18.0), (45.7, 15.0), (45.7, 9.0),
+                                                        (47.9, 9.0), (43.0, 9.0)]),
+    dict(name='HIGH 2', layers=['B.Cu'], w=_FIRE, path=[(40.2, 19.0), (33.0, 17.0), (33.0, 7.0), (40.0, 7.0),
+                                                        (40.0, 9.0)]),
+    dict(name='LOW, FETs', layers=['F.Cu'], box=(35.3, 12.8, 44.7, 19.4)),
+]
+
 # test points (stage B2 step 5): each aims for its net's route. These probe sensitive nodes, so they go in with their
 # circuit, before the general parts, and their stub is 10 mm at most; every other one 20 mm (the brief's limits)
 PROBES_WITH_CIRCUIT = ('BAT_BLOCK_GATE', 'ADC_PYRO1_CURRENT', 'ADC_PYRO2_CURRENT', 'ADC_PYRO3_CURRENT',

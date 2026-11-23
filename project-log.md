@@ -5056,3 +5056,34 @@ What the sheets show, read from the step-16 netlist:
 - Open: channel 3's low side (R6505), and where the three FETs sit for their fire paths: channel 2's LOW pin is the
   middle one of J6601's back row, so its 1 mm path leaves on L3 or L6 wherever its FET goes. Both come with the
   pyro copper.
+
+## 23 November 2026: the budget run (stage C/D review, call 9)
+
+- The hard copper's floor plan as keep-outs, `spec.BUDGET`, from the brief's list: the armed rails' corridor on L6
+  (x 9–16 from the arm plugs up the left edge, then across under band 1's aft edge, y 30–37, to the three energy
+  links); the 6 A copper on L1 (J102 and the umbilical J101 to Q101's drain, Q101's tab to U101 and the two arm
+  fuses); the fire-logic lanes on L3 (6 mm wide from under U201 up to the output stages, and across above them); the
+  two RF lines on L1; and each channel's fire copper: the supply between link, capacitor and pins, HIGH 1 and 3 round
+  the ends of J6601's LOW row on L1, HIGH 2 round it on L6 (its pin sits behind the LOW row, and J6601's
+  through-hole pins block every layer: 1.5 mm between pads, where a 1.0 mm fire track needs 2.0), and the LOW pins
+  down to the FETs. Not modelled: the arm feeds, the logic feeds, the USB and CAN pairs, the crystals.
+- `meter.py --budget` makes each area a keep-out for tracks and vias on its layers, for the router, and the fanout
+  places no via in one (`fanout.plan(no_via=...)`).
+- Run on ae1642b's board (5b85ff73), L5 as one FLIGHT_3V3 plane and the other rails as tracks (D-23Nov.2), via in
+  pad: the router draws RAIL_3V3 (the four rails of D-23Nov.2 and the small rails), then Default at full effort.
+- **The run is void.** The router's Default pass was killed for memory (6.0 GB, the container's limit) after 955 s,
+  in its rescue laps, and the meter reported rc 0: it took the largest return code, and a kill is −9. Its count (271
+  of 273 open) is the rails-only board, not a result. The meter now reports the first pass that didn't finish
+  cleanly, so a killed pass reads as one.
+- What the pass did show: its main pass left 56 nets for the rescue laps, against 19 on the baseline (which ended
+  at 4 open). 12 of the 56 are the baseline's own. Of the 44 new ones, near the areas that block them:
+  - 9 at the fire-logic lanes under U201: the budget ran them 6 mm wide through U201's middle at the 0.5 mm rule,
+    where the scripted escape keeps 0.2 mm inside the courtyard (D-22Nov.26) and needs about 2 mm;
+  - 15 at the corridor and its crossing under band 1 (y 30–37): the LoRa supply and level-shifter parts
+    (U4601–U4604) and the pyro diagnostics sit in the crossing, and U3604 sits astride the corridor;
+  - 3 at the 6 A copper, which the budget drew up to U101's left pins;
+  - 7 pyro diagnostics in the fire paths or the crossing;
+  - 10 near none of them: the congestion the rest pushes on.
+- So the floor plan's cost is mostly parts standing where the hard copper goes and areas drawn wider than the
+  copper. Next: the floor plan to the copper's real size, the parts it displaces moved (D-23Nov.7), and the run
+  again; the gate (25 open) applies to that run.

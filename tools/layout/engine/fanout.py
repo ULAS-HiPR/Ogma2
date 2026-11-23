@@ -86,8 +86,9 @@ def existing(board, origin):
     return {'vias': vias, 'tracks': tracks, 'joined': joined}
 
 
-def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None):
-    """existing: from existing(); its pads are skipped and its copper is kept clear of."""
+def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_via=()):
+    """existing: from existing(); its pads are skipped and its copper is kept clear of. no_via: shapely polygons
+    (board mm) no via may touch, the keep-outs of the budget run (meter.py --budget)."""
     vr = VIA_D / 2
     ex = existing or {'vias': [], 'tracks': [], 'joined': set()}
     pair = clearances(spec)
@@ -123,6 +124,8 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None):
         if not (vr + EDGE <= x <= bd.W - vr - EDGE and vr + EDGE <= y <= bd.H - vr - EDGE):
             return False
         if any(math.hypot(x - wx, y - wy) < washer_r + vr for wx, wy in washers):
+            return False
+        if no_via and any(k.distance(Point(x, y)) < vr for k in no_via):
             return False
         if len(holes) and (np.hypot(holes[:, 0] - x, holes[:, 1] - y) < holes[:, 2] + DRILL / 2 + HOLE_GAP).any():
             return False

@@ -55,6 +55,31 @@ def load_spec(board, length):
     return spec, root / 'hardware' / board
 
 
+def budget_keepouts(b, spec):
+    """spec.BUDGET's areas as keep-out rule areas on the board (no tracks, no vias on their layers; pads and pours
+    allowed), for the router; returns them as shapely polygons for the fanout, which places no via in any."""
+    from shapely.geometry import LineString, box
+    ox, oy = spec.ORIGIN
+    polys = []
+    for it in spec.BUDGET:
+        g = box(*it['box']) if 'box' in it else LineString(it['path']).buffer(it['w'] / 2, quad_segs=4)
+        z = K.ZONE(b)
+        z.SetIsRuleArea(True)
+        z.SetZoneName('BUDGET ' + it['name'])
+        ls = K.LSET()
+        for l in it['layers']:
+            ls.AddLayer(b.GetLayerID(l))
+        z.SetLayerSet(ls)
+        z.SetDoNotAllowTracks(True); z.SetDoNotAllowVias(True); z.SetDoNotAllowPads(False)
+        z.SetDoNotAllowCopperPour(False); z.SetDoNotAllowFootprints(False)
+        o = z.Outline(); o.NewOutline()
+        for x, y in list(g.exterior.coords)[:-1]:
+            o.Append(K.FromMM(x + ox), K.FromMM(y + oy))
+        b.Add(z)
+        polys.append(g)
+    return polys
+
+
 def glob_escape(n):
     return ''.join(f'[{c}]' if c in '[]*?' else c for c in n)
 
@@ -219,6 +244,9 @@ def main():
                     help="extra router flags for every pass, one string (stage D's knobs), e.g. '--layer-costs 1 1 1'")
     ap.add_argument('--plane-rails', nargs='+', default=[],
                     help='with --rails-as-tracks: these rails stay planes (e.g. FLIGHT_3V3 as a whole L5 plane)')
+    ap.add_argument('--budget', action='store_true',
+                    help="the budget run (stage C/D review, call 9): spec.BUDGET's areas become keep-outs for tracks and "
+                         'vias on their layers, for the fanout and the router alike')
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     b = K.LoadBoard(a.pcb)
@@ -263,9 +291,10 @@ def main():
         for n in net_cl:
             if M.net_class(n, spec.PATTERNS) == 'FIRE_LOGIC':
                 net_cl[n] = a.fire_logic_clearance
+    no_via = budget_keepouts(b, spec) if a.budget else []
     t0 = time.time()
     ex = FO.existing(b, spec.ORIGIN)            # stage C's scripted copper: its pads need no fanout via
-    fr = FO.plan(bd, planes, spec, in_pad=a.via_in_pad, existing=ex)
+    fr = FO.plan(bd, planes, spec, in_pad=a.via_in_pad, existing=ex, no_via=no_via)
     FO.apply(b, spec.ORIGIN, fr)
     fan = out / 'fanned.kicad_pcb'
     K.SaveBoard(str(fan), b)
@@ -284,7 +313,8 @@ def main():
            'fanout': {'pads': len(fr['done']) + len(fr['failed']), 'vias': len(fr['done']),
                       'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']], 'in_pad': sum(1 for d in fr['done'] if d['stub'] is None),
                       'seconds': round(time.time() - t0, 1)},
-           'ignores': 'rule areas other than the mounting holes; the copper stage C scripts by hand; the L3 islands\' shapes'}
+           'ignores': 'rule areas other than the mounting holes; the copper stage C scripts by hand; the L3 islands\' shapes',
+           'budget': [it['name'] for it in spec.BUDGET] if a.budget else None}
     if not a.skip_krt:
         # the router's clearance floor is the widest class in a call (KiCadRoutingTools' routing_config), so the
         # classes route in passes, widest copper first, each on top of the last, as D-22Nov.17 routes in passes
@@ -327,7 +357,9 @@ def main():
             if (out / f'fanned.{ext}').exists():
                 shutil.copy(out / f'fanned.{ext}', out / f'routed.{ext}')
         rcs = [x['rc'] for x in runs]
-        rep['krt'] = {'rc': next((x for x in rcs if not isinstance(x, int)), max(rcs, default=0)), 'seconds': round(time.time() - t1, 1),
+        # the first pass that didn't finish cleanly: a timeout, an error, or a kill (negative, e.g. -9 when the kernel
+        # ends it for memory); its nets stay open, so the count is void, not a result
+        rep['krt'] = {'rc': next((x for x in rcs if x != 0), 0), 'seconds': round(time.time() - t1, 1),
                       'peak_rss_mb': round(resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss / 1024),
                       'passes': runs, 'cmd_flags': flags}
         routed_sig = {n for n in sig if not a.classes or M.net_class(n, spec.PATTERNS) in a.classes}
