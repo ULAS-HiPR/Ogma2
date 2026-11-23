@@ -4956,3 +4956,9 @@ What the sheets show, read from the step-16 netlist:
   VREF+ 5.9 and 6.4 mm, VCAP pin 98 18.0 mm (2 mm allowed); U401 VDD pins 1, 19, 32, 48 and 64 at 5.0, 3.1, 4.7,
   11.3 and 7.5 mm, VDDA 12.2 mm, VCAP pin 62 12.5 mm. 16 at the MCUs, 19 in all.
 - Board unchanged (b507a62c); only the build's report changes.
+
+## 23 November 2026: signal vias 0.5 mm (D-23Nov.4)
+
+- The spec's Default class now gives a 0.5 mm via with a 0.3 mm hole; the power classes keep 0.6 mm. It reaches
+  the board through the project file's net classes, which the router reads, so the meter needs no flag for it.
+  Board unchanged (b507a62c). Teardrops come with stage D's finishing.

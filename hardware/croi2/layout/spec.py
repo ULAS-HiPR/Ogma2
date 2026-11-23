@@ -59,7 +59,7 @@ def nc(name, track, clearance, **kw):
                 priority=kw.get('priority', 10))
 
 NETCLASSES = [
-    nc('Default', 0.15, 0.15, priority=2147483647),
+    nc('Default', 0.15, 0.15, via_d=0.5, priority=2147483647),   # 0.5 mm signal vias, 0.3 mm hole (D-23Nov.4)
     nc('SRC_6A', 4.0, 0.2, priority=1),
     nc('PYRO_RAIL', 2.0, 0.2, priority=2),        # 0.5 mm to other nets: custom rule below
     nc('FIRE', 1.0, 0.2, priority=3),
