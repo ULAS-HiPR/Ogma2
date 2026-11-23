@@ -5338,3 +5338,28 @@ What the sheets show, read from the step-16 netlist:
   capacitor 18 mm, RT and feedback resistors 16-18 mm. The held core (U1401) and the input mux (U1101) are the same.
   The brief's block templates (section 4) want them at the pins. Part 2 places those blocks to their datasheets
   first, then draws the logic feeds and L5's plane.
+
+## 23 November 2026: power, part 2, the regulators' parts and the planes (D-23Nov.29, D-23Nov.30)
+
+- The logic regulators' own parts now sit at their pins. The buck (U1301) has an input capacitor at each pair of VIN
+  and PGND pins, its two 47 uF output capacitors under the VOUT row, and the feedback divider and VCC capacitor over
+  its top row, all 1.0 mm off its pins, JLC's spacing to a QFN. To make that room, the held core (U1401) and the
+  flight LDO (U1701) step west and the input mux (U1101) east. The held core's input capacitor, current-monitor
+  resistor and slew capacitor sit below it; the mux's input, soft-start and current-limit parts sit at their pins.
+- How: spec.POWER_PARTS holds the spots, and replace_region.py --block now places them (and the power copper's
+  parts) first, closes the L1 power copper and every scripted via to other parts, and re-places the region round
+  them. 113 parts lifted, 77 moved. The regulators' refs no longer count as courtyard for the placer; the silk pass
+  places them.
+- Not yet at their pins: the buck's RT resistor (4 mm, across the top row, reached by L3), the held core's and the
+  mux's threshold dividers (8-15 mm, DC), and U101's ILIM, IMON and slew parts (5-10 mm). TP41 found no spot within
+  9 mm of its net; it sits 15 mm from R1010.
+- The planes: L2 and L4 GND whole; L5 FLIGHT_3V3 1 mm in from the edge, with GND under the corridor's L6 copper
+  grown 0.5 mm. The first fill, in the build's own process, kept 0.2 mm from fire and armed-rail vias where the fire
+  rule asks 0.5: DRC flagged 158 clearance errors. KiCad loads the DRU only when it runs DRC on a board loaded with its
+  project, so tools/layout/refill.py fills the planes in a process of its own, and DRC is clean. The meter takes the
+  planes off its scratch copy (KiCad 9's Remove() leaves a dead object in the zone list, so RemoveNative; the first
+  run crashed on it and printed no count).
+- Board e59a26f6: DRC 0 errors, rules check 9 of 9, every SRC_6A, PYRO_RAIL and fire net one piece. Warnings: the
+  silk pass's overlaps (23) and eight plane islands, which stage D's vias join. Full-effort budget run
+  (pw2-e59a26f6): 5 of 271 ordinary nets open and 1 of 22 rails (ST_3V3, in the flight band), 306 s, peak 3.7 GB
+  (gate 25; part 1 left 7).

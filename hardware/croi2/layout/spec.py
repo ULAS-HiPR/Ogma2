@@ -254,6 +254,9 @@ SILK_NAME_GAP = {'J6601': 3.3}     # 1.6 until 23 Nov: two rows of capacitors no
 # 1.9 mm deeper along the whole side, so no capacitor could sit at a pin there (D-23Nov.1); U4606's, turned, would
 # have spanned the side its RF pin faces (D-23Nov.3). The refs stay where they were
 REFS_APART = ('U201', 'U401', 'U4606')
+# the logic regulators, whose own parts sit at their pins on every side (the brief's block templates, D-23Nov.29): their
+# refs don't count as courtyard for the placer, and the silk pass sets them where there's room
+LABELS_MOVE = ('U1301', 'U1401', 'U1101', 'U1701')
 # where each MCU's own decoupling capacitors are drawn, for tools/layout/caps_to_pins.py (D-23Nov.1)
 DECOUPLING_SHEETS = {'U201': ('/02a-flight-support/',), 'U401': ('/04a-comms-support/',)}
 # parts that may move this far, mm, to make room for those capacitors (D-23Nov.5): test points and pull resistors
@@ -367,6 +370,25 @@ NEAR += [dict(rule='part_to_pins', part='U6502', ic='U6504', mm=18.0,
               src='D-23Nov.10: the staging AND gate by channel 3 IN pin, so PYRO3_HS_ENABLE stays short: 17.6 mm on 23 Nov; nearer is for the fire-logic step [J]'),
          dict(rule='part_to_pins', part='U6001', ic='U6502', mm=6.0,
               src='D-23Nov.12: the staging latch by the AND gate, so STAGE_ELIGIBLE stays short [J]')]
+# the logic regulators' own parts at their pins (D-23Nov.29; the brief's block templates, section 4): the buck's
+# capacitors and set resistors, the held core's and the mux's input capacitors and set parts [J]
+_BLOCK = 'layout brief section 4, block templates [J]'
+NEAR += [dict(rule='part_to_pins', part=r, ic=ic, mm=mm, src=f'{_BLOCK}: {why}') for r, ic, mm, why in (
+    ('C1303', 'U1301', 1.5, 'input capacitors tight between VIN and PGND'),
+    ('C1304', 'U1301', 1.5, 'input capacitors tight between VIN and PGND'),
+    ('C1305', 'U1301', 1.5, 'output capacitors at VOUT'), ('C1306', 'U1301', 1.5, 'output capacitors at VOUT'),
+    ('C1302', 'U1301', 2.5, 'output capacitors at VOUT'),
+    ('C1301', 'U1301', 1.5, '1 uF on VCC close'), ('R1303', 'U1301', 5.0, 'RT by its pin'),
+    ('R1302', 'U1301', 1.5, 'RFBT and RFBB as close as possible to the FB pin (TI)'),
+    ('C1401', 'U1401', 4.0, '0.1 uF at IN'), ('R1406', 'U1401', 6.0, 'R_IMON close'),
+    ('C1402', 'U1401', 6.0, 'set parts by their pins'),
+    ('R1402', 'U1401', 15.0, 'the threshold dividers in the block (DC)'),
+    ('R1404', 'U1401', 15.0, 'the threshold dividers in the block (DC)'),
+    ('C1102', 'U1101', 2.5, 'caps close'), ('C1101', 'U1101', 4.0, 'set parts by their pins'),
+    ('R1107', 'U1101', 4.0, 'set parts by their pins'),
+    ('R1102', 'U1101', 8.0, 'the threshold dividers in the block (DC)'),
+    ('R1104', 'U1101', 8.0, 'the threshold dividers in the block (DC)'),
+    ('R1106', 'U1101', 8.0, 'the threshold dividers in the block (DC)'))]
 PYRO_STAMP = {
     'anchors': ('U6304', 'U6404', 'U6504'),
     'rows': [('energy link', ('R6310', 'R6410', 'R6510'), (-3.1, 5.5), 90),
@@ -571,6 +593,23 @@ POWER_PARTS = {     # moved for this copper; placement.json holds them
     'TP42': (9.0, 142.0, 0),     # VBAT_CROI_INPUT's test point onto J101's run (was in the recovery feed's way)
     'R8007': (12.6, 105.6, 0),   # the pyro-rail divider's top beside the recovery rail: the 40 mm to R8008 is then
                                  # PYRO_RAIL_MID's, behind 22.1 kohm, not armed-rail copper's
+    # the logic regulators' blocks (D-23Nov.29; the brief's block templates; TI's TPSM63603 layout guidelines: "Place
+    # ceramic input and output capacitors close to the device pins", "Place RFBT and RFBB as close as possible to the FB
+    # pin"). The buck U1301 keeps its place; the held core U1401 and the flight LDO U1701 step west and the input mux
+    # U1101 east, so the buck's parts sit at its pins, each 1.0 mm off (JLC's spacing to a QFN): an input capacitor at
+    # each pair of VIN and PGND pins, the two output capacitors under the VOUT row, and above the top row the feedback
+    # divider over FB (its two FB pads side by side) and the VCC capacitor over VCC
+    'U1401': (22.0, 125.65, 90), 'U1701': (18.5, 126.15, 90), 'U1101': (36.45, 127.2, 0),
+    'C1304': (25.55, 125.95, 270), 'C1303': (33.775, 125.38, 270),
+    'C1305': (28.45, 131.6, 270), 'C1306': (31.75, 131.6, 270), 'C1302': (25.6, 129.4, 180),
+    'R1301': (27.6, 119.92, 270), 'R1302': (29.12, 119.92, 90), 'C1301': (30.64, 119.925, 90),
+    # the held core's input capacitor on its input feed, its current-monitor resistor and slew capacitor below it (their
+    # pins on the top row reach them by L3: the 1000 uF sits over U1401); the mux's input capacitor at IN1
+    'C1401': (23.85, 129.9, 270), 'R1406': (21.5, 129.5, 270), 'C1402': (22.8, 129.9, 270),
+    'C1102': (39.15, 127.93, 270),
+    'TP41': (18.75, 131.5, 0),   # BAT_SOURCE_PG's probe: the blocks took its spot; the nearest free one, 15 mm from R1010
+    'C1403': (21.8, 118.3, 90),  # the held core's 1000 uF stays over U1401's output
+    'R6101': (21.2, 101.95, 90),  # on the recovery rail's tap
 }
 
 
@@ -651,6 +690,17 @@ def _power_copper():
 
 
 POWER_COPPER = _power_copper()
+
+# the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
+# planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire
+# rule's gap: so no other L6 copper can cross into it). Filled by the build, last
+PLANES = [
+    dict(layer='In1.Cu', net='GND'),
+    dict(layer='In3.Cu', net='GND'),
+    dict(layer='In4.Cu', net='FLIGHT_3V3', inset=1.0),
+    dict(layer='In4.Cu', net='GND', under=('PYRO_RAIL',), margin=0.5, priority=1, name='GND under the corridor'),
+]
+SOLID_PADS = ('J102', 'J101')     # their GND pins carry the 6 A return: no thermal relief (brief section 4)
 
 # The hard copper's floor plan, as keep-outs for the budget run (stage C/D review, call 9; meter.py --budget): where
 # stage C will draw it, each area with the copper's own clearance to other nets. Board mm, (x0, y0, x1, y1) boxes or

@@ -47,7 +47,8 @@ def main():
     ap.add_argument('--also', nargs='*', default=[], help='lift these parts too, whatever their kind or place')
     ap.add_argument('--closed', action='append', default=[], help='X0,Y0,X1,Y1: no re-placed part in this box '
                     '(an area the hard copper takes, where a pad would need a via it can\'t have)')
-    ap.add_argument('--block', action='store_true', help="spec.PYRO_PARTS at their spots first, and spec.PYRO_COPPER's "
+    ap.add_argument('--block', action='store_true', help="spec.PYRO_PARTS and spec.POWER_PARTS at their spots first, "
+                    "and the L1 copper and vias of spec.PYRO_COPPER and spec.POWER_COPPER, "
                     'L1 copper, with the fire rule round it, closed to every other part')
     ap.add_argument('--plan')
     ap.add_argument('--write', action='store_true')
@@ -75,8 +76,10 @@ def main():
         return any(b[0] <= x <= b[2] and b[1] <= y <= b[3] for b in boxes)
     lifted = sorted(r for r in list(pl.placed) if liftable(r) and inside(r))
     lifted = sorted(set(lifted) | {r for r in a.also if r in pl.placed})
-    if a.block:                                           # the output stage's own parts, wherever they stand
-        lifted = sorted(set(lifted) | {r for r in spec.PYRO_PARTS if r in pl.placed})
+    block_parts = {**spec.PYRO_PARTS, **getattr(spec, 'POWER_PARTS', {})}
+    block_copper = spec.PYRO_COPPER + getattr(spec, 'POWER_COPPER', [])
+    if a.block:                                           # the output stage's and the power blocks' own parts
+        lifted = sorted(set(lifted) | {r for r in block_parts if r in pl.placed})
     for r in lifted:
         run.lift(r)
     run.movable = set()                                    # nothing outside the boxes is pushed
@@ -112,12 +115,16 @@ def main():
     # sampled along each track as squares of the track's half width plus the fire rule's 0.5 mm
     copper_rects = []
     if a.block:
-        for r, (x, y, rot) in spec.PYRO_PARTS.items():
+        for r, (x, y, rot) in block_parts.items():
             hits = run.conflicts(r, x, y, rot)
             run.place(r, x, y, rot)
             settled.add(r)
             report.append(f'block: {r} at ({x}, {y}, {rot})' + (f', over {sorted(hits)}' if hits else ''))
-        for it in spec.PYRO_COPPER:
+        for it in block_copper:
+            if 'via' in it:                               # a via is on every layer: no pad of another part on it
+                (x, y), h = it['via'], it.get('d', 0.6) / 2 + 0.5
+                copper_rects.append((x - h, y - h, x + h, y + h, 'via'))
+                continue
             if it.get('layer') != 'F.Cu' or 'path' not in it:
                 continue
             h = it['w'] / 2 + 0.5

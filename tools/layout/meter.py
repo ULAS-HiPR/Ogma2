@@ -257,6 +257,10 @@ def main():
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     b = K.LoadBoard(a.pcb)
+    # the board's copper planes go (D-23Nov.30): the meter models a plane as before, a plane pad's via counting as
+    # joined, and a fill saved before the fanout's vias would clash with them
+    for z in [z for z in b.Zones() if not z.GetIsRuleArea()]:
+        b.RemoveNative(z)                          # Remove() leaves a dead object in Zones(): a later read crashes
     length = a.length or float(round(K.ToMM(b.GetBoardEdgesBoundingBox().GetHeight())))
     spec, hw = load_spec(a.board, length)
     a.layers = a.layers or getattr(spec, 'ROUTER_LAYERS', ['F.Cu', 'B.Cu'])

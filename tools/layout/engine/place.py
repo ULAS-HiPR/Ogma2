@@ -143,13 +143,15 @@ def _closest(p, a, b):
 
 
 class Placer:
-    def __init__(self, fps, nets, comps, size, edge_margin=1.0, power_fanout=12, apart=None):
+    def __init__(self, fps, nets, comps, size, edge_margin=1.0, power_fanout=12, apart=None, bare=()):
         self.fps, self.nets, self.comps = fps, nets, comps
         self.w, self.h = size
         self.edge_margin = edge_margin
         apart = apart or {}                    # ref -> its silk name, kept clear as a box of its own
-        self.geo = {r: geometry(f, label=True, label_text='TP00' if r.startswith('TP') else None, apart=apart.get(r))
-                    for r, f in fps.items()}                      # a visible silk ref counts as courtyard
+        # a visible silk ref counts as courtyard, except for the parts in `bare`, whose own parts ring their pins:
+        # the silk pass sets those refs where there's room (D-23Nov.29)
+        self.geo = {r: geometry(f, label=r not in bare, label_text='TP00' if r.startswith('TP') else None,
+                                apart=apart.get(r)) for r, f in fps.items()}
         self.apart = {r: text_boxes(fps[r], t) for r, t in apart.items() if r in fps}
         self.apart_rect = {}                   # ref -> its name's placed box, in self.rects
         self.cls = {r: pkg_class(f.GetFPIDAsString()) for r, f in fps.items()}

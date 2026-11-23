@@ -249,6 +249,15 @@ def near_plan(spec, comps, nets):
     return plan
 
 
+def refill(pcb):
+    """Fill every zone of the saved board under its project's own rules (refill.py, in a process of its own: see there;
+    D-23Nov.30)."""
+    import subprocess
+    r = subprocess.run([sys.executable, str(Path(__file__).resolve().parent / 'refill.py'), str(pcb)],
+                       capture_output=True, text=True)
+    return r.returncode == 0
+
+
 def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, replace=False):
     spec = load_spec(board)
     for s in sets:                                    # trials only (--set): a statement run in the spec's namespace
@@ -300,7 +309,8 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
                 nets_of.setdefault(r, set()).add(n)
         pl = P.Placer({**fps, **marks}, nets, comps, (spec.W, spec.H),     # a name set off its part: a box of its own
                       apart={**{r: spec.SILK_NAMES[r] for r in getattr(spec, 'SILK_NAME_GAP', {})},
-                             **{r: r for r in getattr(spec, 'REFS_APART', ())}})
+                             **{r: r for r in getattr(spec, 'REFS_APART', ())}},
+                      bare=tuple(getattr(spec, 'LABELS_MOVE', ())))
         pl.circles = [(x, y, spec.HOLE_PART_KEEPOUT_D / 2) for x, y in spec.HOLES] + [(x, y, FIDUCIAL_R) for x, y in spec.FIDUCIALS]
         fixed = {ref: [*fixed_xy(pl, ref, f, spec), f['rot']] for ref, f in spec.FIXED.items()}
         if length:
@@ -486,12 +496,21 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
             report['copper']['power'] = CU.pyro(bd, spec, fps, cu, data, spec.POWER_COPPER)
         if getattr(spec, 'RF_LINES', None):
             report['copper']['rf_lines'] = CU.rf_lines(bd, spec, fps, cu, data)
+        if getattr(spec, 'PLANES', None):                  # last: the fill keeps clear of every track and via (D-23Nov.30)
+            report['copper']['planes'] = CU.planes(bd, spec)
         report['stages'].append('copper')
 
     bd.save(str(pcb))
     if not out_dir:
         post.project_rules(hw / f'{spec.NAME}.kicad_pro', spec.NETCLASSES, spec.PATTERNS, spec.RULES)
         post.dru(hw / f'{spec.NAME}.kicad_dru', spec.DRU)
+    if 'planes' in report.get('copper', {}):          # D-23Nov.30: fill the planes under the project's own rules
+        if out_dir:                                    # a trial gets the project beside its board, for this and its DRC
+            import shutil
+            shutil.copy(hw / f'{spec.NAME}.kicad_pro', out / f'{spec.NAME}.kicad_pro')
+            post.project_rules(out / f'{spec.NAME}.kicad_pro', spec.NETCLASSES, spec.PATTERNS, spec.RULES)
+            post.dru(out / f'{spec.NAME}.kicad_dru', spec.DRU)
+        report['copper']['planes_filled'] = refill(pcb)
     report['uuids'] = post.finish(pcb, spec.STACKUP, f'{board}')
     if STAGES.index(upto) >= 2:                       # the stage B2 yardsticks (engine/metrics.py), from the saved board
         from engine import fanout as FO, metrics as M

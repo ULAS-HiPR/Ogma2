@@ -474,3 +474,59 @@ def pyro(bd, spec, fps, cu, data, items=None):
         rep['tracks'] += len(it['path']) - 1
         rep['mm'] = round(rep['mm'] + line.length, 1)
     return rep
+
+
+def planes(bd, spec):
+    """The copper planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): each of spec.PLANES as a zone, filled after the board
+    is saved (build.refill). A plane covers the board inset by `inset` mm; one with `under` covers the L6 copper of those net
+    classes (spec.POWER_COPPER) grown by `margin` and wins over the plane below it (its priority). Islands stay: L5's
+    FLIGHT_3V3 joins its pads only through the vias stage D adds. Pads of the high-current connectors join solid."""
+    import fnmatch
+    from shapely.geometry import LineString, Point, box as sbox
+    from shapely.ops import unary_union
+    ox, oy = spec.ORIGIN
+    by_short = {str(n).rsplit('/', 1)[-1]: item for n, item in bd.b.GetNetsByName().items()}
+    cls = lambda n: next((c for c, p in spec.PATTERNS if fnmatch.fnmatchcase(n, p)), 'Default')
+    rep = []
+    for k, pl in enumerate(spec.PLANES):
+        if 'under' in pl:
+            shapes = []
+            for it in getattr(spec, 'POWER_COPPER', []):
+                if cls(it['net']) not in pl['under'] and it['net'] != 'GND':
+                    continue
+                if 'path' in it and it['layer'] == 'B.Cu':
+                    g = LineString(it['path']) if len(it['path']) > 1 else Point(it['path'][0])
+                    shapes.append(g.buffer(it['w'] / 2 + pl['margin']))
+            area = unary_union(shapes).simplify(0.02)
+            polys = list(area.geoms) if hasattr(area, 'geoms') else [area]
+        else:
+            i = pl.get('inset', 0.0)
+            polys = [sbox(i, i, spec.W - i, spec.H - i)]
+        for poly in polys:
+            z = K.ZONE(bd.b)
+            z.SetLayer(bd.b.GetLayerID(pl['layer']))
+            z.SetNet(by_short[pl['net']])
+            z.SetZoneName(pl.get('name', f"{pl['net']} {pl['layer']}"))
+            z.SetAssignedPriority(pl.get('priority', 0))
+            z.SetLocalClearance(MM(pl.get('clearance', 0.2)))
+            z.SetMinThickness(MM(0.2))
+            z.SetIslandRemovalMode(K.ISLAND_REMOVAL_MODE_NEVER)
+            z.SetPadConnection(K.ZONE_CONNECTION_THERMAL)
+            z.SetThermalReliefGap(MM(0.3))
+            z.SetThermalReliefSpokeWidth(MM(0.4))
+            o = z.Outline()
+            o.NewOutline()
+            for x, y in list(poly.exterior.coords)[:-1]:
+                o.Append(MM(x + ox), MM(y + oy))
+            for hole in poly.interiors:
+                o.NewHole()
+                for x, y in list(hole.coords)[:-1]:
+                    o.Append(MM(x + ox), MM(y + oy), -1, o.HoleCount(0) - 1)
+            bd.b.Add(z)
+        rep.append({'layer': pl['layer'], 'net': pl['net'], 'zones': len(polys)})
+    for ref in getattr(spec, 'SOLID_PADS', ()):         # high-current pins: no thermal relief (brief section 4)
+        fp = bd.b.FindFootprintByReference(ref)
+        for p in fp.Pads():
+            if p.GetNetname().rsplit('/', 1)[-1] == 'GND':
+                p.SetLocalZoneConnection(K.ZONE_CONNECTION_FULL)
+    return rep                                         # filled by build.refill, under the project's own rules
