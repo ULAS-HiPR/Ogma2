@@ -54,8 +54,9 @@ def geometry(fp, label=False, label_text=None, apart=None):
     label: a reference visible on the silkscreen counts as courtyard, so no part covers it (D-22Nov.9).
     label_text: size that box for this text instead of the ref (test points: 'TP00', so renumbering them
     can't change their boxes, and so can't move them).
-    apart: a silk text left out of the box (a name set further off than usual, with room for parts between; the
-    Placer keeps it clear as a box of its own)."""
+    apart: a silk text left out of the box (a name set further off than usual, with room for parts between; or a
+    ref whose box would otherwise span the part's whole side: the MCUs', D-23Nov.1); the Placer keeps it clear as a
+    box of its own."""
     g = {}
     ref_text = fp.Reference().GetText()
     if label_text:
@@ -67,7 +68,7 @@ def geometry(fp, label=False, label_text=None, apart=None):
         cy = fp.GetCourtyard(K.F_CrtYd)
         bb = cy.BBox() if cy.OutlineCount() else fp.GetBoundingBox(False, False)
         crt = (TOMM(bb.GetX()), TOMM(bb.GetY()), TOMM(bb.GetRight()), TOMM(bb.GetBottom()))
-        texts = [f for f in fp.GetFields() if f.IsVisible() and f.GetLayer() == K.F_SilkS]
+        texts = [f for f in fp.GetFields() if f.IsVisible() and f.GetLayer() == K.F_SilkS and f.GetText() != apart]
         texts += [g for g in fp.GraphicalItems() if g.GetClass() == 'PCB_TEXT' and g.GetLayer() == K.F_SilkS
                   and g.GetText() != apart]
         for tx in texts if label else []:              # the ref and any pin-1 mark printed on silk
@@ -94,13 +95,13 @@ def geometry(fp, label=False, label_text=None, apart=None):
 
 
 def text_boxes(fp, text):
-    """Per rotation: the local box of the footprint's top silk text `text`."""
+    """Per rotation: the local box of the footprint's top silk text `text` (a text, or a field such as its ref)."""
     g = {}
     for a in ROTS:
         fp.SetOrientationDegrees(a)
         fp.SetPosition(K.VECTOR2I(0, 0))
-        tb = next(t for t in fp.GraphicalItems() if t.GetClass() == 'PCB_TEXT' and t.GetLayer() == K.F_SilkS
-                  and t.GetText() == text).GetBoundingBox()
+        tb = next(t for t in [*fp.GetFields(), *fp.GraphicalItems()] if t.GetClass() in ('PCB_TEXT', 'PCB_FIELD')
+                  and t.GetLayer() == K.F_SilkS and t.GetText() == text).GetBoundingBox()
         g[a] = (TOMM(tb.GetX()), TOMM(tb.GetY()), TOMM(tb.GetRight()), TOMM(tb.GetBottom()))
     fp.SetOrientationDegrees(0)
     return g

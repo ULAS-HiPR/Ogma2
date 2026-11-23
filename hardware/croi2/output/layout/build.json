@@ -287,8 +287,8 @@
  },
  "density_by_band": {
   "1 RF and fire": 0.66,
-  "2 Flight": 0.634,
-  "3 Comms": 0.697,
+  "2 Flight": 0.623,
+  "3 Comms": 0.687,
   "4 Power and harness": 0.708
  },
  "jlc_spacing_violations": [],
@@ -3790,6 +3790,16 @@
    {
     "rule": "supply_caps",
     "what": "U201",
+    "mm": 3.0,
+    "source": "ST's VDDA and VREF+ pairing: 1 uF with each 100 nF; 3 mm [J]; D-23Nov.1",
+    "misses": [
+     "U201.21 FLIGHT_VDDA: nearest 1u 8.5 mm",
+     "U201.22 FLIGHT_VDDA: nearest 1u 8.0 mm"
+    ]
+   },
+   {
+    "rule": "supply_caps",
+    "what": "U201",
     "mm": 2.0,
     "source": "burrito-sweep.md section 5: VCAP capacitors within 2 mm, one at each VCAP pin; D-23Nov.1",
     "misses": [
@@ -3816,6 +3826,15 @@
     "source": "burrito-sweep.md section 5: one 100 nF per supply pin; 3 mm [J]; D-23Nov.1",
     "misses": [
      "U401.13 COMMS_VDDA: nearest 100n 12.2 mm"
+    ]
+   },
+   {
+    "rule": "supply_caps",
+    "what": "U401",
+    "mm": 3.0,
+    "source": "ST's VDDA pairing: 1 uF with its 100 nF; 3 mm [J]; D-23Nov.1",
+    "misses": [
+     "U401.13 COMMS_VDDA: nearest 1u 12.0 mm"
     ]
    },
    {
@@ -3939,7 +3958,7 @@
     ]
    }
   ],
-  "near_misses": 19,
+  "near_misses": 22,
   "plane_pads": 601,
   "plane_pads_no_via": 59,
   "plane_pads_no_via_by_band": {
@@ -4013,5 +4032,5 @@
  "probe_stub_misses": {
   "TP36": 22.1
  },
- "seconds": 25.4
+ "seconds": 25.7
 }

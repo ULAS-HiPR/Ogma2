@@ -4962,3 +4962,22 @@ What the sheets show, read from the step-16 netlist:
 - The spec's Default class now gives a 0.5 mm via with a 0.3 mm hole; the power classes keep 0.6 mm. It reaches
   the board through the project file's net classes, which the router reads, so the meter needs no flag for it.
   Board unchanged (b507a62c). Teardrops come with stage D's finishing.
+
+## 23 November 2026: the MCUs' names apart, and a tool to bring capacitors to their pins (tooling for D-23Nov.1)
+
+- The meter with the via coming from the net class (D-23Nov.4), full effort on 9d89841f: 9 of 273 ordinary nets
+  open in 7 min, as with the router's own flag: CAN_TX, CC_COMMS_TO_FLIGHT, FLIGHT_VBAT, FOINSE_SDA, LORA_EN,
+  NEW_FLIGHT_CLEAR_REQUEST, SERVICE_POWER_EN, TDK_MOSI, TE_SDA.
+- The near check gains rows for VDDA's 1 µF capacitors (ST's pairing with each 100 nF): U201's pins 21 and 22 at
+  8.5 and 8.0 mm, U401's pin 13 at 12.0 mm. 19 misses at the MCUs, 22 in all.
+- The placer merged each MCU's silk ref into its courtyard's box, which made the box 1.9 mm deeper along the whole
+  side the ref sits on: no capacitor could reach U201's pins 98 and 100 or U401's pins 62 and 64. The spec's
+  `REFS_APART` keeps those refs as boxes of their own, still clear of every courtyard (D-22Nov.9), as J6601's name
+  already was. Board unchanged (b507a62c).
+- `tools/layout/caps_to_pins.py` moves an MCU's capacitors to their pins as edits to `placement.json`: per pin,
+  the spot beyond its tip that disturbs least, moving what's in its way. The MCU's own capacitors and its crystals
+  with their load capacitors may move as far as needed (D-23Nov.1), a crystal staying within its 5 mm rule; any
+  other part 1 mm at most (the handoff's stop list), unless a plan for Seán allows more. Nothing it moves, but the
+  crystal parts, may sit in front of a crystal pin within 2.5 mm of its tip, and each capacitor sits between the
+  crystal lanes either side of its own pin, so every pin reaches its capacitor on L1. `spec.DECOUPLING_SHEETS`
+  names each MCU's capacitor sheet.

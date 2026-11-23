@@ -299,7 +299,8 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
             for r, _ in nodes:
                 nets_of.setdefault(r, set()).add(n)
         pl = P.Placer({**fps, **marks}, nets, comps, (spec.W, spec.H),     # a name set off its part: a box of its own
-                      apart={r: spec.SILK_NAMES[r] for r in getattr(spec, 'SILK_NAME_GAP', {})})
+                      apart={**{r: spec.SILK_NAMES[r] for r in getattr(spec, 'SILK_NAME_GAP', {})},
+                             **{r: r for r in getattr(spec, 'REFS_APART', ())}})
         pl.circles = [(x, y, spec.HOLE_PART_KEEPOUT_D / 2) for x, y in spec.HOLES] + [(x, y, FIDUCIAL_R) for x, y in spec.FIDUCIALS]
         fixed = {ref: [*fixed_xy(pl, ref, f, spec), f['rot']] for ref, f in spec.FIXED.items()}
         if length:

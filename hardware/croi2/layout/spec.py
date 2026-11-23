@@ -198,6 +198,11 @@ SILK_NAMES = {
 # names set further off than 0.25 mm, so parts that must sit at the pins fit between; the name stays clear as a box of
 # its own (D-22Nov.28): J6601's leaves a strip for C6601-C6606, a row of 0603s on their side
 SILK_NAME_GAP = {'J6601': 1.6}
+# refs kept clear as boxes of their own, not merged into the courtyard's box: an MCU's ref above its pins made that box
+# 1.9 mm deeper along the whole side, so no capacitor could sit at a pin there (D-23Nov.1). The refs stay where they were
+REFS_APART = ('U201', 'U401')
+# where each MCU's own decoupling capacitors are drawn, for tools/layout/caps_to_pins.py (D-23Nov.1)
+DECOUPLING_SHEETS = {'U201': ('/02a-flight-support/',), 'U401': ('/04a-comms-support/',)}
 # silk marks the placer finds room for, as board-only footprints (tools/layout/marks.py): the board axes with the
 # nose arrow, near the IMUs [J]. The white S/N box is drawn by art.board_art on the top silk after placing, in
 # space that's left (Seán, 22 Nov: "put it in the free space up top"); it never counts as courtyard.
@@ -251,12 +256,16 @@ NEAR = [
          src=f'{_SWEEP}: one 100 nF per supply pin, on its side; 3 mm [J]; D-23Nov.1'),
     dict(rule='supply_caps', ic='U201', nets=('FLIGHT_VDDA',), value='100n', mm=3.0,
          src=f'{_SWEEP}: one 100 nF per supply pin; VDDA and VREF+ each; 3 mm [J]; D-23Nov.1'),
+    dict(rule='supply_caps', ic='U201', nets=('FLIGHT_VDDA',), value='1u', mm=3.0,
+         src="ST's VDDA and VREF+ pairing: 1 uF with each 100 nF; 3 mm [J]; D-23Nov.1"),
     dict(rule='supply_caps', ic='U201', nets=('FLIGHT_VCAP',), value='2.2u', mm=2.0,
          src=f'{_SWEEP}: VCAP capacitors within 2 mm, one at each VCAP pin; D-23Nov.1'),
     dict(rule='supply_caps', ic='U401', nets=('COMMS_3V3',), value='100n', mm=3.0,
          src=f'{_SWEEP}: one 100 nF per supply pin, on its side; 3 mm [J]; D-23Nov.1'),
     dict(rule='supply_caps', ic='U401', nets=('COMMS_VDDA',), value='100n', mm=3.0,
          src=f'{_SWEEP}: one 100 nF per supply pin; 3 mm [J]; D-23Nov.1'),
+    dict(rule='supply_caps', ic='U401', nets=('COMMS_VDDA',), value='1u', mm=3.0,
+         src="ST's VDDA pairing: 1 uF with its 100 nF; 3 mm [J]; D-23Nov.1"),
     dict(rule='supply_caps', ic='U401', nets=('COMMS_VCAP',), value='2.2u', mm=2.0,
          src=f'{_SWEEP}: VCAP capacitors within 2 mm, one at each VCAP pin; D-23Nov.1'),
     dict(rule='part_to_pins', part='Y201', ic='U201', mm=5.0, src=f'{_SWEEP}: crystals within 5 mm of the pins'),
