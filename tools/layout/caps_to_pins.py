@@ -204,6 +204,8 @@ class Run:
         self.log.append(('lift', ref, self._lift(ref)))
 
     def place(self, ref, x, y, a):
+        if ref in self.pl.placed:               # never committed twice: the grid would keep a stale entry
+            self.lift(ref)
         self.pl.commit(ref, x, y, a)
         self.log.append(('place', ref, (x, y, a)))
 
@@ -211,8 +213,11 @@ class Run:
         while len(self.log) > mark:
             op, ref, pos = self.log.pop()
             if op == 'place':
-                self._lift(ref)
+                if ref in self.pl.placed:
+                    self._lift(ref)
             else:
+                if ref in self.pl.placed:
+                    self._lift(ref)
                 self.pl.commit(ref, *pos)
 
     def allowance(self, ref):

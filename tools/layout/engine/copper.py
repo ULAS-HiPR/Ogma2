@@ -38,10 +38,15 @@ def courtyard_poly(fp, origin):
 
 def escape_areas(bd, spec, fps):
     """Named rule areas with no restrictions of their own, for the custom rules to test against: the fire-logic
-    waiver inside U201's courtyard (D-22Nov.26) reads `A.enclosedByArea('U201_ESCAPE')`."""
+    waiver (D-22Nov.26, D-23Nov.8, D-23Nov.13) reads `A.enclosedByArea('<ref>_ESCAPE')`, each area the part's
+    courtyard and spec.ESCAPE_MARGIN round it."""
     out = {}
+    from shapely.geometry import Polygon
+    m = getattr(spec, 'ESCAPE_MARGIN', 0.0)          # D-23Nov.13: the courtyard and this much round it
     for ref in getattr(spec, 'ESCAPE_AREAS', ()):
         poly = courtyard_poly(fps[ref], spec.ORIGIN)
+        if m:
+            poly = list(Polygon(poly).buffer(m, join_style='mitre').exterior.coords)[:-1]
         bd.rule_area(f'{ref}_ESCAPE', poly, list(bd.b.GetEnabledLayers().CuStack()),
                      tracks=False, vias=False, pads=False, pours=False)
         out[ref] = [[round(x, 3), round(y, 3)] for x, y in poly]
@@ -439,3 +444,32 @@ def rf_lines(bd, spec, fps, cu, data):
                                 break
         out[net_s] = {'hops': rep, 'length_mm': round(sum(l.length for l in lines), 2), 'fence_vias': fence}
     return out
+
+
+def pyro(bd, spec, fps, cu, data):
+    """Stage C, the pyro output stage (D-22Nov.27, D-23Nov.9): spec.PYRO_COPPER's tracks and vias, locked, each on
+    its net. Fire vias take the FIRE class's 0.6 mm with a 0.3 mm hole."""
+    by_short = {}
+    for n, item in bd.b.GetNetsByName().items():
+        by_short.setdefault(str(n).rsplit('/', 1)[-1], []).append(item)
+    lay = {'F.Cu': K.F_Cu, 'B.Cu': K.B_Cu, 'In2.Cu': K.In2_Cu}
+    ox, oy = spec.ORIGIN
+    rep = {'tracks': 0, 'vias': 0, 'mm': 0.0}
+    for it in spec.PYRO_COPPER:
+        items = by_short.get(it['net'], [])
+        assert len(items) == 1, f"net {it['net']}: {len(items)} matches"
+        net = items[0]
+        if 'via' in it:
+            x, y = it['via']
+            v = K.PCB_VIA(bd.b)
+            v.SetPosition(K.VECTOR2I(MM(x + ox), MM(y + oy)))
+            v.SetWidth(MM(it.get('d', 0.6))); v.SetDrill(MM(it.get('drill', 0.3)))
+            v.SetNet(net); v.SetLocked(True)
+            bd.b.Add(v)
+            rep['vias'] += 1
+            continue
+        line = LineString(it['path'])
+        add_track(bd.b, spec.ORIGIN, line, it['w'], net, lay[it['layer']])
+        rep['tracks'] += len(it['path']) - 1
+        rep['mm'] = round(rep['mm'] + line.length, 1)
+    return rep

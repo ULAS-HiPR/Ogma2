@@ -78,6 +78,7 @@ PATTERNS = ([('SRC_6A', n) for n in ('VBAT_CROI_INPUT', 'ENERGY_TAP')]
             + [('PYRO_RAIL', n) for n in ('*RECOVERY_ARM_FEED', '*STAGING_ARM_FEED', 'RECOVERY_ARMED_VBAT', 'STAGING_ARMED_VBAT')]
             + [('FIRE', f'{k}{i}{s}') for i in (1, 2, 3) for k, s in (('PYRO', '_ENERGY'), ('OUTPUT', '_HIGH'), ('OUTPUT', '_LOW'))]
             + [('FIRE_LOGIC', f'PYRO{i}{s}') for i in (1, 2, 3) for s in ('_GATE', '_FIRE', '_LS_SELECT')]
+            + [('FIRE_LOGIC', n) for n in ('PYRO3_HS_ENABLE', 'STAGE_ELIGIBLE')]     # D-23Nov.10, D-23Nov.12
             + [('LOGIC_FEED', n) for n in ('VBAT_SHUNT_IN', 'VBAT_PROTECTED', 'LOGIC_SELECTED', '4V_PRE', 'CORE_HELD_4V')]
             + [('RAIL_3V3', n) for n in RAILS]
             + [('RF50', n) for n in ('GNSS_RF', 'LORA_RF_SUBG')]
@@ -103,8 +104,8 @@ DRU = '''(version 1)
 (rule "Fire copper keeps 0.5 mm from other nets, except between pads of one part"
   (condition "(A.NetClass == 'FIRE' || A.NetClass == 'FIRE_LOGIC' || A.NetClass == 'PYRO_RAIL') && A.Net != B.Net && !(A.Type == 'Pad' && B.Type == 'Pad' && A.Parent.Reference == B.Parent.Reference)")
   (constraint clearance (min 0.5mm)))
-(rule "Fire logic leaves U201's pins at its class clearance, inside U201's courtyard only (D-22Nov.26)"
-  (condition "A.NetClass == 'FIRE_LOGIC' && A.enclosedByArea('U201_ESCAPE') && A.Net != B.Net")
+(rule "Fire logic keeps 0.2 mm inside a fine-pitch part's escape area: its courtyard and 0.2 mm (D-23Nov.8, D-23Nov.13)"
+  (condition "((A.NetClass == 'FIRE_LOGIC' && (%s)) || (B.NetClass == 'FIRE_LOGIC' && (%s))) && A.Net != B.Net")
   (constraint clearance (min 0.2mm)))
 (rule "RF lines take no via (D-21Nov.25)"
   (condition "A.Type == 'Via' && A.NetClass == 'RF50'")
@@ -134,7 +135,12 @@ FIXED = {
 }
 # stage C step 0 (D-22Nov.30): the placement is data, written by build.py --replace and read by every other build
 PLACEMENT = 'placement.json'
-ESCAPE_AREAS = ['U201']       # named rule areas on U201's courtyard, for the fire-logic waiver (D-22Nov.26)
+# D-23Nov.8, D-23Nov.13: fire logic keeps 0.2 mm inside each of these parts' escape areas, named <ref>_ESCAPE: the
+# courtyard and ESCAPE_MARGIN round it. Each part's own pads sit closer than the fire rule's 0.5 mm.
+ESCAPE_AREAS = ['U201', 'U6304', 'U6404', 'U6504', 'Q6301', 'Q6401', 'Q6501', 'U6502', 'U6001']
+ESCAPE_MARGIN = 0.2
+DRU = DRU % (' || '.join(f"A.enclosedByArea('{r}_ESCAPE')" for r in ESCAPE_AREAS),
+             ' || '.join(f"B.enclosedByArea('{r}_ESCAPE')" for r in ESCAPE_AREAS))   # both orders: the other item may be fire copper
 # stage C step 3 stopped at kill line 1 (docs/briefs/burrito-stage-c-step3.md): fanning the MCUs' pins inward left 34
 # ordinary nets open against 17, and their plane pins alone 19. engine/copper.py's mcu_fanout keeps
 # both, off, for Seán's call. To draw one: {'U201': [the nets its pins leave for their own copper], ...}, with
@@ -146,9 +152,10 @@ ANCHORS = {   # [J] placed before everything else, at these centres
     'U201': (40.0, 70.0, 0),                 # flight MCU, band 2
     'U401': (33.0, 126.0, 180),              # comms MCU, band 3: turned so USB leaves on the side facing J4401, and
                                              #   7 mm left of centre (stage B2 step 3: its wrong-side pins 19 -> 9)
-    'U6304': (32.5, 24.35, 270),             # channel high sides in a row behind J6601, OUT pins (5-7) forward,
-    'U6404': (41.5, 24.35, 270),             #   VS pins (8-10) aft toward the armed rails; at 24.35 (was 24.0) their
-    'U6504': (50.5, 24.35, 270),             #   refs clear J6601's name behind the capacitor row (D-22Nov.28)
+    'U6304': (32.5, 26.206, 270),            # channel high sides in a row behind J6601, OUT pins (5-7) forward,
+    'U6404': (41.5, 26.206, 270),            #   VS pins (8-10) aft toward the armed rails; at 26.206 (25.011 on the
+    'U6504': (50.5, 26.206, 270),            #   160 mm board; 24.35 until 23 Nov) two rows of capacitors and J6601's
+                                             #   name fit between (D-22Nov.28, D-23Nov.9)
     'U3304': (66.0, 72.0, 0),                # ADXL375 ~12 mm from hole (76, 79): near a hard mount (ADI Rev. B p. 26)
 }
 
@@ -197,7 +204,7 @@ SILK_NAMES = {
 }
 # names set further off than 0.25 mm, so parts that must sit at the pins fit between; the name stays clear as a box of
 # its own (D-22Nov.28): J6601's leaves a strip for C6601-C6606, a row of 0603s on their side
-SILK_NAME_GAP = {'J6601': 1.6}
+SILK_NAME_GAP = {'J6601': 3.3}     # 1.6 until 23 Nov: two rows of capacitors now sit between (D-23Nov.9)
 # refs kept clear as boxes of their own, not merged into the courtyard's box: an MCU's ref above its pins made that box
 # 1.9 mm deeper along the whole side, so no capacitor could sit at a pin there (D-23Nov.1); U4606's, turned, would
 # have spanned the side its RF pin faces (D-23Nov.3). The refs stay where they were
@@ -305,6 +312,16 @@ NEAR = [
 # D-22Nov.27: the three output stages placed as one block, at the same offsets from each high side (a TPS1H100 at
 # 270 degrees). One row of 0603s under its pin row 8-14: the energy link and the supply capacitor under the supply
 # pins (8-10), the current-limit resistor under pin 13, the sense resistor under pin 14, the IN pull-down beside them
+# the continuity and test taps on the fire outputs (sheet 06c) stay by the output stage, so their fire-net stubs are short
+NEAR += [dict(rule='part_to_pins', part=r, ic='J6601', mm=15.0,
+              src='a resistor on a fire output stays by the output stage: its stub is fire copper [J]')
+         for r in ('R6912', 'R6913', 'R6915', 'R6922', 'R6923', 'R6925', 'R6932', 'R6933', 'R6935')]
+# channel 3's fire command passes the staging inhibit (U6502, the AND gate; U6001, the latch) on its way to the high
+# side's IN pin: both are fire logic since D-23Nov.10 and D-23Nov.12, so they sit by the high side and the track stays short
+NEAR += [dict(rule='part_to_pins', part='U6502', ic='U6504', mm=18.0,
+              src='D-23Nov.10: the staging AND gate by channel 3 IN pin, so PYRO3_HS_ENABLE stays short: 17.6 mm on 23 Nov; nearer is for the fire-logic step [J]'),
+         dict(rule='part_to_pins', part='U6001', ic='U6502', mm=6.0,
+              src='D-23Nov.12: the staging latch by the AND gate, so STAGE_ELIGIBLE stays short [J]')]
 PYRO_STAMP = {
     'anchors': ('U6304', 'U6404', 'U6504'),
     'rows': [('energy link', ('R6310', 'R6410', 'R6510'), (-3.1, 5.5), 90),
@@ -314,41 +331,92 @@ PYRO_STAMP = {
              ('IN pull-down', ('R6303', 'R6403', 'R6503'), (4.3, 5.5), 270)],
 }
 
+# The output stage, drawn once and repeated (D-22Nov.27, D-23Nov.9). Each high side's supply (link, capacitor, VS pins
+# 8-10) and OUT stub (pins 7, 6 and the outer 0.15 mm of 5) are stamped; the paths to J6601 are per channel. HIGH 1
+# and 3 go round the ends of J6601's LOW row on L1; HIGH 2 passes between LOW pins 4 and 5 through a 0.5 mm neck
+# (D-23Nov.9), C6603 on it below the neck. The LOW pins leave on L6 through their barrels to the three FETs, whose
+# drains face J6601, each through three vias. Board mm; L1 F.Cu, L6 B.Cu. Copper keeps 0.5 mm from NC pins 4 and 11.
+PYRO_PARTS = {      # placed before anything else in the region, at these spots
+    'Q6301': (31.15, 6.2, 270), 'Q6401': (31.3, 12.9, 270), 'Q6501': (48.85, 6.0, 270),
+    'C6601': (31.35, 8.95, 180), 'C6605': (48.65, 8.95, 0),
+    'C6602': (36.225, 14.05, 180), 'C6603': (39.275, 14.05, 0), 'C6606': (43.775, 14.05, 0), 'C6604': (40.775, 15.75, 0),
+    # each FET's gate resistor and gate pull-down beside its gate pin (spec.NEAR: within 2 mm), 1 mm clear of the FET
+    'R6304': (28.6, 6.4, 90), 'R6305': (29.45, 3.5, 180),
+    'R6404': (28.0, 11.6, 0), 'R6405': (28.0, 13.4, 180),
+    'R6504': (47.95, 2.55, 270), 'R6505': (49.6, 2.55, 90),
+}
+HS_Y = 25.011       # the three high sides' centre line (placement.json), 1.7 mm further aft than at 23 Nov's region
+
+
+def _pyro_copper():
+    F, B, out = 'F.Cu', 'B.Cu', []
+    t = lambda net, lay, w, *path: out.append(dict(net=net, layer=lay, w=w, path=[(round(x, 3), round(y, 3)) for x, y in path]))
+    v = lambda net, *xy: out.extend(dict(net=net, via=p) for p in xy)
+    yo, ys = HS_Y - 2.9, HS_Y + 2.9          # OUT pins (5-7) and VS pins (8-10), each 0.45 x 1.5 mm
+    yb = yo - 2.01                           # the top of each OUT stub
+    for k, c in enumerate((1, 2, 3)):
+        dx = 9.0 * k
+        t(f'PYRO{c}_ENERGY', F, 1.47, (31.04 + dx, ys + 0.24), (31.04 + dx, ys + 1.49))   # VS pins 8, 9, 10 to the cap
+        t(f'PYRO{c}_ENERGY', F, 0.9, (29.4 + dx, HS_Y + 4.679), (31.04 + dx, HS_Y + 4.679))  # the energy link's pad
+        t(f'OUTPUT{c}_HIGH', F, 1.47, (31.04 + dx, yo - 0.25), (31.04 + dx, yb))         # OUT pins 7, 6, 5
+    t('OUTPUT1_HIGH', F, 1.0, (31.04, yb), (31.04, yb - 0.8), (33.7, yb - 3.46), (33.7, 8.97), (37.0, 8.97))
+    t('OUTPUT1_HIGH', F, 1.0, (33.7, 8.97), (32.125, 8.97))                         # C6601
+    t('OUTPUT3_HIGH', F, 1.0, (49.04, yb), (49.04, yb - 0.8), (46.3, yb - 3.54), (46.3, 8.97), (43.0, 8.97))
+    t('OUTPUT3_HIGH', F, 1.0, (46.3, 8.97), (47.875, 8.97))                         # C6605
+    t('OUTPUT2_HIGH', F, 1.0, (40.0, 8.97), (38.5, 10.47), (38.5, 11.04))
+    t('OUTPUT2_HIGH', F, 0.5, (38.5, 11.04), (38.5, 12.9))                          # the neck, between pins 4 and 5
+    t('OUTPUT2_HIGH', F, 1.0, (38.5, 12.9), (38.5, yb - 0.9), (40.04, yb))           # past C6603's pad 1
+    t('OUTPUT1_LOW', F, 1.0, (37.0, 11.97), (37.0, 14.05))                          # C6602
+    t('OUTPUT3_LOW', F, 1.0, (43.0, 11.97), (43.0, 14.05))                          # C6606
+    # each gate to its gate resistor and pull-down; the part inside the FET's escape area ends there (D-23Nov.8)
+    t('PYRO1_GATE', F, 0.15, (30.45, 5.225), (29.9, 5.35), (28.9, 5.575))
+    t('PYRO1_GATE', F, 0.15, (30.45, 5.225), (30.275, 4.65), (30.275, 3.5))
+    t('PYRO2_GATE', F, 0.15, (30.6, 11.925), (30.0, 11.78), (28.825, 11.6), (28.825, 13.4))
+    t('PYRO3_GATE', F, 0.15, (48.2, 4.95), (48.2, 4.47))
+    t('PYRO3_GATE', F, 0.15, (48.2, 4.47), (47.95, 3.45))
+    t('PYRO3_GATE', F, 0.15, (48.2, 4.47), (49.6, 3.45))
+    for net, (px, py), vx, sx in (('OUTPUT1_LOW', (31.475, 6.2), 32.3, 1), ('OUTPUT2_LOW', (31.625, 12.9), 32.3, 1),
+                                  ('OUTPUT3_LOW', (49.175, 6.0), 50.25, 1)):     # drain pad 8, and the via column
+        # from pad 8's outer half to just short of the column: 0.5 mm clear of the source pin 7 and of HIGH 1
+        t(net, F, 0.95, (px + sx * 0.275, py), (vx - sx * 0.2, py))
+        t(net, F, 0.6, (vx, py - 0.7), (vx, py + 0.7))
+        v(net, (vx, round(py - 0.7, 3)), (vx, round(py + 0.7, 3)), (px, py))
+    t('OUTPUT1_LOW', B, 1.0, (37.0, 11.97), (35.3, 10.27), (32.3, 7.27), (32.3, 5.5))
+    t('OUTPUT2_LOW', B, 1.0, (40.0, 11.97), (40.0, 16.6), (33.4, 16.6), (32.3, 15.5), (32.3, 12.2))
+    v('OUTPUT2_LOW', (40.0, 15.75))                                                  # C6604's pad 1
+    t('OUTPUT3_LOW', B, 1.0, (43.0, 11.97), (44.7, 10.27), (48.3, 10.27), (50.25, 8.32), (50.25, 6.7))
+    return out
+
+
+PYRO_COPPER = _pyro_copper()
+
 # The hard copper's floor plan, as keep-outs for the budget run (stage C/D review, call 9; meter.py --budget): where
 # stage C will draw it, each area with the copper's own clearance to other nets. Board mm, (x0, y0, x1, y1) boxes or
 # (path, width) bands; layers L1 F.Cu, L3 In2.Cu, L6 B.Cu. Not modelled: the arm feeds (fuse to plug), the logic
 # feeds (LOGIC_FEED), the USB and CAN pairs and the crystals, which are short or small.
-_FIRE = 1.0 + 2 * 0.5                     # a 1.0 mm fire track with 0.5 mm to other nets either side
 BUDGET = [
     # the armed rails (D-22Nov.3, D-23Nov.2): two 2.0 mm rails and the 1 mm GND strip between, x 9-16 along the left
-    # edge on L6 from the arm plugs, then across under band 1's aft edge to the three energy links
-    dict(name='corridor', layers=['B.Cu'], box=(9.0, 30.0, 16.0, 113.5)),
+    # edge on L6 from the arm plugs, then across under the stamp row (its ARMED pads end at y 31.8) to the three links
+    dict(name='corridor', layers=['B.Cu'], box=(9.0, 31.8, 16.0, 113.5)),
     dict(name='corridor, plugs', layers=['B.Cu'], box=(2.0, 106.0, 16.0, 123.5)),
-    dict(name='corridor, to the links', layers=['B.Cu'], box=(9.0, 30.0, 48.5, 37.0)),
-    # SRC_6A (4.0 mm): J102 and the umbilical J101 to Q101's drain; Q101's tab to U101 and the two arm fuses
-    dict(name='6 A in', layers=['F.Cu'], box=(12.0, 145.5, 23.9, 158.0)),
+    dict(name='corridor, to the links', layers=['B.Cu'], box=(9.0, 31.8, 48.5, 38.8)),
+    # SRC_6A (4.0 mm): J102 and the umbilical J101 to Q101's drain; Q101's tab to U101 and the two arm fuses; 1 mm
+    # short of U101's left pins, which escape between them
+    dict(name='6 A in', layers=['F.Cu'], box=(12.0, 145.5, 23.0, 158.0)),
     dict(name='6 A, J101', layers=['F.Cu'], box=(5.5, 131.8, 11.0, 135.6)),
     dict(name='6 A, J101 down', layers=['F.Cu'], box=(7.0, 131.8, 11.0, 149.5)),
     dict(name='6 A, J101 across', layers=['F.Cu'], box=(7.0, 145.5, 13.6, 149.5)),
-    dict(name='6 A tap', layers=['F.Cu'], box=(12.6, 137.6, 23.9, 144.6)),
-    # FIRE_LOGIC (D-22Nov.26): six nets at 0.5 mm, from under U201 up to the output stages, then across them
-    dict(name='fire logic', layers=['In2.Cu'], box=(38.5, 20.0, 44.5, 63.0)),
-    dict(name='fire logic, across', layers=['In2.Cu'], box=(23.0, 16.0, 51.0, 19.6)),
+    dict(name='6 A tap', layers=['F.Cu'], box=(12.6, 137.6, 23.0, 144.6)),
+    # FIRE_LOGIC (D-22Nov.26, D-23Nov.8): the escape under U201 at 0.2 mm, the trunk up to the high sides at 0.5 mm,
+    # and up between the chips to their IN pins and on to the FETs' gates
+    dict(name='fire logic, under U201', layers=['In2.Cu'], box=(39.9, 47.5, 41.8, 62.2)),
+    dict(name='fire logic', layers=['In2.Cu'], box=(38.8, 31.0, 43.2, 47.5)),
+    dict(name='fire logic, left', layers=['In2.Cu'], box=(35.5, 20.5, 38.5, 31.0)),
+    dict(name='fire logic, right', layers=['In2.Cu'], box=(44.5, 20.5, 47.5, 31.0)),
     # RF lines (D-21Nov.25, D-22Nov.16) on L1 with their gaps and fences
     dict(name='GNSS line', layers=['F.Cu'], box=(60.4, 2.2, 68.3, 6.0)),
     dict(name='LoRa line', layers=['F.Cu'], box=(11.0, 4.2, 14.6, 16.8)),
-    # fire copper: each supply between link, capacitor and pins; HIGH 1 and 3 round the ends of J6601's LOW row on L1,
-    # HIGH 2 round it on L6 (its pin sits behind the LOW row); the LOW pins down to the three FETs between J6601 and
-    # the high sides
-    *[dict(name=f'supply {c}', layers=['F.Cu'], box=(28.8 + 9 * k, 25.7, 32.4 + 9 * k, 28.6))
-      for k, c in enumerate((1, 2, 3))],
-    dict(name='HIGH 1', layers=['F.Cu'], w=_FIRE, path=[(31.2, 19.9), (31.2, 18.0), (34.3, 15.0), (34.3, 9.0),
-                                                        (32.1, 9.0), (37.0, 9.0)]),
-    dict(name='HIGH 3', layers=['F.Cu'], w=_FIRE, path=[(49.2, 19.9), (49.2, 18.0), (45.7, 15.0), (45.7, 9.0),
-                                                        (47.9, 9.0), (43.0, 9.0)]),
-    dict(name='HIGH 2', layers=['B.Cu'], w=_FIRE, path=[(40.2, 19.0), (33.0, 17.0), (33.0, 7.0), (40.0, 7.0),
-                                                        (40.0, 9.0)]),
-    dict(name='LOW, FETs', layers=['F.Cu'], box=(35.3, 12.8, 44.7, 19.4)),
+    # the fire copper itself is drawn (spec.PYRO_COPPER) and on the board
 ]
 
 # test points (stage B2 step 5): each aims for its net's route. These probe sensitive nodes, so they go in with their

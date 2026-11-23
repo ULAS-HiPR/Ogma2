@@ -11,8 +11,8 @@
 (rule "Fire copper keeps 0.5 mm from other nets, except between pads of one part"
   (condition "(A.NetClass == 'FIRE' || A.NetClass == 'FIRE_LOGIC' || A.NetClass == 'PYRO_RAIL') && A.Net != B.Net && !(A.Type == 'Pad' && B.Type == 'Pad' && A.Parent.Reference == B.Parent.Reference)")
   (constraint clearance (min 0.5mm)))
-(rule "Fire logic leaves U201's pins at its class clearance, inside U201's courtyard only (D-22Nov.26)"
-  (condition "A.NetClass == 'FIRE_LOGIC' && A.enclosedByArea('U201_ESCAPE') && A.Net != B.Net")
+(rule "Fire logic keeps 0.2 mm inside a fine-pitch part's escape area: its courtyard and 0.2 mm (D-23Nov.8, D-23Nov.13)"
+  (condition "((A.NetClass == 'FIRE_LOGIC' && (A.enclosedByArea('U201_ESCAPE') || A.enclosedByArea('U6304_ESCAPE') || A.enclosedByArea('U6404_ESCAPE') || A.enclosedByArea('U6504_ESCAPE') || A.enclosedByArea('Q6301_ESCAPE') || A.enclosedByArea('Q6401_ESCAPE') || A.enclosedByArea('Q6501_ESCAPE') || A.enclosedByArea('U6502_ESCAPE') || A.enclosedByArea('U6001_ESCAPE'))) || (B.NetClass == 'FIRE_LOGIC' && (B.enclosedByArea('U201_ESCAPE') || B.enclosedByArea('U6304_ESCAPE') || B.enclosedByArea('U6404_ESCAPE') || B.enclosedByArea('U6504_ESCAPE') || B.enclosedByArea('Q6301_ESCAPE') || B.enclosedByArea('Q6401_ESCAPE') || B.enclosedByArea('Q6501_ESCAPE') || B.enclosedByArea('U6502_ESCAPE') || B.enclosedByArea('U6001_ESCAPE')))) && A.Net != B.Net")
   (constraint clearance (min 0.2mm)))
 (rule "RF lines take no via (D-21Nov.25)"
   (condition "A.Type == 'Via' && A.NetClass == 'RF50'")

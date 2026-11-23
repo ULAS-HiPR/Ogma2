@@ -5135,3 +5135,37 @@ What the sheets show, read from the step-16 netlist:
   nil; the noise that matters is a placement's (the quick meter moved about 10 nets between near-identical
   placements on 22 November). 271, not 273: PYRO3_HS_ENABLE and STAGE_ELIGIBLE are fire logic now (D-23Nov.10,
   D-23Nov.12).
+
+## 23 November 2026: the pyro output stage drawn, and the region round it re-placed (D-23Nov.8 to D-23Nov.14)
+
+- Seán's answers: “Yes add to fire logic” (STAGE_ELIGIBLE, D-23Nov.12) and, asked whether each waiver area should be
+  the courtyard plus 0.2 mm, “Yes” (D-23Nov.13). The DRU rule now names nine areas (U201, the three high sides, the
+  three FETs, U6502, U6001) and applies whichever item of a pair is the fire logic: with only A tested, a gate track
+  beside its own FET's drain pad kept the 0.5 mm fire rule. `rules_check.py` plants fire logic 0.1 mm inside and 0.3 mm
+  past U6304's margin: 9 of 9 tests pass.
+- The copper (`spec.PYRO_COPPER`, drawn by `engine/copper.py`): per channel the supply (VS pins 8–10, the energy link's
+  pad, the supply capacitor) and the OUT stub (pins 7, 6 and the outer 0.15 mm of 5, 0.5 mm from NC pin 4), stamped;
+  HIGH 1 and 3 round the ends of J6601's LOW row on L1, 18.9 mm each, no via; HIGH 2 through a 0.5 mm neck 1.9 mm
+  long between LOW pins 4 and 5, 14.4 mm, no via; the LOW pins through their barrels on L6 to the FETs (8.4, 16.1 and
+  10.4 mm), each drain by three vias; each gate to its resistor and pull-down at 0.15 mm, inside the FET's escape area
+  where it leaves the pin.
+- Why the FETs sit beside J6601 and not behind its LOW row (D-23Nov.14): 6.9 mm between the LOW pads and the high
+  sides' pins couldn't take three FETs, four capacitors and six gate parts with their gaps. The high sides and stamp
+  moved 1.7 mm aft and J6601's name 3.3 mm behind its courtyard (1.6 before), so the four capacitors fit at the pins
+  in two rows: C6602 and C6606 2.1 mm from their pins, C6604 3.8, C6603 5.3, C6601 and C6605 4.9 (centre to centre).
+  Channel 3's FET sits in the 3.5 mm strip between J6601 and U4504, its gate parts above it, which also clears last
+  Stop's R6505 miss.
+- The region (x 9–58, y 0–43) re-placed with `replace_region.py --block --stamp`: the output stage's parts first at
+  their spots, its L1 copper closed to other parts with the fire rule round it, then the rest; the armed rails'
+  crossing (x 9–48.5, y 32.3–38.8) and corridor (x 9–16) closed to the pads of any part with a GND or FLIGHT_3V3 pad,
+  which would need a via there. U4601, U4602, U6502, U6701, U6901, U6001, U4603 and U4604 moved out of the crossing
+  with 95 small parts. Two placer bugs fixed on the way: a part committed twice left a stale entry in the placer's
+  grid (now refused), and a list naming a part twice placed it twice.
+- Checks: DRC 0 errors; two builds the same bytes (7b1fd46a); near misses 3 → 2 (U1701's output cap and D4501, as at
+  Stop 1b; R6505 fixed); a new rule keeps U6502 within 18 mm of channel 3's IN pin (17.6 today; nearer is the fire
+  logic's); probe stubs unchanged (TP36); JLC spacing 0; silk labels stuck 16 (the finish tidies them).
+- Counts. The plain quick meter (no hard copper modelled): 19 → 26 of 271, the parts closed out of the crossing
+  standing further from their routes. The budget run (quick; the floor plan as keep-outs, FLIGHT_3V3 the only
+  plane): 37 of 271 ordinary nets open, 1 of 22 rail nets, 154 s, 1.8 GB; the same run on the region placed with only
+  the crossing closed left 43 (U4601 then stood in the corridor). The gate is 25; a quick count above it is
+  inconclusive, so the full-effort budget run decides.

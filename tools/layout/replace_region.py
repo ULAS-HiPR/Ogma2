@@ -44,6 +44,11 @@ def main():
     ap.add_argument('--box', action='append', required=True, help='X0,Y0,X1,Y1 in board mm')
     ap.add_argument('--mcus', nargs='*', default=[])
     ap.add_argument('--stamp', action='store_true')
+    ap.add_argument('--also', nargs='*', default=[], help='lift these parts too, whatever their kind or place')
+    ap.add_argument('--closed', action='append', default=[], help='X0,Y0,X1,Y1: no re-placed part in this box '
+                    '(an area the hard copper takes, where a pad would need a via it can\'t have)')
+    ap.add_argument('--block', action='store_true', help="spec.PYRO_PARTS at their spots first, and spec.PYRO_COPPER's "
+                    'L1 copper, with the fire rule round it, closed to every other part')
     ap.add_argument('--plan')
     ap.add_argument('--write', action='store_true')
     ap.add_argument('--set', action='append', default=[], help="trials: a statement run in the spec's namespace")
@@ -69,6 +74,9 @@ def main():
         x, y = (c[0] + c[2]) / 2, (c[1] + c[3]) / 2
         return any(b[0] <= x <= b[2] and b[1] <= y <= b[3] for b in boxes)
     lifted = sorted(r for r in list(pl.placed) if liftable(r) and inside(r))
+    lifted = sorted(set(lifted) | {r for r in a.also if r in pl.placed})
+    if a.block:                                           # the output stage's own parts, wherever they stand
+        lifted = sorted(set(lifted) | {r for r in spec.PYRO_PARTS if r in pl.placed})
     for r in lifted:
         run.lift(r)
     run.movable = set()                                    # nothing outside the boxes is pushed
@@ -91,6 +99,35 @@ def main():
                     hits = run.conflicts(r, x, y, rot)
                     report.append(f'stamp: {r} ({role}) blocked at ({x}, {y}): {sorted(hits) if hits else "board"}')
 
+    # a closed box takes no pad of a part with a plane-net pad (GND, FLIGHT_3V3: D-23Nov.2): every such pad needs a via,
+    # and the box is the hard copper's, where no via may go. A part on signal nets alone may sit there.
+    boxes = [tuple(float(v) for v in c.split(',')) for c in a.closed]
+    closed = []
+    if boxes:
+        for r in lifted:
+            if any(n in ('GND', 'FLIGHT_3V3') for n in (run.net(r, q) for q in pl.pin_nets.get(r, {}))):
+                pl.pad_keepout[r] = list(pl.pad_keepout.get(r, [])) + boxes
+
+    # 1b. the output stage (D-22Nov.27, D-23Nov.9): its parts at their spots, then its L1 copper closed to the rest,
+    # sampled along each track as squares of the track's half width plus the fire rule's 0.5 mm
+    copper_rects = []
+    if a.block:
+        for r, (x, y, rot) in spec.PYRO_PARTS.items():
+            hits = run.conflicts(r, x, y, rot)
+            run.place(r, x, y, rot)
+            settled.add(r)
+            report.append(f'block: {r} at ({x}, {y}, {rot})' + (f', over {sorted(hits)}' if hits else ''))
+        for it in spec.PYRO_COPPER:
+            if it.get('layer') != 'F.Cu' or 'path' not in it:
+                continue
+            h = it['w'] / 2 + 0.5
+            for (x0, y0), (x1, y1) in zip(it['path'], it['path'][1:]):
+                n = max(1, int(math.hypot(x1 - x0, y1 - y0) / 0.25))
+                for i in range(n + 1):
+                    x, y = x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n
+                    copper_rects.append((x - h, y - h, x + h, y + h, 'pyro copper'))
+        pl.rects.extend(copper_rects)
+
     # 2. the MCUs' capacitors
     if a.mcus:
         rows = CT.prepare(run, a.mcus)
@@ -101,6 +138,8 @@ def main():
     region = lambda r: build.region_of(r, comps, nets_of, spec)[0] or (1, 1, spec.W - 1, spec.H - 1)
 
     def put(r):
+        if r in pl.placed:                                # already down (a list can name a part twice)
+            return True
         if pl.place_grow(r, region(r)):
             return True
         unplaced.append(r)
@@ -192,7 +231,7 @@ def main():
             run.rollback(mark)
             report.append(f'near: {part} still {g0:.1f} mm from {ic}, no spot in reach')
     run.orig = orig0
-    for k in lane_rects:
+    for k in lane_rects + copper_rects + closed:
         pl.rects.remove(k)
 
     moves = run.moves()
