@@ -80,6 +80,10 @@
    0.354,
    -0.354
   ],
+  "TP38": [
+   -3.206,
+   1.448
+  ],
   "TP4": [
    2.727,
    1.948
@@ -87,6 +91,10 @@
   "TP41": [
    0.354,
    -0.354
+  ],
+  "TP42": [
+   0.5,
+   -0.343
   ],
   "TP44": [
    -0.001,
@@ -152,11 +160,10 @@
   "TP26",
   "TP32",
   "TP33",
-  "TP38",
   "TP43",
   "TP9",
-  "U1401",
   "U1501",
+  "U2301",
   "U3104",
   "U3403",
   "U4301",
@@ -260,7 +267,7 @@
    "scale": 0.75,
    "tilt": 0
   },
-  "wave_items": 8345,
+  "wave_items": 8358,
   "top_tag": [
    63.8,
    131.2
@@ -275,20 +282,20 @@
    ]
   },
   "misses": [],
-  "items": 9123
+  "items": 9136
  },
  "placed": 567,
  "unplaced": [],
  "marks_unplaced": [],
  "no_region": [],
  "spills": [],
- "hpwl_mm": 9147.8,
+ "hpwl_mm": 9171.5,
  "hpwl_by_class_mm": {
   "RF50": 19.6,
   "FIRE": 118.8,
   "USB_DIFF": 47.3,
-  "SRC_6A": 99.5,
-  "PYRO_RAIL": 270.7
+  "SRC_6A": 96.7,
+  "PYRO_RAIL": 249.4
  },
  "density_by_band": {
   "1 RF and fire": 0.64,
@@ -2561,9 +2568,9 @@
    270
   ],
   "R8007": [
-   46.45,
-   124.5,
-   180
+   12.6,
+   105.6,
+   0
   ],
   "R8008": [
    45.45,
@@ -2651,7 +2658,7 @@
    0
   ],
   "TP16": [
-   10.05,
+   12.5,
    64.4,
    0
   ],
@@ -2796,8 +2803,8 @@
    0
   ],
   "TP42": [
-   14.0,
-   131.05,
+   9.0,
+   142.0,
    0
   ],
   "TP43": [
@@ -3465,9 +3472,14 @@
    "tracks": 239,
    "vias": 35,
    "mm": 478.4
+  },
+  "power": {
+   "tracks": 75,
+   "vias": 33,
+   "mm": 542.4
   }
  },
- "uuids": 20509,
+ "uuids": 20630,
  "metrics": {
   "plane_nets": {
    "BOOT_3V3": "island",
@@ -3478,20 +3490,20 @@
    "LORA_3V3": "island"
   },
   "signal_nets": 330,
-  "wire_mm": 7349.4,
+  "wire_mm": 7345.7,
   "wire_by_class_mm": {
    "CAN_DIFF": 64.4,
-   "Default": 5583.1,
+   "Default": 5618.0,
    "FIRE": 119.6,
    "FIRE_LOGIC": 304.7,
    "LOGIC_FEED": 267.6,
-   "PYRO_RAIL": 275.9,
+   "PYRO_RAIL": 242.3,
    "RAIL_3V3": 556.4,
    "RF50": 19.0,
-   "SRC_6A": 113.5,
+   "SRC_6A": 108.4,
    "USB_DIFF": 45.2
   },
-  "crossings": 2305,
+  "crossings": 2300,
   "crossings_worst_nets": [
    [
     "3V3_OPTIONAL",
@@ -3499,10 +3511,6 @@
    ],
    [
     "BRANCH_FAULT_N",
-    85
-   ],
-   [
-    "RECOVERY_ARMED_VBAT",
     85
    ],
    [
@@ -3522,12 +3530,16 @@
     57
    ],
    [
-    "4V_PRE",
+    "RECOVERY_ARMED_VBAT",
     56
    ],
    [
     "STAGING_ARMED_VBAT",
     56
+   ],
+   [
+    "4V_PRE",
+    55
    ],
    [
     "GNSS_EN",
@@ -3949,8 +3961,8 @@
    },
    "TP42": {
     "net": "VBAT_CROI_INPUT",
-    "to_pad": 9.5,
-    "to_route": 9.1
+    "to_pad": 6.0,
+    "to_route": 0.9
    },
    "TP43": {
     "net": "BAT_BLOCK_GATE",
@@ -4000,8 +4012,8 @@
   },
   "tp_stub_summary": {
    "n": 43,
-   "median_to_route": 4.4,
-   "median_to_pad": 6.6,
+   "median_to_route": 4.3,
+   "median_to_pad": 6.5,
    "over_10_to_route": 3,
    "over_20_to_route": 1
   },

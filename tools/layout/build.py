@@ -482,6 +482,8 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
             report['copper']['crystals'] = CU.crystals(bd, spec, fps, cu, data)
         if getattr(spec, 'PYRO_COPPER', None):
             report['copper']['pyro'] = CU.pyro(bd, spec, fps, cu, data)
+        if getattr(spec, 'POWER_COPPER', None):           # D-23Nov.28
+            report['copper']['power'] = CU.pyro(bd, spec, fps, cu, data, spec.POWER_COPPER)
         if getattr(spec, 'RF_LINES', None):
             report['copper']['rf_lines'] = CU.rf_lines(bd, spec, fps, cu, data)
         report['stages'].append('copper')

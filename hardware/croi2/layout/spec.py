@@ -564,23 +564,100 @@ def _tap_stubs():
 
 PYRO_COPPER = _pyro_copper() + _fire_logic_escapes() + _fire_logic_runs() + _tap_stubs()
 
+# --- power, stage C step 4 (midpoint review: "Power the same way"), part 1 (D-23Nov.28): the 6 A path, the arm feeds,
+# and the corridor with its taps and links, locked like the pyro band. Board mm; L1 F.Cu, L3 In2.Cu, L6 B.Cu.
+POWER_PARTS = {     # moved for this copper; placement.json holds them
+    'TP16': (12.5, 64.4, 0),     # the flight GND loop onto the corridor's GND strip (was 2.45 mm west, on a rail's line)
+    'TP42': (9.0, 142.0, 0),     # VBAT_CROI_INPUT's test point onto J101's run (was in the recovery feed's way)
+    'R8007': (12.6, 105.6, 0),   # the pyro-rail divider's top beside the recovery rail: the 40 mm to R8008 is then
+                                 # PYRO_RAIL_MID's, behind 22.1 kohm, not armed-rail copper's
+}
+
+
+def _power_copper():
+    out = []
+    t = lambda net, lay, w, *path: out.append(dict(net=net, layer=lay, w=w, path=[(round(x, 3), round(y, 3)) for x, y in path]))
+    v = lambda net, d, dr, *xy: out.extend(dict(net=net, via=(round(x, 3), round(y, 3)), d=d, drill=dr) for x, y in xy)
+    F, B, L3 = 'F.Cu', 'B.Cu', 'In2.Cu'
+    VB, ET = 'VBAT_CROI_INPUT', 'ENERGY_TAP'
+    # the 6 A path on L1 (SRC_6A, 4.0 mm: on L1 alone it meets 20 C at 6 A; L4, the brief's second layer, is GND
+    # since D-22Nov.29). J101 and J102 to Q101's source pins; R1003 and C1002 sit on it
+    t(VB, F, 4.0, (9.0, 147.8), (17.0, 147.8))
+    t(VB, F, 4.0, (17.0, 149.6), (23.4, 149.6))
+    t(VB, F, 4.0, (22.5, 150.0), (22.5, 156.6))                # J102's six VBAT pins
+    t(VB, F, 1.2, (18.39, 147.2), (20.93, 147.2))              # Q101's source pins 1-3, 0.4 mm short of its gate
+    t(VB, F, 0.2, (24.39, 145.2), (23.65, 145.2), (23.65, 147.9))   # U101's IN_SYS (pin 5)
+    t(VB, F, 1.6, (4.95, 133.81), (8.0, 133.81))               # J101's pin, between its peg and its GND pin
+    t(VB, F, 4.0, (9.0, 132.3), (9.0, 147.8))                  # J101 down the left side; TP42 sits on it
+    # the UV divider's top (R1001) and Q102's source, north of Q101's tab, by L6
+    t(VB, F, 0.3, (22.75, 137.22), (23.9, 137.2))
+    t(VB, F, 0.3, (26.45, 139.57), (26.45, 140.2))
+    v(VB, 0.45, 0.2, (23.9, 137.2), (26.45, 140.2), (23.6, 148.4))
+    t(VB, B, 0.3, (23.9, 137.2), (23.6, 137.5), (23.6, 148.4))
+    t(VB, B, 0.3, (26.45, 140.2), (24.0, 140.2), (23.6, 140.6))
+    # D1002, the master-enable diode by J103, along the clear strip between the power parts and J102
+    t(VB, F, 0.2, (25.0, 149.0), (55.6, 149.0), (55.6, 143.0), (56.95, 142.0))
+    # Q101's tab (ENERGY_TAP) to the two fuses, C1004, C1005, U101's IN pins and R7104
+    t(ET, F, 2.6, (15.4, 140.4), (21.0, 140.4))
+    t(ET, F, 1.9, (15.0, 138.76), (20.9, 138.76))
+    t(ET, F, 0.7, (13.4, 139.02), (15.0, 139.02))
+    t(ET, F, 0.75, (22.3, 143.45), (24.35, 143.45))
+    t(ET, F, 0.25, (22.3, 141.3), (28.6, 141.3), (29.83, 140.6))
+    # the arm feeds (PYRO_RAIL, 2.0 mm): recovery's on L1, up the gap west of the LDO's column of parts and across to
+    # J6101; staging's drops through three vias in its fuse's pad and runs on L6 to J6102, so the two never cross
+    RF, SF = 'RECOVERY_ARM_FEED', 'STAGING_ARM_FEED'
+    t(RF, F, 2.0, (16.05, 133.84), (16.05, 131.0), (14.4, 129.35), (14.4, 112.5), (9.1, 112.5))
+    v(SF, 0.6, 0.3, (19.2, 133.9), (20.05, 133.9), (20.9, 133.9))
+    t(SF, B, 2.0, (20.05, 133.9), (20.05, 129.0), (4.05, 129.0), (4.05, 125.76))
+    # the corridor on L6 (D-22Nov.3, D-23Nov.2): recovery west, a 1.0 mm GND strip, staging east, each 0.55 mm from
+    # the strip, north along the left edge, then east under the stamp row to the three links. The two GND loops (TP16,
+    # TP23) sit on the strip; the rails step 0.9 mm out round them
+    RA, SA = 'RECOVERY_ARMED_VBAT', 'STAGING_ARMED_VBAT'
+    xr, xg, xs = 10.45, 12.5, 14.55
+    yr, yg, ys = 33.3, 35.35, 37.4
+    loops = (84.55, 64.4)                                      # TP23 and TP16, both at x 12.5
+
+    def stepped(x0, dx, y_top, y_bottom):
+        pts = [(x0, y_bottom)]
+        for yc in loops:
+            pts += [(x0, yc + 3.1), (x0 + dx, yc + 2.2), (x0 + dx, yc - 2.2), (x0, yc - 3.1)]
+        return pts + [(x0, y_top)]
+    t(RA, B, 2.0, (3.6, 112.15), (3.6, 109.9), (4.6, 108.9), (xr - 1.0, 108.9), (xr, 107.9),
+      *stepped(xr, -0.9, yr + 2.0, 107.9)[1:], (xr + 2.0, yr), (39.1, yr))
+    t(SA, B, 2.0, (4.05, 121.8), (xs - 1.0, 121.8), (xs, 120.8), *stepped(xs, 0.9, ys + 2.0, 120.8)[1:],
+      (xs + 2.0, ys), (45.6, ys), (46.85, ys - 1.25), (46.85, 32.3), (47.4, 31.34))
+    t('GND', B, 1.0, (xg, 106.9), (xg, yg + 1.0), (xg + 1.0, yg), (40.6, yg))
+    v('GND', 0.45, 0.2, *[(xg, y) for y in (41, 50, 56, 69, 75, 82, 90, 98, 102, 106.9)], *[(x, yg) for x in (18, 22, 29)])
+    # the links: each armed pad drops to its rail through vias 0.5 mm from every other net on every layer, the fire
+    # logic's runs on L3 included. Channel 1's: one in the pad and three below
+    t(RA, F, 0.95, (29.4, 31.34), (29.4, 32.2))
+    t(RA, F, 0.5, (28.75, 32.5), (30.15, 32.5))
+    v(RA, 0.6, 0.3, (29.4, 31.34), (28.75, 32.6), (29.4, 32.45), (30.15, 32.45))
+    # channel 2's: two below, in the 2.5 mm between the fire logic's runs at x 37.5 and x 40.0 and clear of
+    # PYRO1_FIRE's diagonal under the pad (so none in the pad)
+    t(RA, F, 0.95, (38.4, 31.34), (38.75, 32.0), (38.75, 33.85))
+    v(RA, 0.6, 0.3, (38.75, 33.3), (38.75, 34.0))
+    # channel 3's: one in the pad and a column of three west of R6926, 0.5 mm east of PYRO2_FIRE's run (x 45.8)
+    t(SA, F, 0.6, (47.4, 31.34), (46.85, 32.55), (46.85, 34.25))
+    v(SA, 0.6, 0.3, (47.4, 31.34), (46.85, 32.55), (46.85, 33.4), (46.85, 34.25))
+    # the taps, each divider's top resistor, 0.3 mm on L1 from a via on its rail; R6101's crosses the corridor on L3
+    t(SA, F, 0.3, (xs, 99.6), (16.22, 99.6))
+    v(SA, 0.45, 0.2, (xs, 99.6))
+    v(RA, 0.45, 0.2, (xr, 103.6), (21.5, 103.9), (xr, 105.6))
+    t(RA, L3, 0.3, (xr, 103.6), (21.2, 103.6), (21.5, 103.9))
+    t(RA, F, 0.3, (21.2, 102.78), (21.5, 103.9))
+    t(RA, F, 0.3, (xr, 105.6), (11.77, 105.6))                 # R8007
+    return out
+
+
+POWER_COPPER = _power_copper()
+
 # The hard copper's floor plan, as keep-outs for the budget run (stage C/D review, call 9; meter.py --budget): where
 # stage C will draw it, each area with the copper's own clearance to other nets. Board mm, (x0, y0, x1, y1) boxes or
-# (path, width) bands; layers L1 F.Cu, L3 In2.Cu, L6 B.Cu. Not modelled: the arm feeds (fuse to plug), the logic
-# feeds (LOGIC_FEED), the USB and CAN pairs and the crystals, which are short or small.
+# (path, width) bands; layers L1 F.Cu, L3 In2.Cu, L6 B.Cu. Not modelled: the logic feeds (LOGIC_FEED), the USB and
+# CAN pairs and the crystals, which are short or small.
 BUDGET = [
-    # the armed rails (D-22Nov.3, D-23Nov.2): two 2.0 mm rails and the 1 mm GND strip between, x 9-16 along the left
-    # edge on L6 from the arm plugs, then across under the stamp row (its ARMED pads end at y 31.8) to the three links
-    dict(name='corridor', layers=['B.Cu'], box=(9.0, 31.8, 16.0, 113.5)),
-    dict(name='corridor, plugs', layers=['B.Cu'], box=(2.0, 106.0, 16.0, 123.5)),
-    dict(name='corridor, to the links', layers=['B.Cu'], box=(9.0, 31.8, 48.5, 38.8)),
-    # SRC_6A (4.0 mm): J102 and the umbilical J101 to Q101's drain; Q101's tab to U101 and the two arm fuses; 1 mm
-    # short of U101's left pins, which escape between them
-    dict(name='6 A in', layers=['F.Cu'], box=(12.0, 145.5, 23.0, 158.0)),
-    dict(name='6 A, J101', layers=['F.Cu'], box=(5.5, 131.8, 11.0, 135.6)),
-    dict(name='6 A, J101 down', layers=['F.Cu'], box=(7.0, 131.8, 11.0, 149.5)),
-    dict(name='6 A, J101 across', layers=['F.Cu'], box=(7.0, 145.5, 13.6, 149.5)),
-    dict(name='6 A tap', layers=['F.Cu'], box=(12.6, 137.6, 23.0, 144.6)),
+    # the armed rails, the arm feeds and the 6 A path: drawn (spec.POWER_COPPER), on the board itself since 23 Nov
     # FIRE_LOGIC: drawn (spec.FIRE_LOGIC_L3 and its escapes), on the board itself since 23 Nov
     # RF lines (D-21Nov.25, D-22Nov.16) on L1 with their gaps and fences
     dict(name='GNSS line', layers=['F.Cu'], box=(60.4, 2.2, 68.3, 6.0)),

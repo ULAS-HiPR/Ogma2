@@ -446,19 +446,20 @@ def rf_lines(bd, spec, fps, cu, data):
     return out
 
 
-def pyro(bd, spec, fps, cu, data):
+def pyro(bd, spec, fps, cu, data, items=None):
     """Stage C, the pyro output stage (D-22Nov.27, D-23Nov.9): spec.PYRO_COPPER's tracks and vias, locked, each on
-    its net. Fire vias take the FIRE class's 0.6 mm with a 0.3 mm hole."""
+    its net. Fire vias take the FIRE class's 0.6 mm with a 0.3 mm hole. `items`: another list of the same shape
+    (spec.POWER_COPPER, D-23Nov.28), drawn the same way."""
     by_short = {}
     for n, item in bd.b.GetNetsByName().items():
         by_short.setdefault(str(n).rsplit('/', 1)[-1], []).append(item)
     lay = {'F.Cu': K.F_Cu, 'B.Cu': K.B_Cu, 'In2.Cu': K.In2_Cu}
     ox, oy = spec.ORIGIN
     rep = {'tracks': 0, 'vias': 0, 'mm': 0.0}
-    for it in spec.PYRO_COPPER:
-        items = by_short.get(it['net'], [])
-        assert len(items) == 1, f"net {it['net']}: {len(items)} matches"
-        net = items[0]
+    for it in (spec.PYRO_COPPER if items is None else items):
+        nets = by_short.get(it['net'], [])
+        assert len(nets) == 1, f"net {it['net']}: {len(nets)} matches"
+        net = nets[0]
         if 'via' in it:
             x, y = it['via']
             v = K.PCB_VIA(bd.b)

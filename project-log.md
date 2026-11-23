@@ -5314,3 +5314,27 @@ What the sheets show, read from the step-16 netlist:
   open in each: take 2 (fb-b80b5012) 19; the taps trial on top of it (fb-0f9363d1) 25; take 3 on top of that
   (fb-t3b) 6. Before take 2 it was 27. Take 2 and the taps trial are at or under the gate, so the pyro band freezes.
 - A fire pin beside VCAP: Seán, "I think it should be a no." D-22Nov.25's neighbour rule stands as A26 holds it.
+
+## 23 November 2026: power, part 1 (D-23Nov.28)
+
+- Seán, 23 Nov: "Okay, start power." The midpoint review's step 4: the 6 A copper, the feeds, L5's plane, the
+  corridor, the same way as the pyro band.
+- Drawn and locked in spec.POWER_COPPER, built by the same routine as the pyro copper: the 6 A path on L1 (J101 and
+  J102 to Q101, Q101's tab to the fuses and U101), both arm feeds, the corridor's two armed rails and the GND strip
+  between them on L6, the three links' vias and the three divider taps. Each item was checked for clearance against
+  the board before the build (a scratch checker), then by KiCad's DRC.
+- The two GND loops on the left edge stood in the corridor's path. TP23 already sat on the strip's line; TP16 moves
+  2.45 mm east onto it, and the rails step out round both. TP42 (VBAT_CROI_INPUT) stood in the recovery feed's way and
+  now sits on J101's run. R8007, the pyro-rail divider's top, moves from the power band's east side to beside the
+  recovery rail.
+- The links: the fire logic's L3 runs pass under the stamp row, so each link's vias sit 0.5 mm from them. Channel 2
+  has room for two vias between them, none in its pad; channels 1 and 3 have one in the pad and three below.
+- Board 16fdde24: DRC 0 errors, rules check 9 of 9, every SRC_6A, PYRO_RAIL and fire net one piece. New warnings:
+  three silk overlaps from TP16's move, twelve GND vias on the strip dangling until the planes go in, and the
+  strip's east end (it can't take a via there, over the fire logic). Full-effort budget run (pw1-16fdde24): 7 of 271
+  ordinary nets open, 0 of 22 rails, 434 s, peak 5.2 GB (gate 25; take 3 left 6).
+- Found for part 2: no distance rule held the logic regulators' own parts, and the placer put them 12-22 mm from
+  their chips. The buck (U1301): input capacitors 15-19 mm from its VIN pins, output capacitors 12-17 mm, VCC
+  capacitor 18 mm, RT and feedback resistors 16-18 mm. The held core (U1401) and the input mux (U1101) are the same.
+  The brief's block templates (section 4) want them at the pins. Part 2 places those blocks to their datasheets
+  first, then draws the logic feeds and L5's plane.
