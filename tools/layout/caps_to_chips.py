@@ -14,7 +14,8 @@ default), each keeping its own distance rule, a test point staying beside its ne
 What never moves: the MCUs' capacitors, the crystals and their load capacitors, the stamped parts (spec.PYRO_PARTS,
 spec.POWER_PARTS, spec.PYRO_STAMP) and any part the scripted copper reaches. A part already in reach may be pushed
 aside to make room, only within its own rule.
-Nothing goes on the scripted copper or within the fire rule of fire copper, or in front of a crystal pin.
+Nothing goes on the scripted copper, within the fire rule of fire copper or 1 mm of an RF line, or in front of a
+crystal pin; a part already in an RF line's corridor is placed again, after the --first parts (D-24Nov.8).
 
 Prints every move and each capacitor still out of reach; --plan writes them as JSON; --write puts them in
 placement.json.
@@ -110,11 +111,19 @@ def main():
     run.approved = set()
     run.movable -= keep
     run.room = {r: a.room for r in run.movable}
+    rf_rects = []
     for n, g in cu:                                        # the scripted copper, closed to every part placed now
-        m = 0.5 if cls.get(n) in FIREISH else 0.0
+        m = 0.5 if cls.get(n) in FIREISH else 1.0 if cls.get(n) == 'RF50' else 0.0   # RF: 1 mm clear (D-24Nov.8)
         x0, y0, x1, y1 = g.bounds
         pl.rects.append((x0 - m, y0 - m, x1 + m, y1 + m, 'scripted copper'))
+        if cls.get(n) == 'RF50':
+            rf_rects.append(pl.rects[-1])
     settled, report = set(keep), []         # what may not be pushed aside: a part in reach may, keeping its own rule
+    evict = sorted(r for r in run.movable if r in pl.placed and r not in keep and any(
+        CT.P.overlap(pl.boxes_at(r, *pl.placed[r])[0], k) for k in rf_rects))
+    if evict:                                              # a part in an RF line's corridor is placed again, first
+        report.append(f"in an RF line's corridor, placed again: {', '.join(evict)}")
+        a.first = a.first + [r for r in evict if r not in a.first]     # after the ranked ones, in their order
 
     def gap(r, ic, only):
         x, y, rot = pl.placed[r]

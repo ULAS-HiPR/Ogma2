@@ -499,6 +499,8 @@ def planes(bd, spec):
                     shapes.append(g.buffer(it['w'] / 2 + pl['margin']))
             area = unary_union(shapes).simplify(0.02)
             polys = list(area.geoms) if hasattr(area, 'geoms') else [area]
+        elif 'box' in pl:                                 # a local pour (the RF lines' ground, D-24Nov.8)
+            polys = [sbox(*pl['box'])]
         else:
             i = pl.get('inset', 0.0)
             polys = [sbox(i, i, spec.W - i, spec.H - i)]
@@ -510,8 +512,9 @@ def planes(bd, spec):
             z.SetAssignedPriority(pl.get('priority', 0))
             z.SetLocalClearance(MM(pl.get('clearance', 0.2)))
             z.SetMinThickness(MM(0.2))
-            z.SetIslandRemovalMode(K.ISLAND_REMOVAL_MODE_NEVER)
-            z.SetPadConnection(K.ZONE_CONNECTION_THERMAL)
+            z.SetIslandRemovalMode(K.ISLAND_REMOVAL_MODE_NEVER if pl.get('islands', True) else
+                                   K.ISLAND_REMOVAL_MODE_ALWAYS)
+            z.SetPadConnection(K.ZONE_CONNECTION_FULL if pl.get('solid') else K.ZONE_CONNECTION_THERMAL)
             z.SetThermalReliefGap(MM(0.3))
             z.SetThermalReliefSpokeWidth(MM(0.4))
             o = z.Outline()

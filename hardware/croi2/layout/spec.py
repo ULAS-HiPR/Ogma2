@@ -90,7 +90,7 @@ NETCLASSES = [
     nc('FIRE_LOGIC', 0.15, 0.2, priority=4),
     nc('LOGIC_FEED', 1.0, 0.2, priority=5),
     nc('RAIL_3V3', 0.4, JLC['pad_to_track'], via_d=SIGNAL_VIA[0], via_drill=SIGNAL_VIA[1], priority=6),   # width: current
-    nc('RF50', 0.151, 0.203, priority=7),
+    nc('RF50', 0.142, 0.203, priority=7),         # grounded coplanar on L1 (D-22Nov.16): JLC's calculator, 3313, 22 Nov (D-24Nov.8)
     nc('USB_DIFF', 0.154, 0.2, dp_w=0.154, dp_gap=0.203, priority=8),
     nc('CAN_DIFF', 0.2, 0.2, dp_w=0.2, dp_gap=0.2, priority=9),
     nc('GND', 0.3, 0.2, priority=10),
@@ -152,6 +152,9 @@ DRU = '''(version 1)
 (rule "Fire logic keeps 0.2 mm inside a fine-pitch part's escape area: its courtyard and 0.2 mm (D-23Nov.8, D-23Nov.13)"
   (condition "((A.NetClass == 'FIRE_LOGIC' && (%s)) || (B.NetClass == 'FIRE_LOGIC' && (%s))) && A.Net != B.Net")
   (constraint clearance (min 0.2mm)))
+(rule "RF lines keep 1 mm from other nets' copper, ground apart (Seeed Wio-LR2021 PCB guide; layout brief 2; D-24Nov.8)"
+  (condition "A.NetClass == 'RF50' && B.NetClass != 'GND' && A.Net != B.Net")
+  (constraint clearance (min 1mm)))
 (rule "RF lines take no via (D-21Nov.25)"
   (condition "A.Type == 'Via' && A.NetClass == 'RF50'")
   (constraint disallow via))
@@ -252,8 +255,9 @@ SILK_NAMES = {
 SILK_NAME_GAP = {'J6601': 3.3}     # 1.6 until 23 Nov: two rows of capacitors now sit between (D-23Nov.9)
 # refs kept clear as boxes of their own, not merged into the courtyard's box: an MCU's ref above its pins made that box
 # 1.9 mm deeper along the whole side, so no capacitor could sit at a pin there (D-23Nov.1); U4606's, turned, would
-# have spanned the side its RF pin faces (D-23Nov.3). The refs stay where they were
-REFS_APART = ('U201', 'U401', 'U4606')
+# have spanned the side its RF pin faces (D-23Nov.3). The refs stay where they were. U4606's name, kept apart, stood
+# in the one strip within 3 mm of its VCC_IN pin, so since D-24Nov.8 it moves like the other served chips' names
+REFS_APART = ('U201', 'U401')
 # the logic regulators, whose own parts sit at their pins on every side (the brief's block templates, D-23Nov.29): their
 # refs don't count as courtyard for the placer, and the silk pass sets them where there's room
 LABELS_MOVE = ('U1301', 'U1401', 'U1101', 'U1701', 'U1102')
@@ -453,6 +457,10 @@ _WHY = {
             "node, so the millisecond ramp is unchanged (D-24Nov.2)",
     'NOUSE': "a power-good threshold whose output reaches only its pull-up and a test point, so its accuracy affects "
              "nothing on the board (D-24Nov.2)",
+    'RFVCC': "the LoRa module's 10 uF at VCC_IN, which Seeed wants as close as possible with the 100 nF (Wio-LR2021 "
+             "PCB guide, read 24 Nov; replaces D-24Nov.2's 10 mm, D-24Nov.8)",
+    'RFSPI': "a 470 ohm series resistor on the LoRa module's SPI, which Seeed wants as close to the module as possible: "
+             "it slows the edges that couple into the radio (Wio-LR2021 PCB guide, read 24 Nov; D-24Nov.8)",
     'BURST': "the LoRa module's bulk for millisecond transmit bursts; its 100 nF sits at the pin for the fast edges "
              "(D-24Nov.2)",
     'ENTRY': "filters the master-enable line where it enters from J103's cable, within the first 5 mm of its 50 mm "
@@ -477,7 +485,7 @@ _WHY = {
     'TERM': 'CAN termination at the bus end, by the transceiver',
 }
 PASSIVE_PINS = [
-    ('C1001', 'U101', '9', 15.0, 'DVDT'), ('C4612', 'U4606', '1', 10.0, 'BURST'),
+    ('C1001', 'U101', '9', 15.0, 'DVDT'), ('C4612', 'U4606', '1', 3.0, 'RFVCC'),
     ('R1503', 'R1501', '2', 10.0, 'BLEED'), ('R1603', 'R1601', '2', 10.0, 'BLEED'),
     ('R3603', 'R3601', '2', 10.0, 'BLEED'), ('R509', 'R501', '2', 10.0, 'BLEED'),
     ('R7003', 'R7001', '2', 10.0, 'BLEED'), ('C1403', 'U1401', '6', 20.0, 'BULK'),
@@ -532,9 +540,9 @@ PASSIVE_PINS = [
     ('R6106', 'U6103', '6', 10.0, 'ODPU'), ('R7007', 'U7001', '4', 10.0, 'ODPU'),
     ('C1003', 'R7101', '2', 10.0, 'OUTCAP'), ('R9002', 'Q9001', '1', 10.0, 'PROT'),
     ('R1013', 'U1002', '1', 10.0, 'PROT'), ('R203', 'U201', '41', 10.0, 'PROT'), ('R204', 'U2301', '3', 10.0, 'PROT'),
-    ('R4619', 'U4604', '6', 10.0, 'PROT'), ('R4614', 'U4606', '6', 10.0, 'PROT'),
-    ('R4615', 'U4606', '5', 10.0, 'PROT'), ('R4616', 'U4606', '4', 10.0, 'PROT'),
-    ('R4617', 'U4606', '7', 10.0, 'PROT'), ('R4618', 'U4606', '3', 10.0, 'PROT'),
+    ('R4619', 'U4604', '6', 10.0, 'PROT'), ('R4614', 'U4606', '6', 3.0, 'RFSPI'),
+    ('R4615', 'U4606', '5', 3.0, 'RFSPI'), ('R4616', 'U4606', '4', 3.0, 'RFSPI'),
+    ('R4617', 'U4606', '7', 3.0, 'RFSPI'), ('R4618', 'U4606', '3', 10.0, 'PROT'),
     ('R4620', 'U4606', '2', 10.0, 'PROT'), ('R6005', 'U6001', '3', 10.0, 'PROT'),
     ('R1015', 'R1014', '1', 10.0, 'PULL'), ('R205', 'R203', '2', 10.0, 'PULL'), ('R6302', 'R6304', '1', 10.0, 'PULL'),
     ('R6402', 'R6404', '1', 10.0, 'PULL'), ('R6502', 'R6504', '1', 10.0, 'PULL'),
@@ -677,6 +685,15 @@ LAYOUT_REFS = {
     'U6404': 'TPS1H100-Q1, https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf (layout brief 4)',
     'U6504': 'TPS1H100-Q1, https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf (layout brief 4)',
     'U7101': 'INA228, https://www.ti.com/lit/ds/symlink/ina228.pdf p. 39 (layout brief 4)',
+    # step 5 (24 Nov, D-24Nov.8)
+    'U4504': 'u-blox MAX-M10S integration manual UBX-20053088 R01, 3.3: 50 ohm line, grounded coplanar with GND on '
+             'L2 best, short, GND vias along it, no stubs; GND under the module on L1 and L2, no signals below it',
+    'U4606': 'Seeed Wio-LR2021 PCB design guide (wiki, read 24 Nov): grounded coplanar 50 ohm on the top layer, '
+             'no 90 degree bends, staggered GND via rows; 10 uF and 100 nF as close as possible to VCC_IN; 470 ohm '
+             'on NSS, SCK, MOSI and MISO as close to the module as possible; other copper 3W or 1 mm away',
+    'U201': 'ST AN2867 Rev 25, 7.1 and 7.2 (crystals): crystal and load capacitors as close as possible to the MCU, '
+            'short symmetric tracks, a ground guard ring and plane under them tied to the nearest MCU ground',
+    'U401': 'as U201 (ST AN2867 Rev 25, 7.1 and 7.2)',
 }
 # and so every chip a passive serves has its parts at its pins, as the logic regulators do (D-23Nov.29): its ref no
 # longer counts as courtyard for the placer, and the silk pass sets it where there's room
@@ -1155,7 +1172,93 @@ def _threshold_nodes():
     ]
 
 
-POWER_COPPER = _power_copper() + _logic_feeds() + _threshold_nodes()
+def _rf_lines():
+    """The two RF feed lines (D-21Nov.25, D-22Nov.16, D-23Nov.3, D-24Nov.8): grounded coplanar on L1, 0.142 mm with
+    the RF zones' 0.203 mm gap (spec.PLANES), no via, every bend 45 degrees. GNSS: out of U4504's RF pin through
+    D4501's pad, round J4501's GND leg into its centre pin, 8.0 mm. LoRa: out of U4606's RF pin, along the module
+    and through D4601's pad between J4601's legs into its centre pin, 13.1 mm. GND vias each side at 0.6 mm from
+    the centre line, 2 mm apart at most outside a part's own footprint (D-22Nov.16), and one by each ESD part's
+    GND pad. Drawn in capture/pw/rf.json, checked by cucheck2.py"""
+    W, out = 0.142, []
+    v = lambda x, y: out.append(dict(net='GND', via=(x, y), d=0.45, drill=0.2))
+    out.append(dict(net='GNSS_RF', layer='F.Cu', w=W, path=[(61.2, 4.4), (61.2, 3.35), (63.0, 3.35), (64.65, 5.0),
+                                                            (67.5, 5.0)]))
+    v(61.5, 1.9)                                           # D4501's GND pad
+    out.append(dict(net='GND', layer='F.Cu', w=0.3, path=[(61.5, 2.5), (61.5, 1.9)]))
+    v(62.75, 2.75)                                         # the fence between D4501 and J4501
+    out.append(dict(net='LORA_RF_SUBG', layer='F.Cu', w=W, path=[(13.4, 16.01), (14.2, 16.01), (14.45, 15.76),
+                                                                 (14.45, 13.45), (14.2, 13.2), (13.2, 13.2),
+                                                                 (12.9, 12.9), (12.9, 5.0)]))
+    v(14.45, 12.2)                                         # D4601's GND pad
+    out.append(dict(net='GND', layer='F.Cu', w=0.3, path=[(13.6, 12.2), (14.45, 12.2)]))
+    for x, y in ((14.85, 16.45), (15.05, 15.15), (15.05, 13.75), (12.25, 13.05), (12.2, 11.7), (12.3, 10.4),
+                 (13.5, 10.4)):
+        v(x, y)                                            # the fence outside the module, the diode and the SMA
+    return out
+
+
+def _crystals():
+    """The three crystals' traces and their ground (D-24Nov.9; ST AN2867 Rev 25, 7.1 and 7.2): each MCU pin to its
+    crystal pin and each load capacitor to the same crystal pin on L1, 0.1 mm, no via; a GND via on a short stub by
+    every crystal and load-capacitor GND pad, over L2's whole GND (no L1 pour: see spec.PLANES).
+    Routed by capture/pw/l1_route.py (grid A*, 0.025 mm, round every other net's copper at its clearance) and
+    checked by cucheck2.py. FLIGHT_LSE_OUT goes round C207 (U201's VBAT capacitor), not between its pads"""
+    return [
+        dict(net='FLIGHT_HSE_IN', layer='F.Cu', w=0.1, path=[(32.325, 54.312), (27.7, 54.125), (27.65, 54.075), (27.625, 54.05), (26.95, 53.35)]),
+        dict(net='FLIGHT_HSE_OUT', layer='F.Cu', w=0.1, path=[(32.325, 54.812), (28.25, 55.05)]),
+        dict(net='FLIGHT_HSE_IN', layer='F.Cu', w=0.1, path=[(26.62, 51.95), (26.95, 53.35)]),
+        dict(net='FLIGHT_HSE_OUT', layer='F.Cu', w=0.1, path=[(27.63, 56.45), (28.25, 55.05)]),
+        dict(net='FLIGHT_LSE_IN', layer='F.Cu', w=0.1, path=[(32.325, 52.312), (31.475, 52.1), (31.15, 51.75), (31.15, 50.6), (30.35, 49.8)]),
+        dict(net='FLIGHT_LSE_OUT', layer='F.Cu', w=0.1, path=[(32.325, 52.812), (29.25, 52.175), (27.85, 50.225), (27.85, 49.8)]),
+        dict(net='FLIGHT_LSE_IN', layer='F.Cu', w=0.1, path=[(30.35, 48.08), (30.35, 49.8)]),
+        dict(net='FLIGHT_LSE_OUT', layer='F.Cu', w=0.1, path=[(28.33, 48.0), (27.85, 49.8)]),
+        dict(net='COMMS_HSE_IN', layer='F.Cu', w=0.1, path=[(38.675, 81.955), (42.225, 82.53), (42.325, 82.58), (43.0, 83.3)]),
+        dict(net='COMMS_HSE_OUT', layer='F.Cu', w=0.1, path=[(38.675, 81.455), (41.7, 81.6)]),
+        dict(net='COMMS_HSE_IN', layer='F.Cu', w=0.1, path=[(42.52, 84.7), (43.0, 83.3)]),
+        dict(net='COMMS_HSE_OUT', layer='F.Cu', w=0.1, path=[(43.32, 80.2), (42.4, 80.875), (42.375, 80.9), (41.7, 81.6)]),
+        dict(net='GND', via=(26.1, 55.05), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(26.95, 55.05), (26.1, 55.05)]),
+        dict(net='GND', via=(29.1, 53.35), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(28.25, 53.35), (29.1, 53.35)]),
+        dict(net='GND', via=(27.58, 51.3), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(27.58, 51.95), (27.58, 51.3)]),
+        dict(net='GND', via=(26.67, 57.1), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(26.67, 56.45), (26.67, 57.1)]),
+        dict(net='GND', via=(29.7, 47.12), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(30.35, 47.12), (29.7, 47.12)]),
+        dict(net='GND', via=(27.37, 47.35), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(27.37, 48.0), (27.37, 47.35)]),
+        dict(net='GND', via=(43.85, 81.6), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(43.0, 81.6), (43.85, 81.6)]),
+        dict(net='GND', via=(40.85, 83.3), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(41.7, 83.3), (40.85, 83.3)]),
+        dict(net='GND', via=(43.48, 85.35), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(43.48, 84.7), (43.48, 85.35)]),
+        dict(net='GND', via=(44.93, 80.2), d=0.45, drill=0.2),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(44.28, 80.2), (44.93, 80.2)]),
+    ]
+
+
+def _usb_pair():
+    """The USB pair on L1, no via (D-24Nov.10): J4401's four pins through D4401's flow-through pads and R4405 and R4406
+    to U401, 0.154 mm (the USB class). R4405 and R4406 swapped places so each faces its U401 pin, which removes the
+    pair's crossing there; at the USB-C pins D- leaves both its pins on L1 and D+'s two pins (A6, B6) join round A7's
+    outer end, so the call 6 via pair isn't needed. Routed by capture/pw/l1_route.py, checked by DRC"""
+    return [
+        dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(7.355, 80.519), (11.105, 80.537), (12.505, 80.537), (13.155, 79.787), (13.15, 79.687)]),
+        dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(7.355, 80.019), (11.25, 79.687)]),
+        dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(7.355, 79.019), (11.25, 79.687)]),
+        dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(11.25, 79.687), (11.25, 77.413)]),
+        dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(13.15, 79.687), (13.15, 77.413)]),
+        dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(11.25, 77.413), (11.825, 76.638), (11.95, 76.563), (15.875, 76.563), (18.45, 78.888), (23.225, 78.888), (23.725, 79.4)]),
+        dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(13.15, 77.413), (19.875, 79.763), (21.1, 79.763), (21.925, 80.538), (23.325, 80.538), (23.875, 81.1)]),
+        dict(net='USB_DM', layer='F.Cu', w=0.154, path=[(25.375, 79.4), (26.35, 81.15), (26.35, 81.625), (26.425, 81.7), (26.45, 81.725), (26.75, 81.95), (27.325, 81.955)]),
+        dict(net='USB_DP', layer='F.Cu', w=0.154, path=[(25.525, 81.1), (26.125, 81.925), (26.675, 82.45), (27.325, 82.455)]),
+        dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(7.355, 80.519), (6.73, 80.344), (6.58, 80.194), (6.58, 79.844), (6.905, 79.519), (7.355, 79.519)]),
+    ]
+
+
+POWER_COPPER = _power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire
@@ -1165,6 +1268,12 @@ PLANES = [
     dict(layer='In3.Cu', net='GND'),
     dict(layer='In4.Cu', net='FLIGHT_3V3', inset=1.0),
     dict(layer='In4.Cu', net='GND', under=('PYRO_RAIL',), margin=0.5, priority=1, name='GND under the corridor'),
+    # each RF line's coplanar ground on L1 (D-22Nov.16, D-24Nov.8): its 0.203 mm gap is the RF class's clearance;
+    # pads join solid, and an island the fence doesn't reach is removed
+    dict(layer='F.Cu', net='GND', box=(60.2, 1.0, 68.9, 6.5), solid=True, islands=False, name='GNSS line ground'),
+    dict(layer='F.Cu', net='GND', box=(11.2, 3.5, 15.9, 16.9), solid=True, islands=False, name='LoRa line ground'),
+    # no L1 guard pour round the crystals (D-24Nov.9): tried, it flanked 0 to 59 % of each trace and closed the escapes
+    # of U201's pins beside it to the router; L2's whole GND lies 0.1 mm under every crystal trace
 ]
 SOLID_PADS = ('J102', 'J101')     # their GND pins carry the 6 A return: no thermal relief (brief section 4)
 
@@ -1175,9 +1284,8 @@ SOLID_PADS = ('J102', 'J101')     # their GND pins carry the 6 A return: no ther
 BUDGET = [
     # the armed rails, the arm feeds and the 6 A path: drawn (spec.POWER_COPPER), on the board itself since 23 Nov
     # FIRE_LOGIC: drawn (spec.FIRE_LOGIC_L3 and its escapes), on the board itself since 23 Nov
-    # RF lines (D-21Nov.25, D-22Nov.16) on L1 with their gaps and fences
-    dict(name='GNSS line', layers=['F.Cu'], box=(60.4, 2.2, 68.3, 6.0)),
-    dict(name='LoRa line', layers=['F.Cu'], box=(11.0, 4.2, 14.6, 16.8)),
+    # RF lines (D-21Nov.25, D-22Nov.16): drawn (spec._rf_lines) since 24 Nov, with their ground; the router keeps other
+    # nets 1 mm off them (engine/fanout.clearances, as spec.DRU)
     # the fire copper itself is drawn (spec.PYRO_COPPER) and on the board
 ]
 

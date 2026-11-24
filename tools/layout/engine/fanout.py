@@ -21,12 +21,13 @@ BIG_PAD_MM2 = 2.0
 
 FIRE_CLASSES = ('FIRE', 'FIRE_LOGIC', 'PYRO_RAIL')     # the brief's custom rule: 0.5 mm to other nets
 FIRE_CLEAR, HOLE_CLEAR = 0.5, 0.2
+RF_CLEAR = 1.0                             # other nets to an RF line, ground apart (spec.DRU, D-24Nov.8)
 EPS = 0.01
 
 
 def clearances(spec):
-    """pair(n1, n2) -> the copper clearance KiCad will ask between two nets: the larger net-class clearance, and
-    0.5 mm if either is fire copper (spec.DRU)."""
+    """pair(n1, n2) -> the copper clearance KiCad will ask between two nets: the larger net-class clearance, 0.5 mm
+    if either is fire copper, and 1 mm if either is an RF line and the other isn't GND (spec.DRU, D-24Nov.8)."""
     import fnmatch
     cls_cl = {c['name']: c['clearance'] for c in spec.NETCLASSES} if isinstance(spec.NETCLASSES[0], dict) else \
         {c.name: c.clearance for c in spec.NETCLASSES}
@@ -45,6 +46,8 @@ def clearances(spec):
         c = max(cls_cl.get(a, CLEAR), cls_cl.get(b, CLEAR))
         if a in FIRE_CLASSES or b in FIRE_CLASSES:
             c = max(c, FIRE_CLEAR)
+        if (a == 'RF50' and b != 'GND') or (b == 'RF50' and a != 'GND'):
+            c = max(c, RF_CLEAR)
         return c + EPS                     # the pad outlines are drawn 0.01 mm inside the true shape
     return pair
 

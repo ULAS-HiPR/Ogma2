@@ -5534,3 +5534,44 @@ What the sheets show, read from the step-16 netlist:
   before. Full-effort routing trial (d25-e0df9c2d): 4 of 271 ordinary nets open and 0 of 22 rails, 341 s, peak 4.1 GB
   (0954dd75 left 5 and 0). Open: BRANCH_FAULT_N, FLIGHT_HSE_IN, FLIGHT_LSE_OUT, FLIGHT_NRST.
 
+
+## 24 November 2026: Step 5, the RF lines, the crystals and the USB pair (D-24Nov.8 to D-24Nov.10)
+
+- Read first, as D-24Nov.7 asked: u-blox's MAX-M10S integration manual (UBX-20053088 R01, 3.3), Seeed's Wio-LR2021
+  PCB design guide and ST AN2867 Rev 25 (7.1, 7.2). Cited in spec.LAYOUT_REFS for U4504, U4606, U201 and U401.
+- RF lines (spec._rf_lines): grounded coplanar on L1, 0.142 mm (JLC's calculator for 3313, the width D-22Nov.16 left
+  open) with the RF class's 0.203 mm gap to a local L1 GND pour per line. GNSS 8.0 mm, LoRa 13.1 mm, no via, 45°
+  bends. GND vias 0.6 mm off each line; tools/layout/rf_check.py walks both sides of each line (860 points): no gap
+  over 2 mm outside a part's own footprint, and taking one fence via away is reported. Keep-aways, all met: the buck
+  module 107 mm or more, crystals 35 mm, USB parts 59 mm, the other radio 38 mm.
+- Other nets keep 1 mm from RF copper, ground apart: a DRC rule (spec.DRU), proven by a planted track 0.5 mm from the
+  LoRa line (rules check 11 of 11, with a ground track at 0.5 mm passing), and the router's clearances
+  (engine/fanout.clearances). The RF budget boxes came out: with the copper drawn they flagged it.
+- The LoRa module's parts, by Seeed's guide: C4612 (10 uF at VCC_IN) 3 mm, was 10 mm under D-24Nov.2's burst rule;
+  R4614-R4617 (470 ohm on SPI) 3 mm, were 10 mm. Placed (caps_to_chips, 100 nF first): C4611 0.5 mm, C4612 1.3 mm,
+  the four resistors 0.5 mm each, R4621 0.6 mm; C4613, C6901 and R4604 moved within their rules. It took U4606's
+  name moving: kept apart (D-23Nov.3), it held the one strip within 3 mm of VCC_IN. caps_to_chips now keeps parts
+  1 mm off RF copper and re-places any part in an RF line's corridor (R4621, C4612).
+- Crystals (spec._crystals): pin to crystal and load capacitor to crystal on L1, 0.1 mm, no via, routed by a grid
+  A* round other nets' copper (capture/pw/l1_route.py) and pre-checked by cucheck2.py. Y201 5.7 and 4.1 mm, Y202 3.6
+  and 6.0 mm, Y401 4.7 and 3.0 mm. C215 and C216 moved to 0.5 mm of their crystal pins. A via by every crystal and
+  load-capacitor GND pad; L2's GND is 0.1 mm under every trace. An L1 GND pour round each group was tried and
+  taken out: it flanked 0 to 59 % of each trace on both sides (capture/pw/guard.py; no room by the pin rows, the
+  neighbouring pads or between each IN/OUT pair). The routing trial lost ground with the crystal and USB copper,
+  and not from the pour: the same 8 nets failed with it (a run stopped at 7 minutes, so void) and without it.
+  FLIGHT_LSE_IN runs along U201's pin row in front of pins 5 to 7 (FLIGHT_VBAT, NOR_RESET_REQUEST); USB D+ crosses
+  in front of U401's SWDIO pin. Next pass: route them round their neighbours' escapes. The first
+  route ran FLIGHT_LSE_OUT between C207's pads and DRC found it 0.0987 mm from one (the router's pad outlines are
+  drawn 0.005 mm inside): the router now keeps 0.11 mm and goes round C207.
+- USB (spec._usb_pair): on L1, no via. R4405 and R4406 swapped places, so each faces its U401 pin and the pair no
+  longer crosses there. D- leaves both USB-C pins to D4401; D+'s A6 and B6 join round A7's outer end, under the
+  receptacle's rear. Call 6 planned a via pair; none was needed. D4401 to the resistors the two lines run apart
+  (11.7 and 14.0 mm): fine at 12 Mbit/s.
+- CAN, tried on L1 for the record: as placed, each pair wraps round a connector pin's outer end at the board edge.
+  Turned 180° in place, R510 takes away bus 1's crossing at U503; every leg routed on L1 but CAN_H's last, to
+  J501, whose only L1 path ran inside the board edge's 0.2 mm. Bus 2 keeps one crossing whichever way R515 and
+  D502 turn, so it gets call 6's via pair. Next.
+- Board 5f80a180: DRC 0 errors, rules check 11 of 11, planted-miss test 8 of 8, RF check passes. Distance rules: 464
+  distances in 440 rows, 1 miss (D4501), 9 written exceptions, all approved and mitigated. RF nets whole; connectivity
+  otherwise as before. Full-effort routing trial (d25-5f80a180), the router's retry summaries: 8 of 271 ordinary nets failing (NEW_FLIGHT_CLEAR_REQUEST, FLIGHT_VBAT, COMMS_SWDIO, GNSS_TX, NOR_RESET_REQUEST, FOINSE_SCL, NOR_EN, FLIGHT_NRST) and 0 of 22 rails; its final count was still running at commit. 796829c8, with only the RF lines, left 1 and 0; e0df9c2d 4 and 0. Under the gate of 25, but 7 worse than the RF board.
+- For Seán: D4501's rule (decisions.md, Open). And C4612's rule is tighter than the one you approved in D-24Nov.2.

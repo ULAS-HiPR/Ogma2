@@ -33,6 +33,9 @@
 (rule "Fire logic keeps 0.2 mm inside a fine-pitch part's escape area: its courtyard and 0.2 mm (D-23Nov.8, D-23Nov.13)"
   (condition "((A.NetClass == 'FIRE_LOGIC' && (A.enclosedByArea('U201_ESCAPE') || A.enclosedByArea('U6304_ESCAPE') || A.enclosedByArea('U6404_ESCAPE') || A.enclosedByArea('U6504_ESCAPE') || A.enclosedByArea('Q6301_ESCAPE') || A.enclosedByArea('Q6401_ESCAPE') || A.enclosedByArea('Q6501_ESCAPE') || A.enclosedByArea('U6502_ESCAPE') || A.enclosedByArea('U6001_ESCAPE'))) || (B.NetClass == 'FIRE_LOGIC' && (B.enclosedByArea('U201_ESCAPE') || B.enclosedByArea('U6304_ESCAPE') || B.enclosedByArea('U6404_ESCAPE') || B.enclosedByArea('U6504_ESCAPE') || B.enclosedByArea('Q6301_ESCAPE') || B.enclosedByArea('Q6401_ESCAPE') || B.enclosedByArea('Q6501_ESCAPE') || B.enclosedByArea('U6502_ESCAPE') || B.enclosedByArea('U6001_ESCAPE')))) && A.Net != B.Net")
   (constraint clearance (min 0.2mm)))
+(rule "RF lines keep 1 mm from other nets' copper, ground apart (Seeed Wio-LR2021 PCB guide; layout brief 2; D-24Nov.8)"
+  (condition "A.NetClass == 'RF50' && B.NetClass != 'GND' && A.Net != B.Net")
+  (constraint clearance (min 1mm)))
 (rule "RF lines take no via (D-21Nov.25)"
   (condition "A.Type == 'Via' && A.NetClass == 'RF50'")
   (constraint disallow via))
