@@ -5676,3 +5676,25 @@ What the sheets show, read from the step-16 netlist:
   COMMS_3V3, FLIGHT_NRST and ADC_PYRO3_CONTINUITY as blockers, with FLIGHT_NRST, FLIGHT_HSE_OUT and GNSS_TX
   protected within 3 mm. Measured: FLIGHT_NRST's drawn L6 run passes 0.43 mm from U201.18's in-pad via site. For NEW_FLIGHT_CLEAR_REQUEST and TE_SDA it names fire copper (PYRO1_FIRE) among the
   blockers, with FLIGHT_NRST and GNSS_TX protected within 3 mm.
+
+## 24 November 2026: D-24Nov.13's last two calls: the CAN pairs drawn; U201's pins under L3 fire copper counted
+
+- The CAN pairs (call 4), by route_scoped.py on L1 and L3 together, L3 at ten times L1's cost, on trial
+  d25-4c8c5ec1's fanned board with other pins' lanes kept out, frozen as data (spec.CAN_RUNS), 0.2 mm (the CAN
+  class). Each bus takes one via pair, where H passes under L: bus 1's H drops through a via in U503's pin 7 and comes
+  up 1.9 mm south, beside R510; bus 2's H crosses under L between U505 and R515, 2.2 mm on L3. No part moved: with
+  the via pair at the transceiver, R510 needn't turn (D-24Nov.10), and J501's pins are reached from the north gap
+  (CAN_L) and from the south (CAN_H), away from the board edge. Each transceiver pin leaves square.
+- Board 409f3371: DRC 0 errors, rules check 11 of 11, planted-miss test 11 of 11, RF check passes, each CAN net in
+  one piece (4 pads). 358 lanes, 4 crossed, the same 4 as before.
+- Routing trial (d25-409f3371, alone, the last half-grid lap skipped): 3 of 271 open and 0 of 22 rails, 318 s, peak
+  3.7 GB: ADC_PYRO1_CONTINUITY, HG_NCS, TE_SDA. NEW_FLIGHT_CLEAR_REQUEST now routes. Findings, open two runs running
+  or more: ADC_PYRO1_CONTINUITY (four runs; at U201.18) and TE_SDA (two runs; U201.89). For TE_SDA the router's log
+  names NEW_FLIGHT_CLEAR_REQUEST, PYRO1_FIRE and FLIGHT_NRST as blockers, with FLIGHT_NRST, GNSS_TX and the fire
+  logic protected within 3 mm; and U201.89's in-pad via site lies 0.2 mm from PYRO1_FIRE on L3 (next bullet).
+- The count (call 5, tools/layout/inpad_fire.py): 11 of U201's 99 connected pins have their in-pad via site under L3
+  fire copper, closer than the DRU's 0.5 mm, all signals on the top row (pins 76 to 95): FLIGHT_SWCLK and TDK_DRDY
+  (PYRO2_FIRE), MAG_INT and BUZZER_DRIVE (PYRO3_LS_SELECT), STAGING_ARM_SENSE, NEW_FLIGHT_CLEAR_REQUEST and TE_SDA
+  (PYRO1_FIRE), BMP_SCL and BMP_SDA (PYRO1_LS_SELECT), FLIGHT_BOOT0 and FOINSE_SCL (PYRO2_LS_SELECT). Each has to
+  escape on L1 past its fire run before it can take a via. One or two of the eleven were open in each of the last
+  five complete trials (FOINSE_SCL, BMP_SDA, BMP_SCL, NEW_FLIGHT_CLEAR_REQUEST, TE_SDA).

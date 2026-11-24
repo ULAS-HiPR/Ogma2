@@ -41,6 +41,7 @@ def main():
     ap.add_argument('--out', required=True)
     ap.add_argument('--grid', default='0.05')
     ap.add_argument('--layers', nargs='+', default=['F.Cu', 'In2.Cu', 'B.Cu'])
+    ap.add_argument('--krt-args', default='', help="extra router flags, one string, e.g. '--layer-costs 1 10'")
     a = ap.parse_args()
     spec = build.load_spec('croi2')
     ox, oy = spec.ORIGIN
@@ -74,7 +75,8 @@ def main():
     cmd = [KRT_PY, 'py_router/route.py', str(WORK / 'in.kicad_pcb'), str(WORK / 'out.kicad_pcb'),
            '--nets'] + [glob_escape(full[n]) for n in a.nets] + \
           ['--layers', *a.layers, '--grid-step', a.grid, '--no-bga-zones', '--escalation', 'off',
-           '--json-out', str(WORK / 'krt.json')] + (['--net-clearances', str(netcl)] if netcl.exists() else [])
+           '--json-out', str(WORK / 'krt.json')] + (['--net-clearances', str(netcl)] if netcl.exists() else []) + \
+          a.krt_args.split()
     with open(WORK / 'krt.log', 'w') as log:
         rc = subprocess.run(cmd, cwd=KRT, stdout=log, stderr=subprocess.STDOUT).returncode
     print(f'lanes as keep-outs: {n_ko}; router rc {rc}; log {WORK / "krt.log"}')

@@ -1350,8 +1350,54 @@ def _scripted_nets():
     return out
 
 
+# The CAN pairs (D-24Nov.13, call 4): routed by route_scoped.py on L1 and L3 together, L3 at ten times L1's cost, on
+# trial d25-4c8c5ec1's fanned board with other pins' lanes kept out, and frozen here: each bus takes one via pair,
+# where H passes under L. Bus 1's H drops through a via in U503's pin 7 and comes up 1.9 mm south, beside R510;
+# bus 2's H crosses under L between U505 and R515 (2.2 mm on L3). 0.2 mm (the CAN class), 0.45 / 0.2 vias; board mm.
+CAN_RUNS = {
+    'CAN_H': dict(vias=[(66.45, 96.2), (66.45, 98.1)], runs=[
+        ('F.Cu', [
+            (69.9, 103.5), (67.55, 103.5), (67.2, 103.15), (67.2, 102.4), (68.15, 101.45), (68.15, 100.05),
+            (66.45, 98.35), (66.45, 98.1),
+        ]),
+        ('F.Cu', [(70.15, 103.75), (70.15, 106.9), (73.45, 110.2), (77.75, 110.2), (78.45, 109.5)]),
+        ('In2.Cu', [(66.45, 98.1), (66.45, 96.2)]),
+    ]),
+    'CAN_L': dict(vias=[], runs=[
+        ('F.Cu', [
+            (77.7, 108.25), (76.45, 107.0), (76.45, 106.25), (74.55, 106.25), (69.95, 101.65), (69.95, 100.05),
+        ]),
+        ('F.Cu', [
+            (70.4, 99.7), (71.55, 98.55), (71.55, 98.35), (69.35, 96.15), (67.9, 96.15), (67.3, 96.75),
+            (66.6, 96.75),
+        ]),
+    ]),
+    'CAN2_H': dict(vias=[(67.6, 72.45), (69.8, 72.45)], runs=[
+        ('F.Cu', [(70.15, 72.4), (69.85, 72.4)]),
+        ('F.Cu', [(67.55, 72.4), (66.15, 72.4)]),
+        ('F.Cu', [(78.45, 75.1), (77.7, 75.85), (72.75, 75.85), (70.15, 73.25), (70.15, 71.45)]),
+        ('In2.Cu', [(69.8, 72.45), (67.6, 72.45)]),
+    ]),
+    'CAN2_L': dict(vias=[], runs=[
+        ('F.Cu', [
+            (66.15, 73.0), (68.0, 73.0), (68.5, 73.5), (69.25, 72.75), (69.25, 70.8), (69.65, 70.4), (74.65, 70.4),
+            (76.9, 72.65), (76.9, 73.1), (77.7, 73.9),
+        ]),
+        ('F.Cu', [(69.25, 71.45), (68.35, 71.45)]),
+    ]),
+}
+
+
+def _can_pairs():
+    out = []
+    for net, d in CAN_RUNS.items():
+        out += [dict(net=net, via=v, d=0.45, drill=0.2) for v in d['vias']]
+        out += [dict(net=net, layer=lay, w=0.2, path=pts) for lay, pts in d['runs']]
+    return out
+
+
 POWER_COPPER = (_power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
-                + _scripted_nets())
+                + _scripted_nets() + _can_pairs())
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire
