@@ -5575,3 +5575,12 @@ What the sheets show, read from the step-16 netlist:
   distances in 440 rows, 1 miss (D4501), 9 written exceptions, all approved and mitigated. RF nets whole; connectivity
   otherwise as before. Full-effort routing trial (d25-5f80a180), the router's retry summaries: 8 of 271 ordinary nets failing (NEW_FLIGHT_CLEAR_REQUEST, FLIGHT_VBAT, COMMS_SWDIO, GNSS_TX, NOR_RESET_REQUEST, FOINSE_SCL, NOR_EN, FLIGHT_NRST) and 0 of 22 rails; its final count was still running at commit. 796829c8, with only the RF lines, left 1 and 0; e0df9c2d 4 and 0. Under the gate of 25, but 7 worse than the RF board.
 - For Seán: D4501's rule (decisions.md, Open). And C4612's rule is tighter than the one you approved in D-24Nov.2.
+
+## 24 November 2026: Step 5's routing trial, final count
+
+- d25-5f80a180 finished after the commit: 9 of 271 ordinary nets open and 1 of 22 rails, 510 s, peak 4.0 GB.
+  Open: COMMS_SWDIO, FLIGHT_NRST, FLIGHT_VBAT, FOINSE_SCL, GNSS_TX, HG_INT1, NOR_EN, NOR_RESET_REQUEST,
+  PYRO3_CS_HALF; rail USB_VBUS. The board with only the RF lines (796829c8) left 1 and 0.
+- USB_VBUS is new: J4401's two VBUS pin pairs (A4/B9 above the data pins, A9/B4 below) can't meet on L1 across the
+  data lines, and D+'s join round A7's outer end closes the way under the receptacle. Next: D+'s join by call 6's
+  via pair, then the crystal and USB traces rerouted round their neighbours' escapes.
