@@ -251,6 +251,9 @@ def main():
                     help="extra router flags for every pass, one string (stage D's knobs), e.g. '--layer-costs 1 1 1'")
     ap.add_argument('--plane-rails', nargs='+', default=[],
                     help='with --rails-as-tracks: these rails stay planes (e.g. FLIGHT_3V3 as a whole L5 plane)')
+    ap.add_argument('--no-finer-lap', action='store_true',
+                    help="skip the router's final whole-board lap at half the grid (krt_wrap.py): it needs more memory "
+                         'than the session has on this board (24 Nov)')
     ap.add_argument('--budget', action='store_true',
                     help="the budget run (stage C/D review, call 9): spec.BUDGET's areas become keep-outs for tracks and "
                          'vias on their layers, for the fanout and the router alike')
@@ -365,6 +368,7 @@ def main():
     dropped_fan = fan_drc.pop('(the waiver model: a net against its twin, dropped)', 0)
     rep = {'board': a.pcb, 'length_mm': length, 'copper_layers': b.GetCopperLayerCount(), 'router_layers': a.layers,
            'classes': a.classes or 'all', 'via_in_pad': a.via_in_pad, 'krt_minutes': a.krt_minutes,
+           'no_finer_lap': a.no_finer_lap,
            'rails_as_tracks': a.rails_as_tracks, 'plane_rails': a.plane_rails, 'krt_args': a.krt_args,
            'fire_logic_twins': sorted(waived), 'net_clearance_overrides': a.net_clearance,
            'plane_nets': {M.short(n): l for n, l in sorted(planes.items())},
@@ -403,7 +407,8 @@ def main():
                      '--net-clearances', str(out / 'net-clearances.json'),
                      '--json-out', str(out / f'krt-pass{k}.json')] + (['--quick', a.quick] if a.quick != '0' else []) \
                 + a.krt_args.split()
-            cmd = [KRT_PY, 'py_router/route.py', str(src), str(dst), '--nets'] + [glob_escape(n) for n in nets] + flags
+            cmd = [KRT_PY] + ([str(HERE / 'krt_wrap.py')] if a.no_finer_lap else []) + \
+                ['py_router/route.py', str(src), str(dst), '--nets'] + [glob_escape(n) for n in nets] + flags
             tp = time.time()
             left = None if a.krt_minutes is None else a.krt_minutes * 60 - (tp - t1)
             if left is not None and left <= 0:

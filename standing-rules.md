@@ -248,3 +248,19 @@ Proposed by Claude (Fable) after step 5's routing trial; approved by Seán and l
    - **Today:** one trial was killed by a build run beside it, another was stopped early and its partial count
      reported, and "no via pair needed" for USB went into the record before its trial finished, which then withdrew
      it.
+
+## D-24Nov.13 (24 Nov 2026): two rules from Fable's second review of step 5
+
+Proposed by Claude (Fable) after the second trial of step 5; approved by Seán and logged in Claude's words.
+
+> "I approve all Fables calls above, including the 2 candidate rules, and the hand to opus in order plan. GO"
+
+1. **Judge a routing trial by its nets.** A net open two trials running, with the router's reason for it, is a
+   finding to act on. The open count is read only against the gate of 25; the rails stay at none open. A stop line
+   set inside the trial's own run-to-run spread steers by noise.
+   - **Today:** the count went 1, 9, 6 with different nets each time. Only four nets were open twice running:
+     FLIGHT_NRST, GNSS_TX, COMMS_SWDIO and USB_VBUS.
+2. **A check passes at zero.** Anything a check lists that nobody will fix gets an approved exception or leaves the
+   check's scope, so a non-zero result always means something new.
+   - **Today:** the lane count listed 10 crossings, 7 of them from older blocks' copper, and some harmless: a pin
+     whose own net is already drawn whole needs no lane.

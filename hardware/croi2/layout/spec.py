@@ -695,6 +695,9 @@ LAYOUT_REFS = {
     'U201': 'ST AN2867 Rev 25, 7.1 and 7.2 (crystals): crystal and load capacitors as close as possible to the MCU, '
             'short symmetric tracks, a ground guard ring and plane under them tied to the nearest MCU ground',
     'U401': 'as U201 (ST AN2867 Rev 25, 7.1 and 7.2)',
+    'D4401': 'ST USBLC6-2 datasheet, 2.3: as close as possible to the connector; the GND and VBUS tracks as short as '
+             'possible. It does not say the two I/O pins of a line are joined inside, so the pair crosses the part on '
+             'copper (D-24Nov.13)',
 }
 # and so every chip a passive serves has its parts at its pins, as the logic regulators do (D-23Nov.29): its ref no
 # longer counts as courtyard for the placer, and the silk pass sets it where there's room
@@ -1245,26 +1248,41 @@ def _crystals():
 
 
 def _usb_pair():
-    """The USB pair on L1, no via (D-24Nov.10): J4401's four pins through D4401's flow-through pads and R4405 and R4406
-    to U401, 0.154 mm (the USB class). R4405 and R4406 swapped places so each faces its U401 pin, which removes the
-    pair's crossing there; at the USB-C pins D- leaves both its pins on L1 and D+'s two pins (A6, B6) join round A7's
-    outer end, under the receptacle's rear (J4401's footprint carries no keep-out). Routed by l1_route.py, checked by
-    DRC. Open (D-24Nov.12): D4401's VBUS pin is closed in by these lines and can't take a via over the corridor"""
+    """The USB pair on L1, no via (D-24Nov.10, D-24Nov.13): J4401's four pins through D4401's flow-through pads and
+    R4405 and R4406 to U401, 0.154 mm (the USB class). D4401 sits east of the armed corridor, turned so the pair runs
+    straight through its pad rows on copper (ST USBLC6-2 2.3), its VBUS and GND pins each on a short track to a via;
+    R4405 and R4406 sit north of U401's west side, out of its pins' lanes. D+'s two USB-C pins (A6, B6) join round
+    A7's outer end, under the receptacle's rear. At U401 the pair crosses pin 42's lane past C402 (which stays), round
+    GNSS_TX's escape via (_scripted_nets). Routed by l1_route.py, checked by DRC"""
+    w = 0.154
     return [
-        dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(7.355, 80.519), (11.105, 80.537), (12.505, 80.537), (13.155, 79.787), (13.15, 79.687)]),
-        dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(7.355, 80.019), (11.25, 79.687)]),
-        dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(7.355, 79.019), (11.25, 79.687)]),
-        dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(11.25, 79.687), (11.25, 77.413)]),
-        dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(13.15, 79.687), (13.15, 77.413)]),
-        dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(11.25, 77.413), (11.825, 76.638), (11.95, 76.563), (15.875, 76.563), (18.45, 78.888), (23.225, 78.888), (23.725, 79.4)]),
-        dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(13.15, 77.413), (19.875, 79.763), (21.1, 79.763), (21.925, 80.538), (23.325, 80.538), (23.875, 81.1)]),
-        dict(net='USB_DM', layer='F.Cu', w=0.154, path=[(25.375, 79.4), (26.35, 81.15), (26.35, 81.625), (26.425, 81.7), (26.45, 81.725), (26.75, 81.95), (27.325, 81.955)]),
-        dict(net='USB_DP', layer='F.Cu', w=0.154, path=[(25.525, 81.1), (26.125, 81.925), (26.675, 82.45), (27.325, 82.455)]),
-        dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(7.355, 80.519), (6.73, 80.344), (6.58, 80.194), (6.58, 79.844), (6.905, 79.519), (7.355, 79.519)]),
+        dict(net='USB_DP_CONN', layer='F.Cu', w=w, path=[(7.355, 80.519), (6.73, 80.344), (6.58, 80.194), (6.58, 79.844), (6.905, 79.519), (7.355, 79.519)]),
+        dict(net='USB_DM_CONN', layer='F.Cu', w=w, path=[(7.355, 79.019), (14.655, 78.075), (17.08, 75.65), (17.962, 75.65)]),
+        dict(net='USB_DM_CONN', layer='F.Cu', w=w, path=[(7.355, 80.019), (13.505, 79.225), (17.08, 75.65)]),
+        dict(net='USB_DM_CONN', layer='F.Cu', w=w, path=[(17.962, 75.65), (20.238, 75.65), (22.475, 76.25)]),
+        dict(net='USB_DP_CONN', layer='F.Cu', w=w, path=[(7.355, 80.519), (13.73, 79.7), (15.93, 77.55), (17.962, 77.55)]),
+        dict(net='USB_DP_CONN', layer='F.Cu', w=w, path=[(17.962, 77.55), (20.238, 77.55), (22.475, 77.9)]),
+        dict(net='USB_DM', layer='F.Cu', w=w, path=[(24.125, 76.25), (24.95, 78.05), (25.85, 81.225), (26.65, 81.95), (27.325, 81.955)]),
+        dict(net='USB_DP', layer='F.Cu', w=w, path=[(24.125, 77.9), (25.55, 81.45), (26.675, 82.45), (27.325, 82.455)]),
+        dict(net='USB_VBUS', via=(16.85, 76.6), d=0.45, drill=0.2),            # D4401's VBUS pin, just east of the
+        dict(net='USB_VBUS', layer='F.Cu', w=0.4, path=[(17.963, 76.6), (16.85, 76.6)]),   # corridor's via-free band
+        dict(net='GND', via=(21.35, 76.6), d=0.45, drill=0.2),                 # D4401's GND pin
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(20.237, 76.6), (21.35, 76.6)]),
     ]
 
 
-POWER_COPPER = _power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
+def _scripted_nets():
+    """Signal nets drawn by script round the frozen fire logic (D-24Nov.13, call 3): FLIGHT_NRST, GNSS_TX and
+    COMMS_SWDIO. So far GNSS_TX's escape at U401.42, drawn with the USB pair: the pair has to cross pin 42's lane to
+    reach pins 44 and 45 past C402 (which stays), so GNSS_TX leaves its pin square into a via at the pad's tip first"""
+    return [
+        dict(net='GNSS_TX', layer='F.Cu', w=0.2, path=[(27.325, 80.955), (26.3, 80.955)]),
+        dict(net='GNSS_TX', via=(26.3, 80.955), d=0.45, drill=0.2),
+    ]
+
+
+POWER_COPPER = (_power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
+                + _scripted_nets())
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire

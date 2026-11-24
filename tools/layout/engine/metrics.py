@@ -437,11 +437,64 @@ def _mitigated(bd, rows, chk):
 LANE_LEN, FINE_PITCH = 1.5, 0.65              # D-24Nov.11: the strip straight out from a pin's end; pin pitch, mm
 
 
-def pin_lanes(bd):
+def nets_drawn_whole(bd):
+    """The nets whose pads all join through drawn copper (tracks, vias and pads; zones aside): such a pin needs no
+    lane (D-24Nov.13). A track joins what it touches on its layer; a via, and a through-hole pad, every layer."""
+    from shapely.geometry import LineString, Point
+    K = bd.K
+    items = defaultdict(list)                         # net -> [(layers or None for all, shape, is_pad)]
+    for d in bd.pads:
+        if not d['net']:
+            continue
+        if d['tht']:
+            g = d['poly'].get('F') or d['poly'].get('B')
+            if g is not None:
+                items[short(d['net'])].append((None, g, True))
+        else:
+            for lay in d['layers']:
+                items[short(d['net'])].append((({'F': 'F.Cu', 'B': 'B.Cu'}[lay],), d['poly'][lay], True))
+    for t in bd.b.GetTracks():
+        n = short(t.GetNetname())
+        if n not in items:
+            continue
+        if t.GetClass() == 'PCB_VIA':
+            c = t.GetPosition()
+            items[n].append((None, Point(K.ToMM(c.x) - bd.ox, K.ToMM(c.y) - bd.oy).buffer(K.ToMM(t.GetWidth(K.F_Cu)) / 2), False))
+        else:
+            a, e = t.GetStart(), t.GetEnd()
+            items[n].append(((bd.b.GetLayerName(t.GetLayer()),),
+                             LineString([(K.ToMM(a.x) - bd.ox, K.ToMM(a.y) - bd.oy),
+                                         (K.ToMM(e.x) - bd.ox, K.ToMM(e.y) - bd.oy)]).buffer(K.ToMM(t.GetWidth()) / 2), False))
+    whole = set()
+    for net, its in items.items():
+        pads = [i for i, it in enumerate(its) if it[2]]
+        if len(pads) < 2 or len(its) == len(pads):
+            continue                                  # one pad, or no drawn copper on the net
+        parent = list(range(len(its)))
+
+        def find(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]
+                i = parent[i]
+            return i
+        for i in range(len(its)):
+            for j in range(i + 1, len(its)):
+                li, gi, _ = its[i]
+                lj, gj, _ = its[j]
+                if (li is None or lj is None or set(li) & set(lj)) and gi.distance(gj) < 1e-4:
+                    parent[find(i)] = find(j)
+        if len({find(i) for i in pads}) == 1:
+            whole.add(net)
+    return whole
+
+
+def pin_lanes(bd, whole=None):
     """Each fine-pitch pin's lane (D-24Nov.11): the strip straight out from its outer end, as wide as the pad and
     LANE_LEN long, for every L1 pad of a part whose neighbouring pin along the row sits FINE_PITCH or closer.
-    Pins with no net, and GND pins (a via in the pad serves them), have none. Returns [(ref, num, net, polygon)]."""
+    Pins with no net, GND pins (a via in the pad serves them), and pins whose own net is already drawn whole
+    (D-24Nov.13) have none. Returns [(ref, num, net, polygon)]."""
     from shapely.geometry import Polygon
+    whole = nets_drawn_whole(bd) if whole is None else whole
     by_ref = defaultdict(list)
     for d in bd.pads:
         g = d['poly'].get('F')
@@ -466,7 +519,7 @@ def pin_lanes(bd):
         cy = sum(c.y for _, c, *_ in ps) / len(ps)
         for d, c, u, L, w in ps:
             net = short(d['net']) if d['net'] else ''
-            if not net or net == 'GND' or net.startswith('unconnected-'):
+            if not net or net == 'GND' or net.startswith('unconnected-') or net in whole:
                 continue
             pitch = min((math.hypot(c.x - c2.x, c.y - c2.y) for d2, c2, u2, *_ in ps
                          if d2 is not d and abs(u[0] * u2[0] + u[1] * u2[1]) > 0.99), default=9.0)

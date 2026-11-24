@@ -7,7 +7,8 @@ The board's pads are read once; each test moves one part's pads 30 mm away in me
 touched) or empties a row's measurement, then runs engine/metrics.near_rules and passes when the expected part
 appears in the misses. A further test drops one passive's rows and expects it listed without a rule; two take an
 accepted written exception's approval, then its mitigation, away and expect a miss; one moves a part off a line its
-rule measures as drawn; and the last plants a track across a fine-pitch pin's lane (D-24Nov.11).
+rule measures as drawn; one plants a track across a fine-pitch pin's lane (D-24Nov.11); and the last breaks a net
+drawn whole, whose pins have no lane, and expects the lane back (D-24Nov.13).
 Prints one line per test and exits non-zero if any fails.
 """
 import copy
@@ -113,6 +114,19 @@ def main():
         _, crossed = M.lanes_crossed(bd, extra=[('PLANTED', plant)])
         hit = [x for x in crossed if x.startswith(f'{r}.{q} ')]
         tests.append((f'lanes: a planted track across {r}.{q} ({n}) of {n0} lanes -> {hit[:1] or "not listed"}', bool(hit)))
+    # a pin whose own net is drawn whole has no lane (D-24Nov.13): break the net by moving another of its parts 30 mm
+    # and the pin's lane must come back
+    whole = M.nets_drawn_whole(bd)
+    ex = next(((r, q, n) for r, q, n, g in M.pin_lanes(bd, whole=set()) if n in whole), None)
+    other = ex and next((d['ref'] for d in bd.pads if d['net'] and M.short(d['net']) == ex[2] and d['ref'] != ex[0]), None)
+    if not other:
+        tests.append(('lanes, drawn whole: no exempt pin with another part on its net to test', False))
+    else:
+        r, q, n = ex
+        now = any((r2, q2) == (r, q) for r2, q2, _, _ in M.pin_lanes(bd, whole=whole))
+        back = any((r2, q2) == (r, q) for r2, q2, _, _ in M.pin_lanes(moved(bd, other)))
+        tests.append((f"lanes, drawn whole: {r}.{q} ({n}) has {'a lane' if now else 'none'}; {other} moved 30 mm -> "
+                      f"{'its lane back' if back else 'still none'}", back and not now))
     for t, ok in tests:
         print(('PASS ' if ok else 'FAIL ') + t)
     print(f"{sum(ok for _, ok in tests)} of {len(tests)} pass")

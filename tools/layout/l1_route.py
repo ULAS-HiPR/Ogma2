@@ -72,11 +72,11 @@ PAD = 0.11                                   # DRC's 0.1 mm, past the pad outlin
 EDGE = 0.2                                   # copper to the board edge (cucheck2, JLC)
 
 
-def blocked_union(net, w, region, avoid=()):
+def blocked_union(net, w, region, avoid=(), exempt=()):
     near = [(g, n, k) for g, n, k in obs if n != net and g.intersects(region)]
     parts = [g.buffer((PAD if k == 'pad' else clear(n, net)) + w / 2 - 1e-4) for g, n, k in near]
     for ref, num, n, g in LANES:                  # other nets' fine-pitch pin lanes (D-24Nov.11)
-        if n != net and g.intersects(region):
+        if n != net and n not in exempt and g.intersects(region):   # exempt: a net drawn whole earlier in this run
             parts.append(g.buffer(w / 2))
     for r in avoid:                              # a part whose pads the line must not pass between: its courtyard
         c = b.FindFootprintByReference(r).GetCourtyard(K.F_Cu).BBox()
@@ -84,11 +84,11 @@ def blocked_union(net, w, region, avoid=()):
     return unary_union(parts) if parts else None
 
 
-def astar(a, c, net, w, step=0.025, margin=2.0, avoid=()):
+def astar(a, c, net, w, step=0.025, margin=2.0, avoid=(), exempt=()):
     x0, x1 = min(a[0], c[0]) - margin, max(a[0], c[0]) + margin
     y0, y1 = min(a[1], c[1]) - margin, max(a[1], c[1]) + margin
     region = box(x0, y0, x1, y1)
-    blk = blocked_union(net, w, region, avoid)
+    blk = blocked_union(net, w, region, avoid, exempt)
     own = unary_union([g for (r, p), (g, n) in pads.items() if n == net and g.intersects(region)])
     nx, ny = int((x1 - x0) / step) + 1, int((y1 - y0) / step) + 1
     memo = {}
@@ -189,7 +189,7 @@ for cn in CONNS:
         continue
     net, w = cn['net'], cn.get('w', 0.1)
     A, B = pads[tuple(cn['a'])][0].centroid, pads[tuple(cn['b'])][0].centroid
-    path = astar((round(A.x, 3), round(A.y, 3)), (round(B.x, 3), round(B.y, 3)), net, w, avoid=cn.get('avoid', ()))
+    path = astar((round(A.x, 3), round(A.y, 3)), (round(B.x, 3), round(B.y, 3)), net, w, avoid=cn.get('avoid', ()), exempt=cn.get('exempt', ()))
     if path is None:
         report.append(f"{net}: no L1 path {cn['a']} -> {cn['b']}"); continue
     items.append(dict(net=net, layer='F.Cu', w=w, path=path))

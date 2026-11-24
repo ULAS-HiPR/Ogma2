@@ -5612,3 +5612,40 @@ What the sheets show, read from the step-16 netlist:
 - D4501 now passes, measured from the drawn GNSS line: no distance misses (9 approved exceptions).
 - Board 9e6b6d05: DRC 0 errors, rules check 11 of 11, planted-miss test 10 of 10, RF check passes.
   Routing trial (d25-9e6b6d05, alone): 6 of 271 open and 1 of 22 rails (USB_VBUS), 421 s, peak 3.9 GB: ADC_PYRO1_CONTINUITY, BMP_SDA, COMMS_SWDIO, FLIGHT_NRST, GNSS_TX, STAGE_ARM_INVALID. FLIGHT_VBAT, NOR_RESET_REQUEST, NOR_EN and three others now route (9 open before). Over the stop line (4 and no rail): to Seán. Router's reasons where it gives one: no via room at U201.18, U201.93 and U4503.2, beside the fire logic and its own tracks; D4401's VBUS pin; COMMS_SWDIO's nearest copper is USB D+, 0.42 mm away, with a via site free.
+
+## 24 November 2026: Fable's second review approved; D4401 east of the corridor, the USB pair redrawn, the lane count's exemption (D-24Nov.13)
+
+- Seán approved Fable's calls, two rules and the order of work (D-24Nov.13; the rules in standing-rules.md: judge a
+  trial by its nets, the count only against the gate of 25; a check passes at zero).
+- Call 1, placement: D4401 to (19.1, 76.6), turned 180°, so the pair runs straight through its pad rows on L1 (pins
+  4 to 3, 6 to 1); its west pins sit at x 17.96, east of the corridor's via-free band (x 8.7 to 16.3). VBUS (pin 5)
+  goes 1.1 mm west to a via at (16.85, 76.6), GND (pin 2) 1.1 mm east to one at (21.35, 76.6). TP20 moved north to
+  (18.4, 72.6) to make the room. R4406 and R4405 to (23.3, 76.25) and (23.3, 77.9), turned 180°, north-west of U401's
+  pins 44 and 45 and out of its lanes. ST's USBLC6-2 datasheet (2.3) read before placing: the part as close as
+  possible to the connector, short GND and VBUS tracks. D4401 sits 10.6 mm from J4401's data pins, the nearest the
+  corridor allows with vias.
+- Call 1, the pair, redrawn on L1 with no via by l1_route.py with the lanes closed (spec._usb_pair). C402 stays and
+  fills pin 45's lane, so D+ can reach pin 45 only from the north past C402's corner, with D- beside it: the pair
+  has to cross pin 42's lane (GNSS_TX). So GNSS_TX's escape is drawn first, call 3's first piece
+  (spec._scripted_nets): pin 42 straight out to a via at its tip, (26.3, 80.955). The pair passes it at 0.2 mm, the
+  USB class's clearance. The lane count lists U401.42 as crossed until GNSS_TX is drawn whole.
+- Call 2, the lane count: a pin whose own net is drawn whole (its pads joined by drawn tracks and vias, zones aside;
+  engine/metrics.nets_drawn_whole) has no lane. 367 lanes (427 before). near_check_test.py adds a test: J4401.A6
+  (USB_DP_CONN, drawn whole) has no lane, and moving D4401 30 mm breaks the net and brings the lane back.
+- Board 1927e4ad: DRC 0 errors, rules check 11 of 11, planted-miss test 11 of 11, RF check passes, the four USB nets
+  each in one piece. 6 of 367 lanes crossed: U401.42 GNSS_TX by the USB pair (until call 3); U6001.6 FLIGHT_NRST and
+  U6001.7 FLIGHT_3V3 by STAGE_ELIGIBLE (frozen fire logic); U1301.7 4V_PRE by GND, U1301.26 BUCK_PG by BUCK_FB and
+  U1701.5 FLIGHT_LDO_PG by FLIGHT_LDO_FB (each regulator's own copper, drawn in stage C).
+- The routing trial was void twice (d25-1927e4ad, d25-1927e4ad-2): the kernel killed the router for memory (6.0 GB
+  resident against the session's 5.8 GB) both times at the same step, its last lap, which maps the whole board again
+  at half the grid (0.05 mm, 31M cells) for the nets still boxed in. In the three complete trials before, that lap
+  rescued one net once (NEW_FLIGHT_CLEAR_REQUEST, 5f80a180) and none otherwise. meter.py --no-finer-lap now skips it
+  (tools/layout/krt_wrap.py sets its cell budget to 0, and the router logs it as skipped). Open, for Seán.
+- Routing trial with the lap skipped (d25-1927e4ad-nf, alone): 5 of 271 open and 0 of 22 rails, 337 s, peak 5.85 GB
+  (0.13 GB under the limit): ADC_PYRO1_CONTINUITY (U201.18), BMP_SCL, FLIGHT_NRST (U6001.6), STAGE_ARM_INVALID,
+  SUPERVISOR_WDI (U201.3). USB_VBUS, GNSS_TX, COMMS_SWDIO and BMP_SDA now route. Open two runs running, so findings
+  (D-24Nov.13): ADC_PYRO1_CONTINUITY at U201.18, FLIGHT_NRST at U6001.6 and STAGE_ARM_INVALID. The router's log
+  calls each failure boxed in by static obstacles. For STAGE_ARM_INVALID it names STAGING_ARMED_VBAT, GND and
+  COMMS_SWO as blockers, with FLIGHT_3V3, PYRO1_FIRE and PYRO3_LS_SELECT protected within 3 mm. For BMP_SCL
+  (U201.92) it names BMP_3V3, PYRO1_LS_SELECT and COMMS_3V3, and lists GNSS_TX among the protected (locked) nets
+  within 3 mm; GNSS_TX's escape is drawn copper now.
