@@ -226,3 +226,25 @@ How it runs: each exception in spec.NEAR_EXCEPTIONS carries who approved it (a D
 on something, a check the build runs on the board: the node drawn on L3 and touching every pad, another part's rule
 holding, or a part within reach of a pin. A missing approval or a failed check keeps the miss a miss, saying which.
 
+
+## D-24Nov.11 (24 Nov 2026): three rules from Fable's review of step 5
+
+Proposed by Claude (Fable) after step 5's routing trial; approved by Seán and logged in Claude's words.
+
+> "Ok agreed on all fronts."
+
+1. **A cause goes in the record only once the router's log or a measurement shows it.** Until then it is written as
+   unknown, or as a guess and labelled one.
+   - **Today:** three causes went into decisions.md and the log before anyone read the router's log: the crystal
+     guard pour, USB D+ across SWDIO's lane, and D+'s join closing USB_VBUS's way. The next trial disproved the
+     first, a measurement the second, and the third is still unknown.
+2. **Scripted copper leaves a fine-pitch pin square to its row and stays out of other pins' lanes.** A pin's lane is
+   the strip straight out from its end, as wide as its pad and 1.5 mm long. The build counts the lanes that other
+   nets' scripted copper crosses, proven on a planted crossing, and the L1 router treats the lanes as obstacles.
+   - **Today:** FLIGHT_LSE_IN ran along U201's pin row across the lanes of pins 4 to 7, through the 0.54 mm between
+     pin 6 and C207, its own capacitor. A one-second count catches what took a nine-minute trial to show.
+3. **One block, one trial, alone on the machine, watched by one monitor.** Nothing is reported or committed until it
+   finishes, and a result that beats an approved call is a proposal until then.
+   - **Today:** one trial was killed by a build run beside it, another was stopped early and its partial count
+     reported, and "no via pair needed" for USB went into the record before its trial finished, which then withdrew
+     it.

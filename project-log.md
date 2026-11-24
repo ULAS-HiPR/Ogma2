@@ -5584,3 +5584,31 @@ What the sheets show, read from the step-16 netlist:
 - USB_VBUS is new: J4401's two VBUS pin pairs (A4/B9 above the data pins, A9/B4 below) can't meet on L1 across the
   data lines, and D+'s join round A7's outer end closes the way under the receptacle. Next: D+'s join by call 6's
   via pair, then the crystal and USB traces rerouted round their neighbours' escapes.
+
+## 24 November 2026: Fable's review of step 5 approved; the LSE lines rerouted; the lane count (D-24Nov.11, D-24Nov.12)
+
+- Seán approved Fable's review on all fronts (D-24Nov.11): D4501 measured from the drawn line, the 16 MHz crystals
+  without an L1 ring, the 32 kHz pair's ground track where it fits, and three rules in standing-rules.md (a cause
+  goes in only once a log or a measurement shows it; scripted copper stays out of other fine-pitch pins' lanes;
+  one block, one trial, alone, nothing reported or committed before it finishes).
+- Corrections to the last two entries and D-24Nov.9/10: USB D+ does not cross U401's SWDIO lane (measured), and
+  "D+'s join closes USB_VBUS's way" was a guess. The router's log names the open terminal: D4401's VBUS pin (5).
+- The lane count (engine/metrics.pin_lanes, lanes_crossed): a lane is the strip 1.5 mm straight out from a
+  fine-pitch pin's end (pitch 0.65 mm or less), as wide as the pad; GND and unconnected pins have none. 427 lanes on
+  the board. Before this pass 17 were crossed, 7 of them U201's by FLIGHT_LSE_IN (NOR_EN, NOR_RESET_REQUEST and
+  FLIGHT_VBAT among them). near_check_test.py plants a track across one and catches it (10 of 10 pass).
+- LSE rerouted by tools/layout/l1_route.py (moved into the repo) with the lanes closed: both lines leave their pins
+  straight, pass south and west of C207 and end at Y202.1's west edge (the pad itself reaches into pins 1 to 5's
+  lanes: Y202 sits in them). A GND track from U201's GND pin 10 runs between the LSE and HSE pairs to Y201's ground.
+  U201's lanes are now all clear. 10 lanes stay crossed: 3 by the USB copper (U401's GNSS_TX and USB_DM pins, J4401
+  A6) and 7 by older blocks' copper (U101.6 by the 6 A input, U1301.1/7/26 and U1701.5 by their own feedback
+  copper, U6001.6/7 by STAGE_ELIGIBLE, which crosses FLIGHT_NRST's lane).
+- USB_VBUS, measured: D- and D+ run under D4401 from pin 4 to 3 and 6 to 1, and D+ enters pin 6 below pin 5, so
+  pin 5 is closed in on L1. No via fits near it: the armed corridor (RECOVERY and STAGING_ARMED_VBAT, 2 mm) and the
+  1 mm GND strip run under D4401 on L6, which leaves no via site from x 8.7 to 16.3 mm. The connector's two VBUS
+  groups did join in the trial. Fable's via pair for them would fix nothing, so it wasn't drawn.
+- USB at U401, measured: R4405's DP pad sits in pins 42 and 43's lanes and C402 in pins 44 and 45's, so the pair
+  can't leave U401 square and crosses GNSS_TX's lane. A placement pass is the fix.
+- D4501 now passes, measured from the drawn GNSS line: no distance misses (9 approved exceptions).
+- Board 9e6b6d05: DRC 0 errors, rules check 11 of 11, planted-miss test 10 of 10, RF check passes.
+  Routing trial (d25-9e6b6d05, alone): 6 of 271 open and 1 of 22 rails (USB_VBUS), 421 s, peak 3.9 GB: ADC_PYRO1_CONTINUITY, BMP_SDA, COMMS_SWDIO, FLIGHT_NRST, GNSS_TX, STAGE_ARM_INVALID. FLIGHT_VBAT, NOR_RESET_REQUEST, NOR_EN and three others now route (9 open before). Over the stop line (4 and no rail): to Seán. Router's reasons where it gives one: no via room at U201.18, U201.93 and U4503.2, beside the fire logic and its own tracks; D4401's VBUS pin; COMMS_SWDIO's nearest copper is USB D+, 0.42 mm away, with a via site free.

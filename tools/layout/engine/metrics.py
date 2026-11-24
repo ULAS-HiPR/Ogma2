@@ -247,6 +247,10 @@ def measure(bd, spec, fanout_result=None):
     # D-24Nov.4: each chip a rule serves has its maker's layout section read and cited (spec.LAYOUT_REFS)
     served = {r['ic'] for r in getattr(spec, 'NEAR', []) if r.get('ic', '').startswith('U') and r.get('part')}
     out['chips_without_layout_ref'] = sorted(served - set(getattr(spec, 'LAYOUT_REFS', {})))
+    # D-24Nov.11: scripted copper stays out of other fine-pitch pins' lanes
+    n_lanes, crossed = lanes_crossed(bd)
+    out['lanes_measured'] = n_lanes
+    out['lanes_crossed'] = crossed
 
     # plane pads with no via spot
     if fanout_result is not None:
@@ -303,7 +307,8 @@ def near_rules(bd, spec):
       net_caps     on each of `nets`, a cap pad within `mm` of `ic`'s pad on that net;
       part_to_pins each pad of `part` within `mm` of `ic`'s pad on the same net; with `pin` (a pin number or a tuple
                    of them, D-24Nov.1), only that pin counts, so the part must sit at the pin it serves;
-      on_line      `part`'s pad on `net` within `mm` of the line from `from`'s pad to `to`'s pad, between them."""
+      on_line      `part`'s pad on `net` within `mm` of the line from `from`'s pad to `to`'s pad, between them; with
+                   line='drawn' (D-24Nov.11), within `mm` of `net`'s drawn L1 copper instead, once the line is drawn."""
     out = []
     pads_of = defaultdict(list)
     for d in bd.pads:
@@ -353,6 +358,15 @@ def near_rules(bd, spec):
             a, b, d = on.get(row['from']), on.get(row['to']), on.get(row['part'])
             if not (a and b and d):
                 miss.append(f"{row['part']}: not on {row['net']} with {row['from']} and {row['to']}")
+            elif row.get('line') == 'drawn':           # the drawn line, not the chord (D-24Nov.11)
+                cu = _net_l1_copper(bd, row['net'])
+                if not cu or 'F' not in d['poly']:
+                    miss.append(f"{row['part']}: {row['net']} has no drawn L1 line to measure from")
+                else:
+                    n = 1
+                    off = min(g.distance(d['poly']['F']) for g in cu)
+                    if off > mm:
+                        miss.append(f"{row['part']}: {off:.1f} mm off the drawn {row['net']} line")
             else:
                 n = 1
                 ax, ay, bx, by = a['x'], a['y'], b['x'], b['y']
@@ -420,6 +434,91 @@ def _mitigated(bd, rows, chk):
     return False
 
 
+LANE_LEN, FINE_PITCH = 1.5, 0.65              # D-24Nov.11: the strip straight out from a pin's end; pin pitch, mm
+
+
+def pin_lanes(bd):
+    """Each fine-pitch pin's lane (D-24Nov.11): the strip straight out from its outer end, as wide as the pad and
+    LANE_LEN long, for every L1 pad of a part whose neighbouring pin along the row sits FINE_PITCH or closer.
+    Pins with no net, and GND pins (a via in the pad serves them), have none. Returns [(ref, num, net, polygon)]."""
+    from shapely.geometry import Polygon
+    by_ref = defaultdict(list)
+    for d in bd.pads:
+        g = d['poly'].get('F')
+        if g is None or g.is_empty:
+            continue
+        r = g.minimum_rotated_rectangle
+        xy = list(r.exterior.coords)[:4]
+        e1 = (xy[1][0] - xy[0][0], xy[1][1] - xy[0][1])
+        e2 = (xy[2][0] - xy[1][0], xy[2][1] - xy[1][1])
+        l1, l2 = math.hypot(*e1), math.hypot(*e2)
+        if min(l1, l2) < 1e-6 or max(l1, l2) / min(l1, l2) < 1.5:
+            continue                                  # square or round: not a pin with a direction
+        u = e1 if l1 >= l2 else e2
+        L = max(l1, l2)
+        u = (u[0] / L, u[1] / L)
+        by_ref[d['ref']].append((d, g.centroid, u, L, min(l1, l2)))
+    out = []
+    for ref, ps in by_ref.items():
+        if len(ps) < 4:
+            continue
+        cx = sum(c.x for _, c, *_ in ps) / len(ps)
+        cy = sum(c.y for _, c, *_ in ps) / len(ps)
+        for d, c, u, L, w in ps:
+            net = short(d['net']) if d['net'] else ''
+            if not net or net == 'GND' or net.startswith('unconnected-'):
+                continue
+            pitch = min((math.hypot(c.x - c2.x, c.y - c2.y) for d2, c2, u2, *_ in ps
+                         if d2 is not d and abs(u[0] * u2[0] + u[1] * u2[1]) > 0.99), default=9.0)
+            if pitch > FINE_PITCH + 1e-6:
+                continue
+            if (c.x - cx) * u[0] + (c.y - cy) * u[1] < 0:
+                u = (-u[0], -u[1])                    # outward, away from the part's centre
+            nx, ny = -u[1], u[0]
+            ex, ey = c.x + u[0] * L / 2, c.y + u[1] * L / 2
+            fx, fy = ex + u[0] * LANE_LEN, ey + u[1] * LANE_LEN
+            h = w / 2
+            out.append((ref, d['num'], net, Polygon([(ex + nx * h, ey + ny * h), (fx + nx * h, fy + ny * h),
+                                                     (fx - nx * h, fy - ny * h), (ex - nx * h, ey - ny * h)])))
+    return out
+
+
+def lanes_crossed(bd, extra=()):
+    """How many fine-pitch pin lanes there are, and each one another net's L1 track or via crosses (D-24Nov.11).
+    `extra`: [(net, shapely)] copper to add, for the planted test."""
+    from shapely.geometry import LineString, Point
+    K = bd.K
+    cu = list(extra)
+    for t in bd.b.GetTracks():
+        n = short(t.GetNetname())
+        if t.GetClass() == 'PCB_VIA':
+            c = t.GetPosition()
+            cu.append((n, Point(K.ToMM(c.x) - bd.ox, K.ToMM(c.y) - bd.oy).buffer(K.ToMM(t.GetWidth(K.F_Cu)) / 2)))
+        elif t.GetLayer() == K.F_Cu:
+            a, e = t.GetStart(), t.GetEnd()
+            cu.append((n, LineString([(K.ToMM(a.x) - bd.ox, K.ToMM(a.y) - bd.oy),
+                                      (K.ToMM(e.x) - bd.ox, K.ToMM(e.y) - bd.oy)]).buffer(K.ToMM(t.GetWidth()) / 2)))
+    lanes = pin_lanes(bd)
+    crossed = []
+    for ref, num, net, lane in lanes:
+        hit = sorted({n for n, g in cu if n != net and g.intersects(lane)})
+        if hit:
+            crossed.append(f"{ref}.{num} {net}: {', '.join(hit)}")
+    return len(lanes), crossed
+
+
+def _net_l1_copper(bd, net):
+    """The net's L1 tracks as shapely shapes, board mm."""
+    from shapely.geometry import LineString
+    K, out = bd.K, []
+    for t in bd.b.GetTracks():
+        if short(t.GetNetname()) == net and t.GetClass() != 'PCB_VIA' and t.GetLayer() == K.F_Cu:
+            a, e = t.GetStart(), t.GetEnd()
+            out.append(LineString([(K.ToMM(a.x) - bd.ox, K.ToMM(a.y) - bd.oy),
+                                   (K.ToMM(e.x) - bd.ox, K.ToMM(e.y) - bd.oy)]).buffer(K.ToMM(t.GetWidth()) / 2))
+    return out
+
+
 def markdown(m):
     L = ['| Metric | Value |', '| --- | --- |',
          f"| Signal nets | {m['signal_nets']} |",
@@ -436,6 +535,9 @@ def markdown(m):
                  f"{m['near_misses']} / {m.get('near_accepted', 0)} / {len(m['passives_without_rule'])} |")
         L.append(f"| Chips served by a rule without their layout section cited | "
                  f"{len(m.get('chips_without_layout_ref', []))} |")
+    if 'lanes_measured' in m:
+        L.append(f"| Fine-pitch pin lanes crossed by another net's copper (of lanes measured) | "
+                 f"{len(m['lanes_crossed'])} of {m['lanes_measured']} |")
     s = m['tp_stub_summary']
     L.append(f"| Test point stubs (median to route / to pad, mm) | {s['median_to_route']} / {s['median_to_pad']} |")
     L.append(f"| Test points over 10 / 20 mm from their route | {s['over_10_to_route']} / {s['over_20_to_route']} |")

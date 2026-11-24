@@ -351,8 +351,9 @@ NEAR = [
            src="D-22Nov.20, D-22Nov.28: each LOW output's 1 nF at J6601, 3 mm") for n in (2, 4, 6)],
     dict(rule='on_line', part='D4601', net='LORA_RF_SUBG', **{'from': 'J4601', 'to': 'U4606'}, mm=1.0,
          src='D-22Nov.20: the LoRa ESD part on the line between connector and module; 1 mm [J]'),
-    dict(rule='on_line', part='D4501', net='GNSS_RF', **{'from': 'J4501', 'to': 'U4504'}, mm=1.0,
-         src='D-22Nov.8: the GNSS ESD part on the line between connector and module; 1 mm [J]'),
+    dict(rule='on_line', part='D4501', net='GNSS_RF', **{'from': 'J4501', 'to': 'U4504'}, mm=1.0, line='drawn',
+         src='D-22Nov.8: the GNSS ESD part on the line between connector and module; 1 mm [J]. Measured from the '
+             'drawn line since D-24Nov.11: the chord stood in for a line not yet drawn'),
     # the pyro output stage (D-22Nov.27's stamp, PYRO_STAMP below): each channel's supply capacitor, limit and sense
     # resistors at their high side's pins, Kelvin (sweep section 5); its low side's gate parts at the FET's gate [J]
     *[dict(rule='part_to_pins', part=p, ic=f'U6{c}04', mm=1.0, src=f'{_SWEEP}: at the pins, Kelvin; D-22Nov.27')
@@ -1202,16 +1203,20 @@ def _crystals():
     crystal pin and each load capacitor to the same crystal pin on L1, 0.1 mm, no via; a GND via on a short stub by
     every crystal and load-capacitor GND pad, over L2's whole GND (no L1 pour: see spec.PLANES).
     Routed by capture/pw/l1_route.py (grid A*, 0.025 mm, round every other net's copper at its clearance) and
-    checked by cucheck2.py. FLIGHT_LSE_OUT goes round C207 (U201's VBAT capacitor), not between its pads"""
+    checked by cucheck2.py. Both LSE lines leave U201's pins square and pass south and west of C207 (U201's VBAT
+    capacitor), leaving the strip between it and the pin row to pins 4 to 7 (D-24Nov.11); routed with the lanes closed
+    (tools/layout/l1_route.py). A GND track from U201's GND pin 10 runs between the LSE and HSE pairs to Y201's ground"""
     return [
         dict(net='FLIGHT_HSE_IN', layer='F.Cu', w=0.1, path=[(32.325, 54.312), (27.7, 54.125), (27.65, 54.075), (27.625, 54.05), (26.95, 53.35)]),
         dict(net='FLIGHT_HSE_OUT', layer='F.Cu', w=0.1, path=[(32.325, 54.812), (28.25, 55.05)]),
         dict(net='FLIGHT_HSE_IN', layer='F.Cu', w=0.1, path=[(26.62, 51.95), (26.95, 53.35)]),
         dict(net='FLIGHT_HSE_OUT', layer='F.Cu', w=0.1, path=[(27.63, 56.45), (28.25, 55.05)]),
-        dict(net='FLIGHT_LSE_IN', layer='F.Cu', w=0.1, path=[(32.325, 52.312), (31.475, 52.1), (31.15, 51.75), (31.15, 50.6), (30.35, 49.8)]),
-        dict(net='FLIGHT_LSE_OUT', layer='F.Cu', w=0.1, path=[(32.325, 52.812), (29.25, 52.175), (27.85, 50.225), (27.85, 49.8)]),
-        dict(net='FLIGHT_LSE_IN', layer='F.Cu', w=0.1, path=[(30.35, 48.08), (30.35, 49.8)]),
+        dict(net='FLIGHT_LSE_IN', layer='F.Cu', w=0.1, path=[(32.325, 52.312), (29.25, 52.175), (29.2, 52.125), (29.2, 50.95), (29.9, 50.25)]),   # ends inside Y202.1's
+        # west edge: the pad itself reaches into U201's pins 2 to 4's lanes
+        dict(net='FLIGHT_LSE_OUT', layer='F.Cu', w=0.1, path=[(32.325, 52.812), (29.2, 52.425), (28.075, 51.175), (27.85, 49.8)]),
+        dict(net='FLIGHT_LSE_IN', layer='F.Cu', w=0.1, path=[(30.35, 48.08), (29.975, 48.63), (29.975, 49.0)]),
         dict(net='FLIGHT_LSE_OUT', layer='F.Cu', w=0.1, path=[(28.33, 48.0), (27.85, 49.8)]),
+        dict(net='GND', layer='F.Cu', w=0.2, path=[(32.325, 53.312), (30.825, 53.137), (28.45, 53.162), (28.25, 53.35)]),   # the 32 kHz pair's ground: U201's GND pin to Y201's (D-24Nov.11)
         dict(net='COMMS_HSE_IN', layer='F.Cu', w=0.1, path=[(38.675, 81.955), (42.225, 82.53), (42.325, 82.58), (43.0, 83.3)]),
         dict(net='COMMS_HSE_OUT', layer='F.Cu', w=0.1, path=[(38.675, 81.455), (41.7, 81.6)]),
         dict(net='COMMS_HSE_IN', layer='F.Cu', w=0.1, path=[(42.52, 84.7), (43.0, 83.3)]),
@@ -1243,7 +1248,8 @@ def _usb_pair():
     """The USB pair on L1, no via (D-24Nov.10): J4401's four pins through D4401's flow-through pads and R4405 and R4406
     to U401, 0.154 mm (the USB class). R4405 and R4406 swapped places so each faces its U401 pin, which removes the
     pair's crossing there; at the USB-C pins D- leaves both its pins on L1 and D+'s two pins (A6, B6) join round A7's
-    outer end, so the call 6 via pair isn't needed. Routed by capture/pw/l1_route.py, checked by DRC"""
+    outer end, under the receptacle's rear (J4401's footprint carries no keep-out). Routed by l1_route.py, checked by
+    DRC. Open (D-24Nov.12): D4401's VBUS pin is closed in by these lines and can't take a via over the corridor"""
     return [
         dict(net='USB_DP_CONN', layer='F.Cu', w=0.154, path=[(7.355, 80.519), (11.105, 80.537), (12.505, 80.537), (13.155, 79.787), (13.15, 79.687)]),
         dict(net='USB_DM_CONN', layer='F.Cu', w=0.154, path=[(7.355, 80.019), (11.25, 79.687)]),

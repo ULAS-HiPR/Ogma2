@@ -5,8 +5,9 @@
 
 The board's pads are read once; each test moves one part's pads 30 mm away in memory (the board file is not
 touched) or empties a row's measurement, then runs engine/metrics.near_rules and passes when the expected part
-appears in the misses. A further test drops one passive's rows and expects it listed without a rule; the last
-two take an accepted written exception's approval, then its mitigation, away and expect a miss.
+appears in the misses. A further test drops one passive's rows and expects it listed without a rule; two take an
+accepted written exception's approval, then its mitigation, away and expect a miss; one moves a part off a line its
+rule measures as drawn; and the last plants a track across a fine-pitch pin's lane (D-24Nov.11).
 Prints one line per test and exits non-zero if any fails.
 """
 import copy
@@ -21,6 +22,7 @@ import build                               # noqa: E402
 from engine import board as B              # noqa: E402
 from engine import metrics as M            # noqa: E402
 from shapely.affinity import translate     # noqa: E402
+from shapely.geometry import LineString    # noqa: E402
 
 
 def moved(bd, ref, dx=30.0):
@@ -90,6 +92,27 @@ def main():
             s4.NEAR = [dict(r, exception=dict(r['exception'], **change)) if r is exr else r for r in spec.NEAR]
             got = misses_for(bd, s4, exr['part'])
             tests.append((f"exception: {exr['part']} {label} -> {got[:1] or 'accepted'}", bool(got)))
+    # an on_line row measured from the drawn line (D-24Nov.11): its part moved 30 mm off the line must miss
+    drow = next((r for r in spec.NEAR if r['rule'] == 'on_line' and r.get('line') == 'drawn'
+                 and not base.get(r['part'], {}).get('misses')), None)
+    if drow is None:
+        tests.append(('on_line, drawn line: no passing row to plant a miss in', False))
+    else:
+        got = misses_for(moved(bd, drow['part']), spec, drow['part'])
+        tests.append((f"on_line, drawn line: {drow['part']} moved 30 mm -> {got[:1] or 'no miss'}", bool(got)))
+    # a fine-pitch pin's lane (D-24Nov.11): a planted track of another net straight across it must be listed
+    lanes = M.pin_lanes(bd)
+    n0, crossed0 = M.lanes_crossed(bd)
+    free = next(((r, q, n, g) for r, q, n, g in lanes if r == 'U201' and not any(c.startswith(f'{r}.{q} ') for c in crossed0)), None)
+    if free is None:
+        tests.append(('lanes: no uncrossed U201 lane to plant a crossing in', False))
+    else:
+        r, q, n, g = free
+        c = g.centroid
+        plant = LineString([(c.x - 0.6, c.y - 0.6), (c.x + 0.6, c.y + 0.6)]).buffer(0.05)
+        _, crossed = M.lanes_crossed(bd, extra=[('PLANTED', plant)])
+        hit = [x for x in crossed if x.startswith(f'{r}.{q} ')]
+        tests.append((f'lanes: a planted track across {r}.{q} ({n}) of {n0} lanes -> {hit[:1] or "not listed"}', bool(hit)))
     for t, ok in tests:
         print(('PASS ' if ok else 'FAIL ') + t)
     print(f"{sum(ok for _, ok in tests)} of {len(tests)} pass")
