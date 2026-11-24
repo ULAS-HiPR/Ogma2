@@ -5482,3 +5482,32 @@ What the sheets show, read from the step-16 netlist:
   first eight are logged as written (D-24Nov.4).
 - Still to build from D-24Nov.4: the checks do not yet print how many things they measured, the placement rules have
   no planted-miss test, and the rule rows do not cite the chips' datasheets.
+
+## 24 November 2026: D-24Nov.2 carried out, and the three checks built (D-24Nov.5)
+
+- Read before placing: TI SLVSE94G (TPS2663, U101), SLVSEA3F (TPS2120/1, U1101), SNOSDC0A (LM7310/LM73100, U1401).
+  What they changed: U101's OVP and UVLO turn it off 8.5-16 us after a crossing, so R1002 and R1004 stay out as
+  written exceptions (Fable's test). LM73100's OVLO acts in 1.1 us, so its divider gets 3 mm, not the 15 mm the block
+  template gave it as "DC". TI wants U101's IN_SYS capacitor as close as possible; C1002's path is the 4 mm battery
+  copper then the 2.7 mm stub any spot would need, so it keeps a worked 15 mm. TPS2121 says nothing about its
+  dividers. U101's PGOOD reaches only R1010 and TP41; U1401's PG reaches only R1405.
+- The checks: each distance row now counts what it measured, and a row that measured nothing is a miss; written
+  exceptions are reported apart; the build lists the chips a rule serves that have no layout section cited (56 of
+  59). tools/layout/near_check_test.py plants a miss for each kind of rule, a pin that doesn't exist and a dropped
+  row: 6 of 6 caught.
+- The mover (caps_to_chips.py): --first places parts in a given order of consequence, even where already in reach;
+  a ranked part that can't get inside its rule takes the nearest spot it can (--fallback); --along widens the search
+  along a connector's row.
+- Placed: U7001 moved 6 mm south with its parts, which opened U1101's threshold pins. U1101's three threshold pins
+  hold four 0603s, given to PR1's pair (battery or USB first), OV1's bottom and OV1's top (3.1 mm). OV2 watches USB,
+  absent in flight, so its pair sits 7-8 mm out. R1005 (ILIM) has U101's one strip; C1006 filters the master-enable
+  line by J103, where it enters; R1210 is at U1401. U6701's whole group was re-placed by consequence: its four
+  capacitors inside 3 mm, its six resistors inside 10 mm. C2301 is in.
+- The first routing trial (15ec0dcd: 6 of 271 open) left BAT_ILIM open, the 1 mm hop from U101's pin 10 into R1005
+  between two pins. It is drawn now: 0.15 mm on L1, straight down (TI: as short as possible).
+- Board 0954dd75: DRC 0 errors, rules check 9 of 9, planted-miss test 6 of 6. Distance rules: 464 distances in 440
+  rows, 3 misses (C215, C216 and D4501, all step 4) and 9 written exceptions. Connectivity as before. Warnings: silk
+  overlaps 89 (82 before), silk over copper 33, seven plane islands, the three dangling items from before.
+  Full-effort routing trial (d25-0954dd75): 5 of 271 ordinary nets open and 0 of 22 rails, 346 s, peak 4.7 GB (gate
+  25; 239c6bd5 left 9 and 0). Open: CORE_INPUT_PG, CORE_OV_DIV, FLIGHT_LSE_IN, FLIGHT_NRST, NOR_RESET_REQUEST.
+- For Seán: U1101's dividers are 0603 at 0.1 %; 0402 parts at 0.1 % would let all six sit at its pins (a BOM change).

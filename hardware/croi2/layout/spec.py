@@ -382,13 +382,13 @@ NEAR += [dict(rule='part_to_pins', part=r, ic=ic, mm=mm, src=f'{_BLOCK}: {why}')
     ('R1302', 'U1301', 1.5, 'RFBT and RFBB as close as possible to the FB pin (TI)'),
     ('C1401', 'U1401', 4.0, '0.1 uF at IN'), ('R1406', 'U1401', 6.0, 'R_IMON close'),
     ('C1402', 'U1401', 6.0, 'set parts by their pins'),
-    ('R1402', 'U1401', 15.0, 'the threshold dividers in the block (DC)'),
+    ('R1402', 'U1401', 3.0, 'the OVLO divider at its pin: TI SNOSDC0A 10.1, and OVLO acts in 1.1 us (D-24Nov.5)'),
     ('R1404', 'U1401', 15.0, 'the threshold dividers in the block (DC)'),
     ('C1102', 'U1101', 2.5, 'caps close'), ('C1101', 'U1101', 4.0, 'set parts by their pins'),
     ('R1107', 'U1101', 4.0, 'set parts by their pins'),
-    ('R1102', 'U1101', 8.0, 'the threshold dividers in the block (DC)'),
-    ('R1104', 'U1101', 8.0, 'the threshold dividers in the block (DC)'),
-    ('R1106', 'U1101', 8.0, 'the threshold dividers in the block (DC)'),
+    ('R1102', 'U1101', 3.0, 'the divider at its pin: the mux compares it to switch the source (D-24Nov.2)'),
+    ('R1104', 'U1101', 3.0, 'the divider at its pin: the mux compares it to switch the source (D-24Nov.2)'),
+    ('R1106', 'U1101', 3.0, 'the divider at its pin: the mux compares it to switch the source (D-24Nov.2)'),
     # the flight LDO (D-23Nov.31; TI's TPS7A91 layout)
     ('C1706', 'U1701', 1.5, 'output capacitor at OUT'), ('C1703', 'U1701', 1.5, 'input capacitor at IN'),
     ('C1701', 'U1701', 1.5, 'NR/SS capacitor at its pin'),
@@ -405,7 +405,7 @@ NEAR += [dict(rule='part_to_pins', part=r, ic=ic, mm=mm, src=f'{_BLOCK}: {why}')
 # optional LDOs' NR/SS caps (C1801, C1901), and U101's input and IN_SYS caps (C1004, C1005, C1002), on the 6 A copper
 # behind Q101's tab, the only room: the input path is 2.6 mm copper, a few nH beside the battery lead's microhenries
 CAP_PINS = [
-    ('C1001', 'U101', 3.0), ('C1103', 'U1101', 3.0),
+    ('C1103', 'U1101', 3.0),
     ('C1104', 'U1101', 3.0), ('C1105', 'U1102', 3.0), ('C1106', 'U1102', 5.0), ('C1201', 'U1201', 3.0), ('C1202', 'U1202', 3.0),
     ('C1204', 'U1204', 3.0), ('C1803', 'U1801', 3.0), ('C1805', 'U1801', 5.0), ('C1806', 'U1801', 5.0), ('C1903', 'U1901', 3.0),
     ('C1905', 'U1901', 5.0), ('C1906', 'U1901', 5.0), ('C2301', 'U2301', 3.0), ('C2302', 'U2301', 3.0), ('C2303', 'U2301', 3.0),
@@ -418,7 +418,7 @@ CAP_PINS = [
     ('C4304', 'U4302', 3.0), ('C4305', 'U4303', 3.0), ('C4306', 'U4303', 3.0), ('C4401', 'U4401', 3.0), ('C4402', 'U4401', 3.0),
     ('C4501', 'U4501', 3.0), ('C4502', 'U4502', 3.0), ('C4503', 'U4504', 3.0), ('C4504', 'U4504', 5.0), ('C4505', 'U4504', 3.0),
     ('C4506', 'U4504', 3.0), ('C4601', 'U4602', 3.0), ('C4602', 'U4602', 3.0), ('C4603', 'U4603', 3.0), ('C4604', 'U4604', 3.0),
-    ('C4611', 'U4606', 3.0), ('C4612', 'U4606', 5.0), ('C4613', 'U4606', 5.0), ('C501', 'U501', 3.0), ('C503', 'U502', 3.0),
+    ('C4611', 'U4606', 3.0), ('C4613', 'U4606', 5.0), ('C501', 'U501', 3.0), ('C503', 'U502', 3.0),
     ('C504', 'U502', 3.0), ('C502', 'U503', 3.0), ('C505', 'U503', 3.0), ('C506', 'U503', 3.0), ('C507', 'U504', 3.0),
     ('C508', 'U504', 3.0), ('C509', 'U505', 3.0), ('C510', 'U505', 3.0), ('C6001', 'U6001', 3.0), ('C6103', 'U6103', 3.0),
     ('C6502', 'U6502', 3.0), ('C6701', 'U6701', 3.0), ('C6711', 'U6701', 3.0), ('C6721', 'U6701', 3.0), ('C6731', 'U6701', 3.0),
@@ -445,8 +445,18 @@ _WHY = {
     'FILT': 'filters the pin it sits on',
     'FUSE': "the arm feed's fuse at the energy tap",
     'GATE': 'holds the gate off, at the gate',
-    'INCAP': "U101's input capacitor beside the battery lead's microhenries: 10 mm of the 6 A copper adds a few nH "
-             "(D-23Nov.31)",
+    'INCAP': "U101's input capacitor beside the battery lead's microhenries: 15 mm of the 6 A copper adds a few nH "
+             "(D-23Nov.31, D-24Nov.2)",
+    'INSYS': "U101's IN_SYS decoupling, which TI wants as close as possible (SLVSE94G 9.6.1): its path is the 4 mm "
+             "battery copper, about 0.3 nH, then the 2.7 mm IN_SYS stub that any spot would need (D-24Nov.2)",
+    'DVDT': "the dV/dt capacitor (22 nF, charged at 2 uA): its trace adds about 1 pF and the capacitor holds the "
+            "node, so the millisecond ramp is unchanged (D-24Nov.2)",
+    'NOUSE': "a power-good threshold whose output reaches only its pull-up and a test point, so its accuracy affects "
+             "nothing on the board (D-24Nov.2)",
+    'BURST': "the LoRa module's bulk for millisecond transmit bursts; its 100 nF sits at the pin for the fast edges "
+             "(D-24Nov.2)",
+    'ENTRY': "filters the master-enable line where it enters from J103's cable, within the first 5 mm of its 50 mm "
+             "run (J103's latch courtyard keeps it 3 mm off the pin): U101's one strip went to ILIM (D-24Nov.2)",
     'LED': "sets an LED's current, kept by its LED",
     'LINK': 'a 0 ohm link: any distance does its job, kept with its circuit',
     'LOAD': 'a crystal load capacitor at its crystal pin (placed with the crystal, step 4)',
@@ -467,6 +477,7 @@ _WHY = {
     'TERM': 'CAN termination at the bus end, by the transceiver',
 }
 PASSIVE_PINS = [
+    ('C1001', 'U101', '9', 15.0, 'DVDT'), ('C4612', 'U4606', '1', 10.0, 'BURST'),
     ('R1503', 'R1501', '2', 10.0, 'BLEED'), ('R1603', 'R1601', '2', 10.0, 'BLEED'),
     ('R3603', 'R3601', '2', 10.0, 'BLEED'), ('R509', 'R501', '2', 10.0, 'BLEED'),
     ('R7003', 'R7001', '2', 10.0, 'BLEED'), ('C1403', 'U1401', '6', 20.0, 'BULK'),
@@ -495,9 +506,9 @@ PASSIVE_PINS = [
     ('C403', 'U401', '64', 3.0, 'DEC'), ('C404', 'U401', '19', 3.0, 'DEC'), ('C406', 'U401', '1', 5.0, 'DEC'),
     ('C407', 'U401', '1', 3.0, 'DEC'), ('C409', 'U401', '30', 5.0, 'DEC'), ('C410', 'U401', '62', 5.0, 'DEC'),
     ('C411', 'U401', '13', 3.0, 'DEC'), ('C412', 'U401', '13', 3.0, 'DEC'), ('C413', 'U401', '13', 3.0, 'DEC'),
-    ('C414', 'U401', '13', 3.0, 'DEC'), ('C1006', 'U101', '12', 3.0, 'FILT'), ('C7101', 'U7101', '10', 3.0, 'FILT'),
+    ('C414', 'U401', '13', 3.0, 'DEC'), ('C1006', 'J103', '2', 5.0, 'ENTRY'), ('C7101', 'U7101', '10', 3.0, 'FILT'),
     ('F6101', 'Q101', '5', 10.0, 'FUSE'), ('F6102', 'Q101', '5', 10.0, 'FUSE'), ('R9003', 'Q9001', '1', 3.0, 'GATE'),
-    ('C1002', 'U101', '5', 10.0, 'INCAP'), ('C1004', 'U101', '1', 10.0, 'INCAP'),
+    ('C1002', 'U101', '5', 15.0, 'INSYS'), ('C1004', 'U101', '1', 15.0, 'INCAP'),
     ('C1005', 'U101', '1', 10.0, 'INCAP'), ('R9001', 'D9001', '2', 10.0, 'LED'), ('R9101', 'D9101', '2', 10.0, 'LED'),
     ('R9201', 'D9201', '2', 10.0, 'LED'), ('R9301', 'D9301', '2', 10.0, 'LED'), ('R516', 'J501', '3', 10.0, 'LINK'),
     ('R517', 'J502', '3', 10.0, 'LINK'), ('F501', 'R516', '2', 10.0, 'LINK'), ('F502', 'R517', '2', 10.0, 'LINK'),
@@ -559,17 +570,17 @@ PASSIVE_PINS = [
     ('R6917', 'U6901', '2', 10.0, 'CONT'), ('R6926', 'U6901', '5', 10.0, 'CONT'),
     ('R6927', 'U6901', '5', 10.0, 'CONT'), ('R6936', 'U6901', '9', 10.0, 'CONT'),
     ('R6937', 'U6901', '9', 10.0, 'CONT'), ('R7102', 'U7101', '10', 10.0, 'SENSE'),
-    ('R7103', 'U7101', '9', 10.0, 'SENSE'), ('R7104', 'U7101', '8', 10.0, 'SENSE'),
+    ('R7103', 'U7101', '9', 10.0, 'SENSE'), ('R7104', 'U101', '1', 10.0, 'TAP'),
     ('R8002', 'U8001', '2', 10.0, 'SENSE'), ('R8003', 'U8001', '2', 10.0, 'SENSE'),
     ('R8005', 'U8001', '5', 10.0, 'SENSE'), ('R8006', 'U8001', '5', 10.0, 'SENSE'),
     ('R8008', 'U8001', '9', 10.0, 'SENSE'), ('R8009', 'U8001', '9', 10.0, 'SENSE'),
-    ('R1001', 'U101', '6', 3.0, 'SET'), ('R1002', 'U101', '6', 3.0, 'SET'), ('R1003', 'U101', '7', 3.0, 'SET'),
+    ('R1001', 'Q102', '2', 10.0, 'TAP'), ('R1002', 'U101', '6', 3.0, 'SET'), ('R1003', 'Q101', '1', 10.0, 'TAP'),
     ('R1004', 'U101', '7', 3.0, 'SET'), ('R1005', 'U101', '10', 3.0, 'SET'), ('R1007', 'U101', '15', 3.0, 'SET'),
-    ('R1008', 'U101', '15', 3.0, 'SET'), ('R1009', 'U101', '13', 3.0, 'SET'), ('R1101', 'U1101', '6', 3.0, 'SET'),
+    ('R1008', 'U101', '15', 15.0, 'NOUSE'), ('R1009', 'U101', '13', 3.0, 'SET'), ('R1101', 'U1101', '6', 3.0, 'SET'),
     ('R1103', 'U1101', '5', 3.0, 'SET'), ('R1105', 'U1101', '4', 3.0, 'SET'), ('R1201', 'U1201', '3', 3.0, 'SET'),
     ('R1202', 'U1201', '3', 3.0, 'SET'), ('R1208', 'U1204', '1', 3.0, 'SET'), ('R1209', 'U1204', '1', 3.0, 'SET'),
     ('R1301', 'U1301', '25', 3.0, 'SET'), ('R1204', 'U1401', '1', 3.0, 'SET'), ('R1210', 'U1401', '1', 3.0, 'SET'),
-    ('R1401', 'U1401', '2', 3.0, 'SET'), ('R1403', 'U1401', '4', 3.0, 'SET'), ('R1504', 'U1501', '5', 3.0, 'SET'),
+    ('R1401', 'U1401', '2', 3.0, 'SET'), ('R1403', 'U1401', '4', 15.0, 'NOUSE'), ('R1504', 'U1501', '5', 3.0, 'SET'),
     ('R1604', 'U1601', '5', 3.0, 'SET'), ('C1802', 'U1801', '3', 3.0, 'SET'), ('R1801', 'U1801', '3', 3.0, 'SET'),
     ('R1802', 'U1801', '3', 3.0, 'SET'), ('C1902', 'U1901', '3', 3.0, 'SET'), ('R1901', 'U1901', '3', 3.0, 'SET'),
     ('R1902', 'U1901', '3', 3.0, 'SET'), ('R2310', 'U2302', '2', 3.0, 'SET'), ('R3604', 'U3601', '5', 3.0, 'SET'),
@@ -586,7 +597,7 @@ NEAR.extend(dict(rule='part_to_pins', part=p, ic=u, pin=n, mm=mm, src=f'D-24Nov.
             for p, u, n, mm, k in PASSIVE_PINS)
 # the pins the earlier rows serve, named (D-24Nov.1): one to one where a chip has several pins on the net
 _PINS = {
-    'C1001': '9', 'C1101': '11', 'C1102': '7', 'C1103': '2', 'C1104': '1', 'C1105': '3', 'C1106': '5', 'C1201': '5',
+    'C1001': '9', 'C1101': '11', 'C1102': '7', 'C1103': '2', 'C1104': ('1', '8'), 'C1105': '3', 'C1106': '5', 'C1201': '5',
     'C1202': '5', 'C1204': '5', 'C1301': '23', 'C1302': '8', 'C1303': '19', 'C1304': '3', 'C1305': '10',
     'C1306': '12', 'C1401': '5', 'C1402': '7', 'C1701': '8', 'C1702': '3', 'C1703': '10', 'C1705': '7', 'C1706': '1',
     'C1803': '9', 'C1805': '7', 'C1806': '2', 'C1903': '9', 'C1905': '10', 'C1906': '1', 'C2301': '6', 'C2302': '5',
@@ -610,13 +621,47 @@ _PINS = {
 for _r in NEAR:
     if _r['rule'] == 'part_to_pins' and _r.get('part') in _PINS and 'pin' not in _r:
         _r['pin'] = _PINS[_r['part']]
+# written exceptions (D-24Nov.2): the rule stands and the miss is reported as accepted, with its reason
+NEAR_EXCEPTIONS = {
+    'R1002': "UVLO's bottom, about 10 mm out: U101's own 6 A copper holds the room by its pins; nothing near switches, "
+             "UVLO turns U101 off 9-16 us after a crossing (SLVSE94G 6.6); route the node on L3 between the planes",
+    'R1004': "OVP's bottom, about 10 mm out: as R1002; OVP turns U101 off 8.5-14 us after a crossing (SLVSE94G 6.6); "
+             "route the node on L3 between the planes",
+    'R6103': "the staging arm divider's top, a tap on the drawn staging armed rail (frozen, D-23Nov.28), 4.3 mm out; "
+             "its bottom R6104 holds the node at the comparator input",
+    # U1101's three threshold pins have room for four 0603s, given by consequence to PR1's pair, OV1's bottom and
+    # OV1's top (D-24Nov.5)
+    'R1103': "OV1's top, 3.1 mm out: the fourth spot at U1101's threshold pins; its bottom R1104 sits at the pin",
+    'R1105': "OV2's top, about 8 mm out: OV2 watches USB, which is absent in flight, so a false trip only refuses USB "
+             "on the bench; the threshold pins' spots went to PR1 and OV1",
+    'R1106': "OV2's bottom, about 7 mm out: as R1105",
+    'C1104': "the mux's output bypass, about 10 mm out: C1303, the buck's input capacitor, is the bypass at OUT pin 1 "
+             "on the drawn copper (part 3); C1104 adds 1 uF where room allows",
+    # U1401's set pins face its own capacitors and the buck's; EN/UVLO's pair got in (D-24Nov.5)
+    'R1401': "U1401's OVLO top, about 10 mm out: OVLO acts in 1.1 us (SNOSDC0A 6.6), and a false trip turns the held "
+             "core off briefly while its 1000 uF carries the load, which is that block's job",
+    'R1402': "U1401's OVLO bottom, about 10 mm out: as R1401",
+}
+for _r in NEAR:
+    if _r['rule'] == 'part_to_pins' and _r.get('part') in NEAR_EXCEPTIONS:
+        _r['exception'] = NEAR_EXCEPTIONS[_r['part']]
+# each chip's layout section, read before its parts are placed (D-24Nov.4): the build lists the chips a rule serves
+# that have none
+LAYOUT_REFS = {
+    'U101': 'TI SLVSE94G (TPS2663), 9.6.1: R(ILIM), C(dVdT), R(IMON), UVLO, OVP and PGTH parts close to their pins, '
+            'the ILIM trace short and clear of switching; IN_SYS 0.1 uF as close as possible',
+    'U1101': 'TI SLVSEA3F (TPS2120/1), 11: bypass capacitors as close to the device as possible; none on the dividers',
+    'U1401': 'TI SNOSDC0A (LM7310/LM73100), 10.1: the EN/UVLO, OVLO and PGTH resistors and C(dVdT) close to their '
+             'pins; OVLO acts in 1.1 us',
+}
 # and so every chip a passive serves has its parts at its pins, as the logic regulators do (D-23Nov.29): its ref no
 # longer counts as courtyard for the placer, and the silk pass sets it where there's room
 LABELS_MOVE = tuple(sorted(set(LABELS_MOVE) | {p[1] for p in PASSIVE_PINS if p[1].startswith('U')} |
                            {_r['ic'] for _r in NEAR if _r['src'].startswith('D-24Nov.1') and _r['ic'].startswith('U')}
                            - set(REFS_APART)))
 # and the parts round U101's bottom pins, whose labels stood in the one strip its own parts can use
-LABELS_MOVE += ('C1006', 'C1001', 'R1002', 'R1004', 'R1005', 'R1008', 'R1009', 'J102', 'R1007', 'R7101', 'Q101')
+LABELS_MOVE += ('C1006', 'C1001', 'C1002', 'R1002', 'R1004', 'R1005', 'R1008', 'R1009', 'J102', 'R1007', 'R7101',
+                'Q101')
 PYRO_STAMP = {
     'anchors': ('U6304', 'U6404', 'U6504'),
     'rows': [('energy link', ('R6310', 'R6410', 'R6510'), (-3.1, 5.5), 90),
@@ -1051,6 +1096,9 @@ def _logic_feeds():
     # arm feed on L6 under its pad
     v(G, 0.6, 0.3, (23.2, 114.9), (23.2, 116.1), (16.9, 109.35), (18.0, 109.35))
     v(G, 0.45, 0.2, (16.6, 127.25), (17.5, 127.25), (18.4, 127.25))
+    # U101's ILIM, drawn: straight down from pin 10 into R1005, between pins 9 and 11 (TI SLVSE94G 9.6.1: the ILIM
+    # trace as short as possible and clear of switching; D-24Nov.5)
+    t('BAT_ILIM', F, 0.15, (26.605, 146.7), (26.605, 148.1))
     return out
 
 

@@ -239,9 +239,14 @@ def measure(bd, spec, fanout_result=None):
 
     out['near'] = near_rules(bd, spec)
     out['near_misses'] = sum(len(r['misses']) for r in out['near'])
+    out['near_accepted'] = sum(len(r['accepted']) for r in out['near'])
+    out['near_measured'] = f"{sum(r['measured'] for r in out['near'])} distances in {len(out['near'])} rows" 
     # D-24Nov.1: every passive has a rule of its own, naming the part and the pin it serves
     named = {r['part'] for r in getattr(spec, 'NEAR', []) if r.get('part') and r['rule'] in ('part_to_pins', 'on_line')}
     out['passives_without_rule'] = sorted({d['ref'] for d in bd.pads if re.match(r'^(R|C|L|FB|F)\d+$', d['ref'])} - named)
+    # D-24Nov.4: each chip a rule serves has its maker's layout section read and cited (spec.LAYOUT_REFS)
+    served = {r['ic'] for r in getattr(spec, 'NEAR', []) if r.get('ic', '').startswith('U') and r.get('part')}
+    out['chips_without_layout_ref'] = sorted(served - set(getattr(spec, 'LAYOUT_REFS', {})))
 
     # plane pads with no via spot
     if fanout_result is not None:
@@ -305,13 +310,14 @@ def near_rules(bd, spec):
         pads_of[d['ref']].append(d)
     is_cap = lambda r: r.startswith('C') and r[1:].isdigit()
     for row in getattr(spec, 'NEAR', []):
-        rule, mm, miss = row['rule'], row['mm'], []
+        rule, mm, miss, n = row['rule'], row['mm'], [], 0          # n: how many distances this row measured
         if rule == 'supply_caps':
             if 'nets' in row:
                 pins = [d for d in pads_of[row['ic']] if d['net'] and short(d['net']) in row['nets']]
             else:
                 pins = [d for d in pads_of[row['ic']] if d['net'] and short(d['net']) != 'GND'
                         and d['pintype'] == 'power_in' and 'VCAP' not in d['pinfn']]
+            n = len(pins)
             for net in sorted({d['net'] for d in pins}):
                 caps = [d for d in bd.by_net[net] if is_cap(d['ref']) and row['value'] in bd.value.get(d['ref'], '')]
                 for d in _match([q for q in pins if q['net'] == net], caps, mm):
@@ -324,6 +330,7 @@ def near_rules(bd, spec):
                 ic = [d for d in bd.by_net.get(full, []) if d['ref'] == row['ic']]
                 caps = [d for d in bd.by_net.get(full, []) if is_cap(d['ref'])]
                 g = min((_gap(a, c) for a in ic for c in caps), default=None)
+                n += g is not None
                 if g is None or g > mm:
                     miss.append(f"{row['ic']} {net}: nearest cap {g:.1f} mm" if g is not None else f"{row['ic']} {net}: no cap")
         elif rule == 'part_to_pins':
@@ -333,7 +340,7 @@ def near_rules(bd, spec):
                     continue
                 ic = [q for q in bd.by_net[d['net']] if q['ref'] == row['ic'] and (pins is None or q['num'] in pins)]
                 if ic:
-                    hit = True
+                    hit, n = True, n + 1
                     g = min(_gap(d, q) for q in ic)
                     if g > mm:
                         at = '/'.join(sorted({q['num'] for q in ic}, key=lambda n: (len(n), n))) if pins else ''
@@ -347,13 +354,19 @@ def near_rules(bd, spec):
             if not (a and b and d):
                 miss.append(f"{row['part']}: not on {row['net']} with {row['from']} and {row['to']}")
             else:
+                n = 1
                 ax, ay, bx, by = a['x'], a['y'], b['x'], b['y']
                 L2 = (bx - ax) ** 2 + (by - ay) ** 2
                 t = ((d['x'] - ax) * (bx - ax) + (d['y'] - ay) * (by - ay)) / L2 if L2 else 0.0
                 off = seg_dist((d['x'], d['y']), (ax, ay), (bx, by))
                 if off > mm or not 0.0 <= t <= 1.0:
                     miss.append(f"{row['part']}: {off:.1f} mm off the line, at {t:.2f} along it")
-        out.append({'rule': rule, 'what': row.get('part') or row.get('ic'), 'mm': mm, 'source': row['src'], 'misses': miss})
+        if n == 0 and not miss:                       # zero misses out of zero measured is a failure (D-24Nov.4)
+            miss.append(f"{row.get('part') or row.get('ic')}: measured nothing")
+        accepted = miss if row.get('exception') else []   # a written exception: reported, not counted (D-24Nov.2)
+        out.append({'rule': rule, 'what': row.get('part') or row.get('ic'), 'mm': mm, 'source': row['src'],
+                    'measured': n, 'misses': [] if accepted else miss,
+                    'accepted': [f"{m} ({row['exception']})" for m in accepted]})
     return out
 
 
@@ -368,8 +381,11 @@ def markdown(m):
         if v['far_pins']:
             L.append(f"| Wrong-side pins, {u} | {v['wrong_side']} of {v['far_pins']} |")
     if 'passives_without_rule' in m:
-        L.append(f"| Distance-rule misses / passives without a rule of their own | {m['near_misses']} / "
-                 f"{len(m['passives_without_rule'])} |")
+        L.append(f"| Distance rules: measured | {m.get('near_measured', '')} |")
+        L.append(f"| Distance-rule misses / written exceptions / passives without a rule of their own | "
+                 f"{m['near_misses']} / {m.get('near_accepted', 0)} / {len(m['passives_without_rule'])} |")
+        L.append(f"| Chips served by a rule without their layout section cited | "
+                 f"{len(m.get('chips_without_layout_ref', []))} |")
     s = m['tp_stub_summary']
     L.append(f"| Test point stubs (median to route / to pad, mm) | {s['median_to_route']} / {s['median_to_pad']} |")
     L.append(f"| Test points over 10 / 20 mm from their route | {s['over_10_to_route']} / {s['over_20_to_route']} |")

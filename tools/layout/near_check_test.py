@@ -1,0 +1,88 @@
+"""Plant one miss per kind of distance rule on Burrito's built board and see the build's check report it (D-24Nov.4:
+"Every check says how many things it measured, and is proven on a planted miss").
+
+    python3 tools/layout/near_check_test.py [BOARD]
+
+The board's pads are read once; each test moves one part's pads 30 mm away in memory (the board file is not
+touched) or empties a row's measurement, then runs engine/metrics.near_rules and passes when the expected part
+appears in the misses. A last test drops one passive's rows and expects the passive to be listed without a rule.
+Prints one line per test and exits non-zero if any fails.
+"""
+import copy
+import sys
+from types import SimpleNamespace
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+
+import build                               # noqa: E402
+from engine import board as B              # noqa: E402
+from engine import metrics as M            # noqa: E402
+from shapely.affinity import translate     # noqa: E402
+
+
+def moved(bd, ref, dx=30.0):
+    """A copy of the board data with `ref`'s pads moved dx mm."""
+    b2 = copy.copy(bd)
+    pads = []
+    for d in bd.pads:
+        if d['ref'] == ref:
+            d = dict(d, x=d['x'] + dx, poly={l: translate(g, dx, 0) for l, g in d['poly'].items()})
+        pads.append(d)
+    b2.pads = pads
+    b2.by_net = {}
+    for d in pads:
+        b2.by_net.setdefault(d['net'], []).append(d)
+    return b2
+
+
+def clone(spec):
+    return SimpleNamespace(**{k: v for k, v in vars(spec).items() if not k.startswith('__')})
+
+
+def misses_for(bd, spec, part):
+    return [m for r in M.near_rules(bd, spec) if r['what'] == part for m in r['misses']]
+
+
+def main():
+    board = sys.argv[1] if len(sys.argv) > 1 else 'croi2'
+    spec = build.load_spec(board)
+    pcb = build.ROOT / 'hardware' / board / f'{spec.NAME}.kicad_pcb'
+    bd = M.BoardData(B.K.LoadBoard(str(pcb)), spec.ORIGIN, (spec.W, spec.H))
+    base = {r['what']: r for r in M.near_rules(bd, spec)}
+    tests = []
+    # one row of each kind that passes now, its part moved 30 mm: the check must report it
+    for kind in ('part_to_pins', 'supply_caps', 'net_caps', 'on_line'):
+        row = next((r for r in spec.NEAR if r['rule'] == kind and not base.get(r.get('part') or r['ic'], {}).get('misses')
+                    and not r.get('exception')), None)
+        if row is None:
+            tests.append((f'{kind}: no passing row to plant a miss in', False))
+            continue
+        if kind == 'part_to_pins' or kind == 'on_line':
+            part, what = row['part'], row['part']
+        else:                                   # a cap rule: move the chip, whose pins the rule measures from
+            part, what = row['ic'], row['ic']
+        got = misses_for(moved(bd, part), spec, what)
+        tests.append((f'{kind}: {part} moved 30 mm -> {got[:1] or "no miss"}', bool(got)))
+    # a part_to_pins row naming a pin its part doesn't share: measured nothing, so it must miss
+    row = next(r for r in spec.NEAR if r['rule'] == 'part_to_pins' and r.get('pin') and r['part'].startswith('C'))
+    bad = dict(row, pin='999')
+    s2 = clone(spec)
+    s2.NEAR = [bad if r is row else r for r in spec.NEAR]
+    got = misses_for(bd, s2, row['part'])
+    tests.append((f"part_to_pins: {row['part']} named to a pin that doesn't exist -> {got[:1] or 'no miss'}", bool(got)))
+    # a passive whose rows are dropped must be listed as without a rule
+    s3 = clone(spec)
+    s3.NEAR = [r for r in spec.NEAR if r.get('part') != row['part']]
+    m = M.measure(bd, s3, None) if hasattr(M, 'measure') else None
+    listed = m is not None and row['part'] in m.get('passives_without_rule', [])
+    tests.append((f"coverage: {row['part']}'s rows dropped -> {'listed' if listed else 'not listed'}", listed))
+    for t, ok in tests:
+        print(('PASS ' if ok else 'FAIL ') + t)
+    print(f"{sum(ok for _, ok in tests)} of {len(tests)} pass")
+    sys.exit(0 if all(ok for _, ok in tests) else 1)
+
+
+if __name__ == '__main__':
+    main()

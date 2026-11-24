@@ -21,6 +21,7 @@ placement.json.
 """
 import argparse
 import json
+import re
 import math
 import sys
 from pathlib import Path
@@ -43,12 +44,19 @@ def main():
     ap.add_argument('--room', type=float, default=3.0, help='how far another small part may move to make room, mm')
     ap.add_argument('--depth', type=int, default=CT.DEPTH)
     ap.add_argument('--step', type=float, default=CT.STEP, help='the spot grid, mm')
+    ap.add_argument('--along', type=float, default=CT.ALONG, help="how far the search runs along a pin's row, mm")
     ap.add_argument('--budget', type=float, default=60.0, help="seconds per part for making room (the cheapest first)")
     ap.add_argument('--only', nargs='*', help='trials: only these parts')
+    ap.add_argument('--first', nargs='*', default=[],
+                    help='scarce room goes by consequence (D-24Nov.4): these parts, in this order, are placed first, '
+                         'even where already in reach')
     ap.add_argument('--free', nargs='*', default=[], help='parts that may move though an earlier pass placed them')
     ap.add_argument('--plan')
     ap.add_argument('--write', action='store_true')
     ap.add_argument('--set', action='append', default=[], help="trials: a statement run in the spec's namespace")
+    ap.add_argument('--fallback', type=float, default=10.0,
+                    help='a ranked part with no spot inside its rule and its old spot taken goes to the nearest spot '
+                         'this far from its pin, reported as outside its rule')
     ap.add_argument('--apply', help="write a saved plan's moves to placement.json, each from where it stands now")
     a = ap.parse_args()
     if a.apply:
@@ -65,9 +73,9 @@ def main():
         return
     run = CT.Run(SimpleNamespace(board=a.board, others=None, sets=a.set))
     run.depth = a.depth
-    CT.STEP, CT.BUDGET = a.step, a.budget
+    CT.STEP, CT.BUDGET, CT.ALONG = a.step, a.budget, a.along
     pl, spec, comps = run.pl, run.spec, run.comps
-    rows = [r for r in spec.NEAR if r['rule'] == 'part_to_pins' and r.get('src', '').startswith('D-24Nov.1')]
+    rows = [r for r in spec.NEAR if r['rule'] == 'part_to_pins' and re.match(r'^(R|C|L|FB|F)\d', r['part'])]
     small = {r for r in run.movable if not r.startswith('Y')}
     run.room = {r: a.room for r in small}
     CT.prepare(run, ['U201', 'U401'])                     # the crystals' lanes, the MCUs' own parts, probe routes
@@ -122,17 +130,37 @@ def main():
         g, q, k = gap(r, ic, rule_pins(row))
         if g is None:
             continue
-        if g > row['mm'] and (not a.only or r in a.only):
+        if (g > row['mm'] or r in a.first) and (not a.only or r in a.only or r in a.first):
             todo.append((row['mm'], -g, r, ic, k))
-    for mm, ng, r, ic, k in sorted(todo):
+    rank = {r: i for i, r in enumerate(a.first)}
+    for r in a.first:                                      # lifted first, so the ranked parts choose before the rest
+        if r in pl.placed and r not in keep:
+            run.lift(r)
+    for mm, ng, r, ic, k in sorted(todo, key=lambda t: (rank.get(t[2], len(rank)), t)):
         if r in keep:
             report.append(f'{r}: {-ng:.1f} mm from {ic}.{k} (rule {mm}), kept: {why[r]}')
         elif run.to_pin(r, ic, k, mm, settled, 'its pin', report):
             pass
         else:
             report.append(f'{r}: still {-ng:.1f} mm from {ic}.{k} (rule {mm}), no spot in reach')
+            if r in rank and r not in pl.placed:           # lifted for the ranking: the nearest spot it can have
+                lim = min(a.fallback, -ng - 0.1)
+                x, y, ang = run.orig[r]
+                if lim > mm and run.to_pin(r, ic, k, lim, settled, 'nearer than before, outside its rule', report):
+                    report.append(f'{r}: outside its rule ({mm} mm), at the nearest spot it could have')
+                elif run.conflicts(r, x, y, ang) == set():
+                    run.place(r, x, y, ang)
+                elif run.to_pin(r, ic, k, a.fallback, settled, f'outside its rule, within {a.fallback} mm', report):
+                    report.append(f'{r}: outside its rule ({mm} mm): its old spot was taken by a part ranked before it')
         if a.plan:                                         # as it goes, so a stopped run keeps what it found
             Path(a.plan).write_text(json.dumps({'moves': run.moves(), 'report': report, 'partial': True}, indent=1))
+    for r in a.first:                                      # a ranked part that found no spot goes back where it was
+        if r not in pl.placed and r in run.orig:
+            x, y, ang = run.orig[r]
+            if run.conflicts(r, x, y, ang) == set():
+                run.place(r, x, y, ang)
+            else:
+                report.append(f'{r}: found no spot and its old one is taken: do not apply this plan')
     moves = run.moves()
     out = {'moves': moves, 'report': report}
     print('@@' + json.dumps(out))
