@@ -11,6 +11,9 @@ So entries are only appended. When a new rule supersedes an older one, the older
 rule that replaced it; where two rules differ, the later one holds. Seán's global contract and the hipr-avionics
 skill apply as well, and [AGENTS.md](AGENTS.md) holds the repository's other working rules.
 
+Since D-24Nov.3, learnings drawn out in a reasoning review also go in once he approves them: in Claude's words as he
+approved them, with his go-ahead quoted.
+
 ## D-23Nov.19 (20 and 21 Nov 2026): commits, posting and checkpoints
 
 > "I will be pushing to main from now on re Ogma2" (20 Nov)
@@ -156,3 +159,55 @@ checking them. Dictated, so "pastors are closed" means "passives are close".
 How it runs: every passive that serves a chip gets its own row in the layout spec, naming the part, the chip and the
 pin, with the distance its job needs; the build checks every row. A rule that any part on a net can satisfy is not
 one of these.
+
+## D-24Nov.3 (24 Nov 2026): the meta rule, learnings from a reasoning turn become rules once approved
+
+> "And can you update the contract here somehow; perhaps in the rule file, that when we switch back to fable and have
+> such an introspective moment you add them to adjust how we operate going on once I approve? The meta rule ;)"
+
+How it runs: when the work goes back to the reasoning model (Fable) and a review draws out learnings, Claude writes
+them up as candidate rules. Once Seán approves, Claude appends them here as approved, with his go-ahead quoted and a
+D- number, and they hold from then on. Nothing is added before he approves.
+
+## D-24Nov.4 (24 Nov 2026): eight operating rules from the review of the passives batch
+
+Asked for and approved by Seán; written by Claude (Fable) and logged as written. "Today" below is 24 November 2026.
+
+> "So what learnings can we transfer into things we can log in the operating rule file for this work?"
+>
+> "Log the above as you’ve written them also"
+
+Six learnings would have changed today, and all carry to Churro:
+
+1. **A block is done when all of it is done.** Inside a block the order is the chip, its own parts at their pins,
+   then its copper. Lock it only when every rule in it passes.
+   - **Today:** power parts 1 to 3 were logged done on their copper alone. U101, U1101 and U1401 never had their
+     small parts placed, and U101's own 6 A copper then boxed in its pins.
+   - **Extends:** one sub-circuit at a time.
+2. **Every check says how many things it measured, and is proven on a planted miss.** Zero misses out of zero
+   measured is a failure.
+   - **Today:** the old capacitor rule let any capacitor on a net answer, so it passed with 82 of 118 far away. A
+     supply rule did the same before 23 November: it measured nothing. We already plant a violation for every DRC
+     rule; the placement rules never got that.
+   - **Extends:** never report a check you didn't run.
+3. **A miss has three suspects: the tool, the rule and the board. Clear them in that order.**
+   - **Tool:** pick one spot that looks free and make the tool say why it refuses it.
+   - **Rule:** work the distance from the part's job and write the working down. Any re-rule that turns a miss into
+     a pass comes to you.
+   - **Today:** Opus treated all 24 as the board's fault, and nine were the rule's. Before that, four faults in the
+     mover had it reporting no room beside open board. Probing one refused spot at a time exposed them.
+4. **What leaves a high-energy rail leaves through its resistor, and the resistor sits at the rail.** That covers
+   divider tops and sense and monitor lines. A divider's bottom and any filter cap sit at the pin.
+   - **Today:** five parts were placed this way and ruled the other way, and one proposed fix would have run unfused
+     battery across the board.
+5. **Scarce room goes by consequence.** Rank a chip's parts by what an upset costs, and place in that order.
+   - **Today:** the one strip under U101 went to whichever part the mover reached first, and ILIM was left out.
+6. **Read the chip maker's layout section before placing a chip's parts, and cite it in the rule.**
+   - **Today:** every distance came from general reasoning or my memory of TI's text. Nobody opened a datasheet.
+   - **Extends:** "Look them up; don't work from memory", which so far names only JLC's numbers.
+
+Two smaller ones:
+
+- **Long jobs save as they go.** A 32-minute run was lost to a 30-minute limit. It belongs under "checkpoint often".
+- **A reader who didn't do the work closes each block.** Today's two biggest finds came that way. It costs Fable
+  usage, so whether it becomes a rule is your call. He logged it with the rest.

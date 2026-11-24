@@ -5448,3 +5448,37 @@ What the sheets show, read from the step-16 netlist:
   islands, and the three dangling items from before. Full-effort budget run (d24-239c6bd5): 9 of 271 ordinary nets
   open and 0 of 22 rails, 510 s, peak 3.6 GB (gate 25; part 3 left 5 and 1). Open: BAT_SLEW, BMP_SCL, CC_BAT_VALID,
   COMMS_SWDIO, CORE_INPUT_PG, CORE_OV_DIV, FLIGHT_LSE_OUT, FLIGHT_NRST, GNSS_TX.
+
+## 24 November 2026: the review of the batch, and the rules drawn from it (D-24Nov.2 to D-24Nov.4)
+
+- Seán asked Fable to reason through the 24 passives out of reach and agreed with every point ("I agree with all the
+  points above."). The verdicts are D-24Nov.2. Records only: nothing on the board has changed, and 239c6bd5 stands.
+- Of the 24: 13 move, nine were out only because their rule was wrong or tighter than their job, and two stay as
+  written exceptions. U101 does not move: Q102, R1001, the gate-drive copper and R7104's tap all sit in the 2 mm
+  north of it, so moving it is a re-layout of its north side on the 6 A path, about the size of the flight LDO job.
+- Placed right, ruled to the wrong pin (4): R1001, R1003, R6103, R7104. Each is the first resistor off a high-energy
+  rail and belongs at the rail, as R8007 does; the trace that crosses the board is then limited to under 100 mA.
+  R7104 is not moved to the monitor: that would run unfused battery down a long thin trace.
+- Rule tighter than the job (5), each to get its own worked limit in the spec: C1001 (the capacitor dominates its own
+  node over a millisecond ramp), C1002 and C1004 (0.7-0.8 mm over a 10 mm figure whose argument holds well past it),
+  R1008 (PGOOD reaches only a test point), C4612 (it feeds millisecond bursts; the 100 nF is at the pin).
+- The work, in order. Before the RF lines, one pass in the power block: U1101's six, by moving U7001's group toward
+  J102 and not turning the mux; U1401's three with it; U101's strip set by hand, C1006 and R1005 side by side under
+  the bottom pins, ILIM taking the spot if only one fits and C1006 then going to J103. Before stage D: U6701's two
+  capacitors (re-place its group, starting with R2303) and C2301 (move TP16). R1002 and R1004 stay about 10 mm out,
+  their nodes routed on L3.
+- The review's estimates (inferred, not measured): on L1 a stray 0.05 pF from the buck's switch node couples about
+  100 mV per edge onto the mux's threshold near 1 V; U1401's EN node is 67 kΩ over 22.5 mm; the battery copper
+  induces about 0.1 mV in U101's UVLO and OVP nodes, against about 80 mV of OVP margin at the pin.
+- Not verified, for Opus before the work closes: TI's layout wording, the mux's switching speed and the eFuse's
+  1.2 V reference were recalled, not read; PGOOD reaching only TP41 is from the morning's netlist dump; that C1006 and
+  R1005 both fit the strip is arithmetic from a render. Nine re-rules that turn misses into passes is the pattern to
+  distrust: the test for each was whether a clean-sheet layout would put the part there, and each working goes in
+  the spec for Seán to veto.
+- Left as it is and noted for Churro: the shunt's Kelvin pair has no resistor at the shunt end (R7102 and R7103 sit
+  at the monitor). It runs between ground planes and the eFuse limits a fault. Churro's sense lines are drawn the
+  other way round.
+- The meta rule (D-24Nov.3): learnings from a reasoning turn become standing rules once Seán approves them. The
+  first eight are logged as written (D-24Nov.4).
+- Still to build from D-24Nov.4: the checks do not yet print how many things they measured, the placement rules have
+  no planted-miss test, and the rule rows do not cite the chips' datasheets.
