@@ -117,7 +117,8 @@ profile while the board sits still.
 | Who fires | The flight MCU's own event logic, as in flight |
 | Outputs | Recovery channels 1 and 2 only. Staging stays disarmed and its latch cleared |
 | Power hold | Not asserted: J103 must still switch the board off |
-| Exit | Held in RAM, never stored with the configuration: clears at power-off and at any reset; never carried into a flight. A checkpoint written in ground-test mode never reads as in flight, so a reset mid-test comes back on the pad with nothing firing (D-2Nov.16) |
+| Exit | Stored with the configuration: it stays through resets and power cycles until the configurator sets flight mode again (D-24Nov.18, replacing D-2Nov.16). A checkpoint written in test mode never reads as in flight, so a reset mid-test comes back on the pad, still in test mode, with nothing firing until launch is declared again |
+| Guard (G1) | The readiness lamp never goes green; the sounder plays a test pattern at arming in place of the go tones; pad telemetry and USB readback carry MODE: TEST in every frame; MODE: TEST is a no-go on the pad checklist (D-24Nov.18). Flown in test mode, Burrito never sees launch, fires nothing and holds no power |
 | Record | Every use logged with its configuration, for the annex |
 
 ## Per-flight configuration
@@ -136,7 +137,8 @@ configuration are recorded at launch detect.
 2. Hardware-in-the-loop with simulated trajectories, including transonic pressure spikes.
 3. Reset injection in every phase on the bench, outputs on inert loads,
    including a reset in the first second after launch detect and one during a
-   ground-test run (D-2Nov.16).
+   ground-test run: it comes back in test mode, on the pad, with nothing firing
+   (D-24Nov.18). Power-cycle in test mode: G1's lamp, tones and frame field.
 4. A six-hour pad hold with a pressure drift profile: the datum follows the
    weather and freezes at launch detect.
 5. The LV-0520 ground test in ground-test mode, inert loads first.

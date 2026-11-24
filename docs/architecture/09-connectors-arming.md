@@ -50,7 +50,7 @@ powers down, even if firmware is holding the enable.
 | Servos | None on Burrito (D-19Nov.2) |
 | Indication | Arm sense U6103 → PE13 (recovery, D-5Nov.3) and PD6 (staging, D-22Nov.25), over USB and the 1 Hz pad telemetry (D-2Nov.10); no lamp |
 | Switch parts | Open: maintained, rated above the fuses at 8.4 V DC, operable from outside the airframe |
-| Where they go | EuRoC: on the airframe, reachable from the ground with the rocket on the rail, no ladders or stools, on the side away from the rail (LV-0260–0280, 0540–0550). The av-bay sits above the tanks, so the switches may need to sit low with a harness up to Burrito; open with Jay. The active board's arm key (D-18Nov.1) and the CATS Vega's switch and cell (D-18Nov.2) go with them |
+| Where they go | EuRoC: on the airframe, reachable from the ground with the rocket on the rail, no ladders or stools, on the side away from the rail (LV-0260–0280, 0540–0550). The av-bay sits above the tanks, so the switches may need to sit low with a harness up to Burrito; open with Jay. The active board's arm key (D-18Nov.1) and the CATS Vega's switch and cell (D-18Nov.2) go with them. IREC (Ériú): on the av-bay itself, reached from ESRA's stepladders (D-24Nov.17); J6102 has no job there (single stage; open, Seán) |
 
 The output harness J6601 is not an arm connector: 1/2 recovery high sides, 3
 staging high side, 4/5/6 igniter returns, each switched to ground by its own low

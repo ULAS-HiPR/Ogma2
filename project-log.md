@@ -5712,3 +5712,25 @@ What the sheets show, read from the step-16 netlist:
 - Not touched: D-21Nov.6's "too short" (Seán's calls of 24 November cover it, to be written as decisions), and other
   files that still name GH or Gecko enable loops (system-tour, power-contract, 08, the capture spec, the
   interfaces-and-installation justification, churro.md C-07, the Churro power review brief).
+
+## 24 November 2026: Seán's evening calls written up (D-24Nov.15 to D-24Nov.18, two open rows)
+
+- D-24Nov.15: Ériú's sled is two-sided or more, Churro directly behind Burrito; the 321 mm bay is long enough at
+  Burrito's 160 mm, and the second CATS Vega mount stays. D-21Nov.6's 400–420 mm ask isn't needed. Not measured yet.
+- Open: how J102 meets Churro on that sled. The right-angle MPT and MPS mate in one plane, so the boards no longer
+  meet. Seán would rather have no harness; Claude's candidate is a rigid end-cap board across the sled's aft end
+  (unchecked: a vertical MPS mate exists; the offset across the sled). To revisit.
+- D-24Nov.16: at IREC the CATS Vega is primary and official logger; Burrito fires the redundant chain (Seán confirmed
+  Claude's reading). DTEG REV P1 6.9–6.11.6 barely move; 6.11.6 still binds Burrito, with the second CATS Vega mount
+  as the swap ESRA may ask for. ESRA accepting the CATS Vega as COTS (6.10.4) is now load-bearing.
+- D-24Nov.17: Ériú's access panel sits on the av-bay itself; only EuRoC keeps it low (LV-0270). REV P1's 6.15.6
+  gives the solids area's stepladders (at least 10 ft, rockets about 2 ft up) and wants switch positions in the
+  OpenRocket file. That Ériú flies from the solids area is an inference.
+- Open: J6102 at IREC (no job; fitted, blanked or left open), Seán's.
+- D-24Nov.18: test mode stays until the configurator ends it, like the CATS Vega's; a USB-C extension takes Burrito's
+  J4401 to the panel. Replaces D-2Nov.16; amends D-2Nov.10 (2) and D-21Nov.4. Guard G1, Seán's pick. "Nothing
+  flashed on the rail" now rests on the running firmware's USB having no firmware-write or bootloader-jump command;
+  flashing needs the av-bay open (SWD, or the ROM bootloader with BOOT0 high at TP24), which keeps A7's "each board
+  flashed through its own USB" true at the bench. B-32 goes from Met to Open until firmware carries the rule.
+- Carried into current-system, 09, 10, firmware-interface, behaviour-map, burrito.md (B-12, B-32, B-37), the rules
+  sweep's LV-0520, DTEG 6.10 and 6.15 rows, and the access-panel brief (its stale GH and Gecko enable lines too).
