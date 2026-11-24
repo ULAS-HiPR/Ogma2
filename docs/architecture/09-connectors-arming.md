@@ -27,7 +27,7 @@ over USB and telemetry"]
 
 | Item | Definition |
 | --- | --- |
-| Connector | JST GH BM02B-GHS-TBT(LF)(SN), housing GHR-02V-S, wire-matched crimps |
+| Connector | Molex Micro-Fit 3.0 header, single row, two circuits, 43650-0215 (D-22Nov.18; was JST GH, then Gecko under D-19Nov.5, which makes no 2-contact part). Mates: 43645 or 171850 plugs, not yet tried by hand |
 | Contacts | 1 `BAT_SWITCH_3V`, 2 `BAT_SHDN_N` |
 | Closed | Battery entry on |
 | Open or unplugged | Battery entry commanded off; upstream circuits stay live |
@@ -43,9 +43,9 @@ powers down, even if firmware is holding the enable.
 
 | Item | Decision |
 | --- | --- |
-| Connector | 2-contact, rated above its fuse (F6101 / F6102), to an external maintained switch. Part chosen at capture. It must not mate Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the JST GH enable loops, so a crossed harness can't put propulsion voltage on the pyro rail. Proposed (19 Nov): single-row Micro-Fit 3.0, recovery 2-way, staging 3-way with one cavity empty, so they can't swap; confirm by trying the real housings |
+| Connector | 2-contact, rated above its fuse (F6101 / F6102), to an external maintained switch. Two families, so neither plug enters the other's header (D-21Nov.12): J6101 (recovery) is a Molex Mini-Fit Jr. 2-circuit vertical header, 39281023 (4.2 mm, 9 A); J6102 (staging) is a JST VH 2-pin header, B2P-VH (3.96 mm, 10 A). Neither mates Churro J701 (Micro-Fit 430450200, raw 6S PROP) or the Micro-Fit enable loops, so a crossed harness can't put propulsion voltage on the pyro rail. Still to check: each plug tried in the other header with real parts, and VH's lock through the vibration test |
 | Recovery | `ENERGY_TAP` → F6101 → J6101 → `RECOVERY_ARMED_VBAT` → channels 1 and 2 |
-| Staging (D-7.2, D-2Nov.2) | Its own fuse and arm: `ENERGY_TAP` → F6102 → J6102 → `STAGING_ARMED_VBAT` → channel 3. J6102 is 2-contact, keyed so it can't mate J6101, J701 or the GH loops |
+| Staging (D-7.2, D-2Nov.2) | Its own fuse and arm: `ENERGY_TAP` → F6102 → J6102 → `STAGING_ARMED_VBAT` → channel 3. J6102 is 2-contact, of a family that can't mate J6101, J701 or the enable loops (D-21Nov.12) |
 | Open or unplugged | No energy at the output switches, whatever firmware does |
 | Servos | None on Burrito (D-19Nov.2) |
 | Indication | Arm sense U6103 → PE13 (recovery, D-5Nov.3) and PD6 (staging, D-22Nov.25), over USB and the 1 Hz pad telemetry (D-2Nov.10); no lamp |
@@ -63,9 +63,9 @@ continuity values close.
 | --- | --- | --- | --- |
 | J101 | Molex Nano-Fit 1053111102 | Standalone 2S | Footprint to draw from the Molex drawing; never fitted with J102 |
 | J102 | Samtec MPT-08-01-01-L-RA-SD | To Churro | Pin 8 now `CROI_POWER_HOLD` ([08](08-foinse-can.md)) |
-| J103 | Harwin Gecko 2-contact (was JST GH, D-19Nov.5) | FC battery enable | Series and lock at capture |
-| J6101 | 2-contact, keyed apart from J701 | Recovery arm switch | Function decided; connector and switch parts open |
-| J6102 | 2-contact, keyed apart from J6101 and J701 | Staging arm switch | Function decided (D-7.2); connector and switch parts open |
+| J103 | Molex Micro-Fit 3.0 43650-0215, single row, 2 circuits (D-22Nov.18; was JST GH, then Gecko under D-19Nov.5) | FC battery enable | Part decided and captured; mating plug still to try by hand |
+| J6101 | Molex Mini-Fit Jr. 39281023, 2-circuit vertical (D-21Nov.12) | Recovery arm switch | Connector decided and captured; switch part open |
+| J6102 | JST VH B2P-VH, 2-pin (D-21Nov.12) | Staging arm switch | Function decided (D-7.2); connector decided and captured; switch part open |
 | J6601 | Micro-Fit 430450600 | Pyro outputs | 1/2 recovery high, 3 staging high, 4/5/6 switched returns |
 | J6602 | Removed | Was three servos | D-19Nov.2 |
 | J501 | Harwin Gecko 3-contact (was JST GH) | CAN bus 1 H / L / reference, to Fajita | No power contact; series and lock chosen at capture; Fajita's end has to match (D-18Nov.4) |
@@ -87,9 +87,10 @@ The umbilical plug falls under the same EuRoC access rule as the arm switches.
 - **GNSS vs radio SMA:** identical; radio transmit into the GNSS input may
   damage it. Use a different connector type or gender for GNSS, or retained,
   labelled leads.
-- **Enable loops vs arm:** three 2-contact Gecko plugs (D-19Nov.5; Croí J103, Churro J103,
-  J104) look alike; J6101 and J6102 must stay physically distinct from them,
-  from each other and from Churro J701.
+- **Enable loops vs arm:** three 2-circuit Micro-Fit 3.0 enable plugs look alike
+  (Croí J103, D-22Nov.18; Churro J103 and J104 follow it unless Seán says
+  otherwise). J6101 and J6102 are other families (D-21Nov.12), distinct from
+  them, from each other and from Churro J701.
 
 For every external harness, release the mating part, cavity-numbered drawing,
 wire and contact, retention, strain relief and mounting together. Include

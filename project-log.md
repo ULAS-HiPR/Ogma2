@@ -5698,3 +5698,17 @@ What the sheets show, read from the step-16 netlist:
   (PYRO1_FIRE), BMP_SCL and BMP_SDA (PYRO1_LS_SELECT), FLIGHT_BOOT0 and FOINSE_SCL (PYRO2_LS_SELECT). Each has to
   escape on L1 past its fire run before it can take a via. One or two of the eleven were open in each of the last
   five complete trials (FOINSE_SCL, BMP_SDA, BMP_SCL, NEW_FLIGHT_CLEAR_REQUEST, TE_SDA).
+
+## 24 November 2026: stale connector text and two EuRoC lines fixed (no design change)
+
+- 09 and current-system's interface table still gave J6101 / J6102 as "proposed" single-row Micro-Fit 3.0 and J103 as
+  JST GH or Gecko. They now say what D-21Nov.12 and D-22Nov.18 decided and the schematic holds: J6101 Molex Mini-Fit
+  Jr. 39281023, J6102 JST VH B2P-VH(LF)(SN), J103 Molex Micro-Fit 3.0 43650-0215 (checked in the .kicad_sch files).
+  The enable-loop mix-up note in 09 now names three Micro-Fit plugs.
+- The propulsion boundary's LV-0030 line said the igniter is armable and disarmable "only" with nobody within 15 m.
+  The SRD (Issue 1.1, p.16) asks that it can be armed and disarmed with nobody within 15 m; "only" is dropped.
+- Its Appendix E1 line now adds the appendix's one "shall": a disconnect fitted on a bi-liquid covers both the fuel
+  and the oxidiser valves (p.76). Both checked against the SRD text on 24 November.
+- Not touched: D-21Nov.6's "too short" (Seán's calls of 24 November cover it, to be written as decisions), and other
+  files that still name GH or Gecko enable loops (system-tour, power-contract, 08, the capture spec, the
+  interfaces-and-installation justification, churro.md C-07, the Churro power review brief).
