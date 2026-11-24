@@ -5363,3 +5363,33 @@ What the sheets show, read from the step-16 netlist:
   silk pass's overlaps (23) and eight plane islands, which stage D's vias join. Full-effort budget run
   (pw2-e59a26f6): 5 of 271 ordinary nets open and 1 of 22 rails (ST_3V3, in the flight band), 306 s, peak 3.7 GB
   (gate 25; part 1 left 7).
+
+## 23 November 2026: power, part 3, the logic feeds and the flight LDO's block (D-23Nov.31)
+
+- The logic feeds are drawn and locked (spec._logic_feeds, in POWER_COPPER). The shunt R7101 takes U101's two OUT
+  pins on L1. Its Kelvin pair leaves each pad's inner edge at the middle, drops under the body and runs on L3, between
+  the GND planes, to R7102 and R7103. The protected feed leaves the shunt's far pad at its top and climbs to the input
+  mux on L6 at 1.0 mm, two vias each end, into IN1 and C1102; R1007 takes the pad's bottom.
+- The mux's two OUT pins are joined and reach C1303 and the buck's VIN2 pins on L1; a 1.0 mm L3 link under the buck
+  reaches C1304, the VIN1 pins and EN/SYNC. Each input capacitor closes its loop to the next PGND pins on L1, and the
+  buck's PGND centre pads take two vias each.
+- The buck's VOUT pins drop into C1305 and C1306 either side of the SW pin, which stays bare. 4V_PRE runs west on L1
+  to C1302, C1401 and the held core's IN bar, and north-east on L6 to two vias beside the branch switches' IN pins. A
+  thin L6 branch takes it to VLDOIN and the feedback divider's top.
+- The buck's small pins: FB short to its divider; VCC's capacitor to pin 23, its GND pad on a plane via of its own (TI
+  puts it on PGND); AGND (pins 24 and 27, the divider's and RT's GND pads) joined on L1 and tied to PGND at one point,
+  pad 27 to pad 28; RT by L3 to pin 1.
+- Found on the way: the flight LDO's own parts were far from it (output capacitor 12 mm, divider 12-15 mm, link
+  32 mm, NR/SS capacitor 5 mm), and the 1000 uF filled the only room by it. The 1000 uF moves 8 mm north and turns,
+  and the LDO turns so OUT faces C1706, 1.0 mm off. The link R1704 sits beside C1706 and feeds L5 by two vias. The
+  divider and feed-forward capacitor sit west of FB (2.1-3.1 mm), the divider's top sensed at C1706 by a line of its
+  own; the NR/SS capacitor is 1.0 mm under NR, the 100 nF 1.2 mm east of IN and the 47 uF 3.0 mm off, on the held
+  core's feed. EN, between NR and GND, joins CORE_HELD_4V by two vias. U1102's ref joins the ones the silk pass
+  places, which frees the 1000 uF's corner. 13 parts moved; every distance rule holds, eight new ones included.
+- Not at their pins yet: the branch switches' 100 nF input capacitors (C1501, C1601), 11-12 mm off, with no spot
+  within 3 mm; the comms and optional LDOs' NR/SS capacitors, 5-7 mm off.
+- Board 10464c7d: DRC 0 errors, rules check 9 of 9. Each logic feed is one piece but for its thin taps, which the
+  router takes; FLIGHT_3V3_PRELINK, the buck's FB, VCC and RT, and the LDO's FB and NR are whole. Warnings: silk
+  overlaps (30, the silk pass's), seven plane islands, and the LDO's PG via, which the router joins. Full-effort budget
+  run (pw3-10464c7d): 5 of 271 ordinary nets open and 1 of 22 rails (ST_3V3), 366 s, peak 5.0 GB (gate 25; part 2
+  left 5 and 1). None of the six is in the power block.

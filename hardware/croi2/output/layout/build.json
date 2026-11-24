@@ -60,6 +60,10 @@
    -1.999,
    5.841
   ],
+  "TP24": [
+   -3.206,
+   1.448
+  ],
   "TP26": [
    3.203,
    -0.052
@@ -81,8 +85,8 @@
    -0.354
   ],
   "TP38": [
-   -0.001,
-   -0.647
+   3.203,
+   1.448
   ],
   "TP4": [
    2.727,
@@ -157,13 +161,14 @@
   "TP10",
   "TP16",
   "TP18",
-  "TP24",
   "TP32",
   "TP9",
   "U1101",
+  "U1102",
   "U1202",
   "U1301",
   "U1401",
+  "U1701",
   "U2301",
   "U3104",
   "U3403",
@@ -290,7 +295,7 @@
  "marks_unplaced": [],
  "no_region": [],
  "spills": [],
- "hpwl_mm": 9194.3,
+ "hpwl_mm": 9125.5,
  "hpwl_by_class_mm": {
   "RF50": 19.6,
   "FIRE": 118.8,
@@ -302,7 +307,7 @@
   "1 RF and fire": 0.64,
   "2 Flight": 0.626,
   "3 Comms": 0.7,
-  "4 Power and harness": 0.698
+  "4 Power and harness": 0.696
  },
  "jlc_spacing_violations": [
   {
@@ -464,9 +469,9 @@
    270
   ],
   "C1403": [
-   21.8,
-   118.3,
-   90
+   20.4,
+   109.35,
+   180
   ],
   "C1501": [
    51.8,
@@ -489,19 +494,19 @@
    0
   ],
   "C1701": [
-   16.7,
-   118.7,
-   90
+   19.55,
+   122.9,
+   270
   ],
   "C1702": [
-   16.8,
-   120.7,
-   90
+   16.9,
+   116.5,
+   0
   ],
   "C1703": [
-   16.6,
-   122.7,
-   90
+   22.6,
+   121.0,
+   0
   ],
   "C1704": [
    44.65,
@@ -509,13 +514,13 @@
    0
   ],
   "C1705": [
-   28.75,
-   116.6,
-   0
+   17.35,
+   126.1,
+   270
   ],
   "C1706": [
-   18.4,
-   111.35,
+   21.73,
+   115.5,
    0
   ],
   "C1801": [
@@ -1579,14 +1584,14 @@
    90
   ],
   "R1403": [
-   22.15,
-   108.9,
-   0
+   26.3,
+   116.35,
+   270
   ],
   "R1404": [
-   23.65,
-   111.35,
-   90
+   25.15,
+   121.35,
+   0
   ],
   "R1405": [
    29.0,
@@ -1639,14 +1644,14 @@
    90
   ],
   "R1701": [
-   21.8,
-   111.25,
+   16.7,
+   118.9,
    270
   ],
   "R1702": [
-   18.95,
-   108.15,
-   90
+   16.7,
+   122.0,
+   270
   ],
   "R1703": [
    32.5,
@@ -1654,9 +1659,9 @@
    270
   ],
   "R1704": [
-   16.85,
-   91.5,
-   90
+   17.85,
+   114.9,
+   180
   ],
   "R1801": [
    36.05,
@@ -2779,8 +2784,8 @@
    0
   ],
   "TP38": [
-   24.4,
-   106.45,
+   31.15,
+   103.75,
    0
   ],
   "TP39": [
@@ -2914,9 +2919,9 @@
    90
   ],
   "U1701": [
-   18.5,
-   126.15,
-   90
+   19.5,
+   119.5,
+   270
   ],
   "U1801": [
    41.0,
@@ -3475,9 +3480,9 @@
    "mm": 478.4
   },
   "power": {
-   "tracks": 75,
-   "vias": 33,
-   "mm": 542.4
+   "tracks": 187,
+   "vias": 80,
+   "mm": 726.2
   },
   "planes": [
    {
@@ -3503,7 +3508,7 @@
   ],
   "planes_filled": true
  },
- "uuids": 20635,
+ "uuids": 20794,
  "metrics": {
   "plane_nets": {
    "BOOT_3V3": "island",
@@ -3514,20 +3519,20 @@
    "LORA_3V3": "island"
   },
   "signal_nets": 330,
-  "wire_mm": 7375.0,
+  "wire_mm": 7308.3,
   "wire_by_class_mm": {
    "CAN_DIFF": 64.4,
-   "Default": 5593.5,
+   "Default": 5560.9,
    "FIRE": 119.6,
    "FIRE_LOGIC": 304.7,
-   "LOGIC_FEED": 247.3,
+   "LOGIC_FEED": 244.2,
    "PYRO_RAIL": 242.3,
-   "RAIL_3V3": 630.4,
+   "RAIL_3V3": 599.5,
    "RF50": 19.0,
    "SRC_6A": 108.4,
    "USB_DIFF": 45.2
   },
-  "crossings": 2316,
+  "crossings": 2289,
   "crossings_worst_nets": [
    [
     "3V3_OPTIONAL",
@@ -3551,10 +3556,6 @@
    ],
    [
     "RECOVERY_ARMED_VBAT",
-    60
-   ],
-   [
-    "STAGING_ARMED_VBAT",
     59
    ],
    [
@@ -3562,12 +3563,16 @@
     58
    ],
    [
+    "STAGING_ARMED_VBAT",
+    58
+   ],
+   [
     "GNSS_EN",
     54
    ],
    [
-    "STAGE_ARM_INVALID",
-    51
+    "GNSS_PPS",
+    50
    ]
   ],
   "wrong_side": {
@@ -3857,8 +3862,8 @@
    },
    "TP27": {
     "net": "CORE_HELD_4V",
-    "to_pad": 12.2,
-    "to_route": 12.2
+    "to_pad": 11.2,
+    "to_route": 11.2
    },
    "TP28": {
     "net": "FC_POWER_HOLD",
@@ -3917,8 +3922,8 @@
    },
    "TP38": {
     "net": "FLIGHT_LDO_PG",
-    "to_pad": 17.3,
-    "to_route": 2.5
+    "to_pad": 12.6,
+    "to_route": 4.6
    },
    "TP39": {
     "net": "4V_PRE",
@@ -3993,7 +3998,7 @@
   },
   "tp_stub_summary": {
    "n": 43,
-   "median_to_route": 3.7,
+   "median_to_route": 4.0,
    "median_to_pad": 5.7,
    "over_10_to_route": 6,
    "over_20_to_route": 0
@@ -4081,9 +4086,7 @@
     "what": "U1701",
     "mm": 2.0,
     "source": "burrito-sweep.md section 5: TPS7A91 input and output capacitors within 2 mm",
-    "misses": [
-     "U1701 FLIGHT_3V3_PRELINK: nearest cap 5.5 mm"
-    ]
+    "misses": []
    },
    {
     "rule": "net_caps",
@@ -4484,9 +4487,65 @@
     "misses": [
      "R1106.1 to U1101: 12.3 mm"
     ]
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "C1706",
+    "mm": 1.5,
+    "source": "layout brief section 4, block templates [J]: output capacitor at OUT",
+    "misses": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "C1703",
+    "mm": 1.5,
+    "source": "layout brief section 4, block templates [J]: input capacitor at IN",
+    "misses": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "C1701",
+    "mm": 1.5,
+    "source": "layout brief section 4, block templates [J]: NR/SS capacitor at its pin",
+    "misses": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "R1701",
+    "mm": 3.0,
+    "source": "layout brief section 4, block templates [J]: the feedback divider by FB",
+    "misses": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "R1702",
+    "mm": 3.5,
+    "source": "layout brief section 4, block templates [J]: the feedback divider by FB",
+    "misses": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "C1702",
+    "mm": 3.5,
+    "source": "layout brief section 4, block templates [J]: the feed-forward capacitor with the divider",
+    "misses": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "R1704",
+    "mm": 3.0,
+    "source": "layout brief section 4, block templates [J]: the isolation link beside the output capacitor",
+    "misses": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "C1705",
+    "mm": 4.0,
+    "source": "layout brief section 4, block templates [J]: the 47 uF input capacitor near IN",
+    "misses": []
    }
   ],
-  "near_misses": 5,
+  "near_misses": 4,
   "plane_pads": 601,
   "plane_pads_no_via": 55,
   "plane_pads_no_via_by_band": {
@@ -4554,5 +4613,5 @@
   ]
  },
  "probe_stub_misses": {},
- "seconds": 26.9
+ "seconds": 32.5
 }

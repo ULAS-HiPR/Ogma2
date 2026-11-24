@@ -256,7 +256,7 @@ SILK_NAME_GAP = {'J6601': 3.3}     # 1.6 until 23 Nov: two rows of capacitors no
 REFS_APART = ('U201', 'U401', 'U4606')
 # the logic regulators, whose own parts sit at their pins on every side (the brief's block templates, D-23Nov.29): their
 # refs don't count as courtyard for the placer, and the silk pass sets them where there's room
-LABELS_MOVE = ('U1301', 'U1401', 'U1101', 'U1701')
+LABELS_MOVE = ('U1301', 'U1401', 'U1101', 'U1701', 'U1102')
 # where each MCU's own decoupling capacitors are drawn, for tools/layout/caps_to_pins.py (D-23Nov.1)
 DECOUPLING_SHEETS = {'U201': ('/02a-flight-support/',), 'U401': ('/04a-comms-support/',)}
 # parts that may move this far, mm, to make room for those capacitors (D-23Nov.5): test points and pull resistors
@@ -388,7 +388,14 @@ NEAR += [dict(rule='part_to_pins', part=r, ic=ic, mm=mm, src=f'{_BLOCK}: {why}')
     ('R1107', 'U1101', 4.0, 'set parts by their pins'),
     ('R1102', 'U1101', 8.0, 'the threshold dividers in the block (DC)'),
     ('R1104', 'U1101', 8.0, 'the threshold dividers in the block (DC)'),
-    ('R1106', 'U1101', 8.0, 'the threshold dividers in the block (DC)'))]
+    ('R1106', 'U1101', 8.0, 'the threshold dividers in the block (DC)'),
+    # the flight LDO (D-23Nov.31; TI's TPS7A91 layout)
+    ('C1706', 'U1701', 1.5, 'output capacitor at OUT'), ('C1703', 'U1701', 1.5, 'input capacitor at IN'),
+    ('C1701', 'U1701', 1.5, 'NR/SS capacitor at its pin'),
+    ('R1701', 'U1701', 3.0, 'the feedback divider by FB'), ('R1702', 'U1701', 3.5, 'the feedback divider by FB'),
+    ('C1702', 'U1701', 3.5, 'the feed-forward capacitor with the divider'),
+    ('R1704', 'U1701', 3.0, 'the isolation link beside the output capacitor'),
+    ('C1705', 'U1701', 4.0, 'the 47 uF input capacitor near IN'))]
 PYRO_STAMP = {
     'anchors': ('U6304', 'U6404', 'U6504'),
     'rows': [('energy link', ('R6310', 'R6410', 'R6510'), (-3.1, 5.5), 90),
@@ -599,7 +606,7 @@ POWER_PARTS = {     # moved for this copper; placement.json holds them
     # U1101 east, so the buck's parts sit at its pins, each 1.0 mm off (JLC's spacing to a QFN): an input capacitor at
     # each pair of VIN and PGND pins, the two output capacitors under the VOUT row, and above the top row the feedback
     # divider over FB (its two FB pads side by side) and the VCC capacitor over VCC
-    'U1401': (22.0, 125.65, 90), 'U1701': (18.5, 126.15, 90), 'U1101': (36.45, 127.2, 0),
+    'U1401': (22.0, 125.65, 90), 'U1101': (36.45, 127.2, 0),
     'C1304': (25.55, 125.95, 270), 'C1303': (33.775, 125.38, 270),
     'C1305': (28.45, 131.6, 270), 'C1306': (31.75, 131.6, 270), 'C1302': (25.6, 129.4, 180),
     'R1301': (27.6, 119.92, 270), 'R1302': (29.12, 119.92, 90), 'C1301': (30.64, 119.925, 90),
@@ -608,7 +615,17 @@ POWER_PARTS = {     # moved for this copper; placement.json holds them
     'C1401': (23.85, 129.9, 270), 'R1406': (21.5, 129.5, 270), 'C1402': (22.8, 129.9, 270),
     'C1102': (39.15, 127.93, 270),
     'TP41': (18.75, 131.5, 0),   # BAT_SOURCE_PG's probe: the blocks took its spot; the nearest free one, 15 mm from R1010
-    'C1403': (21.8, 118.3, 90),  # the held core's 1000 uF stays over U1401's output
+    # the flight LDO's block (D-23Nov.31; the brief's LDO template; TI's TPS7A91 layout: input and output capacitors
+    # at the pins, the feedback divider by FB with its top sensed at the output capacitor). Its output capacitor was
+    # 12 mm off and its divider 12-15 mm, the 1000 uF filling the only room by it, so the 1000 uF moves 8 mm north,
+    # turned so its CORE_HELD_4V pad faces east, and the LDO turns so OUT faces it: C1706 1.0 mm over the OUT pins,
+    # the 0 ohm link R1704 beside it, the divider R1701-R1702 and the feed-forward cap C1702 west of the FB pin, the
+    # NR/SS cap C1701 1.0 mm under the NR pin, the 100 nF C1703 east of the IN pins and the 47 uF C1705 where the
+    # LDO stood, on the held core's feed to them
+    'C1403': (20.4, 109.35, 180),
+    'U1701': (19.5, 119.5, 270), 'C1706': (21.73, 115.5, 0), 'R1704': (17.85, 114.9, 180),
+    'R1701': (16.7, 118.9, 270), 'R1702': (16.7, 122.0, 270), 'C1702': (16.9, 116.5, 0),
+    'C1701': (19.55, 122.9, 270), 'C1703': (22.6, 121.0, 0), 'C1705': (17.35, 126.1, 270),
     'R6101': (21.2, 101.95, 90),  # on the recovery rail's tap
 }
 
@@ -689,7 +706,133 @@ def _power_copper():
     return out
 
 
-POWER_COPPER = _power_copper()
+
+def _logic_feeds():
+    """The logic feeds (D-23Nov.31): the shunt and its Kelvin pair, the protected feed to the input mux, the mux to
+    the buck's two inputs and their loops, the buck's output to its loads, the held core to the flight LDO and its
+    1000 uF, the flight LDO's block, and the buck's small pins. Widths: the class's 1.0 mm where there is room,
+    narrower only into a pin (LOGIC_FEED carries 1.24 A at most)."""
+    out = []
+    t = lambda net, lay, w, *path: out.append(dict(net=net, layer=lay, w=w, path=[(round(x, 3), round(y, 3)) for x, y in path]))
+    v = lambda net, d, dr, *xy: out.extend(dict(net=net, via=(round(x, 3), round(y, 3)), d=d, drill=dr) for x, y in xy)
+    F, B, L3 = 'F.Cu', 'B.Cu', 'In2.Cu'
+    VS, VP, LS, V4, CH, G = 'VBAT_SHUNT_IN', 'VBAT_PROTECTED', 'LOGIC_SELECTED', '4V_PRE', 'CORE_HELD_4V', 'GND'
+    PL, FB, NR, PG = 'FLIGHT_3V3_PRELINK', 'FLIGHT_LDO_FB', 'FLIGHT_LDO_NR', 'FLIGHT_LDO_PG'
+    # the shunt R7101: U101's two OUT pins into its outer pad. The Kelvin pair (the brief's template) leaves each pad's
+    # inner edge at its middle, drops under the body and runs on L3, between the two GND planes, to the filter
+    # resistors R7102 and R7103
+    t(VS, F, 0.75, (28.5, 143.445), (30.1, 143.445))
+    t(VS, F, 0.2, (30.85, 143.45), (31.55, 143.45), (32.05, 143.95))
+    v(VS, 0.45, 0.2, (32.05, 143.95), (37.5, 144.45))
+    t(VS, L3, 0.2, (32.05, 143.95), (37.0, 143.95), (37.5, 144.45))
+    t(VS, F, 0.2, (37.5, 144.45), (38.42, 144.8))
+    t(VP, F, 0.2, (35.75, 143.45), (35.05, 143.45), (34.55, 142.95))
+    v(VP, 0.45, 0.2, (34.55, 142.95), (41.65, 142.6))
+    t(VP, L3, 0.2, (34.55, 142.95), (41.3, 142.95), (41.65, 142.6))
+    t(VP, F, 0.2, (41.65, 142.6), (43.2, 142.475))
+    # the protected feed: out of the shunt's far pad at its top through two vias, north on L6 to two vias beside the
+    # mux, into its IN1 pin and its capacitor C1102. R1007 (the eFuse's power-good divider) off the pad's bottom
+    t(VP, F, 1.0, (36.5, 142.3), (36.5, 140.9), (37.4, 140.9))
+    v(VP, 0.6, 0.3, (36.5, 140.9), (37.4, 140.9), (38.0, 128.4), (38.0, 129.3))
+    t(VP, B, 1.0, (36.5, 140.9), (37.4, 140.9), (38.0, 140.3), (38.0, 128.4))
+    t(VP, F, 0.6, (38.0, 129.3), (38.0, 127.55))
+    t(VP, F, 0.4, (37.2, 127.55), (38.0, 127.55), (38.9, 127.3))
+    t(VP, F, 0.2, (36.5, 145.0), (36.5, 145.5), (32.0, 145.5), (32.0, 146.0))
+    # the mux's two OUT pins joined, west round its capacitor C1303's GND pad into C1303 and the buck's VIN2 pins; an
+    # L3 link under the buck, two vias each end, to its other input capacitor C1304, the VIN1 pins and EN/SYNC
+    t(LS, F, 0.4, (35.6, 126.85), (37.3, 126.85))
+    t(LS, F, 0.5, (35.6, 126.85), (34.75, 126.85), (34.75, 124.6), (33.6, 124.6))
+    t(LS, F, 0.9, (31.95, 124.7), (33.6, 124.7))
+    t(LS, F, 0.6, (33.0, 123.45), (33.775, 123.45), (33.775, 124.5))
+    v(LS, 0.6, 0.3, (33.0, 123.45), (33.775, 123.45), (24.75, 123.45), (25.55, 123.45))
+    t(LS, L3, 1.0, (33.775, 123.45), (24.75, 123.45))
+    t(LS, F, 0.6, (24.75, 123.45), (25.55, 123.45), (25.55, 124.2))
+    t(LS, F, 0.9, (26.6, 124.7), (28.35, 124.7))
+    t(LS, F, 0.25, (28.3, 123.58), (28.3, 124.5))
+    # the loops' returns (TI: input capacitors tight between VIN and PGND): PGND pins 5-6 to C1304's GND pad and 16-17
+    # to C1303's; vias in those pads and two in each of the buck's PGND centre pads (28, 29)
+    t(G, F, 0.9, (28.35, 126.15), (27.2, 126.15), (26.5, 127.0))
+    t(G, F, 0.9, (31.95, 126.15), (33.6, 126.15))
+    v(G, 0.6, 0.3, (24.9, 127.45), (26.2, 127.45), (33.775, 126.15),
+      (29.7, 124.75), (30.5, 124.75), (29.7, 125.95), (30.5, 125.95))
+    # the buck's output: its VOUT pins either side of SW (pin 11, left bare: TI) down into C1305 and C1306, the
+    # centre VOUT pad (30) tied in, pins 7-8 and 14-15 joined; two vias in each output capacitor's GND pad
+    t(V4, F, 1.25, (29.105, 128.3), (29.105, 129.9))
+    t(V4, F, 1.25, (31.105, 128.3), (31.105, 129.9))
+    t(V4, F, 0.25, (29.6, 127.3), (29.6, 128.3))
+    t(V4, F, 0.25, (30.6, 127.3), (30.6, 128.3))
+    t(V4, F, 0.3, (28.33, 127.1), (28.33, 127.8))
+    t(V4, F, 0.3, (31.87, 127.1), (31.87, 127.8))
+    v(G, 0.6, 0.3, (27.8, 133.1), (29.1, 133.1), (31.1, 133.1), (32.4, 133.1))
+    # west: C1305 to C1302, C1401 and the held core's IN bar (U1401.5), in by its right end
+    t(V4, F, 0.6, (27.5, 129.9), (26.95, 128.55), (23.7, 128.55), (23.7, 126.2))
+    t(V4, F, 0.3, (23.7, 126.2), (23.7, 125.9), (22.9, 125.9))
+    t(V4, F, 0.4, (26.08, 128.55), (26.08, 129.4))
+    t(V4, F, 0.4, (23.85, 128.55), (23.85, 129.4))
+    # north-east: two vias at C1306, L6 up to the two branch switches U1601 and U1501, a via beside each IN pin
+    t(V4, F, 1.0, (32.7, 130.15), (33.8, 130.15))
+    v(V4, 0.6, 0.3, (33.8, 129.75), (33.8, 130.55), (35.7, 123.0), (38.6, 123.0))
+    t(V4, B, 1.0, (33.8, 130.55), (33.8, 129.75), (34.9, 128.65), (34.9, 123.6), (35.5, 123.0), (38.6, 123.0))
+    t(V4, F, 0.6, (35.7, 123.0), (35.7, 122.2))
+    t(V4, F, 0.6, (38.6, 123.0), (39.5, 122.85))
+    # the buck's VLDOIN (pin 22) and the divider's top (R1301) off that trunk by a thin L6 branch and two vias
+    t(V4, B, 0.3, (34.9, 123.6), (34.9, 122.1), (34.4, 121.6), (31.25, 121.6), (31.25, 118.2), (28.35, 118.2))
+    v(V4, 0.45, 0.2, (31.25, 121.6), (28.35, 118.2))
+    t(V4, F, 0.25, (31.25, 121.6), (31.105, 122.4))
+    t(V4, F, 0.25, (28.35, 118.2), (27.6, 118.9))
+    # the buck's small pins. FB: R1301 and R1302 joined, short to pin 25. VCC: C1301 to pin 23 (its GND pad takes a
+    # plane via of its own: TI puts it on PGND). AGND: pin 24 and the AGND pad (27) to the divider's and the RT
+    # resistor's GND pads, and to PGND at one point, pad 27 to pad 28 (TI). RT: R1303 by L3 to pin 1
+    t('BUCK_FB', F, 0.2, (27.6, 120.74), (29.1, 120.74))
+    t('BUCK_FB', F, 0.2, (29.1, 120.9), (29.35, 121.6), (29.6, 121.85), (29.6, 122.4))
+    t('BUCK_VCC', F, 0.25, (30.6, 120.9), (30.6, 122.4))
+    t(G, F, 0.25, (30.105, 122.5), (30.105, 123.4))
+    t(G, F, 0.4, (30.1, 123.5), (30.1, 124.5))
+    t(G, F, 0.2, (30.105, 122.4), (30.105, 121.6), (29.875, 121.37), (29.875, 119.6), (29.4, 119.15))
+    t(G, F, 0.2, (29.875, 119.925), (31.45, 119.925), (32.1, 119.74))
+    t('BUCK_RT', F, 0.2, (32.1, 120.76), (32.85, 120.76))
+    v('BUCK_RT', 0.45, 0.2, (32.85, 120.76), (27.45, 121.65))
+    t('BUCK_RT', L3, 0.2, (32.85, 120.76), (28.0, 120.76), (27.45, 121.3), (27.45, 121.65))
+    t('BUCK_RT', F, 0.2, (27.45, 121.65), (27.45, 122.25), (28.05, 122.92))
+    # the held core: its OUT bar (U1401.6) out by its left end, north to the flight LDO's two IN pins and C1703, then
+    # east of the LDO's output capacitor to the 1000 uF. EN (pin 7) sits between NR and GND, so it takes a via each end
+    t(CH, F, 0.3, (21.0, 125.4), (20.4, 125.4))
+    t(CH, F, 0.5, (20.4, 125.4), (20.4, 121.6))
+    t(CH, F, 0.74, (20.25, 121.5), (20.25, 120.6))
+    t(CH, F, 0.6, (20.4, 121.0), (22.1, 121.0))
+    t(CH, F, 1.0, (22.1, 120.9), (22.1, 119.8), (24.4, 117.9), (24.4, 110.5))
+    t(CH, F, 0.8, (18.3, 124.6), (20.2, 124.6))                # C1705
+    t(CH, F, 0.2, (19.0, 120.7), (19.0, 121.5), (18.55, 122.0))
+    v(CH, 0.45, 0.2, (18.55, 122.0), (20.4, 122.3))
+    t(CH, B, 0.3, (18.55, 122.0), (20.4, 122.3))
+    # the flight LDO (TI's TPS7A91 layout): OUT pins 1-2 straight into C1706; the link R1704 beside it, its
+    # FLIGHT_3V3 end to L5 by two vias; the divider's top sensed at C1706 by a line of its own, C1702 on it; FB over
+    # pins 4-5 and down the gap to the divider's middle; PG by a via at its pin; NR down to C1701; GND pins 4 and 6
+    # to the thermal pad, three vias in it
+    t(PL, F, 0.74, (20.25, 118.3), (20.25, 116.5))
+    t(PL, F, 0.8, (18.9, 114.9), (19.9, 114.9))
+    t('FLIGHT_3V3', F, 0.8, (17.0, 114.9), (17.0, 113.7))
+    t('FLIGHT_3V3', F, 0.6, (16.75, 113.7), (17.55, 113.7))
+    v('FLIGHT_3V3', 0.6, 0.3, (16.75, 113.7), (17.55, 113.7))
+    t(PL, F, 0.2, (19.75, 115.78), (16.42, 115.78), (16.42, 117.9))
+    t(FB, F, 0.15, (19.5, 118.3), (19.5, 117.0), (17.4, 117.0), (17.4, 116.6))
+    t(FB, F, 0.15, (17.8, 117.0), (17.8, 120.45), (16.9, 120.45))
+    t(FB, F, 0.3, (16.7, 119.8), (16.7, 121.1))
+    t(PG, F, 0.2, (18.5, 118.3), (18.5, 117.75), (18.35, 117.55))
+    v(PG, 0.45, 0.2, (18.35, 117.55))
+    t(NR, F, 0.2, (19.5, 120.7), (19.55, 122.4))
+    t(G, F, 0.24, (19.0, 118.4), (19.0, 119.2))
+    t(G, F, 0.24, (18.5, 119.9), (18.5, 120.6))
+    v(G, 0.45, 0.2, (18.95, 119.5), (19.5, 119.5), (20.05, 119.5))
+    v(G, 0.45, 0.2, (19.55, 123.38))                            # C1701's GND pad
+    # GND vias in C1706's GND pad and the 1000 uF's; C1705's sit at its pad's top edge, 0.5 mm clear of the staging
+    # arm feed on L6 under its pad
+    v(G, 0.6, 0.3, (23.2, 114.9), (23.2, 116.1), (16.9, 109.35), (18.0, 109.35))
+    v(G, 0.45, 0.2, (16.6, 127.25), (17.5, 127.25), (18.4, 127.25))
+    return out
+
+
+POWER_COPPER = _power_copper() + _logic_feeds()
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire
