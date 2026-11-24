@@ -5698,3 +5698,45 @@ What the sheets show, read from the step-16 netlist:
   (PYRO1_FIRE), BMP_SCL and BMP_SDA (PYRO1_LS_SELECT), FLIGHT_BOOT0 and FOINSE_SCL (PYRO2_LS_SELECT). Each has to
   escape on L1 past its fire run before it can take a via. One or two of the eleven were open in each of the last
   five complete trials (FOINSE_SCL, BMP_SDA, BMP_SCL, NEW_FLIGHT_CLEAR_REQUEST, TE_SDA).
+
+## 24 November 2026: Fable's third review approved (D-24Nov.15); two causes on record corrected
+
+- Seán approved Fable's third review of step 5: the trials keep skipping the router's last half-grid lap, U6001.7
+  leaves the lane check, a regulator's feedback copper stays where its maker asks for it, the fire logic stays
+  frozen, two rules (standing-rules.md: count what a router's route closes before freezing it; a trial's result
+  includes the plane pads) and the order of work (D-24Nov.15).
+- Corrections, under D-24Nov.11's first rule (a cause goes in only once a log or a measurement shows it):
+  - The two killed trials of board 1927e4ad (5,861 and 5,865 MB) ended at the router's last half-grid lap, and the
+    entries above, D-24Nov.14 and krt_wrap.py called that lap the cause. But with the lap skipped the same board
+    still peaked at 5,847 MB, against 3.9 and 4.1 GB on the two boards before it, where the lap ran. What put
+    1927e4ad at the limit isn't known; the trial now records the router's memory to find it.
+  - The entry for board 4c8c5ec1 put its drop to 3.5 GB down to the router no longer searching the board for GNSS_TX
+    and COMMS_SWDIO. Nothing shows that; the cause of the drop is unknown.
+  - Claude's report to Seán on call 3 said the two planted rules-check pairs under U201 had passed without testing
+    anything. They had failed (9 of 11), which is how they were caught, as the entry above says.
+
+## 24 November 2026: the router's memory traced; plane pads counted (D-24Nov.15, items 2 and 3)
+
+- meter.py now samples the router's resident memory (the process and its children) each second against the line
+  its log has reached, writes mem-pass{k}.tsv beside the log and reports each pass's peak with its step.
+- Board 1927e4ad rerun once with it (d25-1927e4ad-trace, the last lap skipped): 5 of 271 open (the same five as
+  d25-1927e4ad-nf), peak 5,810 MB at 273 s, during the third of the router's three reconciliation laps. Measured,
+  the router's memory climbs lap by lap and isn't given back: 2.0 GB at the end of the main pass, then 3.6, 4.9 and
+  5.8 GB at the ends of reconciliation laps 1, 2 and 3. The last half-grid lap would start at the next line (5,349),
+  so board 1927e4ad was at the limit before it began: Fable's [model] bet (4/5) settles ok. The other boards also
+  ran three reconciliation laps and peaked at 3.5 to 4.1 GB; why this board's laps took about 1.3 GB each is unknown.
+- The trial now counts plane pads (meter.plane_pads_open): per plane net, pads, tracks, vias and the board's own
+  outer-layer fills are joined where they touch on a shared layer, and a pad whose group holds no via and no
+  through-hole pad is open. tools/layout/plane_pads_test.py takes one pad's in-pad via away and catches it
+  (C1001.2).
+- Board 409f3371 had 53 of 623 plane pads open: 40 GND and 13 FLIGHT_3V3, on 25 parts. U201 has 12 (supply pins on
+  all four sides) and U401 5; the rest are on sensors, supervisors, the pyro high sides, regulators and a few
+  capacitor and resistor pads. Each is 1.5 to 3 mm from its own decoupling capacitor, and the fan-out finds no via
+  site in or beside it: at 0.5 mm pitch, a VSS pin beside a VDD pin can't both take a via. This is the Open "MCU
+  fanout" question from stage C step 3; it goes to Seán. None of the trials before counted these pads.
+- U2301.2's GND via restored by script (spec._plane_vias): straight out of the pin and east to the nearest legal
+  site, (17.05, 67.287); the armed rail runs under the pin's south-west on L6.
+- Board 54ba53cd: DRC 0 errors, rules check 11 of 11, planted-miss test 11 of 11, RF check passes, 4 of 358 lanes
+  crossed. Routing trial (d25-54ba53cd, alone): 3 of 271 open and 0 of 22 rails, 52 of 623 plane pads open, 304 s,
+  router peak 3.5 GB. Open: ADC_PYRO1_CONTINUITY (five trials running, U201.18), TE_SDA (three, U201.89) and HG_NCS
+  (two, U201.83, a top-row pin; the router names BUZZER_DRIVE, CAN2_RX and TDK_NCS as blockers, other top-row nets).

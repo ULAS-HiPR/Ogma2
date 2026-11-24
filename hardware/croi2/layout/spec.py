@@ -1396,8 +1396,18 @@ def _can_pairs():
     return out
 
 
+def _plane_vias():
+    """Plane pads given their via by script (D-24Nov.15: a trial's result includes the plane pads). U2301.2, the reset
+    supervisor's GND pin, lost the fan-out's via when FLIGHT_NRST's route was frozen beside it; the armed rail runs
+    under its south-west on L6, so it goes straight out of the pin and east to the nearest legal site"""
+    return [
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(16.25, 66.188), (16.25, 67.287), (17.05, 67.287)]),
+        dict(net='GND', via=(17.05, 67.287), d=0.45, drill=0.2),
+    ]
+
+
 POWER_COPPER = (_power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
-                + _scripted_nets() + _can_pairs())
+                + _scripted_nets() + _can_pairs() + _plane_vias())
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire

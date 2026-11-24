@@ -2,10 +2,12 @@
 (meter.py --no-finer-lap). Run from the router's checkout, as the meter runs route.py.
 
 The lap (#1763, finer_grid_rung.py) maps the whole board again at half the run's grid for the nets still boxed in
-after the ordinary laps. On Burrito it is the router's biggest allocation: board 1927e4ad's trial was killed for
-memory at that step twice running (24 Nov, 5.8 GB, the session's limit). In the three complete trials before, it
-rescued one net once and none otherwise. Setting its cell budget to zero makes the router skip it with its own
-logged reason ("Finer-grid rung (#1763) skipped: ..."); nothing else changes."""
+after the ordinary laps. Board 1927e4ad's trial was killed for memory at that step twice running (24 Nov, against
+the session's 5.8 GB), but without the lap the same board still peaked at 5.85 GB, so the lap is not shown to be the
+cause; meter.py now records the router's memory against its log to find it. In the three complete trials before, the
+lap rescued one net once and none otherwise. Skipping it keeps the trials comparable (D-24Nov.15). Setting its cell
+budget to zero makes the router skip it with its own logged reason ("Finer-grid rung (#1763) skipped: ...");
+nothing else changes."""
 import os
 import runpy
 import sys

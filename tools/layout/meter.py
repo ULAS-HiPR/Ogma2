@@ -20,6 +20,7 @@ import argparse
 import importlib.util
 import json
 import math
+import os
 import resource
 import shutil
 import subprocess
@@ -78,6 +79,133 @@ def budget_keepouts(b, spec):
         b.Add(z)
         polys.append(g)
     return polys
+
+
+def plane_pads_open(b, origin, planes, fills):
+    """The plane pads with no via and no drawn join to one (D-24Nov.15: a trial's result includes them). Per plane
+    net, its pads, tracks, vias and the board's own outer-layer fills (`fills`: [(net, layer, polygon)], kept from
+    before the planes go, such as the RF lines' ground pours) are joined where they touch on a shared layer; a group
+    reaches the plane if it holds a via or a through-hole pad. Returns (pads counted, ['REF.PIN' open])."""
+    import pcbnew as K
+    from shapely import STRtree
+    from shapely.geometry import LineString, Point, Polygon
+    ox, oy = origin
+    mm = lambda v: (K.ToMM(v.x) - ox, K.ToMM(v.y) - oy)
+    ALL = None
+    items = defaultdict(list)                       # net -> [(layers or ALL, shape, pad name or None, reaches)]
+    for f in b.GetFootprints():
+        for p in f.Pads():
+            n = p.GetNetname()
+            if n not in planes:
+                continue
+            tht = p.GetAttribute() in (K.PAD_ATTRIB_PTH,)
+            for lid, lname in ((K.F_Cu, 'F.Cu'), (K.B_Cu, 'B.Cu')):
+                if not p.IsOnLayer(lid):
+                    continue
+                ps = K.SHAPE_POLY_SET()
+                p.TransformShapeToPolygon(ps, lid, 0, K.FromMM(0.005), K.ERROR_INSIDE)
+                if not ps.OutlineCount():
+                    continue
+                o = ps.Outline(0)
+                g = Polygon([mm(o.CPoint(i)) for i in range(o.PointCount())]).buffer(0.002)
+                items[n].append((ALL if tht else (lname,), g, f'{f.GetReference()}.{p.GetNumber()}', tht))
+                if tht:
+                    break
+    for t in b.GetTracks():
+        n = t.GetNetname()
+        if n not in planes:
+            continue
+        if t.Type() == K.PCB_VIA_T:
+            items[n].append((ALL, Point(mm(t.GetPosition())).buffer(K.ToMM(t.GetWidth(K.F_Cu)) / 2), None, True))
+        else:
+            items[n].append(((b.GetLayerName(t.GetLayer()),),
+                             LineString([mm(t.GetStart()), mm(t.GetEnd())]).buffer(K.ToMM(t.GetWidth()) / 2), None, False))
+    for n, lname, g in fills:
+        if n in planes:
+            items[n].append(((lname,), g, None, False))
+    counted, open_ = 0, []
+    for n, its in items.items():
+        parent = list(range(len(its)))
+
+        def find(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]
+                i = parent[i]
+            return i
+        tree = STRtree([g for _, g, _, _ in its])
+        for i, (li, gi, _, _) in enumerate(its):
+            for j in tree.query(gi, predicate='intersects'):
+                if j <= i:
+                    continue
+                lj = its[j][0]
+                if li is ALL or lj is ALL or set(li) & set(lj):
+                    parent[find(i)] = find(j)
+        reach = {find(i) for i, it in enumerate(its) if it[3]}
+        for i, (_, _, name, _) in enumerate(its):
+            if name:
+                counted += 1
+                if find(i) not in reach:
+                    open_.append(name)
+    return counted, sorted(set(open_))
+
+
+def _tree_rss_mb(pid):
+    """Resident memory of a process and all its descendants, MB, from /proc."""
+    kids, rss = {}, 0
+    for d in os.listdir('/proc'):
+        if d.isdigit():
+            try:
+                with open(f'/proc/{d}/stat') as f:
+                    kids.setdefault(int(f.read().rsplit(')', 1)[1].split()[1]), []).append(int(d))
+            except OSError:
+                pass
+    todo = [pid]
+    while todo:
+        q = todo.pop()
+        try:
+            with open(f'/proc/{q}/status') as f:
+                rss += next((int(l.split()[1]) for l in f if l.startswith('VmRSS:')), 0)
+        except OSError:
+            pass
+        todo += kids.get(q, [])
+    return round(rss / 1024)
+
+
+STEP = ('Loading ', 'Routing ', '[', 'MPS', 'Building ', 'Pre-computing', '  Reconciliation', '  Finer-grid',
+        'Writing ', 'Phase ', 'Final ')
+
+
+def run_traced(cmd, cwd, log_path, trace_path, timeout=None):
+    """Run a router pass with its resident memory (the process and its children) sampled each second against the
+    number of lines its log has reached (D-24Nov.15). Writes the samples to trace_path (seconds, MB, log line) and
+    returns (rc, peak): peak is {mb, at_s, log_line, step}, step the last line before it that starts a router step."""
+    t0, peak, nlines, off = time.time(), (0, 0.0, 0), 0, 0
+    with open(log_path, 'w') as log, open(trace_path, 'w') as tr:
+        tr.write('seconds\trss_mb\tlog_line\n')
+        p = subprocess.Popen(cmd, cwd=cwd, stdout=log, stderr=subprocess.STDOUT)
+        rc = None
+        while rc is None:
+            try:
+                rc = p.wait(timeout=1.0)
+            except subprocess.TimeoutExpired:
+                if timeout is not None and time.time() - t0 > timeout:
+                    p.kill()
+                    p.wait()
+                    rc = 'timeout'
+            mb = _tree_rss_mb(p.pid) if rc is None else 0
+            with open(log_path, 'rb') as f:              # count the log's new lines since the last sample
+                f.seek(off)
+                chunk = f.read()
+            off += len(chunk)
+            nlines += chunk.count(b'\n')
+            if rc is None:
+                tr.write(f'{time.time() - t0:.0f}\t{mb}\t{nlines}\n')
+                tr.flush()
+                if mb > peak[0]:
+                    peak = (mb, round(time.time() - t0), nlines)
+    lines = open(log_path, errors='replace').read().splitlines()
+    step = next((l.strip()[:160] for l in reversed(lines[:peak[2]]) if l.startswith(STEP)), '')
+    return rc, {'mb': peak[0], 'at_s': peak[1], 'log_line': peak[2], 'step': step}
 
 
 def glob_escape(n):
@@ -252,8 +380,7 @@ def main():
     ap.add_argument('--plane-rails', nargs='+', default=[],
                     help='with --rails-as-tracks: these rails stay planes (e.g. FLIGHT_3V3 as a whole L5 plane)')
     ap.add_argument('--no-finer-lap', action='store_true',
-                    help="skip the router's final whole-board lap at half the grid (krt_wrap.py): it needs more memory "
-                         'than the session has on this board (24 Nov)')
+                    help="skip the router's final whole-board lap at half the grid (krt_wrap.py; D-24Nov.15)")
     ap.add_argument('--budget', action='store_true',
                     help="the budget run (stage C/D review, call 9): spec.BUDGET's areas become keep-outs for tracks and "
                          'vias on their layers, for the fanout and the router alike')
@@ -262,6 +389,19 @@ def main():
     b = K.LoadBoard(a.pcb)
     # the board's copper planes go (D-23Nov.30): the meter models a plane as before, a plane pad's via counting as
     # joined, and a fill saved before the fanout's vias would clash with them
+    fills = []                                     # outer-layer fills, kept for the plane-pad count (D-24Nov.15)
+    for z in b.Zones():
+        if z.GetIsRuleArea():
+            continue
+        for lid, lname in ((K.F_Cu, 'F.Cu'), (K.B_Cu, 'B.Cu')):
+            if z.IsOnLayer(lid) and z.HasFilledPolysForLayer(lid):
+                from shapely.geometry import Polygon as _P
+                ps = z.GetFilledPolysList(lid)
+                for i in range(ps.OutlineCount()):
+                    o = ps.Outline(i)
+                    pts = [(K.ToMM(o.CPoint(j).x), K.ToMM(o.CPoint(j).y)) for j in range(o.PointCount())]
+                    if len(pts) >= 3:
+                        fills.append((z.GetNetname(), lname, pts))
     for z in [z for z in b.Zones() if not z.GetIsRuleArea()]:
         b.RemoveNative(z)                          # Remove() leaves a dead object in Zones(): a later read crashes
     length = a.length or float(round(K.ToMM(b.GetBoardEdgesBoundingBox().GetHeight())))
@@ -350,6 +490,10 @@ def main():
     ex = FO.existing(b, spec.ORIGIN)            # stage C's scripted copper: its pads need no fanout via
     fr = FO.plan(bd, planes, spec, in_pad=a.via_in_pad, existing=ex, no_via=no_via)
     FO.apply(b, spec.ORIGIN, fr)
+    from shapely.geometry import Polygon as _P
+    ox_, oy_ = spec.ORIGIN
+    pp_n, pp_open = plane_pads_open(b, spec.ORIGIN, planes,
+                                    [(n, l, _P([(x - ox_, y - oy_) for x, y in pts]).buffer(0)) for n, l, pts in fills])
     fan = out / 'fanned.kicad_pcb'
     K.SaveBoard(str(fan), b)
     for ext in ('kicad_pro', 'kicad_dru'):
@@ -378,6 +522,7 @@ def main():
            'fanout': {'pads': len(fr['done']) + len(fr['failed']), 'vias': len(fr['done']),
                       'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']], 'in_pad': sum(1 for d in fr['done'] if d['stub'] is None),
                       'seconds': round(time.time() - t0, 1)},
+           'plane_pads': {'pads': pp_n, 'open': pp_open},
            'ignores': 'the L3 islands\' shapes',
            'budget': [it['name'] for it in spec.BUDGET] if a.budget else None,
            'fanned_drc_errors': fan_drc, 'fanned_drc_twin_errors_dropped': dropped_fan}
@@ -414,13 +559,9 @@ def main():
             if left is not None and left <= 0:
                 runs.append({'class': cls, 'nets': len(nets), 'rc': 'not started: out of time', 'seconds': 0})
                 continue
-            try:
-                with open(out / f'krt-pass{k}.log', 'w') as log:
-                    r = subprocess.run(cmd, cwd=str(KRT), stdout=log, stderr=subprocess.STDOUT, timeout=left)
-                rc = r.returncode
-            except subprocess.TimeoutExpired:
-                rc = 'timeout'
-            runs.append({'class': cls, 'nets': len(nets), 'rc': rc, 'seconds': round(time.time() - tp, 1)})
+            rc, mem = run_traced(cmd, str(KRT), out / f'krt-pass{k}.log', out / f'mem-pass{k}.tsv', timeout=left)
+            runs.append({'class': cls, 'nets': len(nets), 'rc': rc, 'seconds': round(time.time() - tp, 1),
+                         'memory_peak': mem})
             if rc == 0 and dst.exists():
                 src = dst
         routed = out / 'routed.kicad_pcb'
@@ -446,6 +587,8 @@ def main():
             if M.short(n) in rep['krt']['open']:
                 by[c][0] += 1
         rep['krt']['open_by_class'] = {c: f'{o} of {n}' for c, (o, n) in by.items()}
+        rep['krt']['open_by_class']['PLANE_PADS'] = f'{len(pp_open)} of {pp_n}'   # D-24Nov.15: no via, no drawn join
+        rep['krt']['plane_pads_open'] = pp_open
         if rep['krt']['rc']:     # a pass that didn't finish: its nets were never tried, so the counts mean nothing
             for x in ('nets_open', 'nets_open_pct', 'connections_open', 'open', 'open_by_class', 'nets_open_by_band'):
                 rep['krt'].pop(x, None)

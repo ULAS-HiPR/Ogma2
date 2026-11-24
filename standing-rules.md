@@ -264,3 +264,20 @@ Proposed by Claude (Fable) after the second trial of step 5; approved by Seán a
    check's scope, so a non-zero result always means something new.
    - **Today:** the lane count listed 10 crossings, 7 of them from older blocks' copper, and some harmless: a pin
      whose own net is already drawn whole needs no lane.
+
+## D-24Nov.15 (24 Nov 2026): two rules from Fable's third review of step 5
+
+Proposed by Claude (Fable) after step 5's last three trials; approved by Seán and logged in Claude's words.
+
+> "I approve all above. GO."
+
+1. **Before a router's route is frozen, count what it closes.** That is the plane-pad vias it takes, the in-pad via
+   sites of its neighbours' pins it covers, and the nets left open beside it in the trial it came from. A route that
+   lies beside a net that failed in that trial isn't frozen as it is.
+   - **Today:** FLIGHT_NRST's route was frozen from a trial in which ADC_PYRO1_CONTINUITY failed at U201.18. Its L6
+     leg covers the in-pad via sites of U201's pins 15 and 16 and passes 0.07 mm from pin 17's, the router has named
+     it as a blocker for pin 18 in both trials since, and U2301.2 lost its GND via beside it.
+2. **A trial's result includes the plane pads.** A plane pad with no via and no drawn join to one is open, and "the
+   rails stay at none open" covers it.
+   - **Today:** the fan-out's misses went from 55 to 56 when the three nets were frozen (U2301.2, the reset
+     supervisor's GND pin), and no count the trial reported showed it.
