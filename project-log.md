@@ -5698,3 +5698,39 @@ What the sheets show, read from the step-16 netlist:
   (PYRO1_FIRE), BMP_SCL and BMP_SDA (PYRO1_LS_SELECT), FLIGHT_BOOT0 and FOINSE_SCL (PYRO2_LS_SELECT). Each has to
   escape on L1 past its fire run before it can take a via. One or two of the eleven were open in each of the last
   five complete trials (FOINSE_SCL, BMP_SDA, BMP_SCL, NEW_FLIGHT_CLEAR_REQUEST, TE_SDA).
+
+## 24 November 2026: stale connector text and two EuRoC lines fixed (no design change)
+
+- 09 and current-system's interface table still gave J6101 / J6102 as "proposed" single-row Micro-Fit 3.0 and J103 as
+  JST GH or Gecko. They now say what D-21Nov.12 and D-22Nov.18 decided and the schematic holds: J6101 Molex Mini-Fit
+  Jr. 39281023, J6102 JST VH B2P-VH(LF)(SN), J103 Molex Micro-Fit 3.0 43650-0215 (checked in the .kicad_sch files).
+  The enable-loop mix-up note in 09 now names three Micro-Fit plugs.
+- The propulsion boundary's LV-0030 line said the igniter is armable and disarmable "only" with nobody within 15 m.
+  The SRD (Issue 1.1, p.16) asks that it can be armed and disarmed with nobody within 15 m; "only" is dropped.
+- Its Appendix E1 line now adds the appendix's one "shall": a disconnect fitted on a bi-liquid covers both the fuel
+  and the oxidiser valves (p.76). Both checked against the SRD text on 24 November.
+- Not touched: D-21Nov.6's "too short" (Seán's calls of 24 November cover it, to be written as decisions), and other
+  files that still name GH or Gecko enable loops (system-tour, power-contract, 08, the capture spec, the
+  interfaces-and-installation justification, churro.md C-07, the Churro power review brief).
+
+## 24 November 2026: Seán's evening calls written up (D-24Nov.15 to D-24Nov.18, two open rows)
+
+- D-24Nov.15: Ériú's sled is two-sided or more, Churro directly behind Burrito; the 321 mm bay is long enough at
+  Burrito's 160 mm, and the second CATS Vega mount stays. D-21Nov.6's 400–420 mm ask isn't needed. Not measured yet.
+- Open: how J102 meets Churro on that sled. The right-angle MPT and MPS mate in one plane, so the boards no longer
+  meet. Seán would rather have no harness; Claude's candidate is a rigid end-cap board across the sled's aft end
+  (unchecked: a vertical MPS mate exists; the offset across the sled). To revisit.
+- D-24Nov.16: at IREC the CATS Vega is primary and official logger; Burrito fires the redundant chain (Seán confirmed
+  Claude's reading). DTEG REV P1 6.9–6.11.6 barely move; 6.11.6 still binds Burrito, with the second CATS Vega mount
+  as the swap ESRA may ask for. ESRA accepting the CATS Vega as COTS (6.10.4) is now load-bearing.
+- D-24Nov.17: Ériú's access panel sits on the av-bay itself; only EuRoC keeps it low (LV-0270). REV P1's 6.15.6
+  gives the solids area's stepladders (at least 10 ft, rockets about 2 ft up) and wants switch positions in the
+  OpenRocket file. That Ériú flies from the solids area is an inference.
+- Open: J6102 at IREC (no job; fitted, blanked or left open), Seán's.
+- D-24Nov.18: test mode stays until the configurator ends it, like the CATS Vega's; a USB-C extension takes Burrito's
+  J4401 to the panel. Replaces D-2Nov.16; amends D-2Nov.10 (2) and D-21Nov.4. Guard G1, Seán's pick. "Nothing
+  flashed on the rail" now rests on the running firmware's USB having no firmware-write or bootloader-jump command;
+  flashing needs the av-bay open (SWD, or the ROM bootloader with BOOT0 high at TP24), which keeps A7's "each board
+  flashed through its own USB" true at the bench. B-32 goes from Met to Open until firmware carries the rule.
+- Carried into current-system, 09, 10, firmware-interface, behaviour-map, burrito.md (B-12, B-32, B-37), the rules
+  sweep's LV-0520, DTEG 6.10 and 6.15 rows, and the access-panel brief (its stale GH and Gecko enable lines too).

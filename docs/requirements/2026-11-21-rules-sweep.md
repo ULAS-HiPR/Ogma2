@@ -52,7 +52,7 @@ Rules are paraphrased, not quoted. Status is judged against the design decided o
 | LV-0480, 0490 | Safety-critical wiring managed with slack; connectors pass a tug test | Harness | Open | Positive-lock connectors by design; harness drawing not started |
 | LV-0500 | Cryo-rated insulation near propellants boiling below −50 °C | Harness | **Flag** | N₂O; see flag 4 |
 | LV-0510 | Thermal test, at least one representative temperature monitored, rain tolerance; signed annex | Burrito, Churro | Open | Churro logs the pack temperatures at 2 Hz; no board temperature is specified yet, though the IMUs, barometers and MCU all measure one. Test not run |
-| LV-0520 | Recovery ground test with simulated conditions, sensor electronics included; signed annex | Burrito | Pass on paper | Ground-test mode (D-2Nov.10, D-2Nov.16) and a vacuum chamber |
+| LV-0520 | Recovery ground test with simulated conditions, sensor electronics included; signed annex | Burrito | Pass on paper | Ground-test mode (D-2Nov.10, D-24Nov.18) and a vacuum chamber |
 | LV-0540, 0550 | Arming devices reachable like 0260–0280; on the airframe, not at the clock position of what they fire | Panel | Open | Panel position against the recovery hatches |
 | LV-0650 | Active control only for pitch or roll augmentation, braking, guided recovery, precision landing or guided deployables | Salsa | Open | Roll control is allowed; any heading hold (Notion open question 4) needs a ruling |
 | LV-0660 | Stable with the control system removed or locked | Vehicle | Open | Sim Systems |
@@ -78,13 +78,13 @@ Rules are paraphrased, not quoted. Status is judged against the design decided o
 | DTEG 4.4; R&R-4.4.10.8 | SRAD GPS optional, outside COTS ranges, per the Student Band Plan; test report required | Burrito GNSS and LoRa | Open | Band at Midland; report |
 | DTEG 5.13 | SRAD computers shall not ignite air-start motors | Burrito ch 3 | N/A for IREC | See flag 9 |
 | DTEG 6.9 | Completely independent redundant recovery: arming switches, computers, power, initiators; a dual-pole switch doesn't count | Burrito, CATS Vega | Pass | Separate switches, packs and e-matches |
-| DTEG 6.10 | At least one chain COTS; a COTS computer is the official altimeter and fires one energetic; kits aren't COTS | CATS Vega | Open | Confirm ESRA treats the CATS Vega as COTS |
+| DTEG 6.10 | At least one chain COTS; a COTS computer is the official altimeter and fires one energetic; kits aren't COTS | CATS Vega | Open | Confirm ESRA treats the CATS Vega as COTS; load-bearing since D-24Nov.16 (the CATS Vega is primary at IREC) |
 | DTEG 6.11.5, 6.11.6 | SRAD computers documented; proof of function by ground and flight test before the competition, or COTS substitution on request | Burrito, av-bay | **Flag** | See flag 1 |
 | DTEG 6.11.7 | Sensor filtering, with testing | Burrito firmware | Open | EX-05 replays |
 | DTEG 6.12, App B | Safety-critical wiring labelled or colour-coded with strain relief; locked connectors; no connector as a structure; boards on standoffs with daughterboards supported; parts over 7 g staked; no tape insulation | Boards, harness | Pass for connectors and supports; Open for staking and harness | Separate supports behind the Samtec mate are already in the layout guide |
 | DTEG 6.13.4 | Recovery ground tests with simulated ambient conditions; videos | Burrito | Pass on paper | Ground-test mode |
 | DTEG 6.14 | Energetics safe until launch position; armed only at IREC's direction | Burrito | Pass | External arm switches |
-| DTEG 6.15 | Arming features external, reachable with the head kept 100 mm away and a face shield on; shown in OpenRocket | Panel | Open | Panel design |
+| DTEG 6.15 | Arming features external, reachable with the head kept 100 mm away and a face shield on; shown in OpenRocket | Panel | Open | Panel design; at IREC on the av-bay, reached from ESRA's stepladders (6.15.6, D-24Nov.17) |
 | DTEG 6.16 | Arming verified in 76 dBA plus wind, from 100 mm or more, wearing a face shield | Burrito sounder | **Flag** | See flag 2 |
 | DTEG 6.17 | No LiPo; Li-ion only in cylindrical metal cans; coin cells allowed | Packs | Pass | See flag 10 for EuRoC |
 | DTEG 7.1 | Control only for pitch or roll stability augmentation or braking; never guided to a target | Salsa canards | Pass for roll control | — |

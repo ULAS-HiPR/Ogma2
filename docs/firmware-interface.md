@@ -19,7 +19,7 @@ circuit detail. No target firmware exists yet. Anav owns the firmware.
 | Power hold | D-6.3, D-2Nov.4, D-2Nov.18 | Assert at launch detect; re-assert within 50 ms of a reset in flight; release at LANDED or the time cap |
 | Magnetometer on I²C3 | D-2Nov.11 | 100 Hz, logged, non-essential |
 | Recording from launch detect | D-6.9 | Low-rate pad log, RAM pre-trigger, full rate from launch detect |
-| Pad datum, ground-test mode, pad telemetry | D-2Nov.10, D-2Nov.16 | See [Recovery logic](architecture/10-recovery-logic.md); any reset ends ground-test mode |
+| Pad datum, ground-test mode, pad telemetry | D-2Nov.10, D-24Nov.18 | See [Recovery logic](architecture/10-recovery-logic.md); test mode stays until the configurator ends it; G1 shows it |
 | No deployment below 100 m | D-2Nov.13 | Gate the drogue and main, primary and backup, on 100 m above the pad datum |
 | What CAN carries | D-2Nov.9 | Permissions, mode, slow state, health and stale-safe commands only |
 | Rail power from the umbilical | D-2Nov.7 | Report which source is live |
@@ -30,7 +30,7 @@ circuit detail. No target firmware exists yet. Anav owns the firmware.
 | Board temperatures | B-30 (LV-0510) | Log the flight MCU die, one IMU and one barometer temperature at 1 Hz on the pad (in pad telemetry) and 10 Hz in flight; pad telemetry warns above [60] °C |
 | Charge state | D-21Nov.2, C-15 | Read each charger's state over I²C4: charging, done, temperature hold, fault. Cross-check against the pack-voltage trend. Burrito controls nothing in the charge path |
 | Pack voltages | C-17, C-22, C-23 | AV and actuator packs on their pack side (readable on the umbilical), the CATS cell, both NTCs; pad telemetry shows each, with the live source |
-| No flashing on the rail | D-21Nov.4 | USB service at the av-bay only |
+| No flashing on the rail | D-21Nov.4, D-24Nov.18 | The running firmware's USB writes settings and reads logs only: no firmware-write or bootloader-jump command. Flashing needs the av-bay open (SWD, or the ROM bootloader with BOOT0 high at TP24) |
 | IREC radio behaviour | B-27 (proposed) | Transmit off by default; on once the recovery arm closes on the pad, or by a flag set over USB; channel set over USB |
 | Checkpoint first at launch detect; missed-launch catch in PAD | D-19Nov.1 | **Must, before first flight.** Write the in-flight checkpoint before anything else at launch detect. In PAD with an arm closed, run the missed-launch catch (proposed: 50 m above the datum for 2 s) into the armed row. A pad pressure transient can't make it fire the main |
 | Pins re-allocated for the placement | D-22Nov.25 | 36 flight pins and 12 comms pins moved; three spare pads moved and renamed. See [Pin changes](#pin-changes-d-22nov25) |
@@ -340,11 +340,14 @@ move ignition onto channels 1 or 2.
   frame goes to USB.
 - At arming, the sounder beeps continuity and state, ground only and silent in
   flight, so the crew at the panel hears go or no-go (D-19Nov.4).
-- Ground-test mode: a configuration flag loaded over USB, shown in readback and
-  held in RAM only; launch declared over USB; barometric logic alone; recovery
-  channels only; no power hold; cleared at power-off and at any reset, and a
-  checkpoint written in ground-test mode never reads as in flight (D-2Nov.16);
-  every use logged.
+- Ground-test mode: a configuration flag set by the configurator over USB,
+  stored with the configuration and shown in readback; it stays through resets
+  and power cycles until the configurator sets flight mode (D-24Nov.18). Launch
+  declared over USB; barometric logic alone; recovery channels only; no power
+  hold; a checkpoint written in test mode never reads as in flight; every use
+  logged. G1: the readiness lamp never goes green, the sounder plays a test
+  pattern at arming in place of the go tones, and pad telemetry and readback
+  carry MODE: TEST in every frame.
 - USB service: bounded 4 KiB chunks with credits; never blocks acquisition; a
   timed-out flight reply is unknown, never the last value.
 

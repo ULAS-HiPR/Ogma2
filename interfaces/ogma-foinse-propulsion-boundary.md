@@ -167,13 +167,15 @@ touches this boundary. None is decided.
   range; LiFePO4 would change its protection values. Reachable from the ground,
   and good for 6 h on the rail with whatever Fajita draws there.
 - **Valve power disconnect (Appendix E1, a "should"):** a manual, ground-level
-  disconnect (pull-plug or key) in the valves' hot line, not the return. Where it
-  sits (the PROP harness, Foinse or Fajita) is to agree.
+  disconnect (pull-plug or key) in the valves' hot line, not the return. The
+  appendix recommends it, but if one is fitted on a bi-liquid it shall cover
+  both the fuel and the oxidiser valves (SRD 1.1, p.76). Where it sits (the
+  PROP harness, Foinse or Fajita) is to agree.
 - **Remote vent after an abort (LV-0190):** once the umbilical is pulled at Go,
   which path carries the command: Fajita's own link, or Ogma's radio relayed over
   this link (firmware, not hardware).
-- **Igniter arming (LV-0030):** armable and disarmable only with nobody within
-  15 m, so remotely.
+- **Igniter arming (LV-0030):** armable and disarmable with nobody within 15 m
+  of the vehicle, so remotely (SRD 1.1, p.16).
 - **Loading (LV-0110, 0130, 0150):** pressurise only after the loading lines are
   off; a hand-operated emergency release on any remote loading mechanism; loading
   done within 90 minutes.

@@ -91,7 +91,7 @@ AV-BAY
 | E9 | The CATS Vega fires its own e-matches from its own cell; nothing of ours sits in its firing path | D |
 | E10 | Arming beeps at the panel; arm, continuity and latch state go out in the pad telemetry | D |
 | E11 | All-fire is met at minimum battery through the real panel harness (the arm switch is in the firing loop) | D (D-21Nov.5); test open |
-| E12 | Ground-test mode drives recovery from simulated pressure, and any reset ends it | D |
+| E12 | Ground-test mode drives recovery from simulated pressure; it stays until the configurator ends it, and the lamp, sounder and every frame show it (G1) | D (D-24Nov.18) |
 
 ---
 
@@ -116,7 +116,7 @@ AV-BAY
 | A5a | The e-reg runs the pressure loop on its own board and link; Fajita's overpressure protection doesn't depend on it | D (D-21Nov.10); PTs and link open |
 | A6 | An unpowered actuator sits neutral (mechanical centring); IREC 7.3, EuRoC LV-0670 | D (D-21Nov.7); mechanism open |
 | A7 | No firmware over CAN; each board is flashed through its own USB | D |
-| A7a | The USB ports sit at the av-bay; nothing is flashed on the rail | D (D-21Nov.4) |
+| A7a | The USB ports sit at the av-bay, Burrito's extended to the panel; nothing is flashed on the rail: the running firmware's USB writes settings only, and flashing needs the av-bay open | D (D-21Nov.4, D-24Nov.18) |
 
 ---
 

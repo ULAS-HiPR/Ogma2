@@ -135,14 +135,14 @@ held off above 45 °C (D-22Nov.5).
 | --- | --- |
 | Croí ↔ Foinse | Samtec MPT/MPS-08-01-01-L-RA-SD: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault, 8 `CROI_POWER_HOLD` |
 | Standalone 2S | Molex Nano-Fit 1053111102; footprint from Molex drawing SD-105311-100 (capture step 15) |
-| Pyro arms J6101 / J6102 | Recovery / staging (D-7.2), each with its own fuse. 2-contact each, to external arm switches. Must not mate each other, Churro J701 (Micro-Fit 430450200, raw PROP) or the Gecko enable loops (D-19Nov.5). Proposed: single-row Micro-Fit 3.0, recovery 2-way, staging 3-way with one cavity empty |
+| Pyro arms J6101 / J6102 | Recovery / staging (D-7.2), each with its own fuse. 2-contact each, to external arm switches. J6101 is a Molex Mini-Fit Jr. 2-circuit header (39281023), J6102 a JST VH 2-pin header (B2P-VH): two families, so neither plug enters the other's header (D-21Nov.12). Neither mates Churro J701 (Micro-Fit 430450200, raw PROP) or the Micro-Fit enable loops (D-22Nov.18) |
 | Outputs J6601 | Micro-Fit 430450600: 1/2/3 high sides, 4/5/6 returns through each channel's low side |
 | Servos J6602 | Removed (D-19Nov.2) |
 | CAN J501, bus 1 | Harwin Gecko (D-18Nov.4; was JST GH): 1 CAN H, 2 CAN L, 3 reference; no power. To Fajita, whose end has to match |
 | CAN bus 2 | Harwin Gecko, same pinout, to the active board; reference set at capture (D-5Nov.3) |
 | Umbilical J801 (Churro) | AV and actuator power pairs plus charge contacts (D-21Nov.2); AV 8.4 V at Churro; part, contact count and mechanism with the vehicle owner |
 | Inter-MCU | Framed UART, 2 Mbaud |
-| Service | USB-C (USB4105-GF-A) on comms, at the av-bay: nothing is flashed on the rail (D-21Nov.4); TC2030 debug pads for both MCUs |
+| Service | USB-C (USB4105-GF-A) on comms; a USB-C extension takes it to the access panel (D-24Nov.18). The running firmware's USB writes settings and reads logs only; flashing needs the av-bay open (SWD, or the ROM bootloader with BOOT0 high at TP24), so nothing is flashed on the rail (D-21Nov.4, D-24Nov.18); TC2030 debug pads for both MCUs |
 
 Full contracts: [power](interfaces/power-contract.md), [flight fault](interfaces/flight-fault-contract.md),
 [reset and retained state](interfaces/reset-recovery-contract.md),
@@ -163,7 +163,8 @@ Firmware: [firmware interface](docs/firmware-interface.md).
   Micro-Fit instead, since no 2-contact Gecko exists (D-22Nov.18). Batteries and
   connectors get particular attention: they are where student vehicles fail.
 - One USB-C per programmable board; no firmware over CAN (D-19Nov.9). The ports
-  stay at the av-bay (D-21Nov.4).
+  stay at the av-bay (D-21Nov.4); Burrito's reaches the access panel by an
+  extension (D-24Nov.18).
 - Firmware writes the in-flight checkpoint first at launch detect, and PAD
   catches a missed launch (D-19Nov.1).
 
@@ -210,14 +211,17 @@ Target vehicles, as said at the 14 October requirements meeting:
   between lug faces today (Notion, Ériú av-bay requirements, Rev 1.3, measured
   from the CAD). Flies Burrito, Churro and Salsa without Fajita, as the flight
   test of our core before EuRoC (D-20Nov.3); Salsa drives the nose canards
-  (D-21Nov.7). IREC 2027 DTEG REV P1 (15 Oct 2026) applies. Cornstar, the
+  (D-21Nov.7). The CATS Vega is primary and the official altitude logger, and
+  Burrito fires the redundant chain (D-24Nov.16). The access panel sits on the
+  av-bay itself, reached from ESRA's stepladders (D-24Nov.17). IREC 2027 DTEG
+  REV P1 (15 Oct 2026) applies. Cornstar, the
   heated payload in the nose, is independent: its own pack, launch detect,
   switch and logging, and no wires to Ogma. The canard servos and their leads
   keep clear of its hot module.
 
 Every board is 80 mm wide (D-21Nov.6). Burrito is 80 × 160 mm (D-22Nov.21).
-Ériú's av-bay must grow to hold the stack: about 400–420 mm between lug faces, or
-a two-sided sled. Burrito's mounting holes have GND rings; the sled mounts it on
+In Ériú the sled is two-sided or more, with Churro directly behind Burrito, so the
+stack fits the 321 mm bay (D-24Nov.15); how J102 meets Churro is open. Burrito's mounting holes have GND rings; the sled mounts it on
 insulating standoffs or washers (D-22Nov.11).
 
 ## Fault and software policy
@@ -233,8 +237,10 @@ insulating standoffs or washers (D-22Nov.11).
   creates one. Nothing deploys before the barometric altitude has passed 100 m
   above it, or inertial evidence shows flight if both barometers are invalid
   (D-2Nov.13). Pad telemetry at 1 Hz shows arm, continuity, latch and power
-  state. A ground-test mode serves EuRoC's recovery ground test (D-2Nov.10); it
-  lives in RAM and any reset ends it (D-2Nov.16). The in-flight checkpoint is
+  state. A test mode serves the recovery ground tests (D-2Nov.10): set by the
+  configurator, it stays through resets and power cycles until the configurator
+  ends it; the lamp never goes green, the sounder plays a test pattern at
+  arming, and every frame says MODE: TEST (D-24Nov.18). The in-flight checkpoint is
   written first at launch detect, and PAD catches a missed launch (D-19Nov.1).
 - Initial budgets: 128 MHz, 1 kHz essential loop, 200 Hz estimation/policy,
   30% timing reserve. These are allocations, not measurements.
@@ -258,8 +264,9 @@ insulating standoffs or washers (D-22Nov.11).
    scripted capture and layout, working to 80 × 120 mm (D-22Nov.7).
 3. Anav: the recovery logic (D-6.11) and his pyro-channel circuit against
    D-2Nov.1.
-4. Jay and James: Ériú av-bay Rev 2 length (end-to-end mating, or an adapter at
-   J102 on a two-sided sled; J102 stays where it sits, aft, D-21Nov.24); the sled
+4. Jay and James: how J102 meets Churro on Ériú's two-sided sled (D-24Nov.15;
+   J102 stays where it sits, aft, D-21Nov.24; Seán would rather have no harness)
+   and the panel on Ériú's av-bay (D-24Nov.17); the sled
    and its insulating standoffs or washers for Burrito's eight M3 holes (D-22Nov.11); the e-reg's
    readings and PTs (D-21Nov.10); actuator and valve specs, and each
    valve's unpowered state; where the panel, packs, switches, Churro and the CATS Vega
