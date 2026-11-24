@@ -20,10 +20,11 @@ tests = [
  ('track on L2', lambda b: track(b, 'NOR_EN', K.In1_Cu, (20, 100), (24, 100)), "L2 is an unbroken GND plane"),
  ('track on L4', lambda b: track(b, 'NOR_EN', K.In3_Cu, (20, 100), (24, 100)), "L4 is an unbroken GND plane"),
  ('fire logic 0.3 mm from another net on L3, outside U201', lambda b: (track(b, 'PYRO1_FIRE', K.In2_Cu, (20, 100), (24, 100)), track(b, 'NOR_EN', K.In2_Cu, (20, 100.45), (24, 100.45))), "Fire copper keeps 0.5 mm"),
- ('fire logic 0.25 mm from another net under U201', lambda b: (track(b, 'PYRO1_FIRE', K.F_Cu, (38, 52), (38, 56)), track(b, 'NOR_EN', K.F_Cu, (38.4, 52), (38.4, 56))), None),
- ('fire logic 0.15 mm from another net under U201', lambda b: (track(b, 'PYRO1_FIRE', K.F_Cu, (38, 52), (38, 56)), track(b, 'NOR_EN', K.F_Cu, (38.3, 52), (38.3, 56))), "Fire logic keeps 0.2 mm inside"),
- # across U201's bottom edge (y 63.74), clear of the fire logic drawn on L3 since 23 Nov
- ('fire logic crossing the courtyard edge, 0.25 mm from another net', lambda b: (track(b, 'PYRO1_FIRE', K.In2_Cu, (34, 60), (34, 66)), track(b, 'NOR_EN', K.In2_Cu, (34.4, 60), (34.4, 66))), "Fire copper keeps 0.5 mm"),
+ ('fire logic 0.25 mm from another net under U201', lambda b: (track(b, 'PYRO1_FIRE', K.F_Cu, (42, 52), (42, 56)), track(b, 'NOR_EN', K.F_Cu, (42.4, 52), (42.4, 56))), None),
+ ('fire logic 0.15 mm from another net under U201', lambda b: (track(b, 'PYRO1_FIRE', K.F_Cu, (42, 52), (42, 56)), track(b, 'NOR_EN', K.F_Cu, (42.3, 52), (42.3, 56))), "Fire logic keeps 0.2 mm inside"),
+ # under U201 and across its bottom edge (y 63.74), clear of the fire logic drawn on L3 since 23 Nov and of GNSS_TX's
+ # drawn runs (24 Nov: a planted track touching one took its net, and DRC saw nothing)
+ ('fire logic crossing the courtyard edge, 0.25 mm from another net', lambda b: (track(b, 'PYRO1_FIRE', K.In2_Cu, (46, 60), (46, 66)), track(b, 'NOR_EN', K.In2_Cu, (46.4, 60), (46.4, 66))), "Fire copper keeps 0.5 mm"),
  ('RF via', lambda b: via(b, 'GNSS_RF', 20, 120), 'RF lines take no via'),
  # D-24Nov.8: other nets keep 1 mm from the RF lines, ground apart; beside the LoRa line's run below D4601 (x 12.9), clear
  # of the fence via at y 10.4 (a track touching a via is saved on the via's net)

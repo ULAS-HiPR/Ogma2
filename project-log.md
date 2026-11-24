@@ -5649,3 +5649,30 @@ What the sheets show, read from the step-16 netlist:
   COMMS_SWO as blockers, with FLIGHT_3V3, PYRO1_FIRE and PYRO3_LS_SELECT protected within 3 mm. For BMP_SCL
   (U201.92) it names BMP_3V3, PYRO1_LS_SELECT and COMMS_3V3, and lists GNSS_TX among the protected (locked) nets
   within 3 mm; GNSS_TX's escape is drawn copper now.
+
+## 24 November 2026: D-24Nov.13's third call: GNSS_TX, COMMS_SWDIO and FLIGHT_NRST drawn round the fire logic
+
+- GNSS_TX and COMMS_SWDIO routed in the last trial, so their routes are frozen as data (spec.SCRIPTED_RUNS), as the
+  fire logic's runs were: the router's own routes from d25-1927e4ad-nf, measured to cross no other pin's lane and
+  to keep the fire rule (DRC). GNSS_TX: U401.42's via, L3 under U201's west side, a hop on L1 under U201's body, L6
+  north-east to a via under U4503 (TSSOP, 0.65 mm); there it now leaves pin 2 square out of the pin's inner end (the
+  router came in at 45°). COMMS_SWDIO: U401.46 straight out to a via at its tip, then L3 to J4201.
+- FLIGHT_NRST: the router's route for its first five pads, frozen the same way, and U6001.6 by hand. Measured over a
+  0.05 mm grid, pin 6 has no legal via site outward or in its pad: STAGE_ELIGIBLE's track crosses its lane, PYRO2_FIRE
+  runs on L3 1.3 mm east, and a 0.45 mm via in the pad can't keep both 0.2 mm from pin 5 (fire logic) and 0.1 mm
+  from pin 7. The 57 legal sites within 1.2 mm are all inward, under the body. So pin 6 leaves inward along its axis
+  to a via at (43.6, 40.1), joined to U201.14's in-pad via on L6 (route_scoped.py --layers B.Cu: 19.9 mm, two runs).
+- tools/layout/route_scoped.py: the router on a few nets, on a trial's fanned board (so the fan-out's vias stay
+  clear), with every other net's lanes as L1 keep-outs; its copper comes out as spec items.
+- The rules check's two planted fire-logic pairs under U201 sat on GNSS_TX's new runs: a planted track that touches a
+  run takes its net, and DRC then saw nothing. They moved clear (x 42 on L1, x 46 on L3); 11 of 11 again.
+- Board 4c8c5ec1: DRC 0 errors, rules check 11 of 11, planted-miss test 11 of 11, RF check passes. 362 lanes, 4
+  crossed: U401.42 and U6001.6 cleared, their nets drawn whole; U6001.7 FLIGHT_3V3 by STAGE_ELIGIBLE and U1301.7,
+  U1301.26 and U1701.5 by their regulators' own copper remain.
+- Routing trial (d25-4c8c5ec1, alone, the router's last half-grid lap skipped): 3 of 271 open and 0 of 22 rails,
+  276 s, peak 3.5 GB (5.85 GB before: the router no longer searches the board for GNSS_TX and COMMS_SWDIO):
+  ADC_PYRO1_CONTINUITY, NEW_FLIGHT_CLEAR_REQUEST, TE_SDA. BMP_SCL, FLIGHT_NRST, STAGE_ARM_INVALID and SUPERVISOR_WDI
+  now route. Open three runs running, so a finding: ADC_PYRO1_CONTINUITY at U201.18. The router's log names
+  COMMS_3V3, FLIGHT_NRST and ADC_PYRO3_CONTINUITY as blockers, with FLIGHT_NRST, FLIGHT_HSE_OUT and GNSS_TX
+  protected within 3 mm. Measured: FLIGHT_NRST's drawn L6 run passes 0.43 mm from U201.18's in-pad via site. For NEW_FLIGHT_CLEAR_REQUEST and TE_SDA it names fire copper (PYRO1_FIRE) among the
+  blockers, with FLIGHT_NRST and GNSS_TX protected within 3 mm.

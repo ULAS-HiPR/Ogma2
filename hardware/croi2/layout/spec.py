@@ -1271,14 +1271,83 @@ def _usb_pair():
     ]
 
 
+# The router's own routes for GNSS_TX, COMMS_SWDIO and FLIGHT_NRST's first five pads, from routing trial
+# d25-1927e4ad-nf (24 Nov), frozen here as data (D-24Nov.13, call 3), as the fire logic's runs were: they cross no
+# other pin's lane and keep 0.5 mm from fire copper. 0.09 mm (the Default class), 0.45 / 0.2 vias; board mm.
+SCRIPTED_RUNS = {
+    'GNSS_TX': dict(
+        vias=[(34.8, 56.4), (38.6, 51.4), (53.6, 35.5)],
+        runs=[
+            ('B.Cu', [
+                (38.6, 51.4), (39.6, 50.4), (39.6, 49.0), (47.8, 40.8), (47.8, 40.7), (48.1, 40.4), (48.7, 40.4),
+                (53.6, 35.5),
+            ]),
+            ('F.Cu', [(34.8, 56.4), (39.1, 52.1), (39.1, 51.9), (38.6, 51.4)]),
+            ('In2.Cu', [
+                (26.3, 81.0), (30.8, 76.5), (32.6, 76.5), (33.7, 75.4), (33.7, 70.8), (33.2, 70.3), (33.2, 63.1),
+                (33.6, 62.7), (33.6, 61.2), (34.8, 60.0), (34.8, 56.4),
+            ]),
+        ]),
+    'COMMS_SWDIO': dict(
+        vias=[(3.1, 102.2), (26.25, 82.95)],
+        runs=[
+            ('F.Cu', [(26.35, 82.95), (27.3, 82.95)]),
+            ('In2.Cu', [(26.25, 82.95), (21.775, 87.425), (21.775, 87.475), (7.05, 102.2), (3.1, 102.2)]),
+        ]),
+    'FLIGHT_NRST': dict(
+        vias=[(8.7, 68.2), (13.6, 66.0), (16.7, 70.6), (18.225, 67.475), (25.875, 59.925), (28.4, 57.725), (32.25, 55.325)],
+        runs=[
+            ('B.Cu', [
+                (18.225, 67.475), (18.25, 67.475), (19.625, 66.1), (19.625, 64.85), (20.7, 63.775), (20.7, 63.05),
+                (22.65, 61.1), (24.7, 61.1), (25.875, 59.925),
+            ]),
+            ('B.Cu', [
+                (28.4, 57.725), (29.025, 57.725), (29.55, 57.2), (31.45, 57.2), (32.25, 56.4), (32.25, 55.325),
+            ]),
+            ('F.Cu', [(13.98, 66.95), (14.0, 67.0), (14.8, 66.2), (15.3, 66.2), (15.3, 66.188)]),
+            ('F.Cu', [(14.3, 66.7), (13.6, 66.0)]),
+            ('F.Cu', [
+                (16.7, 70.6), (15.5, 71.8), (15.1, 71.8), (15.0, 71.7), (14.9, 71.7), (12.8, 69.6), (12.3, 69.6),
+                (12.0, 69.3), (12.0, 69.2), (11.9, 69.1), (11.9, 68.9), (10.9, 67.9), (10.9, 67.8), (11.0, 67.7),
+                (11.0, 67.2), (10.9, 67.1), (10.9, 67.0), (10.89, 67.05),
+            ]),
+            ('F.Cu', [(8.7, 68.2), (8.0, 68.9), (4.6, 68.9), (4.635, 68.874)]),
+            ('F.Cu', [
+                (25.875, 59.925), (27.125, 58.675), (27.125, 58.5), (27.15, 58.475), (27.15, 58.4), (27.175, 58.375),
+                (27.175, 58.35), (27.2, 58.325), (27.2, 58.3), (28.05, 57.45), (28.1, 57.45), (28.175, 57.525),
+                (28.2, 57.525), (28.4, 57.725),
+            ]),
+            ('F.Cu', [(32.25, 55.325), (32.275, 55.3), (32.325, 55.3), (32.325, 55.312)]),
+            ('In2.Cu', [
+                (8.7, 68.2), (11.7, 68.2), (13.6, 66.3), (13.6, 66.0), (14.4, 66.0), (16.8, 68.4), (16.9, 68.4),
+                (17.1, 68.6), (17.1, 70.2), (16.7, 70.6),
+            ]),
+            ('In2.Cu', [(17.1, 68.6), (18.225, 67.475)]),
+        ]),
+}
+
+
 def _scripted_nets():
-    """Signal nets drawn by script round the frozen fire logic (D-24Nov.13, call 3): FLIGHT_NRST, GNSS_TX and
-    COMMS_SWDIO. So far GNSS_TX's escape at U401.42, drawn with the USB pair: the pair has to cross pin 42's lane to
-    reach pins 44 and 45 past C402 (which stays), so GNSS_TX leaves its pin square into a via at the pad's tip first"""
-    return [
+    """Signal nets drawn round the frozen fire logic (D-24Nov.13, call 3): FLIGHT_NRST, GNSS_TX and COMMS_SWDIO.
+    GNSS_TX's escape at U401.42 came first, with the USB pair: the pair crosses pin 42's lane to reach pins 44 and 45
+    past C402, so GNSS_TX leaves its pin square into a via at the pad's tip. At U4503.2 (TSSOP, 0.65 mm) it leaves
+    square out of the pin's inner end, under the body, to its run's via. U6001.6 (FLIGHT_NRST) can't leave outward:
+    STAGE_ELIGIBLE's track crosses its lane and PYRO2_FIRE runs 1.3 mm east on L3, so no via fits out there, and none
+    in the pad (0.2 mm from pin 5's fire logic and 0.1 mm from pin 7 can't both hold); it leaves inward under the
+    body to a via, the nearest legal site on the pin's axis. The rest is SCRIPTED_RUNS"""
+    out = [
         dict(net='GNSS_TX', layer='F.Cu', w=0.2, path=[(27.325, 80.955), (26.3, 80.955)]),
         dict(net='GNSS_TX', via=(26.3, 80.955), d=0.45, drill=0.2),
+        dict(net='GNSS_TX', layer='F.Cu', w=0.09, path=[(55.1, 33.388), (55.1, 34.6), (54.2, 35.5), (53.6, 35.5)]),
+        dict(net='FLIGHT_NRST', layer='F.Cu', w=0.15, path=[(44.5, 40.1), (43.6, 40.1)]),
+        dict(net='FLIGHT_NRST', via=(43.6, 40.1), d=0.45, drill=0.2),
+        # that via to U201.14's, on L6 alone (route_scoped.py --layers B.Cu, on board f5bbfc0c's fan-out)
+        dict(net='FLIGHT_NRST', layer='B.Cu', w=0.09, path=[(32.25, 55.3), (43.6, 43.95), (43.6, 40.1)]),
     ]
+    for net, d in SCRIPTED_RUNS.items():
+        out += [dict(net=net, via=v, d=0.45, drill=0.2) for v in d['vias']]
+        out += [dict(net=net, layer=lay, w=0.09, path=pts) for lay, pts in d['runs']]
+    return out
 
 
 POWER_COPPER = (_power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
