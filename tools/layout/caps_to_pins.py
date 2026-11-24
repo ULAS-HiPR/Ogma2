@@ -46,6 +46,7 @@ from shapely.geometry import Polygon       # noqa: E402
 
 import build                               # noqa: E402
 from engine import netlist, place as P     # noqa: E402
+from engine.metrics import rule_pins        # noqa: E402
 
 STEP = 0.05
 REACH = 3.5                                # how far beyond a pin's tip the search goes, mm
@@ -56,6 +57,7 @@ NUDGE = 1.0                                # anything else, without Seán (the h
 GROUPS = 25                                # sets of occupants tried per capacitor
 LANE = 2.5                                 # no part this run moves sits in front of a crystal pin, this far out
 DEPTH = 2                                  # a part moved to make room may itself move one other set of parts
+BUDGET = None                              # seconds per part for the room-making search; None: no limit
 MOVABLE = re.compile(r'(C|R|L|D|FB|TP|Y)\d+$')
 NOTHING = (0, 0.0, 0, 0.0, 0, 0.0)
 
@@ -179,12 +181,12 @@ class Run:
             return True
         pads = self.pads_at(ref, x, y, rot)
         for row in rows:
-            ic = self.board_pads(row['ic'])
+            ic, only = self.board_pads(row['ic']), rule_pins(row)
             for p, g in pads.items():
                 n = self.net(ref, p)
                 if not n or n == 'GND':
                     continue
-                mine = [h for q, h in ic.items() if self.net(row['ic'], q) == n]
+                mine = [h for q, h in ic.items() if self.net(row['ic'], q) == n and (only is None or q in only)]
                 if mine and min(g.distance(h) for h in mine) > row['mm']:
                     return False
         return True
@@ -340,11 +342,12 @@ class Run:
         if cap in pl.placed:
             self.lift(cap)
         groups = {}
-        n_out, n_al = int(REACH / STEP), int(ALONG / STEP)
-        for i in range(0, n_out + 1):
+        st = STEP if limit <= REACH else max(STEP, 0.2)       # a looser rule: a wider search on a coarser grid
+        n_out, n_al = int(max(REACH, limit) / st), int(max(ALONG, limit) / st)
+        for i in range(-n_out, n_out + 1):        # behind the tip too: round a corner pin (D-24Nov.1)
             for j in range(-n_al, n_al + 1):
-                x = round(tip[0] + out[0] * i * STEP + along[0] * j * STEP, 3)
-                y = round(tip[1] + out[1] * i * STEP + along[1] * j * STEP, 3)
+                x = round(tip[0] + out[0] * i * st + along[0] * j * st, 3)
+                y = round(tip[1] + out[1] * i * st + along[1] * j * st, 3)
                 for rot in pl.rotset.get(cap, P.ROTS):
                     pads = self.pads_at(cap, x, y, rot)
                     g = pads[npin].distance(pg)
@@ -357,13 +360,15 @@ class Run:
                     hits = self.conflicts(cap, x, y, rot)
                     if hits is None or any(h in frozen or h == ic or h not in self.movable for h in hits):
                         continue
-                    other = next(q for q in pads if q != npin)
-                    gg = min((pads[other].distance(h) for h in gnd_pins), default=9.0)
-                    score = (round(g, 2), round(gg, 2), round(abs(j * STEP), 2), rot)
+                    other = next((q for q in pads if q != npin), None)        # a test point has one pad
+                    gg = min((pads[other].distance(h) for h in gnd_pins), default=9.0) if other else 0.0
+                    score = (round(g, 2), round(gg, 2), round(abs(j * st), 2), rot)
                     groups.setdefault(frozenset(hits), []).append((score, x, y, rot))
         order = sorted(groups, key=lambda k: (sum(h not in self.approved for h in k), len(k), min(groups[k])[0]))
-        best = None
+        best, t_end = None, (time.time() + BUDGET) if BUDGET else None
         for k in order[:GROUPS]:
+            if t_end and time.time() > t_end:          # the sets tried so far are the ones that disturb least
+                break
             for score, x, y, rot in sorted(groups[k])[:2]:
                 mark = len(self.log)
                 if not self.make_room(cap, x, y, rot, 0, frozen | {ic}):

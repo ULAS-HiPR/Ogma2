@@ -396,6 +396,227 @@ NEAR += [dict(rule='part_to_pins', part=r, ic=ic, mm=mm, src=f'{_BLOCK}: {why}')
     ('C1702', 'U1701', 3.5, 'the feed-forward capacitor with the divider'),
     ('R1704', 'U1701', 3.0, 'the isolation link beside the output capacitor'),
     ('C1705', 'U1701', 4.0, 'the 47 uF input capacitor near IN'))]
+
+# every chip's own capacitors at its pins (D-24Nov.1): each capacitor drawn beside a chip on its sheet, between one of
+# that chip's nets and GND, within 3 mm of the chip's pin on that net, 5 mm from 2.2 uF up [J] (D-23Nov.1's MCU
+# figure). Named one by one from the schematic, so no other capacitor on the net can answer for it; the MCUs' keep
+# their supply_caps rows, the power blocks their own rows. Not here, with rows of their own in PASSIVE_PINS below, at
+# the distances their jobs need: the 1000 uF (C1403), the branch switches' input caps (C1501, C1601), the comms and
+# optional LDOs' NR/SS caps (C1801, C1901), and U101's input and IN_SYS caps (C1004, C1005, C1002), on the 6 A copper
+# behind Q101's tab, the only room: the input path is 2.6 mm copper, a few nH beside the battery lead's microhenries
+CAP_PINS = [
+    ('C1001', 'U101', 3.0), ('C1103', 'U1101', 3.0),
+    ('C1104', 'U1101', 3.0), ('C1105', 'U1102', 3.0), ('C1106', 'U1102', 5.0), ('C1201', 'U1201', 3.0), ('C1202', 'U1202', 3.0),
+    ('C1204', 'U1204', 3.0), ('C1803', 'U1801', 3.0), ('C1805', 'U1801', 5.0), ('C1806', 'U1801', 5.0), ('C1903', 'U1901', 3.0),
+    ('C1905', 'U1901', 5.0), ('C1906', 'U1901', 5.0), ('C2301', 'U2301', 3.0), ('C2302', 'U2301', 3.0), ('C2303', 'U2301', 3.0),
+    ('C3102', 'U3104', 3.0), ('C3107', 'U3104', 3.0), ('C3108', 'U3104', 3.0), ('C3202', 'U3204', 3.0), ('C3207', 'U3204', 3.0),
+    ('C3208', 'U3204', 5.0), ('C3209', 'U3204', 3.0), ('C3302', 'U3304', 3.0), ('C3307', 'U3304', 3.0), ('C3308', 'U3304', 5.0),
+    ('C3402', 'U3403', 3.0), ('C3404', 'U3403', 3.0), ('C3502', 'U3503', 3.0), ('C3504', 'U3503', 3.0), ('C3601', 'U3601', 3.0),
+    ('C3602', 'U3602', 3.0), ('C3605', 'U3602', 3.0), ('C3606', 'U3603', 3.0), ('C3603', 'U3604', 5.0), ('C3604', 'U3604', 3.0),
+    ('C3701', 'U3701', 5.0), ('C3702', 'U3701', 3.0), ('C3703', 'U3701', 3.0), ('C3704', 'U3701', 3.0), ('C4201', 'U4201', 3.0),
+    ('C4202', 'U4201', 3.0), ('C4203', 'U4201', 3.0), ('C4301', 'U4301', 3.0), ('C4302', 'U4301', 3.0), ('C4303', 'U4302', 3.0),
+    ('C4304', 'U4302', 3.0), ('C4305', 'U4303', 3.0), ('C4306', 'U4303', 3.0), ('C4401', 'U4401', 3.0), ('C4402', 'U4401', 3.0),
+    ('C4501', 'U4501', 3.0), ('C4502', 'U4502', 3.0), ('C4503', 'U4504', 3.0), ('C4504', 'U4504', 5.0), ('C4505', 'U4504', 3.0),
+    ('C4506', 'U4504', 3.0), ('C4601', 'U4602', 3.0), ('C4602', 'U4602', 3.0), ('C4603', 'U4603', 3.0), ('C4604', 'U4604', 3.0),
+    ('C4611', 'U4606', 3.0), ('C4612', 'U4606', 5.0), ('C4613', 'U4606', 5.0), ('C501', 'U501', 3.0), ('C503', 'U502', 3.0),
+    ('C504', 'U502', 3.0), ('C502', 'U503', 3.0), ('C505', 'U503', 3.0), ('C506', 'U503', 3.0), ('C507', 'U504', 3.0),
+    ('C508', 'U504', 3.0), ('C509', 'U505', 3.0), ('C510', 'U505', 3.0), ('C6001', 'U6001', 3.0), ('C6103', 'U6103', 3.0),
+    ('C6502', 'U6502', 3.0), ('C6701', 'U6701', 3.0), ('C6711', 'U6701', 3.0), ('C6721', 'U6701', 3.0), ('C6731', 'U6701', 3.0),
+    ('C6901', 'U6901', 3.0), ('C7001', 'U7001', 3.0), ('C7002', 'U7002', 3.0), ('C7003', 'U7002', 3.0), ('C7102', 'U7101', 3.0),
+    ('C7103', 'U7101', 3.0), ('C8001', 'U8001', 3.0), ('C8002', 'U8001', 3.0), ('C8003', 'U8001', 3.0), ('C8005', 'U8001', 3.0),
+    ('C9101', 'U9101', 3.0),
+]
+NEAR.extend(dict(rule='part_to_pins', part=c, ic=u, mm=mm, src="D-24Nov.1: the chip's own capacitor at its pin")
+            for c, u, mm in CAP_PINS)
+
+# every passive at the pin it serves (D-24Nov.1, standing-rules.md): one row per part, naming the chip (or the part
+# it works with) and the pin, so no other part can answer for it, at the distance its job needs: how close it can
+# be while still doing its job. Copper gap, pad edge to the pin, as the build measures it.
+_WHY = {
+    'BLEED': 'a bleed on a switched rail: any distance does its job, kept by its link',
+    'BULK': 'an energy store over milliseconds: inductance does not matter, so any spot on its rail does its job',
+    'BUS': 'an I2C pull-up: it works anywhere on the bus, kept by the chip on its sheet',
+    'CC': 'a USB-C CC pull-down, kept by the connector',
+    'CHAIN': 'a middle resistor of a divider chain: kept with the chain',
+    'CONT': 'a continuity divider into the mux: the test tells an e-match from an open circuit, so pickup on its '
+            '7 kohm node does not matter',
+    'DAMP': 'series damping on a line electrically short at its edges, so it works anywhere on it: kept by its chip',
+    'DEC': "the chip's own decoupling, at its pin",
+    'FILT': 'filters the pin it sits on',
+    'FUSE': "the arm feed's fuse at the energy tap",
+    'GATE': 'holds the gate off, at the gate',
+    'INCAP': "U101's input capacitor beside the battery lead's microhenries: 10 mm of the 6 A copper adds a few nH "
+             "(D-23Nov.31)",
+    'LED': "sets an LED's current, kept by its LED",
+    'LINK': 'a 0 ohm link: any distance does its job, kept with its circuit',
+    'LOAD': 'a crystal load capacitor at its crystal pin (placed with the crystal, step 4)',
+    'NRSS': "the LDO's reference filter: a high-impedance node, so noise on its trace reaches the output",
+    'ODPU': 'pulls up an open-drain output: it works anywhere on the net, kept by its output',
+    'OUTCAP': "the eFuse's output capacitor, by the shunt's output",
+    'PROT': 'limits current into a pin: it works anywhere on the line, kept by the pin it protects',
+    'PULL': "holds a line's idle level: it works anywhere on the line, kept by the pin it holds",
+    'RAILCAP': "the rail's capacitor after its link, kept by the link",
+    'RC': 'part of an RC: kept with its partner',
+    'SENSE': 'a divider into a measuring input whose filter capacitor sits at the pin, which holds the node',
+    'SET': 'sets a threshold, limit or output at a high-impedance pin: a short node keeps noise out of the setting',
+    'SHUNT': "the current shunt at the eFuse's output",
+    'TAP': "a rail divider's top at the armed rail's entry, so only the divided, current-limited node travels",
+    'SUPL': "the sensor's supply link, kept by its supply pin",
+    'SWIN': "the branch switch's input capacitor: 15 mm of 4V_PRE copper over a plane is a few nH, tens of mV at "
+            "worst at the switch's current-limit edges, on a trunk that starts at the buck's output capacitors",
+    'TERM': 'CAN termination at the bus end, by the transceiver',
+}
+PASSIVE_PINS = [
+    ('R1503', 'R1501', '2', 10.0, 'BLEED'), ('R1603', 'R1601', '2', 10.0, 'BLEED'),
+    ('R3603', 'R3601', '2', 10.0, 'BLEED'), ('R509', 'R501', '2', 10.0, 'BLEED'),
+    ('R7003', 'R7001', '2', 10.0, 'BLEED'), ('C1403', 'U1401', '6', 20.0, 'BULK'),
+    ('C219', 'U201', '6', 20.0, 'BULK'), ('R3702', 'R3704', '1', 10.0, 'BUS'), ('R3703', 'R3705', '1', 10.0, 'BUS'),
+    ('R3405', 'U3403', '2', 10.0, 'BUS'), ('R3406', 'U3403', '4', 10.0, 'BUS'), ('R3505', 'U3503', '8', 10.0, 'BUS'),
+    ('R3506', 'U3503', '7', 10.0, 'BUS'), ('R7005', 'U7002', '2', 10.0, 'BUS'), ('R7006', 'U7002', '5', 10.0, 'BUS'),
+    ('R4401', 'J4401', 'A5', 10.0, 'CC'), ('R4402', 'J4401', 'B5', 10.0, 'CC'),
+    ('R1012', 'R1013', '1', 10.0, 'CHAIN'), ('R6911', 'R6912', '1', 10.0, 'CHAIN'),
+    ('R6914', 'R6913', '2', 10.0, 'CHAIN'), ('R6921', 'R6922', '1', 10.0, 'CHAIN'),
+    ('R6924', 'R6923', '2', 10.0, 'CHAIN'), ('R6931', 'R6932', '1', 10.0, 'CHAIN'),
+    ('R6934', 'R6933', '2', 10.0, 'CHAIN'), ('R8001', 'R8002', '1', 10.0, 'CHAIN'),
+    ('R8004', 'R8005', '1', 10.0, 'CHAIN'), ('R8007', 'J6101', '2', 10.0, 'TAP'),
+    ('R6712', 'U6304', '14', 10.0, 'CHAIN'), ('R6722', 'U6404', '14', 10.0, 'CHAIN'),
+    ('R6732', 'U6504', '14', 10.0, 'CHAIN'), ('R3107', 'U3104', '13', 10.0, 'DAMP'),
+    ('R3108', 'U3104', '14', 10.0, 'DAMP'), ('R3207', 'U3204', '13', 10.0, 'DAMP'),
+    ('R3208', 'U3204', '14', 10.0, 'DAMP'), ('R3307', 'U3304', '14', 10.0, 'DAMP'),
+    ('R3308', 'U3304', '13', 10.0, 'DAMP'), ('R3609', 'U3604', '16', 10.0, 'DAMP'),
+    ('R3704', 'U3701', '1', 10.0, 'DAMP'), ('R3705', 'U3701', '16', 10.0, 'DAMP'),
+    ('R4405', 'U401', '45', 10.0, 'DAMP'), ('R4406', 'U401', '44', 10.0, 'DAMP'),
+    ('C1502', 'U1801', '10', 3.0, 'DEC'), ('C1602', 'U1901', '10', 3.0, 'DEC'), ('C201', 'U201', '100', 3.0, 'DEC'),
+    ('C202', 'U201', '73', 3.0, 'DEC'), ('C203', 'U201', '50', 3.0, 'DEC'), ('C204', 'U201', '75', 3.0, 'DEC'),
+    ('C205', 'U201', '11', 3.0, 'DEC'), ('C206', 'U201', '28', 5.0, 'DEC'), ('C207', 'U201', '6', 3.0, 'DEC'),
+    ('C208', 'U201', '28', 3.0, 'DEC'), ('C209', 'U201', '48', 5.0, 'DEC'), ('C210', 'U201', '98', 5.0, 'DEC'),
+    ('C211', 'U201', '21', 3.0, 'DEC'), ('C212', 'U201', '22', 3.0, 'DEC'), ('C213', 'U201', '21', 3.0, 'DEC'),
+    ('C214', 'U201', '21', 3.0, 'DEC'), ('C401', 'U401', '32', 3.0, 'DEC'), ('C402', 'U401', '48', 3.0, 'DEC'),
+    ('C403', 'U401', '64', 3.0, 'DEC'), ('C404', 'U401', '19', 3.0, 'DEC'), ('C406', 'U401', '1', 5.0, 'DEC'),
+    ('C407', 'U401', '1', 3.0, 'DEC'), ('C409', 'U401', '30', 5.0, 'DEC'), ('C410', 'U401', '62', 5.0, 'DEC'),
+    ('C411', 'U401', '13', 3.0, 'DEC'), ('C412', 'U401', '13', 3.0, 'DEC'), ('C413', 'U401', '13', 3.0, 'DEC'),
+    ('C414', 'U401', '13', 3.0, 'DEC'), ('C1006', 'U101', '12', 3.0, 'FILT'), ('C7101', 'U7101', '10', 3.0, 'FILT'),
+    ('F6101', 'Q101', '5', 10.0, 'FUSE'), ('F6102', 'Q101', '5', 10.0, 'FUSE'), ('R9003', 'Q9001', '1', 3.0, 'GATE'),
+    ('C1002', 'U101', '5', 10.0, 'INCAP'), ('C1004', 'U101', '1', 10.0, 'INCAP'),
+    ('C1005', 'U101', '1', 10.0, 'INCAP'), ('R9001', 'D9001', '2', 10.0, 'LED'), ('R9101', 'D9101', '2', 10.0, 'LED'),
+    ('R9201', 'D9201', '2', 10.0, 'LED'), ('R9301', 'D9301', '2', 10.0, 'LED'), ('R516', 'J501', '3', 10.0, 'LINK'),
+    ('R517', 'J502', '3', 10.0, 'LINK'), ('F501', 'R516', '2', 10.0, 'LINK'), ('F502', 'R517', '2', 10.0, 'LINK'),
+    ('R1011', 'U101', '14', 10.0, 'LINK'), ('R1501', 'U1501', '6', 10.0, 'LINK'),
+    ('R1601', 'U1601', '6', 10.0, 'LINK'), ('R1804', 'U1801', '1', 10.0, 'LINK'),
+    ('R1904', 'U1901', '1', 10.0, 'LINK'), ('R201', 'U201', '22', 10.0, 'LINK'),
+    ('R3601', 'U3601', '6', 10.0, 'LINK'), ('R401', 'U401', '13', 10.0, 'LINK'), ('R501', 'U501', '6', 10.0, 'LINK'),
+    ('R6107', 'U6103', '1', 10.0, 'LINK'), ('R6108', 'U6103', '6', 10.0, 'LINK'),
+    ('R6310', 'U6304', '8', 10.0, 'LINK'), ('R6410', 'U6404', '8', 10.0, 'LINK'),
+    ('R6510', 'U6504', '8', 10.0, 'LINK'), ('R7001', 'U7001', '6', 10.0, 'LINK'),
+    ('R7105', 'U7101', '6', 10.0, 'LINK'), ('C215', 'Y201', '1', 2.0, 'LOAD'), ('C216', 'Y201', '3', 2.0, 'LOAD'),
+    ('C217', 'Y202', '1', 2.0, 'LOAD'), ('C218', 'Y202', '2', 2.0, 'LOAD'), ('C415', 'Y401', '1', 2.0, 'LOAD'),
+    ('C416', 'Y401', '3', 2.0, 'LOAD'), ('C1801', 'U1801', '8', 3.0, 'NRSS'), ('C1901', 'U1901', '8', 3.0, 'NRSS'),
+    ('R1010', 'U101', '16', 10.0, 'ODPU'), ('R1108', 'U1101', '9', 10.0, 'ODPU'),
+    ('R1203', 'U1201', '1', 10.0, 'ODPU'), ('R1304', 'U1301', '26', 10.0, 'ODPU'),
+    ('R1405', 'U1401', '3', 10.0, 'ODPU'), ('R1703', 'U1701', '5', 10.0, 'ODPU'),
+    ('R1803', 'U1801', '5', 10.0, 'ODPU'), ('R1903', 'U1901', '5', 10.0, 'ODPU'),
+    ('R2301', 'U2301', '1', 10.0, 'ODPU'), ('R9004', 'U401', '9', 10.0, 'ODPU'),
+    ('R4201', 'U4201', '1', 10.0, 'ODPU'), ('R4407', 'U4401', '4', 10.0, 'ODPU'),
+    ('R4621', 'U4606', '8', 10.0, 'ODPU'), ('R6105', 'U6103', '1', 10.0, 'ODPU'),
+    ('R6106', 'U6103', '6', 10.0, 'ODPU'), ('R7007', 'U7001', '4', 10.0, 'ODPU'),
+    ('C1003', 'R7101', '2', 10.0, 'OUTCAP'), ('R9002', 'Q9001', '1', 10.0, 'PROT'),
+    ('R1013', 'U1002', '1', 10.0, 'PROT'), ('R203', 'U201', '41', 10.0, 'PROT'), ('R204', 'U2301', '3', 10.0, 'PROT'),
+    ('R4619', 'U4604', '6', 10.0, 'PROT'), ('R4614', 'U4606', '6', 10.0, 'PROT'),
+    ('R4615', 'U4606', '5', 10.0, 'PROT'), ('R4616', 'U4606', '4', 10.0, 'PROT'),
+    ('R4617', 'U4606', '7', 10.0, 'PROT'), ('R4618', 'U4606', '3', 10.0, 'PROT'),
+    ('R4620', 'U4606', '2', 10.0, 'PROT'), ('R6005', 'U6001', '3', 10.0, 'PROT'),
+    ('R1015', 'R1014', '1', 10.0, 'PULL'), ('R205', 'R203', '2', 10.0, 'PULL'), ('R6302', 'R6304', '1', 10.0, 'PULL'),
+    ('R6402', 'R6404', '1', 10.0, 'PULL'), ('R6502', 'R6504', '1', 10.0, 'PULL'),
+    ('R1006', 'U101', '12', 10.0, 'PULL'), ('R1205', 'U1202', '3', 10.0, 'PULL'),
+    ('R1207', 'U1202', '4', 10.0, 'PULL'), ('R1502', 'U1501', '3', 10.0, 'PULL'),
+    ('R1602', 'U1601', '3', 10.0, 'PULL'), ('R2303', 'U201', '94', 10.0, 'PULL'),
+    ('R2302', 'U2301', '3', 10.0, 'PULL'), ('R2311', 'U2302', '7', 10.0, 'PULL'),
+    ('R3105', 'U3104', '12', 10.0, 'PULL'), ('R3205', 'U3204', '12', 10.0, 'PULL'),
+    ('R3305', 'U3304', '7', 10.0, 'PULL'), ('R3602', 'U3603', '1', 10.0, 'PULL'),
+    ('R3610', 'U3603', '9', 10.0, 'PULL'), ('R3605', 'U3604', '7', 10.0, 'PULL'),
+    ('R3606', 'U3604', '3', 10.0, 'PULL'), ('R3607', 'U3604', '9', 10.0, 'PULL'),
+    ('R3608', 'U3604', '1', 10.0, 'PULL'), ('R4203', 'U401', '60', 10.0, 'PULL'),
+    ('R4202', 'U4201', '3', 10.0, 'PULL'), ('R4301', 'U4301', '6', 10.0, 'PULL'),
+    ('R4302', 'U4301', '4', 10.0, 'PULL'), ('R4303', 'U4301', '8', 10.0, 'PULL'),
+    ('R4501', 'U4501', '6', 10.0, 'PULL'), ('R4502', 'U4501', '4', 10.0, 'PULL'),
+    ('R4504', 'U4504', '9', 10.0, 'PULL'), ('R4601', 'U4601', '6', 10.0, 'PULL'),
+    ('R4602', 'U4603', '4', 10.0, 'PULL'), ('R4604', 'U4603', '8', 10.0, 'PULL'),
+    ('R4605', 'U4604', '3', 10.0, 'PULL'), ('R503', 'U501', '3', 10.0, 'PULL'), ('R504', 'U502', '2', 10.0, 'PULL'),
+    ('R505', 'U502', '3', 10.0, 'PULL'), ('R506', 'U502', '5', 10.0, 'PULL'), ('R507', 'U503', '1', 10.0, 'PULL'),
+    ('R508', 'U503', '8', 10.0, 'PULL'), ('R511', 'U504', '2', 10.0, 'PULL'), ('R512', 'U504', '5', 10.0, 'PULL'),
+    ('R513', 'U505', '1', 10.0, 'PULL'), ('R514', 'U505', '8', 10.0, 'PULL'), ('R6001', 'U6001', '1', 10.0, 'PULL'),
+    ('R6303', 'U6304', '3', 10.0, 'PULL'), ('R6403', 'U6404', '3', 10.0, 'PULL'),
+    ('R6501', 'U6502', '1', 10.0, 'PULL'), ('R6503', 'U6504', '3', 10.0, 'PULL'),
+    ('R6714', 'U6901', '3', 10.0, 'PULL'), ('R6724', 'U6901', '6', 10.0, 'PULL'),
+    ('R6734', 'U6901', '8', 10.0, 'PULL'), ('R7002', 'U7002', '1', 10.0, 'PULL'),
+    ('R7008', 'U7002', '8', 10.0, 'PULL'), ('R9102', 'U9101', '2', 10.0, 'PULL'),
+    ('C1704', 'R1704', '2', 10.0, 'RAILCAP'), ('C1804', 'R1804', '2', 10.0, 'RAILCAP'),
+    ('C1904', 'R1904', '2', 10.0, 'RAILCAP'), ('R1014', 'C1007', '1', 10.0, 'RC'), ('R202', 'C220', '1', 10.0, 'RC'),
+    ('C1007', 'R1014', '2', 10.0, 'RC'), ('C220', 'U201', '29', 10.0, 'RC'), ('R6713', 'U6701', '2', 10.0, 'SENSE'),
+    ('R6715', 'U6701', '2', 10.0, 'SENSE'), ('R6723', 'U6701', '5', 10.0, 'SENSE'),
+    ('R6725', 'U6701', '5', 10.0, 'SENSE'), ('R6733', 'U6701', '9', 10.0, 'SENSE'),
+    ('R6735', 'U6701', '9', 10.0, 'SENSE'), ('R6916', 'U6901', '2', 10.0, 'CONT'),
+    ('R6917', 'U6901', '2', 10.0, 'CONT'), ('R6926', 'U6901', '5', 10.0, 'CONT'),
+    ('R6927', 'U6901', '5', 10.0, 'CONT'), ('R6936', 'U6901', '9', 10.0, 'CONT'),
+    ('R6937', 'U6901', '9', 10.0, 'CONT'), ('R7102', 'U7101', '10', 10.0, 'SENSE'),
+    ('R7103', 'U7101', '9', 10.0, 'SENSE'), ('R7104', 'U7101', '8', 10.0, 'SENSE'),
+    ('R8002', 'U8001', '2', 10.0, 'SENSE'), ('R8003', 'U8001', '2', 10.0, 'SENSE'),
+    ('R8005', 'U8001', '5', 10.0, 'SENSE'), ('R8006', 'U8001', '5', 10.0, 'SENSE'),
+    ('R8008', 'U8001', '9', 10.0, 'SENSE'), ('R8009', 'U8001', '9', 10.0, 'SENSE'),
+    ('R1001', 'U101', '6', 3.0, 'SET'), ('R1002', 'U101', '6', 3.0, 'SET'), ('R1003', 'U101', '7', 3.0, 'SET'),
+    ('R1004', 'U101', '7', 3.0, 'SET'), ('R1005', 'U101', '10', 3.0, 'SET'), ('R1007', 'U101', '15', 3.0, 'SET'),
+    ('R1008', 'U101', '15', 3.0, 'SET'), ('R1009', 'U101', '13', 3.0, 'SET'), ('R1101', 'U1101', '6', 3.0, 'SET'),
+    ('R1103', 'U1101', '5', 3.0, 'SET'), ('R1105', 'U1101', '4', 3.0, 'SET'), ('R1201', 'U1201', '3', 3.0, 'SET'),
+    ('R1202', 'U1201', '3', 3.0, 'SET'), ('R1208', 'U1204', '1', 3.0, 'SET'), ('R1209', 'U1204', '1', 3.0, 'SET'),
+    ('R1301', 'U1301', '25', 3.0, 'SET'), ('R1204', 'U1401', '1', 3.0, 'SET'), ('R1210', 'U1401', '1', 3.0, 'SET'),
+    ('R1401', 'U1401', '2', 3.0, 'SET'), ('R1403', 'U1401', '4', 3.0, 'SET'), ('R1504', 'U1501', '5', 3.0, 'SET'),
+    ('R1604', 'U1601', '5', 3.0, 'SET'), ('C1802', 'U1801', '3', 3.0, 'SET'), ('R1801', 'U1801', '3', 3.0, 'SET'),
+    ('R1802', 'U1801', '3', 3.0, 'SET'), ('C1902', 'U1901', '3', 3.0, 'SET'), ('R1901', 'U1901', '3', 3.0, 'SET'),
+    ('R1902', 'U1901', '3', 3.0, 'SET'), ('R2310', 'U2302', '2', 3.0, 'SET'), ('R3604', 'U3601', '5', 3.0, 'SET'),
+    ('R4403', 'U4401', '5', 3.0, 'SET'), ('R4503', 'U4502', '5', 3.0, 'SET'), ('R4603', 'U4602', '5', 3.0, 'SET'),
+    ('R502', 'U501', '5', 3.0, 'SET'), ('R6101', 'U6103', '3', 3.0, 'SET'), ('R6102', 'U6103', '3', 3.0, 'SET'),
+    ('R6103', 'U6103', '4', 3.0, 'SET'), ('R6104', 'U6103', '4', 3.0, 'SET'), ('R7004', 'U7001', '5', 3.0, 'SET'),
+    ('R7101', 'U101', '17', 3.0, 'SHUNT'), ('R3101', 'U3104', '10', 10.0, 'SUPL'),
+    ('R3201', 'U3204', '8', 10.0, 'SUPL'), ('R3301', 'U3304', '3', 10.0, 'SUPL'),
+    ('R3401', 'U3403', '6', 10.0, 'SUPL'), ('R3501', 'U3503', '1', 10.0, 'SUPL'),
+    ('R3701', 'U3701', '4', 10.0, 'SUPL'), ('C1501', 'U1501', '1', 15.0, 'SWIN'),
+    ('C1601', 'U1601', '1', 15.0, 'SWIN'), ('R510', 'U503', '7', 10.0, 'TERM'), ('R515', 'U505', '7', 10.0, 'TERM'),
+]
+NEAR.extend(dict(rule='part_to_pins', part=p, ic=u, pin=n, mm=mm, src=f'D-24Nov.1: {_WHY[k]}')
+            for p, u, n, mm, k in PASSIVE_PINS)
+# the pins the earlier rows serve, named (D-24Nov.1): one to one where a chip has several pins on the net
+_PINS = {
+    'C1001': '9', 'C1101': '11', 'C1102': '7', 'C1103': '2', 'C1104': '1', 'C1105': '3', 'C1106': '5', 'C1201': '5',
+    'C1202': '5', 'C1204': '5', 'C1301': '23', 'C1302': '8', 'C1303': '19', 'C1304': '3', 'C1305': '10',
+    'C1306': '12', 'C1401': '5', 'C1402': '7', 'C1701': '8', 'C1702': '3', 'C1703': '10', 'C1705': '7', 'C1706': '1',
+    'C1803': '9', 'C1805': '7', 'C1806': '2', 'C1903': '9', 'C1905': '10', 'C1906': '1', 'C2301': '6', 'C2302': '5',
+    'C2303': '1', 'C3102': '8', 'C3107': '5', 'C3108': '10', 'C3202': '8', 'C3207': '8', 'C3208': '8', 'C3209': '5',
+    'C3302': '3', 'C3307': '6', 'C3308': '6', 'C3402': '1', 'C3404': '10', 'C3502': '1', 'C3504': '2', 'C3601': '1',
+    'C3602': '14', 'C3603': '2', 'C3604': '2', 'C3605': '14', 'C3606': '14', 'C3701': '10', 'C3702': '4',
+    'C3703': '2', 'C3704': '10', 'C4201': '6', 'C4202': '5', 'C4203': '1', 'C4301': '3', 'C4302': '7', 'C4303': '1',
+    'C4304': '6', 'C4305': '1', 'C4306': '14', 'C4401': '1', 'C4402': '3', 'C4501': '5', 'C4502': '4', 'C4503': '7',
+    'C4504': '7', 'C4505': '7', 'C4506': '8', 'C4601': '1', 'C4602': '4', 'C4603': '14', 'C4604': '14', 'C4611': '1',
+    'C4612': '1', 'C4613': '1', 'C501': '1', 'C502': '3', 'C503': '1', 'C504': '14', 'C505': '5', 'C506': '5',
+    'C507': '1', 'C508': '14', 'C509': '3', 'C510': '5', 'C6001': '7', 'C6103': '5', 'C6304': '9', 'C6404': '9',
+    'C6502': '5', 'C6504': '9', 'C6601': '1', 'C6602': '4', 'C6603': '2', 'C6604': '5', 'C6605': '3', 'C6606': '6',
+    'C6701': '10', 'C6711': '2', 'C6721': '5', 'C6731': '9', 'C6901': '14', 'C7001': '1', 'C7002': '14',
+    'C7003': '14', 'C7102': '8', 'C7103': '6', 'C8001': '2', 'C8002': '5', 'C8003': '9', 'C8005': '1', 'C9101': '5',
+    'R1102': '6', 'R1104': '5', 'R1106': '4', 'R1107': '10', 'R1302': '25', 'R1303': '1', 'R1402': '2', 'R1404': '4',
+    'R1406': '9', 'R1701': '3', 'R1702': '3', 'R1704': '2', 'R6304': '3', 'R6305': '3', 'R6314': '13', 'R6404': '3',
+    'R6405': '3', 'R6414': '13', 'R6504': '3', 'R6505': '3', 'R6514': '13', 'R6711': '14', 'R6721': '14',
+    'R6731': '14', 'R6912': '1', 'R6913': '4', 'R6915': '4', 'R6922': '2', 'R6923': '5', 'R6925': '5', 'R6932': '3',
+    'R6933': '6', 'R6935': '6',
+}
+for _r in NEAR:
+    if _r['rule'] == 'part_to_pins' and _r.get('part') in _PINS and 'pin' not in _r:
+        _r['pin'] = _PINS[_r['part']]
+# and so every chip a passive serves has its parts at its pins, as the logic regulators do (D-23Nov.29): its ref no
+# longer counts as courtyard for the placer, and the silk pass sets it where there's room
+LABELS_MOVE = tuple(sorted(set(LABELS_MOVE) | {p[1] for p in PASSIVE_PINS if p[1].startswith('U')} |
+                           {_r['ic'] for _r in NEAR if _r['src'].startswith('D-24Nov.1') and _r['ic'].startswith('U')}
+                           - set(REFS_APART)))
+# and the parts round U101's bottom pins, whose labels stood in the one strip its own parts can use
+LABELS_MOVE += ('C1006', 'C1001', 'R1002', 'R1004', 'R1005', 'R1008', 'R1009', 'J102', 'R1007', 'R7101', 'Q101')
 PYRO_STAMP = {
     'anchors': ('U6304', 'U6404', 'U6504'),
     'rows': [('energy link', ('R6310', 'R6410', 'R6510'), (-3.1, 5.5), 90),
@@ -651,8 +872,9 @@ def _power_copper():
     v(VB, 0.45, 0.2, (23.9, 137.2), (26.45, 140.2), (23.6, 148.4))
     t(VB, B, 0.3, (23.9, 137.2), (23.6, 137.5), (23.6, 148.4))
     t(VB, B, 0.3, (26.45, 140.2), (24.0, 140.2), (23.6, 140.6))
-    # D1002, the master-enable diode by J103, along the clear strip between the power parts and J102
-    t(VB, F, 0.2, (25.0, 149.0), (55.6, 149.0), (55.6, 143.0), (56.95, 142.0))
+    # D1002, the master-enable diode by J103, along the clear strip between the power parts and J102: from the end of
+    # J101's 4 mm run, at 149.9 so U101's bottom pins keep a strip for their own parts (D-24Nov.1)
+    t(VB, F, 0.2, (23.4, 149.6), (24.2, 149.9), (55.6, 149.9), (55.6, 143.0), (56.95, 142.0))
     # Q101's tab (ENERGY_TAP) to the two fuses, C1004, C1005, U101's IN pins and R7104
     t(ET, F, 2.6, (15.4, 140.4), (21.0, 140.4))
     t(ET, F, 1.9, (15.0, 138.76), (20.9, 138.76))

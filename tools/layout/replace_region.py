@@ -1,7 +1,7 @@
 """Re-place the small parts of a region of the board, as edits to placement.json (D-22Nov.30).
 
     python3 tools/layout/replace_region.py croi2 --box X0,Y0,X1,Y1 [--box ...] [--mcus U201 U401] [--stamp]
-        [--plan FILE] [--write]
+        [--also REFS] [--keep REFS] [--block] [--plan FILE] [--write]
 
 Every movable part whose courtyard centre lies in a box is lifted: resistors, capacitors, inductors, diodes, FETs,
 crystals and test points. ICs, connectors, the spec's fixed parts, anchors and edge-region parts stay, and so do
@@ -17,6 +17,9 @@ J6601's output capacitors (D-22Nov.28). Then they go down again in this order:
 5. The other test points last, each beside its net's route (spec.PROBE_STUB_MAX).
 6. A part under a part_to_pins rule that is still out of reach goes to the nearest spot in reach, the other lifted
    parts nudged aside up to 3 mm from where they've just gone.
+
+With --block, a part the scripted copper reaches (its pad under a track's end or a via of its net) stays where it is
+unless it is stamped or named in --also, so no drawn copper is left ending in the air.
 
 Nothing outside the boxes moves. Prints every move and anything that found no spot; --plan writes them as JSON;
 --write puts the moves in placement.json, and refuses if any part found no spot.
@@ -34,6 +37,7 @@ sys.path.insert(0, str(HERE))
 import build                               # noqa: E402
 import caps_to_pins as CT                  # noqa: E402
 from engine import netlist                 # noqa: E402
+from engine.metrics import rule_pins        # noqa: E402
 
 LIFTABLE = ('C', 'R', 'L', 'D', 'FB', 'Q', 'Y', 'TP')
 
@@ -45,6 +49,7 @@ def main():
     ap.add_argument('--mcus', nargs='*', default=[])
     ap.add_argument('--stamp', action='store_true')
     ap.add_argument('--also', nargs='*', default=[], help='lift these parts too, whatever their kind or place')
+    ap.add_argument('--keep', nargs='*', default=[], help='leave these parts where they are, even inside a box')
     ap.add_argument('--closed', action='append', default=[], help='X0,Y0,X1,Y1: no re-placed part in this box '
                     '(an area the hard copper takes, where a pad would need a via it can\'t have)')
     ap.add_argument('--block', action='store_true', help="spec.PYRO_PARTS and spec.POWER_PARTS at their spots first, "
@@ -74,16 +79,30 @@ def main():
         c = pl.crt[r]
         x, y = (c[0] + c[2]) / 2, (c[1] + c[3]) / 2
         return any(b[0] <= x <= b[2] and b[1] <= y <= b[3] for b in boxes)
-    lifted = sorted(r for r in list(pl.placed) if liftable(r) and inside(r))
-    lifted = sorted(set(lifted) | {r for r in a.also if r in pl.placed})
+    lifted = sorted(r for r in list(pl.placed) if liftable(r) and inside(r) and r not in a.keep)
     block_parts = {**spec.PYRO_PARTS, **getattr(spec, 'POWER_PARTS', {})}
     block_copper = spec.PYRO_COPPER + getattr(spec, 'POWER_COPPER', [])
+    report = []
+    if a.block:
+        # a part the scripted copper reaches (a pad of its net under a track's end or a via) stays where it is unless
+        # it is stamped or named in --also: moved, it would leave that copper ending in the air (24 Nov)
+        from shapely.geometry import LineString as _L, Point as _P
+        cu = [(it['net'], _P(*it['via']).buffer(it.get('d', 0.6) / 2) if 'via' in it else
+               (_L(it['path']) if len(it['path']) > 1 else _P(it['path'][0])).buffer(it['w'] / 2))
+              for it in block_copper if 'via' in it or it.get('layer') == 'F.Cu']
+        for r in list(lifted):
+            if r in block_parts or r in a.also:
+                continue
+            if any(run.net(r, p) == n and g.intersects(cg) for p, g in run.board_pads(r).items() for n, cg in cu):
+                lifted.remove(r)
+                report.append(f'kept: {r}, the scripted copper reaches it')
+    lifted = sorted(set(lifted) | {r for r in a.also if r in pl.placed})
     if a.block:                                           # the output stage's and the power blocks' own parts
         lifted = sorted(set(lifted) | {r for r in block_parts if r in pl.placed})
     for r in lifted:
         run.lift(r)
     run.movable = set()                                    # nothing outside the boxes is pushed
-    report, unplaced, settled = [f'lifted {len(lifted)} parts'], [], set()
+    report, unplaced, settled = [f'lifted {len(lifted)} parts'] + report, [], set()
 
     # 1. the stamp
     if a.stamp:
@@ -208,15 +227,17 @@ def main():
         if row['rule'] != 'part_to_pins' or part not in lifted or part not in pl.placed or ic not in pl.placed:
             continue
 
+        only = rule_pins(row)
+
         def gap(pads):
             gs = [g.distance(h) for q, g in pads.items() if run.net(part, q) not in ('', 'GND')
-                  for k, h in now(ic).items() if run.net(ic, k) == run.net(part, q)]
+                  for k, h in now(ic).items() if run.net(ic, k) == run.net(part, q) and (only is None or k in only)]
             return min(gs) if gs else None
         g0 = gap(now(part))
         if g0 is None or g0 <= row['mm']:
             continue
         tx, ty = next(h.centroid.coords[0] for q, g in now(part).items() if run.net(part, q) not in ('', 'GND')
-                      for k, h in now(ic).items() if run.net(ic, k) == run.net(part, q))
+                      for k, h in now(ic).items() if run.net(ic, k) == run.net(part, q) and (only is None or k in only))
         mark = len(run.log)
         run.lift(part)
         spots = []

@@ -134,3 +134,25 @@ Earlier forms of the same idea, in his words: "I'm happy that we're going to go 
 time, Burrito first" (layout, 21 Nov). The method as it runs now is
 [the midpoint review](docs/briefs/burrito-midpoint-review.md), which he accepted on 23 Nov: "I agree to all above.
 Read them."
+
+## D-24Nov.1 (24 Nov 2026): every passive at its chip, by name and pin
+
+Given after the re-check Fable asked for found most of Burrito's chip capacitors far from their chips, with nothing
+checking them. Dictated, so "pastors are closed" means "passives are close".
+
+> "The above probably need some sort of it needs to be an operating rule like make sure that all the pastors are
+> closed will actually look at them make a rule for each of them like an acceptable distance and then fix it"
+>
+> "That's every passive that serves a chip, not only the capacitors: resistors, inductors and ferrites too."
+>
+> "Each rule names the part and the pin it serves, so no other part can satisfy it. Where a part can't get inside
+> its distance, say why and what it would take, and batch those for me."
+>
+> "The whole point is that you look at every single passive and you figure out how far does it actually need to be.
+> Or another way of putting it is like, how close can it be whilst still doing its job?"
+>
+> "I want you to make it a standing rule so that we don't ever forget this."
+
+How it runs: every passive that serves a chip gets its own row in the layout spec, naming the part, the chip and the
+pin, with the distance its job needs; the build checks every row. A rule that any part on a net can satisfy is not
+one of these.

@@ -19,6 +19,7 @@ Signal nets are every net of two pads or more except the plane nets: GND (L2) an
 or more (L3 islands, D-22Nov.15). A rail that feeds fewer is a signal net here, as it is routed as tracks.
 """
 import fnmatch
+import re
 import json
 import math
 import sys
@@ -238,6 +239,9 @@ def measure(bd, spec, fanout_result=None):
 
     out['near'] = near_rules(bd, spec)
     out['near_misses'] = sum(len(r['misses']) for r in out['near'])
+    # D-24Nov.1: every passive has a rule of its own, naming the part and the pin it serves
+    named = {r['part'] for r in getattr(spec, 'NEAR', []) if r.get('part') and r['rule'] in ('part_to_pins', 'on_line')}
+    out['passives_without_rule'] = sorted({d['ref'] for d in bd.pads if re.match(r'^(R|C|L|FB|F)\d+$', d['ref'])} - named)
 
     # plane pads with no via spot
     if fanout_result is not None:
@@ -279,6 +283,12 @@ def _match(pins, caps, limit):
     return [pins[i] for i in edges if not take(i, set())]
 
 
+def rule_pins(row):
+    """The pins a part_to_pins row names (D-24Nov.1): a set of pin numbers, or None when any pin on the net counts."""
+    p = row.get('pin')
+    return None if p is None else {str(p)} if isinstance(p, (str, int)) else {str(q) for q in p}
+
+
 def near_rules(bd, spec):
     """The distance rules of stage B2 step 6 (spec.NEAR). Each row: the rule, the limit and its source; a miss lists
     what is too far and by how much. Rules:
@@ -286,7 +296,8 @@ def near_rules(bd, spec):
                    are `ic`'s pads on `nets` when the row names them: the board's pads carry no pin types, so a row
                    without `nets` finds no pins and can't miss (it measured nothing before 23 November);
       net_caps     on each of `nets`, a cap pad within `mm` of `ic`'s pad on that net;
-      part_to_pins each pad of `part` within `mm` of `ic`'s pad on the same net;
+      part_to_pins each pad of `part` within `mm` of `ic`'s pad on the same net; with `pin` (a pin number or a tuple
+                   of them, D-24Nov.1), only that pin counts, so the part must sit at the pin it serves;
       on_line      `part`'s pad on `net` within `mm` of the line from `from`'s pad to `to`'s pad, between them."""
     out = []
     pads_of = defaultdict(list)
@@ -316,14 +327,19 @@ def near_rules(bd, spec):
                 if g is None or g > mm:
                     miss.append(f"{row['ic']} {net}: nearest cap {g:.1f} mm" if g is not None else f"{row['ic']} {net}: no cap")
         elif rule == 'part_to_pins':
+            pins, hit = rule_pins(row), False
             for d in pads_of[row['part']]:
                 if not d['net'] or short(d['net']) == 'GND':
                     continue
-                ic = [q for q in bd.by_net[d['net']] if q['ref'] == row['ic']]
+                ic = [q for q in bd.by_net[d['net']] if q['ref'] == row['ic'] and (pins is None or q['num'] in pins)]
                 if ic:
+                    hit = True
                     g = min(_gap(d, q) for q in ic)
                     if g > mm:
-                        miss.append(f"{row['part']}.{d['num']} to {row['ic']}: {g:.1f} mm")
+                        at = '/'.join(sorted({q['num'] for q in ic}, key=lambda n: (len(n), n))) if pins else ''
+                        miss.append(f"{row['part']}.{d['num']} to {row['ic']}{'.' + at if at else ''}: {g:.1f} mm")
+            if pins is not None and not hit:
+                miss.append(f"{row['part']}: shares no net with {row['ic']}.{'/'.join(sorted(pins))}")
         elif rule == 'on_line':
             full = next((n for n in bd.by_net if short(n) == row['net']), None)
             on = {d['ref']: d for d in bd.by_net.get(full, [])}
@@ -351,6 +367,9 @@ def markdown(m):
     for u, v in m['wrong_side'].items():
         if v['far_pins']:
             L.append(f"| Wrong-side pins, {u} | {v['wrong_side']} of {v['far_pins']} |")
+    if 'passives_without_rule' in m:
+        L.append(f"| Distance-rule misses / passives without a rule of their own | {m['near_misses']} / "
+                 f"{len(m['passives_without_rule'])} |")
     s = m['tp_stub_summary']
     L.append(f"| Test point stubs (median to route / to pad, mm) | {s['median_to_route']} / {s['median_to_pad']} |")
     L.append(f"| Test points over 10 / 20 mm from their route | {s['over_10_to_route']} / {s['over_20_to_route']} |")

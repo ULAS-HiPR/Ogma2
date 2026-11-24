@@ -22,6 +22,7 @@ from engine import board as B                        # noqa: E402
 from engine import place as P                        # noqa: E402
 from engine import silk as SK                        # noqa: E402
 from engine import art as A                          # noqa: E402
+from engine.metrics import rule_pins                 # noqa: E402
 
 STAGES = ('setup', 'parts', 'place', 'copper')          # copper: stage C's scripted copper (engine/copper.py)
 FIDUCIAL_R = 1.25      # Fiducial_1mm_Mask2mm's courtyard radius: no other courtyard inside
@@ -237,9 +238,9 @@ def near_plan(spec, comps, nets):
                     cp = next(p for p, n in pins_of[r].items() if n == full(net))
                     plan[r] = dict(anchor=ic, pulls=[(cp, ic, ip) for x, ip in nets[full(net)] if x == ic])
         elif rule == 'part_to_pins':
-            part, ic = row['part'], row['ic']
+            part, ic, only = row['part'], row['ic'], rule_pins(row)
             plan[part] = dict(anchor=ic, pulls=[(pp, ic, ip) for pp, n in pins_of[part].items() if short(n) != 'GND'
-                                                for x, ip in nets[n] if x == ic])
+                                                for x, ip in nets[n] if x == ic and (only is None or ip in only)])
         elif rule == 'on_line':
             n = full(row['net'])
             pp = next(p for p, x in pins_of[row['part']].items() if x == n)

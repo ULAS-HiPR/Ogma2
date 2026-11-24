@@ -5393,3 +5393,58 @@ What the sheets show, read from the step-16 netlist:
   overlaps (30, the silk pass's), seven plane islands, and the LDO's PG via, which the router joins. Full-effort budget
   run (pw3-10464c7d): 5 of 271 ordinary nets open and 1 of 22 rails (ST_3V3), 366 s, peak 5.0 GB (gate 25; part 2
   left 5 and 1). None of the six is in the power block.
+
+## 24 November 2026: every passive at the pin it serves (D-24Nov.1)
+
+- The re-check Fable asked for found most of Burrito's chip capacitors far from their chips: 82 of 118 more than
+  3 mm off, some 20-39 mm (the CAN transceivers', the flash's, the TDK IMU's, the arm logic's, the eFuse's input).
+  Nothing checked them: a net_caps row let any capacitor on the net answer, and most passives had no rule. Seán made
+  it a standing rule (standing-rules.md, D-24Nov.1): every passive that serves a chip gets a rule naming the part and
+  the pin, at the distance its job needs, and whatever can't get inside comes to him batched.
+- The rules: 421 rows, one per passive (spec.CAP_PINS, spec.PASSIVE_PINS and the earlier rows, each now with its
+  pin). 3 mm where the job depends on distance, 5 mm for bulk decoupling, 10 mm where the part works anywhere on its
+  net, and worked limits for the branch switches' input capacitors (15 mm), U101's input capacitors (10 mm) and the two
+  stores (20 mm). Each row's reason is in spec._WHY. The near check measures to the named pin; the build lists any
+  passive without a row (none) and reports the misses in metrics.md.
+- Every chip a passive serves has its ref out of the placer's courtyard, as the logic regulators' had; so do the
+  parts round U101's bottom pins. The silk pass places those refs.
+- tools/layout/caps_to_chips.py moves each part still out of reach to its pin, tightest rule first, pushing
+  neighbours aside only within their own rules; --apply writes a saved plan without searching again. 166 parts moved:
+  79 capacitors, 79 resistors, six test points kept beside their nets' routes, D1003 and F502. The comms and optional
+  LDOs' NR/SS capacitors are now at their pins.
+- VBAT_CROI_INPUT's line to D1002 now starts at the end of J101's 4 mm run and runs at 149.9, 0.9 mm lower under
+  U101, which opens a strip under U101's bottom pins: C1006 (SHDN) and R1009 (IMON) took it.
+- Learned on the way (the mover's own faults, each fixed): it searched only outward from a pin's tip, so a corner pin
+  had no spots; it blocked each bent scripted track by its whole bounding box, which closed U7101's side; it counted
+  every part's silk ref as courtyard; it searched only 3.5 mm for a 10 mm rule; and one part's room-making could run
+  for minutes, so the first full run hit the shell's 30 min limit and was lost. Each part now has a 60 s budget and
+  the plan is written as it goes.
+- Still out of reach, batched for Seán (why, then what it would take):
+  - U101's own parts, 9: C1001 (dV/dt, 9.6 mm, rule 3), R1001-R1005 (UVLO, OVP, ILIM; 6.4-10.0 mm), R1008 (PGTH,
+    4.5 mm), C1004 and C1002 (input and IN_SYS, 10.8 and 10.7 mm, rule 10). Its signal pins face its own 6 A copper on three sides: Q101 and the
+    input west, the shunt east, the battery line and J102 south. The strip under its bottom pins holds two parts.
+    Would take moving U101 about 2 mm north, onto its NC side (pins 19-24), and redrawing its 6 A copper (part 1).
+  - The source mux U1101, 6: R1101-R1104 and R1106 (PR1, OV1, OV2 dividers; 8.3-17.3 mm, rule 3), C1104 (its output
+    capacitor, 14.4 mm). Its divider pins face U7001 and the protected feed's vias 0.5-1 mm away; its OUT pins face
+    the buck's input capacitors. Would take moving U7001 and its parts about 5 mm out of the block, or turning
+    U1101 and redrawing its feeds (part 3).
+  - The held core U1401, 3: R1210 (EN/UVLO, 22.5 mm), R1401 (OVLO, 18.4 mm), R1403 (PGTH, 9.1 mm). Its set pins face
+    its own capacitors and the buck's C1304; R1204 got in. Would take re-placing the held core's small parts as one
+    block, as the flight LDO's were.
+  - The pyro current-sense mux U6701, 2: C6701 (supply, 10.9 mm), C6731 (channel 3's filter, 19.1 mm). Pins 9 and
+    10 face its channel resistors and R2303, with no spot inside 3 mm even with neighbours allowed 6 mm. Would take
+    re-placing U6701's group as a block.
+  - R6103, the staging arm divider's top, 4.3 mm (rule 3), on the drawn staging armed rail: moving it changes the
+    frozen pyro band. Its bottom resistor R6104 sits at the comparator input.
+  - R7104, the battery monitor's Vbus filter resistor, 17.5 mm (rule 10), on the drawn ENERGY_TAP tap; its
+    capacitor C7102 is at the pin. Would take redrawing that tap to end at U7101.
+  - C2301 (the supervisor's supply, 3.4 mm, rule 3): its pin faces TP16 and U2302; would take moving TP16 a few mm.
+    C4612 (the LoRa module's bulk, 8.6 mm, rule 5): its pin faces C4611, R4618 and U4603; would take moving U4603's
+    group.
+  - Not batched: the crystals' load capacitors (C215 3.2 mm, C216 3.6 mm, rule 2) and D4501 move in step 4.
+- Board 239c6bd5: DRC 0 errors, rules check 9 of 9. Connectivity as before: the fire copper, fire logic, pyro
+  rails and 6 A path whole, the four logic feeds in the same pieces as at part 3 (their taps, which the router takes).
+  Warnings: silk overlaps 82 (30 before, from the refs the silk pass now places), silk over copper 31, seven plane
+  islands, and the three dangling items from before. Full-effort budget run (d24-239c6bd5): 9 of 271 ordinary nets
+  open and 0 of 22 rails, 510 s, peak 3.6 GB (gate 25; part 3 left 5 and 1). Open: BAT_SLEW, BMP_SCL, CC_BAT_VALID,
+  COMMS_SWDIO, CORE_INPUT_PG, CORE_OV_DIV, FLIGHT_LSE_OUT, FLIGHT_NRST, GNSS_TX.
