@@ -1396,18 +1396,47 @@ def _can_pairs():
     return out
 
 
-def _plane_vias():
-    """Plane pads given their via by script (D-24Nov.15: a trial's result includes the plane pads). U2301.2, the reset
-    supervisor's GND pin, lost the fan-out's via when FLIGHT_NRST's route was frozen beside it; the armed rail runs
-    under its south-west on L6, so it goes straight out of the pin and east to the nearest legal site"""
+def _plane_joins():
+    """Plane pads joined by script (D-24Nov.15: a trial's result includes the plane pads; D-24Nov.16: a supply pin goes
+    on L1 to its own capacitor, whose pad takes the plane via, and a GND pin takes its own via where one fits).
+    U2301.2, the reset supervisor's GND pin, lost the fan-out's via when FLIGHT_NRST's route was frozen beside it; the
+    armed rail runs under its south-west on L6, so it goes straight out of the pin and east to the nearest legal site.
+    The supply pins the fan-out couldn't serve go to their own capacitors at the pad's width (l1_route.py, other pins'
+    lanes and the fan-out's via sites kept clear); the capacitor's pad takes the via (engine/fanout). The pads with
+    fire copper over every via site near them (the armed rails on L6, the fire logic on L3) join the nearest pad of
+    their net that reaches the plane: the pyro high sides' GND pins their own exposed pads. U1101.12 and U6404.12 take
+    a via at the nearest legal site, found on a 0.05 mm grid (the fan-out's 16 directions miss it)."""
     return [
         dict(net='GND', layer='F.Cu', w=0.3, path=[(16.25, 66.188), (16.25, 67.287), (17.05, 67.287)]),
         dict(net='GND', via=(17.05, 67.287), d=0.45, drill=0.2),
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(32.325, 53.812), (30.705, 53.662)]),   # U201.11 to C205
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(35.0, 62.487), (35.0, 63.9), (35.1, 64.0)]),   # U201.28 to C208, west of pin 29's lane
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(46.0, 62.487), (47.55, 64.107)]),   # U201.50 to C203
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(47.675, 49.812), (49.25, 49.812)]),   # U201.73 to C202, south of pin 72's lane
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(47.675, 48.812), (49.295, 48.112)]),   # U201.75 to C204
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(34.0, 47.137), (32.45, 45.517)]),   # U201.100 to C201
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(15.3, 63.913), (16.95, 64.838), (17.975, 64.838), (18.47, 64.35)]),   # U2301.6 to C2302
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(39.05, 69.1), (38.35, 69.025), (38.15, 68.825), (38.15, 68.375), (38.875, 67.7), (40.495, 67.7)]),   # U4301.3 to C4301
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(33.8, 22.111), (33.65, 23.861), (32.5, 25.011)]),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(42.8, 22.111), (42.65, 23.861), (41.5, 25.011)]),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(51.8, 22.111), (51.65, 23.861), (50.5, 25.011)]),
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.28, path=[(14.075, 59.1), (15.0, 58.0), (15.1, 57.95), (16.5, 57.95), (17.025, 58.475), (17.025, 59.1)]),
+        dict(net='GND', layer='F.Cu', w=0.28, path=[(14.075, 60.1), (13.525, 60.25), (13.4, 60.425), (13.4, 60.825), (13.75, 61.1), (14.075, 61.1)]),
+        dict(net='GND', layer='F.Cu', w=0.25, path=[(27.1, 146.413), (27.375, 145.625), (27.45, 145.55)]),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(40.05, 14.05), (41.55, 15.575), (41.55, 15.75)]),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(19.6, 128.685), (17.35, 127.575)]),
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(11.14, 60.1), (12.39, 62.0), (13.59, 63.0), (15.3, 63.913)]),
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(12.4, 94.325), (13.875, 95.5), (14.875, 95.55), (15.575, 96.25)]),
+        dict(net='GND', layer='F.Cu', w=0.3, path=[(36.8, 31.336), (35.1, 31.336)]),
+        dict(net='GND', layer='F.Cu', w=0.2, path=[(35.7, 126.05), (35.85, 125.4)]),          # U1101.12
+        dict(net='GND', via=(35.85, 125.4), d=0.45, drill=0.2),
+        dict(net='FLIGHT_3V3', layer='F.Cu', w=0.3, path=[(42.15, 27.911), (42.3, 28.811)]),   # U6404.12
+        dict(net='FLIGHT_3V3', via=(42.3, 28.811), d=0.45, drill=0.2),
     ]
 
 
 POWER_COPPER = (_power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
-                + _scripted_nets() + _can_pairs() + _plane_vias())
+                + _scripted_nets() + _can_pairs() + _plane_joins())
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire

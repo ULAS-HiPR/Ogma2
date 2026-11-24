@@ -5740,3 +5740,43 @@ What the sheets show, read from the step-16 netlist:
   crossed. Routing trial (d25-54ba53cd, alone): 3 of 271 open and 0 of 22 rails, 52 of 623 plane pads open, 304 s,
   router peak 3.5 GB. Open: ADC_PYRO1_CONTINUITY (five trials running, U201.18), TE_SDA (three, U201.89) and HG_NCS
   (two, U201.83, a top-row pin; the router names BUZZER_DRIVE, CAN2_RX and TDK_NCS as blockers, other top-row nets).
+
+## 24 November 2026: the open plane pads joined (D-24Nov.16)
+
+- Seán approved Fable's calls on the 52 open plane pads (D-24Nov.16; two rules in standing-rules.md: a trial counts
+  every kind of connection the board needs, naming any it doesn't count yet; a proposal that goes ahead by default is
+  written as steps in the plan when it's made).
+- The table (docs/briefs/burrito-plane-pads.md, tools/layout/plane_pad_table.py): for each of the 52, what rejects a
+  via at the pad's centre, whether an in-pad site along the pad clears, whether GND at JLC's 0.1 mm would clear it,
+  and its own capacitor. GND's class clearance (0.2 mm) is what rejects the centre via at the fine-pitch GND pins:
+  25 of the 39 GND pads would take a via at JLC's 0.1 mm. Fire copper rejects it at 12 (the armed rails on L6, the
+  fire logic on L3).
+- The fan-out (engine/fanout.py), widened; most of its misses were its own:
+  - an in-pad via is tried along the pad's long axis, not only at its centre;
+  - drawn copper is checked at its own width (every drawn track was modelled as a 0.3 mm stub);
+  - a stub is the pad's width where it clears, else 0.2 mm (at 0.3 mm a stub can't leave a 0.5 mm pitch pad at
+    GND's 0.2 mm);
+  - pads joined by drawn copper count as joined only if their group reaches the plane, and the first via the plan
+    gives a group serves all its pads, so a supply pin drawn to its capacitor gets its via in the capacitor's pad.
+  These alone close 31 of the 52.
+- Drawn (spec._plane_joins, l1_route.py with other pins' lanes and the fan-out's via sites kept clear):
+  - 8 supply pins to their own capacitors at the pad's width (U201's six, U2301.6, U4301.3), 1.6 to 4.1 mm; two
+    were straightened to enter their capacitors clear of the next pin's lane (U201.28, U201.73);
+  - 11 pads with fire copper over or beside their via sites, to the nearest pad of their net that reaches the plane:
+    the three pyro high sides' GND pins to their own exposed pads (3.4 mm), the watchdog's pins to its own pads,
+    U101.11 to its exposed pad, and five passives (1.7 to 5.8 mm);
+  - U1101.12 and U6404.12 take a via at the nearest legal site, found on a 0.05 mm grid; the fan-out's 16 directions
+    miss it.
+- l1_route.py now keeps the fire rule from fire pads (0.5 mm, or 0.2 mm for fire logic inside an escape area): its
+  first joins came within that of PYRO*_FIRE and OUTPUT2_LOW pads, which DRC caught (4 errors). It also takes keep
+  areas, several targets and widths in order, and an independent mode for feasibility tables.
+- Board e532c976: DRC 0 errors, rules check 11 of 11, planted-miss test 11 of 11, RF check passes, the plane-pad
+  test catches its planted miss, 4 of 358 lanes crossed (the same 4). 0 of 623 plane pads open, the fan-out with no
+  misses.
+- Routing trial (d25-e532c976, alone): 3 of 271 open, 0 of 22 rails, 0 of 623 plane pads, 274 s, router peak
+  4.0 GB: ADC_PYRO1_CONTINUITY (six trials running, U201.18), TE_SDA (four, U201.89) and FLIGHT_BOOT0 (U201.94),
+  all U201 pins; TE_SDA and FLIGHT_BOOT0 are two of the eleven top-row pins whose in-pad via site lies under L3 fire
+  copper. HG_NCS now routes. The router names fire logic (PYRO1_LS_SELECT, PYRO2_LS_SELECT, PYRO1_FIRE) among the
+  blockers of FLIGHT_BOOT0 and TE_SDA, and COMMS_3V3, ADC_PYRO3_CONTINUITY and FLIGHT_NRST for ADC_PYRO1_CONTINUITY.
+- Fable's [model] bets settle ok: all 52 closed without moving a part (was 4/5: at least 40), and the trial has 3
+  of 271 nets open and no rail (was 3/5: 8 or fewer).

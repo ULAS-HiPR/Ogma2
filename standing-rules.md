@@ -281,3 +281,20 @@ Proposed by Claude (Fable) after step 5's last three trials; approved by Seán a
    rails stay at none open" covers it.
    - **Today:** the fan-out's misses went from 55 to 56 when the three nets were frozen (U2301.2, the reset
      supervisor's GND pin), and no count the trial reported showed it.
+
+## D-24Nov.16 (24 Nov 2026): two rules from Fable's review of the open plane pads
+
+Proposed by Claude (Fable) after the trial first counted plane pads; approved by Seán and logged in Claude's words.
+
+> "I approve all above. Go"
+
+1. **A trial counts every kind of connection the board needs.** Nets, rails, plane pads, and whatever else the
+   board must join. A kind it doesn't count yet is named as uncounted in every result, so a clean count can't be
+   read as a clean board.
+   - **Today:** the trials reported nets and rails for days while 53 plane pads had no via and no drawn join, and
+     nothing in any result said plane pads went uncounted.
+2. **A proposal that goes ahead by default is written as steps in the plan when it's made, each with the block that
+   draws it.** "Going ahead unless Seán says no" is a decision with work attached, and work nobody has placed in the
+   order doesn't get done.
+   - **Today:** stage C step 3's Open row ("the decoupling fanout is pin to capacitor on L1 ... going ahead unless
+     Seán says no", told 23 Nov) was never turned into a step, so the supply pins it covers stayed unjoined.

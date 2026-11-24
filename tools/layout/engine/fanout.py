@@ -7,6 +7,8 @@ it on a pcbnew board. Rules: the brief's dense-spot via (0.5 mm pad, 0.3 mm hole
 signal pad: a via sits at least 0.1 mm off every pad, except in an exposed pad (2 mm² or more), where it goes in
 the middle. A pad with no legal spot within `reach` of its edge is a miss. in_pad=True (the layer test): every pad's
 via goes in the pad where its copper clears, as JLC's plated-over filled via allows (free from six layers).
+D-24Nov.16: an in-pad via is tried along the pad's long axis, not only at its centre; drawn copper is checked at its
+own width; a stub is the pad's width, 0.2 to 0.3 mm.
 """
 import math
 
@@ -16,6 +18,7 @@ from shapely.geometry import LineString, Point
 
 VIA_D, DRILL = 0.45, 0.2          # spec.SIGNAL_VIA: JLC's smallest via at no extra cost (D-23Nov.17)
 CLEAR, HOLE_GAP, EDGE, STUB_W, MASK_WEB = 0.1, 0.2, 0.2, 0.3, 0.1    # JLC's table (spec.JLC): pad to track, hole gap, edge
+MIN_STUB = 0.2                    # a stub is the pad's width, 0.2 to 0.3 mm (D-24Nov.16)
 BIG_PAD_MM2 = 2.0
 
 
@@ -80,24 +83,51 @@ def existing(board, origin):
             g = Polygon([(mm(ol.CPoint(j).x) - ox, mm(ol.CPoint(j).y) - oy) for j in range(ol.PointCount())]).buffer(0)
             areas.append({'poly': g, 'no_via': bool(z.GetDoNotAllowVias()),
                           'no_track_f': bool(z.GetDoNotAllowTracks()) and z.IsOnLayer(K.F_Cu)})
-    joined = set()
+    # D-24Nov.16: drawn copper joins pads into groups; a pad is 'joined' (needs no via of its own) only if its group
+    # holds a via or a through-hole pad. 'group' maps each pad in a group to its id, so the first via the plan gives
+    # one of a group's pads serves them all (a supply pin drawn to its capacitor: the capacitor's pad takes the via)
+    joined, group = set(), {}
     if vias or tracks:
+        items = []                                  # (shape, net, pad key or None, reaches the plane)
         for f in board.GetFootprints():
             for p in f.Pads():
                 n = p.GetNetname()
                 if not n or not p.IsOnLayer(K.F_Cu):
                     continue
-                c = p.GetPosition()
                 ps = K.SHAPE_POLY_SET()
                 p.TransformShapeToPolygon(ps, K.F_Cu, 0, K.FromMM(0.01), K.ERROR_INSIDE)
                 if not ps.OutlineCount():
                     continue
                 o = ps.Outline(0)
                 g = Polygon([(mm(o.CPoint(i).x) - ox, mm(o.CPoint(i).y) - oy) for i in range(o.PointCount())]).buffer(0.002)
-                if any(tn == n and g.intersects(t) for t, w, tn in tracks) or \
-                        any(vn == n and g.distance(Point(x, y)) < VIA_D / 2 for x, y, vn in vias):
-                    joined.add((f.GetReference(), p.GetNumber()))
-    return {'vias': vias, 'tracks': tracks, 'under': under, 'areas': areas, 'joined': joined}
+                items.append((g, n, (f.GetReference(), p.GetNumber()), p.GetAttribute() == K.PAD_ATTRIB_PTH))
+        items += [(t.buffer(w / 2), n, None, False) for t, w, n in tracks]
+        items += [(Point(x, y).buffer(VIA_D / 2), n, None, True) for x, y, n in vias]
+        parent = list(range(len(items)))
+
+        def find(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]
+                i = parent[i]
+            return i
+        tree = STRtree([g for g, *_ in items])
+        for i, (g, n, _, _) in enumerate(items):
+            for j in tree.query(g, predicate='intersects'):
+                if j > i and items[j][1] == n:
+                    parent[find(i)] = find(j)
+        reach = {find(i) for i, it in enumerate(items) if it[3]}
+        sizes = {}
+        for i, it in enumerate(items):
+            sizes[find(i)] = sizes.get(find(i), 0) + 1
+        for i, (g, n, key, _) in enumerate(items):
+            if key is None:
+                continue
+            r = find(i)
+            if r in reach:
+                joined.add(key)
+            elif sizes[r] > 1:
+                group[key] = r
+    return {'vias': vias, 'tracks': tracks, 'under': under, 'areas': areas, 'joined': joined, 'group': group}
 
 
 def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_via=()):
@@ -118,9 +148,10 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
     vias = []            # (x, y, net)
     stubs = []           # (LineString, net)
     old_vias = ex['vias']
-    old_tracks = [(t.buffer(w / 2 - STUB_W / 2) if w > STUB_W else t, n) for t, w, n in ex['tracks']]   # as stubs
+    # drawn copper at its own width (D-24Nov.16: it was modelled as 0.3 mm stubs, which turned away legal sites)
+    old_tracks = [(t.buffer(w / 2), n) for t, w, n in ex['tracks']]
     # scripted copper on the other layers: a via passes through it, an L1 stub doesn't
-    old_under = [(t.buffer(w / 2 - STUB_W / 2) if w > STUB_W else t, n) for t, w, n in ex.get('under', [])]
+    old_under = [(t.buffer(w / 2), n) for t, w, n in ex.get('under', [])]
     area_via = [a['poly'] for a in ex.get('areas', []) if a['no_via']]
     area_trk = [a['poly'] for a in ex.get('areas', []) if a['no_track_f']]
 
@@ -155,7 +186,7 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
                 return False
         pt = Point(x, y)
         for s, sn in stubs + old_tracks + old_under:
-            if sn != net and s.distance(pt) < vr + STUB_W / 2 + pair(net, sn):
+            if sn != net and s.distance(pt) < vr + pair(net, sn):
                 return False
         if in_pad:
             # copper clearance only: the via is meant to sit in its own pad
@@ -168,24 +199,24 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
             return True
         return copper_ok(pt, net, own)
 
-    def stub_ok(a, b, net, own):
+    def stub_ok(a, b, net, own, sw=STUB_W):
         s = LineString([a, b])
-        if any(k.distance(s) < STUB_W / 2 for k in area_trk):
+        if any(k.distance(s) < sw / 2 for k in area_trk):
             return False
         for name in ('F',):
             tree, items = trees[name]
-            for k in tree.query(s, predicate='dwithin', distance=STUB_W / 2 + FIRE_CLEAR):
+            for k in tree.query(s, predicate='dwithin', distance=sw / 2 + FIRE_CLEAR):
                 g, n, i = items[k]
-                if n != net and g.distance(s) < STUB_W / 2 + pair(net, n):
+                if n != net and g.distance(s) < sw / 2 + pair(net, n):
                     return False
         for (hx, hy, hr), hn in zip(holes, hole_net):
-            if hn != net and s.distance(Point(hx, hy)) < hr + HOLE_CLEAR + STUB_W / 2 + EPS:
+            if hn != net and s.distance(Point(hx, hy)) < hr + HOLE_CLEAR + sw / 2 + EPS:
                 return False
         for vx, vy, vn in vias + old_vias:
-            if vn != net and s.distance(Point(vx, vy)) < vr + STUB_W / 2 + pair(net, vn):
+            if vn != net and s.distance(Point(vx, vy)) < vr + sw / 2 + pair(net, vn):
                 return False
         for t, tn in stubs + old_tracks:
-            if tn != net and s.distance(t) < STUB_W + pair(net, tn):
+            if tn != net and s.distance(t) < sw / 2 + pair(net, tn):
                 return False
         return True
 
@@ -193,13 +224,38 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
     order = sorted((i for i, d in enumerate(bd.pads)
                     if d['net'] in planes and 'F' in d['poly'] and not d['tht'] and (d['ref'], d['num']) not in ex['joined']),
                    key=lambda i: (bd.pads[i]['ref'], bd.pads[i]['num']))
+    group, served = ex.get('group', {}), set()
     for i in order:
         d = bd.pads[i]
+        if group.get((d['ref'], d['num'])) in served:      # its drawn group got a via already (D-24Nov.16)
+            done.append(dict(d, via=None, stub=None, by_group=True)); continue
         net, g = d['net'], d['poly']['F']
         cx, cy = g.centroid.x, g.centroid.y
+        mrr = list(g.minimum_rotated_rectangle.exterior.coords)[:3]
+        e1 = (mrr[1][0] - mrr[0][0], mrr[1][1] - mrr[0][1])
+        e2 = (mrr[2][0] - mrr[1][0], mrr[2][1] - mrr[1][1])
+        long_, short_ = (e1, e2) if math.hypot(*e1) >= math.hypot(*e2) else (e2, e1)
+        sw = min(STUB_W, max(MIN_STUB, math.hypot(*short_)))     # the pad's width, 0.2 to 0.3 mm (D-24Nov.16)
         if g.area >= BIG_PAD_MM2 or in_pad:
+            site = None
             if via_ok(cx, cy, net, i, in_pad=True):
-                vias.append((cx, cy, net)); done.append(dict(d, via=(cx, cy), stub=None)); continue
+                site = (cx, cy)
+            else:                                   # D-24Nov.16: along the pad's long axis, nearest the centre first
+                L = math.hypot(*long_)
+                ux, uy = long_[0] / L, long_[1] / L
+                for k in range(1, int(L / 0.05) + 1):
+                    for sg in (1, -1):
+                        x, y = round(cx + sg * k * 0.025 * ux, 3), round(cy + sg * k * 0.025 * uy, 3)
+                        if g.contains(Point(x, y)) and via_ok(x, y, net, i, in_pad=True):
+                            site = (x, y)
+                            break
+                    if site:
+                        break
+            if site:
+                vias.append((site[0], site[1], net)); done.append(dict(d, via=site, stub=None))
+                if (d['ref'], d['num']) in group:
+                    served.add(group[(d['ref'], d['num'])])
+                continue
         fx, fy = bd.fp_xy[d['ref']]
         away = math.atan2(cy - fy, cx - fx) if (cx, cy) != (fx, fy) else 0.0
         dirs = sorted((math.radians(22.5 * k) for k in range(16)),
@@ -214,18 +270,25 @@ def plan(bd, planes, spec, reach=1.5, step=0.1, in_pad=False, existing=None, no_
                     r += 0.05
                 r += t
                 x, y = round(cx + r * ux, 3), round(cy + r * uy, 3)
-                if via_ok(x, y, net, i) and stub_ok((cx, cy), (x, y), net, i):
-                    hit = (x, y)
-                    break
+                if via_ok(x, y, net, i):
+                    w_ok = next((w for w in (sw, MIN_STUB) if stub_ok((cx, cy), (x, y), net, i, w)), None)
+                    if w_ok:                        # the pad's width where there's room, else 0.2 mm
+                        hit, sw = (x, y), w_ok
+                        break
             if hit:
                 break
         if hit:
             vias.append((hit[0], hit[1], net))
-            stubs.append((LineString([(cx, cy), hit]), net))
-            done.append(dict(d, via=hit, stub=((cx, cy), hit)))
+            stubs.append((LineString([(cx, cy), hit]).buffer(sw / 2), net))
+            done.append(dict(d, via=hit, stub=((cx, cy), hit), stub_w=sw))
+            if (d['ref'], d['num']) in group:
+                served.add(group[(d['ref'], d['num'])])
         else:
             failed.append(d)
-    copper = {'F': [Point(x, y).buffer(vr, 8) for x, y, _ in vias] + [s.buffer(STUB_W / 2, 4) for s, _ in stubs],
+    late = [d for d in failed if group.get((d['ref'], d['num'])) in served]   # its group got a via after it was tried
+    failed = [d for d in failed if d not in late]
+    done += [dict(d, via=None, stub=None, by_group=True) for d in late]
+    copper = {'F': [Point(x, y).buffer(vr, 8) for x, y, _ in vias] + [s for s, _ in stubs],
               'B': [Point(x, y).buffer(vr, 8) for x, y, _ in vias]}
     return {'done': done, 'failed': failed, 'vias': vias, 'copper': copper}
 
@@ -237,6 +300,8 @@ def apply(board, origin, result, lock=True):
     V = lambda x, y: K.VECTOR2I(K.FromMM(float(x + ox)), K.FromMM(float(y + oy)))
     nets = {}
     for d in result['done']:
+        if d.get('via') is None:                    # served through its drawn group's via
+            continue
         net = nets.get(d['net']) or board.FindNet(d['net'])
         nets[d['net']] = net
         v = K.PCB_VIA(board)
@@ -245,6 +310,6 @@ def apply(board, origin, result, lock=True):
         board.Add(v)
         if d['stub']:
             t = K.PCB_TRACK(board)
-            t.SetStart(V(*d['stub'][0])); t.SetEnd(V(*d['stub'][1])); t.SetWidth(K.FromMM(STUB_W))
+            t.SetStart(V(*d['stub'][0])); t.SetEnd(V(*d['stub'][1])); t.SetWidth(K.FromMM(d.get('stub_w', STUB_W)))
             t.SetLayer(K.F_Cu); t.SetNet(net); t.SetLocked(lock)
             board.Add(t)

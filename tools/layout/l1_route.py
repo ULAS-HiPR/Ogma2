@@ -3,10 +3,14 @@
 Run in the KiCad chroot: python3 /work/tools/layout/l1_route.py BOARD CONNS OUT. Other nets' fine-pitch pin lanes
 (engine/metrics.pin_lanes, D-24Nov.11) are obstacles, so a line leaves its own pin square and crosses no other.
 
-CONNS.json: [{"net": N, "a": [ref, pin], "b": [ref, pin], "w": 0.1}, ...] in order, then optional
+CONNS.json: [{"net": N, "a": [ref, pin], "b": [ref, pin], "w": 0.1}, ...] in order ("b_any" and "w_any" give
+targets and widths to try in order, the first that routes), then optional
 {"gnd_via": [ref, pin]} entries: a GND via by that pad on a short stub (kept 0.1 mm off every pad, clear of all
-copper). Each connection is a grid A* (0.025 mm, 8-connected) from pad centre to pad centre round every other net's
-F.Cu copper: pads at 0.1 mm (DRC's JLC rule), tracks and vias at their class clearance (0.5 fire, 1.0 RF, 0.2 GND),
+copper). A first entry {"independent": true} routes each connection against the board alone (a feasibility table),
+not against the ones before it; {"keep": [...]} adds areas to keep clear, such as other pads' via sites, each a point list
+or {"net": N, "pts": [...]} (an area of net N doesn't block N's own connections). Each connection is a grid A* (0.025 mm, 8-connected) from pad centre to pad centre round every other net's
+F.Cu copper: pads at 0.1 mm (DRC's JLC rule; fire pads 0.5 mm, fire logic 0.2 mm inside an escape area), tracks and
+vias at their class clearance (0.5 fire, 1.0 RF, 0.2 GND),
 earlier connections included; zone fills are ignored (they refill). Writes spec-style items (board mm)."""
 import sys, json, math, fnmatch, heapq
 from pathlib import Path
@@ -39,7 +43,15 @@ def clear(n, mine):
 b = K.LoadBoard(sys.argv[1])
 CONNS = json.load(open(sys.argv[2]))
 DROP = set(CONNS[0]['drop']) if CONNS and 'drop' in CONNS[0] else set()   # nets whose drawn copper is redrawn
+INDEP = bool(CONNS and CONNS[0].get('independent'))   # each connection against the board alone, none against another
+KEEP = CONNS[0].get('keep', []) if CONNS else []       # areas kept clear, such as other pads' via sites: [[x, y], ...]
 obs, pads = [], {}                          # (geom, net, kind)
+ESC = []                                     # fine-pitch parts' escape areas: fire logic keeps 0.2 mm inside them (DRU)
+for z in b.Zones():
+    if z.GetIsRuleArea() and z.GetZoneName().endswith('_ESCAPE'):
+        o = z.Outline().Outline(0)
+        ESC.append(Polygon([(TM(o.CPoint(i).x) - OX, TM(o.CPoint(i).y) - OY) for i in range(o.PointCount())]).buffer(0))
+PADCL = {}                                   # a fire pad's clearance: 0.5 mm, or 0.2 for fire logic in an escape area
 for fp in b.GetFootprints():
     for p in fp.Pads():
         if not p.IsOnLayer(K.F_Cu):
@@ -53,6 +65,9 @@ for fp in b.GetFootprints():
             if len(pts) >= 3:
                 polys.append(Polygon(pts).buffer(0))
         g = unary_union(polys)
+        c_ = cls(p.GetNetname())
+        if c_ in ('FIRE', 'FIRE_LOGIC', 'PYRO_RAIL'):
+            PADCL[id(g)] = 0.21 if c_ == 'FIRE_LOGIC' and any(a.contains(g) for a in ESC) else 0.51
         obs.append((g, short(p.GetNetname()), 'pad'))
         pads[(fp.GetReference(), p.GetNumber())] = (g, short(p.GetNetname()))
 for t in b.GetTracks():
@@ -66,6 +81,9 @@ for t in b.GetTracks():
         obs.append((LineString([(TM(a.x) - OX, TM(a.y) - OY), (TM(e.x) - OX, TM(e.y) - OY)]).buffer(TM(t.GetWidth()) / 2), n, 'cu'))
 items, report = [], []
 LANES = M.pin_lanes(M.BoardData(b, spec.ORIGIN, (spec.W, spec.H)))   # D-24Nov.11: other pins' lanes are closed
+for k in KEEP:                               # [[x, y], ...] or {"net": N, "pts": [[x, y], ...]}
+    pts, kn = (k['pts'], k['net']) if isinstance(k, dict) else (k, '__keep__')
+    obs.append((Polygon(pts).buffer(0), kn, 'cu'))
 
 
 PAD = 0.11                                   # DRC's 0.1 mm, past the pad outlines' 0.005 mm approximation
@@ -74,7 +92,7 @@ EDGE = 0.2                                   # copper to the board edge (cucheck
 
 def blocked_union(net, w, region, avoid=(), exempt=()):
     near = [(g, n, k) for g, n, k in obs if n != net and g.intersects(region)]
-    parts = [g.buffer((PAD if k == 'pad' else clear(n, net)) + w / 2 - 1e-4) for g, n, k in near]
+    parts = [g.buffer((PADCL.get(id(g), PAD) if k == 'pad' else clear(n, net)) + w / 2 - 1e-4) for g, n, k in near]
     for ref, num, n, g in LANES:                  # other nets' fine-pitch pin lanes (D-24Nov.11)
         if n != net and n not in exempt and g.intersects(region):   # exempt: a net drawn whole earlier in this run
             parts.append(g.buffer(w / 2))
@@ -172,7 +190,7 @@ def via_near(pad, reach=1.5, step=0.05, d=0.45):
 
 
 for cn in CONNS:
-    if 'drop' in cn:
+    if 'drop' in cn or 'independent' in cn or 'keep' in cn:
         continue
     if 'gnd_via' in cn:
         pad = tuple(cn['gnd_via'])
@@ -187,13 +205,24 @@ for cn in CONNS:
         obs.append((LineString([(c.x, c.y), (x, y)]).buffer(0.15), 'GND', 'cu'))
         report.append(f'GND via by {pad} at ({x}, {y})')
         continue
-    net, w = cn['net'], cn.get('w', 0.1)
-    A, B = pads[tuple(cn['a'])][0].centroid, pads[tuple(cn['b'])][0].centroid
-    path = astar((round(A.x, 3), round(A.y, 3)), (round(B.x, 3), round(B.y, 3)), net, w, avoid=cn.get('avoid', ()), exempt=cn.get('exempt', ()))
+    net = cn['net']
+    A = pads[tuple(cn['a'])][0].centroid
+    path = None
+    for bb in ([cn['b']] if 'b' in cn else cn['b_any']):      # b_any: targets in order, the first that routes
+        for w in ([cn['w']] if 'w' in cn else cn.get('w_any', [0.1])):   # w_any: widths in order, widest first
+            B = pads[tuple(bb)][0].centroid
+            path = astar((round(A.x, 3), round(A.y, 3)), (round(B.x, 3), round(B.y, 3)), net, w,
+                         avoid=cn.get('avoid', ()), exempt=cn.get('exempt', ()))
+            if path:
+                break
+        if path:
+            cn = dict(cn, b=bb)
+            break
     if path is None:
-        report.append(f"{net}: no L1 path {cn['a']} -> {cn['b']}"); continue
+        report.append(f"{net}: no L1 path {cn['a']} -> {cn.get('b', cn.get('b_any'))}"); continue
     items.append(dict(net=net, layer='F.Cu', w=w, path=path))
-    obs.append((LineString(path).buffer(w / 2), net, 'cu'))
+    if not INDEP:
+        obs.append((LineString(path).buffer(w / 2), net, 'cu'))
     L = sum(math.dist(p, q) for p, q in zip(path, path[1:]))
     report.append(f"{net}: {cn['a']} -> {cn['b']} {L:.2f} mm, {len(path) - 1} runs")
 json.dump(items, open(sys.argv[3], 'w'), indent=1)

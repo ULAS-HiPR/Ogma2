@@ -519,8 +519,10 @@ def main():
            'left_out': {'rf_scripted_in_stage_c': [M.short(n) for n in rf]},
            'fire_logic_clearance': a.fire_logic_clearance if a.fire_logic_clearance is not None else 'the 0.5 mm fire rule',
            'scripted': {'vias': len(ex['vias']), 'tracks': len(ex['tracks']), 'pads_joined': len(ex['joined'])},
-           'fanout': {'pads': len(fr['done']) + len(fr['failed']), 'vias': len(fr['done']),
-                      'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']], 'in_pad': sum(1 for d in fr['done'] if d['stub'] is None),
+           'fanout': {'pads': len(fr['done']) + len(fr['failed']), 'vias': sum(1 for d in fr['done'] if d.get('via')),
+                      'by_group': sum(1 for d in fr['done'] if d.get('by_group')),
+                      'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']],
+                      'in_pad': sum(1 for d in fr['done'] if d.get('via') and d['stub'] is None),
                       'seconds': round(time.time() - t0, 1)},
            'plane_pads': {'pads': pp_n, 'open': pp_open},
            'ignores': 'the L3 islands\' shapes',
@@ -576,7 +578,7 @@ def main():
                       'peak_rss_mb': round(resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss / 1024),
                       'passes': runs, 'cmd_flags': flags}
         routed_sig = {n for n in sig if not a.classes or M.net_class(n, spec.PATTERNS) in a.classes}
-        rep['krt'].update(summarise(routed, spec, routed_sig, len(fr['done']) + len(ex['vias']), 'krt'))
+        rep['krt'].update(summarise(routed, spec, routed_sig, sum(1 for d in fr['done'] if d.get('via')) + len(ex['vias']), 'krt'))
         rep['krt']['drc_errors'] = drc(routed, out / 'routed-drc.json', twin_of)
         by = defaultdict(lambda: [0, 0])
         for n in sig:
@@ -612,7 +614,7 @@ def main():
             K.ImportSpecctraSES(bf, str(ses))
             frb = out / 'fr-routed.kicad_pcb'
             K.SaveBoard(str(frb), bf)
-            frrep.update(summarise(frb, spec, set(sig), len(fr['done']), 'freerouting'))
+            frrep.update(summarise(frb, spec, set(sig), sum(1 for d in fr['done'] if d.get('via')), 'freerouting'))
             widths = [K.ToMM(t.GetWidth()) for t in bf.GetTracks() if t.Type() == K.PCB_TRACE_T]
             frrep['min_track_mm'] = round(min(widths), 3) if widths else None
         rep['freerouting'] = frrep
