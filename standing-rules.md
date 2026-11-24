@@ -211,3 +211,18 @@ Two smaller ones:
 - **Long jobs save as they go.** A 32-minute run was lost to a 30-minute limit. It belongs under "checkpoint often".
 - **A reader who didn't do the work closes each block.** Today's two biggest finds came that way. It costs Fable
   usage, so whether it becomes a rule is your call. He logged it with the rest.
+
+## D-24Nov.6 (24 Nov 2026): a written exception counts as a miss until approved, with its mitigation in place
+
+Proposed by Claude (Fable) after the review of D-24Nov.5; approved by Seán and logged as written.
+
+> "On the candidate rule I agree."
+
+- A written exception counts as a miss until you approve it, and its mitigation is drawn or checked, not only
+  written.
+  - **Today:** exceptions went from the two you agreed to nine in one pass, and two rest on routing nobody has drawn.
+
+How it runs: each exception in spec.NEAR_EXCEPTIONS carries who approved it (a D- number) and, where its reason leans
+on something, a check the build runs on the board: the node drawn on L3 and touching every pad, another part's rule
+holding, or a part within reach of a pin. A missing approval or a failed check keeps the miss a miss, saying which.
+

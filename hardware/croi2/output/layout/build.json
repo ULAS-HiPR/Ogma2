@@ -3530,9 +3530,9 @@
    "mm": 478.4
   },
   "power": {
-   "tracks": 189,
-   "vias": 80,
-   "mm": 729.7
+   "tracks": 204,
+   "vias": 87,
+   "mm": 778.7
   },
   "planes": [
    {
@@ -3558,7 +3558,7 @@
   ],
   "planes_filled": true
  },
- "uuids": 20796,
+ "uuids": 20818,
  "metrics": {
   "plane_nets": {
    "BOOT_3V3": "island",
@@ -4575,7 +4575,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "R1402.1 to U1401.2: 9.6 mm (U1401's OVLO bottom, about 10 mm out: as R1401)"
+     "R1402.1 to U1401.2: 9.6 mm (U1401's OVLO bottom, about 10 mm out: as R1401; its node is drawn on L3 between the planes; D-24Nov.7)"
     ]
    },
    {
@@ -4640,7 +4640,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "R1106.1 to U1101.4: 7.2 mm (OV2's bottom, about 7 mm out: as R1105)"
+     "R1106.1 to U1101.4: 7.2 mm (OV2's bottom, about 7 mm out: as R1105; D-24Nov.7)"
     ]
    },
    {
@@ -4732,7 +4732,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "C1104.1 to U1101.1/8: 10.2 mm (the mux's output bypass, about 10 mm out: C1303, the buck's input capacitor, is the bypass at OUT pin 1 on the drawn copper (part 3); C1104 adds 1 uF where room allows)"
+     "C1104.1 to U1101.1/8: 10.2 mm (the mux's output bypass, about 10 mm out: C1303, the buck's input capacitor, is the bypass at OUT pin 1 on the drawn copper (part 3); C1104 adds 1 uF where room allows; D-24Nov.7)"
     ]
    },
    {
@@ -7564,7 +7564,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "R1002.1 to U101.6: 9.8 mm (UVLO's bottom, about 10 mm out: U101's own 6 A copper holds the room by its pins; nothing near switches, UVLO turns U101 off 9-16 us after a crossing (SLVSE94G 6.6); route the node on L3 between the planes)"
+     "R1002.1 to U101.6: 9.8 mm (UVLO's bottom, about 10 mm out: U101's own 6 A copper holds the room by its pins; nothing near switches, UVLO turns U101 off 9-16 us after a crossing (SLVSE94G 6.6); its node is drawn on L3 between the planes; D-24Nov.2)"
     ]
    },
    {
@@ -7584,7 +7584,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "R1004.1 to U101.7: 10.0 mm (OVP's bottom, about 10 mm out: as R1002; OVP turns U101 off 8.5-14 us after a crossing (SLVSE94G 6.6); route the node on L3 between the planes)"
+     "R1004.1 to U101.7: 10.0 mm (OVP's bottom, about 10 mm out: as R1002; OVP turns U101 off 8.5-14 us after a crossing (SLVSE94G 6.6); its node is drawn on L3 between the planes; D-24Nov.2)"
     ]
    },
    {
@@ -7640,7 +7640,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "R1103.2 to U1101.5: 3.1 mm (OV1's top, 3.1 mm out: the fourth spot at U1101's threshold pins; its bottom R1104 sits at the pin)"
+     "R1103.2 to U1101.5: 3.1 mm (OV1's top, 3.1 mm out: the fourth spot at U1101's threshold pins; its bottom R1104 sits at the pin; D-24Nov.7)"
     ]
    },
    {
@@ -7651,7 +7651,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "R1105.2 to U1101.4: 7.9 mm (OV2's top, about 8 mm out: OV2 watches USB, which is absent in flight, so a false trip only refuses USB on the bench; the threshold pins' spots went to PR1 and OV1)"
+     "R1105.2 to U1101.4: 7.9 mm (OV2's top, about 8 mm out: OV2 watches USB, which is absent in flight, so a false trip only refuses USB on the bench; the threshold pins' spots went to PR1 and OV1; D-24Nov.7)"
     ]
    },
    {
@@ -7725,7 +7725,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "R1401.2 to U1401.2: 9.9 mm (U1401's OVLO top, about 10 mm out: OVLO acts in 1.1 us (SNOSDC0A 6.6), and a false trip turns the held core off briefly while its 1000 uF carries the load, which is that block's job)"
+     "R1401.2 to U1401.2: 9.9 mm (U1401's OVLO top, about 10 mm out: OVLO acts in 1.1 us (SNOSDC0A 6.6), and a false trip turns the held core off briefly while its 1000 uF carries the load, which is that block's job; its node is drawn on L3 between the planes; D-24Nov.7)"
     ]
    },
    {
@@ -7889,7 +7889,7 @@
     "measured": 1,
     "misses": [],
     "accepted": [
-     "R6103.2 to U6103.4: 4.3 mm (the staging arm divider's top, a tap on the drawn staging armed rail (frozen, D-23Nov.28), 4.3 mm out; its bottom R6104 holds the node at the comparator input)"
+     "R6103.2 to U6103.4: 4.3 mm (the staging arm divider's top, a tap on the drawn staging armed rail (frozen, D-23Nov.28), 4.3 mm out; its bottom R6104 holds the node at the comparator input; D-24Nov.7)"
     ]
    },
    {
@@ -8020,12 +8020,8 @@
    "U1201",
    "U1202",
    "U1204",
-   "U1301",
    "U1501",
    "U1601",
-   "U1701",
-   "U1801",
-   "U1901",
    "U201",
    "U2301",
    "U2302",
@@ -8055,20 +8051,14 @@
    "U4606",
    "U501",
    "U502",
-   "U503",
    "U504",
-   "U505",
    "U6001",
    "U6103",
-   "U6304",
-   "U6404",
    "U6502",
-   "U6504",
    "U6701",
    "U6901",
    "U7001",
    "U7002",
-   "U7101",
    "U8001",
    "U9101"
   ],
@@ -8138,5 +8128,5 @@
   ]
  },
  "probe_stub_misses": {},
- "seconds": 34.2
+ "seconds": 35.8
 }

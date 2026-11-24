@@ -621,26 +621,36 @@ _PINS = {
 for _r in NEAR:
     if _r['rule'] == 'part_to_pins' and _r.get('part') in _PINS and 'pin' not in _r:
         _r['pin'] = _PINS[_r['part']]
-# written exceptions (D-24Nov.2): the rule stands and the miss is reported as accepted, with its reason
+# written exceptions (D-24Nov.2, D-24Nov.6): the rule stands; a miss is accepted only when Seán has approved the
+# exception and its mitigation is drawn or checked on the board (engine/metrics._mitigated), else it stays a miss
 NEAR_EXCEPTIONS = {
-    'R1002': "UVLO's bottom, about 10 mm out: U101's own 6 A copper holds the room by its pins; nothing near switches, "
-             "UVLO turns U101 off 9-16 us after a crossing (SLVSE94G 6.6); route the node on L3 between the planes",
-    'R1004': "OVP's bottom, about 10 mm out: as R1002; OVP turns U101 off 8.5-14 us after a crossing (SLVSE94G 6.6); "
-             "route the node on L3 between the planes",
-    'R6103': "the staging arm divider's top, a tap on the drawn staging armed rail (frozen, D-23Nov.28), 4.3 mm out; "
-             "its bottom R6104 holds the node at the comparator input",
-    # U1101's three threshold pins have room for four 0603s, given by consequence to PR1's pair, OV1's bottom and
-    # OV1's top (D-24Nov.5)
-    'R1103': "OV1's top, 3.1 mm out: the fourth spot at U1101's threshold pins; its bottom R1104 sits at the pin",
-    'R1105': "OV2's top, about 8 mm out: OV2 watches USB, which is absent in flight, so a false trip only refuses USB "
-             "on the bench; the threshold pins' spots went to PR1 and OV1",
-    'R1106': "OV2's bottom, about 7 mm out: as R1105",
-    'C1104': "the mux's output bypass, about 10 mm out: C1303, the buck's input capacitor, is the bypass at OUT pin 1 "
-             "on the drawn copper (part 3); C1104 adds 1 uF where room allows",
-    # U1401's set pins face its own capacitors and the buck's; EN/UVLO's pair got in (D-24Nov.5)
-    'R1401': "U1401's OVLO top, about 10 mm out: OVLO acts in 1.1 us (SNOSDC0A 6.6), and a false trip turns the held "
-             "core off briefly while its 1000 uF carries the load, which is that block's job",
-    'R1402': "U1401's OVLO bottom, about 10 mm out: as R1401",
+    'R1002': dict(approved='D-24Nov.2', check=('drawn', 'BAT_UV_DIV'),
+                 why="UVLO's bottom, about 10 mm out: U101's own 6 A copper holds the room by its pins; nothing "
+                     "near switches, UVLO turns U101 off 9-16 us after a crossing (SLVSE94G 6.6); its node is drawn"
+                     " on L3 between the planes"),
+    'R1004': dict(approved='D-24Nov.2', check=('drawn', 'BAT_OV_DIV'),
+                 why="OVP's bottom, about 10 mm out: as R1002; OVP turns U101 off 8.5-14 us after a crossing "
+                     "(SLVSE94G 6.6); its node is drawn on L3 between the planes"),
+    'R6103': dict(approved='D-24Nov.7', check=('passes', 'R6104'),
+                 why="the staging arm divider's top, a tap on the drawn staging armed rail (frozen, D-23Nov.28), "
+                     "4.3 mm out; its bottom R6104 holds the node at the comparator input"),
+    'R1103': dict(approved='D-24Nov.7', check=('passes', 'R1104'),
+                 why="OV1's top, 3.1 mm out: the fourth spot at U1101's threshold pins; its bottom R1104 sits at "
+                     "the pin"),
+    'R1105': dict(approved='D-24Nov.7', check=None,
+                 why="OV2's top, about 8 mm out: OV2 watches USB, which is absent in flight, so a false trip only "
+                     "refuses USB on the bench; the threshold pins' spots went to PR1 and OV1"),
+    'R1106': dict(approved='D-24Nov.7', check=None,
+                 why="OV2's bottom, about 7 mm out: as R1105"),
+    'C1104': dict(approved='D-24Nov.7', check=('within', 'C1303', 'U1101', ('1', '8'), 3.0),
+                 why="the mux's output bypass, about 10 mm out: C1303, the buck's input capacitor, is the bypass at"
+                     " OUT pin 1 on the drawn copper (part 3); C1104 adds 1 uF where room allows"),
+    'R1401': dict(approved='D-24Nov.7', check=('drawn', 'CORE_OV_DIV'),
+                 why="U1401's OVLO top, about 10 mm out: OVLO acts in 1.1 us (SNOSDC0A 6.6), and a false trip turns"
+                     " the held core off briefly while its 1000 uF carries the load, which is that block's job; its"
+                     " node is drawn on L3 between the planes"),
+    'R1402': dict(approved='D-24Nov.7', check=('drawn', 'CORE_OV_DIV'),
+                 why="U1401's OVLO bottom, about 10 mm out: as R1401; its node is drawn on L3 between the planes"),
 }
 for _r in NEAR:
     if _r['rule'] == 'part_to_pins' and _r.get('part') in NEAR_EXCEPTIONS:
@@ -653,6 +663,20 @@ LAYOUT_REFS = {
     'U1101': 'TI SLVSEA3F (TPS2120/1), 11: bypass capacitors as close to the device as possible; none on the dividers',
     'U1401': 'TI SNOSDC0A (LM7310/LM73100), 10.1: the EN/UVLO, OVLO and PGTH resistors and C(dVdT) close to their '
              'pins; OVLO acts in 1.1 us',
+    # read in power parts 2 and 3 (23 Nov, D-23Nov.29): the layout brief's block templates, from TI's layout sections
+    'U1301': "TI TPSM63603 (layout brief 4, burrito-sweep 155; pin table read 23 Nov): input capacitors tight between "
+             "VIN and PGND, AGND to PGND at one point, the FB divider at FB, VCC's 1 uF to PGND, SW copper minimal",
+    'U1701': 'TI TPS7A91 (layout brief 4, burrito-sweep 157): input and output capacitors within 2 mm, grounded '
+             'together at GND; noise and feedback parts on the quiet side',
+    'U1801': 'as U1701 (TPS7A91)',
+    'U1901': 'as U1701 (TPS7A91)',
+    # the rest of the layout brief's block table (section 4), read when the brief was written
+    'U503': 'TCAN3413, https://www.ti.com/lit/ds/symlink/tcan3413.pdf p. 29 (layout brief 4)',
+    'U505': 'TCAN3413, https://www.ti.com/lit/ds/symlink/tcan3413.pdf p. 29 (layout brief 4)',
+    'U6304': 'TPS1H100-Q1, https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf (layout brief 4)',
+    'U6404': 'TPS1H100-Q1, https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf (layout brief 4)',
+    'U6504': 'TPS1H100-Q1, https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf (layout brief 4)',
+    'U7101': 'INA228, https://www.ti.com/lit/ds/symlink/ina228.pdf p. 39 (layout brief 4)',
 }
 # and so every chip a passive serves has its parts at its pins, as the logic regulators do (D-23Nov.29): its ref no
 # longer counts as courtyard for the placer, and the silk pass sets it where there's room
@@ -1102,7 +1126,36 @@ def _logic_feeds():
     return out
 
 
-POWER_COPPER = _power_copper() + _logic_feeds()
+def _threshold_nodes():
+    """The three threshold nodes the written exceptions lean on, drawn on L3 between the GND planes (D-24Nov.6):
+    U1401's OVLO first (it acts in 1.1 us, SNOSDC0A 6.6), then U101's UVLO and OVP. Each pin and each divider
+    resistor drops by a short L1 stub to a via kept off every pad; the vias are joined on In2.Cu. Routed by
+    capture/pw/node_route.py (grid A* round other nets' copper at its clearance) and checked by cucheck2.py"""
+    return [
+        dict(net='CORE_OV_DIV', via=(21.775, 127.25), d=0.45, drill=0.2),
+        dict(net='CORE_OV_DIV', layer='F.Cu', w=0.15, path=[(21.775, 126.55), (21.775, 127.25)]),
+        dict(net='CORE_OV_DIV', via=(12.575, 130.725), d=0.45, drill=0.2),
+        dict(net='CORE_OV_DIV', layer='F.Cu', w=0.15, path=[(11.975, 129.825), (12.575, 130.725)]),
+        dict(net='CORE_OV_DIV', layer='F.Cu', w=0.15, path=[(13.375, 133.225), (12.575, 130.725)]),
+        dict(net='CORE_OV_DIV', layer='In2.Cu', w=0.15, path=[(21.775, 127.25), (12.575, 130.725)]),
+        dict(net='BAT_UV_DIV', via=(24.388, 146.2), d=0.45, drill=0.2),
+        dict(net='BAT_UV_DIV', layer='F.Cu', w=0.15, path=[(24.388, 145.7), (24.388, 146.2)]),
+        dict(net='BAT_UV_DIV', via=(29.125, 135.85), d=0.45, drill=0.2),
+        dict(net='BAT_UV_DIV', layer='F.Cu', w=0.15, path=[(28.325, 135.85), (29.125, 135.85)]),
+        dict(net='BAT_UV_DIV', via=(22.75, 139.675), d=0.45, drill=0.2),
+        dict(net='BAT_UV_DIV', layer='F.Cu', w=0.15, path=[(22.75, 138.875), (22.75, 139.675)]),
+        dict(net='BAT_UV_DIV', layer='In2.Cu', w=0.15, path=[(24.388, 146.2), (24.788, 142.95), (27.088, 140.35), (29.125, 135.85)]),
+        dict(net='BAT_UV_DIV', layer='In2.Cu', w=0.15, path=[(29.125, 135.85), (22.75, 139.675)]),
+        dict(net='BAT_OV_DIV', via=(24.6, 146.913), d=0.45, drill=0.2),
+        dict(net='BAT_OV_DIV', layer='F.Cu', w=0.15, path=[(25.1, 146.413), (24.6, 146.913)]),
+        dict(net='BAT_OV_DIV', via=(14.5, 144.375), d=0.45, drill=0.2),
+        dict(net='BAT_OV_DIV', layer='F.Cu', w=0.15, path=[(14.5, 145.175), (14.5, 144.375)]),
+        dict(net='BAT_OV_DIV', layer='F.Cu', w=0.15, path=[(16.1, 144.975), (14.5, 144.375)]),
+        dict(net='BAT_OV_DIV', layer='In2.Cu', w=0.15, path=[(24.6, 146.913), (14.5, 144.375)]),
+    ]
+
+
+POWER_COPPER = _power_copper() + _logic_feeds() + _threshold_nodes()
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire

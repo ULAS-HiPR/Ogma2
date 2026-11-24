@@ -5,7 +5,8 @@
 
 The board's pads are read once; each test moves one part's pads 30 mm away in memory (the board file is not
 touched) or empties a row's measurement, then runs engine/metrics.near_rules and passes when the expected part
-appears in the misses. A last test drops one passive's rows and expects the passive to be listed without a rule.
+appears in the misses. A further test drops one passive's rows and expects it listed without a rule; the last
+two take an accepted written exception's approval, then its mitigation, away and expect a miss.
 Prints one line per test and exits non-zero if any fails.
 """
 import copy
@@ -78,6 +79,17 @@ def main():
     m = M.measure(bd, s3, None) if hasattr(M, 'measure') else None
     listed = m is not None and row['part'] in m.get('passives_without_rule', [])
     tests.append((f"coverage: {row['part']}'s rows dropped -> {'listed' if listed else 'not listed'}", listed))
+    # a written exception is accepted only when approved and its mitigation is in place (D-24Nov.6)
+    exr = next((r for r in spec.NEAR if r.get('exception') and base.get(r['part'], {}).get('accepted')), None)
+    if exr is None:
+        tests.append(('exception: no accepted exception to test', False))
+    else:
+        for label, change in (('not approved', dict(approved=None)),
+                              ('mitigation missing', dict(check=('drawn', 'NO_SUCH_NET')))):
+            s4 = clone(spec)
+            s4.NEAR = [dict(r, exception=dict(r['exception'], **change)) if r is exr else r for r in spec.NEAR]
+            got = misses_for(bd, s4, exr['part'])
+            tests.append((f"exception: {exr['part']} {label} -> {got[:1] or 'accepted'}", bool(got)))
     for t, ok in tests:
         print(('PASS ' if ok else 'FAIL ') + t)
     print(f"{sum(ok for _, ok in tests)} of {len(tests)} pass")

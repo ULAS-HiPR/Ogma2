@@ -5511,3 +5511,26 @@ What the sheets show, read from the step-16 netlist:
   Full-effort routing trial (d25-0954dd75): 5 of 271 ordinary nets open and 0 of 22 rails, 346 s, peak 4.7 GB (gate
   25; 239c6bd5 left 9 and 0). Open: CORE_INPUT_PG, CORE_OV_DIV, FLIGHT_LSE_IN, FLIGHT_NRST, NOR_RESET_REQUEST.
 - For Seán: U1101's dividers are 0603 at 0.1 %; 0402 parts at 0.1 % would let all six sit at its pins (a BOM change).
+
+## 24 November 2026: Fable's review approved, three nodes drawn on L3, exceptions checked (D-24Nov.6, D-24Nov.7)
+
+- Seán approved Fable's review of D-24Nov.5 on all fronts (D-24Nov.7) and the candidate rule (D-24Nov.6, in
+  standing-rules.md): a written exception counts as a miss until he approves it, and its mitigation is drawn or
+  checked, not only written.
+- Each exception now carries its approval and a check the build runs: R1002, R1004, R1401 and R1402 need their node
+  drawn on L3 touching every pad; R1103 and R6103 need their bottom resistor's rule to hold; C1104 needs C1303 within
+  3 mm of an OUT pin; OV2's pair needs only the approval. The first build after the change reported the four
+  node-dependent exceptions as misses, as it should, until the nodes were drawn.
+- The three threshold nodes are drawn on In2.Cu between the GND planes (spec._threshold_nodes): U1401's OVLO (9.8 mm),
+  U101's UVLO (two runs, 11.7 and 7.4 mm) and OVP (10.4 mm). Each pin and resistor drops by an L1 stub to a 0.45 mm via
+  kept 0.1 mm off every pad. Routed by a grid A* round other nets' copper at their clearances (capture/pw/
+  node_route.py) and checked by cucheck2.py (0 violations) before the build.
+- Citations: the layout brief's block table (section 4) already held TI's sections for the regulators, the shunt
+  monitor, the output channels and the CAN transceivers; they are now in spec.LAYOUT_REFS. 46 chips a rule serves
+  have none yet.
+- near_check_test.py now also takes an accepted exception's approval, then its mitigation, away: 8 of 8 caught.
+- Board e0df9c2d: DRC 0 errors, rules check 9 of 9, planted-miss test 8 of 8. Distance rules: 464 distances in 440
+  rows, 3 misses (C215, C216, D4501: step 4), 9 written exceptions, all approved and mitigated. Connectivity as
+  before. Full-effort routing trial (d25-e0df9c2d): 4 of 271 ordinary nets open and 0 of 22 rails, 341 s, peak 4.1 GB
+  (0954dd75 left 5 and 0). Open: BRANCH_FAULT_N, FLIGHT_HSE_IN, FLIGHT_LSE_OUT, FLIGHT_NRST.
+

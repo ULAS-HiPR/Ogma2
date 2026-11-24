@@ -363,11 +363,61 @@ def near_rules(bd, spec):
                     miss.append(f"{row['part']}: {off:.1f} mm off the line, at {t:.2f} along it")
         if n == 0 and not miss:                       # zero misses out of zero measured is a failure (D-24Nov.4)
             miss.append(f"{row.get('part') or row.get('ic')}: measured nothing")
-        accepted = miss if row.get('exception') else []   # a written exception: reported, not counted (D-24Nov.2)
         out.append({'rule': rule, 'what': row.get('part') or row.get('ic'), 'mm': mm, 'source': row['src'],
-                    'measured': n, 'misses': [] if accepted else miss,
-                    'accepted': [f"{m} ({row['exception']})" for m in accepted]})
+                    'measured': n, 'misses': miss, 'accepted': []})
+    # written exceptions (D-24Nov.2, D-24Nov.6): a miss is accepted only once Seán has approved the exception and its
+    # mitigation is drawn or checked; until then it stays a miss, saying what is missing
+    first = {r['what']: r for r in out}
+    for row, r in zip(getattr(spec, 'NEAR', []), out):
+        ex = row.get('exception')
+        if not ex or not r['misses']:
+            continue
+        ex = ex if isinstance(ex, dict) else {'why': ex}
+        lack = [] if ex.get('approved') else ['not approved by Seán']
+        chk = ex.get('check')
+        if chk and not _mitigated(bd, first, chk):
+            lack.append(f'mitigation not in place: {chk[0]} {chk[1]}')
+        if lack:
+            r['misses'] = [f"{m} (exception: {'; '.join(lack)})" for m in r['misses']]
+        else:
+            r['accepted'], r['misses'] = [f"{m} ({ex['why']}; {ex['approved']})" for m in r['misses']], []
     return out
+
+
+def _mitigated(bd, rows, chk):
+    """An exception's mitigation, checked on the board: ('drawn', net) the net's copper is drawn, on In2.Cu among
+    other layers, and touches every one of its pads; ('passes', part) that part's own rule holds; ('within', part, ic,
+    pins, mm) that part sits within mm of one of those pins."""
+    kind = chk[0]
+    if kind == 'passes':
+        r = rows.get(chk[1])
+        return bool(r and r['measured'] and not r['misses'])
+    if kind == 'within':
+        _, part, ic, pins, mm = chk
+        pins = {pins} if isinstance(pins, str) else set(pins)
+        mine = [d for d in bd.pads if d['ref'] == part and d['net'] and short(d['net']) != 'GND']
+        theirs = [d for d in bd.pads if d['ref'] == ic and d['num'] in pins]
+        gs = [_gap(a, b) for a in mine for b in theirs if a['net'] == b['net']]
+        return bool(gs) and min(gs) <= mm
+    if kind == 'drawn':
+        from shapely.geometry import LineString, Point
+        net, K = chk[1], bd.K
+        cu, layers = [], set()
+        for t in bd.b.GetTracks():
+            if short(t.GetNetname()) != net:
+                continue
+            if t.GetClass() == 'PCB_VIA':
+                c = t.GetPosition()
+                cu.append(Point(K.ToMM(c.x) - bd.ox, K.ToMM(c.y) - bd.oy).buffer(K.ToMM(t.GetWidth(K.F_Cu)) / 2))
+                continue
+            layers.add(bd.b.GetLayerName(t.GetLayer()))
+            if t.GetLayer() == K.F_Cu:
+                a, e = t.GetStart(), t.GetEnd()
+                cu.append(LineString([(K.ToMM(a.x) - bd.ox, K.ToMM(a.y) - bd.oy),
+                                      (K.ToMM(e.x) - bd.ox, K.ToMM(e.y) - bd.oy)]).buffer(K.ToMM(t.GetWidth()) / 2))
+        pads = [d for d in bd.pads if d['net'] and short(d['net']) == net and 'F' in d['poly']]
+        return 'In2.Cu' in layers and bool(pads) and all(any(g.intersects(d['poly']['F']) for g in cu) for d in pads)
+    return False
 
 
 def markdown(m):
