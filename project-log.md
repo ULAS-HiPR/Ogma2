@@ -5780,3 +5780,19 @@ What the sheets show, read from the step-16 netlist:
   blockers of FLIGHT_BOOT0 and TE_SDA, and COMMS_3V3, ADC_PYRO3_CONTINUITY and FLIGHT_NRST for ADC_PYRO1_CONTINUITY.
 - Fable's [model] bets settle ok: all 52 closed without moving a part (was 4/5: at least 40), and the trial has 3
   of 271 nets open and no rail (was 3/5: 8 or fewer).
+
+## 25 November 2026: Fable's fourth review approved (D-24Nov.17)
+
+- Fable read board e532c976: the 0 of 623 open plane pads held only in the trial's copy, which adds 438 plane vias
+  each run and plans them again each time; the repo's board has the 19 drawn joins and 3 vias, and the build's own
+  plane-pad figure (15 of 601 with no via) still ran the old fan-out. Seán approved: the build counts plane pads with
+  the trial's fan-out, U201's and U401's plane vias are frozen into the spec (the rest wait for stage D's own step),
+  GND stays at 0.2 mm, supply pins that already have their own via keep it, C2303 stays; then items 4 to 7.
+- Step 1, the build's plane-pad check on the trial's fan-out: meter.fan_out() now holds the trial's fan-out and its
+  count (the planes go with their outer fills kept, the waiver's twins, the budget's keep-outs, the fan-out,
+  plane_pads_open). meter.py, build.py and metrics.py's own entry all call it; the build with spec.TRIAL_FANOUT, the
+  trial's flags. The build reports 0 of 623 plane pads open, as trial e532c976 does; the fan-out run alone on the
+  rebuilt board matches that trial's meter.json in its fan-out (462 pads, 438 vias, 375 in pad, 24 by group), plane
+  pads, scripted copper and fanned DRC. A run's meter.json says whether its settings are the build's
+  (fanout_as_build). Board e532c976 unchanged; rules check 11 of 11, planted-miss test 11 of 11, the plane-pad
+  planted test passes, 4 of 358 lanes crossed (as before).

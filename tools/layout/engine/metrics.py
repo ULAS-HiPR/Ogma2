@@ -168,7 +168,7 @@ def signal_nets(bd, planes):
     return {n: ps for n, ps in bd.by_net.items() if n not in planes and len(ps) >= 2}
 
 
-def measure(bd, spec, fanout_result=None):
+def measure(bd, spec, fan=None):
     planes = plane_nets(bd, set(spec.RAILS))
     sig = signal_nets(bd, planes)
     out = {'plane_nets': {short(n): l for n, l in sorted(planes.items())}}
@@ -252,18 +252,25 @@ def measure(bd, spec, fanout_result=None):
     out['lanes_measured'] = n_lanes
     out['lanes_crossed'] = crossed
 
-    # plane pads with no via spot
-    if fanout_result is not None:
-        done, failed = fanout_result['done'], fanout_result['failed']
-        out['plane_pads'] = len(done) + len(failed)
-        out['plane_pads_no_via'] = len(failed)
+    # the plane pads still open after the routing trial's own fan-out (D-24Nov.17): `fan` is meter.fan_out's result
+    # with spec.TRIAL_FANOUT, so the build reports the trial's number
+    if fan is not None:
+        fr = fan['fr']
+        out['plane_pads'] = fan['plane_pads']
+        out['plane_pads_open'] = len(fan['plane_pads_open'])
         bands = getattr(spec, 'BANDS', {})
+        at = {f"{d['ref']}.{d['num']}": d['y'] for d in bd.pads}
         fb = defaultdict(int)
-        for f in failed:
-            band = next((k for k, (y0, y1) in bands.items() if y0 <= f['y'] < y1), '?')
+        for name in fan['plane_pads_open']:
+            y = at.get(name)
+            band = next((k for k, (y0, y1) in bands.items() if y is not None and y0 <= y < y1), '?')
             fb[band] += 1
-        out['plane_pads_no_via_by_band'] = dict(sorted(fb.items()))
-        out['plane_pads_no_via_list'] = [f"{f['ref']}.{f['num']}" for f in failed][:60]
+        out['plane_pads_open_by_band'] = dict(sorted(fb.items()))
+        out['plane_pads_open_list'] = fan['plane_pads_open'][:60]
+        out['plane_fanout'] = {'settings': fan['settings'], 'vias': sum(1 for d in fr['done'] if d.get('via')),
+                               'in_pad': sum(1 for d in fr['done'] if d.get('via') and d['stub'] is None),
+                               'by_group': sum(1 for d in fr['done'] if d.get('by_group')),
+                               'scripted_joined': len(fan['existing']['joined'])}
 
     return out
 
@@ -595,7 +602,7 @@ def markdown(m):
     L.append(f"| Test point stubs (median to route / to pad, mm) | {s['median_to_route']} / {s['median_to_pad']} |")
     L.append(f"| Test points over 10 / 20 mm from their route | {s['over_10_to_route']} / {s['over_20_to_route']} |")
     if 'plane_pads' in m:
-        L.append(f"| Plane pads without a via spot (of {m['plane_pads']}) | {m['plane_pads_no_via']} |")
+        L.append(f"| Plane pads open after the routing trial's fan-out (of {m['plane_pads']}) | {m['plane_pads_open']} |")
     return '\n'.join(L) + '\n'
 
 
@@ -620,9 +627,8 @@ if __name__ == '__main__':
     H = a.length or float(round(K.ToMM(bb.GetHeight())))
     stretch(spec, H)
     bd = BoardData(b, spec.ORIGIN, (spec.W, spec.H))
-    from engine import fanout as FO
-    fr = FO.plan(bd, plane_nets(bd, set(spec.RAILS)), spec)
-    m = measure(bd, spec, fr)
+    import meter                                    # the trial's fan-out and plane-pad count (D-24Nov.17)
+    m = measure(bd, spec, meter.fan_out(K.LoadBoard(a.pcb), spec, **spec.TRIAL_FANOUT))
     if a.json:
         Path(a.json).write_text(json.dumps(m, indent=1) + '\n')
     if a.md:

@@ -514,10 +514,12 @@ def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, re
         report['copper']['planes_filled'] = refill(pcb)
     report['uuids'] = post.finish(pcb, spec.STACKUP, f'{board}')
     if STAGES.index(upto) >= 2:                       # the stage B2 yardsticks (engine/metrics.py), from the saved board
-        from engine import fanout as FO, metrics as M
+        from engine import metrics as M
+        import meter
         bdata = M.BoardData(B.K.LoadBoard(str(pcb)), spec.ORIGIN, (spec.W, spec.H))
-        fo = FO.plan(bdata, M.plane_nets(bdata, set(spec.RAILS)), spec)
-        m = M.measure(bdata, spec, fo)
+        # the plane pads as the routing trial counts them (D-24Nov.17): its own fan-out, on a scratch copy
+        fan = meter.fan_out(B.K.LoadBoard(str(pcb)), spec, **spec.TRIAL_FANOUT)
+        m = M.measure(bdata, spec, fan)
         report['metrics'] = m
         lim = getattr(spec, 'PROBE_STUB_MAX', (10.0, 20.0))  # with their circuit / every other (stage B2 step 5)
         report['probe_stub_misses'] = {

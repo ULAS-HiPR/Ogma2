@@ -8064,31 +8064,26 @@
    "U1701.5 FLIGHT_LDO_PG: FLIGHT_LDO_FB",
    "U6001.7 FLIGHT_3V3: STAGE_ELIGIBLE"
   ],
-  "plane_pads": 601,
-  "plane_pads_no_via": 15,
-  "plane_pads_no_via_by_band": {
-   "1 RF and fire": 12,
-   "2 Flight": 1,
-   "4 Power and harness": 2
-  },
-  "plane_pads_no_via_list": [
-   "Q6301.4",
-   "Q6301.7",
-   "Q6401.4",
-   "Q6401.7",
-   "Q6501.4",
-   "Q6501.7",
-   "U1301.27",
-   "U1301.28",
-   "U201.11",
-   "U6304.12",
-   "U6304.2",
-   "U6404.12",
-   "U6404.2",
-   "U6504.12",
-   "U6504.2"
-  ]
+  "plane_pads": 623,
+  "plane_pads_open": 0,
+  "plane_pads_open_by_band": {},
+  "plane_pads_open_list": [],
+  "plane_fanout": {
+   "settings": {
+    "via_in_pad": true,
+    "rails_as_tracks": true,
+    "plane_rails": [
+     "FLIGHT_3V3"
+    ],
+    "waive_fire_logic": true,
+    "budget": true
+   },
+   "vias": 438,
+   "in_pad": 375,
+   "by_group": 24,
+   "scripted_joined": 240
+  }
  },
  "probe_stub_misses": {},
- "seconds": 26.6
+ "seconds": 63.1
 }

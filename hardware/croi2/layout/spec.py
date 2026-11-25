@@ -1455,6 +1455,12 @@ PLANES = [
 ]
 SOLID_PADS = ('J102', 'J101')     # their GND pins carry the 6 A return: no thermal relief (brief section 4)
 
+# The routing trial's fan-out (meter.py --via-in-pad --rails-as-tracks --plane-rails FLIGHT_3V3 --waive-fire-logic
+# --budget): the build's plane-pad check runs the same call (meter.fan_out) with these, so the build and the trial
+# report one number (D-24Nov.17); a trial's meter.json says whether its own settings match (fanout_as_build).
+TRIAL_FANOUT = dict(via_in_pad=True, rails_as_tracks=True, plane_rails=['FLIGHT_3V3'], waive_fire_logic=True,
+                    budget=True)
+
 # The hard copper's floor plan, as keep-outs for the budget run (stage C/D review, call 9; meter.py --budget): where
 # stage C will draw it, each area with the copper's own clearance to other nets. Board mm, (x0, y0, x1, y1) boxes or
 # (path, width) bands; layers L1 F.Cu, L3 In2.Cu, L6 B.Cu. Not modelled: the logic feeds (LOGIC_FEED), the USB and

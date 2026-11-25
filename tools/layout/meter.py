@@ -149,6 +149,113 @@ def plane_pads_open(b, origin, planes, fills):
     return counted, sorted(set(open_))
 
 
+def fan_out(b, spec, via_in_pad=False, rails_as_tracks=False, plane_rails=(), waive_fire_logic=False, budget=False):
+    """The trial's plane fan-out and its plane-pad count, on `b`, which it changes (a scratch copy). The build's
+    plane-pad check calls this too, with spec.TRIAL_FANOUT, so the two report one number (D-24Nov.17).
+
+    The board's planes go, their outer-layer fills kept for the count (D-23Nov.30: the meter models a plane as
+    before, a plane pad's via counting as joined, and a fill saved before the fanout's vias would clash with them);
+    the fire-logic waiver's twins (waive_fire_logic); spec.BUDGET's keep-outs (budget); a via for each plane pad
+    (engine/fanout.py), clear of the board's scripted copper; then the plane pads still open (plane_pads_open).
+    Returns a dict: bd (the board's data before the fanout), planes, waived, twin_of, existing, fr, plane_pads (pads
+    counted), plane_pads_open (['REF.PIN']), settings, seconds (the fanout's own)."""
+    from shapely.geometry import Polygon as _P
+    fills = []                                     # outer-layer fills, kept for the plane-pad count (D-24Nov.15)
+    for z in b.Zones():
+        if z.GetIsRuleArea():
+            continue
+        for lid, lname in ((K.F_Cu, 'F.Cu'), (K.B_Cu, 'B.Cu')):
+            if z.IsOnLayer(lid) and z.HasFilledPolysForLayer(lid):
+                ps = z.GetFilledPolysList(lid)
+                for i in range(ps.OutlineCount()):
+                    o = ps.Outline(i)
+                    pts = [(K.ToMM(o.CPoint(j).x), K.ToMM(o.CPoint(j).y)) for j in range(o.PointCount())]
+                    if len(pts) >= 3:
+                        fills.append((z.GetNetname(), lname, pts))
+    for z in [z for z in b.Zones() if not z.GetIsRuleArea()]:
+        b.RemoveNative(z)                          # Remove() leaves a dead object in Zones(): a later read crashes
+    waived, twin_of = {}, {}
+    if waive_fire_logic:
+        # the waiver as DRC applies it (D-22Nov.26, D-23Nov.8, D-23Nov.13): fire logic wholly inside a part's escape
+        # area keeps 0.2 mm, elsewhere 0.5. Each fire-logic net's pads, tracks and vias that sit wholly inside an area
+        # move to a twin net at the class's 0.2 mm, so the router keeps 0.2 mm from them and 0.5 mm from the rest of
+        # the net. A twin touches its own net where the copper leaves the area; DRC's errors between a net and its own
+        # twin are the model's, and drc() drops them.
+        from shapely.geometry import LineString, Point, Polygon
+        fl_cl = next(c['clearance'] for c in spec.NETCLASSES if c['name'] == 'FIRE_LOGIC')
+        mm_ = K.ToMM
+        areas = []
+        for z in b.Zones():
+            if z.GetIsRuleArea() and z.GetZoneName().endswith('_ESCAPE'):
+                o = z.Outline()
+                for k in range(o.OutlineCount()):
+                    ol = o.Outline(k)
+                    areas.append(Polygon([(mm_(ol.CPoint(q).x), mm_(ol.CPoint(q).y)) for q in range(ol.PointCount())]).buffer(1e-4))
+        twins, moved = {}, defaultdict(list)
+
+        def to_twin(item):
+            n = item.GetNetname()
+            if n not in twins:
+                name = f'{M.short(n)}_WAIVED'
+                ni = K.NETINFO_ITEM(b, name)
+                b.Add(ni)
+                twins[n], waived[name], twin_of[name] = ni, fl_cl, M.short(n)
+            moved[n].append((item, item.GetNet()))
+            item.SetNet(twins[n])
+        is_fl = lambda n: M.net_class(n, spec.PATTERNS) == 'FIRE_LOGIC'
+        for f in b.GetFootprints():
+            for p in f.Pads():
+                if is_fl(p.GetNetname()):
+                    ps = K.SHAPE_POLY_SET()
+                    p.TransformShapeToPolygon(ps, K.F_Cu if p.IsOnLayer(K.F_Cu) else K.B_Cu, 0, K.FromMM(0.005), K.ERROR_INSIDE)
+                    if ps.OutlineCount():
+                        ol = ps.Outline(0)
+                        g = Polygon([(mm_(ol.CPoint(q).x), mm_(ol.CPoint(q).y)) for q in range(ol.PointCount())])
+                        if any(ar.contains(g) for ar in areas):
+                            to_twin(p)
+        for t in list(b.GetTracks()):
+            if is_fl(t.GetNetname()):
+                if t.Type() == K.PCB_VIA_T:
+                    c = t.GetPosition()
+                    g = Point(mm_(c.x), mm_(c.y)).buffer(mm_(t.GetWidth(K.F_Cu)) / 2, 16)
+                else:
+                    g = LineString([(mm_(t.GetStart().x), mm_(t.GetStart().y)), (mm_(t.GetEnd().x), mm_(t.GetEnd().y))]).buffer(mm_(t.GetWidth()) / 2, 16)
+                if any(ar.contains(g) for ar in areas):
+                    to_twin(t)
+        # a net with every pad inside an area keeps its own name throughout: KiCad would give the copper between the
+        # areas the twin's net when it saves the board (STAGE_ELIGIBLE, U6001 to U6502), so it keeps 0.5 mm there too
+        for n, items in moved.items():
+            if not any(p.GetNetname() == n for f in b.GetFootprints() for p in f.Pads()):
+                for item, ni in items:
+                    item.SetNet(ni)
+                name = twins[n].GetNetname()
+                waived.pop(name, None); twin_of.pop(name, None)
+    bd = M.BoardData(b, spec.ORIGIN, (spec.W, spec.H))
+    planes = M.plane_nets(bd, set(spec.RAILS))
+    if rails_as_tracks:
+        planes = {n: l for n, l in planes.items() if M.short(n) == 'GND' or M.short(n) in plane_rails}
+    no_via = budget_keepouts(b, spec) if budget else []
+    t0 = time.time()
+    ex = FO.existing(b, spec.ORIGIN)            # stage C's scripted copper: its pads need no fanout via
+    fr = FO.plan(bd, planes, spec, in_pad=via_in_pad, existing=ex, no_via=no_via)
+    FO.apply(b, spec.ORIGIN, fr)
+    seconds = round(time.time() - t0, 1)
+    ox_, oy_ = spec.ORIGIN
+    pp_n, pp_open = plane_pads_open(b, spec.ORIGIN, planes,
+                                    [(n, l, _P([(x - ox_, y - oy_) for x, y in pts]).buffer(0)) for n, l, pts in fills])
+    settings = dict(via_in_pad=bool(via_in_pad), rails_as_tracks=bool(rails_as_tracks),
+                    plane_rails=sorted(plane_rails or ()), waive_fire_logic=bool(waive_fire_logic), budget=bool(budget))
+    return dict(bd=bd, planes=planes, waived=waived, twin_of=twin_of, existing=ex, fr=fr, plane_pads=pp_n,
+                plane_pads_open=pp_open, settings=settings, seconds=seconds)
+
+
+def trial_fanout(spec):
+    """spec.TRIAL_FANOUT as fan_out's settings dict (sorted rails), to compare a run's settings with the build's."""
+    t = dict(getattr(spec, 'TRIAL_FANOUT', {}))
+    t['plane_rails'] = sorted(t.get('plane_rails', ()))
+    return t
+
+
 def _tree_rss_mb(pid):
     """Resident memory of a process and all its descendants, MB, from /proc."""
     kids, rss = {}, 0
@@ -387,86 +494,15 @@ def main():
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     b = K.LoadBoard(a.pcb)
-    # the board's copper planes go (D-23Nov.30): the meter models a plane as before, a plane pad's via counting as
-    # joined, and a fill saved before the fanout's vias would clash with them
-    fills = []                                     # outer-layer fills, kept for the plane-pad count (D-24Nov.15)
-    for z in b.Zones():
-        if z.GetIsRuleArea():
-            continue
-        for lid, lname in ((K.F_Cu, 'F.Cu'), (K.B_Cu, 'B.Cu')):
-            if z.IsOnLayer(lid) and z.HasFilledPolysForLayer(lid):
-                from shapely.geometry import Polygon as _P
-                ps = z.GetFilledPolysList(lid)
-                for i in range(ps.OutlineCount()):
-                    o = ps.Outline(i)
-                    pts = [(K.ToMM(o.CPoint(j).x), K.ToMM(o.CPoint(j).y)) for j in range(o.PointCount())]
-                    if len(pts) >= 3:
-                        fills.append((z.GetNetname(), lname, pts))
-    for z in [z for z in b.Zones() if not z.GetIsRuleArea()]:
-        b.RemoveNative(z)                          # Remove() leaves a dead object in Zones(): a later read crashes
     length = a.length or float(round(K.ToMM(b.GetBoardEdgesBoundingBox().GetHeight())))
     spec, hw = load_spec(a.board, length)
     a.layers = a.layers or getattr(spec, 'ROUTER_LAYERS', ['F.Cu', 'B.Cu'])
-    waived, twin_of = {}, {}
-    if a.waive_fire_logic:
-        # the waiver as DRC applies it (D-22Nov.26, D-23Nov.8, D-23Nov.13): fire logic wholly inside a part's escape
-        # area keeps 0.2 mm, elsewhere 0.5. Each fire-logic net's pads, tracks and vias that sit wholly inside an area
-        # move to a twin net at the class's 0.2 mm, so the router keeps 0.2 mm from them and 0.5 mm from the rest of
-        # the net. A twin touches its own net where the copper leaves the area; DRC's errors between a net and its own
-        # twin are the model's, and drc() drops them.
-        from shapely.geometry import LineString, Point, Polygon
-        fl_cl = next(c['clearance'] for c in spec.NETCLASSES if c['name'] == 'FIRE_LOGIC')
-        mm_ = K.ToMM
-        areas = []
-        for z in b.Zones():
-            if z.GetIsRuleArea() and z.GetZoneName().endswith('_ESCAPE'):
-                o = z.Outline()
-                for k in range(o.OutlineCount()):
-                    ol = o.Outline(k)
-                    areas.append(Polygon([(mm_(ol.CPoint(q).x), mm_(ol.CPoint(q).y)) for q in range(ol.PointCount())]).buffer(1e-4))
-        twins, moved = {}, defaultdict(list)
-
-        def to_twin(item):
-            n = item.GetNetname()
-            if n not in twins:
-                name = f'{M.short(n)}_WAIVED'
-                ni = K.NETINFO_ITEM(b, name)
-                b.Add(ni)
-                twins[n], waived[name], twin_of[name] = ni, fl_cl, M.short(n)
-            moved[n].append((item, item.GetNet()))
-            item.SetNet(twins[n])
-        is_fl = lambda n: M.net_class(n, spec.PATTERNS) == 'FIRE_LOGIC'
-        for f in b.GetFootprints():
-            for p in f.Pads():
-                if is_fl(p.GetNetname()):
-                    ps = K.SHAPE_POLY_SET()
-                    p.TransformShapeToPolygon(ps, K.F_Cu if p.IsOnLayer(K.F_Cu) else K.B_Cu, 0, K.FromMM(0.005), K.ERROR_INSIDE)
-                    if ps.OutlineCount():
-                        ol = ps.Outline(0)
-                        g = Polygon([(mm_(ol.CPoint(q).x), mm_(ol.CPoint(q).y)) for q in range(ol.PointCount())])
-                        if any(ar.contains(g) for ar in areas):
-                            to_twin(p)
-        for t in list(b.GetTracks()):
-            if is_fl(t.GetNetname()):
-                if t.Type() == K.PCB_VIA_T:
-                    c = t.GetPosition()
-                    g = Point(mm_(c.x), mm_(c.y)).buffer(mm_(t.GetWidth(K.F_Cu)) / 2, 16)
-                else:
-                    g = LineString([(mm_(t.GetStart().x), mm_(t.GetStart().y)), (mm_(t.GetEnd().x), mm_(t.GetEnd().y))]).buffer(mm_(t.GetWidth()) / 2, 16)
-                if any(ar.contains(g) for ar in areas):
-                    to_twin(t)
-        # a net with every pad inside an area keeps its own name throughout: KiCad would give the copper between the
-        # areas the twin's net when it saves the board (STAGE_ELIGIBLE, U6001 to U6502), so it keeps 0.5 mm there too
-        for n, items in moved.items():
-            if not any(p.GetNetname() == n for f in b.GetFootprints() for p in f.Pads()):
-                for item, ni in items:
-                    item.SetNet(ni)
-                name = twins[n].GetNetname()
-                waived.pop(name, None); twin_of.pop(name, None)
-    bd = M.BoardData(b, spec.ORIGIN, (spec.W, spec.H))
-    planes = M.plane_nets(bd, set(spec.RAILS))
-    if a.rails_as_tracks:
-        planes = {n: l for n, l in planes.items() if M.short(n) == 'GND' or M.short(n) in a.plane_rails}
+    # the planes go, the waiver's twins, the budget's keep-outs, the fanout and the plane-pad count: fan_out(), the
+    # same call the build's plane-pad check makes (D-24Nov.17)
+    fo = fan_out(b, spec, via_in_pad=a.via_in_pad, rails_as_tracks=a.rails_as_tracks, plane_rails=a.plane_rails,
+                 waive_fire_logic=a.waive_fire_logic, budget=a.budget)
+    bd, planes, waived, twin_of = fo['bd'], fo['planes'], fo['waived'], fo['twin_of']
+    ex, fr, pp_n, pp_open = fo['existing'], fo['fr'], fo['plane_pads'], fo['plane_pads_open']
     allsig = sorted(M.signal_nets(bd, planes))
     # RF lines are scripted in stage C on L1 with no via (D-21Nov.25, D-22Nov.16): left out of the route
     rf = [n for n in allsig if M.net_class(n, spec.PATTERNS) == 'RF50']
@@ -485,15 +521,6 @@ def main():
         for n in net_cl:
             if M.net_class(n, spec.PATTERNS) == 'FIRE_LOGIC':
                 net_cl[n] = a.fire_logic_clearance
-    no_via = budget_keepouts(b, spec) if a.budget else []
-    t0 = time.time()
-    ex = FO.existing(b, spec.ORIGIN)            # stage C's scripted copper: its pads need no fanout via
-    fr = FO.plan(bd, planes, spec, in_pad=a.via_in_pad, existing=ex, no_via=no_via)
-    FO.apply(b, spec.ORIGIN, fr)
-    from shapely.geometry import Polygon as _P
-    ox_, oy_ = spec.ORIGIN
-    pp_n, pp_open = plane_pads_open(b, spec.ORIGIN, planes,
-                                    [(n, l, _P([(x - ox_, y - oy_) for x, y in pts]).buffer(0)) for n, l, pts in fills])
     fan = out / 'fanned.kicad_pcb'
     K.SaveBoard(str(fan), b)
     for ext in ('kicad_pro', 'kicad_dru'):
@@ -523,8 +550,10 @@ def main():
                       'by_group': sum(1 for d in fr['done'] if d.get('by_group')),
                       'misses': [f"{d['ref']}.{d['num']}" for d in fr['failed']],
                       'in_pad': sum(1 for d in fr['done'] if d.get('via') and d['stub'] is None),
-                      'seconds': round(time.time() - t0, 1)},
+                      'seconds': fo['seconds']},
            'plane_pads': {'pads': pp_n, 'open': pp_open},
+           # the build's plane-pad check runs fan_out with spec.TRIAL_FANOUT: the two counts are one only if these match
+           'fanout_settings': fo['settings'], 'fanout_as_build': fo['settings'] == trial_fanout(spec),
            'ignores': 'the L3 islands\' shapes',
            'budget': [it['name'] for it in spec.BUDGET] if a.budget else None,
            'fanned_drc_errors': fan_drc, 'fanned_drc_twin_errors_dropped': dropped_fan}
