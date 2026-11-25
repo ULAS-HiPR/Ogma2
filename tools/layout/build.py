@@ -25,6 +25,10 @@ from engine import art as A                          # noqa: E402
 from engine.metrics import rule_pins                 # noqa: E402
 
 STAGES = ('setup', 'parts', 'place', 'copper')          # copper: stage C's scripted copper (engine/copper.py)
+# Boards whose .kicad_pcb in the repository is edited by hand: Seán took Burrito's routed board over on 25 Nov 2026
+# (HANDOFF.md; the last scripted board is tag burrito-scripted-final). A build writes them only to --out, or with
+# --overwrite-hand-edits.
+HAND_EDITED = {'croi2'}
 FIDUCIAL_R = 1.25      # Fiducial_1mm_Mask2mm's courtyard radius: no other courtyard inside
 
 
@@ -259,7 +263,10 @@ def refill(pcb):
     return r.returncode == 0
 
 
-def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, replace=False):
+def build(board, upto, length=None, out_dir=None, sets=(), netlist_path=None, replace=False, overwrite=False):
+    if board in HAND_EDITED and not out_dir and not overwrite:
+        raise SystemExit(f'{board}: its board is edited by hand since the hand-off (HANDOFF.md, 25 Nov 2026), and a build '
+                         'would overwrite it. Build to --out, or pass --overwrite-hand-edits to replace it on purpose.')
     spec = load_spec(board)
     for s in sets:                                    # trials only (--set): a statement run in the spec's namespace
         exec(s, vars(spec))
@@ -542,10 +549,12 @@ if __name__ == '__main__':
                     help="trials: a statement run in the spec's namespace, e.g. \"ANCHORS['U401'] = (40.0, 126.0, 180)\"")
     ap.add_argument('--netlist', help='trials: build from this netlist instead of output/full-netlist.xml')
     ap.add_argument('--replace', action='store_true', help='run the placer and rewrite layout/placement.json (D-22Nov.30)')
+    ap.add_argument('--overwrite-hand-edits', action='store_true',
+                    help='write the repository board even though it is edited by hand (HAND_EDITED; HANDOFF.md)')
     a = ap.parse_args()
     if (a.set or a.netlist) and not a.out:
         ap.error('--set and --netlist are for trials: give --out too')
-    r = build(a.board, a.to, a.length, a.out, a.set, a.netlist, a.replace)
+    r = build(a.board, a.to, a.length, a.out, a.set, a.netlist, a.replace, a.overwrite_hand_edits)
     keep = {k: v for k, v in r.items() if k != 'positions'}
     for k in ('jlc_spacing_exceptions',):
         if k in keep:

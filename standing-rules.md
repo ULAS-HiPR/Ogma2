@@ -1,5 +1,7 @@
 # Standing rules
 
+**Since 25 Nov 2026 (D-25Nov.1) Burrito's board is edited by hand.** The rules on scripted copper and routing trials (D-21Nov.21; D-24Nov.11, rules 2 and 3; D-24Nov.13; D-24Nov.15; D-24Nov.16, rule 1) governed Burrito up to tag `burrito-scripted-final` and the hand-off commit after it; they don't bind Seán's edits.
+
 Seán's standing rules for all Ogma2 work, in his words. Read this file before starting any session. Each rule
 carries the date he gave it and its number in [decisions.md](decisions.md); entries run in the order he gave them.
 
@@ -34,6 +36,8 @@ approved them, with his go-ahead quoted.
 > "The board is the output of scripts in the repo. Everything you do to the .kicad_pcb (outline, stackup, rules,
 > placement, routing, pours, silkscreen) is done by a script that can be rerun from a clean state. No one-off manual
 > edits I can't replay."
+
+*Ended for Burrito's board by D-25Nov.1 (25 Nov): Seán edits it by hand from the hand-off on.*
 
 ## D-23Nov.20 (21 Nov 2026): ground rules for layout
 
@@ -298,3 +302,12 @@ Proposed by Claude (Fable) after the trial first counted plane pads; approved by
    order doesn't get done.
    - **Today:** stage C step 3's Open row ("the decoupling fanout is pin to capacitor on L1 ... going ahead unless
      Seán says no", told 23 Nov) was never turned into a step, so the supply pins it covers stayed unjoined.
+
+## D-25Nov.1 (25 Nov 2026): the hand-off
+
+> "I want it such that after the next opus turn I should be able to open the kicad files for burrito and do the final
+> cleaning of everything up myself. I do not care if the version that Opus saves after this next turn does not have
+> all nets closed. Thats why we have this human in the loop. I will close it." "I the human am taking over from here
+> on out."
+
+*Supersedes D-21Nov.21 for Burrito's board.*

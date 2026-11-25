@@ -5912,3 +5912,27 @@ What the sheets show, read from the step-16 netlist:
 - Tools: pockets.py, the pocket measure (read only); closes.py counts a fourth thing, a neighbour that loses its last
   via site or its way out to the frozen copper. It sees frozen copper only: it found nothing for the first pattern,
   whose box the router's copper closed.
+
+## 25 November 2026: the hand-off: the routed board kept, Seán takes Burrito by hand (D-25Nov.1)
+
+- Seán, 25 Nov: "I want it such that after the next opus turn I should be able to open the kicad files for burrito
+  and do the final cleaning of everything up myself"; "I the human am taking over from here on out". Fable's close-out
+  plan, approved: "I agree with all above. GO".
+- Before it, the same day: fifth review step 4 measured both CAN buses (13.1, 10.9, 9.7 and 13.3 mm of trace from
+  each connector pin to its TVS, no vias on those stretches, nothing else within 6 mm of the bus pins) and found free
+  spots for D501 and D502 within 5 mm. Seán found both blocks poor and asked for one arrangement copied to both,
+  placed and routed nearly by hand, with his first flight computer's CAN block as the model. He stopped the redesign
+  before anything changed and took the CAN blocks on himself. The 22 datasheets for the 42 chips were read on the Mac
+  (text only); the asks not yet checked on the board are in HANDOFF.md. Fable's bet on the 42 reads stays open.
+- Tag `burrito-scripted-final` on ebf6bb5 (board 832b743a): the last board build.py can rebuild. The cloud session's
+  push of the tag was refused (HTTP 403); the tag goes to the Mac in the bundle.
+- `tools/layout/keep_routes.py`: 3,827 tracks and 1,142 vias carried from d25-832b743a's routed board (the router's
+  routes and the fan-out's plane vias), waiver twins back to their own nets, no rule areas, no zones; the board's
+  zones refilled under the project rules. No net unmatched; none of the board's copper missing from the trial. The
+  router's copper is unlocked; the 967 scripted items stay locked.
+- Board de46421a, KiCad 9.0.8 DRC under the project rules: 0 errors, 20 unconnected items. PYRO3_CS_HALF (R6733.1,
+  boxed in by the router's NEW_FLIGHT_CLEAR_REQUEST); FLIGHT_3V3, one track to a via at (111.49, 116.03); and 18 on
+  the logic feeds (VBAT_PROTECTED 6, 4V_PRE 5, LOGIC_SELECTED 5, CORE_HELD_4V 2), which no trial routed.
+- build.py refuses to write Burrito's board without `--overwrite-hand-edits` (HAND_EDITED). HANDOFF.md at the root;
+  the layout Open rows are Seán's, by hand; standing-rules.md marks D-21Nov.21 ended for Burrito.
+
