@@ -1435,8 +1435,47 @@ def _plane_joins():
     ]
 
 
+# U201's and U401's plane vias and stubs (D-24Nov.17), frozen from the routing trial's fan-out on board e532c976
+# (tools/layout/freeze_fanout.py: meter.fan_out with TRIAL_FANOUT, as the build's plane-pad check runs it), so the
+# MCUs' escapes are designed against vias that don't move. Each plane pin's own via, beside the pad on a stub; and for
+# a supply pin drawn to its capacitor (D-24Nov.16), the via the fan-out puts in that capacitor's pad. The rest of the
+# board's plane vias wait for stage D's own step. Counted before they were frozen (D-24Nov.15, rule 1): no plane pad
+# opens and no other pad's via moves, though C202.2 is now joined by U201.74's stub and takes no via of its own; no
+# in-pad via site that was clear closes; none lies in the lane of a pin open in the trial. Two lie in other pins' lanes
+# (C208.1's via in U201.29's, C202.1's in U201.72's): the lane check's, with the rest (D-24Nov.15, item 6).
+# (pin, net, via, stub path or None, stub width), board mm; vias Ø0.45 mm, 0.2 mm hole (spec.SIGNAL_VIA).
+MCU_PLANE_VIAS = [
+    ('C201.1', 'FLIGHT_3V3', (32.45, 45.517), None, None),
+    ('C202.1', 'FLIGHT_3V3', (49.325, 50.092), None, None),
+    ('C203.1', 'FLIGHT_3V3', (47.55, 64.107), None, None),
+    ('C204.1', 'FLIGHT_3V3', (49.295, 48.112), None, None),
+    ('C205.1', 'FLIGHT_3V3', (30.705, 53.687), None, None),
+    ('C208.1', 'FLIGHT_3V3', (35.28, 64.137), None, None),
+    ('U201.19', 'GND', (33.475, 57.812), [(32.325, 57.812), (33.475, 57.812)], 0.2),
+    ('U201.20', 'GND', (33.475, 58.312), [(32.325, 58.312), (33.475, 58.312)], 0.2),
+    ('U201.27', 'GND', (34.5, 61.337), [(34.5, 62.487), (34.5, 61.337)], 0.2),
+    ('U201.49', 'GND', (45.5, 63.637), [(45.5, 62.487), (45.5, 63.637)], 0.2),
+    ('U201.74', 'GND', (50.025, 49.312), [(47.675, 49.312), (50.025, 49.312)], 0.2),
+    ('U201.99', 'GND', (34.5, 45.987), [(34.5, 47.137), (34.5, 45.987)], 0.2),
+    ('U401.12', 'GND', (37.575, 78.455), [(38.675, 78.455), (37.575, 78.455)], 0.2),
+    ('U401.18', 'GND', (36.25, 73.43), [(36.25, 74.53), (36.25, 73.43)], 0.2),
+    ('U401.31', 'GND', (29.75, 73.43), [(29.75, 74.53), (29.75, 73.43)], 0.2),
+    ('U401.47', 'GND', (28.425, 83.455), [(27.325, 83.455), (28.425, 83.455)], 0.2),
+    ('U401.63', 'GND', (36.25, 84.78), [(36.25, 85.88), (36.25, 84.78)], 0.2),
+]
+
+
+def _mcu_plane_vias():
+    out = []
+    for pin, net, via, stub, w in MCU_PLANE_VIAS:
+        if stub:
+            out.append(dict(net=net, layer='F.Cu', w=w, path=stub))
+        out.append(dict(net=net, via=via, d=0.45, drill=0.2))
+    return out
+
+
 POWER_COPPER = (_power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
-                + _scripted_nets() + _can_pairs() + _plane_joins())
+                + _scripted_nets() + _can_pairs() + _plane_joins() + _mcu_plane_vias())
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire

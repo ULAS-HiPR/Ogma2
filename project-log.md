@@ -5796,3 +5796,16 @@ What the sheets show, read from the step-16 netlist:
   pads, scripted copper and fanned DRC. A run's meter.json says whether its settings are the build's
   (fanout_as_build). Board e532c976 unchanged; rules check 11 of 11, planted-miss test 11 of 11, the plane-pad
   planted test passes, 4 of 358 lanes crossed (as before).
+- Step 2, U201's and U401's plane vias frozen (spec.MCU_PLANE_VIAS, tools/layout/freeze_fanout.py): the trial's
+  fan-out on board e532c976 serves 17 of the two MCUs' plane pins: U201's six GND pins and U401's five each take a
+  via beside the pad on a 0.2 mm stub, and U201's six supply pins, drawn to their capacitors, take the via the
+  fan-out puts in the capacitor's pad (C201, C202, C203, C204, C205, C208): 17 vias, 11 stubs. Counted before they
+  were frozen (D-24Nov.15, rule 1): plane pads 0 of 623 open with them as without, no other pad's via moves, and
+  C202.2 is now joined by U201.74's stub (2.35 mm, east) and takes no via of its own (fan-out vias 438 to 420); no
+  in-pad via site that was clear closes (14 already closed by other copper are also within reach of the GND stubs);
+  of the trial's three open nets only ADC_PYRO1_CONTINUITY has frozen copper near its pin, U201.19's stub and via
+  under the body, none in its lane. The lane check with them in: 6 of 358 crossed, 2 new, both vias in capacitor
+  pads: C208.1's in U201.29's lane (RESET_MEMORY) and C202.1's in U201.72's (FLIGHT_SWDIO), each overlapping it by
+  0.05 mm². They join the four for item 6. Board 1d7320d5: DRC 0, rules check 11 of 11, planted-miss test 11 of 11,
+  plane pads 0 of 623 open by the build's check.
+- Fable's [model] bet settles x: two new crossings, but by fan-out vias, none by a stub (was 3/5).

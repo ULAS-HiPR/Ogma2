@@ -3525,9 +3525,9 @@
    "mm": 478.4
   },
   "power": {
-   "tracks": 464,
-   "vias": 130,
-   "mm": 1212.2
+   "tracks": 475,
+   "vias": 147,
+   "mm": 1226.0
   },
   "planes": [
    {
@@ -3563,7 +3563,7 @@
   ],
   "planes_filled": true
  },
- "uuids": 21123,
+ "uuids": 21151,
  "metrics": {
   "plane_nets": {
    "BOOT_3V3": "island",
@@ -8062,6 +8062,8 @@
    "U1301.7 4V_PRE: GND",
    "U1301.26 BUCK_PG: BUCK_FB",
    "U1701.5 FLIGHT_LDO_PG: FLIGHT_LDO_FB",
+   "U201.29 RESET_MEMORY: FLIGHT_3V3",
+   "U201.72 FLIGHT_SWDIO: FLIGHT_3V3",
    "U6001.7 FLIGHT_3V3: STAGE_ELIGIBLE"
   ],
   "plane_pads": 623,
@@ -8078,12 +8080,12 @@
     "waive_fire_logic": true,
     "budget": true
    },
-   "vias": 438,
-   "in_pad": 375,
-   "by_group": 24,
-   "scripted_joined": 240
+   "vias": 420,
+   "in_pad": 368,
+   "by_group": 18,
+   "scripted_joined": 264
   }
  },
  "probe_stub_misses": {},
- "seconds": 63.1
+ "seconds": 34.9
 }
