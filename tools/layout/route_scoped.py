@@ -42,6 +42,9 @@ def main():
     ap.add_argument('--grid', default='0.05')
     ap.add_argument('--layers', nargs='+', default=['F.Cu', 'In2.Cu', 'B.Cu'])
     ap.add_argument('--krt-args', default='', help="extra router flags, one string, e.g. '--layer-costs 1 10'")
+    ap.add_argument('--keep', help='JSON [{"pts": [[x, y], ...], "layers": [...]}]: more keep-outs (no tracks, no vias), '
+                                   "board mm, on their layers (default the router's); e.g. other pins' pads and lanes "
+                                   'on every layer, so a net leaves its pin off the row (D-24Nov.17, item 4)')
     a = ap.parse_args()
     spec = build.load_spec('croi2')
     ox, oy = spec.ORIGIN
@@ -67,6 +70,19 @@ def main():
         z.SetLayer(K.F_Cu); z.SetZoneName(f'LANE_{ref}_{num}')
         o = z.Outline(); o.NewOutline()
         for x, y in list(g.exterior.coords)[:-1]:
+            o.Append(K.FromMM(x + ox), K.FromMM(y + oy))
+        b.Add(z)
+        n_ko += 1
+    for k, it in enumerate(json.load(open(a.keep)) if a.keep else []):
+        z = K.ZONE(b)
+        z.SetIsRuleArea(True); z.SetDoNotAllowTracks(True); z.SetDoNotAllowVias(True)
+        z.SetDoNotAllowPads(False); z.SetDoNotAllowCopperPour(False); z.SetDoNotAllowFootprints(False)
+        ls = K.LSET()
+        for lay in it.get('layers', a.layers):
+            ls.AddLayer(b.GetLayerID(lay))
+        z.SetLayerSet(ls); z.SetZoneName(f'KEEP_{k}')
+        o = z.Outline(); o.NewOutline()
+        for x, y in it['pts']:
             o.Append(K.FromMM(x + ox), K.FromMM(y + oy))
         b.Add(z)
         n_ko += 1

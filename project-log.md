@@ -5809,3 +5809,22 @@ What the sheets show, read from the step-16 netlist:
   0.05 mm². They join the four for item 6. Board 1d7320d5: DRC 0, rules check 11 of 11, planted-miss test 11 of 11,
   plane pads 0 of 623 open by the build's check.
 - Fable's [model] bet settles x: two new crossings, but by fan-out vias, none by a stub (was 3/5).
+- Item 4, U201's west side (pins 14 to 18). ST AN5711 rev 5 read: section 2.4.4 and figure 10 describe the reset
+  circuit (the internal pull-up, a filter, a 20 µs pulse generator); it gives no capacitor, distance or routing
+  guidance for NRST, and its routing guidelines (section 9) don't mention reset. FLIGHT_NRST's leg under pins 15 to
+  17 (L6 along the row, then L1) is gone: from pin 14's in-pad via it runs west on L6, round pins 15 to 18's pads and
+  lanes, to its via at (25.875, 59.925) (route_scoped.py --layers B.Cu --keep). ADC_PYRO1_CONTINUITY is drawn whole
+  on L1: out of pin 18's inner end, under the body along x = 33.4 to the north-west corner, then north past U6701 to
+  U6901.3, R6714.1 and TP6.1 (route_scoped.py, pins 15 to 17 and 21 to 24's pads and lanes kept out on every layer);
+  the router left U201.18 and U6901.3 at 45°, so both exits are squared by hand. Counted before freezing (closes.py,
+  D-24Nov.15 rule 1): neither closes a plane-pad via, an in-pad via site or a lane, and no plane pad opens. In-pad
+  via sites: pins 16 and 17 are clear now (the old leg closed 15, 16 and 17); pin 15's stays closed by pin 14's own
+  via (0.5 mm pitch), pin 18's by pin 19's GND pad at GND's 0.2 mm. Board 3610724b: DRC 0, rules check 11 of 11,
+  planted-miss test 11 of 11, plane pads 0 of 623 open, 6 of 356 lanes crossed (both nets are drawn whole, so their
+  pins have no lane).
+- Routing trial (d25-3610724b, alone): 2 of 271 open, 0 of 22 rails, 0 of 623 plane pads, 231 s, router peak
+  2.7 GB: BMP_SCL and FLIGHT_SWCLK, both top-row pins among the eleven under L3 fire copper. ADC_PYRO1_CONTINUITY,
+  open six trials running, is drawn; TE_SDA and FLIGHT_BOOT0 now route. The router names BMP_3V3, PYRO1_LS_SELECT
+  and GND as BMP_SCL's blockers, and LORA_NCS, LORA_RESET_N, LORA_EN, PYRO2_FIRE and PYRO3_FIRE as FLIGHT_SWCLK's.
+- Tools: closes.py, rule 1's count for any copper before it's frozen (freeze_fanout.py now uses it);
+  route_scoped.py --keep, keep-outs on chosen layers.

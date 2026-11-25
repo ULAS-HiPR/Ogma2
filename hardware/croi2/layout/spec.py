@@ -1295,14 +1295,11 @@ SCRIPTED_RUNS = {
             ('In2.Cu', [(26.25, 82.95), (21.775, 87.425), (21.775, 87.475), (7.05, 102.2), (3.1, 102.2)]),
         ]),
     'FLIGHT_NRST': dict(
-        vias=[(8.7, 68.2), (13.6, 66.0), (16.7, 70.6), (18.225, 67.475), (25.875, 59.925), (28.4, 57.725), (32.25, 55.325)],
+        vias=[(8.7, 68.2), (13.6, 66.0), (16.7, 70.6), (18.225, 67.475), (25.875, 59.925), (32.25, 55.325)],
         runs=[
             ('B.Cu', [
                 (18.225, 67.475), (18.25, 67.475), (19.625, 66.1), (19.625, 64.85), (20.7, 63.775), (20.7, 63.05),
                 (22.65, 61.1), (24.7, 61.1), (25.875, 59.925),
-            ]),
-            ('B.Cu', [
-                (28.4, 57.725), (29.025, 57.725), (29.55, 57.2), (31.45, 57.2), (32.25, 56.4), (32.25, 55.325),
             ]),
             ('F.Cu', [(13.98, 66.95), (14.0, 67.0), (14.8, 66.2), (15.3, 66.2), (15.3, 66.188)]),
             ('F.Cu', [(14.3, 66.7), (13.6, 66.0)]),
@@ -1312,17 +1309,33 @@ SCRIPTED_RUNS = {
                 (11.0, 67.2), (10.9, 67.1), (10.9, 67.0), (10.89, 67.05),
             ]),
             ('F.Cu', [(8.7, 68.2), (8.0, 68.9), (4.6, 68.9), (4.635, 68.874)]),
-            ('F.Cu', [
-                (25.875, 59.925), (27.125, 58.675), (27.125, 58.5), (27.15, 58.475), (27.15, 58.4), (27.175, 58.375),
-                (27.175, 58.35), (27.2, 58.325), (27.2, 58.3), (28.05, 57.45), (28.1, 57.45), (28.175, 57.525),
-                (28.2, 57.525), (28.4, 57.725),
-            ]),
             ('F.Cu', [(32.25, 55.325), (32.275, 55.3), (32.325, 55.3), (32.325, 55.312)]),
             ('In2.Cu', [
                 (8.7, 68.2), (11.7, 68.2), (13.6, 66.3), (13.6, 66.0), (14.4, 66.0), (16.8, 68.4), (16.9, 68.4),
                 (17.1, 68.6), (17.1, 70.2), (16.7, 70.6),
             ]),
             ('In2.Cu', [(17.1, 68.6), (18.225, 67.475)]),
+            # U201.14 off the pin row (D-24Nov.17, item 4): from the pin's via west on L6, round pins 15 to 18's
+            # pads and lanes (route_scoped.py --layers B.Cu --keep, on the scratch build's fan-out)
+            ('B.Cu', [
+                (25.9, 59.9), (28.55, 57.25), (28.65, 57.35), (28.7, 57.35), (28.75, 57.4), (29.05, 57.4), (29.1, 57.35),
+                (29.15, 57.35), (29.8, 56.7), (29.8, 55.55), (30.05, 55.3), (32.25, 55.3),
+            ]),
+        ]),
+    # U201.18 to U6901.3, R6714.1 and TP6.1 (D-24Nov.17, item 4): routed by route_scoped.py on the scratch build's
+    # fan-out with FLIGHT_NRST off the row, pins 15 to 17 and 21 to 24's pads and lanes kept out on every layer; it
+    # leaves pin 18 square out of its inner end, under the body on L1, and U6901.3 square out of its outer end
+    'ADC_PYRO1_CONTINUITY': dict(
+        vias=[],
+        runs=[
+            ('F.Cu', [
+                (26.2, 27.1), (26.2, 26.7), (24.65, 26.7), (24.0, 26.05), (24.0, 19.9), (21.7, 17.6), (21.1, 17.6),
+            ]),
+            ('F.Cu', [
+                (24.65, 26.7), (24.5, 26.85), (24.5, 31.75), (27.05, 34.3), (27.6, 34.3), (28.45, 35.15),
+                (28.45, 35.5), (31.85, 38.9), (31.85, 47.0), (33.4, 48.55), (33.4, 56.95), (33.4, 57.3),
+                (33.05, 57.3),
+            ]),
         ]),
 }
 
@@ -1334,7 +1347,10 @@ def _scripted_nets():
     square out of the pin's inner end, under the body, to its run's via. U6001.6 (FLIGHT_NRST) can't leave outward:
     STAGE_ELIGIBLE's track crosses its lane and PYRO2_FIRE runs 1.3 mm east on L3, so no via fits out there, and none
     in the pad (0.2 mm from pin 5's fire logic and 0.1 mm from pin 7 can't both hold); it leaves inward under the
-    body to a via, the nearest legal site on the pin's axis. The rest is SCRIPTED_RUNS"""
+    body to a via, the nearest legal site on the pin's axis. The rest is SCRIPTED_RUNS. D-24Nov.17, item 4: FLIGHT_NRST
+    leaves U201.14 off the pin row (its leg under pins 15 to 17 is gone, so their in-pad via sites are free) and
+    ADC_PYRO1_CONTINUITY, open six trials running, is drawn whole. ST AN5711 rev 5 (2.4.4, figure 10) gives no
+    capacitor, distance or routing guidance for NRST."""
     out = [
         dict(net='GNSS_TX', layer='F.Cu', w=0.2, path=[(27.325, 80.955), (26.3, 80.955)]),
         dict(net='GNSS_TX', via=(26.3, 80.955), d=0.45, drill=0.2),
