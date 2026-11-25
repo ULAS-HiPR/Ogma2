@@ -1579,9 +1579,32 @@ def _top_row_escapes():
     return out
 
 
+# U6001's west pins round PYRO3_LS_SELECT (D-24Nov.17, Fable's fifth review, step 2). The L3 run lies under the west
+# pads, so none of pins 1 to 4 has an in-pad via site, no via fits between it and PYRO1_FIRE (1.5 mm apart, 1.6
+# needed), and the armed rail under C6001 closes every site north of y 39.1. STAGE_ARM_INVALID, open two trials
+# running, leaves pin 2 square out of its inner end to a via in the strip under the body, and C6001's supply pad takes
+# the strip's other via, so the fan-out still serves it. Pins 1 and 3 stay the router's: drawn to R6001 and R6005
+# with their lanes kept, they walled NEW_FLIGHT_CLEAR_REQUEST's piece in on L1, and in trial d25-9e2309a6 the router
+# took R6735.1's last way out with it (PYRO3_CS_MID open). Pin 4 is GND, the fan-out's.
+# (pin, net, path from the pad's centre, via or None, width), board mm; vias 0.45 / 0.2 mm.
+U6001_WEST_ESCAPES = [
+    ('U6001.2', 'STAGE_ARM_INVALID', [(41.7, 39.6), (42.75, 39.6)], (42.75, 39.6), 0.09),
+    ('C6001.1', 'FLIGHT_3V3', [(43.625, 37.775), (43.2, 39.2)], (43.2, 39.2), 0.3),
+]
+
+
+def _u6001_west():
+    out = []
+    for pin, net, path, via, w in U6001_WEST_ESCAPES:
+        out.append(dict(net=net, layer='F.Cu', w=w, path=path))
+        if via:
+            out.append(dict(net=net, via=via, d=0.45, drill=0.2))
+    return out
+
+
 POWER_COPPER = (_power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
                 + _scripted_nets() + _can_pairs() + _plane_joins() + _mcu_plane_vias()
-                + _top_row_escapes())
+                + _top_row_escapes() + _u6001_west())
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire

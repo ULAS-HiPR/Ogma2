@@ -12,6 +12,8 @@ route_scoped.py and freeze_fanout.py write them; PCB the board they're to be fro
    clears the board's copper without the items and not with them;
 3. the source trial's open nets: for each of their fine-pitch pins, the items in its lane (any layer) or within a
    lane's length of the pin;
+4. neighbours' ways out: each other connected pad within 2 mm of the items (off the planes, its net not drawn whole
+   once they're in) whose pocket (pockets.py) loses its last via site, or its way out of a 3 mm window;
 and the lane check (engine/metrics.lanes_crossed: L1 tracks and vias) without the items and with them.
 """
 import argparse
@@ -139,6 +141,29 @@ def count(spec, pcb, items, trial, skip=()):
             'in_lane': sorted({f'{fn} {lay}' for fn, g, lay in frozen if fn != M.short(d['net']) and g.intersects(lane)}),
             'within_1.5_mm': sorted({f'{fn} {lay}' for fn, g, lay in frozen if g.distance(c) < M.LANE_LEN})}
 
+    # 4. neighbours' ways out (Fable's fifth review): each other connected pad within 2 mm of the items, off the planes
+    # and not drawn whole once they're in, by pockets.pocket on the board without them and with them; listed when it
+    # loses its last via site or its way out of the window (U6001's pattern boxed R6735.1, trial d25-9e2309a6)
+    import pockets as PK
+    b2 = K.LoadBoard(str(pcb))
+    draw(b2, spec, items)
+    whole1 = M.nets_drawn_whole(M.BoardData(b2, spec.ORIGIN, (spec.W, spec.H)))
+    cu0, cu1 = PK.Copper(b0, spec), PK.Copper(b0, spec, extra=frozen)
+    mine = {fn for fn, _, _ in frozen}
+    boxed, looked = [], 0
+    for pin, (pn, pg, _) in sorted(cu0.pads.items()):
+        sn = M.short(pn)
+        if not pn or pn in planes or sn.startswith('unconnected-') or sn in whole1 or sn in mine:
+            continue
+        if min(g.distance(pg) for _, g, _ in frozen) > 2.0:
+            continue
+        looked += 1
+        p0, p1 = PK.pocket(cu0, pin), PK.pocket(cu1, pin)
+        if (p0['via_sites'] and not p1['via_sites']) or (p0['reaches_edge'] and not p1['reaches_edge']):
+            boxed.append(dict(pin=f'{pin} {sn}', via_sites=f"{p0['via_sites']} -> {p1['via_sites']}",
+                              reaches_edge=f"{p0['reaches_edge']} -> {p1['reaches_edge']}",
+                              bounded_by=p1['bounded_by'][:4]))
+
     n_l, crossed0 = M.lanes_crossed(bd, served=served0)
     _, crossed1 = M.lanes_crossed(bd, extra=[(fn, g) for fn, g, lay in frozen if lay in ('via', 'F.Cu')], served=served1)
     return {
@@ -149,6 +174,7 @@ def count(spec, pcb, items, trial, skip=()):
                                         f"{sum(1 for d in f1['fr']['done'] if d.get('via'))}"},
         '2_in_pad_sites_closed': closed, '2_already_closed_by_other_copper': also,
         '3_open_nets_beside': {'trial': str(trial), 'open': sorted(open_nets), 'pins': beside},
+        '4_neighbours_boxed': {'pins_looked_at': looked, 'boxed': boxed},
         'lanes': {'measured': n_l, 'crossed_before': crossed0, 'crossed_with_items': crossed1,
                   'new': sorted(set(crossed1) - set(crossed0)), 'gone': sorted(set(crossed0) - set(crossed1))},
     }

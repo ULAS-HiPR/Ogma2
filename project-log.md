@@ -5871,3 +5871,44 @@ What the sheets show, read from the step-16 netlist:
   3.3 GB; by band, one in 3 Comms and one in 4 Power and harness: STAGE_ARM_INVALID (two trials running, U6001.2;
   the router names PYRO3_LS_SELECT) and BRANCH_FAULT_N (U201.4 and U1501.4 left; it was open before the rescue in
   d25-a584d338 too; the router names FOINSE_SCL, now frozen at the top row, as its top blocker, near U201.4).
+
+## 25 November 2026: Fable's fifth review approved; boxed pins, U6001's west pins (D-24Nov.17, fifth review)
+
+- Seán approved Fable's fifth review: judge trials by boxed pins, not the open count; U6001's west pins as one
+  pattern; second vias at the CAN protection and bypass parts; D501 and D502 moved to their connectors; the 42 layout
+  sections read before any route is kept. He dropped the five datasheets cited on 25 Nov, then the 22 for the 42
+  chips, into Claude outputs on his Mac (ti.com and st.com are blocked from both shells); none goes in the repo.
+- The five, read directly: every section, document number and revision cited matches (TPS7A91: SBVS282A, revised
+  September 2026, as the summary had it). Two asks the summaries missed: TPS7A91 7.4.1.1, the GND pin straight to
+  the thermal pad and not to an external plane; TCAN3413 8.5.1, split termination (an example, not an ask).
+- Step 1, the pockets in trial d25-524fc7d1's routed board, by tools/layout/pockets.py (a 0.09 mm track on L1, L3
+  and L6 at the router's 0.1 mm grid and the trial's clearances, changing layer where a 0.45 mm via fits). U1501.4
+  is boxed on L1 (168 cells, no via site) by FOINSE_SCL's L1 track, U1501.5's pad and COMMS_LDO_IN_PRELINK's L1
+  track; FOINSE_SDA (L3), MUX_OV_USB and COMMS_BRANCH_EN (L6) close its via sites. All of it is router copper but
+  the pad. d25-a584d338 reached it on L1, and in 524fc7d1 FOINSE_SCL sits on that path at (41.9 to 42.0, 125.7).
+  U201.4 is not boxed in the routed board: 5,536 cells and 306 via sites within 3 mm, and a584d338's way out (an
+  in-pad via, then L6 north) is free there. ADC_PYRO1_CONTINUITY's frozen L1 run bounds it on L1's inner side and
+  closes the most via sites (885), but L3 and L6 pass. The router's 104-cell pocket was its state mid-run.
+- Fable's [model] bet on U201.4 settles x: no pocket there in the routed board (was 3/5).
+- Step 2, U6001's west pins round PYRO3_LS_SELECT. The L3 run lies under the west pads, no via fits between it
+  and PYRO1_FIRE, and the armed rail under C6001 closes every site north of y 39.1: the only via sites near are a
+  strip under U6001's body (x 42.65 to 43.23) and west of x 39.2.
+  - First pattern (board 9e2309a6): pin 2 (STAGE_ARM_INVALID) straight out of its outer end, between R6735's pads, to
+    a via at (39.0, 39.6); pins 1 and 3 drawn to R6001 and R6005, square and out of the lanes, pin 3 by its inner end
+    (a first try took C6001.1's only via site and was moved). Counted: nothing closed. Trial d25-9e2309a6 (alone):
+    1 of 271 open, PYRO3_CS_MID. R6735.1 boxed on L1 (159 cells, no via site) by frozen pins 1 and 2 and the router's
+    NEW_FLIGHT_CLEAR_REQUEST, which, the inner side walled by pin 3, came round R6735.1's west to reach pin 1.
+  - Second (board 832b743a): pins 1 and 3 back to the router; pin 2 square out of its inner end to a via in the strip
+    at (42.75, 39.6), C6001's supply pad's via frozen beside it at (43.2, 39.2) on a 0.3 mm stub (pin 2's via alone
+    took C6001.1's site). Counted: no plane pad opens, U6001.8's fan-out via moves 0.2 mm. DRC 0, plane pads 0 of
+    623, lanes 0 of 322. Trial d25-832b743a (alone): 1 of 271 open, 0 of 22 rails, 0 of 623 plane pads, 161 s, peak
+    1.9 GB: PYRO3_CS_HALF. R6733.1 boxed on L1 (583 cells, no via site) by the router's NEW_FLIGHT_CLEAR_REQUEST,
+    U6001.8's and C6001.1's pads and PYRO3_FIRE's and STAGE_ELIGIBLE's frozen tracks. STAGE_ARM_INVALID,
+    PYRO3_CS_MID and BRANCH_FAULT_N route.
+  - Counted, not frozen: NEW_FLIGHT_CLEAR_REQUEST designed out of R6001's east side to a via past the armed rail,
+    then on L3 to U201.88's escape. It takes R6001.2's plane via and closes U201.79's in-pad via site.
+  - U6001, R6001, R6005, R6735, R6733 and C6001 sit where no via fits, so six nets leave them on L1 alone and the
+    router boxes whichever it reaches last. Moving those parts, or the armed rail: Open.
+- Tools: pockets.py, the pocket measure (read only); closes.py counts a fourth thing, a neighbour that loses its last
+  via site or its way out to the frozen copper. It sees frozen copper only: it found nothing for the first pattern,
+  whose box the router's copper closed.
