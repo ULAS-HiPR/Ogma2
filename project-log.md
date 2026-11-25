@@ -5828,3 +5828,19 @@ What the sheets show, read from the step-16 netlist:
   and GND as BMP_SCL's blockers, and LORA_NCS, LORA_RESET_N, LORA_EN, PYRO2_FIRE and PYRO3_FIRE as FLIGHT_SWCLK's.
 - Tools: closes.py, rule 1's count for any copper before it's frozen (freeze_fanout.py now uses it);
   route_scoped.py --keep, keep-outs on chosen layers.
+- Item 5, U201's top-row escapes as one pattern (spec.U201_TOP_ESCAPES): the eleven pins whose in-pad via site lies
+  under L3 fire copper leave square out of their inner ends, south under the body on L1, each to a via at least
+  0.8 mm from every L3 fire run (0.5 mm edge to edge) and clear of FLIGHT_NRST's and GNSS_TX's L6 legs: FOINSE_SCL
+  and FLIGHT_BOOT0 west of PYRO2_LS_SELECT (x 35.75); BMP_SDA, BMP_SCL and TE_SDA between PYRO1_LS_SELECT and
+  PYRO1_FIRE (x 38.75); NEW_FLIGHT_CLEAR_REQUEST, STAGING_ARM_SENSE, BUZZER_DRIVE and MAG_INT between PYRO1_FIRE and
+  PYRO2_FIRE (x 40.85 to 42.0); TDK_DRDY and FLIGHT_SWCLK west of PYRO2_FIRE (x 44.95). The jogs nest, so none
+  crosses another, and the other top-row pins keep the outer side and their lanes. Routed alone, the router had
+  taken four of the eleven under the body too (MAG_INT, STAGING_ARM_SENSE, FOINSE_SCL, BMP_SDA). Counted before
+  freezing (closes.py): no plane-pad via, in-pad via site or lane closed. Board a584d338: DRC 0, rules check 11 of
+  11, planted-miss test 11 of 11, plane pads 0 of 623 open, 6 of 356 lanes crossed (as before).
+- Routing trial (d25-a584d338, alone): 1 of 271 open, 0 of 22 rails, 0 of 623 plane pads, 206 s, router peak
+  2.4 GB: STAGE_ARM_INVALID, at U6001.2, the staging latch's input. No U201 pin is open. The router names
+  PYRO3_LS_SELECT, COMMS_SWO, the latch's Q net and NEW_FLIGHT_CLEAR_REQUEST as blockers; PYRO3_LS_SELECT runs
+  under U6001's west pins on L3.
+- Fable's [model] bet from D-24Nov.15 settles ok: with pins 14 to 18 and the eleven top-row escapes drawn, the
+  trial has 1 net open, none of the sixteen pins (was 3/5).

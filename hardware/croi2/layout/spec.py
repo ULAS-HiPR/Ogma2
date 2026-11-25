@@ -1490,8 +1490,41 @@ def _mcu_plane_vias():
     return out
 
 
+# U201's top-row escapes (D-24Nov.17, item 5; D-24Nov.15: one scripted block, round the fire logic as it is). The
+# eleven pins whose in-pad via site lies under L3 fire copper (tools/layout/inpad_fire.py) leave square out of their
+# inner ends, south under the body on L1, to a via at least 0.8 mm from every L3 fire run (0.5 mm edge to edge) and
+# clear of FLIGHT_NRST's and GNSS_TX's L6 legs: west of PYRO2_LS_SELECT (x 35.75), between PYRO1_LS_SELECT and
+# PYRO1_FIRE (x 38.75, south of FLIGHT_NRST's leg), between PYRO1_FIRE and PYRO2_FIRE (x 40.85 to 44.95). Each jog
+# nests inside the next, so none crosses another; the other top-row pins keep the outer side, their lanes untouched.
+# (pin, net, pin x, the jog's y, the via's x): a track from the pad's centre (y 47.137) south to the jog, then across
+# to the via; 0.09 mm, vias 0.45 / 0.2 mm; board mm.
+U201_TOP_ESCAPES = [
+    ('U201.95', 'FOINSE_SCL', 36.5, 48.55, 35.75),
+    ('U201.94', 'FLIGHT_BOOT0', 37.0, 49.15, 35.75),
+    ('U201.93', 'BMP_SDA', 37.5, 50.65, 38.75),
+    ('U201.92', 'BMP_SCL', 38.0, 50.05, 38.75),
+    ('U201.89', 'TE_SDA', 39.5, 49.45, 38.75),
+    ('U201.88', 'NEW_FLIGHT_CLEAR_REQUEST', 40.0, 51.4, 40.85),
+    ('U201.87', 'STAGING_ARM_SENSE', 40.5, 50.8, 40.9),
+    ('U201.86', 'BUZZER_DRIVE', 41.0, 50.2, 41.0),
+    ('U201.84', 'MAG_INT', 42.0, 49.65, 42.0),
+    ('U201.77', 'TDK_DRDY', 45.5, 48.6, 44.95),
+    ('U201.76', 'FLIGHT_SWCLK', 46.0, 49.2, 44.95),
+]
+
+
+def _top_row_escapes():
+    out = []
+    for pin, net, x, yt, xv in U201_TOP_ESCAPES:
+        path = [(x, 47.137), (x, yt)] + ([(xv, yt)] if xv != x else [])
+        out.append(dict(net=net, layer='F.Cu', w=0.09, path=path))
+        out.append(dict(net=net, via=(xv, yt), d=0.45, drill=0.2))
+    return out
+
+
 POWER_COPPER = (_power_copper() + _logic_feeds() + _threshold_nodes() + _rf_lines() + _crystals() + _usb_pair()
-                + _scripted_nets() + _can_pairs() + _plane_joins() + _mcu_plane_vias())
+                + _scripted_nets() + _can_pairs() + _plane_joins() + _mcu_plane_vias()
+                + _top_row_escapes())
 
 # the planes (D-22Nov.29, D-23Nov.2, D-23Nov.30): L2 and L4 GND whole; L5 FLIGHT_3V3, 1 mm in from the edge so the GND
 # planes reach past it, with GND under the corridor, the arm feed and the strip (their L6 copper and 0.5 mm, the fire
