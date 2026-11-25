@@ -127,7 +127,8 @@ def count(spec, pcb, items, trial, skip=()):
 
     mj = json.load(open(Path(trial) / 'meter.json'))
     open_nets = set(mj['krt'].get('open', []))
-    lanes = {(r, num): g for r, num, net, g in M.pin_lanes(bd)}
+    served0, served1 = M.served_plane_pins(bd, f0), M.served_plane_pins(bd, f1)
+    lanes = {(r, num): g for r, num, net, g in M.pin_lanes(bd, served=served0)}
     beside = {}
     for d in bd.pads:
         if M.short(d['net']) not in open_nets or (d['ref'], d['num']) not in lanes:
@@ -138,8 +139,8 @@ def count(spec, pcb, items, trial, skip=()):
             'in_lane': sorted({f'{fn} {lay}' for fn, g, lay in frozen if fn != M.short(d['net']) and g.intersects(lane)}),
             'within_1.5_mm': sorted({f'{fn} {lay}' for fn, g, lay in frozen if g.distance(c) < M.LANE_LEN})}
 
-    n_l, crossed0 = M.lanes_crossed(bd)
-    _, crossed1 = M.lanes_crossed(bd, extra=[(fn, g) for fn, g, lay in frozen if lay in ('via', 'F.Cu')])
+    n_l, crossed0 = M.lanes_crossed(bd, served=served0)
+    _, crossed1 = M.lanes_crossed(bd, extra=[(fn, g) for fn, g, lay in frozen if lay in ('via', 'F.Cu')], served=served1)
     return {
         '1_plane_pads': {'before': f"{len(f0['plane_pads_open'])} of {f0['plane_pads']} open",
                          'after': f"{len(f1['plane_pads_open'])} of {f1['plane_pads']} open",

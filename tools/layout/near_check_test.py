@@ -7,8 +7,9 @@ The board's pads are read once; each test moves one part's pads 30 mm away in me
 touched) or empties a row's measurement, then runs engine/metrics.near_rules and passes when the expected part
 appears in the misses. A further test drops one passive's rows and expects it listed without a rule; two take an
 accepted written exception's approval, then its mitigation, away and expect a miss; one moves a part off a line its
-rule measures as drawn; one plants a track across a fine-pitch pin's lane (D-24Nov.11); and the last breaks a net
-drawn whole, whose pins have no lane, and expects the lane back (D-24Nov.13).
+rule measures as drawn; one plants a track across a fine-pitch pin's lane (D-24Nov.11); one breaks a net drawn
+whole, whose pins have no lane, and expects the lane back (D-24Nov.13); and the last takes a plane pin's via away and
+expects its lane back (D-24Nov.15).
 Prints one line per test and exits non-zero if any fails.
 """
 import copy
@@ -126,6 +127,19 @@ def main():
         now = any((r2, q2) == (r, q) for r2, q2, _, _ in M.pin_lanes(bd, whole=whole))
         back = any((r2, q2) == (r, q) for r2, q2, _, _ in M.pin_lanes(moved(bd, other)))
         tests.append((f"lanes, drawn whole: {r}.{q} ({n}) has {'a lane' if now else 'none'}; {other} moved 30 mm -> "
+                      f"{'its lane back' if back else 'still none'}", back and not now))
+    # a plane pin whose via is in place has no lane (D-24Nov.15): with the trial's fan-out a FLIGHT_3V3 pin's lane goes;
+    # taken out of the served set, as if its via were missing, it comes back
+    import meter
+    served = M.served_plane_pins(bd, meter.fan_out(B.K.LoadBoard(str(pcb)), spec, **spec.TRIAL_FANOUT))
+    pp = next(((r, q, n) for r, q, n, g in M.pin_lanes(bd, served=set()) if (r, q) in served), None)
+    if pp is None:
+        tests.append(('lanes, plane pins: no served plane pin with a lane to test', False))
+    else:
+        r, q, n = pp
+        now = any((r2, q2) == (r, q) for r2, q2, _, _ in M.pin_lanes(bd, served=served))
+        back = any((r2, q2) == (r, q) for r2, q2, _, _ in M.pin_lanes(bd, served=served - {(r, q)}))
+        tests.append((f"lanes, plane pins: {r}.{q} ({n}) has {'a lane' if now else 'none'}; its via taken away -> "
                       f"{'its lane back' if back else 'still none'}", back and not now))
     for t, ok in tests:
         print(('PASS ' if ok else 'FAIL ') + t)

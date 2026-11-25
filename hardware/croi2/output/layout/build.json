@@ -3525,9 +3525,9 @@
    "mm": 478.4
   },
   "power": {
-   "tracks": 506,
-   "vias": 157,
-   "mm": 1310.6
+   "tracks": 528,
+   "vias": 161,
+   "mm": 1360.5
   },
   "planes": [
    {
@@ -3563,7 +3563,7 @@
   ],
   "planes_filled": true
  },
- "uuids": 21192,
+ "uuids": 21218,
  "metrics": {
   "plane_nets": {
    "BOOT_3V3": "island",
@@ -4233,6 +4233,72 @@
     "what": "D4501",
     "mm": 1.0,
     "source": "D-22Nov.8: the GNSS ESD part on the line between connector and module; 1 mm [J]. Measured from the drawn line since D-24Nov.11: the chord stood in for a line not yet drawn",
+    "measured": 1,
+    "misses": [],
+    "accepted": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "D501",
+    "mm": 5.0,
+    "source": "TI SLVSFW5D 9.1, SLLSFS8A 8.5.1: as close to the connector as possible; 5 mm [J]; D-24Nov.17",
+    "measured": 2,
+    "misses": [
+     "D501.1 to J501: 8.3 mm",
+     "D501.2 to J501: 8.7 mm"
+    ],
+    "accepted": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "D502",
+    "mm": 5.0,
+    "source": "TI SLVSFW5D 9.1, SLLSFS8A 8.5.1: as close to the connector as possible; 5 mm [J]; D-24Nov.17",
+    "measured": 2,
+    "misses": [
+     "D502.1 to J502: 6.6 mm",
+     "D502.2 to J502: 8.4 mm"
+    ],
+    "accepted": []
+   },
+   {
+    "rule": "part_to_pins",
+    "what": "D4401",
+    "mm": 5.0,
+    "source": "ST USBLC6-2 2.3: as close to the connector as possible; 5 mm [J]; D-24Nov.17",
+    "measured": 5,
+    "misses": [],
+    "accepted": [
+     "D4401.1 to J4401: 11.8 mm (the USB ESD part, about 10 mm from J4401: the nearest spot east of the armed corridor (D-24Nov.13); ST asks for short GND and VBUS tracks, so each of those pins takes a via 1.1 mm out; D-24Nov.13)",
+     "D4401.3 to J4401: 12.1 mm (the USB ESD part, about 10 mm from J4401: the nearest spot east of the armed corridor (D-24Nov.13); ST asks for short GND and VBUS tracks, so each of those pins takes a via 1.1 mm out; D-24Nov.13)",
+     "D4401.4 to J4401: 9.9 mm (the USB ESD part, about 10 mm from J4401: the nearest spot east of the armed corridor (D-24Nov.13); ST asks for short GND and VBUS tracks, so each of those pins takes a via 1.1 mm out; D-24Nov.13)",
+     "D4401.5 to J4401: 9.4 mm (the USB ESD part, about 10 mm from J4401: the nearest spot east of the armed corridor (D-24Nov.13); ST asks for short GND and VBUS tracks, so each of those pins takes a via 1.1 mm out; D-24Nov.13)",
+     "D4401.6 to J4401: 9.5 mm (the USB ESD part, about 10 mm from J4401: the nearest spot east of the armed corridor (D-24Nov.13); ST asks for short GND and VBUS tracks, so each of those pins takes a via 1.1 mm out; D-24Nov.13)"
+    ]
+   },
+   {
+    "rule": "on_line",
+    "what": "D501",
+    "mm": 1.0,
+    "source": "TI SLLSFS8A 8.5.1: the protection in the direction of the signal path; 1 mm [J]; D-24Nov.17",
+    "measured": 1,
+    "misses": [],
+    "accepted": []
+   },
+   {
+    "rule": "on_line",
+    "what": "D502",
+    "mm": 1.0,
+    "source": "TI SLLSFS8A 8.5.1: the protection in the direction of the signal path; 1 mm [J]; D-24Nov.17",
+    "measured": 1,
+    "misses": [],
+    "accepted": []
+   },
+   {
+    "rule": "on_line",
+    "what": "D4401",
+    "mm": 1.0,
+    "source": "ST USBLC6-2 2.3: the pair runs straight through its pads; 1 mm [J]; D-24Nov.17",
     "measured": 1,
     "misses": [],
     "accepted": []
@@ -8009,9 +8075,9 @@
     "accepted": []
    }
   ],
-  "near_misses": 0,
-  "near_accepted": 9,
-  "near_measured": "464 distances in 440 rows",
+  "near_misses": 4,
+  "near_accepted": 14,
+  "near_measured": "476 distances in 446 rows",
   "passives_without_rule": [],
   "chips_without_layout_ref": [
    "U1002",
@@ -8057,15 +8123,8 @@
    "U8001",
    "U9101"
   ],
-  "lanes_measured": 356,
-  "lanes_crossed": [
-   "U1301.7 4V_PRE: GND",
-   "U1301.26 BUCK_PG: BUCK_FB",
-   "U1701.5 FLIGHT_LDO_PG: FLIGHT_LDO_FB",
-   "U201.29 RESET_MEMORY: FLIGHT_3V3",
-   "U201.72 FLIGHT_SWDIO: FLIGHT_3V3",
-   "U6001.7 FLIGHT_3V3: STAGE_ELIGIBLE"
-  ],
+  "lanes_measured": 322,
+  "lanes_crossed": [],
   "plane_pads": 623,
   "plane_pads_open": 0,
   "plane_pads_open_by_band": {},
@@ -8083,9 +8142,9 @@
    "vias": 420,
    "in_pad": 368,
    "by_group": 18,
-   "scripted_joined": 275
+   "scripted_joined": 280
   }
  },
  "probe_stub_misses": {},
- "seconds": 37.5
+ "seconds": 37.2
 }

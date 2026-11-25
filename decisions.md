@@ -223,6 +223,8 @@ umbilical the same limits apply, because U1001 sits after the ORing (D-2Nov.7).
 | Recovery parameters | Main altitude (at or below 450 m AGL at EuRoC, D-18Nov.5), lockouts and timers per vehicle (D-6.11); descent 23–46 m/s under the drogue and under 9 m/s under the main (LV-0360, 0380) | Anav, vehicle lead | 7 Oct |
 | Propulsion eFuse U2001 fault mode | Propulsion owner decides latch-off vs retry | Fajita owner | 7 Oct |
 | Foinse "dumb driver" allowance in the LTS boundary copy | Accept or remove in the controlling copy | Seán, LTS | 7 Oct |
+| D501 and D502, the CAN ESD parts, sit 6.6 to 8.7 mm from their connectors' pins against the distance check's new 5 mm row (D-24Nov.17, item 7). TI asks for them as close to the connector as possible (SLVSFW5D 9.1; SLLSFS8A 8.5.1) and gives no number; 5 mm is [J] | Move each to its connector on its drawn pair, which redraws CAN_RUNS there: a part move, so Seán's. The alternatives: another number, or written exceptions with a mitigation, as D4401's | Seán | 25 Nov |
+| TCAN3413's layout section asks for at least two vias on the supply and ground of the bypass capacitors and protection devices (SLLSFS8A 8.5.1); the fan-out gives each plane pad one | Count the CAN parts' pads with one via, then add a second where one fits, by script | Seán, Fable | 25 Nov |
 
 Closed on 2 November: pad power and pack (D-2Nov.6, D-2Nov.7); pad state after
 arming (D-2Nov.10); magnetometer (D-2Nov.11); grid fins and the Enchilada rows

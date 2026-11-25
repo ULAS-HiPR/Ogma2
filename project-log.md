@@ -5844,3 +5844,30 @@ What the sheets show, read from the step-16 netlist:
   under U6001's west pins on L3.
 - Fable's [model] bet from D-24Nov.15 settles ok: with pins 14 to 18 and the eleven top-row escapes drawn, the
   trial has 1 net open, none of the sixteen pins (was 3/5).
+- Item 6, the lane check to zero (D-24Nov.15): 0 of 322 lanes crossed, from 6 of 356. A plane pin whose via is in
+  place, the fan-out's or the spec's, has no lane, as a GND pin hasn't (engine/metrics.served_plane_pins; U6001.7
+  and the other FLIGHT_3V3 pins leave the check; the planted test takes one pin's via away and its lane comes back,
+  12 of 12). TI's layout sections read first: SLVSFS5A (TPSM63603) 10.1 and table 5-1, RFBT and RFBB as close as
+  possible to FB and the FB trace short; SBVS282A (TPS7A91) 7.4.1, no vias or long traces in the LDO circuit; neither
+  says anything about PG. Both dividers pass their distance rows, so the feedback copper stays and BUCK_PG and
+  FLIGHT_LDO_PG are drawn whole (route_scoped.py; BUCK_PG's exit squared by hand). Counted before freezing
+  (closes.py): no plane-pad via or lane; FLIGHT_LDO_PG's L3 run closes the in-pad via sites of U1701.2 and C1706.1,
+  whose net, FLIGHT_3V3_PRELINK, is drawn whole and takes no via. U1301.7's lane was crossed by the buck's input
+  loop return (TI: input capacitors tight between VIN and PGND), so pins 5 and 6's return now runs west and drops into
+  C1304's GND pad west of the lane, its via with it; drawing 4V_PRE whole instead would have frozen five long routes.
+  C208.1's and C202.1's frozen vias each move inside their pads, 0.18 and 0.17 mm, out of U201.29's and U201.72's
+  lanes; no neighbour's in-pad via site changes. Board 524fc7d1: DRC 0, rules check 11 of 11, plane pads 0 of 623.
+- Item 7: TI's CAN layout sections read: SLLSFS8A (TCAN3413) 8.5.1, the protection close to the bus connector and in
+  the direction of the signal path, decoupling as close as possible to VCC and VIO, at least two vias on the supply
+  and ground of bypass capacitors and protection devices; SLVSFW5D (ESD2CAN24-Q1) 9.1, as close to the connector as
+  possible, protected traces straight. Cited in spec.LAYOUT_REFS, with U1301's and U1701's. New distance rows: D501,
+  D502 and D4401 within 5 mm [J] of their connectors' pins (neither maker gives a number), and each on its drawn line
+  within 1 mm [J]. The line rows pass. D4401's misses (9.4 to 12.1 mm) are accepted as the exception D-24Nov.13
+  approved, its mitigation checked on the board: a via within 1.5 mm of its GND and VBUS pins, each joined by a drawn
+  track (a new check kind). D501 (8.3 and 8.7 mm) and D502 (6.6 and 8.4 mm) miss: Open, Seán's call. TCAN3413's two
+  vias per protection and bypass pad: Open. 42 chips served by a distance rule still have no layout section cited, as
+  before this block.
+- Routing trial (d25-524fc7d1, alone): 2 of 271 open, 0 of 22 rails, 0 of 623 plane pads, 248 s, router peak
+  3.3 GB; by band, one in 3 Comms and one in 4 Power and harness: STAGE_ARM_INVALID (two trials running, U6001.2;
+  the router names PYRO3_LS_SELECT) and BRANCH_FAULT_N (U201.4 and U1501.4 left; it was open before the rescue in
+  d25-a584d338 too; the router names FOINSE_SCL, now frozen at the top row, as its top blocker, near U201.4).

@@ -354,6 +354,19 @@ NEAR = [
     dict(rule='on_line', part='D4501', net='GNSS_RF', **{'from': 'J4501', 'to': 'U4504'}, mm=1.0, line='drawn',
          src='D-22Nov.8: the GNSS ESD part on the line between connector and module; 1 mm [J]. Measured from the '
              'drawn line since D-24Nov.11: the chord stood in for a line not yet drawn'),
+    # the CAN and USB ESD parts (D-24Nov.15, D-24Nov.17 item 7). TI SLLSFS8A (TCAN3413) 8.5.1: the protection close to
+    # the bus connector, in the direction of the signal path; TI SLVSFW5D (ESD2CAN24-Q1) 9.1: as close to the connector
+    # as possible; ST USBLC6-2 2.3: as close as possible to the connector. None gives a number: 5 mm to the connector's
+    # pins [J], and on the drawn line 1 mm [J], as D4501 and D4601. D4401 is the exception D-24Nov.13 approved
+    *[dict(rule='part_to_pins', part=p, ic=j, mm=5.0,
+           src=f'{why}: as close to the connector as possible; 5 mm [J]; D-24Nov.17') for p, j, why in (
+        ('D501', 'J501', 'TI SLVSFW5D 9.1, SLLSFS8A 8.5.1'), ('D502', 'J502', 'TI SLVSFW5D 9.1, SLLSFS8A 8.5.1'),
+        ('D4401', 'J4401', 'ST USBLC6-2 2.3'))],
+    *[dict(rule='on_line', part=p, net=net, **{'from': j, 'to': u}, mm=1.0, line='drawn',
+           src=f'{why}; 1 mm [J]; D-24Nov.17') for p, net, j, u, why in (
+        ('D501', 'CAN_H', 'J501', 'U503', 'TI SLLSFS8A 8.5.1: the protection in the direction of the signal path'),
+        ('D502', 'CAN2_H', 'J502', 'U505', 'TI SLLSFS8A 8.5.1: the protection in the direction of the signal path'),
+        ('D4401', 'USB_DP_CONN', 'J4401', 'R4405', 'ST USBLC6-2 2.3: the pair runs straight through its pads'))],
     # the pyro output stage (D-22Nov.27's stamp, PYRO_STAMP below): each channel's supply capacitor, limit and sense
     # resistors at their high side's pins, Kelvin (sweep section 5); its low side's gate parts at the FET's gate [J]
     *[dict(rule='part_to_pins', part=p, ic=f'U6{c}04', mm=1.0, src=f'{_SWEEP}: at the pins, Kelvin; D-22Nov.27')
@@ -660,6 +673,9 @@ NEAR_EXCEPTIONS = {
                      " node is drawn on L3 between the planes"),
     'R1402': dict(approved='D-24Nov.7', check=('drawn', 'CORE_OV_DIV'),
                  why="U1401's OVLO bottom, about 10 mm out: as R1401; its node is drawn on L3 between the planes"),
+    'D4401': dict(approved='D-24Nov.13', check=('vias', 'D4401', ('2', '5'), 1.5),
+                  why="the USB ESD part, about 10 mm from J4401: the nearest spot east of the armed corridor (D-24Nov.13);"
+                      " ST asks for short GND and VBUS tracks, so each of those pins takes a via 1.1 mm out"),
 }
 for _r in NEAR:
     if _r['rule'] == 'part_to_pins' and _r.get('part') in NEAR_EXCEPTIONS:
@@ -673,15 +689,23 @@ LAYOUT_REFS = {
     'U1401': 'TI SNOSDC0A (LM7310/LM73100), 10.1: the EN/UVLO, OVLO and PGTH resistors and C(dVdT) close to their '
              'pins; OVLO acts in 1.1 us',
     # read in power parts 2 and 3 (23 Nov, D-23Nov.29): the layout brief's block templates, from TI's layout sections
-    'U1301': "TI TPSM63603 (layout brief 4, burrito-sweep 155; pin table read 23 Nov): input capacitors tight between "
-             "VIN and PGND, AGND to PGND at one point, the FB divider at FB, VCC's 1 uF to PGND, SW copper minimal",
-    'U1701': 'TI TPS7A91 (layout brief 4, burrito-sweep 157): input and output capacitors within 2 mm, grounded '
-             'together at GND; noise and feedback parts on the quiet side',
+    'U1301': "TI SLVSFS5A (TPSM63603), 10.1 and table 5-1 (read 25 Nov): input and output capacitors close to the pins, "
+             "large VIN, VOUT and PGND copper with multiple vias, AGND to PGND at one point, RFBT and RFBB as close as "
+             "possible to FB and the FB trace short; nothing on PG. Before: layout brief 4, burrito-sweep 155",
+    'U1701': 'TI SBVS282A (TPS7A91), 7.4.1 and 7.4.1.1 (read 25 Nov): input and output capacitors as near as '
+             'practical to their pins, no vias or long traces in the LDO circuit, the divider top sensed at the load, '
+             'NR/SS and the divider bottom to the thermal pad; nothing on PG. Before: layout brief 4, burrito-sweep 157',
     'U1801': 'as U1701 (TPS7A91)',
     'U1901': 'as U1701 (TPS7A91)',
     # the rest of the layout brief's block table (section 4), read when the brief was written
-    'U503': 'TCAN3413, https://www.ti.com/lit/ds/symlink/tcan3413.pdf p. 29 (layout brief 4)',
-    'U505': 'TCAN3413, https://www.ti.com/lit/ds/symlink/tcan3413.pdf p. 29 (layout brief 4)',
+    'U503': 'TI SLLSFS8A (TCAN3413), 8.5.1 (read 25 Nov): protection and filtering close to the bus connector, in the '
+            'direction of the signal path; decoupling as close as possible to VCC and VIO; at least two vias for the '
+            'supply and ground of bypass capacitors and protection devices',
+    'U505': 'as U503 (TI SLLSFS8A, 8.5.1)',
+    'D501': 'TI SLVSFW5D (ESD2CAN24-Q1), 9.1 (read 25 Nov): as close to the connector as possible; unprotected traces '
+            'kept away from the protected ones between it and the connector; protected traces straight, no sharp '
+            'corners; pin 3 to GND by a thick, short trace',
+    'D502': 'as D501 (TI SLVSFW5D, 9.1)',
     'U6304': 'TPS1H100-Q1, https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf (layout brief 4)',
     'U6404': 'TPS1H100-Q1, https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf (layout brief 4)',
     'U6504': 'TPS1H100-Q1, https://www.ti.com/lit/ds/symlink/tps1h100-q1.pdf (layout brief 4)',
@@ -1062,10 +1086,11 @@ def _logic_feeds():
     t(LS, F, 0.9, (26.6, 124.7), (28.35, 124.7))
     t(LS, F, 0.25, (28.3, 123.58), (28.3, 124.5))
     # the loops' returns (TI: input capacitors tight between VIN and PGND): PGND pins 5-6 to C1304's GND pad and 16-17
-    # to C1303's; vias in those pads and two in each of the buck's PGND centre pads (28, 29)
-    t(G, F, 0.9, (28.35, 126.15), (27.2, 126.15), (26.5, 127.0))
+    # to C1303's; vias in those pads and two in each of the buck's PGND centre pads (28, 29). Pins 5-6's return runs
+    # west and drops into C1304's pad west of pin 7's lane, its via with it (D-24Nov.17, item 6: it crossed the lane)
+    t(G, F, 0.9, (28.35, 126.15), (25.9, 126.15), (25.9, 126.9))
     t(G, F, 0.9, (31.95, 126.15), (33.6, 126.15))
-    v(G, 0.6, 0.3, (24.9, 127.45), (26.2, 127.45), (33.775, 126.15),
+    v(G, 0.6, 0.3, (24.9, 127.45), (25.95, 127.5), (33.775, 126.15),
       (29.7, 124.75), (30.5, 124.75), (29.7, 125.95), (30.5, 125.95))
     # the buck's output: its VOUT pins either side of SW (pin 11, left bare: TI) down into C1305 and C1306, the
     # centre VOUT pad (30) tied in, pins 7-8 and 14-15 joined; two vias in each output capacitor's GND pad
@@ -1325,6 +1350,38 @@ SCRIPTED_RUNS = {
     # U201.18 to U6901.3, R6714.1 and TP6.1 (D-24Nov.17, item 4): routed by route_scoped.py on the scratch build's
     # fan-out with FLIGHT_NRST off the row, pins 15 to 17 and 21 to 24's pads and lanes kept out on every layer; it
     # leaves pin 18 square out of its inner end, under the body on L1, and U6901.3 square out of its outer end
+    # U1301.26 square out of its pad and by two vias under BUCK_FB, to R1304 and TP36 (D-24Nov.17, item 6: the feedback copper stays where TI asks for it, so the PG net is drawn whole and its
+    # pin has no lane; route_scoped.py on trial d25-a584d338's fan-out)
+    'BUCK_PG': dict(
+        vias=[(28.35, 121.45), (28.35, 120.05)],
+        runs=[
+            ('B.Cu', [
+                (28.35, 121.45), (28.35, 120.05),
+            ]),
+            ('F.Cu', [
+                (29.1, 122.15), (29.1, 121.8), (28.4, 121.45),
+            ]),
+            ('F.Cu', [
+                (28.35, 120.05), (26.4, 120.05), (25.6, 119.25), (25.6, 116.7), (26.1, 116.2), (27.1, 116.2),
+                (32.3, 111.0), (32.3, 107.73),
+            ]),
+        ]),
+    # from the via at U1701.5 on L3, to R1703 and TP38 (D-24Nov.17, item 6: the feedback copper stays where TI asks for it, so the PG net is drawn whole and its
+    # pin has no lane; route_scoped.py on trial d25-a584d338's fan-out)
+    'FLIGHT_LDO_PG': dict(
+        vias=[(21.3, 114.6), (21.65, 121.75)],
+        runs=[
+            ('F.Cu', [
+                (21.3, 114.6), (22.1, 113.8), (22.1, 113.75), (21.6, 113.25), (21.6, 108.25), (21.65, 108.2),
+                (21.65, 108.1), (26.0, 103.75), (31.15, 103.75),
+            ]),
+            ('In2.Cu', [
+                (18.35, 117.55), (21.3, 114.6),
+            ]),
+            ('In2.Cu', [
+                (18.6, 117.3), (21.25, 119.95), (21.25, 121.35), (21.65, 121.75),
+            ]),
+        ]),
     'ADC_PYRO1_CONTINUITY': dict(
         vias=[],
         runs=[
@@ -1457,16 +1514,16 @@ def _plane_joins():
 # a supply pin drawn to its capacitor (D-24Nov.16), the via the fan-out puts in that capacitor's pad. The rest of the
 # board's plane vias wait for stage D's own step. Counted before they were frozen (D-24Nov.15, rule 1): no plane pad
 # opens and no other pad's via moves, though C202.2 is now joined by U201.74's stub and takes no via of its own; no
-# in-pad via site that was clear closes; none lies in the lane of a pin open in the trial. Two lie in other pins' lanes
-# (C208.1's via in U201.29's, C202.1's in U201.72's): the lane check's, with the rest (D-24Nov.15, item 6).
+# in-pad via site that was clear closes; none lies in the lane of a pin open in the trial. Two lay in other pins' lanes
+# (C208.1's via in U201.29's, C202.1's in U201.72's), so item 6 moved each inside its pad, out of the lane.
 # (pin, net, via, stub path or None, stub width), board mm; vias Ø0.45 mm, 0.2 mm hole (spec.SIGNAL_VIA).
 MCU_PLANE_VIAS = [
     ('C201.1', 'FLIGHT_3V3', (32.45, 45.517), None, None),
-    ('C202.1', 'FLIGHT_3V3', (49.325, 50.092), None, None),
+    ('C202.1', 'FLIGHT_3V3', (49.315, 49.925), None, None),     # 0.17 mm north, out of U201.72's lane (item 6)
     ('C203.1', 'FLIGHT_3V3', (47.55, 64.107), None, None),
     ('C204.1', 'FLIGHT_3V3', (49.295, 48.112), None, None),
     ('C205.1', 'FLIGHT_3V3', (30.705, 53.687), None, None),
-    ('C208.1', 'FLIGHT_3V3', (35.28, 64.137), None, None),
+    ('C208.1', 'FLIGHT_3V3', (35.1, 64.127), None, None),       # 0.18 mm west, out of U201.29's lane (item 6)
     ('U201.19', 'GND', (33.475, 57.812), [(32.325, 57.812), (33.475, 57.812)], 0.2),
     ('U201.20', 'GND', (33.475, 58.312), [(32.325, 58.312), (33.475, 58.312)], 0.2),
     ('U201.27', 'GND', (34.5, 61.337), [(34.5, 62.487), (34.5, 61.337)], 0.2),
