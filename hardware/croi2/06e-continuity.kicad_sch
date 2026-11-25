@@ -1,1871 +1,3072 @@
 (kicad_sch
-  (version 20250114)
-  (generator eeschema)
-  (generator_version "9.0")
-  (uuid "7af92f12-aa36-5ee4-b8d7-a12d75d0c0c6")
-  (paper "User" 460 465.32)
-  (title_block
-    (title "Continuity topology")
-    (date "2026-09-08")
-    (rev "A-DRAFT")
-    (company "HiPR")
-    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
-  (lib_symbols
-    (symbol "Device:R"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 0))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "R"
-        (at 2.032 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "R"
-        (at 0 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" ""
-        (at -1.778 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Resistor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "R res resistor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "R_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "R_0_1"
-        (rectangle
-          (start -1.016 -2.54)
-          (end 1.016 2.54)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "R_1_1"
-        (pin passive line
-          (at 0 3.81 270)
-          (length 1.27)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 0 -3.81 90)
-          (length 1.27)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no)))
-  (embedded_fonts no)
-  (text "CONTINUITY TOPOLOGY"
-    (at 15.24 15.24 0)
-    (effects
-      (font
-        (size 2.54 2.54))
-      (justify left))
-    (uuid "3e26b797-39d9-557d-937b-0971aefcdaf9"))
-  (text "CHANNEL 1 / CONTINUITY: 3.9k TEST AND RETURN"
-    (at 15.24 68.58 0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left))
-    (uuid "a82f7d7c-9229-53fb-ba6b-e269c370282a"))
-  (symbol
-    (lib_id "Device:R")
-    (at 81.28 91.44 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "b9695018-284e-5d0b-9315-e50860be5c9f")
-    (property "Reference" "R6911"
-      (at 81.28 86.36 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 81.28 88.9 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 81.28 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 81.28 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 81.28 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 81.28 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 81.28 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6911")
-          (unit 1))))
-    (pin "1"
-      (uuid "661d233e-a536-5989-a9e7-d8b9206a8508"))
-    (pin "2"
-      (uuid "4f1bce1d-692a-5599-a652-ad8363cb4cc5")))
-  (symbol
-    (lib_id "Device:R")
-    (at 157.48 91.44 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "0b685794-84e6-5c4a-b3ba-ad4149acc38b")
-    (property "Reference" "R6912"
-      (at 157.48 86.36 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 157.48 88.9 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 157.48 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 157.48 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 157.48 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 157.48 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 157.48 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6912")
-          (unit 1))))
-    (pin "1"
-      (uuid "a56f4967-8b7a-5709-8290-6ef8f29ee9f9"))
-    (pin "2"
-      (uuid "ecd99244-ae2f-54f6-b83b-4e9c4f1ee858")))
-  (symbol
-    (lib_id "Device:R")
-    (at 274.32 91.44 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "5589202f-8b29-5733-bb7c-f4ccd662613f")
-    (property "Reference" "R6913"
-      (at 274.32 86.36 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 274.32 88.9 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 274.32 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 274.32 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 274.32 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 274.32 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 274.32 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6913")
-          (unit 1))))
-    (pin "1"
-      (uuid "b9be03d9-51d8-598d-98ec-ea56081cb703"))
-    (pin "2"
-      (uuid "30bac98f-c788-5017-b755-7ccb54ed933a")))
-  (symbol
-    (lib_id "Device:R")
-    (at 350.52 91.44 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "d7b0ae9e-9bee-5ac2-926e-a46c554ced83")
-    (property "Reference" "R6914"
-      (at 350.52 86.36 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 350.52 88.9 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 350.52 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 350.52 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 350.52 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 350.52 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 350.52 91.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6914")
-          (unit 1))))
-    (pin "1"
-      (uuid "21c09486-93e7-51f4-860d-995ec2955c00"))
-    (pin "2"
-      (uuid "20f78e1b-5d82-5f6d-9dd3-d6d12b04852a")))
-  (symbol
-    (lib_id "Device:R")
-    (at 129.54 139.7 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "bbec954b-d03f-53b7-b469-e14136128826")
-    (property "Reference" "R6915"
-      (at 129.54 134.62 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "22.1k 0.1%"
-      (at 129.54 137.16 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 129.54 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 129.54 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 129.54 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 129.54 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 129.54 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6915")
-          (unit 1))))
-    (pin "1"
-      (uuid "4383718a-3f82-5a3c-8ea9-388b51e5a38f"))
-    (pin "2"
-      (uuid "bb8029c7-1da7-5160-89dc-b33859152149")))
-  (symbol
-    (lib_id "Device:R")
-    (at 307.34 139.7 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "124b74e2-c0ed-578f-a02a-77eb405a3f03")
-    (property "Reference" "R6916"
-      (at 311.15 138.43 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10k 0.1%"
-      (at 311.15 140.97 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 307.34 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 307.34 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 307.34 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 307.34 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 307.34 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6916")
-          (unit 1))))
-    (pin "1"
-      (uuid "ca9746e3-191b-5494-88e5-430e86a95c5a"))
-    (pin "2"
-      (uuid "7bce192a-d6cb-54f1-899b-62d0f6a34f98")))
-  (text "R6917 on sheet 06f completes MID -> SCALED; divider lower leg is at right."
-    (at 35.56 170.18 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "036ca62a-a90c-55f0-bff8-4b5c8172c1a7"))
-  (text "CHANNEL 2 / CONTINUITY: 3.9k TEST AND RETURN"
-    (at 15.24 180.34 0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left))
-    (uuid "6facce9c-e095-5e69-b8c3-540eba27fb43"))
-  (symbol
-    (lib_id "Device:R")
-    (at 81.28 203.2 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "83d86267-e0b3-5952-affd-3d62fcf4ae3f")
-    (property "Reference" "R6921"
-      (at 81.28 198.12 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 81.28 200.66 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 81.28 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 81.28 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 81.28 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 81.28 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 81.28 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6921")
-          (unit 1))))
-    (pin "1"
-      (uuid "77912c7f-755b-552f-b8b5-1f8c7015aadb"))
-    (pin "2"
-      (uuid "50298aca-5653-5468-8ee4-f47bc7774713")))
-  (symbol
-    (lib_id "Device:R")
-    (at 157.48 203.2 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "4e7e67ff-d621-5b1a-93bc-ed104b3223ca")
-    (property "Reference" "R6922"
-      (at 157.48 198.12 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 157.48 200.66 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 157.48 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 157.48 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 157.48 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 157.48 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 157.48 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6922")
-          (unit 1))))
-    (pin "1"
-      (uuid "b0d60113-9fcd-5733-9926-b9808f2a1c19"))
-    (pin "2"
-      (uuid "695a93b9-aa06-5979-a51a-d9e48c19a868")))
-  (symbol
-    (lib_id "Device:R")
-    (at 274.32 203.2 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "cdb486c2-5b21-59b4-b216-02a544c49f7b")
-    (property "Reference" "R6923"
-      (at 274.32 198.12 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 274.32 200.66 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 274.32 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 274.32 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 274.32 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 274.32 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 274.32 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6923")
-          (unit 1))))
-    (pin "1"
-      (uuid "fdfaf7bf-ce8a-5911-abcc-3d7834918bc9"))
-    (pin "2"
-      (uuid "73cc791e-51c1-597d-9441-15708732adab")))
-  (symbol
-    (lib_id "Device:R")
-    (at 350.52 203.2 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "1e15568b-1042-5113-ad7a-808f8810c28c")
-    (property "Reference" "R6924"
-      (at 350.52 198.12 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 350.52 200.66 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 350.52 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 350.52 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 350.52 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 350.52 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 350.52 203.2 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6924")
-          (unit 1))))
-    (pin "1"
-      (uuid "c0d3d4a1-6795-5a22-b96e-3828d12e175d"))
-    (pin "2"
-      (uuid "82880781-dfee-53a0-8d25-5eb3cecebbaf")))
-  (symbol
-    (lib_id "Device:R")
-    (at 129.54 251.46 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "8176d55c-5b59-52bc-b56e-f08b619be355")
-    (property "Reference" "R6925"
-      (at 129.54 246.38 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "22.1k 0.1%"
-      (at 129.54 248.92 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 129.54 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 129.54 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 129.54 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 129.54 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 129.54 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6925")
-          (unit 1))))
-    (pin "1"
-      (uuid "343944dc-522f-5aab-a5ef-7d821e3a3a5a"))
-    (pin "2"
-      (uuid "39cf33be-e847-5c4d-900b-00d555e3b587")))
-  (symbol
-    (lib_id "Device:R")
-    (at 307.34 251.46 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "195102e8-033b-5358-b6d0-6160e3369549")
-    (property "Reference" "R6926"
-      (at 311.15 250.19 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10k 0.1%"
-      (at 311.15 252.73 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 307.34 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 307.34 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 307.34 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 307.34 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 307.34 251.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6926")
-          (unit 1))))
-    (pin "1"
-      (uuid "d36cda16-0b67-50a0-a2a1-891118f3380b"))
-    (pin "2"
-      (uuid "7760214b-4b5f-5ebe-ae37-159d8afce0d2")))
-  (text "R6927 on sheet 06f completes MID -> SCALED; divider lower leg is at right."
-    (at 35.56 281.94 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "2c9e7da0-ee88-5719-ab94-9d49a68e5cdc"))
-  (text "CHANNEL 3 / CONTINUITY: 3.9k TEST AND RETURN"
-    (at 15.24 292.1 0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left))
-    (uuid "0f56c4c2-d697-5fba-a194-4c988c3de32d"))
-  (symbol
-    (lib_id "Device:R")
-    (at 81.28 314.96 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "2cc9da6e-9de9-507e-b087-ca70ce0306f9")
-    (property "Reference" "R6931"
-      (at 81.28 309.88 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 81.28 312.42 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 81.28 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 81.28 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 81.28 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 81.28 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 81.28 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6931")
-          (unit 1))))
-    (pin "1"
-      (uuid "f1b312fc-da64-5e22-affe-4694086e8383"))
-    (pin "2"
-      (uuid "6df84260-ab43-5076-9dcd-eb63f3dbe168")))
-  (symbol
-    (lib_id "Device:R")
-    (at 157.48 314.96 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "56747455-6d3c-514b-b223-b57c87d0e8b3")
-    (property "Reference" "R6932"
-      (at 157.48 309.88 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 157.48 312.42 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 157.48 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 157.48 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 157.48 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 157.48 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 157.48 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6932")
-          (unit 1))))
-    (pin "1"
-      (uuid "8766c5f6-ed08-58b5-9178-1cca2b649a9b"))
-    (pin "2"
-      (uuid "e6c8acd0-dc52-5e63-9d77-d2e39255b8bd")))
-  (symbol
-    (lib_id "Device:R")
-    (at 274.32 314.96 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "39088a4f-4e66-59e5-9b52-ec1b0450a457")
-    (property "Reference" "R6933"
-      (at 274.32 309.88 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 274.32 312.42 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 274.32 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 274.32 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 274.32 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 274.32 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 274.32 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6933")
-          (unit 1))))
-    (pin "1"
-      (uuid "a1a2426e-1035-545a-9f10-8a6ef57a34fd"))
-    (pin "2"
-      (uuid "91a33954-cb18-5896-b535-c4c7511db140")))
-  (symbol
-    (lib_id "Device:R")
-    (at 350.52 314.96 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "24508e9d-27af-5891-b80c-82c2eac6ad6a")
-    (property "Reference" "R6934"
-      (at 350.52 309.88 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "3.9k 1%"
-      (at 350.52 312.42 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 350.52 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 350.52 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 350.52 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 350.52 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 350.52 314.96 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6934")
-          (unit 1))))
-    (pin "1"
-      (uuid "76bec9bc-1675-51ef-9553-cd4a709e4a06"))
-    (pin "2"
-      (uuid "e77d25d7-6d2b-5c48-8e6d-ed17f64dfa6b")))
-  (symbol
-    (lib_id "Device:R")
-    (at 129.54 363.22 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "0aeada16-48b0-5810-a0e7-4f8e1830e382")
-    (property "Reference" "R6935"
-      (at 129.54 358.14 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "22.1k 0.1%"
-      (at 129.54 360.68 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 129.54 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 129.54 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 129.54 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 129.54 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 129.54 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6935")
-          (unit 1))))
-    (pin "1"
-      (uuid "33496154-26a6-5cb7-acf8-898ac715bd31"))
-    (pin "2"
-      (uuid "cacba4ce-4695-5482-94bf-4d4ab0445248")))
-  (symbol
-    (lib_id "Device:R")
-    (at 307.34 363.22 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "30cd7f52-4d8b-5b72-929d-c9ab87bad157")
-    (property "Reference" "R6936"
-      (at 311.15 361.95 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10k 0.1%"
-      (at 311.15 364.49 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 307.34 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 307.34 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 307.34 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 307.34 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 307.34 363.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
-          (reference "R6936")
-          (unit 1))))
-    (pin "1"
-      (uuid "b26d8238-290d-5c5f-b8cd-87f242e78f6e"))
-    (pin "2"
-      (uuid "1f7c940f-f254-5775-841f-82f2d23ae018")))
-  (text "R6937 on sheet 06f completes MID -> SCALED; divider lower leg is at right."
-    (at 35.56 393.7 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "39185908-2f52-5ad9-bbe1-b51693d54210"))
-  (text "Connected load raises its switched-return node through the test resistors; an open load does not."
-    (at 15.24 411.48 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "a5707be4-c5a1-5118-b8aa-75131d4c1022"))
-  (text "Values require exact no-fire/current/time limits with ANY ONE limiting resistor shorted."
-    (at 15.24 416.56 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "da04b769-fee6-5c75-9fa6-b2354027ae68"))
-  (text "Test and return resistors 3.9k 1% 0603, fitted (D-2Nov.14): under a tenth of the no-fire current of any igniter rated 25 mA or more."
-    (at 15.24 421.64 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "001f2bf8-9e78-5756-99b1-106a5d409778"))
-  (text "Low-return short is indistinguishable from an open load in this topology: report ambiguity."
-    (at 15.24 426.72 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "4ada8a44-0fc7-59d9-adb1-2330b8c7e6ae"))
-  (global_label "3V3_OPTIONAL"
-    (shape bidirectional)
-    (at 72.39 203.2 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "2f0f7262-ac42-5c41-a91e-094cc024b6cc")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 72.39 203.2 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "3V3_OPTIONAL"
-    (shape bidirectional)
-    (at 72.39 314.96 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "79126098-4a6d-5141-85f5-005f95d539eb")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 72.39 314.96 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "3V3_OPTIONAL"
-    (shape bidirectional)
-    (at 72.39 91.44 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "e55b056f-24e5-5f34-95ad-a7a6d2618e48")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 72.39 91.44 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO1_TEST_MID"
-    (shape bidirectional)
-    (at 85.09 91.44 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "514701df-a1ed-59b7-adb8-3ddc17b06dc8")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 85.09 91.44 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT1_HIGH"
-    (shape bidirectional)
-    (at 166.37 91.44 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "55f286cf-dbd7-5c75-99ce-450b4469a2af")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 166.37 91.44 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT1_LOW"
-    (shape bidirectional)
-    (at 265.43 91.44 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "dcfd12bb-e524-52d3-b76e-618c4ef5635f")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 265.43 91.44 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT1_LOW"
-    (shape bidirectional)
-    (at 120.65 139.7 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "fd36aa96-0356-5f28-8d0d-a444e858b53c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 120.65 139.7 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO1_RETURN_MID"
-    (shape bidirectional)
-    (at 278.13 91.44 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "8fce711b-fbfc-588e-a800-3bd0a28ef7dc")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 278.13 91.44 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 307.34 148.59 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "102838e5-9045-59ae-bd1c-bb4d596f1ea5")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 307.34 148.59 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 359.41 91.44 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "3f7f0fed-3422-5ebc-bbe4-fed392ad8860")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 359.41 91.44 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 359.41 314.96 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "c4ecfe2e-7df0-516a-9d96-48d555463d3e")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 359.41 314.96 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 307.34 372.11 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "39a948db-a1ec-5ab6-8af7-54f465441591")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 307.34 372.11 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 307.34 260.35 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "b0f7c5ff-be0e-5b52-93c0-e9886f1abb52")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 307.34 260.35 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 359.41 203.2 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "29219c94-0cff-5fc1-b0c6-19622d668860")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 359.41 203.2 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO1_CONT_MID"
-    (shape bidirectional)
-    (at 138.43 139.7 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "76233080-82ed-5c07-b95c-d1d26a8f4299")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 138.43 139.7 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO1_CONT_SCALED"
-    (shape bidirectional)
-    (at 307.34 130.81 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "0f40fc20-4d44-51cc-831f-d85e12c50629")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 307.34 130.81 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO2_TEST_MID"
-    (shape bidirectional)
-    (at 85.09 203.2 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "32877b91-ef66-5f52-8ca9-454bed001c49")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 85.09 203.2 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT2_HIGH"
-    (shape bidirectional)
-    (at 166.37 203.2 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "489653ca-caf1-55d6-ba41-1be559f1fdec")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 166.37 203.2 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT2_LOW"
-    (shape bidirectional)
-    (at 265.43 203.2 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "d4e8db42-dd21-5747-9221-9efd38253085")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 265.43 203.2 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT2_LOW"
-    (shape bidirectional)
-    (at 120.65 251.46 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "24ec0d02-2900-5d62-963d-bffd09829ca3")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 120.65 251.46 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO2_RETURN_MID"
-    (shape bidirectional)
-    (at 278.13 203.2 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "0aa80aca-58ae-5bd2-8257-5e49a68db97a")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 278.13 203.2 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO2_CONT_MID"
-    (shape bidirectional)
-    (at 138.43 251.46 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "01f61b9a-6c06-50f4-9d04-2d3e49cb5f74")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 138.43 251.46 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO2_CONT_SCALED"
-    (shape bidirectional)
-    (at 307.34 242.57 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "952d056b-8ab3-588b-93ff-ac10a69f6f93")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 307.34 242.57 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO3_TEST_MID"
-    (shape bidirectional)
-    (at 85.09 314.96 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "757fe9e4-f95f-5dde-aa5f-5d77d6719974")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 85.09 314.96 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT3_HIGH"
-    (shape bidirectional)
-    (at 166.37 314.96 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "1a0103f9-421e-53a0-8e59-f3b1d2d2d66e")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 166.37 314.96 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT3_LOW"
-    (shape bidirectional)
-    (at 265.43 314.96 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "d14972e5-ad39-56fd-8ff6-61d7203a669d")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 265.43 314.96 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT3_LOW"
-    (shape bidirectional)
-    (at 120.65 363.22 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "6cc0432e-82b0-5f08-82a5-9e60a1f4c7e6")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 120.65 363.22 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO3_RETURN_MID"
-    (shape bidirectional)
-    (at 278.13 314.96 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "a5e25482-af97-521f-ac66-6044f3685e60")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 278.13 314.96 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO3_CONT_MID"
-    (shape bidirectional)
-    (at 138.43 363.22 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "67cd756f-4eb8-5700-8433-8f91c9583083")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 138.43 363.22 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "PYRO3_CONT_SCALED"
-    (shape bidirectional)
-    (at 307.34 354.33 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "774a1145-03ba-5a30-8da2-ea8c0c158b23")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 307.34 354.33 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (wire
-    (pts
-      (xy 72.39 91.44)
-      (xy 77.47 91.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "178c8a22-716f-58f8-88ff-1351aa168388"))
-  (wire
-    (pts
-      (xy 72.39 203.2)
-      (xy 77.47 203.2))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1d59be1a-87c6-56f8-a9a5-6ab66e8f99a1"))
-  (wire
-    (pts
-      (xy 72.39 314.96)
-      (xy 77.47 314.96))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d4680df0-28e1-5471-944a-0c32d8543b2f"))
-  (wire
-    (pts
-      (xy 307.34 143.51)
-      (xy 307.34 148.59))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d0df3322-a916-57c2-a353-84804198b575"))
-  (wire
-    (pts
-      (xy 307.34 255.27)
-      (xy 307.34 260.35))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2f59abb5-af8c-5bfd-aea8-f5b8e370f232"))
-  (wire
-    (pts
-      (xy 307.34 367.03)
-      (xy 307.34 372.11))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "438ed9c8-0d58-5547-b30e-fc7d879d0121"))
-  (wire
-    (pts
-      (xy 354.33 91.44)
-      (xy 359.41 91.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9bda0a40-dacb-5280-9f60-9ea8fa8f147c"))
-  (wire
-    (pts
-      (xy 354.33 203.2)
-      (xy 359.41 203.2))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "ff95599c-133b-5fee-95a2-ae61f233d52d"))
-  (wire
-    (pts
-      (xy 354.33 314.96)
-      (xy 359.41 314.96))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f97e8029-c1ab-570e-b097-342ad0891640"))
-  (wire
-    (pts
-      (xy 161.29 91.44)
-      (xy 166.37 91.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2a80ad82-553c-5db5-8c16-d572f24b8edb"))
-  (wire
-    (pts
-      (xy 120.65 139.7)
-      (xy 125.73 139.7))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "3b763ef6-2606-5d21-b076-19bf9012b618"))
-  (wire
-    (pts
-      (xy 265.43 91.44)
-      (xy 270.51 91.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "2594c603-aa6a-5aa2-83aa-a537f117520a"))
-  (wire
-    (pts
-      (xy 161.29 203.2)
-      (xy 166.37 203.2))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "64b74e3d-8085-54d3-b687-7a44a44d349a"))
-  (wire
-    (pts
-      (xy 120.65 251.46)
-      (xy 125.73 251.46))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d12ce64b-6e71-5871-801c-34df6a98e529"))
-  (wire
-    (pts
-      (xy 265.43 203.2)
-      (xy 270.51 203.2))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "88c32e45-ea11-5bf8-b8cc-9117f12a0496"))
-  (wire
-    (pts
-      (xy 161.29 314.96)
-      (xy 166.37 314.96))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d9dca750-7d70-501e-81cd-cc83d2b51574"))
-  (wire
-    (pts
-      (xy 120.65 363.22)
-      (xy 125.73 363.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "e857283a-618c-5de5-852d-5f1d93b21b0a"))
-  (wire
-    (pts
-      (xy 265.43 314.96)
-      (xy 270.51 314.96))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "c6e27c75-9481-5c35-b5a9-95ac1e7556cd"))
-  (wire
-    (pts
-      (xy 133.35 139.7)
-      (xy 138.43 139.7))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "38f83901-d646-5f6d-b4e9-f6fcbbc60f0b"))
-  (wire
-    (pts
-      (xy 307.34 130.81)
-      (xy 307.34 135.89))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "8fb5f3b8-32a7-50db-87e8-d3bede4f5058"))
-  (wire
-    (pts
-      (xy 278.13 91.44)
-      (xy 346.71 91.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "de8f8276-46bc-5d37-8568-c9046d1afa39"))
-  (wire
-    (pts
-      (xy 85.09 91.44)
-      (xy 153.67 91.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "c14ecfba-f71b-5f7f-ae98-d646fb9f255d"))
-  (wire
-    (pts
-      (xy 133.35 251.46)
-      (xy 138.43 251.46))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "e8628cef-9612-56d8-8d8f-27142054bca7"))
-  (wire
-    (pts
-      (xy 307.34 242.57)
-      (xy 307.34 247.65))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "8eb9db22-ef63-5c38-98e3-2251c1efcc75"))
-  (wire
-    (pts
-      (xy 278.13 203.2)
-      (xy 346.71 203.2))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "0177b7c3-81e6-5b89-aaa2-ba9a67f03412"))
-  (wire
-    (pts
-      (xy 85.09 203.2)
-      (xy 153.67 203.2))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a2903524-f9aa-5149-815f-a033ae17080c"))
-  (wire
-    (pts
-      (xy 133.35 363.22)
-      (xy 138.43 363.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a8f2ee96-187c-5215-b595-9a795f188fbb"))
-  (wire
-    (pts
-      (xy 307.34 354.33)
-      (xy 307.34 359.41))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "3988d800-ce72-52df-987c-48fe3b384a70"))
-  (wire
-    (pts
-      (xy 278.13 314.96)
-      (xy 346.71 314.96))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "189ebff6-c3a8-5dae-921f-a78b3d18d8f7"))
-  (wire
-    (pts
-      (xy 85.09 314.96)
-      (xy 153.67 314.96))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "e20b3a1e-111f-52b3-8893-3bdf332c28a6"))
-  (text "What this does: Shows the proposed low-current check for whether each external load is connected.\nConnects to: External load pairs -> test/return resistors -> divider on 06f -> flight ADC. Test and return resistors are 3.9k, safe for an igniter with a no-fire current of 25 mA or more."
-    (at 15.24 27.94 0.0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left top))
-    (uuid "123844b9-7b77-5d99-add5-aaefcaad0602")))
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "7af92f12-aa36-5ee4-b8d7-a12d75d0c0c6")
+	(paper "User" 460 465.32)
+	(title_block
+		(title "Continuity topology")
+		(date "2026-09-08")
+		(rev "A-DRAFT")
+		(company "HiPR")
+		(comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight.")
+	)
+	(lib_symbols
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "Test and return resistors 3.9k 1% 0603, fitted (D-2Nov.14): under a tenth of the no-fire current of any igniter rated 25 mA or more."
+		(exclude_from_sim no)
+		(at 15.24 421.64 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "001f2bf8-9e78-5756-99b1-106a5d409778")
+	)
+	(text "R6917 on sheet 06f completes MID -> SCALED; divider lower leg is at right."
+		(exclude_from_sim no)
+		(at 35.56 170.18 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "036ca62a-a90c-55f0-bff8-4b5c8172c1a7")
+	)
+	(text "CHANNEL 3 / CONTINUITY: 3.9k TEST AND RETURN"
+		(exclude_from_sim no)
+		(at 15.24 292.1 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left)
+		)
+		(uuid "0f56c4c2-d697-5fba-a194-4c988c3de32d")
+	)
+	(text "What this does: Shows the proposed low-current check for whether each external load is connected.\nConnects to: External load pairs -> test/return resistors -> divider on 06f -> flight ADC. Test and return resistors are 3.9k, safe for an igniter with a no-fire current of 25 mA or more."
+		(exclude_from_sim no)
+		(at 15.24 27.94 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left top)
+		)
+		(uuid "123844b9-7b77-5d99-add5-aaefcaad0602")
+	)
+	(text "R6927 on sheet 06f completes MID -> SCALED; divider lower leg is at right."
+		(exclude_from_sim no)
+		(at 35.56 281.94 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "2c9e7da0-ee88-5719-ab94-9d49a68e5cdc")
+	)
+	(text "R6937 on sheet 06f completes MID -> SCALED; divider lower leg is at right."
+		(exclude_from_sim no)
+		(at 35.56 393.7 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "39185908-2f52-5ad9-bbe1-b51693d54210")
+	)
+	(text "CONTINUITY TOPOLOGY"
+		(exclude_from_sim no)
+		(at 15.24 15.24 0)
+		(effects
+			(font
+				(size 2.54 2.54)
+			)
+			(justify left)
+		)
+		(uuid "3e26b797-39d9-557d-937b-0971aefcdaf9")
+	)
+	(text "Low-return short is indistinguishable from an open load in this topology: report ambiguity."
+		(exclude_from_sim no)
+		(at 15.24 426.72 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "4ada8a44-0fc7-59d9-adb1-2330b8c7e6ae")
+	)
+	(text "CHANNEL 2 / CONTINUITY: 3.9k TEST AND RETURN"
+		(exclude_from_sim no)
+		(at 15.24 180.34 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left)
+		)
+		(uuid "6facce9c-e095-5e69-b8c3-540eba27fb43")
+	)
+	(text "Connected load raises its switched-return node through the test resistors; an open load does not."
+		(exclude_from_sim no)
+		(at 15.24 411.48 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "a5707be4-c5a1-5118-b8aa-75131d4c1022")
+	)
+	(text "CHANNEL 1 / CONTINUITY: 3.9k TEST AND RETURN"
+		(exclude_from_sim no)
+		(at 15.24 68.58 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left)
+		)
+		(uuid "a82f7d7c-9229-53fb-ba6b-e269c370282a")
+	)
+	(text "Values require exact no-fire/current/time limits with ANY ONE limiting resistor shorted."
+		(exclude_from_sim no)
+		(at 15.24 416.56 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "da04b769-fee6-5c75-9fa6-b2354027ae68")
+	)
+	(wire
+		(pts
+			(xy 278.13 203.2) (xy 346.71 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0177b7c3-81e6-5b89-aaa2-ba9a67f03412")
+	)
+	(wire
+		(pts
+			(xy 72.39 91.44) (xy 77.47 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "178c8a22-716f-58f8-88ff-1351aa168388")
+	)
+	(wire
+		(pts
+			(xy 278.13 314.96) (xy 346.71 314.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "189ebff6-c3a8-5dae-921f-a78b3d18d8f7")
+	)
+	(wire
+		(pts
+			(xy 72.39 203.2) (xy 77.47 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1d59be1a-87c6-56f8-a9a5-6ab66e8f99a1")
+	)
+	(wire
+		(pts
+			(xy 265.43 91.44) (xy 270.51 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2594c603-aa6a-5aa2-83aa-a537f117520a")
+	)
+	(wire
+		(pts
+			(xy 161.29 91.44) (xy 166.37 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2a80ad82-553c-5db5-8c16-d572f24b8edb")
+	)
+	(wire
+		(pts
+			(xy 307.34 255.27) (xy 307.34 260.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f59abb5-af8c-5bfd-aea8-f5b8e370f232")
+	)
+	(wire
+		(pts
+			(xy 133.35 139.7) (xy 138.43 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "38f83901-d646-5f6d-b4e9-f6fcbbc60f0b")
+	)
+	(wire
+		(pts
+			(xy 307.34 354.33) (xy 307.34 359.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3988d800-ce72-52df-987c-48fe3b384a70")
+	)
+	(wire
+		(pts
+			(xy 120.65 139.7) (xy 125.73 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3b763ef6-2606-5d21-b076-19bf9012b618")
+	)
+	(wire
+		(pts
+			(xy 307.34 367.03) (xy 307.34 372.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "438ed9c8-0d58-5547-b30e-fc7d879d0121")
+	)
+	(wire
+		(pts
+			(xy 161.29 203.2) (xy 166.37 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "64b74e3d-8085-54d3-b687-7a44a44d349a")
+	)
+	(wire
+		(pts
+			(xy 265.43 203.2) (xy 270.51 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "88c32e45-ea11-5bf8-b8cc-9117f12a0496")
+	)
+	(wire
+		(pts
+			(xy 307.34 242.57) (xy 307.34 247.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8eb9db22-ef63-5c38-98e3-2251c1efcc75")
+	)
+	(wire
+		(pts
+			(xy 307.34 130.81) (xy 307.34 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8fb5f3b8-32a7-50db-87e8-d3bede4f5058")
+	)
+	(wire
+		(pts
+			(xy 354.33 91.44) (xy 359.41 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9bda0a40-dacb-5280-9f60-9ea8fa8f147c")
+	)
+	(wire
+		(pts
+			(xy 85.09 203.2) (xy 153.67 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a2903524-f9aa-5149-815f-a033ae17080c")
+	)
+	(wire
+		(pts
+			(xy 133.35 363.22) (xy 138.43 363.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a8f2ee96-187c-5215-b595-9a795f188fbb")
+	)
+	(wire
+		(pts
+			(xy 85.09 91.44) (xy 153.67 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c14ecfba-f71b-5f7f-ae98-d646fb9f255d")
+	)
+	(wire
+		(pts
+			(xy 265.43 314.96) (xy 270.51 314.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c6e27c75-9481-5c35-b5a9-95ac1e7556cd")
+	)
+	(wire
+		(pts
+			(xy 307.34 143.51) (xy 307.34 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d0df3322-a916-57c2-a353-84804198b575")
+	)
+	(wire
+		(pts
+			(xy 120.65 251.46) (xy 125.73 251.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d12ce64b-6e71-5871-801c-34df6a98e529")
+	)
+	(wire
+		(pts
+			(xy 72.39 314.96) (xy 77.47 314.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d4680df0-28e1-5471-944a-0c32d8543b2f")
+	)
+	(wire
+		(pts
+			(xy 161.29 314.96) (xy 166.37 314.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d9dca750-7d70-501e-81cd-cc83d2b51574")
+	)
+	(wire
+		(pts
+			(xy 278.13 91.44) (xy 346.71 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "de8f8276-46bc-5d37-8568-c9046d1afa39")
+	)
+	(wire
+		(pts
+			(xy 85.09 314.96) (xy 153.67 314.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e20b3a1e-111f-52b3-8893-3bdf332c28a6")
+	)
+	(wire
+		(pts
+			(xy 120.65 363.22) (xy 125.73 363.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e857283a-618c-5de5-852d-5f1d93b21b0a")
+	)
+	(wire
+		(pts
+			(xy 133.35 251.46) (xy 138.43 251.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e8628cef-9612-56d8-8d8f-27142054bca7")
+	)
+	(wire
+		(pts
+			(xy 354.33 314.96) (xy 359.41 314.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f97e8029-c1ab-570e-b097-342ad0891640")
+	)
+	(wire
+		(pts
+			(xy 354.33 203.2) (xy 359.41 203.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ff95599c-133b-5fee-95a2-ae61f233d52d")
+	)
+	(global_label "PYRO2_CONT_MID"
+		(shape bidirectional)
+		(at 138.43 251.46 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "01f61b9a-6c06-50f4-9d04-2d3e49cb5f74")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 138.43 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO2_RETURN_MID"
+		(shape bidirectional)
+		(at 278.13 203.2 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "0aa80aca-58ae-5bd2-8257-5e49a68db97a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 278.13 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO1_CONT_SCALED"
+		(shape bidirectional)
+		(at 307.34 130.81 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "0f40fc20-4d44-51cc-831f-d85e12c50629")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 307.34 130.81 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 307.34 148.59 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "102838e5-9045-59ae-bd1c-bb4d596f1ea5")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 307.34 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT3_HIGH"
+		(shape bidirectional)
+		(at 166.37 314.96 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "1a0103f9-421e-53a0-8e59-f3b1d2d2d66e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 166.37 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT2_LOW"
+		(shape bidirectional)
+		(at 120.65 251.46 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "24ec0d02-2900-5d62-963d-bffd09829ca3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 120.65 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 359.41 203.2 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "29219c94-0cff-5fc1-b0c6-19622d668860")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 359.41 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "3V3_OPTIONAL"
+		(shape bidirectional)
+		(at 72.39 203.2 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "2f0f7262-ac42-5c41-a91e-094cc024b6cc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 72.39 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO2_TEST_MID"
+		(shape bidirectional)
+		(at 85.09 203.2 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "32877b91-ef66-5f52-8ca9-454bed001c49")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 85.09 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 307.34 372.11 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "39a948db-a1ec-5ab6-8af7-54f465441591")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 307.34 372.11 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 359.41 91.44 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "3f7f0fed-3422-5ebc-bbe4-fed392ad8860")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 359.41 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT2_HIGH"
+		(shape bidirectional)
+		(at 166.37 203.2 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "489653ca-caf1-55d6-ba41-1be559f1fdec")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 166.37 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO1_TEST_MID"
+		(shape bidirectional)
+		(at 85.09 91.44 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "514701df-a1ed-59b7-adb8-3ddc17b06dc8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 85.09 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT1_HIGH"
+		(shape bidirectional)
+		(at 166.37 91.44 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "55f286cf-dbd7-5c75-99ce-450b4469a2af")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 166.37 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO3_CONT_MID"
+		(shape bidirectional)
+		(at 138.43 363.22 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "67cd756f-4eb8-5700-8433-8f91c9583083")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 138.43 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT3_LOW"
+		(shape bidirectional)
+		(at 120.65 363.22 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "6cc0432e-82b0-5f08-82a5-9e60a1f4c7e6")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 120.65 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO3_TEST_MID"
+		(shape bidirectional)
+		(at 85.09 314.96 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "757fe9e4-f95f-5dde-aa5f-5d77d6719974")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 85.09 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO1_CONT_MID"
+		(shape bidirectional)
+		(at 138.43 139.7 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "76233080-82ed-5c07-b95c-d1d26a8f4299")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 138.43 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO3_CONT_SCALED"
+		(shape bidirectional)
+		(at 307.34 354.33 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "774a1145-03ba-5a30-8da2-ea8c0c158b23")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 307.34 354.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "3V3_OPTIONAL"
+		(shape bidirectional)
+		(at 72.39 314.96 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "79126098-4a6d-5141-85f5-005f95d539eb")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 72.39 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO1_RETURN_MID"
+		(shape bidirectional)
+		(at 278.13 91.44 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "8fce711b-fbfc-588e-a800-3bd0a28ef7dc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 278.13 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO2_CONT_SCALED"
+		(shape bidirectional)
+		(at 307.34 242.57 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "952d056b-8ab3-588b-93ff-ac10a69f6f93")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 307.34 242.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "PYRO3_RETURN_MID"
+		(shape bidirectional)
+		(at 278.13 314.96 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "a5e25482-af97-521f-ac66-6044f3685e60")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 278.13 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 307.34 260.35 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "b0f7c5ff-be0e-5b52-93c0-e9886f1abb52")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 307.34 260.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 359.41 314.96 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "c4ecfe2e-7df0-516a-9d96-48d555463d3e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 359.41 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT3_LOW"
+		(shape bidirectional)
+		(at 265.43 314.96 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "d14972e5-ad39-56fd-8ff6-61d7203a669d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 265.43 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT2_LOW"
+		(shape bidirectional)
+		(at 265.43 203.2 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "d4e8db42-dd21-5747-9221-9efd38253085")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 265.43 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT1_LOW"
+		(shape bidirectional)
+		(at 265.43 91.44 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "dcfd12bb-e524-52d3-b76e-618c4ef5635f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 265.43 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "3V3_OPTIONAL"
+		(shape bidirectional)
+		(at 72.39 91.44 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "e55b056f-24e5-5f34-95ad-a7a6d2618e48")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 72.39 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT1_LOW"
+		(shape bidirectional)
+		(at 120.65 139.7 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "fd36aa96-0356-5f28-8d0d-a444e858b53c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 120.65 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 129.54 363.22 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0aeada16-48b0-5810-a0e7-4f8e1830e382")
+		(property "Reference" "R6935"
+			(at 129.54 358.14 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "22.1k 0.1%"
+			(at 129.54 360.68 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 129.54 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 129.54 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 129.54 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 129.54 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "33496154-26a6-5cb7-acf8-898ac715bd31")
+		)
+		(pin "2"
+			(uuid "cacba4ce-4695-5482-94bf-4d4ab0445248")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6935")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 157.48 91.44 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0b685794-84e6-5c4a-b3ba-ad4149acc38b")
+		(property "Reference" "R6912"
+			(at 157.48 86.36 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 157.48 88.9 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 157.48 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 157.48 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 157.48 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 157.48 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a56f4967-8b7a-5709-8290-6ef8f29ee9f9")
+		)
+		(pin "2"
+			(uuid "ecd99244-ae2f-54f6-b83b-4e9c4f1ee858")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6912")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 307.34 139.7 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "124b74e2-c0ed-578f-a02a-77eb405a3f03")
+		(property "Reference" "R6916"
+			(at 311.15 138.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k 0.1%"
+			(at 311.15 140.97 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 307.34 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 307.34 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 307.34 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 307.34 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 307.34 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ca9746e3-191b-5494-88e5-430e86a95c5a")
+		)
+		(pin "2"
+			(uuid "7bce192a-d6cb-54f1-899b-62d0f6a34f98")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6916")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 307.34 251.46 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "195102e8-033b-5358-b6d0-6160e3369549")
+		(property "Reference" "R6926"
+			(at 311.15 250.19 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k 0.1%"
+			(at 311.15 252.73 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 307.34 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 307.34 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 307.34 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 307.34 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 307.34 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d36cda16-0b67-50a0-a2a1-891118f3380b")
+		)
+		(pin "2"
+			(uuid "7760214b-4b5f-5ebe-ae37-159d8afce0d2")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6926")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 350.52 203.2 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1e15568b-1042-5113-ad7a-808f8810c28c")
+		(property "Reference" "R6924"
+			(at 350.52 198.12 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 350.52 200.66 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 350.52 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 350.52 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 350.52 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 350.52 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 350.52 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c0d3d4a1-6795-5a22-b96e-3828d12e175d")
+		)
+		(pin "2"
+			(uuid "82880781-dfee-53a0-8d25-5eb3cecebbaf")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6924")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 350.52 314.96 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "24508e9d-27af-5891-b80c-82c2eac6ad6a")
+		(property "Reference" "R6934"
+			(at 350.52 309.88 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 350.52 312.42 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 350.52 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 350.52 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 350.52 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 350.52 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 350.52 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "76bec9bc-1675-51ef-9553-cd4a709e4a06")
+		)
+		(pin "2"
+			(uuid "e77d25d7-6d2b-5c48-8e6d-ed17f64dfa6b")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6934")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 81.28 314.96 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "2cc9da6e-9de9-507e-b087-ca70ce0306f9")
+		(property "Reference" "R6931"
+			(at 81.28 309.88 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 81.28 312.42 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 81.28 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 81.28 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 81.28 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 81.28 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f1b312fc-da64-5e22-affe-4694086e8383")
+		)
+		(pin "2"
+			(uuid "6df84260-ab43-5076-9dcd-eb63f3dbe168")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6931")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 307.34 363.22 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "30cd7f52-4d8b-5b72-929d-c9ab87bad157")
+		(property "Reference" "R6936"
+			(at 311.15 361.95 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k 0.1%"
+			(at 311.15 364.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 307.34 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 307.34 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 307.34 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 307.34 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 307.34 363.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b26d8238-290d-5c5f-b8cd-87f242e78f6e")
+		)
+		(pin "2"
+			(uuid "1f7c940f-f254-5775-841f-82f2d23ae018")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6936")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 274.32 314.96 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "39088a4f-4e66-59e5-9b52-ec1b0450a457")
+		(property "Reference" "R6933"
+			(at 274.32 309.88 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 274.32 312.42 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 274.32 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 274.32 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 274.32 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 274.32 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 274.32 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a1a2426e-1035-545a-9f10-8a6ef57a34fd")
+		)
+		(pin "2"
+			(uuid "91a33954-cb18-5896-b535-c4c7511db140")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6933")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 157.48 203.2 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4e7e67ff-d621-5b1a-93bc-ed104b3223ca")
+		(property "Reference" "R6922"
+			(at 157.48 198.12 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 157.48 200.66 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 157.48 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 157.48 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 157.48 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 157.48 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b0d60113-9fcd-5733-9926-b9808f2a1c19")
+		)
+		(pin "2"
+			(uuid "695a93b9-aa06-5979-a51a-d9e48c19a868")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6922")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 274.32 91.44 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5589202f-8b29-5733-bb7c-f4ccd662613f")
+		(property "Reference" "R6913"
+			(at 274.32 86.36 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 274.32 88.9 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 274.32 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 274.32 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 274.32 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 274.32 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 274.32 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b9be03d9-51d8-598d-98ec-ea56081cb703")
+		)
+		(pin "2"
+			(uuid "30bac98f-c788-5017-b755-7ccb54ed933a")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6913")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 157.48 314.96 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "56747455-6d3c-514b-b223-b57c87d0e8b3")
+		(property "Reference" "R6932"
+			(at 157.48 309.88 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 157.48 312.42 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 157.48 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 157.48 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 157.48 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 157.48 314.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "8766c5f6-ed08-58b5-9178-1cca2b649a9b")
+		)
+		(pin "2"
+			(uuid "e6c8acd0-dc52-5e63-9d77-d2e39255b8bd")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6932")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 129.54 251.46 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8176d55c-5b59-52bc-b56e-f08b619be355")
+		(property "Reference" "R6925"
+			(at 129.54 246.38 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "22.1k 0.1%"
+			(at 129.54 248.92 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 129.54 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 129.54 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 129.54 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 129.54 251.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "343944dc-522f-5aab-a5ef-7d821e3a3a5a")
+		)
+		(pin "2"
+			(uuid "39cf33be-e847-5c4d-900b-00d555e3b587")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6925")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 81.28 203.2 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "83d86267-e0b3-5952-affd-3d62fcf4ae3f")
+		(property "Reference" "R6921"
+			(at 81.28 198.12 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 81.28 200.66 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 81.28 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 81.28 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 81.28 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 81.28 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "77912c7f-755b-552f-b8b5-1f8c7015aadb")
+		)
+		(pin "2"
+			(uuid "50298aca-5653-5468-8ee4-f47bc7774713")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6921")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 81.28 91.44 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b9695018-284e-5d0b-9315-e50860be5c9f")
+		(property "Reference" "R6911"
+			(at 81.28 86.36 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 81.28 88.9 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 81.28 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 81.28 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 81.28 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 81.28 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "661d233e-a536-5989-a9e7-d8b9206a8508")
+		)
+		(pin "2"
+			(uuid "4f1bce1d-692a-5599-a652-ad8363cb4cc5")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6911")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 129.54 139.7 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "bbec954b-d03f-53b7-b469-e14136128826")
+		(property "Reference" "R6915"
+			(at 129.54 134.62 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "22.1k 0.1%"
+			(at 129.54 137.16 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 129.54 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 129.54 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 129.54 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 129.54 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4383718a-3f82-5a3c-8ea9-388b51e5a38f")
+		)
+		(pin "2"
+			(uuid "bb8029c7-1da7-5160-89dc-b33859152149")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6915")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 274.32 203.2 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "cdb486c2-5b21-59b4-b216-02a544c49f7b")
+		(property "Reference" "R6923"
+			(at 274.32 198.12 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 274.32 200.66 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 274.32 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 274.32 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 274.32 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 274.32 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 274.32 203.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "fdfaf7bf-ce8a-5911-abcc-3d7834918bc9")
+		)
+		(pin "2"
+			(uuid "73cc791e-51c1-597d-9441-15708732adab")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6923")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 350.52 91.44 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "d7b0ae9e-9bee-5ac2-926e-a46c554ced83")
+		(property "Reference" "R6914"
+			(at 350.52 86.36 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "3.9k 1%"
+			(at 350.52 88.9 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 350.52 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 350.52 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 350.52 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 350.52 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 350.52 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "21c09486-93e7-51f4-860d-995ec2955c00")
+		)
+		(pin "2"
+			(uuid "20f78e1b-5d82-5f6d-9dd3-d6d12b04852a")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/bf0ca14d-00fe-59c3-8ba2-e8a3c3f442d4"
+					(reference "R6914")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

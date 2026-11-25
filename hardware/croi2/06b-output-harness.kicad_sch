@@ -1,1711 +1,2828 @@
 (kicad_sch
-  (version 20250114)
-  (generator eeschema)
-  (generator_version "9.0")
-  (uuid "030c6117-148a-5d00-86ef-caa8a45bd316")
-  (paper "User" 440 375.32)
-  (title_block
-    (title "Output harnesses")
-    (date "2026-09-08")
-    (rev "A-DRAFT")
-    (company "HiPR")
-    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
-  (lib_symbols
-    (symbol "Device:R"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 0))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "R"
-        (at 2.032 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "R"
-        (at 0 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" ""
-        (at -1.778 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Resistor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "R res resistor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "R_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "R_0_1"
-        (rectangle
-          (start -1.016 -2.54)
-          (end 1.016 2.54)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "R_1_1"
-        (pin passive line
-          (at 0 3.81 270)
-          (length 1.27)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 0 -3.81 90)
-          (length 1.27)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no))
-    (symbol "Ogma2:430450600"
-      (pin_names
-        (offset 0.508))
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "J"
-        (at -10.16 11.43 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Value" "430450600"
-        (at -10.16 10.16 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (symbol "430450600_0_1"
-        (rectangle
-          (start -10.16 -8.89)
-          (end 10.16 8.89)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "430450600_1_1"
-        (pin passive line
-          (at -15.24 6.35 0)
-          (length 5.08)
-          (name "1"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "1"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin passive line
-          (at -15.24 3.8099999999999996 0)
-          (length 5.08)
-          (name "2"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "2"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin passive line
-          (at -15.24 1.2699999999999996 0)
-          (length 5.08)
-          (name "3"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "3"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin passive line
-          (at -15.24 -1.2700000000000005 0)
-          (length 5.08)
-          (name "4"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "4"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin passive line
-          (at -15.24 -3.8100000000000005 0)
-          (length 5.08)
-          (name "5"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "5"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin passive line
-          (at -15.24 -6.35 0)
-          (length 5.08)
-          (name "6"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "6"
-            (effects
-              (font
-                (size 1.0 1.0))))))
-      (property "Footprint" "Ogma2:430450600"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.molex.com/en-us/products/part-detail/430450600"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "430450600"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Molex"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Right-angle through-hole PCB header"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "numbered physical contacts; see harness map; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes))))
-    (symbol "Ogma2:430451000"
-      (pin_names
-        (offset 1.016)
-        (hide yes))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "J"
-        (at 1.27 7.62 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "430451000"
-        (at 1.27 -7.62 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:430451000"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Generic connector, double row, 02x05, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "connector"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "Connector*:*_2x??_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "430451000_1_1"
-        (rectangle
-          (start -1.27 6.35)
-          (end 3.81 -6.35)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background)))
-        (rectangle
-          (start -1.27 5.207)
-          (end 0 4.953)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start -1.27 2.667)
-          (end 0 2.413)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start -1.27 0.127)
-          (end 0 -0.127)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start -1.27 -2.413)
-          (end 0 -2.667)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start -1.27 -4.953)
-          (end 0 -5.207)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start 3.81 5.207)
-          (end 2.54 4.953)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start 3.81 2.667)
-          (end 2.54 2.413)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start 3.81 0.127)
-          (end 2.54 -0.127)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start 3.81 -2.413)
-          (end 2.54 -2.667)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (rectangle
-          (start 3.81 -4.953)
-          (end 2.54 -5.207)
-          (stroke
-            (width 0.1524)
-            (type default))
-          (fill
-            (type none)))
-        (pin passive line
-          (at -5.08 5.08 0)
-          (length 3.81)
-          (name "Pin_1"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at -5.08 2.54 0)
-          (length 3.81)
-          (name "Pin_3"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "3"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at -5.08 0 0)
-          (length 3.81)
-          (name "Pin_5"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "5"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at -5.08 -2.54 0)
-          (length 3.81)
-          (name "Pin_7"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "7"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at -5.08 -5.08 0)
-          (length 3.81)
-          (name "Pin_9"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "9"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 7.62 5.08 180)
-          (length 3.81)
-          (name "Pin_2"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 7.62 2.54 180)
-          (length 3.81)
-          (name "Pin_4"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "4"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 7.62 0 180)
-          (length 3.81)
-          (name "Pin_6"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "6"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 7.62 -2.54 180)
-          (length 3.81)
-          (name "Pin_8"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "8"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 7.62 -5.08 180)
-          (length 3.81)
-          (name "Pin_10"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "10"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no)
-      (property "MPN" "430451000"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Molex"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes))))
-    (symbol "Ogma2_Readable_Output:Readable_J6601"
-      (pin_names
-        (offset 0.508))
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "J"
-        (at -10.16 11.43 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Value" "430450600"
-        (at -10.16 10.16 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Footprint" "Ogma2:430450600"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.molex.com/en-us/products/part-detail/430450600"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "430450600"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Molex"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Right-angle through-hole PCB header"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "numbered physical contacts; see harness map; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Readable_J6601_0_1"
-        (rectangle
-          (start -10.16 30.48)
-          (end 10.16 -30.48)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "Readable_J6601_1_1"
-        (pin passive line
-          (at -15.24 25.4 0)
-          (length 5.08)
-          (name "1"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "1"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 5.08 0)
-          (length 5.08)
-          (name "2"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "2"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 -15.24 0)
-          (length 5.08)
-          (name "3"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "3"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 15.24 0)
-          (length 5.08)
-          (name "4"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "4"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 -5.08 0)
-          (length 5.08)
-          (name "5"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "5"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 -25.4 0)
-          (length 5.08)
-          (name "6"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "6"
-            (effects
-              (font
-                (size 0.9 0.9)))))))
-    (symbol "Ogma2_Readable_Output:Readable_J6602"
-      (pin_names
-        (offset 1.016)
-        (hide yes))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "J"
-        (at 1.27 7.62 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "430451000"
-        (at 1.27 -7.62 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:430451000"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Generic connector, double row, 02x05, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "connector"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "Connector*:*_2x??_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (embedded_fonts no)
-      (property "MPN" "430451000"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Molex"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Readable_J6602_0_1"
-        (rectangle
-          (start -10.16 55.88)
-          (end 10.16 -55.88)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "Readable_J6602_1_1"
-        (pin passive line
-          (at -15.24 50.8 0)
-          (length 5.08)
-          (name "Pin_1"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "1"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 30.48 0)
-          (length 5.08)
-          (name "Pin_3"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "3"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 0 0)
-          (length 5.08)
-          (name "Pin_5"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "5"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 -30.48 0)
-          (length 5.08)
-          (name "Pin_7"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "7"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 -50.8 0)
-          (length 5.08)
-          (name "Pin_9"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "9"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 40.64 0)
-          (length 5.08)
-          (name "Pin_2"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "2"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 10.16 0)
-          (length 5.08)
-          (name "Pin_4"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "4"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 -10.16 0)
-          (length 5.08)
-          (name "Pin_6"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "6"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at -15.24 -40.64 0)
-          (length 5.08)
-          (name "Pin_8"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "8"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin passive line
-          (at 15.24 -50.8 180)
-          (length 5.08)
-          (name "Pin_10"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "10"
-            (effects
-              (font
-                (size 0.9 0.9)))))))
-    (symbol "Device:C"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 0.254))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "C"
-        (at 0.635 2.54 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Value" "C"
-        (at 0.635 -2.54 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Footprint" ""
-        (at 0.9652 -3.81 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Unpolarized capacitor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "cap capacitor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "C_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "C_0_1"
-        (polyline
-          (pts
-            (xy -2.032 0.762)
-            (xy 2.032 0.762))
-          (stroke
-            (width 0.508)
-            (type default))
-          (fill
-            (type none)))
-        (polyline
-          (pts
-            (xy -2.032 -0.762)
-            (xy 2.032 -0.762))
-          (stroke
-            (width 0.508)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "C_1_1"
-        (pin passive line
-          (at 0 3.81 270)
-          (length 2.794)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 0 -3.81 90)
-          (length 2.794)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no)))
-  (text "Servos removed (D-19Nov.2): J6602, its PWM and enable resistors and sheet 06d are gone."
-    (exclude_from_sim no)
-    (at 15.24 299.72 0)
-    (effects
-      (font
-        (size 1.27 1.27))
-      (justify left))
-    (uuid "20f32a59-7d45-5b99-963e-90cc1e9bf5b1"))
-  (symbol
-    (lib_id "Device:C")
-    (at 50.8 109.22 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "68e15025-dd84-5893-88a3-a9595a3d2386")
-    (property "Reference" "C6601"
-      (at 49.53 106.68 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "1n 50V C0G"
-      (at 49.53 111.76 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 50.8 109.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 50.8 109.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 50.8 109.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 50.8 109.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 50.8 109.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "RF bypass on OUTPUT1_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"
-      (at 50.8 109.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
-          (reference "C6601")
-          (unit 1))))
-    (pin "1"
-      (uuid "bd8799f1-8a98-5fd6-9be3-e8d0ac363d9c"))
-    (pin "2"
-      (uuid "49802f5e-9df1-5ff7-8b67-5fcbee42afb2")))
-  (global_label "OUTPUT1_HIGH"
-    (shape bidirectional)
-    (at 46.99 109.22 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "6ece366c-691a-585e-ad55-7e1d1a354868")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 46.99 109.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 54.61 109.22 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "5a2a8d77-36a7-5e5f-ba46-6a3cc9ac3b22")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 54.61 109.22 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:C")
-    (at 50.8 119.38 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "4194b4f2-5c5a-5eab-81fc-a3ed1fa300a3")
-    (property "Reference" "C6602"
-      (at 49.53 116.84 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "1n 50V C0G"
-      (at 49.53 121.92 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 50.8 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 50.8 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 50.8 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 50.8 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 50.8 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "RF bypass on OUTPUT1_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"
-      (at 50.8 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
-          (reference "C6602")
-          (unit 1))))
-    (pin "1"
-      (uuid "48c499ab-869f-5547-99d1-336e282deb0a"))
-    (pin "2"
-      (uuid "9eafe0e9-fcb2-50c6-aae8-447a43d7cf65")))
-  (global_label "OUTPUT1_LOW"
-    (shape bidirectional)
-    (at 46.99 119.38 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "69cc76a2-5be2-5315-99f3-1fcedeaa5423")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 46.99 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 54.61 119.38 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "da8573f3-f0a4-5766-8bf0-8bbffae1fe94")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 54.61 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:C")
-    (at 50.8 129.54 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "4b55d160-c6da-5616-86b9-8dd42f56d139")
-    (property "Reference" "C6603"
-      (at 49.53 127 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "1n 50V C0G"
-      (at 49.53 132.08 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 50.8 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 50.8 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 50.8 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 50.8 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 50.8 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "RF bypass on OUTPUT2_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"
-      (at 50.8 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
-          (reference "C6603")
-          (unit 1))))
-    (pin "1"
-      (uuid "503e2597-9de1-56ef-bc29-9c3912a88c9a"))
-    (pin "2"
-      (uuid "4a792b44-5a77-5359-9c5c-2872f4aa7021")))
-  (global_label "OUTPUT2_HIGH"
-    (shape bidirectional)
-    (at 46.99 129.54 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "02a7b0d0-d60a-53e7-bdee-8feccdb2b3ad")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 46.99 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 54.61 129.54 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "14aa41dd-4de0-510c-9e8e-0bf75b3e3685")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 54.61 129.54 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:C")
-    (at 50.8 139.7 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "8a04d379-e761-5056-84bd-c4a8f4bcdbd6")
-    (property "Reference" "C6604"
-      (at 49.53 137.16 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "1n 50V C0G"
-      (at 49.53 142.24 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 50.8 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 50.8 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 50.8 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 50.8 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 50.8 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "RF bypass on OUTPUT2_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"
-      (at 50.8 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
-          (reference "C6604")
-          (unit 1))))
-    (pin "1"
-      (uuid "9e2e828d-8316-538e-b2ae-d4536bd0cabb"))
-    (pin "2"
-      (uuid "97f37222-940d-56f0-ba42-316a30514e68")))
-  (global_label "OUTPUT2_LOW"
-    (shape bidirectional)
-    (at 46.99 139.7 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "0094599f-3788-548e-9292-8f4ca5dd53d6")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 46.99 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 54.61 139.7 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "1dde8d62-0fd7-5c55-981a-7dcc9476ac84")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 54.61 139.7 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:C")
-    (at 50.8 149.86 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "086aed66-f254-5435-8bf8-075cd951227f")
-    (property "Reference" "C6605"
-      (at 49.53 147.32 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "1n 50V C0G"
-      (at 49.53 152.4 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 50.8 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 50.8 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 50.8 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 50.8 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 50.8 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "RF bypass on OUTPUT3_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"
-      (at 50.8 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
-          (reference "C6605")
-          (unit 1))))
-    (pin "1"
-      (uuid "16da0d14-30bb-5ed9-b80d-f408653b8aa5"))
-    (pin "2"
-      (uuid "8eb501c1-7f08-53bb-82ae-cd9a18cb98ed")))
-  (global_label "OUTPUT3_HIGH"
-    (shape bidirectional)
-    (at 46.99 149.86 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "965b5809-48ec-58ee-a4ad-b8dcd78430ae")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 46.99 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 54.61 149.86 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "1b71e236-d386-5f2d-ac44-7d536b533156")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 54.61 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:C")
-    (at 50.8 160.02 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "f7895806-7bc7-5155-b9bc-331c571b7d14")
-    (property "Reference" "C6606"
-      (at 49.53 157.48 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "1n 50V C0G"
-      (at 49.53 162.56 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 50.8 160.02 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 50.8 160.02 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 50.8 160.02 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 50.8 160.02 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 50.8 160.02 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "RF bypass on OUTPUT3_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"
-      (at 50.8 160.02 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
-          (reference "C6606")
-          (unit 1))))
-    (pin "1"
-      (uuid "c133df3a-689a-57fa-adb7-b740454b9cb4"))
-    (pin "2"
-      (uuid "f6c1720c-c756-5926-a766-2601ce82246b")))
-  (global_label "OUTPUT3_LOW"
-    (shape bidirectional)
-    (at 46.99 160.02 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "e5f1932e-5393-5a49-93b4-98cb987f5cdc")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 46.99 160.02 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 54.61 160.02 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "eed30133-1f9b-596a-9aa4-950b13dd0422")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 54.61 160.02 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (text "C6601-C6606: 1 nF C0G from each output to GND at J6601 (D-22Nov.20).\nRF picked up on the e-match leads returns here, not through the switches."
-    (exclude_from_sim no)
-    (at 30.48 167.64 0)
-    (effects
-      (font
-        (size 1.27 1.27))
-      (justify left top))
-    (uuid "8715ecb7-5618-50a3-8a55-da02db5413a8"))
-  (embedded_fonts no)
-  (text "OUTPUT HARNESS"
-    (at 15.24 15.24 0)
-    (effects
-      (font
-        (size 2.54 2.54))
-      (justify left))
-    (uuid "301ca424-ba8b-5a58-9fd2-c1d1941d26e0"))
-  (text "1  THREE ENERGETIC LOAD PAIRS / J6601"
-    (at 15.24 58.42 0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left))
-    (uuid "6414987e-c7b2-5a6e-83dc-f3979c5375c3"))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_J6601")
-    (at 111.76 134.62 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "4c1eb2de-6f69-55a5-aa4c-c50a7030d5eb")
-    (property "Reference" "J6601"
-      (at 111.76 96.52 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "430450600"
-      (at 111.76 99.06 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:430450600"
-      (at 111.76 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.molex.com/en-us/products/part-detail/430450600"
-      (at 111.76 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "430450600"
-      (at 111.76 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Molex"
-      (at 111.76 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Right-angle through-hole PCB header"
-      (at 111.76 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "numbered physical contacts; see harness map; pending dimensional audit"
-      (at 111.76 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
-          (reference "J6601")
-          (unit 1))))
-    (pin "1"
-      (uuid "851ebec2-cb9a-5427-8c8c-3fde1587b00b"))
-    (pin "2"
-      (uuid "3b337334-297e-5e9c-aad0-2c3aa38af16d"))
-    (pin "3"
-      (uuid "cf518558-c9e2-51f5-95ca-98ccd17e00f4"))
-    (pin "4"
-      (uuid "66092327-715d-5b23-ba50-280507c64c68"))
-    (pin "5"
-      (uuid "2ab5ec0c-5c1c-5a38-a51c-87d970628882"))
-    (pin "6"
-      (uuid "6c7bc957-3633-547f-8b99-e04b8c9afc5a")))
-  (text "1/4 = channel 1; 2/5 = channel 2; 3/6 = channel 3."
-    (at 20.32 185.42 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "1f1ec127-c7f3-5aa3-bdcd-90758dbc0118"))
-  (text "High + low both go to the remote removable e-match connection."
-    (at 20.32 195.58 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "5f7a0d05-71e0-5aa2-b840-e894ffa3c808"))
-  (text "Three isolated energetic load pairs; LOW is a switched return, not a chassis contact."
-    (at 15.24 314.96 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "3657c0e2-6d24-5df6-a38b-c7eb48b20e59"))
-  (text "Karman recorder population: no output source/harness; independent vehicle recovery required."
-    (at 15.24 325.12 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "9ffca0ec-f49f-5eca-b2fd-7f8272a47cff"))
-  (global_label "OUTPUT1_HIGH"
-    (shape bidirectional)
-    (at 91.44 109.22 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "92c0b8a1-1236-5bb8-aca7-6e95294b82ae")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 109.22 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT2_HIGH"
-    (shape bidirectional)
-    (at 91.44 129.54 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "18d7238c-e169-5356-999c-2208f1f6aaa5")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 129.54 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT3_HIGH"
-    (shape bidirectional)
-    (at 91.44 149.86 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "444bcc7f-03d2-57a1-997b-ac1bf4869683")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 149.86 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT1_LOW"
-    (shape bidirectional)
-    (at 91.44 119.38 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "76ff2ef1-2024-57cb-bc41-5ef63c21f03f")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 119.38 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT2_LOW"
-    (shape bidirectional)
-    (at 91.44 139.7 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "11521277-b6e9-5ba8-95be-0b06827a8b4a")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 139.7 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "OUTPUT3_LOW"
-    (shape bidirectional)
-    (at 91.44 160.02 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "ea24db23-cc9f-5ebd-8680-588218a51749")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 91.44 160.02 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (wire
-    (pts
-      (xy 91.44 109.22)
-      (xy 96.52 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "b2b31795-47cb-5d4b-8b65-610d5750f188"))
-  (wire
-    (pts
-      (xy 91.44 119.38)
-      (xy 96.52 119.38))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "8607d963-bf3e-533d-baf5-ea3a9391c1b7"))
-  (wire
-    (pts
-      (xy 91.44 129.54)
-      (xy 96.52 129.54))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "01252c52-58ca-51ef-a6b0-c901d4b265da"))
-  (wire
-    (pts
-      (xy 91.44 139.7)
-      (xy 96.52 139.7))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "ab8f1713-4f68-5f62-9349-38c6dbabc24e"))
-  (wire
-    (pts
-      (xy 91.44 149.86)
-      (xy 96.52 149.86))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "00dca61e-db17-59f9-a8e4-95a8f864fc6d"))
-  (wire
-    (pts
-      (xy 91.44 160.02)
-      (xy 96.52 160.02))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "08886a23-d1fb-549c-8d6a-4c98ea4daed0"))
-  (text "What this does: Defines the physical connector contacts for three energetic loads.\nConnects to: Three channel sheets -> J6601. Both wires of each energetic load return here; LOW is a switched return, not ground."
-    (at 15.24 27.94 0.0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left top))
-    (uuid "c3257751-1afd-53a2-8a19-774764a2f79e")))
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "030c6117-148a-5d00-86ef-caa8a45bd316")
+	(paper "User" 440 375.32)
+	(title_block
+		(title "Output harnesses")
+		(date "2026-09-08")
+		(rev "A-DRAFT")
+		(company "HiPR")
+		(comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight.")
+	)
+	(lib_symbols
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2:430450600"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at -10.16 11.43 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "430450600"
+				(at -10.16 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Ogma2:430450600"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.molex.com/en-us/products/part-detail/430450600"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Right-angle through-hole PCB header"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "430450600"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Molex"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "numbered physical contacts; see harness map; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "430450600_0_1"
+				(rectangle
+					(start -10.16 -8.89)
+					(end 10.16 8.89)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "430450600_1_1"
+				(pin passive line
+					(at -15.24 6.35 0)
+					(length 5.08)
+					(name "1"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 3.81 0)
+					(length 5.08)
+					(name "2"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 1.27 0)
+					(length 5.08)
+					(name "3"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -1.27 0)
+					(length 5.08)
+					(name "4"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -3.81 0)
+					(length 5.08)
+					(name "5"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -6.35 0)
+					(length 5.08)
+					(name "6"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2:430451000"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 1.27 7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "430451000"
+				(at 1.27 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:430451000"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic connector, double row, 02x05, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "430451000"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Molex"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_2x??_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "430451000_1_1"
+				(rectangle
+					(start -1.27 6.35)
+					(end 3.81 -6.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(rectangle
+					(start -1.27 5.207)
+					(end 0 4.953)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 5.207)
+					(end 2.54 4.953)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 2.667)
+					(end 2.54 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 0.127)
+					(end 2.54 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 -2.413)
+					(end 2.54 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 -4.953)
+					(end 2.54 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 5.08 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 5.08 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 2.54 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 2.54 180)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 0 180)
+					(length 3.81)
+					(name "Pin_6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -2.54 180)
+					(length 3.81)
+					(name "Pin_8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -5.08 0)
+					(length 3.81)
+					(name "Pin_9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -5.08 180)
+					(length 3.81)
+					(name "Pin_10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_Readable_Output:Readable_J6601"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at -10.16 11.43 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "430450600"
+				(at -10.16 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Ogma2:430450600"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.molex.com/en-us/products/part-detail/430450600"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Right-angle through-hole PCB header"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "430450600"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Molex"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "numbered physical contacts; see harness map; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Readable_J6601_0_1"
+				(rectangle
+					(start -10.16 30.48)
+					(end 10.16 -30.48)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Readable_J6601_1_1"
+				(pin passive line
+					(at -15.24 25.4 0)
+					(length 5.08)
+					(name "1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 5.08 0)
+					(length 5.08)
+					(name "2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -15.24 0)
+					(length 5.08)
+					(name "3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 15.24 0)
+					(length 5.08)
+					(name "4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -5.08 0)
+					(length 5.08)
+					(name "5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -25.4 0)
+					(length 5.08)
+					(name "6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_Readable_Output:Readable_J6602"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 1.27 7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "430451000"
+				(at 1.27 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:430451000"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic connector, double row, 02x05, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "430451000"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Molex"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_2x??_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Readable_J6602_0_1"
+				(rectangle
+					(start -10.16 55.88)
+					(end 10.16 -55.88)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Readable_J6602_1_1"
+				(pin passive line
+					(at -15.24 50.8 0)
+					(length 5.08)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 40.64 0)
+					(length 5.08)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 30.48 0)
+					(length 5.08)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 10.16 0)
+					(length 5.08)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 0 0)
+					(length 5.08)
+					(name "Pin_5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -10.16 0)
+					(length 5.08)
+					(name "Pin_6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -30.48 0)
+					(length 5.08)
+					(name "Pin_7"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -40.64 0)
+					(length 5.08)
+					(name "Pin_8"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -15.24 -50.8 0)
+					(length 5.08)
+					(name "Pin_9"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 15.24 -50.8 180)
+					(length 5.08)
+					(name "Pin_10"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "1/4 = channel 1; 2/5 = channel 2; 3/6 = channel 3."
+		(exclude_from_sim no)
+		(at 20.32 185.42 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "1f1ec127-c7f3-5aa3-bdcd-90758dbc0118")
+	)
+	(text "Servos removed (D-19Nov.2): J6602, its PWM and enable resistors and sheet 06d are gone."
+		(exclude_from_sim no)
+		(at 15.24 299.72 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "20f32a59-7d45-5b99-963e-90cc1e9bf5b1")
+	)
+	(text "OUTPUT HARNESS"
+		(exclude_from_sim no)
+		(at 15.24 15.24 0)
+		(effects
+			(font
+				(size 2.54 2.54)
+			)
+			(justify left)
+		)
+		(uuid "301ca424-ba8b-5a58-9fd2-c1d1941d26e0")
+	)
+	(text "Three isolated energetic load pairs; LOW is a switched return, not a chassis contact."
+		(exclude_from_sim no)
+		(at 15.24 314.96 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "3657c0e2-6d24-5df6-a38b-c7eb48b20e59")
+	)
+	(text "High + low both go to the remote removable e-match connection."
+		(exclude_from_sim no)
+		(at 20.32 195.58 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "5f7a0d05-71e0-5aa2-b840-e894ffa3c808")
+	)
+	(text "1  THREE ENERGETIC LOAD PAIRS / J6601"
+		(exclude_from_sim no)
+		(at 15.24 58.42 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left)
+		)
+		(uuid "6414987e-c7b2-5a6e-83dc-f3979c5375c3")
+	)
+	(text "C6601-C6606: 1 nF C0G from each output to GND at J6601 (D-22Nov.20).\nRF picked up on the e-match leads returns here, not through the switches."
+		(exclude_from_sim no)
+		(at 30.48 167.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "8715ecb7-5618-50a3-8a55-da02db5413a8")
+	)
+	(text "Karman recorder population: no output source/harness; independent vehicle recovery required."
+		(exclude_from_sim no)
+		(at 15.24 325.12 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "9ffca0ec-f49f-5eca-b2fd-7f8272a47cff")
+	)
+	(text "What this does: Defines the physical connector contacts for three energetic loads.\nConnects to: Three channel sheets -> J6601. Both wires of each energetic load return here; LOW is a switched return, not ground."
+		(exclude_from_sim no)
+		(at 15.24 27.94 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left top)
+		)
+		(uuid "c3257751-1afd-53a2-8a19-774764a2f79e")
+	)
+	(wire
+		(pts
+			(xy 91.44 149.86) (xy 96.52 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "00dca61e-db17-59f9-a8e4-95a8f864fc6d")
+	)
+	(wire
+		(pts
+			(xy 91.44 129.54) (xy 96.52 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "01252c52-58ca-51ef-a6b0-c901d4b265da")
+	)
+	(wire
+		(pts
+			(xy 91.44 160.02) (xy 96.52 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "08886a23-d1fb-549c-8d6a-4c98ea4daed0")
+	)
+	(wire
+		(pts
+			(xy 91.44 119.38) (xy 96.52 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8607d963-bf3e-533d-baf5-ea3a9391c1b7")
+	)
+	(wire
+		(pts
+			(xy 91.44 139.7) (xy 96.52 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ab8f1713-4f68-5f62-9349-38c6dbabc24e")
+	)
+	(wire
+		(pts
+			(xy 91.44 109.22) (xy 96.52 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b2b31795-47cb-5d4b-8b65-610d5750f188")
+	)
+	(global_label "OUTPUT2_LOW"
+		(shape bidirectional)
+		(at 46.99 139.7 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "0094599f-3788-548e-9292-8f4ca5dd53d6")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 46.99 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT2_HIGH"
+		(shape bidirectional)
+		(at 46.99 129.54 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "02a7b0d0-d60a-53e7-bdee-8feccdb2b3ad")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 46.99 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT2_LOW"
+		(shape bidirectional)
+		(at 91.44 139.7 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "11521277-b6e9-5ba8-95be-0b06827a8b4a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 91.44 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 54.61 129.54 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "14aa41dd-4de0-510c-9e8e-0bf75b3e3685")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 54.61 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT2_HIGH"
+		(shape bidirectional)
+		(at 91.44 129.54 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "18d7238c-e169-5356-999c-2208f1f6aaa5")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 91.44 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 54.61 149.86 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "1b71e236-d386-5f2d-ac44-7d536b533156")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 54.61 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 54.61 139.7 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "1dde8d62-0fd7-5c55-981a-7dcc9476ac84")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 54.61 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT3_HIGH"
+		(shape bidirectional)
+		(at 91.44 149.86 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "444bcc7f-03d2-57a1-997b-ac1bf4869683")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 91.44 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 54.61 109.22 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "5a2a8d77-36a7-5e5f-ba46-6a3cc9ac3b22")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 54.61 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT1_LOW"
+		(shape bidirectional)
+		(at 46.99 119.38 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "69cc76a2-5be2-5315-99f3-1fcedeaa5423")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 46.99 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT1_HIGH"
+		(shape bidirectional)
+		(at 46.99 109.22 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "6ece366c-691a-585e-ad55-7e1d1a354868")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 46.99 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT1_LOW"
+		(shape bidirectional)
+		(at 91.44 119.38 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "76ff2ef1-2024-57cb-bc41-5ef63c21f03f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 91.44 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT1_HIGH"
+		(shape bidirectional)
+		(at 91.44 109.22 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "92c0b8a1-1236-5bb8-aca7-6e95294b82ae")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 91.44 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT3_HIGH"
+		(shape bidirectional)
+		(at 46.99 149.86 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "965b5809-48ec-58ee-a4ad-b8dcd78430ae")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 46.99 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 54.61 119.38 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "da8573f3-f0a4-5766-8bf0-8bbffae1fe94")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 54.61 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT3_LOW"
+		(shape bidirectional)
+		(at 46.99 160.02 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "e5f1932e-5393-5a49-93b4-98cb987f5cdc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 46.99 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "OUTPUT3_LOW"
+		(shape bidirectional)
+		(at 91.44 160.02 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "ea24db23-cc9f-5ebd-8680-588218a51749")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 91.44 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 54.61 160.02 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "eed30133-1f9b-596a-9aa4-950b13dd0422")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 54.61 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 50.8 149.86 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "086aed66-f254-5435-8bf8-075cd951227f")
+		(property "Reference" "C6605"
+			(at 49.53 147.32 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1n 50V C0G"
+			(at 49.53 152.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 50.8 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 50.8 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 50.8 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 50.8 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "RF bypass on OUTPUT3_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"
+			(at 50.8 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "16da0d14-30bb-5ed9-b80d-f408653b8aa5")
+		)
+		(pin "2"
+			(uuid "8eb501c1-7f08-53bb-82ae-cd9a18cb98ed")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
+					(reference "C6605")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 50.8 119.38 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4194b4f2-5c5a-5eab-81fc-a3ed1fa300a3")
+		(property "Reference" "C6602"
+			(at 49.53 116.84 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1n 50V C0G"
+			(at 49.53 121.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 50.8 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 50.8 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 50.8 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 50.8 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "RF bypass on OUTPUT1_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"
+			(at 50.8 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "48c499ab-869f-5547-99d1-336e282deb0a")
+		)
+		(pin "2"
+			(uuid "9eafe0e9-fcb2-50c6-aae8-447a43d7cf65")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
+					(reference "C6602")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 50.8 129.54 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4b55d160-c6da-5616-86b9-8dd42f56d139")
+		(property "Reference" "C6603"
+			(at 49.53 127 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1n 50V C0G"
+			(at 49.53 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "RF bypass on OUTPUT2_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"
+			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "503e2597-9de1-56ef-bc29-9c3912a88c9a")
+		)
+		(pin "2"
+			(uuid "4a792b44-5a77-5359-9c5c-2872f4aa7021")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
+					(reference "C6603")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ogma2_Readable_Output:Readable_J6601")
+		(at 111.76 134.62 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4c1eb2de-6f69-55a5-aa4c-c50a7030d5eb")
+		(property "Reference" "J6601"
+			(at 111.76 96.52 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "430450600"
+			(at 111.76 99.06 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Ogma2:430450600"
+			(at 111.76 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.molex.com/en-us/products/part-detail/430450600"
+			(at 111.76 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Right-angle through-hole PCB header"
+			(at 111.76 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "430450600"
+			(at 111.76 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Molex"
+			(at 111.76 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Library_Check" "numbered physical contacts; see harness map; pending dimensional audit"
+			(at 111.76 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "851ebec2-cb9a-5427-8c8c-3fde1587b00b")
+		)
+		(pin "2"
+			(uuid "3b337334-297e-5e9c-aad0-2c3aa38af16d")
+		)
+		(pin "3"
+			(uuid "cf518558-c9e2-51f5-95ca-98ccd17e00f4")
+		)
+		(pin "4"
+			(uuid "66092327-715d-5b23-ba50-280507c64c68")
+		)
+		(pin "5"
+			(uuid "2ab5ec0c-5c1c-5a38-a51c-87d970628882")
+		)
+		(pin "6"
+			(uuid "6c7bc957-3633-547f-8b99-e04b8c9afc5a")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
+					(reference "J6601")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 50.8 109.22 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "68e15025-dd84-5893-88a3-a9595a3d2386")
+		(property "Reference" "C6601"
+			(at 49.53 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1n 50V C0G"
+			(at 49.53 111.76 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 50.8 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 50.8 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 50.8 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 50.8 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "RF bypass on OUTPUT1_HIGH at J6601: 1 nF C0G to GND (D-22Nov.20)"
+			(at 50.8 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bd8799f1-8a98-5fd6-9be3-e8d0ac363d9c")
+		)
+		(pin "2"
+			(uuid "49802f5e-9df1-5ff7-8b67-5fcbee42afb2")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
+					(reference "C6601")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 50.8 139.7 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8a04d379-e761-5056-84bd-c4a8f4bcdbd6")
+		(property "Reference" "C6604"
+			(at 49.53 137.16 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1n 50V C0G"
+			(at 49.53 142.24 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 50.8 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 50.8 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 50.8 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 50.8 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "RF bypass on OUTPUT2_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"
+			(at 50.8 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "9e2e828d-8316-538e-b2ae-d4536bd0cabb")
+		)
+		(pin "2"
+			(uuid "97f37222-940d-56f0-ba42-316a30514e68")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
+					(reference "C6604")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 50.8 160.02 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "f7895806-7bc7-5155-b9bc-331c571b7d14")
+		(property "Reference" "C6606"
+			(at 49.53 157.48 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1n 50V C0G"
+			(at 49.53 162.56 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 50.8 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 50.8 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 50.8 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 50.8 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "RF bypass on OUTPUT3_LOW at J6601: 1 nF C0G to GND (D-22Nov.20)"
+			(at 50.8 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c133df3a-689a-57fa-adb7-b740454b9cb4")
+		)
+		(pin "2"
+			(uuid "f6c1720c-c756-5926-a766-2601ce82246b")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/9cc140c7-4b49-5686-9319-135458861ae2"
+					(reference "C6606")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

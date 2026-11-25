@@ -1,2861 +1,4631 @@
 (kicad_sch
-  (version 20250114)
-  (generator eeschema)
-  (generator_version "9.0")
-  (uuid "ba77ec24-8ca2-5ca6-af9d-5700bf55409e")
-  (paper "User" 420 317.32)
-  (title_block
-    (title "Radio / Wio-LR2021 module and host RF")
-    (date "2026-09-08")
-    (rev "A-DRAFT")
-    (company "HiPR")
-    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
-  (lib_symbols
-    (symbol "Connector:Conn_Coaxial"
-      (pin_names
-        (offset 1.016)
-        (hide yes))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "J"
-        (at 0.254 3.048 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "Conn_Coaxial"
-        (at 2.921 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" ""
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "BNC SMA SMB SMC LEMO coaxial connector CINCH RCA MCX MMCX U.FL UMRF"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Conn_Coaxial_0_1"
-        (polyline
-          (pts
-            (xy -2.54 0)
-            (xy -0.508 0))
-          (stroke
-            (width 0)
-            (type default))
-          (fill
-            (type none)))
-        (arc
-          (start 1.778 0)
-          (mid 0.222 -1.8079)
-          (end -1.778 -0.508)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type none)))
-        (arc
-          (start -1.778 0.508)
-          (mid 0.2221 1.8084)
-          (end 1.778 0)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type none)))
-        (circle
-          (center 0 0)
-          (radius 0.508)
-          (stroke
-            (width 0.2032)
-            (type default))
-          (fill
-            (type none)))
-        (polyline
-          (pts
-            (xy 0 -2.54)
-            (xy 0 -1.778))
-          (stroke
-            (width 0)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "Conn_Coaxial_1_1"
-        (pin passive line
-          (at -5.08 0 0)
-          (length 2.54)
-          (name "In"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 0 -5.08 90)
-          (length 2.54)
-          (name "Ext"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no))
-    (symbol "Connector:TestPoint"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 0.762)
-        (hide yes))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "TP"
-        (at 0 6.858 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "TestPoint"
-        (at 0 5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" ""
-        (at 5.08 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 5.08 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "test point"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "test point tp"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "Pin* Test*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "TestPoint_0_1"
-        (circle
-          (center 0 3.302)
-          (radius 0.762)
-          (stroke
-            (width 0)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "TestPoint_1_1"
-        (pin passive line
-          (at 0 0 90)
-          (length 2.54)
-          (name "1"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no))
-    (symbol "Device:C"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 0.254))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "C"
-        (at 0.635 2.54 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Value" "C"
-        (at 0.635 -2.54 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Footprint" ""
-        (at 0.9652 -3.81 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Unpolarized capacitor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "cap capacitor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "C_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "C_0_1"
-        (polyline
-          (pts
-            (xy -2.032 0.762)
-            (xy 2.032 0.762))
-          (stroke
-            (width 0.508)
-            (type default))
-          (fill
-            (type none)))
-        (polyline
-          (pts
-            (xy -2.032 -0.762)
-            (xy 2.032 -0.762))
-          (stroke
-            (width 0.508)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "C_1_1"
-        (pin passive line
-          (at 0 3.81 270)
-          (length 2.794)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 0 -3.81 90)
-          (length 2.794)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no))
-    (symbol "Device:R"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 0))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "R"
-        (at 2.032 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "R"
-        (at 0 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" ""
-        (at -1.778 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Resistor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "R res resistor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "R_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "R_0_1"
-        (rectangle
-          (start -1.016 -2.54)
-          (end 1.016 2.54)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "R_1_1"
-        (pin passive line
-          (at 0 3.81 270)
-          (length 1.27)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 0 -3.81 90)
-          (length 1.27)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no))
-    (symbol "Ogma2:Wio-LR2021"
-      (pin_names
-        (offset 0.002))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "U"
-        (at 5.588 17.272 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "Wio-LR2021"
-        (at -0.508 17.78 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:Wio-LR2021"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Seeed Wio-LR2021 868/915 MHz module, SKU 100058045; KiCad 9 adaptation"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Wio-LR2021_0_1"
-        (rectangle
-          (start -9.525 -17.145)
-          (end 9.525 15.875)
-          (stroke
-            (width 0)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "Wio-LR2021_1_0"
-        (pin power_in line
-          (at -12.065 12.065 0)
-          (length 2.54)
-          (name "VCC_IN"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at -12.065 9.525 0)
-          (length 2.54)
-          (name "DIO5"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -12.065 6.985 0)
-          (length 2.54)
-          (name "RESET"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "3"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin output line
-          (at -12.065 4.445 0)
-          (length 2.54)
-          (name "MISO"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "4"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -12.065 1.905 0)
-          (length 2.54)
-          (name "MOSI"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "5"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -12.065 -0.635 0)
-          (length 2.54)
-          (name "SCK"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "6"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -12.065 -3.175 0)
-          (length 2.54)
-          (name "NSS"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "7"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin open_collector line
-          (at -12.065 -5.715 0)
-          (length 2.54)
-          (name "BUSY"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "8"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at -12.065 -8.255 0)
-          (length 2.54)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "9"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at -12.065 -10.795 0)
-          (length 2.54)
-          (name "Sub-G_RF"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "10"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at -12.065 -13.335 0)
-          (length 2.54)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "11"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 12.065 -13.335 180)
-          (length 2.54)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "12"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 12.065 -10.795 180)
-          (length 2.54)
-          (name "2.4G_RF"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "13"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 12.065 -8.255 180)
-          (length 2.54)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "14"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 12.065 -5.715 180)
-          (length 2.54)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "15"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 12.065 -3.175 180)
-          (length 2.54)
-          (name "DIO11"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "16"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 12.065 -0.635 180)
-          (length 2.54)
-          (name "DIO10"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "17"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 12.065 1.905 180)
-          (length 2.54)
-          (name "DIO9"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "18"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 12.065 4.445 180)
-          (length 2.54)
-          (name "DIO8"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "19"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 12.065 6.985 180)
-          (length 2.54)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "20"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 12.065 9.525 180)
-          (length 2.54)
-          (name "DIO6"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "21"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 12.065 12.065 180)
-          (length 2.54)
-          (name "DIO7"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "22"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no))
-    (symbol "Ogma2_Readable_IO:Wio_LR2021_Review"
-      (pin_names
-        (offset 0.002))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "U"
-        (at 5.588 17.272 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "Wio-LR2021"
-        (at -0.508 17.78 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:Wio-LR2021"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Seeed Wio-LR2021 868/915 MHz module, SKU 100058045; KiCad 9 adaptation"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (embedded_fonts no)
-      (symbol "Wio_LR2021_Review_0_1"
-        (rectangle
-          (start -20.32 55.88)
-          (end 20.32 -55.88)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "Wio_LR2021_Review_1_1"
-        (pin input line
-          (at -25.4 30.48 0)
-          (length 5.08)
-          (name "SCK"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "6"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -25.4 20.32 0)
-          (length 5.08)
-          (name "MOSI"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "5"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin output line
-          (at -25.4 10.16 0)
-          (length 5.08)
-          (name "MISO"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "4"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -25.4 0 0)
-          (length 5.08)
-          (name "NSS"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "7"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -25.4 -10.16 0)
-          (length 5.08)
-          (name "RESET"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "3"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin open_collector line
-          (at -25.4 -20.32 0)
-          (length 5.08)
-          (name "BUSY"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "8"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at -25.4 -30.48 0)
-          (length 5.08)
-          (name "DIO5"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 0 60.96 270)
-          (length 5.08)
-          (name "VCC_IN"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 25.4 20.32 180)
-          (length 5.08)
-          (name "Sub-G_RF"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "10"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 0 -60.96 90)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "9"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 0 -60.96 90)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes)))
-          (number "11"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes))))
-        (pin power_in line
-          (at 0 -60.96 90)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes)))
-          (number "12"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes))))
-        (pin power_in line
-          (at 0 -60.96 90)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes)))
-          (number "14"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes))))
-        (pin power_in line
-          (at 0 -60.96 90)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes)))
-          (number "15"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes))))
-        (pin power_in line
-          (at 0 -60.96 90)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes)))
-          (number "20"
-            (effects
-              (font
-                (size 1.27 1.27))
-              (hide yes))))
-        (pin passive line
-          (at 25.4 0 180)
-          (length 5.08)
-          (name "2.4G_RF"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "13"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 25.4 -5.08 180)
-          (length 5.08)
-          (name "DIO11"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "16"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 25.4 -10.16 180)
-          (length 5.08)
-          (name "DIO10"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "17"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 25.4 -15.24 180)
-          (length 5.08)
-          (name "DIO9"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "18"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 25.4 -20.32 180)
-          (length 5.08)
-          (name "DIO8"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "19"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 25.4 -25.4 180)
-          (length 5.08)
-          (name "DIO6"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "21"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin bidirectional line
-          (at 25.4 -30.48 180)
-          (length 5.08)
-          (name "DIO7"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "22"
-            (effects
-              (font
-                (size 1.27 1.27)))))))
-    (symbol "Ogma2_GNSS:TPD1E0B04DPYR"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 1.016)
-        (hide yes))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "D"
-        (at 0 2.54 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "TPD1E0B04DPYR"
-        (at 0 -2.54 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2_GNSS:TPD1E0B04DPYR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tpd1e0b04.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Bidirectional RF ESD candidate, DPY 0402, 0.15 pF typical; board ESD unqualified"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "diode TVS thyrector"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "TPD1E0B04DPYR_0_1"
-        (polyline
-          (pts
-            (xy -2.54 1.27)
-            (xy -2.54 -1.27)
-            (xy 2.54 1.27)
-            (xy 2.54 -1.27)
-            (xy -2.54 1.27))
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type none)))
-        (polyline
-          (pts
-            (xy 0.508 1.27)
-            (xy 0 1.27)
-            (xy 0 -1.27)
-            (xy -0.508 -1.27))
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type none)))
-        (polyline
-          (pts
-            (xy 1.27 0)
-            (xy -1.27 0))
-          (stroke
-            (width 0)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "TPD1E0B04DPYR_1_1"
-        (pin passive line
-          (at -3.81 0 0)
-          (length 2.54)
-          (name "A1"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 3.81 0 180)
-          (length 2.54)
-          (name "A2"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no)))
-  (symbol
-    (lib_id "Ogma2_GNSS:TPD1E0B04DPYR")
-    (at 314.96 157.48 270)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "dd0de93c-272a-5683-8953-a1e3868f3db5")
-    (property "Reference" "D4601"
-      (at 317.5 156.21 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "PESD5V0F1BL,315"
-      (at 317.5 158.75 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Diode_SMD:D_SOD-882"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tpd1e0b04.pdf"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "LoRa RF ESD at J4601: bidirectional TVS, 0.4 pF typ, 5.5 V standoff (D-22Nov.20)"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "diode TVS thyrector"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BL.pdf"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "PESD5V0F1BL,315"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Nexperia"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C45961"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "as D4501 (step 10): PESD5V0F1BL is bidirectional, so the TPD1E0B04 symbol's pin 1 (IO) and pin 2 (GND) map to either SOD882 pad; footprint KiCad D_SOD-882"
-      (at 314.96 157.48 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "D4601")
-          (unit 1))))
-    (pin "1"
-      (uuid "866d80ae-2bf6-509c-a828-920e0f7e6631"))
-    (pin "2"
-      (uuid "b99556d5-ad13-53e3-b655-7e0e96ae16b6")))
-  (global_label "LORA_RF_SUBG"
-    (shape bidirectional)
-    (at 314.96 153.67 90)
-    (effects
-      (font
-        (size 0.9 0.9)))
-    (uuid "bd37a87c-6de6-5a12-b842-9f0d4a7c5743")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 314.96 153.67 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 314.96 161.29 270)
-    (effects
-      (font
-        (size 0.9 0.9)))
-    (uuid "203812cc-e5b7-59f8-a78f-e3e546c4a61c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 314.96 161.29 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (text "D4601: ESD on the LoRa port, as D4501 on GNSS (D-22Nov.20).\nA path for static the antenna collects; 0.4 pF."
-    (exclude_from_sim no)
-    (at 302.26 167.64 0)
-    (effects
-      (font
-        (size 1.27 1.27))
-      (justify left top))
-    (uuid "cf6f682c-d0cf-5372-a331-5815ed91d1e6"))
-  (embedded_fonts no)
-  (text "RADIO MODULE / SIGNAL DAMPING / EXTERNAL ANTENNA"
-    (at 15.24 16.51 0)
-    (effects
-      (font
-        (size 2.54 2.54))
-      (justify left))
-    (uuid "19ab8f90-d371-55d8-95ef-d5d01e4dda27"))
-  (symbol
-    (lib_id "Ogma2_Readable_IO:Wio_LR2021_Review")
-    (at 205.74 165.1 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "c338e120-2bea-5f69-aa7f-246ac3f90e3b")
-    (property "Reference" "U4606"
-      (at 205.74 96.52 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "Wio-LR2021"
-      (at 205.74 99.06 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:Wio-LR2021"
-      (at 205.74 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf"
-      (at 205.74 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Seeed Wio-LR2021 868/915 MHz module, SKU 100058045; KiCad 9 adaptation"
-      (at 205.74 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "U4606")
-          (unit 1))))
-    (pin "1"
-      (uuid "1e845be3-66fe-5554-af1c-7247c7a9b903"))
-    (pin "2"
-      (uuid "ae4b5a09-ce7e-5b12-9d5f-440c31d072b0"))
-    (pin "3"
-      (uuid "cc952947-5dbb-5ccd-b776-e6f2880995ef"))
-    (pin "4"
-      (uuid "ae0cb2ef-d1c2-5da1-ac8d-6cb8ff6a8597"))
-    (pin "5"
-      (uuid "18740b3a-2655-5e02-b306-341972a64278"))
-    (pin "6"
-      (uuid "27726326-337b-532f-8257-3ffef5ff1777"))
-    (pin "7"
-      (uuid "440d29cb-c0b9-53f6-8669-4413cc63cf6e"))
-    (pin "8"
-      (uuid "696ee18a-e642-5338-8b39-b89ddefa2df6"))
-    (pin "9"
-      (uuid "def6c955-8693-5be9-b820-c26245cbabdc"))
-    (pin "10"
-      (uuid "8301574b-1705-5d0b-8b7a-cff6495c44af"))
-    (pin "11"
-      (uuid "b1415622-2d80-5aa2-8313-4542d1e78a82"))
-    (pin "12"
-      (uuid "f9d2ca51-6241-50c4-b196-ca5a7cbdf05b"))
-    (pin "13"
-      (uuid "311a7393-e3aa-5d63-b2bb-33161f87a203"))
-    (pin "14"
-      (uuid "5e5f69c2-f9b6-550b-a2eb-24664482b073"))
-    (pin "15"
-      (uuid "0e67026c-4a88-5755-9c23-d2262647eb88"))
-    (pin "16"
-      (uuid "57fdc1e5-92bb-519c-a1d1-6e84a54fb1ad"))
-    (pin "17"
-      (uuid "eef1df0d-fa23-5362-a904-6ac7219da457"))
-    (pin "18"
-      (uuid "f85e4301-97ec-5d82-9e56-6ecfacf2541f"))
-    (pin "19"
-      (uuid "730aef33-5fcf-5b48-a78a-22279fc74ab8"))
-    (pin "20"
-      (uuid "a1fdf46f-233e-5a93-9563-093ad22037be"))
-    (pin "21"
-      (uuid "21523e87-ee1b-5e57-ad32-17cc7026941a"))
-    (pin "22"
-      (uuid "357844cc-840c-5bc7-ab99-d48536a820c1"))
-    (property "MPN" "Wio-LR2021 / SKU 100058045"
-      (at 205.74 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Seeed Studio"
-      (at 205.74 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "Official Seeed symbol and 22-pad land pattern adapted to KiCad 9; pad map independently checked; STEP alignment and assembly review open. See libraries/radio-integration.md."
-      (at 205.74 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (no_connect
-    (at 231.14 165.1)
-    (uuid "8cba8ac2-35dd-5a3e-8c94-8462a3246d1e"))
-  (no_connect
-    (at 231.14 170.18)
-    (uuid "6867ae42-038a-5d5f-8e6b-a09ef0a283ec"))
-  (no_connect
-    (at 231.14 175.26)
-    (uuid "8fa5e953-0d44-5b21-91a7-2c0fd4bb68d1"))
-  (no_connect
-    (at 231.14 180.34)
-    (uuid "616282cb-e762-59bf-ab29-2904ab947283"))
-  (no_connect
-    (at 231.14 185.42)
-    (uuid "e12b61b6-fa4e-52a9-8130-6d8e0cbac542"))
-  (no_connect
-    (at 231.14 190.5)
-    (uuid "ba3913c3-8455-5dd8-810b-1a0ba91808f0"))
-  (no_connect
-    (at 231.14 195.58)
-    (uuid "fa581f0b-4e07-5563-b6c1-d7db156e2ea9"))
-  (symbol
-    (lib_id "Device:R")
-    (at 121.92 134.62 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "a5323c7d-5719-54e4-9117-4c9fb51cc884")
-    (property "Reference" "R4614"
-      (at 121.92 129.54 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "470R"
-      (at 121.92 132.08 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-      (at 121.92 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 121.92 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 121.92 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 121.92 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 121.92 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "0402WGF4700TCE"
-      (at 121.92 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C25117"
-      (at 121.92 134.62 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "R4614")
-          (unit 1))))
-    (pin "1"
-      (uuid "a2c34d89-b476-5eeb-a0fc-a467923909d3"))
-    (pin "2"
-      (uuid "71e08a8a-b741-5d6d-a2cc-e630bf19fe8c")))
-  (global_label "LORA_SCK_ISO"
-    (shape bidirectional)
-    (at 87.63 134.62 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "9bf858b3-2538-5b40-a104-a6afd6b6a4b8")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 87.63 134.62 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 121.92 144.78 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "fc567bbd-af93-5f49-a8c8-a2bbfa983de9")
-    (property "Reference" "R4615"
-      (at 121.92 139.7 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "470R"
-      (at 121.92 142.24 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-      (at 121.92 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 121.92 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 121.92 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 121.92 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 121.92 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "0402WGF4700TCE"
-      (at 121.92 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C25117"
-      (at 121.92 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "R4615")
-          (unit 1))))
-    (pin "1"
-      (uuid "20d61541-1fa6-5f37-b346-d4ad8d531462"))
-    (pin "2"
-      (uuid "7dfbac2f-bb0a-5aa7-9a45-f7be31824360")))
-  (global_label "LORA_MOSI_ISO"
-    (shape bidirectional)
-    (at 87.63 144.78 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "fed7f511-7f99-583d-9c59-7bcba1226941")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 87.63 144.78 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 121.92 154.94 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "6d45a8d1-afe7-5491-a163-c1cdff408673")
-    (property "Reference" "R4616"
-      (at 121.92 149.86 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "470R"
-      (at 121.92 152.4 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-      (at 121.92 154.94 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 121.92 154.94 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 121.92 154.94 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 121.92 154.94 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 121.92 154.94 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "0402WGF4700TCE"
-      (at 121.92 154.94 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C25117"
-      (at 121.92 154.94 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "R4616")
-          (unit 1))))
-    (pin "1"
-      (uuid "c7b2e50b-817d-500d-940f-d32908e0202e"))
-    (pin "2"
-      (uuid "1c7d7a1b-5585-5de2-86d7-392990f1ea5b")))
-  (global_label "LORA_MISO_ISO"
-    (shape bidirectional)
-    (at 87.63 154.94 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "ab7616b8-d71c-5da3-b1d5-26468328f21b")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 87.63 154.94 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 121.92 165.1 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "a341378a-270c-548e-b92f-d284b7e1e2b6")
-    (property "Reference" "R4617"
-      (at 121.92 160.02 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "470R"
-      (at 121.92 162.56 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-      (at 121.92 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 121.92 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 121.92 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 121.92 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 121.92 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "0402WGF4700TCE"
-      (at 121.92 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C25117"
-      (at 121.92 165.1 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "R4617")
-          (unit 1))))
-    (pin "1"
-      (uuid "7ae4e2c4-a010-5667-a887-d52f0f9e4d3a"))
-    (pin "2"
-      (uuid "a5f3ddbf-f330-50d8-8895-b22f0071bf6b")))
-  (global_label "LORA_NCS_ISO"
-    (shape bidirectional)
-    (at 87.63 165.1 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "e40d343c-8cd3-5418-9bab-cdfdeeab6359")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 87.63 165.1 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 121.92 175.26 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "26fd9cec-95dd-559b-be06-2f2ec38bcabf")
-    (property "Reference" "R4618"
-      (at 121.92 170.18 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "470R"
-      (at 121.92 172.72 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-      (at 121.92 175.26 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 121.92 175.26 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 121.92 175.26 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 121.92 175.26 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 121.92 175.26 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "0402WGF4700TCE"
-      (at 121.92 175.26 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C25117"
-      (at 121.92 175.26 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "R4618")
-          (unit 1))))
-    (pin "1"
-      (uuid "26a0cbb2-3634-5c75-b171-cd08e777e0ac"))
-    (pin "2"
-      (uuid "97526407-e132-5616-8ad9-c8c88ec88bed")))
-  (global_label "LORA_RESET_N_ISO"
-    (shape bidirectional)
-    (at 87.63 175.26 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "0bde3de6-1bf2-5490-bbeb-7b22e991bbee")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 87.63 175.26 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 121.92 185.42 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "b3dbe346-230e-5375-925b-7e733ad9dbed")
-    (property "Reference" "R4619"
-      (at 121.92 180.34 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "470R"
-      (at 121.92 182.88 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-      (at 121.92 185.42 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 121.92 185.42 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 121.92 185.42 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 121.92 185.42 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 121.92 185.42 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "0402WGF4700TCE"
-      (at 121.92 185.42 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C25117"
-      (at 121.92 185.42 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "R4619")
-          (unit 1))))
-    (pin "1"
-      (uuid "f5bde085-4f2b-5348-8ea5-daeb5a8475b3"))
-    (pin "2"
-      (uuid "190389f9-7161-5689-b273-3a28f71a2d6f")))
-  (global_label "LORA_BUSY_ISO"
-    (shape bidirectional)
-    (at 87.63 185.42 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "966f2c1e-3a88-56c1-84f6-0eefc7067355")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 87.63 185.42 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 121.92 195.58 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "08dbc132-eada-5476-b848-0aeaa38c1824")
-    (property "Reference" "R4620"
-      (at 121.92 190.5 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "470R"
-      (at 121.92 193.04 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-      (at 121.92 195.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 121.92 195.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 121.92 195.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 121.92 195.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 121.92 195.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "0402WGF4700TCE"
-      (at 121.92 195.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C25117"
-      (at 121.92 195.58 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "R4620")
-          (unit 1))))
-    (pin "1"
-      (uuid "3731897d-fb5d-50b7-a04a-ee7a869876b4"))
-    (pin "2"
-      (uuid "1d44467d-54bd-519e-908f-628125673a13")))
-  (global_label "LORA_DIO1_ISO"
-    (shape bidirectional)
-    (at 87.63 195.58 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "c2de81ac-37b8-5744-a071-cd36dbbe5e7a")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 87.63 195.58 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 330.2 210.82 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "0502e5c5-d309-53e0-a8f2-0d39fd6b9d23")
-    (property "Reference" "R4621"
-      (at 334.01 209.55 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10k"
-      (at 334.01 212.09 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-      (at 330.2 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 330.2 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 330.2 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 330.2 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 330.2 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "BUSY open-drain pull-up on switched module rail."
-      (at 330.2 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "0402WGF1002TCE"
-      (at 330.2 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C25744"
-      (at 330.2 210.82 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "R4621")
-          (unit 1))))
-    (pin "1"
-      (uuid "b86f5c2a-0129-5724-b887-6794214d79e7"))
-    (pin "2"
-      (uuid "25aa7c5b-9059-5385-9021-7a63d4bb7322")))
-  (global_label "LORA_3V3"
-    (shape bidirectional)
-    (at 330.2 199.39 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "641c6b3c-9013-59cc-8cb5-7771dce429f2")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 330.2 199.39 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "LORA_BUSY_MOD"
-    (shape bidirectional)
-    (at 330.2 222.25 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "37443868-957d-5930-b910-280142e1f3b4")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 330.2 222.25 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (text "Open-drain BUSY pull-up"
-    (at 289.56 193.04 0)
-    (effects
-      (font
-        (size 1.15 1.15))
-      (justify left))
-    (uuid "0c3e462f-78c1-5f75-9598-abcb4f9fe37a"))
-  (symbol
-    (lib_id "Device:C")
-    (at 281.94 93.98 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "462313d4-76df-52eb-9c77-12f90cc9ce95")
-    (property "Reference" "C4611"
-      (at 285.75 92.71 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 285.75 95.25 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 281.94 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 281.94 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 281.94 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 281.94 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 281.94 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "CL05B104KB54PNC"
-      (at 281.94 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C307331"
-      (at 281.94 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "C4611")
-          (unit 1))))
-    (pin "1"
-      (uuid "bbada07a-8317-54d1-ab3f-15e0ddfaf94a"))
-    (pin "2"
-      (uuid "37431e20-cabc-5340-bfa0-3c660284853e")))
-  (symbol
-    (lib_id "Device:C")
-    (at 309.88 93.98 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "aaef6447-1563-5add-806b-800290bd43ca")
-    (property "Reference" "C4612"
-      (at 313.69 92.71 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "10u 16V X7R"
-      (at 313.69 95.25 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
-      (at 309.88 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 309.88 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 309.88 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 309.88 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 309.88 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "C4612")
-          (unit 1))))
-    (pin "1"
-      (uuid "29bfd65a-3bde-5075-b8ff-2937d55ce520"))
-    (pin "2"
-      (uuid "a31c4164-d95e-5a5d-ae67-ac3f5dfecec3")))
-  (symbol
-    (lib_id "Device:C")
-    (at 337.82 93.98 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "8ade3943-8a5d-53e2-9e4f-809027639985")
-    (property "Reference" "C4613"
-      (at 341.63 92.71 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100u 16V X5R"
-      (at 341.63 95.25 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
-      (at 337.82 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 337.82 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 337.82 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 337.82 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 337.82 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "EMK325ABJ107MM-P"
-      (at 337.82 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Taiyo Yuden"
-      (at 337.82 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "C4613")
-          (unit 1))))
-    (pin "1"
-      (uuid "a432b1be-809d-5efb-a306-c226e2431bc4"))
-    (pin "2"
-      (uuid "d15d476c-4725-5583-a9b3-0b3a8ab89c51"))
-    (property "Implementation_Note" "Require >=47uF effective; qualify slew/TX dip"
-      (at 337.82 93.98 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "LORA_3V3"
-    (shape bidirectional)
-    (at 205.74 81.28 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "902b2334-c1f5-5072-af0e-f6ff339359fb")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 205.74 81.28 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 337.82 109.22 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "a05683ef-8f5f-5c2d-b57e-ec8de3f7b4c9")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 337.82 109.22 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Connector:TestPoint")
-    (at 251.46 81.28 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "4d603a9b-4ade-5cdb-b4c4-2ad3e6fa555e")
-    (property "Reference" "TP2"
-      (at 255.27 77.47 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "LORA_3V3"
-      (at 255.27 77.47 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)
-        (hide yes)))
-    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "test point"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "test point tp"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "Pin* Test*"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "LCSC" "C22388408"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "TP2")
-          (unit 1))))
-    (pin "1"
-      (uuid "b2948358-766a-52dc-a756-43a716b4356f"))
-    (property "MPN" "5194TR"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Keystone Electronics"
-      (at 251.46 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (symbol
-    (lib_id "Connector:Conn_Coaxial")
-    (at 294.64 144.78 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "f8be854e-7663-5c45-b132-257c2041bff4")
-    (property "Reference" "J4601"
-      (at 294.64 137.16 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "132134"
-      (at 294.64 139.7 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SMA_Amphenol_132134_Vertical"
-      (at 294.64 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.amphenolrf.com/en-us/part/132134/662/"
-      (at 294.64 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Standard SMA female, vertical through-hole, 50 ohm; not RP-SMA"
-      (at 294.64 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "BNC SMA SMB SMC LEMO coaxial connector CINCH RCA MCX MMCX U.FL UMRF"
-      (at 294.64 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*"
-      (at 294.64 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
-          (reference "J4601")
-          (unit 1))))
-    (pin "1"
-      (uuid "bce32b4b-2d9d-5168-af33-59095ab434dc"))
-    (pin "2"
-      (uuid "4c06bf98-63b4-5871-82c5-98e40671387f"))
-    (property "MPN" "132134"
-      (at 294.64 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Amphenol RF"
-      (at 294.64 144.78 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 294.64 160.02 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "971997d1-366a-537c-b860-174fdb03e13c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 294.64 160.02 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 205.74 236.22 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "2c6269c8-573d-5267-964a-4ae569eea7cb")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 205.74 236.22 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (text "470-ohm values are initial damping choices; verify SPI edge/timing margin on the first PCBA."
-    (at 15.24 261.62 0)
-    (effects
-      (font
-        (size 1.2 1.2))
-      (justify left))
-    (uuid "0d338e31-0fe2-5b3d-bad8-cac22d102ef0"))
-  (text "One 50-ohm sub-GHz path to vertical SMA. Do not route a second RF stub to the unused module RF contacts."
-    (at 15.24 270.51 0)
-    (effects
-      (font
-        (size 1.2 1.2))
-      (justify left))
-    (uuid "32acd15c-3b47-55ed-be05-f0199bd185bb"))
-  (text "All module ground pins connect to the plane. Physical RF return, matching and coexistence remain layout / installed tests."
-    (at 15.24 279.4 0)
-    (effects
-      (font
-        (size 1.2 1.2))
-      (justify left))
-    (uuid "9a2b9ded-9afe-5f89-917e-b71fc3d3a908"))
-  (global_label "LORA_SCK_MOD"
-    (shape bidirectional)
-    (at 125.73 134.62 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "fddc2981-53b3-54e8-897b-2507203bd49f")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 125.73 134.62 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "LORA_MOSI_MOD"
-    (shape bidirectional)
-    (at 125.73 144.78 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "b2149be1-7b58-54bb-8e71-b3476092f31c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 125.73 144.78 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "LORA_MISO_MOD"
-    (shape bidirectional)
-    (at 125.73 154.94 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "6f9db29c-0505-5705-be07-e9a275528371")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 125.73 154.94 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "LORA_NCS_MOD"
-    (shape bidirectional)
-    (at 125.73 165.1 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "3b7b0fca-d43d-5c5d-a33f-040d79a140e9")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 125.73 165.1 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "LORA_RESET_N_MOD"
-    (shape bidirectional)
-    (at 125.73 175.26 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "3fff61bc-c8d2-58f7-9581-bf1ea9a2ddd1")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 125.73 175.26 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "LORA_BUSY_MOD"
-    (shape bidirectional)
-    (at 125.73 185.42 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "0a2791c6-5863-5644-9752-86dd8b22b14c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 125.73 185.42 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "LORA_DIO1_MOD"
-    (shape bidirectional)
-    (at 125.73 195.58 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "747ef8ee-61d5-58d2-8e21-d2957623ec02")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 125.73 195.58 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "LORA_RF_SUBG"
-    (shape bidirectional)
-    (at 231.14 144.78 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "dbb3292e-423b-518f-9422-5f809ddecb47")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 231.14 144.78 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (wire
-    (pts
-      (xy 205.74 226.06)
-      (xy 205.74 236.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "23638425-33db-5061-b278-c329f9723fc9"))
-  (wire
-    (pts
-      (xy 281.94 97.79)
-      (xy 281.94 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d7ceba27-31fb-505b-9370-0c341fcc7c4b"))
-  (wire
-    (pts
-      (xy 281.94 109.22)
-      (xy 309.88 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "33d0136c-2d31-5bff-aa76-450603a41733"))
-  (wire
-    (pts
-      (xy 294.64 149.86)
-      (xy 294.64 160.02))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a70482f5-dba9-57e5-8401-e388fa0fb268"))
-  (wire
-    (pts
-      (xy 309.88 97.79)
-      (xy 309.88 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "44891abd-4ca8-5326-ba9f-a0323a1359e2"))
-  (wire
-    (pts
-      (xy 309.88 109.22)
-      (xy 337.82 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "914c36bb-7bf9-590a-a78b-922f6831d5fe"))
-  (wire
-    (pts
-      (xy 337.82 97.79)
-      (xy 337.82 109.22))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "3fd55e60-9b1b-5778-afd7-dc23bb11f0e9"))
-  (wire
-    (pts
-      (xy 205.74 81.28)
-      (xy 205.74 104.14))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "c993bed8-3bad-5829-9319-3522f4fb28eb"))
-  (wire
-    (pts
-      (xy 205.74 81.28)
-      (xy 251.46 81.28))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "977e8c3a-fdea-55ff-992d-56adb2d7f519"))
-  (wire
-    (pts
-      (xy 251.46 81.28)
-      (xy 281.94 81.28))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "ae8d4f23-9ce0-50d7-ad0e-267d75833058"))
-  (wire
-    (pts
-      (xy 281.94 81.28)
-      (xy 281.94 90.17))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1abb484e-f790-53b8-aaa2-f4bcb497a401"))
-  (wire
-    (pts
-      (xy 281.94 81.28)
-      (xy 309.88 81.28))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "26aa463e-fd03-5fa8-a4ed-73ba6666cb3c"))
-  (wire
-    (pts
-      (xy 309.88 81.28)
-      (xy 309.88 90.17))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "cebcc365-e10c-5287-850d-6407ba3e4d85"))
-  (wire
-    (pts
-      (xy 309.88 81.28)
-      (xy 337.82 81.28))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "0931b659-c4e2-5dae-9d86-a782dada5c02"))
-  (wire
-    (pts
-      (xy 330.2 199.39)
-      (xy 330.2 207.01))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "93d3dd90-b6ea-59db-8db2-971b157da045"))
-  (wire
-    (pts
-      (xy 337.82 81.28)
-      (xy 337.82 90.17))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "93266358-1305-5e26-9156-d977c9a89a5a"))
-  (wire
-    (pts
-      (xy 87.63 185.42)
-      (xy 99.06 185.42))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "b28eac95-5656-588c-bb65-e35d3054d541"))
-  (wire
-    (pts
-      (xy 99.06 185.42)
-      (xy 118.11 185.42))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "a482f99f-2633-5ec8-882e-e897c628da1e"))
-  (wire
-    (pts
-      (xy 125.73 185.42)
-      (xy 180.34 185.42))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f5df9012-b143-5327-800e-d45cb48d3b45"))
-  (wire
-    (pts
-      (xy 330.2 214.63)
-      (xy 330.2 222.25))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "8d6f3814-eb1b-5b6a-88cf-6e81c8855e69"))
-  (wire
-    (pts
-      (xy 87.63 195.58)
-      (xy 99.06 195.58))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9ecad42d-9974-5a4d-8d6d-5402ccae761e"))
-  (wire
-    (pts
-      (xy 99.06 195.58)
-      (xy 118.11 195.58))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "b1bc4e06-663b-5f5f-8a1e-3e37548fa623"))
-  (wire
-    (pts
-      (xy 125.73 195.58)
-      (xy 180.34 195.58))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f51dc125-10a0-5f1f-93e5-64af924257cc"))
-  (wire
-    (pts
-      (xy 87.63 154.94)
-      (xy 118.11 154.94))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "14779845-5d98-5e35-8a59-41d1b836cb69"))
-  (wire
-    (pts
-      (xy 125.73 154.94)
-      (xy 180.34 154.94))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "331dc5f5-ad25-5537-b4b9-b2c1ad47c9e5"))
-  (wire
-    (pts
-      (xy 87.63 144.78)
-      (xy 118.11 144.78))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1e421907-357f-5fc4-8a5d-4a87569e04b8"))
-  (wire
-    (pts
-      (xy 125.73 144.78)
-      (xy 180.34 144.78))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "1b50172b-af8f-5872-b88c-37bd5dd8a5a8"))
-  (wire
-    (pts
-      (xy 87.63 165.1)
-      (xy 118.11 165.1))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "312e9698-da7d-56c1-a5a4-afe15b2c73e3"))
-  (wire
-    (pts
-      (xy 125.73 165.1)
-      (xy 180.34 165.1))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d6e53ca0-5255-50d2-9e88-831c5140d6ce"))
-  (wire
-    (pts
-      (xy 87.63 175.26)
-      (xy 118.11 175.26))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "22ef6be6-b40f-54e6-a7e1-83b4e1d27f35"))
-  (wire
-    (pts
-      (xy 125.73 175.26)
-      (xy 180.34 175.26))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "f48c95ce-af25-5017-bfe8-8e9c7ce73af3"))
-  (wire
-    (pts
-      (xy 231.14 144.78)
-      (xy 289.56 144.78))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "22f41b8d-9d59-5476-a829-5392231d9b04"))
-  (wire
-    (pts
-      (xy 87.63 134.62)
-      (xy 99.06 134.62))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "fbec5045-f011-50b6-9db4-b918db61ca26"))
-  (wire
-    (pts
-      (xy 99.06 134.62)
-      (xy 118.11 134.62))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "d90eba43-22c2-5fde-8752-5d6e5442150a"))
-  (wire
-    (pts
-      (xy 125.73 134.62)
-      (xy 180.34 134.62))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "ffadfde4-3924-5d71-8d4f-a730450bfd95"))
-  (junction
-    (at 309.88 109.22)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "27adc74c-b431-5ecf-9656-97083a59a921"))
-  (junction
-    (at 281.94 81.28)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "d830fbea-d47e-5bf7-aa70-3fd80ce33225"))
-  (junction
-    (at 309.88 81.28)
-    (diameter 0)
-    (color 0 0 0 0)
-    (uuid "82a0fe8a-625f-53e6-8799-ba2994b199eb"))
-  (text "What this does: Sends telemetry over the sub-GHz radio link.\nConnects to: Comms SPI/status signals through 04e -> Wio-LR2021 -> vertical SMA/external antenna. Flight does not wait for radio to succeed."
-    (at 15.24 27.94 0.0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left top))
-    (uuid "e31c5869-bc22-5e8c-abab-9d883a7486ba")))
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "ba77ec24-8ca2-5ca6-af9d-5700bf55409e")
+	(paper "User" 420 317.32)
+	(title_block
+		(title "Radio / Wio-LR2021 module and host RF")
+		(date "2026-09-08")
+		(rev "A-DRAFT")
+		(company "HiPR")
+		(comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight.")
+	)
+	(lib_symbols
+		(symbol "Connector:Conn_Coaxial"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0.254 3.048 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_Coaxial"
+				(at 2.921 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "BNC SMA SMB SMC LEMO coaxial connector CINCH RCA MCX MMCX U.FL UMRF"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Conn_Coaxial_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy -0.508 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 1.778 0)
+					(mid 0.222 -1.8079)
+					(end -1.778 -0.508)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -1.778 0.508)
+					(mid 0.2221 1.8084)
+					(end 1.778 0)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 0)
+					(radius 0.508)
+					(stroke
+						(width 0.2032)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -2.54) (xy 0 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Conn_Coaxial_1_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "In"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -5.08 90)
+					(length 2.54)
+					(name "Ext"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Connector:TestPoint"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.762)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TestPoint_0_1"
+				(circle
+					(center 0 3.302)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2:Wio-LR2021"
+			(pin_names
+				(offset 0.002)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 5.588 17.272 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Wio-LR2021"
+				(at -0.508 17.78 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:Wio-LR2021"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Seeed Wio-LR2021 868/915 MHz module, SKU 100058045; KiCad 9 adaptation"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Wio-LR2021_0_1"
+				(rectangle
+					(start -9.525 -17.145)
+					(end 9.525 15.875)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Wio-LR2021_1_0"
+				(pin power_in line
+					(at -12.065 12.065 0)
+					(length 2.54)
+					(name "VCC_IN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.065 9.525 0)
+					(length 2.54)
+					(name "DIO5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.065 6.985 0)
+					(length 2.54)
+					(name "RESET"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -12.065 4.445 0)
+					(length 2.54)
+					(name "MISO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.065 1.905 0)
+					(length 2.54)
+					(name "MOSI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.065 -0.635 0)
+					(length 2.54)
+					(name "SCK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.065 -3.175 0)
+					(length 2.54)
+					(name "NSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin open_collector line
+					(at -12.065 -5.715 0)
+					(length 2.54)
+					(name "BUSY"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -12.065 -8.255 0)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -12.065 -10.795 0)
+					(length 2.54)
+					(name "Sub-G_RF"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -12.065 -13.335 0)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.065 -13.335 180)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 12.065 -10.795 180)
+					(length 2.54)
+					(name "2.4G_RF"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.065 -8.255 180)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.065 -5.715 180)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 12.065 -3.175 180)
+					(length 2.54)
+					(name "DIO11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 12.065 -0.635 180)
+					(length 2.54)
+					(name "DIO10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 12.065 1.905 180)
+					(length 2.54)
+					(name "DIO9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 12.065 4.445 180)
+					(length 2.54)
+					(name "DIO8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.065 6.985 180)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 12.065 9.525 180)
+					(length 2.54)
+					(name "DIO6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "21"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 12.065 12.065 180)
+					(length 2.54)
+					(name "DIO7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "22"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_GNSS:TPD1E0B04DPYR"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TPD1E0B04DPYR"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2_GNSS:TPD1E0B04DPYR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tpd1e0b04.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Bidirectional RF ESD candidate, DPY 0402, 0.15 pF typical; board ESD unqualified"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode TVS thyrector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TPD1E0B04DPYR_0_1"
+				(polyline
+					(pts
+						(xy -2.54 1.27) (xy -2.54 -1.27) (xy 2.54 1.27) (xy 2.54 -1.27) (xy -2.54 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.508 1.27) (xy 0 1.27) (xy 0 -1.27) (xy -0.508 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TPD1E0B04DPYR_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "A1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_Readable_IO:Wio_LR2021_Review"
+			(pin_names
+				(offset 0.002)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 5.588 17.272 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Wio-LR2021"
+				(at -0.508 17.78 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:Wio-LR2021"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Seeed Wio-LR2021 868/915 MHz module, SKU 100058045; KiCad 9 adaptation"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Wio_LR2021_Review_0_1"
+				(rectangle
+					(start -20.32 55.88)
+					(end 20.32 -55.88)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Wio_LR2021_Review_1_1"
+				(pin power_in line
+					(at 0 60.96 270)
+					(length 5.08)
+					(name "VCC_IN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -25.4 -30.48 0)
+					(length 5.08)
+					(name "DIO5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 -10.16 0)
+					(length 5.08)
+					(name "RESET"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -25.4 10.16 0)
+					(length 5.08)
+					(name "MISO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 20.32 0)
+					(length 5.08)
+					(name "MOSI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 30.48 0)
+					(length 5.08)
+					(name "SCK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 0 0)
+					(length 5.08)
+					(name "NSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin open_collector line
+					(at -25.4 -20.32 0)
+					(length 5.08)
+					(name "BUSY"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -60.96 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 25.4 20.32 180)
+					(length 5.08)
+					(name "Sub-G_RF"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -60.96 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -60.96 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 25.4 0 180)
+					(length 5.08)
+					(name "2.4G_RF"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -60.96 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -60.96 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 -5.08 180)
+					(length 5.08)
+					(name "DIO11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 -10.16 180)
+					(length 5.08)
+					(name "DIO10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 -15.24 180)
+					(length 5.08)
+					(name "DIO9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 -20.32 180)
+					(length 5.08)
+					(name "DIO8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -60.96 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 -25.4 180)
+					(length 5.08)
+					(name "DIO6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "21"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 -30.48 180)
+					(length 5.08)
+					(name "DIO7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "22"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "Open-drain BUSY pull-up"
+		(exclude_from_sim no)
+		(at 289.56 193.04 0)
+		(effects
+			(font
+				(size 1.15 1.15)
+			)
+			(justify left)
+		)
+		(uuid "0c3e462f-78c1-5f75-9598-abcb4f9fe37a")
+	)
+	(text "470-ohm values are initial damping choices; verify SPI edge/timing margin on the first PCBA."
+		(exclude_from_sim no)
+		(at 15.24 261.62 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "0d338e31-0fe2-5b3d-bad8-cac22d102ef0")
+	)
+	(text "RADIO MODULE / SIGNAL DAMPING / EXTERNAL ANTENNA"
+		(exclude_from_sim no)
+		(at 15.24 16.51 0)
+		(effects
+			(font
+				(size 2.54 2.54)
+			)
+			(justify left)
+		)
+		(uuid "19ab8f90-d371-55d8-95ef-d5d01e4dda27")
+	)
+	(text "One 50-ohm sub-GHz path to vertical SMA. Do not route a second RF stub to the unused module RF contacts."
+		(exclude_from_sim no)
+		(at 15.24 270.51 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "32acd15c-3b47-55ed-be05-f0199bd185bb")
+	)
+	(text "All module ground pins connect to the plane. Physical RF return, matching and coexistence remain layout / installed tests."
+		(exclude_from_sim no)
+		(at 15.24 279.4 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+			)
+			(justify left)
+		)
+		(uuid "9a2b9ded-9afe-5f89-917e-b71fc3d3a908")
+	)
+	(text "D4601: ESD on the LoRa port, as D4501 on GNSS (D-22Nov.20).\nA path for static the antenna collects; 0.4 pF."
+		(exclude_from_sim no)
+		(at 302.26 167.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "cf6f682c-d0cf-5372-a331-5815ed91d1e6")
+	)
+	(text "What this does: Sends telemetry over the sub-GHz radio link.\nConnects to: Comms SPI/status signals through 04e -> Wio-LR2021 -> vertical SMA/external antenna. Flight does not wait for radio to succeed."
+		(exclude_from_sim no)
+		(at 15.24 27.94 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left top)
+		)
+		(uuid "e31c5869-bc22-5e8c-abab-9d883a7486ba")
+	)
+	(junction
+		(at 309.88 109.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "27adc74c-b431-5ecf-9656-97083a59a921")
+	)
+	(junction
+		(at 309.88 81.28)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "82a0fe8a-625f-53e6-8799-ba2994b199eb")
+	)
+	(junction
+		(at 281.94 81.28)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d830fbea-d47e-5bf7-aa70-3fd80ce33225")
+	)
+	(no_connect
+		(at 231.14 180.34)
+		(uuid "616282cb-e762-59bf-ab29-2904ab947283")
+	)
+	(no_connect
+		(at 231.14 170.18)
+		(uuid "6867ae42-038a-5d5f-8e6b-a09ef0a283ec")
+	)
+	(no_connect
+		(at 231.14 165.1)
+		(uuid "8cba8ac2-35dd-5a3e-8c94-8462a3246d1e")
+	)
+	(no_connect
+		(at 231.14 175.26)
+		(uuid "8fa5e953-0d44-5b21-91a7-2c0fd4bb68d1")
+	)
+	(no_connect
+		(at 231.14 190.5)
+		(uuid "ba3913c3-8455-5dd8-810b-1a0ba91808f0")
+	)
+	(no_connect
+		(at 231.14 185.42)
+		(uuid "e12b61b6-fa4e-52a9-8130-6d8e0cbac542")
+	)
+	(no_connect
+		(at 231.14 195.58)
+		(uuid "fa581f0b-4e07-5563-b6c1-d7db156e2ea9")
+	)
+	(wire
+		(pts
+			(xy 309.88 81.28) (xy 337.82 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0931b659-c4e2-5dae-9d86-a782dada5c02")
+	)
+	(wire
+		(pts
+			(xy 87.63 154.94) (xy 118.11 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "14779845-5d98-5e35-8a59-41d1b836cb69")
+	)
+	(wire
+		(pts
+			(xy 281.94 81.28) (xy 281.94 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1abb484e-f790-53b8-aaa2-f4bcb497a401")
+	)
+	(wire
+		(pts
+			(xy 125.73 144.78) (xy 180.34 144.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b50172b-af8f-5872-b88c-37bd5dd8a5a8")
+	)
+	(wire
+		(pts
+			(xy 87.63 144.78) (xy 118.11 144.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1e421907-357f-5fc4-8a5d-4a87569e04b8")
+	)
+	(wire
+		(pts
+			(xy 87.63 175.26) (xy 118.11 175.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "22ef6be6-b40f-54e6-a7e1-83b4e1d27f35")
+	)
+	(wire
+		(pts
+			(xy 231.14 144.78) (xy 289.56 144.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "22f41b8d-9d59-5476-a829-5392231d9b04")
+	)
+	(wire
+		(pts
+			(xy 205.74 226.06) (xy 205.74 236.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23638425-33db-5061-b278-c329f9723fc9")
+	)
+	(wire
+		(pts
+			(xy 281.94 81.28) (xy 309.88 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "26aa463e-fd03-5fa8-a4ed-73ba6666cb3c")
+	)
+	(wire
+		(pts
+			(xy 87.63 165.1) (xy 118.11 165.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "312e9698-da7d-56c1-a5a4-afe15b2c73e3")
+	)
+	(wire
+		(pts
+			(xy 125.73 154.94) (xy 180.34 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "331dc5f5-ad25-5537-b4b9-b2c1ad47c9e5")
+	)
+	(wire
+		(pts
+			(xy 281.94 109.22) (xy 309.88 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "33d0136c-2d31-5bff-aa76-450603a41733")
+	)
+	(wire
+		(pts
+			(xy 337.82 97.79) (xy 337.82 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3fd55e60-9b1b-5778-afd7-dc23bb11f0e9")
+	)
+	(wire
+		(pts
+			(xy 309.88 97.79) (xy 309.88 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "44891abd-4ca8-5326-ba9f-a0323a1359e2")
+	)
+	(wire
+		(pts
+			(xy 330.2 214.63) (xy 330.2 222.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d6f3814-eb1b-5b6a-88cf-6e81c8855e69")
+	)
+	(wire
+		(pts
+			(xy 309.88 109.22) (xy 337.82 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "914c36bb-7bf9-590a-a78b-922f6831d5fe")
+	)
+	(wire
+		(pts
+			(xy 337.82 81.28) (xy 337.82 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "93266358-1305-5e26-9156-d977c9a89a5a")
+	)
+	(wire
+		(pts
+			(xy 330.2 199.39) (xy 330.2 207.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "93d3dd90-b6ea-59db-8db2-971b157da045")
+	)
+	(wire
+		(pts
+			(xy 205.74 81.28) (xy 251.46 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "977e8c3a-fdea-55ff-992d-56adb2d7f519")
+	)
+	(wire
+		(pts
+			(xy 87.63 195.58) (xy 118.11 195.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9ecad42d-9974-5a4d-8d6d-5402ccae761e")
+	)
+	(wire
+		(pts
+			(xy 294.64 149.86) (xy 294.64 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a70482f5-dba9-57e5-8401-e388fa0fb268")
+	)
+	(wire
+		(pts
+			(xy 251.46 81.28) (xy 281.94 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ae8d4f23-9ce0-50d7-ad0e-267d75833058")
+	)
+	(wire
+		(pts
+			(xy 87.63 185.42) (xy 118.11 185.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b28eac95-5656-588c-bb65-e35d3054d541")
+	)
+	(wire
+		(pts
+			(xy 205.74 81.28) (xy 205.74 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c993bed8-3bad-5829-9319-3522f4fb28eb")
+	)
+	(wire
+		(pts
+			(xy 309.88 81.28) (xy 309.88 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cebcc365-e10c-5287-850d-6407ba3e4d85")
+	)
+	(wire
+		(pts
+			(xy 125.73 165.1) (xy 180.34 165.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d6e53ca0-5255-50d2-9e88-831c5140d6ce")
+	)
+	(wire
+		(pts
+			(xy 281.94 97.79) (xy 281.94 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d7ceba27-31fb-505b-9370-0c341fcc7c4b")
+	)
+	(wire
+		(pts
+			(xy 125.73 175.26) (xy 180.34 175.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f48c95ce-af25-5017-bfe8-8e9c7ce73af3")
+	)
+	(wire
+		(pts
+			(xy 125.73 195.58) (xy 180.34 195.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f51dc125-10a0-5f1f-93e5-64af924257cc")
+	)
+	(wire
+		(pts
+			(xy 125.73 185.42) (xy 180.34 185.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f5df9012-b143-5327-800e-d45cb48d3b45")
+	)
+	(wire
+		(pts
+			(xy 87.63 134.62) (xy 118.11 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fbec5045-f011-50b6-9db4-b918db61ca26")
+	)
+	(wire
+		(pts
+			(xy 125.73 134.62) (xy 180.34 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ffadfde4-3924-5d71-8d4f-a730450bfd95")
+	)
+	(global_label "LORA_BUSY_MOD"
+		(shape bidirectional)
+		(at 125.73 185.42 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "0a2791c6-5863-5644-9752-86dd8b22b14c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 125.73 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_RESET_N_ISO"
+		(shape bidirectional)
+		(at 87.63 175.26 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "0bde3de6-1bf2-5490-bbeb-7b22e991bbee")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 87.63 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 314.96 161.29 90)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+		)
+		(uuid "203812cc-e5b7-59f8-a78f-e3e546c4a61c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 314.96 161.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 205.74 236.22 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "2c6269c8-573d-5267-964a-4ae569eea7cb")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 205.74 236.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_BUSY_MOD"
+		(shape bidirectional)
+		(at 330.2 222.25 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "37443868-957d-5930-b910-280142e1f3b4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 330.2 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_NCS_MOD"
+		(shape bidirectional)
+		(at 125.73 165.1 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "3b7b0fca-d43d-5c5d-a33f-040d79a140e9")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 125.73 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_RESET_N_MOD"
+		(shape bidirectional)
+		(at 125.73 175.26 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "3fff61bc-c8d2-58f7-9581-bf1ea9a2ddd1")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 125.73 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_3V3"
+		(shape bidirectional)
+		(at 330.2 199.39 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "641c6b3c-9013-59cc-8cb5-7771dce429f2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 330.2 199.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_MISO_MOD"
+		(shape bidirectional)
+		(at 125.73 154.94 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "6f9db29c-0505-5705-be07-e9a275528371")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 125.73 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_DIO1_MOD"
+		(shape bidirectional)
+		(at 125.73 195.58 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "747ef8ee-61d5-58d2-8e21-d2957623ec02")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 125.73 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_3V3"
+		(shape bidirectional)
+		(at 205.74 81.28 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "902b2334-c1f5-5072-af0e-f6ff339359fb")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 205.74 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_BUSY_ISO"
+		(shape bidirectional)
+		(at 87.63 185.42 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "966f2c1e-3a88-56c1-84f6-0eefc7067355")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 87.63 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 294.64 160.02 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "971997d1-366a-537c-b860-174fdb03e13c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 294.64 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_SCK_ISO"
+		(shape bidirectional)
+		(at 87.63 134.62 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "9bf858b3-2538-5b40-a104-a6afd6b6a4b8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 87.63 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 337.82 109.22 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "a05683ef-8f5f-5c2d-b57e-ec8de3f7b4c9")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 337.82 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_MISO_ISO"
+		(shape bidirectional)
+		(at 87.63 154.94 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "ab7616b8-d71c-5da3-b1d5-26468328f21b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 87.63 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_MOSI_MOD"
+		(shape bidirectional)
+		(at 125.73 144.78 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "b2149be1-7b58-54bb-8e71-b3476092f31c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 125.73 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_RF_SUBG"
+		(shape bidirectional)
+		(at 314.96 153.67 90)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+		)
+		(uuid "bd37a87c-6de6-5a12-b842-9f0d4a7c5743")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 314.96 153.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "LORA_DIO1_ISO"
+		(shape bidirectional)
+		(at 87.63 195.58 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "c2de81ac-37b8-5744-a071-cd36dbbe5e7a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 87.63 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_RF_SUBG"
+		(shape bidirectional)
+		(at 231.14 144.78 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "dbb3292e-423b-518f-9422-5f809ddecb47")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 231.14 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_NCS_ISO"
+		(shape bidirectional)
+		(at 87.63 165.1 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "e40d343c-8cd3-5418-9bab-cdfdeeab6359")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 87.63 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_SCK_MOD"
+		(shape bidirectional)
+		(at 125.73 134.62 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "fddc2981-53b3-54e8-897b-2507203bd49f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 125.73 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "LORA_MOSI_ISO"
+		(shape bidirectional)
+		(at 87.63 144.78 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "fed7f511-7f99-583d-9c59-7bcba1226941")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 87.63 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 330.2 210.82 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0502e5c5-d309-53e0-a8f2-0d39fd6b9d23")
+		(property "Reference" "R4621"
+			(at 334.01 209.55 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 334.01 212.09 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 330.2 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 330.2 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 330.2 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 330.2 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 330.2 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "BUSY open-drain pull-up on switched module rail."
+			(at 330.2 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF1002TCE"
+			(at 330.2 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25744"
+			(at 330.2 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b86f5c2a-0129-5724-b887-6794214d79e7")
+		)
+		(pin "2"
+			(uuid "25aa7c5b-9059-5385-9021-7a63d4bb7322")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "R4621")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 195.58 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "08dbc132-eada-5476-b848-0aeaa38c1824")
+		(property "Reference" "R4620"
+			(at 121.92 190.5 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "470R"
+			(at 121.92 193.04 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 121.92 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 121.92 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 121.92 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 121.92 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4700TCE"
+			(at 121.92 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25117"
+			(at 121.92 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3731897d-fb5d-50b7-a04a-ee7a869876b4")
+		)
+		(pin "2"
+			(uuid "1d44467d-54bd-519e-908f-628125673a13")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "R4620")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 175.26 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "26fd9cec-95dd-559b-be06-2f2ec38bcabf")
+		(property "Reference" "R4618"
+			(at 121.92 170.18 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "470R"
+			(at 121.92 172.72 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 121.92 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 121.92 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 121.92 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 121.92 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4700TCE"
+			(at 121.92 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25117"
+			(at 121.92 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "26a0cbb2-3634-5c75-b171-cd08e777e0ac")
+		)
+		(pin "2"
+			(uuid "97526407-e132-5616-8ad9-c8c88ec88bed")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "R4618")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 281.94 93.98 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "462313d4-76df-52eb-9c77-12f90cc9ce95")
+		(property "Reference" "C4611"
+			(at 285.75 92.71 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n 16V X7R"
+			(at 285.75 95.25 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 281.94 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 281.94 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 281.94 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 281.94 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 281.94 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL05B104KB54PNC"
+			(at 281.94 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C307331"
+			(at 281.94 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bbada07a-8317-54d1-ab3f-15e0ddfaf94a")
+		)
+		(pin "2"
+			(uuid "37431e20-cabc-5340-bfa0-3c660284853e")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "C4611")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 251.46 81.28 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4d603a9b-4ade-5cdb-b4c4-2ad3e6fa555e")
+		(property "Reference" "TP2"
+			(at 255.27 77.47 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "LORA_3V3"
+			(at 255.27 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "test point tp"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "Pin* Test*"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C22388408"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "5194TR"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Keystone Electronics"
+			(at 251.46 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b2948358-766a-52dc-a756-43a716b4356f")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "TP2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 154.94 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "6d45a8d1-afe7-5491-a163-c1cdff408673")
+		(property "Reference" "R4616"
+			(at 121.92 149.86 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "470R"
+			(at 121.92 152.4 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 121.92 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 121.92 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 121.92 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 121.92 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4700TCE"
+			(at 121.92 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25117"
+			(at 121.92 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c7b2e50b-817d-500d-940f-d32908e0202e")
+		)
+		(pin "2"
+			(uuid "1c7d7a1b-5585-5de2-86d7-392990f1ea5b")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "R4616")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 337.82 93.98 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8ade3943-8a5d-53e2-9e4f-809027639985")
+		(property "Reference" "C4613"
+			(at 341.63 92.71 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100u 16V X5R"
+			(at 341.63 95.25 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+			(at 337.82 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 337.82 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 337.82 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 337.82 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 337.82 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "EMK325ABJ107MM-P"
+			(at 337.82 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Taiyo Yuden"
+			(at 337.82 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "Require >=47uF effective; qualify slew/TX dip"
+			(at 337.82 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a432b1be-809d-5efb-a306-c226e2431bc4")
+		)
+		(pin "2"
+			(uuid "d15d476c-4725-5583-a9b3-0b3a8ab89c51")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "C4613")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 165.1 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a341378a-270c-548e-b92f-d284b7e1e2b6")
+		(property "Reference" "R4617"
+			(at 121.92 160.02 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "470R"
+			(at 121.92 162.56 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 121.92 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 121.92 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 121.92 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 121.92 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4700TCE"
+			(at 121.92 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25117"
+			(at 121.92 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "7ae4e2c4-a010-5667-a887-d52f0f9e4d3a")
+		)
+		(pin "2"
+			(uuid "a5f3ddbf-f330-50d8-8895-b22f0071bf6b")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "R4617")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 134.62 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a5323c7d-5719-54e4-9117-4c9fb51cc884")
+		(property "Reference" "R4614"
+			(at 121.92 129.54 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "470R"
+			(at 121.92 132.08 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 121.92 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 121.92 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 121.92 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 121.92 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4700TCE"
+			(at 121.92 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25117"
+			(at 121.92 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a2c34d89-b476-5eeb-a0fc-a467923909d3")
+		)
+		(pin "2"
+			(uuid "71e08a8a-b741-5d6d-a2cc-e630bf19fe8c")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "R4614")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 309.88 93.98 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "aaef6447-1563-5add-806b-800290bd43ca")
+		(property "Reference" "C4612"
+			(at 313.69 92.71 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10u 16V X7R"
+			(at 313.69 95.25 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
+			(at 309.88 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 309.88 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 309.88 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 309.88 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 309.88 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "29bfd65a-3bde-5075-b8ff-2937d55ce520")
+		)
+		(pin "2"
+			(uuid "a31c4164-d95e-5a5d-ae67-ac3f5dfecec3")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "C4612")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 185.42 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b3dbe346-230e-5375-925b-7e733ad9dbed")
+		(property "Reference" "R4619"
+			(at 121.92 180.34 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "470R"
+			(at 121.92 182.88 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 121.92 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 121.92 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 121.92 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 121.92 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4700TCE"
+			(at 121.92 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25117"
+			(at 121.92 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f5bde085-4f2b-5348-8ea5-daeb5a8475b3")
+		)
+		(pin "2"
+			(uuid "190389f9-7161-5689-b273-3a28f71a2d6f")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "R4619")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ogma2_Readable_IO:Wio_LR2021_Review")
+		(at 205.74 165.1 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c338e120-2bea-5f69-aa7f-246ac3f90e3b")
+		(property "Reference" "U4606"
+			(at 205.74 96.52 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "Wio-LR2021"
+			(at 205.74 99.06 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Ogma2:Wio-LR2021"
+			(at 205.74 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://files.seeedstudio.com/wiki/Wio-LR2021/res/Wio-LR2021%20Module%20Datasheet.pdf"
+			(at 205.74 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Seeed Wio-LR2021 868/915 MHz module, SKU 100058045; KiCad 9 adaptation"
+			(at 205.74 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "Wio-LR2021 / SKU 100058045"
+			(at 205.74 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Seeed Studio"
+			(at 205.74 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Library_Check" "Official Seeed symbol and 22-pad land pattern adapted to KiCad 9; pad map independently checked; STEP alignment and assembly review open. See libraries/radio-integration.md."
+			(at 205.74 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1e845be3-66fe-5554-af1c-7247c7a9b903")
+		)
+		(pin "2"
+			(uuid "ae4b5a09-ce7e-5b12-9d5f-440c31d072b0")
+		)
+		(pin "3"
+			(uuid "cc952947-5dbb-5ccd-b776-e6f2880995ef")
+		)
+		(pin "4"
+			(uuid "ae0cb2ef-d1c2-5da1-ac8d-6cb8ff6a8597")
+		)
+		(pin "5"
+			(uuid "18740b3a-2655-5e02-b306-341972a64278")
+		)
+		(pin "6"
+			(uuid "27726326-337b-532f-8257-3ffef5ff1777")
+		)
+		(pin "7"
+			(uuid "440d29cb-c0b9-53f6-8669-4413cc63cf6e")
+		)
+		(pin "8"
+			(uuid "696ee18a-e642-5338-8b39-b89ddefa2df6")
+		)
+		(pin "9"
+			(uuid "def6c955-8693-5be9-b820-c26245cbabdc")
+		)
+		(pin "10"
+			(uuid "8301574b-1705-5d0b-8b7a-cff6495c44af")
+		)
+		(pin "11"
+			(uuid "b1415622-2d80-5aa2-8313-4542d1e78a82")
+		)
+		(pin "12"
+			(uuid "f9d2ca51-6241-50c4-b196-ca5a7cbdf05b")
+		)
+		(pin "13"
+			(uuid "311a7393-e3aa-5d63-b2bb-33161f87a203")
+		)
+		(pin "14"
+			(uuid "5e5f69c2-f9b6-550b-a2eb-24664482b073")
+		)
+		(pin "15"
+			(uuid "0e67026c-4a88-5755-9c23-d2262647eb88")
+		)
+		(pin "16"
+			(uuid "57fdc1e5-92bb-519c-a1d1-6e84a54fb1ad")
+		)
+		(pin "17"
+			(uuid "eef1df0d-fa23-5362-a904-6ac7219da457")
+		)
+		(pin "18"
+			(uuid "f85e4301-97ec-5d82-9e56-6ecfacf2541f")
+		)
+		(pin "19"
+			(uuid "730aef33-5fcf-5b48-a78a-22279fc74ab8")
+		)
+		(pin "20"
+			(uuid "a1fdf46f-233e-5a93-9563-093ad22037be")
+		)
+		(pin "21"
+			(uuid "21523e87-ee1b-5e57-ad32-17cc7026941a")
+		)
+		(pin "22"
+			(uuid "357844cc-840c-5bc7-ab99-d48536a820c1")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "U4606")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ogma2_GNSS:TPD1E0B04DPYR")
+		(at 314.96 157.48 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "dd0de93c-272a-5683-8953-a1e3868f3db5")
+		(property "Reference" "D4601"
+			(at 317.5 156.21 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "PESD5V0F1BL,315"
+			(at 317.5 158.75 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-882"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BL.pdf"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "LoRa RF ESD at J4601: bidirectional TVS, 0.4 pF typ, 5.5 V standoff (D-22Nov.20)"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "diode TVS thyrector"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "PESD5V0F1BL,315"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Nexperia"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C45961"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Library_Check" "as D4501 (step 10): PESD5V0F1BL is bidirectional, so the TPD1E0B04 symbol's pin 1 (IO) and pin 2 (GND) map to either SOD882 pad; footprint KiCad D_SOD-882"
+			(at 314.96 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "866d80ae-2bf6-509c-a828-920e0f7e6631")
+		)
+		(pin "2"
+			(uuid "b99556d5-ad13-53e3-b655-7e0e96ae16b6")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "D4601")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_Coaxial")
+		(at 294.64 144.78 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "f8be854e-7663-5c45-b132-257c2041bff4")
+		(property "Reference" "J4601"
+			(at 294.64 137.16 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "132134"
+			(at 294.64 139.7 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Ogma2:SMA_Amphenol_132134_Vertical"
+			(at 294.64 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.amphenolrf.com/en-us/part/132134/662/"
+			(at 294.64 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Standard SMA female, vertical through-hole, 50 ohm; not RP-SMA"
+			(at 294.64 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "BNC SMA SMB SMC LEMO coaxial connector CINCH RCA MCX MMCX U.FL UMRF"
+			(at 294.64 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*"
+			(at 294.64 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "132134"
+			(at 294.64 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Amphenol RF"
+			(at 294.64 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bce32b4b-2d9d-5168-af33-59095ab434dc")
+		)
+		(pin "2"
+			(uuid "4c06bf98-63b4-5871-82c5-98e40671387f")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "J4601")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 121.92 144.78 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "fc567bbd-af93-5f49-a8c8-a2bbfa983de9")
+		(property "Reference" "R4615"
+			(at 121.92 139.7 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "470R"
+			(at 121.92 142.24 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 121.92 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 121.92 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 121.92 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 121.92 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF4700TCE"
+			(at 121.92 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25117"
+			(at 121.92 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "20d61541-1fa6-5f37-b346-d4ad8d531462")
+		)
+		(pin "2"
+			(uuid "7dfbac2f-bb0a-5aa7-9a45-f7be31824360")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/54913143-31a3-5c14-9626-89e466cdfe5c"
+					(reference "R4615")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

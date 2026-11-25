@@ -1,1745 +1,2891 @@
 (kicad_sch
-  (version 20250114)
-  (generator eeschema)
-  (generator_version "9.0")
-  (uuid "9a8bfc18-52b7-5270-9f41-d4338a2fa908")
-  (paper "User" 420 370.84)
-  (title_block
-    (title "Output authority")
-    (date "2026-09-08")
-    (rev "A-DRAFT")
-    (company "HiPR")
-    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
-  (lib_symbols
-    (symbol "Device:C"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 0.254))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "C"
-        (at 0.635 2.54 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Value" "C"
-        (at 0.635 -2.54 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Footprint" ""
-        (at 0.9652 -3.81 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Unpolarized capacitor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "cap capacitor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "C_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "C_0_1"
-        (polyline
-          (pts
-            (xy -2.032 0.762)
-            (xy 2.032 0.762))
-          (stroke
-            (width 0.508)
-            (type default))
-          (fill
-            (type none)))
-        (polyline
-          (pts
-            (xy -2.032 -0.762)
-            (xy 2.032 -0.762))
-          (stroke
-            (width 0.508)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "C_1_1"
-        (pin passive line
-          (at 0 3.81 270)
-          (length 2.794)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 0 -3.81 90)
-          (length 2.794)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no))
-    (symbol "Device:R"
-      (pin_numbers
-        (hide yes))
-      (pin_names
-        (offset 0))
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "R"
-        (at 2.032 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "R"
-        (at 0 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" ""
-        (at -1.778 0 90)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "~"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Resistor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "R res resistor"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "R_*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "R_0_1"
-        (rectangle
-          (start -1.016 -2.54)
-          (end 1.016 2.54)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type none))))
-      (symbol "R_1_1"
-        (pin passive line
-          (at 0 3.81 270)
-          (length 1.27)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin passive line
-          (at 0 -3.81 90)
-          (length 1.27)
-          (name "~"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no))
-    (symbol "Ogma2:SN74LVC1G74DCUR"
-      (pin_names
-        (offset 0.508))
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "U"
-        (at -10.16 11.43 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Value" "SN74LVC1G74DCUR"
-        (at -10.16 10.16 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (symbol "SN74LVC1G74DCUR_0_1"
-        (rectangle
-          (start -10.16 -8.89)
-          (end 10.16 8.89)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "SN74LVC1G74DCUR_1_1"
-        (pin input line
-          (at -15.24 6.35 0)
-          (length 5.08)
-          (name "CLK"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "1"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin input line
-          (at -15.24 3.8099999999999996 0)
-          (length 5.08)
-          (name "D"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "2"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin power_in line
-          (at -15.24 1.2699999999999996 0)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "4"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin input line
-          (at -15.24 -1.2700000000000005 0)
-          (length 5.08)
-          (name "~{CLR}"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "6"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin input line
-          (at -15.24 -3.8100000000000005 0)
-          (length 5.08)
-          (name "~{PRE}"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "7"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin power_in line
-          (at -15.24 -6.35 0)
-          (length 5.08)
-          (name "VCC"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "8"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin output line
-          (at 15.24 1.27 180)
-          (length 5.08)
-          (name "~{Q}"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "3"
-            (effects
-              (font
-                (size 1.0 1.0)))))
-        (pin output line
-          (at 15.24 -1.27 180)
-          (length 5.08)
-          (name "Q"
-            (effects
-              (font
-                (size 1.0 1.0))))
-          (number "5"
-            (effects
-              (font
-                (size 1.0 1.0))))))
-      (property "Footprint" "Ogma2:SN74LVC1G74DCUR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "SN74LVC1G74DCUR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Texas Instruments"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Staging eligibility latch"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes))))
-    (symbol "Ogma2:SN74LVC1G97DBVR"
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (symbol "SN74LVC1G97DBVR_0_1"
-        (rectangle
-          (start -7.62 7.62)
-          (end 7.62 -7.62)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "SN74LVC1G97DBVR_1_1"
-        (pin input line
-          (at -12.7 5.08 0)
-          (length 5.08)
-          (name "IN0"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "3"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -12.7 0 0)
-          (length 5.08)
-          (name "IN1"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "1"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin input line
-          (at -12.7 -5.08 0)
-          (length 5.08)
-          (name "IN2"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "6"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 0 12.7 270)
-          (length 5.08)
-          (name "VCC"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "5"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin power_in line
-          (at 0 -12.7 90)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "2"
-            (effects
-              (font
-                (size 1.27 1.27)))))
-        (pin output line
-          (at 12.7 0 180)
-          (length 5.08)
-          (name "Y"
-            (effects
-              (font
-                (size 1.27 1.27))))
-          (number "4"
-            (effects
-              (font
-                (size 1.27 1.27))))))
-      (embedded_fonts no)
-      (property "Reference" "U"
-        (at -2.54 5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "SN74LVC1G97DBVR"
-        (at 0 -5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Bootstrap logic mux OR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "SOT* SC*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Texas Instruments"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes))))
-    (symbol "Ogma2_Readable_Output:Readable_U6001"
-      (pin_names
-        (offset 0.508))
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "U"
-        (at -10.16 11.43 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Value" "SN74LVC1G74DCUR"
-        (at -10.16 10.16 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (justify left)))
-      (property "Footprint" "Ogma2:SN74LVC1G74DCUR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "SN74LVC1G74DCUR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Texas Instruments"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Staging eligibility latch"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Readable_U6001_0_1"
-        (rectangle
-          (start -20.32 20.32)
-          (end 20.32 -20.32)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "Readable_U6001_1_1"
-        (pin input line
-          (at -25.4 -5.08 0)
-          (length 5.08)
-          (name "CLK"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "1"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin input line
-          (at -25.4 5.08 0)
-          (length 5.08)
-          (name "D"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "2"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 -25.4 90)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "4"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin input line
-          (at -7.62 25.4 270)
-          (length 5.08)
-          (name "~{CLR}"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "6"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin input line
-          (at 7.62 25.4 270)
-          (length 5.08)
-          (name "SUPPLY [7,8]"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "7"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 7.62 25.4 270)
-          (length 5.08)
-          (name "~"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes)))
-          (number "8"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes))))
-        (pin output line
-          (at 25.4 -5.08 180)
-          (length 5.08)
-          (name "~{Q}"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "3"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin output line
-          (at 25.4 5.08 180)
-          (length 5.08)
-          (name "Q"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "5"
-            (effects
-              (font
-                (size 0.9 0.9)))))))
-    (symbol "Ogma2_Readable_Output:Readable_U6002"
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (embedded_fonts no)
-      (property "Reference" "U"
-        (at -2.54 5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "SN74LVC1G97DBVR"
-        (at 0 -5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Bootstrap logic mux OR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "SOT* SC*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Texas Instruments"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Readable_U6002_0_1"
-        (rectangle
-          (start -10.16 10.16)
-          (end 10.16 -10.16)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "Readable_U6002_1_1"
-        (pin input line
-          (at -15.24 5.08 0)
-          (length 5.08)
-          (name "IN0"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "3"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin input line
-          (at 0 -15.24 90)
-          (length 5.08)
-          (name "GND [1,2]"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "1"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 -15.24 90)
-          (length 5.08)
-          (name "~"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes)))
-          (number "2"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes))))
-        (pin input line
-          (at -15.24 -5.08 0)
-          (length 5.08)
-          (name "IN2"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "6"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 15.24 270)
-          (length 5.08)
-          (name "VCC"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "5"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin output line
-          (at 15.24 0 180)
-          (length 5.08)
-          (name "Y"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "4"
-            (effects
-              (font
-                (size 0.9 0.9)))))))
-    (symbol "Ogma2_Readable_Output:Readable_U6003"
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (embedded_fonts no)
-      (property "Reference" "U"
-        (at -2.54 5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "SN74LVC1G97DBVR"
-        (at 0 -5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Bootstrap logic mux OR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "SOT* SC*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Texas Instruments"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Readable_U6003_0_1"
-        (rectangle
-          (start -10.16 10.16)
-          (end 10.16 -10.16)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "Readable_U6003_1_1"
-        (pin input line
-          (at -15.24 5.08 0)
-          (length 5.08)
-          (name "IN0"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "3"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin input line
-          (at 0 -15.24 90)
-          (length 5.08)
-          (name "GND [1,2]"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "1"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 -15.24 90)
-          (length 5.08)
-          (name "~"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes)))
-          (number "2"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes))))
-        (pin input line
-          (at -15.24 -5.08 0)
-          (length 5.08)
-          (name "IN2"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "6"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 15.24 270)
-          (length 5.08)
-          (name "VCC"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "5"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin output line
-          (at 15.24 0 180)
-          (length 5.08)
-          (name "Y"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "4"
-            (effects
-              (font
-                (size 0.9 0.9)))))))
-    (symbol "Ogma2_Readable_Output:Readable_U6004"
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (embedded_fonts no)
-      (property "Reference" "U"
-        (at -2.54 5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "SN74LVC1G97DBVR"
-        (at 0 -5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Bootstrap logic mux OR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "SOT* SC*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Texas Instruments"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Readable_U6004_0_1"
-        (rectangle
-          (start -10.16 10.16)
-          (end 10.16 -10.16)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "Readable_U6004_1_1"
-        (pin input line
-          (at -15.24 5.08 0)
-          (length 5.08)
-          (name "IN0"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "3"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin input line
-          (at 0 -15.24 90)
-          (length 5.08)
-          (name "GND [1,2]"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "1"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 -15.24 90)
-          (length 5.08)
-          (name "~"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes)))
-          (number "2"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes))))
-        (pin input line
-          (at -15.24 -5.08 0)
-          (length 5.08)
-          (name "IN2"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "6"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 15.24 270)
-          (length 5.08)
-          (name "VCC"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "5"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin output line
-          (at 15.24 0 180)
-          (length 5.08)
-          (name "Y"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "4"
-            (effects
-              (font
-                (size 0.9 0.9)))))))
-    (symbol "Ogma2_Readable_Output:Readable_U6005"
-      (exclude_from_sim no)
-      (in_bom yes)
-      (on_board yes)
-      (embedded_fonts no)
-      (property "Reference" "U"
-        (at -2.54 5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Value" "SN74LVC1G97DBVR"
-        (at 0 -5.08 0)
-        (effects
-          (font
-            (size 1.27 1.27))))
-      (property "Footprint" "Ogma2:SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Description" "Bootstrap logic mux OR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_keywords" "Configurable Single Gate LVC CMOS"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "ki_fp_filters" "SOT* SC*"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "MPN" "SN74LVC1G97DBVR"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Manufacturer" "Texas Instruments"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (property "Library_Check" "pending primary pin audit; pending dimensional audit"
-        (at 0 0 0)
-        (effects
-          (font
-            (size 1.27 1.27))
-          (hide yes)))
-      (symbol "Readable_U6005_0_1"
-        (rectangle
-          (start -10.16 10.16)
-          (end 10.16 -10.16)
-          (stroke
-            (width 0.254)
-            (type default))
-          (fill
-            (type background))))
-      (symbol "Readable_U6005_1_1"
-        (pin input line
-          (at -15.24 5.08 0)
-          (length 5.08)
-          (name "IN0"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "3"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin input line
-          (at 0 -15.24 90)
-          (length 5.08)
-          (name "GND [1,2]"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "1"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 -15.24 90)
-          (length 5.08)
-          (name "~"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes)))
-          (number "2"
-            (effects
-              (font
-                (size 0.9 0.9))
-              (hide yes))))
-        (pin input line
-          (at -15.24 -5.08 0)
-          (length 5.08)
-          (name "IN2"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "6"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin power_in line
-          (at 0 15.24 270)
-          (length 5.08)
-          (name "VCC"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "5"
-            (effects
-              (font
-                (size 0.9 0.9)))))
-        (pin output line
-          (at 15.24 0 180)
-          (length 5.08)
-          (name "Y"
-            (effects
-              (font
-                (size 0.9 0.9))))
-          (number "4"
-            (effects
-              (font
-                (size 0.9 0.9))))))))
-  (symbol
-    (lib_id "Device:R")
-    (at 148.59 124.46 90)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "859ece81-8a08-56b5-b1af-bf18ced8878d")
-    (property "Reference" "R6005"
-      (at 148.59 119.38 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "1k"
-      (at 148.59 121.92 90)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 148.59 124.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 148.59 124.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 148.59 124.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 148.59 124.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 148.59 124.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Implementation_Note" "Series 1k: a wrongly configured PE14 cannot fight the latch output (D-7.2)"
-      (at 148.59 124.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
-          (reference "R6005")
-          (unit 1))))
-    (pin "1"
-      (uuid "6b6affd9-6f79-56ce-bc26-67992f8afb86"))
-    (pin "2"
-      (uuid "2d1f515c-b2b6-564a-8084-934bcc8f0a7c")))
-  (wire
-    (pts
-      (xy 152.4 124.46)
-      (xy 157.48 124.46))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "03d3e0ae-cbc8-518f-b282-e8a4113aba5d"))
-  (global_label "STAGE_INHIBIT_LATCHED"
-    (shape bidirectional)
-    (at 157.48 124.46 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "394fd8e8-5e39-50be-85c2-efdd38ce9f28")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 157.48 124.46 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes))))
-  (text "D = STAGE_ARM_INVALID (U6103 OUTB, 06a): the latch can only be set while staging is disarmed."
-    (exclude_from_sim no)
-    (at 30.48 187.96 0)
-    (effects
-      (font
-        (size 1.27 1.27))
-      (justify left))
-    (uuid "2f6e02e7-00c5-5bf7-be5a-3d8985b577f6"))
-  (embedded_fonts no)
-  (text "OUTPUT AUTHORITY / STAGING RESET LATCH"
-    (at 15.24 15.24 0)
-    (effects
-      (font
-        (size 2.54 2.54))
-      (justify left))
-    (uuid "363c6d1d-3bff-511d-93d7-71cd60fc4892"))
-  (text "1  NEW-FLIGHT EDGE / RESET-TO-INHIBIT LATCH"
-    (at 15.24 58.42 0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left))
-    (uuid "152e9dd5-2ffc-565d-88a5-87f848cda0df"))
-  (symbol
-    (lib_id "Ogma2_Readable_Output:Readable_U6001")
-    (at 114.3 119.38 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "1ae6c011-e3ca-58d1-86b5-2d1528519474")
-    (property "Reference" "U6001"
-      (at 139.7 86.36 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "SN74LVC1G74DCUR"
-      (at 139.7 88.9 0)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" "Ogma2:SN74LVC1G74DCUR"
-      (at 114.3 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
-      (at 114.3 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "MPN" "SN74LVC1G74DCUR"
-      (at 114.3 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Manufacturer" "Texas Instruments"
-      (at 114.3 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Staging eligibility latch"
-      (at 114.3 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
-      (at 114.3 119.38 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
-          (reference "U6001")
-          (unit 1))))
-    (pin "1"
-      (uuid "9fffddd5-48ab-5ce2-b41c-c2802d270531"))
-    (pin "2"
-      (uuid "07540bb4-b92d-5230-aa4e-bd0ca8924831"))
-    (pin "4"
-      (uuid "a42abbda-6633-5d3f-a8c2-2911de149762"))
-    (pin "6"
-      (uuid "8b39c91e-cf33-5e96-948e-f1f4b5824ade"))
-    (pin "7"
-      (uuid "def863be-e560-5d45-80cf-fa35ae5ae38c"))
-    (pin "8"
-      (uuid "c7fb01f0-9705-556b-b1d9-41c455a258a2"))
-    (pin "3"
-      (uuid "74cd91e1-32da-5953-8e6d-2f7eb8056436"))
-    (pin "5"
-      (uuid "3fa6f2ff-350e-56ca-9fa1-9fc771ccea4f")))
-  (symbol
-    (lib_id "Device:C")
-    (at 162.56 81.28 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "1626e7a0-7b23-5b61-9c8c-791413c79197")
-    (property "Reference" "C6001"
-      (at 166.37 80.01 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100n 16V X7R"
-      (at 166.37 82.55 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 162.56 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 162.56 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Unpolarized capacitor"
-      (at 162.56 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "cap capacitor"
-      (at 162.56 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "C_*"
-      (at 162.56 81.28 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
-          (reference "C6001")
-          (unit 1))))
-    (pin "1"
-      (uuid "04384c21-08bf-543c-8f84-750b89e0ead1"))
-    (pin "2"
-      (uuid "031e6127-9762-5d1e-84d0-61bc0a91600d")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 162.56 90.17 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "b74a0201-acda-5053-b085-679fe9a515e0")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 162.56 90.17 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (symbol
-    (lib_id "Device:R")
-    (at 63.5 149.86 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "e80d8561-6432-5174-a24a-4184393b6278")
-    (property "Reference" "R6001"
-      (at 67.31 148.59 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Value" "100k"
-      (at 67.31 151.13 0)
-      (effects
-        (font
-          (size 1.016 1.016))
-        (justify left)))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-      (at 63.5 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Datasheet" "~"
-      (at 63.5 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "Description" "Resistor"
-      (at 63.5 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_keywords" "R res resistor"
-      (at 63.5 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (property "ki_fp_filters" "R_*"
-      (at 63.5 149.86 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (hide yes)))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
-          (reference "R6001")
-          (unit 1))))
-    (pin "1"
-      (uuid "69258974-df8a-5dd0-b61f-bb82bcc5a0d6"))
-    (pin "2"
-      (uuid "fc7c6b58-0e64-5999-9f6b-b8008294e772")))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 63.5 158.75 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "473df33b-3767-5907-825d-fefebd130358")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 63.5 158.75 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (text "CLOCK is the request edge. D qualifies the edge; do not gate the clock."
-    (at 30.48 182.88 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "642f253c-992d-5d40-b908-0fcbcfaf9550"))
-  (text "CLK is the request edge directly. Disarm qualifies D, never gates CLK. Q-bar = inhibited."
-    (at 15.24 320.04 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "93d4a865-22c5-572f-a555-09849bafef9f"))
-  (text "Q-bar -> R6005 1k -> PE14. Arm feeds and arm sense: 06a. Channel 3 fires only through U6502 (PYRO3_FIRE AND STAGE_ELIGIBLE), 06pyro3."
-    (at 15.24 325.12 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "5877b1c8-c376-54db-a6ea-9ee95253a742"))
-  (text "A low arm sense is not proof that the physical energy break is open."
-    (at 15.24 330.2 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "023a1c82-d17e-5b9f-9769-7c6839027fcd"))
-  (text "All internal/debug/software reset classes must clear this latch; target NRST proof remains open."
-    (at 15.24 335.28 0)
-    (effects
-      (font
-        (size 1.05 1.05))
-      (justify left))
-    (uuid "3c43f12b-02f1-563e-b310-47d39ad3f12f"))
-  (global_label "NEW_FLIGHT_CLEAR_REQUEST"
-    (shape bidirectional)
-    (at 63.5 124.46 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "6d1a4625-daf4-59e6-a13e-3cdccfc61a57")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 63.5 124.46 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "STAGE_ARM_INVALID"
-    (shape bidirectional)
-    (at 83.82 114.3 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "6dd51efd-68a7-5cf9-9a50-36d7bbb638b2")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 83.82 114.3 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "GND"
-    (shape bidirectional)
-    (at 114.3 149.86 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "41b1b451-7011-5766-827f-3f89d5029b7f")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 114.3 149.86 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_NRST"
-    (shape bidirectional)
-    (at 106.68 88.9 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "8eab216e-3f75-5307-bd48-63a241763f0a")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 106.68 88.9 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "FLIGHT_3V3"
-    (shape bidirectional)
-    (at 121.92 68.58 0)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify right))
-    (uuid "a531822e-0900-5075-85df-cced3e330256")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 121.92 68.58 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (global_label "STAGE_ELIGIBLE"
-    (shape bidirectional)
-    (at 144.78 114.3 180)
-    (effects
-      (font
-        (size 0.9 0.9))
-      (justify left))
-    (uuid "542a5661-68c0-568a-975e-851d1b8f9b75")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 144.78 114.3 0)
-      (effects
-        (font
-          (size 1 1))
-        (hide yes))))
-  (wire
-    (pts
-      (xy 121.92 68.58)
-      (xy 121.92 93.98))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "06ee30ab-0ea4-515a-bed9-142b06e55c69"))
-  (wire
-    (pts
-      (xy 121.92 68.58)
-      (xy 162.56 68.58))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "500f51d9-908e-5bc2-8ca8-3b0148f81a0b"))
-  (wire
-    (pts
-      (xy 162.56 68.58)
-      (xy 162.56 77.47))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "68134866-bae5-57c0-8041-7dd617e40f5e"))
-  (wire
-    (pts
-      (xy 106.68 88.9)
-      (xy 106.68 93.98))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "eb55bbc8-9e72-521d-b118-1aae268745f6"))
-  (wire
-    (pts
-      (xy 63.5 153.67)
-      (xy 63.5 158.75))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "58eb0619-0c17-5446-8456-fd295b07b942"))
-  (wire
-    (pts
-      (xy 114.3 144.78)
-      (xy 114.3 149.86))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "6c25414d-564b-5c79-9825-89e20f844968"))
-  (wire
-    (pts
-      (xy 162.56 85.09)
-      (xy 162.56 90.17))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "807f21b3-ad76-55f1-8317-582ea02637d1"))
-  (wire
-    (pts
-      (xy 63.5 124.46)
-      (xy 63.5 146.05))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "516caec6-aace-5be9-8aa6-596e765c597b"))
-  (wire
-    (pts
-      (xy 63.5 124.46)
-      (xy 88.9 124.46))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "3fd3ea18-cee3-5267-9dca-436f352e21d1"))
-  (wire
-    (pts
-      (xy 139.7 114.3)
-      (xy 144.78 114.3))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "540a57d3-bf62-5f3f-9973-34f0c669d194"))
-  (wire
-    (pts
-      (xy 139.7 124.46)
-      (xy 144.78 124.46))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "9ec4ca06-c91a-55c7-b701-06fb7bbfaef3"))
-  (wire
-    (pts
-      (xy 83.82 114.3)
-      (xy 88.9 114.3))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid "b57d1fe4-57de-5af7-99ff-7370fd440512"))
-  (text "What this does: Holds the staging channel inhibited after any flight reset or power-up, until the flight MCU clocks the latch with staging disarmed (D-7.2).\nConnects to: FLIGHT_NRST, PD15 request and STAGE_ARM_INVALID (06a) -> STAGE_ELIGIBLE to 06pyro3; STAGE_INHIBIT_LATCHED -> PE14. This logic does not replace a physical energy disconnect."
-    (at 15.24 27.94 0.0)
-    (effects
-      (font
-        (size 1.4 1.4))
-      (justify left top))
-    (uuid "16af8c03-a3c5-56b5-8efa-1a5f13138b6d")))
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "9a8bfc18-52b7-5270-9f41-d4338a2fa908")
+	(paper "User" 420 370.84)
+	(title_block
+		(title "Output authority")
+		(date "2026-09-08")
+		(rev "A-DRAFT")
+		(company "HiPR")
+		(comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight.")
+	)
+	(lib_symbols
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2:SN74LVC1G74DCUR"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -10.16 11.43 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "SN74LVC1G74DCUR"
+				(at -10.16 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Ogma2:SN74LVC1G74DCUR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Staging eligibility latch"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "SN74LVC1G74DCUR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Texas Instruments"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "SN74LVC1G74DCUR_0_1"
+				(rectangle
+					(start -10.16 -8.89)
+					(end 10.16 8.89)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "SN74LVC1G74DCUR_1_1"
+				(pin input line
+					(at -15.24 6.35 0)
+					(length 5.08)
+					(name "CLK"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 3.81 0)
+					(length 5.08)
+					(name "D"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 15.24 1.27 180)
+					(length 5.08)
+					(name "~{Q}"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -15.24 1.27 0)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 15.24 -1.27 180)
+					(length 5.08)
+					(name "Q"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -1.27 0)
+					(length 5.08)
+					(name "~{CLR}"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -3.81 0)
+					(length 5.08)
+					(name "~{PRE}"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -15.24 -6.35 0)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2:SN74LVC1G97DBVR"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -2.54 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SN74LVC1G97DBVR"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Bootstrap logic mux OR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Texas Instruments"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "pending primary pin audit; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Configurable Single Gate LVC CMOS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT* SC*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "SN74LVC1G97DBVR_0_1"
+				(rectangle
+					(start -7.62 7.62)
+					(end 7.62 -7.62)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "SN74LVC1G97DBVR_1_1"
+				(pin input line
+					(at -12.7 0 0)
+					(length 5.08)
+					(name "IN1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -12.7 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.7 5.08 0)
+					(length 5.08)
+					(name "IN0"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 12.7 0 180)
+					(length 5.08)
+					(name "Y"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 12.7 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.7 -5.08 0)
+					(length 5.08)
+					(name "IN2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_Readable_Output:Readable_U6001"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -10.16 11.43 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "SN74LVC1G74DCUR"
+				(at -10.16 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Ogma2:SN74LVC1G74DCUR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Staging eligibility latch"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "SN74LVC1G74DCUR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Texas Instruments"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Readable_U6001_0_1"
+				(rectangle
+					(start -20.32 20.32)
+					(end 20.32 -20.32)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Readable_U6001_1_1"
+				(pin input line
+					(at -25.4 -5.08 0)
+					(length 5.08)
+					(name "CLK"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 5.08 0)
+					(length 5.08)
+					(name "D"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 25.4 -5.08 180)
+					(length 5.08)
+					(name "~{Q}"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -25.4 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 25.4 5.08 180)
+					(length 5.08)
+					(name "Q"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 25.4 270)
+					(length 5.08)
+					(name "~{CLR}"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 7.62 25.4 270)
+					(length 5.08)
+					(name "SUPPLY_[7,8]"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 7.62 25.4 270)
+					(length 5.08)
+					(name ""
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_Readable_Output:Readable_U6002"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -2.54 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SN74LVC1G97DBVR"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Bootstrap logic mux OR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Texas Instruments"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "pending primary pin audit; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Configurable Single Gate LVC CMOS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT* SC*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Readable_U6002_0_1"
+				(rectangle
+					(start -10.16 10.16)
+					(end 10.16 -10.16)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Readable_U6002_1_1"
+				(pin input line
+					(at 0 -15.24 90)
+					(length 5.08)
+					(name "GND_[1,2]"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -15.24 90)
+					(length 5.08)
+					(name ""
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 5.08 0)
+					(length 5.08)
+					(name "IN0"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 15.24 0 180)
+					(length 5.08)
+					(name "Y"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 15.24 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 5.08)
+					(name "IN2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_Readable_Output:Readable_U6003"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -2.54 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SN74LVC1G97DBVR"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Bootstrap logic mux OR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Texas Instruments"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "pending primary pin audit; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Configurable Single Gate LVC CMOS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT* SC*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Readable_U6003_0_1"
+				(rectangle
+					(start -10.16 10.16)
+					(end 10.16 -10.16)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Readable_U6003_1_1"
+				(pin input line
+					(at 0 -15.24 90)
+					(length 5.08)
+					(name "GND_[1,2]"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -15.24 90)
+					(length 5.08)
+					(name ""
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 5.08 0)
+					(length 5.08)
+					(name "IN0"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 15.24 0 180)
+					(length 5.08)
+					(name "Y"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 15.24 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 5.08)
+					(name "IN2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_Readable_Output:Readable_U6004"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -2.54 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SN74LVC1G97DBVR"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Bootstrap logic mux OR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Texas Instruments"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "pending primary pin audit; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Configurable Single Gate LVC CMOS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT* SC*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Readable_U6004_0_1"
+				(rectangle
+					(start -10.16 10.16)
+					(end 10.16 -10.16)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Readable_U6004_1_1"
+				(pin input line
+					(at 0 -15.24 90)
+					(length 5.08)
+					(name "GND_[1,2]"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -15.24 90)
+					(length 5.08)
+					(name ""
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 5.08 0)
+					(length 5.08)
+					(name "IN0"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 15.24 0 180)
+					(length 5.08)
+					(name "Y"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 15.24 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 5.08)
+					(name "IN2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Ogma2_Readable_Output:Readable_U6005"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -2.54 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SN74LVC1G97DBVR"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ogma2:SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g97.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Bootstrap logic mux OR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "SN74LVC1G97DBVR"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Texas Instruments"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Library_Check" "pending primary pin audit; pending dimensional audit"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Configurable Single Gate LVC CMOS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT* SC*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Readable_U6005_0_1"
+				(rectangle
+					(start -10.16 10.16)
+					(end 10.16 -10.16)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "Readable_U6005_1_1"
+				(pin input line
+					(at 0 -15.24 90)
+					(length 5.08)
+					(name "GND_[1,2]"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -15.24 90)
+					(length 5.08)
+					(name ""
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 5.08 0)
+					(length 5.08)
+					(name "IN0"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 15.24 0 180)
+					(length 5.08)
+					(name "Y"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 15.24 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 5.08)
+					(name "IN2"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 0.9 0.9)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "A low arm sense is not proof that the physical energy break is open."
+		(exclude_from_sim no)
+		(at 15.24 330.2 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "023a1c82-d17e-5b9f-9769-7c6839027fcd")
+	)
+	(text "1  NEW-FLIGHT EDGE / RESET-TO-INHIBIT LATCH"
+		(exclude_from_sim no)
+		(at 15.24 58.42 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left)
+		)
+		(uuid "152e9dd5-2ffc-565d-88a5-87f848cda0df")
+	)
+	(text "What this does: Holds the staging channel inhibited after any flight reset or power-up, until the flight MCU clocks the latch with staging disarmed (D-7.2).\nConnects to: FLIGHT_NRST, PD15 request and STAGE_ARM_INVALID (06a) -> STAGE_ELIGIBLE to 06pyro3; STAGE_INHIBIT_LATCHED -> PE14. This logic does not replace a physical energy disconnect."
+		(exclude_from_sim no)
+		(at 15.24 27.94 0)
+		(effects
+			(font
+				(size 1.4 1.4)
+			)
+			(justify left top)
+		)
+		(uuid "16af8c03-a3c5-56b5-8efa-1a5f13138b6d")
+	)
+	(text "D = STAGE_ARM_INVALID (U6103 OUTB, 06a): the latch can only be set while staging is disarmed."
+		(exclude_from_sim no)
+		(at 30.48 187.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2f6e02e7-00c5-5bf7-be5a-3d8985b577f6")
+	)
+	(text "OUTPUT AUTHORITY / STAGING RESET LATCH"
+		(exclude_from_sim no)
+		(at 15.24 15.24 0)
+		(effects
+			(font
+				(size 2.54 2.54)
+			)
+			(justify left)
+		)
+		(uuid "363c6d1d-3bff-511d-93d7-71cd60fc4892")
+	)
+	(text "All internal/debug/software reset classes must clear this latch; target NRST proof remains open."
+		(exclude_from_sim no)
+		(at 15.24 335.28 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "3c43f12b-02f1-563e-b310-47d39ad3f12f")
+	)
+	(text "Q-bar -> R6005 1k -> PE14. Arm feeds and arm sense: 06a. Channel 3 fires only through U6502 (PYRO3_FIRE AND STAGE_ELIGIBLE), 06pyro3."
+		(exclude_from_sim no)
+		(at 15.24 325.12 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "5877b1c8-c376-54db-a6ea-9ee95253a742")
+	)
+	(text "CLOCK is the request edge. D qualifies the edge; do not gate the clock."
+		(exclude_from_sim no)
+		(at 30.48 182.88 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "642f253c-992d-5d40-b908-0fcbcfaf9550")
+	)
+	(text "CLK is the request edge directly. Disarm qualifies D, never gates CLK. Q-bar = inhibited."
+		(exclude_from_sim no)
+		(at 15.24 320.04 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left)
+		)
+		(uuid "93d4a865-22c5-572f-a555-09849bafef9f")
+	)
+	(wire
+		(pts
+			(xy 152.4 124.46) (xy 157.48 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "03d3e0ae-cbc8-518f-b282-e8a4113aba5d")
+	)
+	(wire
+		(pts
+			(xy 121.92 68.58) (xy 121.92 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "06ee30ab-0ea4-515a-bed9-142b06e55c69")
+	)
+	(wire
+		(pts
+			(xy 63.5 124.46) (xy 88.9 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3fd3ea18-cee3-5267-9dca-436f352e21d1")
+	)
+	(wire
+		(pts
+			(xy 121.92 68.58) (xy 162.56 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "500f51d9-908e-5bc2-8ca8-3b0148f81a0b")
+	)
+	(wire
+		(pts
+			(xy 63.5 124.46) (xy 63.5 146.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "516caec6-aace-5be9-8aa6-596e765c597b")
+	)
+	(wire
+		(pts
+			(xy 139.7 114.3) (xy 144.78 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "540a57d3-bf62-5f3f-9973-34f0c669d194")
+	)
+	(wire
+		(pts
+			(xy 63.5 153.67) (xy 63.5 158.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "58eb0619-0c17-5446-8456-fd295b07b942")
+	)
+	(wire
+		(pts
+			(xy 162.56 68.58) (xy 162.56 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "68134866-bae5-57c0-8041-7dd617e40f5e")
+	)
+	(wire
+		(pts
+			(xy 114.3 144.78) (xy 114.3 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6c25414d-564b-5c79-9825-89e20f844968")
+	)
+	(wire
+		(pts
+			(xy 162.56 85.09) (xy 162.56 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "807f21b3-ad76-55f1-8317-582ea02637d1")
+	)
+	(wire
+		(pts
+			(xy 139.7 124.46) (xy 144.78 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9ec4ca06-c91a-55c7-b701-06fb7bbfaef3")
+	)
+	(wire
+		(pts
+			(xy 83.82 114.3) (xy 88.9 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b57d1fe4-57de-5af7-99ff-7370fd440512")
+	)
+	(wire
+		(pts
+			(xy 106.68 88.9) (xy 106.68 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb55bbc8-9e72-521d-b118-1aae268745f6")
+	)
+	(global_label "STAGE_INHIBIT_LATCHED"
+		(shape bidirectional)
+		(at 157.48 124.46 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "394fd8e8-5e39-50be-85c2-efdd38ce9f28")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 157.48 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 114.3 149.86 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "41b1b451-7011-5766-827f-3f89d5029b7f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 114.3 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 63.5 158.75 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "473df33b-3767-5907-825d-fefebd130358")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 63.5 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "STAGE_ELIGIBLE"
+		(shape bidirectional)
+		(at 144.78 114.3 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left)
+		)
+		(uuid "542a5661-68c0-568a-975e-851d1b8f9b75")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 144.78 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "NEW_FLIGHT_CLEAR_REQUEST"
+		(shape bidirectional)
+		(at 63.5 124.46 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "6d1a4625-daf4-59e6-a13e-3cdccfc61a57")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 63.5 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "STAGE_ARM_INVALID"
+		(shape bidirectional)
+		(at 83.82 114.3 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "6dd51efd-68a7-5cf9-9a50-36d7bbb638b2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 83.82 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "FLIGHT_NRST"
+		(shape bidirectional)
+		(at 106.68 88.9 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "8eab216e-3f75-5307-bd48-63a241763f0a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 106.68 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "FLIGHT_3V3"
+		(shape bidirectional)
+		(at 121.92 68.58 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "a531822e-0900-5075-85df-cced3e330256")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 121.92 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 162.56 90.17 180)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify right)
+		)
+		(uuid "b74a0201-acda-5053-b085-679fe9a515e0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 162.56 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 162.56 81.28 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1626e7a0-7b23-5b61-9c8c-791413c79197")
+		(property "Reference" "C6001"
+			(at 166.37 80.01 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n 16V X7R"
+			(at 166.37 82.55 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 162.56 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 162.56 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "cap capacitor"
+			(at 162.56 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "C_*"
+			(at 162.56 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "04384c21-08bf-543c-8f84-750b89e0ead1")
+		)
+		(pin "2"
+			(uuid "031e6127-9762-5d1e-84d0-61bc0a91600d")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+					(reference "C6001")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ogma2_Readable_Output:Readable_U6001")
+		(at 114.3 119.38 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1ae6c011-e3ca-58d1-86b5-2d1528519474")
+		(property "Reference" "U6001"
+			(at 139.7 86.36 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "SN74LVC1G74DCUR"
+			(at 139.7 88.9 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Ogma2:SN74LVC1G74DCUR"
+			(at 114.3 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
+			(at 114.3 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Staging eligibility latch"
+			(at 114.3 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SN74LVC1G74DCUR"
+			(at 114.3 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 114.3 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Library_Check" "transcribed and checked: SN74LVC1G74 p4 DCU; Qbar3 and Q5; pending dimensional audit"
+			(at 114.3 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "9fffddd5-48ab-5ce2-b41c-c2802d270531")
+		)
+		(pin "2"
+			(uuid "07540bb4-b92d-5230-aa4e-bd0ca8924831")
+		)
+		(pin "4"
+			(uuid "a42abbda-6633-5d3f-a8c2-2911de149762")
+		)
+		(pin "6"
+			(uuid "8b39c91e-cf33-5e96-948e-f1f4b5824ade")
+		)
+		(pin "7"
+			(uuid "def863be-e560-5d45-80cf-fa35ae5ae38c")
+		)
+		(pin "8"
+			(uuid "c7fb01f0-9705-556b-b1d9-41c455a258a2")
+		)
+		(pin "3"
+			(uuid "74cd91e1-32da-5953-8e6d-2f7eb8056436")
+		)
+		(pin "5"
+			(uuid "3fa6f2ff-350e-56ca-9fa1-9fc771ccea4f")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+					(reference "U6001")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 148.59 124.46 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "859ece81-8a08-56b5-b1af-bf18ced8878d")
+		(property "Reference" "R6005"
+			(at 148.59 119.38 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "1k"
+			(at 148.59 121.92 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 148.59 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 148.59 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 148.59 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 148.59 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 148.59 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Implementation_Note" "Series 1k: a wrongly configured PE14 cannot fight the latch output (D-7.2)"
+			(at 148.59 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6b6affd9-6f79-56ce-bc26-67992f8afb86")
+		)
+		(pin "2"
+			(uuid "2d1f515c-b2b6-564a-8084-934bcc8f0a7c")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+					(reference "R6005")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 63.5 149.86 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e80d8561-6432-5174-a24a-4184393b6278")
+		(property "Reference" "R6001"
+			(at 67.31 148.59 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 67.31 151.13 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 63.5 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 63.5 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "R res resistor"
+			(at 63.5 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "R_*"
+			(at 63.5 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "69258974-df8a-5dd0-b61f-bb82bcc5a0d6")
+		)
+		(pin "2"
+			(uuid "fc7c6b58-0e64-5999-9f6b-b8008294e772")
+		)
+		(instances
+			(project "Croi2"
+				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/b10f5548-0f9f-500e-b426-85c55e30a1c5"
+					(reference "R6001")
+					(unit 1)
+				)
+			)
+		)
+	)
+)
