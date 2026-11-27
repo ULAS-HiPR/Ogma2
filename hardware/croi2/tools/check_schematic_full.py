@@ -24,7 +24,7 @@ TP_LOOP = ('Ogma2:TestPoint_Keystone_5190TR_ColorKeyed', '5194TR', 'C22388408') 
 TP_PAD = ('TestPoint:TestPoint_Pad_D1.0mm', None, None)                                  # 1.0 mm pad, probe touches
 TP_LOOP_NETS = frozenset({   # each regulator or switch output, the strobe, PPS
     'VBAT_BURRITO_INPUT', 'VBAT_PROTECTED', 'LOGIC_SELECTED', '4V_PRE', 'CORE_HELD_4V', 'FLIGHT_3V3', 'COMMS_3V3',
-    '3V3_OPTIONAL', 'LORA_3V3', 'CAN_3V3', 'BOOT_3V3', 'NOR_3V3', 'GNSS_3V3', 'CHURRO_AUX_3V3', 'USB_VBUS',
+    'CAN_3V3', 'BOOT_3V3', 'CHURRO_AUX_3V3', 'USB_VBUS',
     'USB_LIMITED', 'TP_STROBE_PAD', 'GNSS_PPS'})
 TP_SENSE_ONLY = frozenset({f'ADC_PYRO{n}_{k}' for n in (1, 2, 3) for k in ('CONTINUITY', 'CURRENT')}
                           | {'RECOVERY_ARM_SENSE', 'STAGING_ARM_SENSE', 'ADC_PYRO_RAIL'})
@@ -174,15 +174,15 @@ def check(project, netlist, erc):
     require(actual[('U201', '14')] != actual[('U401', '7')], 'No cross-reset net short')
 
     # ---- GNSS and radio (unchanged by capture)
-    for pin, net in {'1': 'GND', '2': 'GNSS_RX_ISO', '3': 'GNSS_TX_ISO', '4': 'GNSS_PPS_ISO', '7': 'GNSS_3V3', '8': 'GNSS_3V3',
-                     '9': 'GNSS_RESET_N_ISO', '10': 'GND', '11': 'GNSS_RF', '12': 'GND'}.items():
+    for pin, net in {'1': 'GND', '2': 'GNSS_RX', '3': 'GNSS_TX', '4': 'GNSS_PPS', '7': 'COMMS_3V3', '8': 'COMMS_3V3',
+                     '9': 'GNSS_RESET_N', '10': 'GND', '11': 'GNSS_RF', '12': 'GND'}.items():
         require(actual[('U4504', pin)] == net, f'MAX-M10S manufacturer pin {pin}: {net}')
     for pin in ['5', '6', '13', '14', '15', '16', '17', '18']:
         require(actual[('U4504', pin)].startswith('unconnected-'), f'MAX unused pin {pin}; SAFEBOOT18 and backup6 unloaded')
     require(nets['GNSS_RF'] == {('U4504', '11'), ('J4501', '1'), ('D4501', '1')}, 'Single passive GNSS RF path with ESD; no bias supply')
     require(actual[('J4501', '2')] == actual[('D4501', '2')] == 'GND', 'GNSS SMA and ESD returns')
     require(value('J4501') == '132134' and value('D4501') == 'PESD5V0F1BL,315', 'GNSS SMA and low-capacitance ESD selections (D-22Nov.8)')
-    for pin, net in {'1': 'LORA_3V3', '2': 'LORA_DIO1_MOD', '3': 'LORA_RESET_N_MOD', '4': 'LORA_MISO_MOD', '5': 'LORA_MOSI_MOD',
+    for pin, net in {'1': 'COMMS_3V3', '2': 'LORA_DIO1_MOD', '3': 'LORA_RESET_N_MOD', '4': 'LORA_MISO_MOD', '5': 'LORA_MOSI_MOD',
                      '6': 'LORA_SCK_MOD', '7': 'LORA_NCS_MOD', '8': 'LORA_BUSY_MOD', '9': 'GND', '10': 'LORA_RF_SUBG',
                      '11': 'GND', '12': 'GND', '14': 'GND', '15': 'GND', '20': 'GND'}.items():
         require(actual[('U4606', pin)] == net, f'Wio manufacturer pin {pin}: {net}')
@@ -190,12 +190,12 @@ def check(project, netlist, erc):
         require(actual[('U4606', pin)].startswith('unconnected-'), f'Wio unused RF/DIO pin {pin} NC')
     require(nets['LORA_RF_SUBG'] == {('U4606', '10'), ('J4601', '1'), ('D4601', '1')} and actual[('J4601', '2')] == 'GND', 'Single sub-GHz host RF path with ESD (D4601, D-22Nov.20)')
     require(value('J4601') == '132134' and parts['J4601'].findtext('footprint') == 'Ogma2:SMA_Amphenol_132134_Vertical', 'Approved vertical SMA')
-    require(actual[('R4621', '1')] == 'LORA_3V3' and actual[('R4621', '2')] == 'LORA_BUSY_MOD', 'Open-drain BUSY pulled to switched rail')
+    require(actual[('R4621', '1')] == 'COMMS_3V3' and actual[('R4621', '2')] == 'LORA_BUSY_MOD', 'Open-drain BUSY pulled to COMMS_3V3 (D-27Nov.2)')
     for i, sig in enumerate(['SCK', 'MOSI', 'MISO', 'NCS', 'RESET_N', 'BUSY', 'DIO1']):
         ref = f'R{4614 + i}'
-        require(actual[(ref, '1')] == f'LORA_{sig}_ISO' and actual[(ref, '2')] == f'LORA_{sig}_MOD' and value(ref) == '470R', f'{sig} series boundary')
+        require(actual[(ref, '1')] == f'LORA_{sig}' and actual[(ref, '2')] == f'LORA_{sig}_MOD' and value(ref) == '470R', f'{sig} series boundary')
     require(not {'U4605', 'C4605', 'R4606', 'R4607'} & set(parts), 'Obsolete external RF-switch control components removed')
-    require(actual[('U4604', '13')] == 'GND' and all(actual[('U4604', p)].startswith('unconnected-') for p in ['11', '12']), 'Unused isolation channel disabled')
+    require(not {'U4501', 'U4502', 'U4503', 'U4601', 'U4602', 'U4603', 'U4604'} & set(parts), 'GNSS and radio gates and isolators removed (D-27Nov.2)')
 
     # ---- source, master enable, monitoring
     require(value('R1006') == '22.1k 1%' and actual[('R1006', '1')] == 'BAT_SHDN_N' and actual[('R1006', '2')] == 'GND', 'Source enable defaults OFF locally')
@@ -219,11 +219,12 @@ def check(project, netlist, erc):
             and actual[('R1210', '1')] == '4V_PRE' and value('R1210') == '200k 1%' and value('R1204') == '100k',
             'Core input enable from its own 4V_PRE divider, whatever the source (D-6.5)')
     require(actual[('U1701', '7')] == 'CORE_HELD_4V', 'Flight LDO input on the held core rail')
-    require(actual[('U1601', '3')] == 'SERVICE_POWER_EN' and actual[('U201', '39')] == 'SERVICE_POWER_EN', 'Service restart on PE8 (D-6.5)')
+    require(not {'U1601', 'U1901', 'U3601', 'U6701'} & set(parts) and not [n for n in nets if n in ('3V3_OPTIONAL', 'NOR_3V3', 'GNSS_3V3', 'LORA_3V3', 'SERVICE_POWER_EN', 'OPTIONAL_LDO_PG')],
+            'Services LDO and limiter, NOR / GNSS / radio gates and pyro current sense removed; no folded rail name left (D-27Nov.2)')
 
     # ---- CAN
     for bus, (j, d, r, u) in {'': ('J501', 'D501', 'R510', 'U503'), '2': ('J502', 'D502', 'R515', 'U505')}.items():
-        for net, pin in [(f'CAN{bus}_H', '1'), (f'CAN{bus}_L', '2')]:
+        for net, pin in [(f'CAN{bus}+', '1'), (f'CAN{bus}-', '2')]:
             require(nets[net] == {(j, pin), (d, pin), (r, pin), (u, '7' if pin == '1' else '6')}, f'Exact {net} conductors; no H/L short')
         require(value(j) == 'G125-MS10605M2P' and all(actual[(j, p)].startswith('unconnected-') for p in '456'), f'{j}: Gecko-SL, spare contacts NC')
     require(actual[('U502', '1')] != actual[('U502', '14')], 'CAN translator supply domains remain separate')
@@ -235,7 +236,7 @@ def check(project, netlist, erc):
     for pin, net in {'2': 'FLIGHT_STATUS_LED1', '3': 'GND', '4': 'FLIGHT_NOT_READY', '5': 'FLIGHT_3V3'}.items():
         require(actual[('U9101', pin)] == net, f'Inverter manufacturer DBV contact {pin}')
     require(value('U9101') == 'SN74LVC1G04DBVR' and actual[('R9102', '1')] == 'FLIGHT_STATUS_LED1' and value('R9102') == '47k', 'Readiness inverter and its default')
-    require('BZ9001' not in dnp and actual[('D9002', '1')] == actual[('BZ9001', '1')] == '3V3_OPTIONAL'
+    require('BZ9001' not in dnp and actual[('D9002', '1')] == actual[('BZ9001', '1')] == 'FLIGHT_3V3'
             and actual[('D9002', '2')] == actual[('BZ9001', '2')] == actual[('Q9001', '3')] == 'BUZZER_LOW'
             and refs('BUZZER_LOW') == {'BZ9001', 'D9002', 'Q9001'} and actual[('Q9001', '2')] == 'GND',
             'Magnetic sounder: one flyback diode (D9002) across its coil, no bleed resistor, AO3400A low side (D-21Nov.20)')
@@ -270,7 +271,7 @@ def check(project, netlist, erc):
             and 'R6001' in refs('NEW_FLIGHT_CLEAR_REQUEST') and value('R6001') == '100k',
             'A8: U6001 CLR = FLIGHT_NRST, D = STAGE_ARM_INVALID, CLK = PD7 with pull-down (PD15 until D-22Nov.25)')
     require(all(refs(f'OUTPUT{n}_HIGH') == {'J6601', f'U6{n + 2}04', f'R69{n}2', f'C660{2 * n - 1}'} and refs(f'PYRO{n}_ENERGY') == {f'U6{n + 2}04', f'R6{n + 2}10', f'C6{n + 2}04'}
-                and actual[(f'R69{n}1', '1')] == '3V3_OPTIONAL' and refs(actual[(f'R69{n}1', '2')]) == {f'R69{n}1', f'R69{n}2'} for n in (1, 2, 3)),
+                and actual[(f'R69{n}1', '1')] == 'FLIGHT_3V3' and refs(actual[(f'R69{n}1', '2')]) == {f'R69{n}1', f'R69{n}2'} for n in (1, 2, 3)),
             'A9: no logic rail on an armed rail; the only logic-rail path to J6601 is R69x1 / R69x2')
     for ref in ['R6310', 'R6410', 'R6510']:
         require(ref in dnp, f'A10: {ref} energy link DNP until the igniter values close')
@@ -293,7 +294,7 @@ def check(project, netlist, erc):
             and all(refs(n) <= {'U201', 'R3702', 'R3703', 'R3704', 'R3705'} for n in ('MAG_SCL', 'MAG_SDA')),
             'A16: magnetometer nets land on PA8, PC9 and PD3 only (INT on PE6 until D-22Nov.25)')
     require(refs('USB_VBUS') == {'J4401', 'D4401', 'C4401', 'C4402', 'U4401', 'R1208'}, 'A18: USB VBUS only to its ESD, decoupling, U4401 and the R1208 divider')
-    for ref in ('R1701', 'R1801', 'R1901'):
+    for ref in ('R1701', 'R1801'):
         bottom = next(r for r in refs(actual[(ref, '2')]) if r.startswith('R') and r != ref)
         require(value(ref) == '32k 0.1%' and value(bottom).startswith('10k'), f'A19: {ref} 32k over {bottom} 10k (D-21Nov.18)')
     require(actual[('U101', '11')] == 'GND', 'A19: U101 MODE tied to GND (auto-retry, D-6.3)')
