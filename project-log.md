@@ -5962,3 +5962,4 @@ What the sheets show, read from the step-16 netlist:
 - Sonnet's first reading kept the GNSS and LoRa gates (RF off on USB). Opus: that is a budget, not a safety rule (U4401 already limits USB), so the gates and their isolators go. Seán sided with Opus.
 - Pyro: kept whole except the 06c current sense. 06f is kept: its reason is an unpowered flight ADC, not the services rail.
 - Not applied: the sheets are KiCad 10; the cloud's KiCad is 9.0.8 and loads zero components from them. Apply on the Mac, then ERC.
+- 27 Nov, later: the three checks before applying D-27Nov.2 are answered in the plan (LM73100 5.5 A, trips 21.9 A; hold-up about 2.25 ms to about 1.1 ms at the ceilings, computed; U6701 gates only the pyro current sense; the NOR bus connects only the flight MCU). The first plan wrongly listed the NOR pull-ups R3605-R3608 for deletion; they stay. Part count revised from about 40 to about 65.
