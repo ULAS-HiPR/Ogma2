@@ -1,4179 +1,2389 @@
 (kicad_sch
-	(version 20260306)
-	(generator "eeschema")
-	(generator_version "10.0")
-	(uuid "af960ddd-c325-529e-ae30-b0b66c820447")
-	(paper "User" 297 230.32)
-	(title_block
-		(title "Test points / key nets")
-		(date "2026-11-21")
-		(rev "A-DRAFT")
-		(company "HiPR")
-		(comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight.")
-	)
-	(lib_symbols
-		(symbol "Connector:TestPoint"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0.762)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "TP"
-				(at 0 6.858 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "TestPoint"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 5.08 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 5.08 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "test point"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "test point tp"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "Pin* Test*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "TestPoint_0_1"
-				(circle
-					(center 0 3.302)
-					(radius 0.762)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "TestPoint_1_1"
-				(pin passive line
-					(at 0 0 90)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-	)
-	(text "PADS: PYRO DIAGNOSTICS"
-		(exclude_from_sim no)
-		(at 162.56 55.88 0)
-		(effects
-			(font
-				(size 1.524 1.524)
-			)
-			(justify left)
-		)
-		(uuid "1419f518-fac5-5302-bd40-9af521c5de14")
-	)
-	(text "YELLOW LOOPS: RAILS, PPS"
-		(exclude_from_sim no)
-		(at 25.4 55.88 0)
-		(effects
-			(font
-				(size 1.524 1.524)
-			)
-			(justify left)
-		)
-		(uuid "193ce850-2041-577a-8fc0-32bbb6d3d46c")
-	)
-	(text "PADS: POWER STATUS"
-		(exclude_from_sim no)
-		(at 116.84 55.88 0)
-		(effects
-			(font
-				(size 1.524 1.524)
-			)
-			(justify left)
-		)
-		(uuid "3310d5f8-c4a6-5ad6-81fe-9895d1fc8ade")
-	)
-	(text "BLACK LOOPS: GND (FWD, AFT)"
-		(exclude_from_sim no)
-		(at 71.12 55.88 0)
-		(effects
-			(font
-				(size 1.524 1.524)
-			)
-			(justify left)
-		)
-		(uuid "333c6ad8-2397-5ae1-ba5c-56fcf6f26e25")
-	)
-	(text "What this does: test points on key nets not served elsewhere, in three sizes (D-22Nov.9). Silkscreen: TP number only.\nBlack Keystone 5011 loops on GND at the board edges; yellow Keystone 5194TR surface-mount loops where a probe stays clipped on\n(rails, GNSS PPS); 1.0 mm round pads for nets you only touch. Each joins its net by global label.\nNo test point on a fire net or on a line that drives a fire switch: OUTPUTx_HIGH / LOW, PYROx_ENERGY, the armed rails,\nPYROx_FIRE / GATE / LS_SELECT, STAGE_ELIGIBLE, PYRO3_HS_ENABLE (B-02). Their scaled ADC nodes are under PYRO DIAGNOSTICS."
-		(exclude_from_sim no)
-		(at 15.24 25.4 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left top)
-		)
-		(uuid "c75cdf50-37a6-565c-acd4-1248b48f1b52")
-	)
-	(text "TEST POINTS / KEY NETS"
-		(exclude_from_sim no)
-		(at 15.24 15.24 0)
-		(effects
-			(font
-				(size 2.54 2.54)
-			)
-			(justify left)
-		)
-		(uuid "ca28736c-7f17-5a9e-9b5d-b48bfaacdb68")
-	)
-	(wire
-		(pts
-			(xy 55.88 93.98) (xy 60.96 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0d73e8e6-1038-5d07-be14-de9b9dbe92a4")
-	)
-	(wire
-		(pts
-			(xy 193.04 86.36) (xy 198.12 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "131d07b3-8163-50d9-b639-7f3d5dd40524")
-	)
-	(wire
-		(pts
-			(xy 55.88 71.12) (xy 60.96 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1805130a-325a-521b-ac3c-947afc5a9d1f")
-	)
-	(wire
-		(pts
-			(xy 193.04 63.5) (xy 198.12 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "21d6ebd8-6815-5e0f-bd4c-7e1a485754b2")
-	)
-	(wire
-		(pts
-			(xy 147.32 109.22) (xy 152.4 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "21dff1c3-6b3a-5383-b922-bee293add07d")
-	)
-	(wire
-		(pts
-			(xy 193.04 109.22) (xy 198.12 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "308c94a3-315b-5af4-b3d2-789cb7023c7d")
-	)
-	(wire
-		(pts
-			(xy 193.04 78.74) (xy 198.12 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "39a8a45a-8413-5de5-9f3c-4124ebdb9862")
-	)
-	(wire
-		(pts
-			(xy 147.32 78.74) (xy 152.4 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3fa058b5-77a2-5775-b76f-a3b1731c52e6")
-	)
-	(wire
-		(pts
-			(xy 55.88 63.5) (xy 60.96 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "521e32ff-4e1d-5cd1-9d09-2f76cff7049c")
-	)
-	(wire
-		(pts
-			(xy 193.04 101.6) (xy 198.12 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "53f5fd73-a4e8-57df-b8af-b88196fc7b44")
-	)
-	(wire
-		(pts
-			(xy 101.6 71.12) (xy 106.68 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "596cbac5-5b65-598b-9896-cd9acb9ff308")
-	)
-	(wire
-		(pts
-			(xy 55.88 78.74) (xy 60.96 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "62c8cfc0-7fcb-56b8-87c7-bc837b35647c")
-	)
-	(wire
-		(pts
-			(xy 147.32 63.5) (xy 152.4 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a992e249-85f2-5410-9fcd-ba46573f80db")
-	)
-	(wire
-		(pts
-			(xy 193.04 71.12) (xy 198.12 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ae64ceb5-c729-56d1-a74b-79b61aec98b6")
-	)
-	(wire
-		(pts
-			(xy 101.6 63.5) (xy 106.68 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bc6af941-c841-5053-b5db-43729b893aa6")
-	)
-	(wire
-		(pts
-			(xy 147.32 116.84) (xy 152.4 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bcb047bd-9fe3-50d9-a22f-8e244343e086")
-	)
-	(wire
-		(pts
-			(xy 147.32 86.36) (xy 152.4 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bf375a11-e7a7-50d6-a27e-0ad2ad17d604")
-	)
-	(wire
-		(pts
-			(xy 193.04 93.98) (xy 198.12 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d1ec2fa9-e3ef-5050-ab5e-d7e568fcfad5")
-	)
-	(wire
-		(pts
-			(xy 147.32 71.12) (xy 152.4 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "da0340d5-7022-5144-9b75-dda9d7a60289")
-	)
-	(wire
-		(pts
-			(xy 193.04 116.84) (xy 198.12 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "de7f2e79-22a4-536a-858d-8713cbbd5d7d")
-	)
-	(wire
-		(pts
-			(xy 55.88 101.6) (xy 60.96 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ea5ed2d3-171a-5e9f-95cb-20b5ccbf31ca")
-	)
-	(wire
-		(pts
-			(xy 147.32 93.98) (xy 152.4 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ec257310-2290-5343-9d97-6707f628fd0e")
-	)
-	(wire
-		(pts
-			(xy 147.32 101.6) (xy 152.4 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ecc9da6e-9154-584b-ab31-758c8e1abb77")
-	)
-	(wire
-		(pts
-			(xy 55.88 86.36) (xy 60.96 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f137e38e-010e-5c89-beee-75f55083ccaa")
-	)
-	(wire
-		(pts
-			(xy 55.88 109.22) (xy 60.96 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f97c1d31-e7f8-54e6-baab-c08aec5d7894")
-	)
-	(global_label "BAT_SHDN_N"
-		(shape bidirectional)
-		(at 147.32 86.36 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "06686461-2579-5041-9ab4-bae945d99af9")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "STAGING_ARM_SENSE"
-		(shape bidirectional)
-		(at 193.04 116.84 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "273fba47-4971-5b82-b033-4f68ba9deb16")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 193.04 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 101.6 63.5 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "276508a2-d1e7-57e4-97b5-c27c9f1fd5c7")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 101.6 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "NOR_3V3"
-		(shape bidirectional)
-		(at 55.88 71.12 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "2dd694c2-adeb-5180-8c14-c2a9e65f4615")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 55.88 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "FC_POWER_HOLD"
-		(shape bidirectional)
-		(at 147.32 78.74 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "48ea56ce-1295-5887-b9ed-49beddf02f5e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "ADC_PYRO1_CONTINUITY"
-		(shape bidirectional)
-		(at 193.04 63.5 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "4d763cd2-0f56-5104-ab92-87d192b561e4")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 193.04 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GNSS_3V3"
-		(shape bidirectional)
-		(at 55.88 78.74 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "581f18d1-9dd8-58eb-883e-3334c01ebfae")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 55.88 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "ADC_PYRO2_CURRENT"
-		(shape bidirectional)
-		(at 193.04 93.98 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "5cf4bf99-47d6-5db7-b2c9-8688dbf19f2e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 193.04 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "RECOVERY_ARM_SENSE"
-		(shape bidirectional)
-		(at 193.04 109.22 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "5fecac11-cd4b-5755-9b39-eb59a1838d5b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 193.04 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "OPTIONAL_LDO_PG"
-		(shape bidirectional)
-		(at 147.32 109.22 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "608f3b60-cd97-5ff1-9f9e-206a3a888ddf")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "BAT_SOURCE_FAULT_N"
-		(shape bidirectional)
-		(at 147.32 63.5 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "6965484c-3a00-557e-9acd-4aef57125772")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GNSS_PPS"
-		(shape bidirectional)
-		(at 55.88 109.22 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "71a28471-2ff7-5522-a3a7-f0be441e960a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 55.88 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "ADC_PYRO3_CONTINUITY"
-		(shape bidirectional)
-		(at 193.04 78.74 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "776c1f58-439c-5550-98ad-7c86266a4a70")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 193.04 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "ADC_PYRO1_CURRENT"
-		(shape bidirectional)
-		(at 193.04 86.36 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "853cfcda-f381-5695-b5bb-9b9aa4751d65")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 193.04 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "ADC_PYRO3_CURRENT"
-		(shape bidirectional)
-		(at 193.04 101.6 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "93171d30-fbbc-5a20-9487-4d7e384fde1b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 193.04 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "USB_VBUS"
-		(shape bidirectional)
-		(at 55.88 93.98 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "989b9df0-bdd9-55ec-bb11-151cde0dceeb")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 55.88 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "FLIGHT_LDO_PG"
-		(shape bidirectional)
-		(at 147.32 93.98 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "9b4142b3-016a-5f0c-9708-35e9712b9fab")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "ADC_PYRO2_CONTINUITY"
-		(shape bidirectional)
-		(at 193.04 71.12 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "a92fb384-6913-5abe-a4a9-1617b9aec3e7")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 193.04 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "BRANCH_FAULT_N"
-		(shape bidirectional)
-		(at 147.32 71.12 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "ac382537-a7a3-5d6c-834c-db6f1ac72362")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape bidirectional)
-		(at 101.6 71.12 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "b9bf10b5-6a5c-5194-8ab5-4f523e300bec")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 101.6 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "BOOT_3V3"
-		(shape bidirectional)
-		(at 55.88 63.5 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "c99a0a0d-7be7-555e-9491-7d0170864fbe")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 55.88 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "COMMS_LDO_PG"
-		(shape bidirectional)
-		(at 147.32 101.6 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "e2dff611-9b23-5d7a-99da-8d6828bceb13")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "USB_LIMITED"
-		(shape bidirectional)
-		(at 55.88 101.6 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "eb4175f6-7e24-5af8-9745-a8ec440d8e63")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 55.88 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "CHURRO_AUX_3V3"
-		(shape bidirectional)
-		(at 55.88 86.36 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "f1299430-e64a-5400-bb1b-f6be2f002fa2")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 55.88 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "SUPERVISOR_WDI"
-		(shape bidirectional)
-		(at 147.32 116.84 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "fb9627da-3303-5e84-94c4-df7508dbf431")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.32 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 60.96 101.6 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "0485684a-d2c2-52d3-a33f-a45b33c288b5")
-		(property "Reference" "TP29"
-			(at 63.5 97.79 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "USB_LIMITED"
-			(at 63.5 97.79 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5194TR"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C22388408"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on USB_LIMITED: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP29 only"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
-			(at 60.96 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "fc5223ef-cf24-575f-aede-4e99c0d2f8f3")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP29")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 106.68 63.5 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "081ab3a3-c242-5207-9a02-8ffd45d07b39")
-		(property "Reference" "TP1"
-			(at 109.22 59.69 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "GND"
-			(at 109.22 59.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Keystone_5010-5014_Multipurpose"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1319"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5011"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C238127"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on GND: black loop at an edge, Keystone 5011 (D-22Nov.9); silkscreen shows TP1 only"
-			(at 106.68 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "57267923-fbce-5896-a6ca-5f6e1ccf152a")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 60.96 63.5 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "22f41da2-e776-508a-b87d-64f1b4812a59")
-		(property "Reference" "TP30"
-			(at 63.5 59.69 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BOOT_3V3"
-			(at 63.5 59.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5194TR"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C22388408"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on BOOT_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP30 only"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
-			(at 60.96 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "0b8c3210-b828-5a78-8bfc-09f8f1ba3ec9")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP30")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 106.68 71.12 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "287d6129-c7f0-541f-8cc0-54707ca8c4be")
-		(property "Reference" "TP47"
-			(at 109.22 67.31 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "GND"
-			(at 109.22 67.31 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Keystone_5010-5014_Multipurpose"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1319"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5011"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C238127"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on GND: black loop at an edge, Keystone 5011 (D-22Nov.9); silkscreen shows TP47 only"
-			(at 106.68 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "e7f9adb3-3aec-58ef-af7a-261ab38fd2df")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP47")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 198.12 93.98 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "4fa6afd8-977c-5ead-a3f0-c0de1e5cc5df")
-		(property "Reference" "TP10"
-			(at 200.66 90.17 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ADC_PYRO2_CURRENT"
-			(at 200.66 90.17 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 198.12 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 198.12 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 198.12 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 198.12 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 198.12 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on ADC_PYRO2_CURRENT: 1.0 mm pad (D-22Nov.9); silkscreen shows TP10 only"
-			(at 198.12 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "b78b1587-d806-5a5f-9dab-86ff1dc6a80e")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 198.12 71.12 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "5a28cba7-0586-538e-af72-ed333ba3ac0e")
-		(property "Reference" "TP11"
-			(at 200.66 67.31 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ADC_PYRO2_CONTINUITY"
-			(at 200.66 67.31 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 198.12 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 198.12 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 198.12 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 198.12 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 198.12 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on ADC_PYRO2_CONTINUITY: 1.0 mm pad (D-22Nov.9); silkscreen shows TP11 only"
-			(at 198.12 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "5ada9b05-0ae7-55f0-bf8f-c8743ab975aa")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 152.4 63.5 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "634ffe1e-dbb3-5d23-a014-ad7d3a4248d4")
-		(property "Reference" "TP45"
-			(at 154.94 59.69 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BAT_SOURCE_FAULT_N"
-			(at 154.94 59.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 152.4 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 152.4 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 152.4 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 152.4 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on BAT_SOURCE_FAULT_N: 1.0 mm pad (D-22Nov.9); silkscreen shows TP45 only"
-			(at 152.4 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "6777136d-f2a3-541f-8c04-7b46828c91b5")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP45")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 60.96 86.36 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "66ec47d2-f474-5c2f-a29a-70472dfa3190")
-		(property "Reference" "TP40"
-			(at 63.5 82.55 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "CHURRO_AUX_3V3"
-			(at 63.5 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5194TR"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C22388408"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on CHURRO_AUX_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP40 only"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
-			(at 60.96 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "0910296e-c5f7-5a54-8544-7817a9c86632")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP40")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 60.96 78.74 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "6afc565d-f982-5287-b5bc-70a65476bbf6")
-		(property "Reference" "TP3"
-			(at 63.5 74.93 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "GNSS_3V3"
-			(at 63.5 74.93 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5194TR"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C22388408"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on GNSS_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP3 only"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
-			(at 60.96 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "ea2f7c05-9de0-5fbc-944a-effd29ecc0c9")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 198.12 78.74 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "76adba21-fc09-5c2a-9a3b-a49c0605d49d")
-		(property "Reference" "TP7"
-			(at 200.66 74.93 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ADC_PYRO3_CONTINUITY"
-			(at 200.66 74.93 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 198.12 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 198.12 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 198.12 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 198.12 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 198.12 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on ADC_PYRO3_CONTINUITY: 1.0 mm pad (D-22Nov.9); silkscreen shows TP7 only"
-			(at 198.12 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "b9cb679f-5415-59f4-8e9d-22d460a49d11")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 198.12 63.5 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "7a9248b1-4b3c-5e35-9c57-b64717595cb3")
-		(property "Reference" "TP6"
-			(at 200.66 59.69 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ADC_PYRO1_CONTINUITY"
-			(at 200.66 59.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 198.12 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 198.12 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 198.12 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 198.12 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 198.12 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on ADC_PYRO1_CONTINUITY: 1.0 mm pad (D-22Nov.9); silkscreen shows TP6 only"
-			(at 198.12 63.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "56aa3e29-2dd8-5325-8b7a-b5951a44e9e8")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 152.4 93.98 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "8661bd09-b167-57cf-8f0f-d35728244f63")
-		(property "Reference" "TP38"
-			(at 154.94 90.17 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "FLIGHT_LDO_PG"
-			(at 154.94 90.17 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 152.4 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 152.4 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 152.4 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 152.4 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on FLIGHT_LDO_PG: 1.0 mm pad (D-22Nov.9); silkscreen shows TP38 only"
-			(at 152.4 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "972cda3f-ea33-561e-b727-5b8025b270f6")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP38")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 198.12 109.22 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "86e95a06-437a-565c-b1b7-46cf43ef1ab2")
-		(property "Reference" "TP22"
-			(at 200.66 105.41 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "RECOVERY_ARM_SENSE"
-			(at 200.66 105.41 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 198.12 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 198.12 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 198.12 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 198.12 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 198.12 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on RECOVERY_ARM_SENSE: 1.0 mm pad (D-22Nov.9); silkscreen shows TP22 only"
-			(at 198.12 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "a5a33e1d-0b15-5515-a73d-a22b064082cd")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP22")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 152.4 71.12 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "8a5a5317-542d-5d21-ae6b-215ccfcd9bf2")
-		(property "Reference" "TP33"
-			(at 154.94 67.31 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BRANCH_FAULT_N"
-			(at 154.94 67.31 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 152.4 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 152.4 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 152.4 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 152.4 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on BRANCH_FAULT_N: 1.0 mm pad (D-22Nov.9); silkscreen shows TP33 only"
-			(at 152.4 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "2c3353b0-190d-5da8-9674-fdd0d1859fe1")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP33")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 152.4 78.74 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "8b77875d-8ca3-5ba8-9324-dd12218d8fff")
-		(property "Reference" "TP28"
-			(at 154.94 74.93 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "FC_POWER_HOLD"
-			(at 154.94 74.93 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 152.4 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 152.4 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 152.4 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 152.4 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on FC_POWER_HOLD: 1.0 mm pad (D-22Nov.9); silkscreen shows TP28 only"
-			(at 152.4 78.74 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "dd84264e-2054-546d-938a-e37af22bc762")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP28")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 198.12 116.84 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "8ee99ce9-b090-53e8-a2c4-3a0e42168482")
-		(property "Reference" "TP21"
-			(at 200.66 113.03 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "STAGING_ARM_SENSE"
-			(at 200.66 113.03 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 198.12 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 198.12 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 198.12 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 198.12 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 198.12 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on STAGING_ARM_SENSE: 1.0 mm pad (D-22Nov.9); silkscreen shows TP21 only"
-			(at 198.12 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "59ddf233-e359-599d-936a-4f781d760e13")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP21")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 152.4 101.6 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "bb3f60b5-b4ca-58f4-9d2c-86a7a0e6eb07")
-		(property "Reference" "TP26"
-			(at 154.94 97.79 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "COMMS_LDO_PG"
-			(at 154.94 97.79 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 152.4 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 152.4 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 152.4 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 152.4 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on COMMS_LDO_PG: 1.0 mm pad (D-22Nov.9); silkscreen shows TP26 only"
-			(at 152.4 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "4afde969-3568-58c5-b6d5-dfe964e629ec")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP26")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 152.4 116.84 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "beb2836a-689f-5aa1-ac94-8cac22410b02")
-		(property "Reference" "TP4"
-			(at 154.94 113.03 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "SUPERVISOR_WDI"
-			(at 154.94 113.03 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 152.4 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 152.4 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 152.4 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 152.4 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on SUPERVISOR_WDI: 1.0 mm pad (D-22Nov.9); silkscreen shows TP4 only"
-			(at 152.4 116.84 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "957d4d2c-b71b-54e7-9657-dcd9c1a52408")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 60.96 71.12 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "d6af2738-9a14-526a-946f-7d0c35987265")
-		(property "Reference" "TP8"
-			(at 63.5 67.31 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "NOR_3V3"
-			(at 63.5 67.31 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5194TR"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C22388408"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on NOR_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP8 only"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
-			(at 60.96 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "d381fa45-78cc-541e-b633-61df5998d92b")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 152.4 86.36 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "da28f76d-abf2-5c18-bb55-3477d9660885")
-		(property "Reference" "TP44"
-			(at 154.94 82.55 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BAT_SHDN_N"
-			(at 154.94 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 152.4 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 152.4 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 152.4 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 152.4 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on BAT_SHDN_N: 1.0 mm pad (D-22Nov.9); silkscreen shows TP44 only"
-			(at 152.4 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "4d90543e-7300-5a61-9280-907959600a55")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP44")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 152.4 109.22 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "defbe959-85a2-5e90-8509-f1e9346f0c38")
-		(property "Reference" "TP32"
-			(at 154.94 105.41 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "OPTIONAL_LDO_PG"
-			(at 154.94 105.41 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 152.4 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 152.4 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 152.4 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 152.4 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on OPTIONAL_LDO_PG: 1.0 mm pad (D-22Nov.9); silkscreen shows TP32 only"
-			(at 152.4 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "cace40e2-0808-5e85-92e9-5339fa5a7673")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP32")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 60.96 93.98 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "e82c98b9-0250-5f09-96ef-269fec0d8352")
-		(property "Reference" "TP20"
-			(at 63.5 90.17 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "USB_VBUS"
-			(at 63.5 90.17 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5194TR"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C22388408"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on USB_VBUS: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP20 only"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
-			(at 60.96 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "1ec9ce66-a293-5707-9393-0f008f118ff9")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP20")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 60.96 109.22 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "e87fb423-81b4-5881-87d4-c4fd917bd9b0")
-		(property "Reference" "TP15"
-			(at 63.5 105.41 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "GNSS_PPS"
-			(at 63.5 105.41 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "5194TR"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Keystone Electronics"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C22388408"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on GNSS_PPS: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP15 only"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
-			(at 60.96 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "c8da121f-3cad-5957-b21c-1ff424f87201")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP15")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 198.12 101.6 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "ebc55b30-dd0f-517b-addd-b87cc68a19e9")
-		(property "Reference" "TP5"
-			(at 200.66 97.79 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ADC_PYRO3_CURRENT"
-			(at 200.66 97.79 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 198.12 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 198.12 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 198.12 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 198.12 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 198.12 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on ADC_PYRO3_CURRENT: 1.0 mm pad (D-22Nov.9); silkscreen shows TP5 only"
-			(at 198.12 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "184a656a-9157-553f-8746-c4f7dac095d2")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 198.12 86.36 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "fc6e090a-4e0b-589b-916a-7d1c780c06b0")
-		(property "Reference" "TP9"
-			(at 200.66 82.55 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ADC_PYRO1_CURRENT"
-			(at 200.66 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 198.12 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 198.12 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "test point"
-			(at 198.12 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_keywords" "test point tp"
-			(at 198.12 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "ki_fp_filters" "Pin* Test*"
-			(at 198.12 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Implementation_Note" "Test point on ADC_PYRO1_CURRENT: 1.0 mm pad (D-22Nov.9); silkscreen shows TP9 only"
-			(at 198.12 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "8b3becee-cb1b-57eb-ba36-de8d8a7c27c5")
-		)
-		(instances
-			(project "Croi2"
-				(path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
-					(reference "TP9")
-					(unit 1)
-				)
-			)
-		)
-	)
-)
+  (version 20260306)
+  (generator "eeschema")
+  (generator_version "10.0")
+  (uuid "af960ddd-c325-529e-ae30-b0b66c820447")
+  (paper "User" 297 230.32)
+  (title_block
+    (title "Test points / key nets")
+    (date "2026-11-21")
+    (rev "A-DRAFT")
+    (company "HiPR")
+    (comment 1 "ENGINEERING DRAFT - review open; not for fabrication or flight."))
+  (lib_symbols
+    (symbol "Connector:TestPoint"
+      (pin_numbers
+        (hide yes))
+      (pin_names
+        (offset 0.762)
+        (hide yes))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (in_pos_files yes)
+      (duplicate_pin_numbers_are_jumpers no)
+      (property "Reference" "TP"
+        (at 0 6.858 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Value" "TestPoint"
+        (at 0 5.08 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Footprint" ""
+        (at 5.08 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Datasheet" ""
+        (at 5.08 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "Description" "test point"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "ki_keywords" "test point tp"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (property "ki_fp_filters" "Pin* Test*"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects
+          (font
+            (size 1.27 1.27))))
+      (symbol "TestPoint_0_1"
+        (circle
+          (center 0 3.302)
+          (radius 0.762)
+          (stroke
+            (width 0)
+            (type default))
+          (fill
+            (type none))))
+      (symbol "TestPoint_1_1"
+        (pin passive line
+          (at 0 0 90)
+          (length 2.54)
+          (name "1"
+            (effects
+              (font
+                (size 1.27 1.27))))
+          (number "1"
+            (effects
+              (font
+                (size 1.27 1.27))))))
+      (embedded_fonts no)))
+  (text "PADS: PYRO DIAGNOSTICS"
+    (exclude_from_sim no)
+    (at 162.56 55.88 0)
+    (effects
+      (font
+        (size 1.524 1.524))
+      (justify left))
+    (uuid "1419f518-fac5-5302-bd40-9af521c5de14"))
+  (text "YELLOW LOOPS: RAILS, PPS"
+    (exclude_from_sim no)
+    (at 25.4 55.88 0)
+    (effects
+      (font
+        (size 1.524 1.524))
+      (justify left))
+    (uuid "193ce850-2041-577a-8fc0-32bbb6d3d46c"))
+  (text "PADS: POWER STATUS"
+    (exclude_from_sim no)
+    (at 116.84 55.88 0)
+    (effects
+      (font
+        (size 1.524 1.524))
+      (justify left))
+    (uuid "3310d5f8-c4a6-5ad6-81fe-9895d1fc8ade"))
+  (text "BLACK LOOPS: GND (FWD, AFT)"
+    (exclude_from_sim no)
+    (at 71.12 55.88 0)
+    (effects
+      (font
+        (size 1.524 1.524))
+      (justify left))
+    (uuid "333c6ad8-2397-5ae1-ba5c-56fcf6f26e25"))
+  (text "What this does: test points on key nets not served elsewhere, in three sizes (D-22Nov.9). Silkscreen: TP number only.\nBlack Keystone 5011 loops on GND at the board edges; yellow Keystone 5194TR surface-mount loops where a probe stays clipped on\n(rails, GNSS PPS); 1.0 mm round pads for nets you only touch. Each joins its net by global label.\nNo test point on a fire net or on a line that drives a fire switch: OUTPUTx_HIGH / LOW, PYROx_ENERGY, the armed rails,\nPYROx_FIRE / GATE / LS_SELECT, STAGE_ELIGIBLE, PYRO3_HS_ENABLE (B-02). Their scaled ADC nodes are under PYRO DIAGNOSTICS."
+    (exclude_from_sim no)
+    (at 15.24 25.4 0)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left top))
+    (uuid "c75cdf50-37a6-565c-acd4-1248b48f1b52"))
+  (text "TEST POINTS / KEY NETS"
+    (exclude_from_sim no)
+    (at 15.24 15.24 0)
+    (effects
+      (font
+        (size 2.54 2.54))
+      (justify left))
+    (uuid "ca28736c-7f17-5a9e-9b5d-b48bfaacdb68"))
+  (wire
+    (pts
+      (xy 55.88 93.98)
+      (xy 60.96 93.98))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "0d73e8e6-1038-5d07-be14-de9b9dbe92a4"))
+  (wire
+    (pts
+      (xy 193.04 63.5)
+      (xy 198.12 63.5))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "21d6ebd8-6815-5e0f-bd4c-7e1a485754b2"))
+  (wire
+    (pts
+      (xy 193.04 109.22)
+      (xy 198.12 109.22))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "308c94a3-315b-5af4-b3d2-789cb7023c7d"))
+  (wire
+    (pts
+      (xy 193.04 78.74)
+      (xy 198.12 78.74))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "39a8a45a-8413-5de5-9f3c-4124ebdb9862"))
+  (wire
+    (pts
+      (xy 147.32 78.74)
+      (xy 152.4 78.74))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "3fa058b5-77a2-5775-b76f-a3b1731c52e6"))
+  (wire
+    (pts
+      (xy 55.88 63.5)
+      (xy 60.96 63.5))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "521e32ff-4e1d-5cd1-9d09-2f76cff7049c"))
+  (wire
+    (pts
+      (xy 101.6 71.12)
+      (xy 106.68 71.12))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "596cbac5-5b65-598b-9896-cd9acb9ff308"))
+  (wire
+    (pts
+      (xy 147.32 63.5)
+      (xy 152.4 63.5))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "a992e249-85f2-5410-9fcd-ba46573f80db"))
+  (wire
+    (pts
+      (xy 193.04 71.12)
+      (xy 198.12 71.12))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "ae64ceb5-c729-56d1-a74b-79b61aec98b6"))
+  (wire
+    (pts
+      (xy 101.6 63.5)
+      (xy 106.68 63.5))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "bc6af941-c841-5053-b5db-43729b893aa6"))
+  (wire
+    (pts
+      (xy 147.32 116.84)
+      (xy 152.4 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "bcb047bd-9fe3-50d9-a22f-8e244343e086"))
+  (wire
+    (pts
+      (xy 147.32 86.36)
+      (xy 152.4 86.36))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "bf375a11-e7a7-50d6-a27e-0ad2ad17d604"))
+  (wire
+    (pts
+      (xy 147.32 71.12)
+      (xy 152.4 71.12))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "da0340d5-7022-5144-9b75-dda9d7a60289"))
+  (wire
+    (pts
+      (xy 193.04 116.84)
+      (xy 198.12 116.84))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "de7f2e79-22a4-536a-858d-8713cbbd5d7d"))
+  (wire
+    (pts
+      (xy 55.88 101.6)
+      (xy 60.96 101.6))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "ea5ed2d3-171a-5e9f-95cb-20b5ccbf31ca"))
+  (wire
+    (pts
+      (xy 147.32 93.98)
+      (xy 152.4 93.98))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "ec257310-2290-5343-9d97-6707f628fd0e"))
+  (wire
+    (pts
+      (xy 147.32 101.6)
+      (xy 152.4 101.6))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "ecc9da6e-9154-584b-ab31-758c8e1abb77"))
+  (wire
+    (pts
+      (xy 55.88 86.36)
+      (xy 60.96 86.36))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "f137e38e-010e-5c89-beee-75f55083ccaa"))
+  (wire
+    (pts
+      (xy 55.88 109.22)
+      (xy 60.96 109.22))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "f97c1d31-e7f8-54e6-baab-c08aec5d7894"))
+  (global_label "BAT_SHDN_N"
+    (shape bidirectional)
+    (at 147.32 86.36 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "06686461-2579-5041-9ab4-bae945d99af9")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 147.32 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "STAGING_ARM_SENSE"
+    (shape bidirectional)
+    (at 193.04 116.84 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "273fba47-4971-5b82-b033-4f68ba9deb16")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 193.04 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 101.6 63.5 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "276508a2-d1e7-57e4-97b5-c27c9f1fd5c7")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 101.6 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "FC_POWER_HOLD"
+    (shape bidirectional)
+    (at 147.32 78.74 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "48ea56ce-1295-5887-b9ed-49beddf02f5e")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 147.32 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "ADC_PYRO1_CONTINUITY"
+    (shape bidirectional)
+    (at 193.04 63.5 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "4d763cd2-0f56-5104-ab92-87d192b561e4")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 193.04 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "RECOVERY_ARM_SENSE"
+    (shape bidirectional)
+    (at 193.04 109.22 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "5fecac11-cd4b-5755-9b39-eb59a1838d5b")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 193.04 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "BAT_SOURCE_FAULT_N"
+    (shape bidirectional)
+    (at 147.32 63.5 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "6965484c-3a00-557e-9acd-4aef57125772")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 147.32 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "GNSS_PPS"
+    (shape bidirectional)
+    (at 55.88 109.22 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "71a28471-2ff7-5522-a3a7-f0be441e960a")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 55.88 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "ADC_PYRO3_CONTINUITY"
+    (shape bidirectional)
+    (at 193.04 78.74 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "776c1f58-439c-5550-98ad-7c86266a4a70")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 193.04 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "USB_VBUS"
+    (shape bidirectional)
+    (at 55.88 93.98 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "989b9df0-bdd9-55ec-bb11-151cde0dceeb")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 55.88 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "FLIGHT_LDO_PG"
+    (shape bidirectional)
+    (at 147.32 93.98 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "9b4142b3-016a-5f0c-9708-35e9712b9fab")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 147.32 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "ADC_PYRO2_CONTINUITY"
+    (shape bidirectional)
+    (at 193.04 71.12 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "a92fb384-6913-5abe-a4a9-1617b9aec3e7")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 193.04 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "BRANCH_FAULT_N"
+    (shape bidirectional)
+    (at 147.32 71.12 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "ac382537-a7a3-5d6c-834c-db6f1ac72362")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 147.32 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "GND"
+    (shape bidirectional)
+    (at 101.6 71.12 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "b9bf10b5-6a5c-5194-8ab5-4f523e300bec")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 101.6 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "BOOT_3V3"
+    (shape bidirectional)
+    (at 55.88 63.5 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "c99a0a0d-7be7-555e-9491-7d0170864fbe")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 55.88 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "COMMS_LDO_PG"
+    (shape bidirectional)
+    (at 147.32 101.6 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "e2dff611-9b23-5d7a-99da-8d6828bceb13")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 147.32 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "USB_LIMITED"
+    (shape bidirectional)
+    (at 55.88 101.6 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "eb4175f6-7e24-5af8-9745-a8ec440d8e63")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 55.88 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "CHURRO_AUX_3V3"
+    (shape bidirectional)
+    (at 55.88 86.36 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "f1299430-e64a-5400-bb1b-f6be2f002fa2")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 55.88 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (global_label "SUPERVISOR_WDI"
+    (shape bidirectional)
+    (at 147.32 116.84 180)
+    (effects
+      (font
+        (size 0.9 0.9))
+      (justify right))
+    (uuid "fb9627da-3303-5e84-94c4-df7508dbf431")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 147.32 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 60.96 101.6 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "0485684a-d2c2-52d3-a33f-a45b33c288b5")
+    (property "Reference" "TP29"
+      (at 63.5 97.79 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "USB_LIMITED"
+      (at 63.5 97.79 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "MPN" "5194TR"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Manufacturer" "Keystone Electronics"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "LCSC" "C22388408"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on USB_LIMITED: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP29 only"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
+      (at 60.96 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "fc5223ef-cf24-575f-aede-4e99c0d2f8f3"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP29")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 106.68 63.5 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "081ab3a3-c242-5207-9a02-8ffd45d07b39")
+    (property "Reference" "TP1"
+      (at 109.22 59.69 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "GND"
+      (at 109.22 59.69 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Keystone_5010-5014_Multipurpose"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1319"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "MPN" "5011"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Manufacturer" "Keystone Electronics"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "LCSC" "C238127"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on GND: black loop at an edge, Keystone 5011 (D-22Nov.9); silkscreen shows TP1 only"
+      (at 106.68 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "57267923-fbce-5896-a6ca-5f6e1ccf152a"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP1")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 60.96 63.5 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "22f41da2-e776-508a-b87d-64f1b4812a59")
+    (property "Reference" "TP30"
+      (at 63.5 59.69 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "BOOT_3V3"
+      (at 63.5 59.69 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "MPN" "5194TR"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Manufacturer" "Keystone Electronics"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "LCSC" "C22388408"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on BOOT_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP30 only"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
+      (at 60.96 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "0b8c3210-b828-5a78-8bfc-09f8f1ba3ec9"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP30")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 106.68 71.12 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "287d6129-c7f0-541f-8cc0-54707ca8c4be")
+    (property "Reference" "TP47"
+      (at 109.22 67.31 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "GND"
+      (at 109.22 67.31 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Keystone_5010-5014_Multipurpose"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" "https://www.keyelco.com/product-pdf.cfm?p=1319"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "MPN" "5011"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Manufacturer" "Keystone Electronics"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "LCSC" "C238127"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on GND: black loop at an edge, Keystone 5011 (D-22Nov.9); silkscreen shows TP47 only"
+      (at 106.68 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "e7f9adb3-3aec-58ef-af7a-261ab38fd2df"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP47")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 198.12 71.12 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "5a28cba7-0586-538e-af72-ed333ba3ac0e")
+    (property "Reference" "TP11"
+      (at 200.66 67.31 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "ADC_PYRO2_CONTINUITY"
+      (at 200.66 67.31 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 198.12 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 198.12 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 198.12 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 198.12 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 198.12 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on ADC_PYRO2_CONTINUITY: 1.0 mm pad (D-22Nov.9); silkscreen shows TP11 only"
+      (at 198.12 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "5ada9b05-0ae7-55f0-bf8f-c8743ab975aa"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP11")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 152.4 63.5 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "634ffe1e-dbb3-5d23-a014-ad7d3a4248d4")
+    (property "Reference" "TP45"
+      (at 154.94 59.69 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "BAT_SOURCE_FAULT_N"
+      (at 154.94 59.69 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 152.4 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 152.4 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 152.4 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 152.4 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 152.4 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on BAT_SOURCE_FAULT_N: 1.0 mm pad (D-22Nov.9); silkscreen shows TP45 only"
+      (at 152.4 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "6777136d-f2a3-541f-8c04-7b46828c91b5"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP45")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 60.96 86.36 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "66ec47d2-f474-5c2f-a29a-70472dfa3190")
+    (property "Reference" "TP40"
+      (at 63.5 82.55 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "CHURRO_AUX_3V3"
+      (at 63.5 82.55 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "MPN" "5194TR"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Manufacturer" "Keystone Electronics"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "LCSC" "C22388408"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on CHURRO_AUX_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP40 only"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
+      (at 60.96 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "0910296e-c5f7-5a54-8544-7817a9c86632"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP40")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 198.12 78.74 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "76adba21-fc09-5c2a-9a3b-a49c0605d49d")
+    (property "Reference" "TP7"
+      (at 200.66 74.93 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "ADC_PYRO3_CONTINUITY"
+      (at 200.66 74.93 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 198.12 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 198.12 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 198.12 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 198.12 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 198.12 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on ADC_PYRO3_CONTINUITY: 1.0 mm pad (D-22Nov.9); silkscreen shows TP7 only"
+      (at 198.12 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "b9cb679f-5415-59f4-8e9d-22d460a49d11"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP7")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 198.12 63.5 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "7a9248b1-4b3c-5e35-9c57-b64717595cb3")
+    (property "Reference" "TP6"
+      (at 200.66 59.69 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "ADC_PYRO1_CONTINUITY"
+      (at 200.66 59.69 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 198.12 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 198.12 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 198.12 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 198.12 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 198.12 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on ADC_PYRO1_CONTINUITY: 1.0 mm pad (D-22Nov.9); silkscreen shows TP6 only"
+      (at 198.12 63.5 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "56aa3e29-2dd8-5325-8b7a-b5951a44e9e8"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP6")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 152.4 93.98 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "8661bd09-b167-57cf-8f0f-d35728244f63")
+    (property "Reference" "TP38"
+      (at 154.94 90.17 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "FLIGHT_LDO_PG"
+      (at 154.94 90.17 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 152.4 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 152.4 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 152.4 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 152.4 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 152.4 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on FLIGHT_LDO_PG: 1.0 mm pad (D-22Nov.9); silkscreen shows TP38 only"
+      (at 152.4 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "972cda3f-ea33-561e-b727-5b8025b270f6"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP38")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 198.12 109.22 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "86e95a06-437a-565c-b1b7-46cf43ef1ab2")
+    (property "Reference" "TP22"
+      (at 200.66 105.41 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "RECOVERY_ARM_SENSE"
+      (at 200.66 105.41 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 198.12 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 198.12 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 198.12 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 198.12 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 198.12 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on RECOVERY_ARM_SENSE: 1.0 mm pad (D-22Nov.9); silkscreen shows TP22 only"
+      (at 198.12 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "a5a33e1d-0b15-5515-a73d-a22b064082cd"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP22")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 152.4 71.12 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "8a5a5317-542d-5d21-ae6b-215ccfcd9bf2")
+    (property "Reference" "TP33"
+      (at 154.94 67.31 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "BRANCH_FAULT_N"
+      (at 154.94 67.31 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 152.4 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 152.4 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 152.4 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 152.4 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 152.4 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on BRANCH_FAULT_N: 1.0 mm pad (D-22Nov.9); silkscreen shows TP33 only"
+      (at 152.4 71.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "2c3353b0-190d-5da8-9674-fdd0d1859fe1"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP33")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 152.4 78.74 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "8b77875d-8ca3-5ba8-9324-dd12218d8fff")
+    (property "Reference" "TP28"
+      (at 154.94 74.93 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "FC_POWER_HOLD"
+      (at 154.94 74.93 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 152.4 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 152.4 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 152.4 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 152.4 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 152.4 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on FC_POWER_HOLD: 1.0 mm pad (D-22Nov.9); silkscreen shows TP28 only"
+      (at 152.4 78.74 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "dd84264e-2054-546d-938a-e37af22bc762"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP28")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 198.12 116.84 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "8ee99ce9-b090-53e8-a2c4-3a0e42168482")
+    (property "Reference" "TP21"
+      (at 200.66 113.03 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "STAGING_ARM_SENSE"
+      (at 200.66 113.03 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 198.12 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 198.12 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 198.12 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 198.12 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 198.12 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on STAGING_ARM_SENSE: 1.0 mm pad (D-22Nov.9); silkscreen shows TP21 only"
+      (at 198.12 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "59ddf233-e359-599d-936a-4f781d760e13"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP21")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 152.4 101.6 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "bb3f60b5-b4ca-58f4-9d2c-86a7a0e6eb07")
+    (property "Reference" "TP26"
+      (at 154.94 97.79 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "COMMS_LDO_PG"
+      (at 154.94 97.79 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 152.4 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 152.4 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 152.4 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 152.4 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 152.4 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on COMMS_LDO_PG: 1.0 mm pad (D-22Nov.9); silkscreen shows TP26 only"
+      (at 152.4 101.6 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "4afde969-3568-58c5-b6d5-dfe964e629ec"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP26")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 152.4 116.84 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "beb2836a-689f-5aa1-ac94-8cac22410b02")
+    (property "Reference" "TP4"
+      (at 154.94 113.03 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "SUPERVISOR_WDI"
+      (at 154.94 113.03 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 152.4 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 152.4 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 152.4 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 152.4 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 152.4 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on SUPERVISOR_WDI: 1.0 mm pad (D-22Nov.9); silkscreen shows TP4 only"
+      (at 152.4 116.84 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "957d4d2c-b71b-54e7-9657-dcd9c1a52408"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP4")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 152.4 86.36 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "da28f76d-abf2-5c18-bb55-3477d9660885")
+    (property "Reference" "TP44"
+      (at 154.94 82.55 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "BAT_SHDN_N"
+      (at 154.94 82.55 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+      (at 152.4 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" ""
+      (at 152.4 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 152.4 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 152.4 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 152.4 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on BAT_SHDN_N: 1.0 mm pad (D-22Nov.9); silkscreen shows TP44 only"
+      (at 152.4 86.36 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "4d90543e-7300-5a61-9280-907959600a55"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP44")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 60.96 93.98 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "e82c98b9-0250-5f09-96ef-269fec0d8352")
+    (property "Reference" "TP20"
+      (at 63.5 90.17 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "USB_VBUS"
+      (at 63.5 90.17 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "MPN" "5194TR"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Manufacturer" "Keystone Electronics"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "LCSC" "C22388408"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on USB_VBUS: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP20 only"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
+      (at 60.96 93.98 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "1ec9ce66-a293-5707-9393-0f008f118ff9"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP20")
+          (unit 1)))))
+  (symbol
+    (lib_id "Connector:TestPoint")
+    (at 60.96 109.22 0)
+    (unit 1)
+    (body_style 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (in_pos_files yes)
+    (dnp no)
+    (uuid "e87fb423-81b4-5881-87d4-c4fd917bd9b0")
+    (property "Reference" "TP15"
+      (at 63.5 105.41 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Value" "GNSS_PPS"
+      (at 63.5 105.41 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.016 1.016))
+        (justify left)))
+    (property "Footprint" "Ogma2:TestPoint_Keystone_5190TR_ColorKeyed"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Datasheet" "https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Description" "test point"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_keywords" "test point tp"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "ki_fp_filters" "Pin* Test*"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "MPN" "5194TR"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Manufacturer" "Keystone Electronics"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "LCSC" "C22388408"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Implementation_Note" "Test point on GNSS_PPS: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP15 only"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Library_Check" "Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"
+      (at 60.96 109.22 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (pin "1"
+      (uuid "c8da121f-3cad-5957-b21c-1ff424f87201"))
+    (instances
+      (project "Croi2"
+        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/6e0e07e7-a777-50b9-a456-15f7b91a5a13"
+          (reference "TP15")
+          (unit 1))))))
