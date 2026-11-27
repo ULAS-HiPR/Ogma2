@@ -3050,6 +3050,12 @@
 		(uuid "06c1da97-329a-5dec-a8ba-ccd81c40607e")
 	)
 	(junction
+		(at 363.22 226.06)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "27075a58-73a1-4439-a8ca-59dff4840f79")
+	)
+	(junction
 		(at 187.96 134.62)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3092,6 +3098,12 @@
 		(uuid "56970d5b-8d1c-5bb2-bbd5-aeea2dbdfd57")
 	)
 	(junction
+		(at 363.22 223.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6194c7a4-4bc5-4444-970d-7e13728a72d3")
+	)
+	(junction
 		(at 66.04 134.62)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3126,6 +3138,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "910028dd-21c0-5b82-8539-9f0650b04315")
+	)
+	(junction
+		(at 363.22 220.98)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "99be6beb-9960-4fda-b45d-31c1997460a4")
 	)
 	(junction
 		(at 284.48 386.08)
@@ -3235,6 +3253,16 @@
 	)
 	(wire
 		(pts
+			(xy 363.22 223.52) (xy 365.76 223.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "00ac34df-57de-4d6d-b155-064544c3789d")
+	)
+	(wire
+		(pts
 			(xy 76.2 346.71) (xy 76.2 406.4)
 		)
 		(stroke
@@ -3252,6 +3280,16 @@
 			(type default)
 		)
 		(uuid "036ab4ec-3f89-538f-b10b-d838414caf89")
+	)
+	(wire
+		(pts
+			(xy 363.22 226.06) (xy 358.14 226.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "03aa3521-ec1d-4089-8a9a-da453c46fbe8")
 	)
 	(wire
 		(pts
@@ -3555,7 +3593,7 @@
 	)
 	(wire
 		(pts
-			(xy 330.2 220.98) (xy 365.76 220.98)
+			(xy 330.2 220.98) (xy 363.22 220.98)
 		)
 		(stroke
 			(width 0)
@@ -3745,6 +3783,16 @@
 	)
 	(wire
 		(pts
+			(xy 363.22 220.98) (xy 365.76 220.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "61efb076-75b9-41d9-9c4c-74fed0aa26ee")
+	)
+	(wire
+		(pts
 			(xy 254 421.64) (xy 254 429.26)
 		)
 		(stroke
@@ -3825,7 +3873,7 @@
 	)
 	(wire
 		(pts
-			(xy 355.6 223.52) (xy 365.76 223.52)
+			(xy 355.6 223.52) (xy 363.22 223.52)
 		)
 		(stroke
 			(width 0)
@@ -3915,7 +3963,7 @@
 	)
 	(wire
 		(pts
-			(xy 365.76 226.06) (xy 358.14 226.06)
+			(xy 365.76 226.06) (xy 363.22 226.06)
 		)
 		(stroke
 			(width 0)
@@ -7583,6 +7631,7 @@
 	(symbol
 		(lib_id "Connector_Generic:Conn_02x03_Top_Bottom")
 		(at 370.84 223.52 0)
+		(mirror y)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -7592,7 +7641,7 @@
 		(dnp no)
 		(uuid "41fe472c-ff5b-5592-9ac7-d29fa5d15c18")
 		(property "Reference" "J501"
-			(at 368.3 215.9 0)
+			(at 373.38 215.9 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7603,7 +7652,7 @@
 			)
 		)
 		(property "Value" "G125-MS10605M2P"
-			(at 368.3 217.17 0)
+			(at 373.38 217.17 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

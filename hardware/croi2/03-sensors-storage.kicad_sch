@@ -2609,12 +2609,6 @@
 		(uuid "3ab88139-b610-5c2b-9482-587c8e8ce100")
 	)
 	(junction
-		(at 552.45 172.72)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "612939bb-1b8e-5934-b9d0-fa24813555cf")
-	)
-	(junction
 		(at 54.61 142.24)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2649,6 +2643,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b29f7a24-2879-51ba-9ba6-5ae22ad7cf0c")
+	)
+	(junction
+		(at 565.15 172.72)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ba97063d-7032-415e-9be6-877bda0185fa")
 	)
 	(junction
 		(at 30.48 85.09)
@@ -2764,7 +2764,7 @@
 	)
 	(wire
 		(pts
-			(xy 590.55 233.68) (xy 590.55 238.76)
+			(xy 565.15 233.68) (xy 565.15 238.76)
 		)
 		(stroke
 			(width 0)
@@ -2781,6 +2781,16 @@
 			(type default)
 		)
 		(uuid "13c47bb2-3c46-5fd2-84c4-2df61910a191")
+	)
+	(wire
+		(pts
+			(xy 565.15 172.72) (xy 590.55 172.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "175603c1-6dbd-4b70-bdb6-68eb63523517")
 	)
 	(wire
 		(pts
@@ -2974,7 +2984,7 @@
 	)
 	(wire
 		(pts
-			(xy 552.45 233.68) (xy 552.45 238.76)
+			(xy 603.25 233.68) (xy 603.25 238.76)
 		)
 		(stroke
 			(width 0)
@@ -3224,7 +3234,7 @@
 	)
 	(wire
 		(pts
-			(xy 483.87 172.72) (xy 552.45 172.72)
+			(xy 483.87 172.72) (xy 565.15 172.72)
 		)
 		(stroke
 			(width 0)
@@ -3264,7 +3274,7 @@
 	)
 	(wire
 		(pts
-			(xy 590.55 172.72) (xy 590.55 226.06)
+			(xy 565.15 172.72) (xy 565.15 226.06)
 		)
 		(stroke
 			(width 0)
@@ -3344,7 +3354,7 @@
 	)
 	(wire
 		(pts
-			(xy 552.45 172.72) (xy 552.45 226.06)
+			(xy 603.25 172.72) (xy 603.25 226.06)
 		)
 		(stroke
 			(width 0)
@@ -3391,16 +3401,6 @@
 			(type default)
 		)
 		(uuid "e5fb7e2c-afc3-589f-915c-2e9cc5047c3a")
-	)
-	(wire
-		(pts
-			(xy 552.45 172.72) (xy 590.55 172.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e68b7e2a-5078-5b07-a8a7-85a8f0d40188")
 	)
 	(wire
 		(pts
@@ -3972,16 +3972,16 @@
 	)
 	(global_label "GND"
 		(shape bidirectional)
-		(at 552.45 238.76 180)
+		(at 603.25 238.76 0)
 		(effects
 			(font
 				(size 0.9 0.9)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "a511487b-1354-5a65-8ff9-712ee354e207")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 552.45 238.76 0)
+			(at 603.25 238.76 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4214,16 +4214,16 @@
 	)
 	(global_label "GND"
 		(shape bidirectional)
-		(at 590.55 238.76 180)
+		(at 565.15 238.76 0)
 		(effects
 			(font
 				(size 0.9 0.9)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "f3106f1c-3fdc-5aa6-a03d-e2dea6b161cb")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 590.55 238.76 0)
+			(at 565.15 238.76 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4804,7 +4804,8 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 552.45 229.87 0)
+		(at 603.25 229.87 0)
+		(mirror y)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4814,7 +4815,7 @@
 		(dnp no)
 		(uuid "368f56cf-da2a-59cf-9d57-07a014ea5d6e")
 		(property "Reference" "C3603"
-			(at 556.26 228.6 0)
+			(at 599.44 228.6 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4825,7 +4826,7 @@
 			)
 		)
 		(property "Value" "4.7u 16V X7R"
-			(at 556.26 231.14 0)
+			(at 599.44 231.14 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4836,7 +4837,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 552.45 229.87 0)
+			(at 603.25 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4847,7 +4848,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 552.45 229.87 0)
+			(at 603.25 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4858,7 +4859,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 552.45 229.87 0)
+			(at 603.25 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4869,7 +4870,7 @@
 			)
 		)
 		(property "ki_keywords" "cap capacitor"
-			(at 552.45 229.87 0)
+			(at 603.25 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4880,7 +4881,7 @@
 			)
 		)
 		(property "ki_fp_filters" "C_*"
-			(at 552.45 229.87 0)
+			(at 603.25 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6654,7 +6655,8 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 590.55 229.87 0)
+		(at 565.15 229.87 0)
+		(mirror y)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6664,7 +6666,7 @@
 		(dnp no)
 		(uuid "f40dcfb9-ca5f-5111-bde2-487e88dab72c")
 		(property "Reference" "C3604"
-			(at 594.36 228.6 0)
+			(at 561.34 228.6 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6675,7 +6677,7 @@
 			)
 		)
 		(property "Value" "100n 16V X7R"
-			(at 594.36 231.14 0)
+			(at 561.34 231.14 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6686,7 +6688,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 590.55 229.87 0)
+			(at 565.15 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6697,7 +6699,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 590.55 229.87 0)
+			(at 565.15 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6708,7 +6710,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 590.55 229.87 0)
+			(at 565.15 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6719,7 +6721,7 @@
 			)
 		)
 		(property "ki_keywords" "cap capacitor"
-			(at 590.55 229.87 0)
+			(at 565.15 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6730,7 +6732,7 @@
 			)
 		)
 		(property "ki_fp_filters" "C_*"
-			(at 590.55 229.87 0)
+			(at 565.15 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6741,7 +6743,7 @@
 			)
 		)
 		(property "MPN" "CL05B104KB54PNC"
-			(at 590.55 229.87 0)
+			(at 565.15 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6752,7 +6754,7 @@
 			)
 		)
 		(property "LCSC" "C307331"
-			(at 590.55 229.87 0)
+			(at 565.15 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
