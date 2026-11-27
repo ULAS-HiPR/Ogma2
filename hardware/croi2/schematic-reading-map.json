@@ -2,7 +2,7 @@
   {
     "file": "01-power.kicad_sch",
     "purpose": "Accepts one 2S battery source, blocks reverse connection, shuts down a faulty input and retries,\nand holds the battery enable on through a flight-computer reset aloft (FC_POWER_HOLD).",
-    "connects_to": "Standalone battery or Foinse mate -> battery monitor shunt -> logic and output branches. The external switch is on 44-master-enable.\nENERGY_TAP (Q101 drain, ahead of the eFuse) -> output arm feeds on 06*, battery-monitor VBUS on 07a."
+    "connects_to": "Standalone battery or Churro mate -> battery monitor shunt -> logic and output branches. The external switch is on 44-master-enable.\nENERGY_TAP (Q101 drain, ahead of the eFuse) -> output arm feeds on 06*, battery-monitor VBUS on 07a."
   },
   {
     "file": "01a-source-mux.kicad_sch",
@@ -190,13 +190,13 @@
     "connects_to": "Return measurements on 06e -> analog switches -> flight ADC, with default pulls on 06c. No continuity result is a physical disarm proof."
   },
   {
-    "file": "07-foinse-aux.kicad_sch",
-    "purpose": "Supplies limited 3.3 V power and a controlled monitoring bus to Foinse and the local current monitor.",
-    "connects_to": "Optional rail + flight I2C -> Samtec mate and INA228 on 07a. Foinse source protection starts independently of this auxiliary supply."
+    "file": "07-churro-aux.kicad_sch",
+    "purpose": "Supplies limited 3.3 V power and a controlled monitoring bus to Churro and the local current monitor.",
+    "connects_to": "Optional rail + flight I2C -> Samtec mate and INA228 on 07a. Churro source protection starts independently of this auxiliary supply."
   },
   {
     "file": "07a-battery-monitor.kicad_sch",
-    "purpose": "Measures bulk battery current and input voltage, including when Croi runs without Foinse.",
+    "purpose": "Measures bulk battery current and input voltage, including when Burrito runs without Churro.",
     "connects_to": "01-power eFuse -> 5 mOhm shunt -> downstream loads. INA228 reports over the controlled I2C bus on 07. USB-only current does not pass through this shunt."
   },
   {
@@ -211,7 +211,7 @@
   },
   {
     "file": "44-master-enable.kicad_sch",
-    "purpose": "Lets an external maintained switch turn Croi's battery path on and off, without carrying load current through the switch.",
+    "purpose": "Lets an external maintained switch turn Burrito's battery path on and off, without carrying load current through the switch.",
     "connects_to": "J103 pin 1 is a limited 3 V bias; pin 2 returns to the eFuse SHDN input on 01-power. Open/unplugged means electronic OFF, not physical disconnection."
   }
 ]

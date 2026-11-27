@@ -52,7 +52,7 @@ Freerouting gave no count. With 40 passes it ran 40 minutes without a result; wi
 
 36 flight and 12 comms nets moved; every one is in the
 [firmware interface](../firmware-interface.md#pin-changes-d-22nov25) for Anav. Four moves fix reset-state
-faults, verified against ST DS14258, TI SLVS841G and SCDS390B and AN2606: `FOINSE_RETURN_EN` off PA15 (its
+faults, verified against ST DS14258, TI SLVS841G and SCDS390B and AN2606: `CHURRO_RETURN_EN` off PA15 (its
 pull-up switched Foinse's aux rail on at every power-up) and three outputs off pins the ROM bootloader drives
 (PA9, PA11, PA12). The checker now holds the rules as A24–A26.
 

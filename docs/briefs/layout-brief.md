@@ -182,7 +182,7 @@ test it. The bands may shift by a few mm; the order doesn't change.
 ### 4. Power
 
 **The paths** (netlist, step 9):
-- **Source:** J102.1 / J101.1 → `VBAT_CROI_INPUT` → Q101 (CSD18540, the blocking
+- **Source:** J102.1 / J101.1 → `VBAT_BURRITO_INPUT` → Q101 (CSD18540, the blocking
   FET) → `ENERGY_TAP` → U101 (TPS26630) → `VBAT_SHUNT_IN` → R7101 (5 mΩ) →
   `VBAT_PROTECTED` → U1101 (TPS2121 mux) → `LOGIC_SELECTED` → U1301 (TPSM63603).
 - **Logic rails:** U1301 → `4V_PRE`. Then U1401 (LM73100) → `CORE_HELD_4V` →
@@ -206,7 +206,7 @@ test it. The bands may shift by a few mm; the order doesn't change.
 
 | Block | Template | Source |
 | --- | --- | --- |
-| Source path: J102 → Q101 → U101 | `VBAT_CROI_INPUT` and `ENERGY_TAP` as pours ≥ 4 mm wide on L1 and again on L4, joined by ≥ 12 vias. Q101's drain sits close to U101's input through the pour. 0.1 µF (C1002) at IN_SYS. R_ILIM (`BAT_ILIM`) short and away from the switching path, with its own short GND. Nothing on IMON. PowerPAD to GND with vias. J102's GND pins (2, 4) into L1, L2 and L4 copper | [TPS2663](https://www.ti.com/lit/ds/symlink/tps2663.pdf) pp. 38–40 |
+| Source path: J102 → Q101 → U101 | `VBAT_BURRITO_INPUT` and `ENERGY_TAP` as pours ≥ 4 mm wide on L1 and again on L4, joined by ≥ 12 vias. Q101's drain sits close to U101's input through the pour. 0.1 µF (C1002) at IN_SYS. R_ILIM (`BAT_ILIM`) short and away from the switching path, with its own short GND. Nothing on IMON. PowerPAD to GND with vias. J102's GND pins (2, 4) into L1, L2 and L4 copper | [TPS2663](https://www.ti.com/lit/ds/symlink/tps2663.pdf) pp. 38–40 |
 | Shunt: R7101 with U7101 | Kelvin lines from the inner edges of R7101's pads, through R7102 / R7103 and C7101, as a pair to U7101. 0.1 µF bypass at the INA228 | [INA228](https://www.ti.com/lit/ds/symlink/ina228.pdf) p. 39 |
 | Mux: U1101 | Short wide copper. Vias under the input and output pins. Caps close | [TPS2121](https://www.ti.com/lit/ds/symlink/tps2121.pdf) p. 33 |
 | Buck: U1301 | Input caps (C1303, C1304) tight between VIN and PGND. Large VIN, VOUT and PGND copper. AGND to PGND at one point. RFBT and RFBB (R1301 and its partner) at FB. 1 µF on VCC close. SW pin left as minimal copper, nothing routed by it. Pads 27–30 soldered, with GND vias | [TPSM63603](https://www.ti.com/lit/ds/symlink/tpsm63603.pdf) p. 36 |
@@ -259,14 +259,14 @@ updated 27 Jun 2025).
 
 | Class | Nets | Current | Width | Clearance | Layers |
 | --- | --- | --- | --- | --- | --- |
-| `SRC_6A` | `VBAT_CROI_INPUT`, `ENERGY_TAP` | 6 A ceiling [R] | Pours ≥ 4.0 mm on L1 and on L4 in parallel: each alone meets 20 °C *[J]* | 0.2 mm | L1, L4 |
+| `SRC_6A` | `VBAT_BURRITO_INPUT`, `ENERGY_TAP` | 6 A ceiling [R] | Pours ≥ 4.0 mm on L1 and on L4 in parallel: each alone meets 20 °C *[J]* | 0.2 mm | L1, L4 |
 | `PYRO_RAIL` | `RECOVERY_ARM_FEED`, `STAGING_ARM_FEED`, `RECOVERY_ARMED_VBAT`, `STAGING_ARMED_VBAT` | 4 A fuse rating [R] | ≥ 2.0 mm *[J]* | 0.5 mm to any other net *[J]* | L1 at the parts, L4 in the corridor |
 | `FIRE` | `PYROx_ENERGY`, `OUTPUTx_HIGH`, `OUTPUTx_LOW`, `PYROx_GATE`, `PYROx_FIRE`, `PYROx_LS_SELECT` | ≈ 2 A pulses on the power nets [R] | ≥ 1.0 mm on the power nets, 0.15 mm on the logic ones *[J]* | 0.5 mm to any other net; channels apart, with GND between *[J]* | L1 |
 | `LOGIC_FEED` | `VBAT_SHUNT_IN`, `VBAT_PROTECTED`, `LOGIC_SELECTED`, `4V_PRE`, `CORE_HELD_4V` | ≤ 1.24 A at 4.0 V | ≥ 1.0 mm, or pours *[J]* | 0.2 mm | L1, L3 |
 | `RAIL_3V3` | `FLIGHT_3V3`, `COMMS_3V3`, the branch rails, `BOOT_3V3`, `USB_VBUS`, `USB_LIMITED` | Branch limits up to 588 mA; USB 491 mA [R] | ≥ 0.4 mm, or L3 pours *[J]* | 0.15 mm | Any but L2 |
 | `RF50` | `GNSS_RF`, `LORA_RF_SUBG` | — | 0.151 mm, or 0.142 mm coplanar with a 0.203 mm gap | GND fill set back to the gap. Other copper ≥ 1 mm (Seeed: 3W or 1 mm) | L1 only, no via [R] D-21Nov.25 |
-| `USB_DIFF` | `USB_DP`/`USB_DM` and their `_CONN` nets | 12 Mbit/s | Pair 0.154 mm, gap 0.203 mm; matched to 1 mm *[J]* | 0.2 mm | L1 only |
-| `CAN_DIFF` | `CAN_H`/`CAN_L`, `CAN2_H`/`CAN2_L` | Not impedance-controlled: on-board runs are short *[J]* | Coupled pair 0.2 mm, gap 0.2 mm | 0.2 mm | L1 |
+| `USB_DIFF` | `USB_D+`/`USB_D-` and their `_CONN` nets | 12 Mbit/s | Pair 0.154 mm, gap 0.203 mm; matched to 1 mm *[J]* | 0.2 mm | L1 only |
+| `CAN_DIFF` | `CAN+`/`CAN-`, `CAN2+`/`CAN2-` | Not impedance-controlled: on-board runs are short *[J]* | Coupled pair 0.2 mm, gap 0.2 mm | 0.2 mm | L1 |
 | `GND` | `GND` | Returns | L2 plane, pours, a via per pad | 0.2 mm (pours) | All |
 | Default | Everything else | ≤ 50 mA | 0.15 mm | 0.15 mm | L1, L4; L3 at a cost |
 

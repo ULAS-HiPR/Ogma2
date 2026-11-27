@@ -48,7 +48,7 @@ FIELDS = {
     'Footprint': f'Ogma2:{NAME}',
     'Library_Check': 'SD-105311-100 rev H: holes, pitch, clips C apart, peg 1.34 mm off the row on the latch side '
                      '(also so in KiCad 9.0.7\'s 105309-xx02 footprint); pads ours (sweep section 10): clips no net, peg unplated',
-    'Implementation_Note': 'Standalone and Foinse feeds MUST be mechanically exclusive (J101 or J102 fitted, never both).',
+    'Implementation_Note': 'Standalone and Churro feeds MUST be mechanically exclusive (J101 or J102 fitted, never both).',
 }
 
 

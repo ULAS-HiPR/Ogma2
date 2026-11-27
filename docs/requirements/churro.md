@@ -27,7 +27,7 @@ Burrito's side is frozen ([B-36](burrito.md)). Every Churro change keeps to thes
 | C-03 | Salsa's arm key is a physical switch in series in ACT | D-21Nov.1; LV-0700; IREC 6.14 | Key on the panel, wired into ACT | Bench: key open means no ACT output | Decided D-22Nov.4: the key in series ahead of ACT's LM5069 |
 | C-04 | A short on any branch trips only that branch | D2; D-21Nov.1 | Per-branch protection | EX-02 | Decided D-22Nov.4 |
 | C-05 | PROP stays powered through an abort, so Fajita can vent | Concern 4 (21 Nov) | Burrito has no path to switch PROP off | Fault analysis | Open: vent behaviour, James |
-| C-06 | Burrito can hold AV on through a reset | D-6.3 | `CROI_POWER_HOLD` → diode → AV shutdown pin; auto-retry eFuse | EX-03 | Met |
+| C-06 | Burrito can hold AV on through a reset | D-6.3 | `BURRITO_POWER_HOLD` → diode → AV shutdown pin; auto-retry eFuse | EX-03 | Met |
 | C-07 | Separate external enables for AV and PROP | D-19Nov.5 | Gecko enable loops, each biased from its own pack | Bench | Met |
 
 ## The umbilical

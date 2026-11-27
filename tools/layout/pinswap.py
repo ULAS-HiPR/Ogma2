@@ -65,7 +65,7 @@ NO_DEST = NEVER | BOOT_DRIVES | PULLED_OR_READ           # where an off-by-defau
 HARMLESS = re.compile(r'^TP_P[A-K]\d+$')                # spare test pads, named for their pin: a pad and nothing else
 ARM = {'RECOVERY_ARM_SENSE', 'STAGING_ARM_SENSE', 'STAGE_INHIBIT_LATCHED'}   # never on a bootloader or pulled pin
 MIN_GAIN = 1.0
-MUST_AVOID = {'FC_POWER_HOLD', 'SERVICE_POWER_EN', 'CAN_POWER_EN', 'NOR_EN', 'FLIGHT_COMMS_EN', 'FOINSE_RETURN_EN',
+MUST_AVOID = {'FC_POWER_HOLD', 'SERVICE_POWER_EN', 'CAN_POWER_EN', 'NOR_EN', 'FLIGHT_COMMS_EN', 'CHURRO_RETURN_EN',
               'TP_STROBE', 'NEW_FLIGHT_CLEAR_REQUEST', 'GNSS_EN', 'LORA_EN',
               'PYRO1_FIRE', 'PYRO2_FIRE', 'PYRO3_FIRE', 'PYRO1_LS_SELECT', 'PYRO2_LS_SELECT', 'PYRO3_LS_SELECT'}
 FIRE = {'PYRO1_FIRE', 'PYRO2_FIRE', 'PYRO3_FIRE'}

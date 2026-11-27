@@ -5,7 +5,7 @@
 	(uuid "6d5f6474-8526-5c9f-99f2-5cf36a64052f")
 	(paper "User" 420 317.32)
 	(title_block
-		(title "Croi / bulk battery monitor")
+		(title "Burrito / bulk battery monitor")
 		(date "2026-09-08")
 		(rev "A-DRAFT")
 		(company "HiPR")
@@ -1078,7 +1078,7 @@
 		)
 		(uuid "958a5f56-25a8-510b-81d7-6c82d27ec2ef")
 	)
-	(text "What this does: Measures bulk battery current and input voltage, including when Croi runs without Foinse.\nConnects to: 01-power eFuse -> 5 mOhm shunt -> downstream loads. INA228 reports over the controlled I2C bus on 07. USB-only current does not pass through this shunt."
+	(text "What this does: Measures bulk battery current and input voltage, including when Burrito runs without Churro.\nConnects to: 01-power eFuse -> 5 mOhm shunt -> downstream loads. INA228 reports over the controlled I2C bus on 07. USB-only current does not pass through this shunt."
 		(exclude_from_sim no)
 		(at 15.24 27.94 0)
 		(effects
@@ -1477,7 +1477,7 @@
 		)
 		(uuid "d1989ede-d082-5628-af75-9029f55b034a")
 	)
-	(global_label "FOINSE_SDA_EXT"
+	(global_label "CHURRO_SDA_EXT"
 		(shape bidirectional)
 		(at 330.2 160.02 0)
 		(effects
@@ -1499,7 +1499,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_SCL_EXT"
+	(global_label "CHURRO_SCL_EXT"
 		(shape bidirectional)
 		(at 330.2 172.72 0)
 		(effects
@@ -1521,7 +1521,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_AUX_3V3"
+	(global_label "CHURRO_AUX_3V3"
 		(shape bidirectional)
 		(at 156.21 81.28 180)
 		(effects
@@ -1675,7 +1675,7 @@
 			)
 		)
 	)
-	(global_label "CROI_MON_3V3"
+	(global_label "BURRITO_MON_3V3"
 		(shape bidirectional)
 		(at 194.31 81.28 0)
 		(effects
@@ -1697,7 +1697,7 @@
 			)
 		)
 	)
-	(global_label "CROI_VBUS_FILTER"
+	(global_label "BURRITO_VBUS_FILTER"
 		(shape bidirectional)
 		(at 130.81 114.3 0)
 		(effects
@@ -1719,7 +1719,7 @@
 			)
 		)
 	)
-	(global_label "CROI_IN_PLUS"
+	(global_label "BURRITO_IN_PLUS"
 		(shape bidirectional)
 		(at 130.81 160.02 0)
 		(effects
@@ -1741,7 +1741,7 @@
 			)
 		)
 	)
-	(global_label "CROI_IN_MINUS"
+	(global_label "BURRITO_IN_MINUS"
 		(shape bidirectional)
 		(at 190.5 173.99 180)
 		(effects

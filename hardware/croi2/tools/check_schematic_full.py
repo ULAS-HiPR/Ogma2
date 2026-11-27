@@ -23,8 +23,8 @@ TP_GND = ('TestPoint:TestPoint_Keystone_5010-5014_Multipurpose', '5011', 'C23812
 TP_LOOP = ('Ogma2:TestPoint_Keystone_5190TR_ColorKeyed', '5194TR', 'C22388408')         # yellow SMT loop, probe stays on (D-22Nov.24)
 TP_PAD = ('TestPoint:TestPoint_Pad_D1.0mm', None, None)                                  # 1.0 mm pad, probe touches
 TP_LOOP_NETS = frozenset({   # each regulator or switch output, the strobe, PPS
-    'VBAT_CROI_INPUT', 'VBAT_PROTECTED', 'LOGIC_SELECTED', '4V_PRE', 'CORE_HELD_4V', 'FLIGHT_3V3', 'COMMS_3V3',
-    '3V3_OPTIONAL', 'LORA_3V3', 'CAN_3V3', 'BOOT_3V3', 'NOR_3V3', 'GNSS_3V3', 'FOINSE_AUX_3V3', 'USB_VBUS',
+    'VBAT_BURRITO_INPUT', 'VBAT_PROTECTED', 'LOGIC_SELECTED', '4V_PRE', 'CORE_HELD_4V', 'FLIGHT_3V3', 'COMMS_3V3',
+    '3V3_OPTIONAL', 'LORA_3V3', 'CAN_3V3', 'BOOT_3V3', 'NOR_3V3', 'GNSS_3V3', 'CHURRO_AUX_3V3', 'USB_VBUS',
     'USB_LIMITED', 'TP_STROBE_PAD', 'GNSS_PPS'})
 TP_SENSE_ONLY = frozenset({f'ADC_PYRO{n}_{k}' for n in (1, 2, 3) for k in ('CONTINUITY', 'CURRENT')}
                           | {'RECOVERY_ARM_SENSE', 'STAGING_ARM_SENSE', 'ADC_PYRO_RAIL'})
@@ -199,22 +199,22 @@ def check(project, netlist, erc):
 
     # ---- source, master enable, monitoring
     require(value('R1006') == '22.1k 1%' and actual[('R1006', '1')] == 'BAT_SHDN_N' and actual[('R1006', '2')] == 'GND', 'Source enable defaults OFF locally')
-    for ref, pins in {'D1002': {'1': 'VBAT_CROI_INPUT', '3': 'BAT_SW_DIODE'}, 'R1012': {'1': 'BAT_SW_DIODE', '2': 'BAT_SW_RMID'},
+    for ref, pins in {'D1002': {'1': 'VBAT_BURRITO_INPUT', '3': 'BAT_SW_DIODE'}, 'R1012': {'1': 'BAT_SW_DIODE', '2': 'BAT_SW_RMID'},
                       'R1013': {'1': 'BAT_SW_RMID', '2': 'BAT_SWITCH_3V'}, 'U1002': {'1': 'BAT_SWITCH_3V', '2': 'GND'},
                       'J103': {'1': 'BAT_SWITCH_3V', '2': 'BAT_SHDN_N'}, 'C1006': {'1': 'BAT_SHDN_N', '2': 'GND'}}.items():
         for pin, net in pins.items():
             require(actual[(ref, pin)] == net, f'External master {ref}.{pin}: {net}')
     require(refs('BAT_SHDN_N') == {'U101', 'R1006', 'J103', 'C1006', 'D1003'}, 'Master-enable return: no firmware path except the FC_POWER_HOLD diode')
-    for pin, net in {'1': 'VBAT_CROI_INPUT', '2': 'GND', '3': 'FOINSE_AUX_3V3', '4': 'GND', '5': 'FOINSE_SCL_EXT',
-                     '6': 'FOINSE_SDA_EXT', '7': 'FOINSE_FAULT_N_EXT', '8': 'CROI_POWER_HOLD'}.items():
+    for pin, net in {'1': 'VBAT_BURRITO_INPUT', '2': 'GND', '3': 'CHURRO_AUX_3V3', '4': 'GND', '5': 'CHURRO_SCL_EXT',
+                     '6': 'CHURRO_SDA_EXT', '7': 'CHURRO_FAULT_N_EXT', '8': 'BURRITO_POWER_HOLD'}.items():
         require(actual[('J102', pin)] == net, f'Samtec contact {pin} / {net}')
     require(actual[('U101', '17')] == actual[('U101', '18')] == 'VBAT_SHUNT_IN', 'Both eFuse OUT pads feed upstream shunt node')
     require(actual[('R7101', '1')] == 'VBAT_SHUNT_IN' and actual[('R7101', '2')] == 'VBAT_PROTECTED', 'Bulk shunt separates source protection from loads')
-    require(actual[('J101', '1')] == actual[('J102', '1')] == 'VBAT_CROI_INPUT', 'Both mutually exclusive sources feed the same measured path')
-    require(actual[('U7101', '1')] == actual[('U7101', '2')] == 'GND', 'Croi INA228 address 0x40')
-    require(actual[('U7101', '4')] == 'FOINSE_SDA_EXT' and actual[('U7101', '5')] == 'FOINSE_SCL_EXT', 'Current monitor behind existing optional bus boundary')
+    require(actual[('J101', '1')] == actual[('J102', '1')] == 'VBAT_BURRITO_INPUT', 'Both mutually exclusive sources feed the same measured path')
+    require(actual[('U7101', '1')] == actual[('U7101', '2')] == 'GND', 'Burrito INA228 address 0x40')
+    require(actual[('U7101', '4')] == 'CHURRO_SDA_EXT' and actual[('U7101', '5')] == 'CHURRO_SCL_EXT', 'Current monitor behind existing optional bus boundary')
     require(actual[('R7104', '1')] == 'ENERGY_TAP', 'Battery monitor VBUS reads ENERGY_TAP (D-2Nov.5)')
-    require(actual[('R7105', '1')] == 'FOINSE_AUX_3V3' and actual[('R7105', '2')] == 'CROI_MON_3V3', 'Local current monitor operates without Foinse board')
+    require(actual[('R7105', '1')] == 'CHURRO_AUX_3V3' and actual[('R7105', '2')] == 'BURRITO_MON_3V3', 'Local current monitor operates without Churro board')
     require(actual[('U1401', '1')] == 'CORE_INPUT_EN' and refs('CORE_INPUT_EN') == {'U1401', 'R1210', 'R1204'}
             and actual[('R1210', '1')] == '4V_PRE' and value('R1210') == '200k 1%' and value('R1204') == '100k',
             'Core input enable from its own 4V_PRE divider, whatever the source (D-6.5)')
@@ -280,7 +280,7 @@ def check(project, netlist, erc):
     require(not [n for n in reach(starts) if OUTPUT_ENABLES.match(n)], 'A12: CAN, radio and USB nets have no path to an output enable')
     require(refs('FC_POWER_HOLD') == {'U201', 'R1014', 'R1015'} and value('R1014') == '330R' and value('C1007').startswith('470u')
             and refs(actual[('R1014', '2')]) == {'R1014', 'C1007', 'D1003', 'D1004'} and actual[('D1003', '1')] == 'BAT_SHDN_N'
-            and actual[('D1004', '1')] == 'CROI_POWER_HOLD' and refs('CROI_POWER_HOLD') == {'D1004', 'J102'},
+            and actual[('D1004', '1')] == 'BURRITO_POWER_HOLD' and refs('BURRITO_POWER_HOLD') == {'D1004', 'J102'},
             'A14: FC_POWER_HOLD reaches BAT_SHDN_N and J102.8 only through diodes, 330R / 470uF')
     for ref, rail in (('R3101', 'ST_3V3'), ('R3201', 'TDK_3V3'), ('R3301', 'HG_3V3'), ('R3401', 'BMP_3V3'), ('R3501', 'TE_3V3'), ('R3701', 'MAG_3V3')):
         want = '22R' if ref == 'R3701' else '47R 1%'
@@ -368,7 +368,7 @@ def check(project, netlist, erc):
 
     # ---- negative tests exercise the checker, not a modified live schematic
     bad = copy.deepcopy(root)
-    h = next(net for net in bad.findall('nets/net') if net.get('name') == 'CAN_H')
+    h = next(net for net in bad.findall('nets/net') if net.get('name') == 'CAN+')
     next(n for n in h.findall('node') if n.get('ref') == 'J501').set('pin', '2')
     try:
         verify(bad, expected)

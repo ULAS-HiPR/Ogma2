@@ -162,8 +162,8 @@ actuators are the active board's, powered through Foinse's ACT branch
   0x44, ADS1115 0x49 and charger-status TCA9535 0x20, all only read by Croí
   (D-22Nov.4, D-22Nov.5).
 - Power authority is unchanged. The Samtec pinout is unchanged except pin 8,
-  now `CROI_POWER_HOLD`.
-- `FOINSE_RETURN_EN` must also enable Croí-local monitoring when Foinse isn't
+  now `BURRITO_POWER_HOLD`.
+- `CHURRO_RETURN_EN` must also enable Croí-local monitoring when Foinse isn't
   there.
 - No duplicate Foinse AV shunt. Croí logic takeoffs come after its shunt.
 - Pyro and servo energy leave before U101 and bypass the shunt (D-6.1).

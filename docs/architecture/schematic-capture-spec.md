@@ -91,7 +91,7 @@ Also on the processors:
 | Core enable | Remove U1203. Drive U1401 EN/UVLO from a divider on `4V_PRE` (R1204 becomes the lower leg), enabling above ≈3.6 V. Values from the LM73100 threshold | D-6.5 |
 | USB limiter | Remove U4402 (TS5A3167). U4401 ILIM fixed by R4403 60.4 kΩ: 387–491 mA from attach. Keep U1201 / U1202 / U1204 | D-6.5 |
 | U101 fault mode | MODE pad 11 to GND: auto-retry | D-6.3 |
-| Enable hold | `FC_POWER_HOLD` → 330 Ω → 470 µF ≥6.3 V to GND → BAT54-class diode → `BAT_SHDN_N`. A second diode from the same node → J102.8 (`CROI_POWER_HOLD`). The RC keeps SHDN above 2 V (the TPS26630's guaranteed-on level) after the GPIO lets go, loaded by both 22.1 kΩ pull-downs (Croí R1006, Churro R1006), both diode drops and PE5's 1 MΩ pull-down: at Churro's `AV_SHDN_N`, 1.25 s at a typical 0.20 V per diode with −20% capacitance and 15 µA of leakage, and 0.79 s at the worst corner (0.30 V cold, −30%, 30 µA); Croí's holds longer. ≈0.5 s to charge after launch detect | D-6.3, D-2Nov.4, D-2Nov.18. Covers Burrito's worst-case restart (550 ms) plus the 50 ms re-assert with margin |
+| Enable hold | `FC_POWER_HOLD` → 330 Ω → 470 µF ≥6.3 V to GND → BAT54-class diode → `BAT_SHDN_N`. A second diode from the same node → J102.8 (`BURRITO_POWER_HOLD`). The RC keeps SHDN above 2 V (the TPS26630's guaranteed-on level) after the GPIO lets go, loaded by both 22.1 kΩ pull-downs (Croí R1006, Churro R1006), both diode drops and PE5's 1 MΩ pull-down: at Churro's `AV_SHDN_N`, 1.25 s at a typical 0.20 V per diode with −20% capacitance and 15 µA of leakage, and 0.79 s at the worst corner (0.30 V cold, −30%, 30 µA); Croí's holds longer. ≈0.5 s to charge after launch detect | D-6.3, D-2Nov.4, D-2Nov.18. Covers Burrito's worst-case restart (550 ms) plus the 50 ms re-assert with margin |
 | Flight VBAT | U201 pad 6 from `FLIGHT_3V3` through a BAT54-class Schottky. Add 100 µF ≥6.3 V X5R to GND beside the existing 100 nF | D-6.4 |
 
 ### Sensors, memory and CAN
@@ -135,7 +135,7 @@ Also on the processors:
 ## Churro changes
 
 Keep: autonomous source protection, threshold networks, source controls, the
-Samtec pinout (pin 8 is now `CROI_POWER_HOLD`), TCA4307, INA228, ADS1115 and the
+Samtec pinout (pin 8 is now `BURRITO_POWER_HOLD`), TCA4307, INA228, ADS1115 and the
 voltage-input TMUX1511. Don't add an MCU, CAN endpoint or actuator-voltage converter (D-21Nov.1).
 Churro gains charging (D-20Nov.1, D-21Nov.2), an ACT branch for Salsa beside
 PROP, both from one 6S actuator pack (D-21Nov.1), and damping on each umbilical
@@ -160,9 +160,9 @@ rows come from D-2Nov.7.
 | C6002 / C6003 | 10 nF → 1 µF 16 V X7R 0603; keep the ADC-input-to-GND connection |
 | J101 | Same Nano-Fit footprint fix as Burrito |
 | U1001 | MODE pad 11 to GND: auto-retry (D-6.3). U2001 unchanged until the propulsion owner decides |
-| J301.8 / AV hold | J301 pin 8 (`CROI_POWER_HOLD`) → BAT54-class diode → `AV_SHDN_N` (D-6.3). Keep R1006 at 22.1 kΩ: Burrito's hold RC is sized against it (D-2Nov.4, D-2Nov.18). PROP enable is not held |
+| J301.8 / AV hold | J301 pin 8 (`BURRITO_POWER_HOLD`) → BAT54-class diode → `AV_SHDN_N` (D-6.3). Keep R1006 at 22.1 kΩ: Burrito's hold RC is sized against it (D-2Nov.4, D-2Nov.18). PROP enable is not held |
 | Umbilical entry (D-2Nov.7) | New 4-way umbilical connector J801: AV+, AV−, PROP+, PROP−; part chosen with the vehicle owner. At the connector, a fuse and a TVS per pair (SMBJ12A AV and SMBJ28A PROP to start, as at the packs). Four ideal-diode stages, LM74700-Q1 class, each with its own N-FET: AV pack (`AV_PACK`) and AV umbilical into a new `AV_SOURCE`; PROP pack (`PROP_PACK`) and PROP umbilical into a new `PROP_SOURCE`. `AV_SOURCE` / `PROP_SOURCE` take over from `AV_PACK` / `PROP_PACK` at Q1001 / Q2001 sources, U1001 / U2001 IN_SYS, the UV / OV dividers R1001 / R1003 and R2001 / R2003, and the enable-bias diodes D1002 / D2002, so the umbilical alone can enable and protection works the same on either source. Pack TVS D1001 / D2001 stay at the pack connectors |
-| Pack voltage readout (D-2Nov.7) | Move R6101's top from `VBAT_CROI` to `AV_PACK`, the pack side of its ideal diode, so the ADS1115 reads the pack while the umbilical carries the load. Burrito's INA228 reads the bus; the difference names the source. R6111 (PROP) stays on `PROP_RAW` unless the propulsion owner wants the same |
+| Pack voltage readout (D-2Nov.7) | Move R6101's top from `VBAT_BURRITO` to `AV_PACK`, the pack side of its ideal diode, so the ADS1115 reads the pack while the umbilical carries the load. Burrito's INA228 reads the bus; the difference names the source. R6111 (PROP) stays on `PROP_RAW` unless the propulsion owner wants the same |
 | External probes | Vishay NTCLE305E4103SB ×2. J601: AV / GND / PROP / GND. Dedicated paired leads, ≤0.5 m |
 | Pack service assembly | 0287005.PXCN fuse in an FHAC0001ZXJ holder for each source. Short protected 20 AWG paired harness, properly joined to the holder's 16 AWG leads |
 

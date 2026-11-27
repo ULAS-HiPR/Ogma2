@@ -51,7 +51,7 @@ floor that ignores what each pin can do.
    router can't. Freerouting cross-checks the first and last runs only.
 3. **U401 turns 180°.** Rotation alone gets everything there is.
 4. **U201 gets pin swaps.** Rotation can't help it; re-ordering can.
-5. **One possible fault (inferred; verify before acting).** `FOINSE_RETURN_EN` is on PA15. An STM32
+5. **One possible fault (inferred; verify before acting).** `CHURRO_RETURN_EN` is on PA15. An STM32
    pulls PA15 up from reset, as JTDI, at about 40 kΩ. Against R7002's 100 kΩ pull-down that's about
    2.4 V on U7001's EN and U7002's select pins, so the "off by default" in the pin map wouldn't hold
    until firmware runs. Moving the net to a plain GPIO fixes it. `COMMS_RESET_REQUEST` on PB4 idles
@@ -161,7 +161,7 @@ modules as they are: their angles are tied to the axes mark and the RF lines.
 ### 7. Pin swaps
 
 1. **Verify the possible fault first (call 5 above),** against RM0481's GPIO reset values and the TPS2553's and TMUX1511's input
-   thresholds. If it holds, `FOINSE_RETURN_EN` moves whatever the routing gain.
+   thresholds. If it holds, `CHURRO_RETURN_EN` moves whatever the routing gain.
 2. **Never a destination:** PA13, PA14, PA15, PB3, PB4, PC13–PC15, PH0, PH1, BOOT0, NRST, and any pin
    AN2606 says the H563's ROM bootloader drives.
 3. **Tier 1, no new data:** swap nets among pins already used as GPIO, and among ADC inputs of one

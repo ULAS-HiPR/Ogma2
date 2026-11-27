@@ -508,13 +508,13 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="29" name="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/">
+    <sheet number="29" name="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/">
       <title_block>
-        <title>Foinse / limited auxiliary return</title>
+        <title>Churro / limited auxiliary return</title>
         <company>HiPR</company>
         <rev>A-DRAFT</rev>
         <date>2026-09-08</date>
-        <source>07-foinse-aux.kicad_sch</source>
+        <source>07-churro-aux.kicad_sch</source>
         <comment number="1" value="ENGINEERING DRAFT - review open; not for fabrication or flight."/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
@@ -744,7 +744,7 @@
     </sheet>
     <sheet number="42" name="/07a-battery-monitor/" tstamps="/31a99147-d947-5c47-8362-7267ddf58920/">
       <title_block>
-        <title>Croi / bulk battery monitor</title>
+        <title>Burrito / bulk battery monitor</title>
         <company>HiPR</company>
         <rev>A-DRAFT</rev>
         <date>2026-09-08</date>
@@ -1023,7 +1023,7 @@
         <field name="MPN">1053111102</field>
         <field name="Manufacturer">Molex</field>
         <field name="Library_Check">SD-105311-100 rev H: holes, pitch, clips C apart, peg 1.34 mm off the row on the latch side (also so in KiCad 9.0.7's 105309-xx02 footprint); pads ours (sweep section 10): clips no net, peg unplated</field>
-        <field name="Implementation_Note">Standalone and Foinse feeds MUST be mechanically exclusive (J101 or J102 fitted, never both).</field>
+        <field name="Implementation_Note">Standalone and Churro feeds MUST be mechanically exclusive (J101 or J102 fitted, never both).</field>
         <field name="Footprint">Ogma2:105311-1102</field>
         <field name="Datasheet">https://www.molex.com/en-us/products/part-detail/1053111102</field>
         <field name="Description">Vertical through-hole PCB header with solder clips</field>
@@ -1032,7 +1032,7 @@
       <property name="MPN" value="1053111102"/>
       <property name="Manufacturer" value="Molex"/>
       <property name="Library_Check" value="SD-105311-100 rev H: holes, pitch, clips C apart, peg 1.34 mm off the row on the latch side (also so in KiCad 9.0.7's 105309-xx02 footprint); pads ours (sweep section 10): clips no net, peg unplated"/>
-      <property name="Implementation_Note" value="Standalone and Foinse feeds MUST be mechanically exclusive (J101 or J102 fitted, never both)."/>
+      <property name="Implementation_Note" value="Standalone and Churro feeds MUST be mechanically exclusive (J101 or J102 fitted, never both)."/>
       <property name="Sheetname" value="01-power"/>
       <property name="Sheetfile" value="01-power.kicad_sch"/>
       <sheetpath names="/01-power/" tstamps="/1ed0d183-0300-4b05-9ff2-c54b7708c528/"/>
@@ -1435,7 +1435,7 @@
       <tstamps>747c8bc9-4013-5aa5-b07c-b8cb964efd0d</tstamps>
     </comp>
     <comp ref="TP42">
-      <value>VBAT_CROI_INPUT</value>
+      <value>VBAT_BURRITO_INPUT</value>
       <footprint>Ogma2:TestPoint_Keystone_5190TR_ColorKeyed</footprint>
       <datasheet>https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf</datasheet>
       <description>test point</description>
@@ -9205,11 +9205,11 @@
       <property name="ki_fp_filters" value="C_*"/>
       <property name="MPN" value="CL05B104KB54PNC"/>
       <property name="LCSC" value="C307331"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>a33f197a-485e-5fe6-8acc-383e85ad18b3</tstamps>
     </comp>
     <comp ref="C7002">
@@ -9227,11 +9227,11 @@
       <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>6788b016-19d7-5a15-834d-a35840fd24b5</tstamps>
     </comp>
     <comp ref="C7003">
@@ -9253,11 +9253,11 @@
       <property name="ki_fp_filters" value="C_*"/>
       <property name="MPN" value="CL05B104KB54PNC"/>
       <property name="LCSC" value="C307331"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>14be34d6-7b95-5a73-a352-314f27842b60</tstamps>
     </comp>
     <comp ref="R7001">
@@ -9275,11 +9275,11 @@
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>5688f9cf-bff0-5d64-92bf-e6a15104834b</tstamps>
     </comp>
     <comp ref="R7002">
@@ -9301,11 +9301,11 @@
       <property name="ki_fp_filters" value="R_*"/>
       <property name="MPN" value="0402WGF1003TCE"/>
       <property name="LCSC" value="C25741"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>54bb90c6-2168-5e5b-b1f8-1de2a6d5fc1c</tstamps>
     </comp>
     <comp ref="R7003">
@@ -9327,11 +9327,11 @@
       <property name="ki_fp_filters" value="R_*"/>
       <property name="MPN" value="0402WGF1002TCE"/>
       <property name="LCSC" value="C25744"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>9ce80a1a-2ec2-50d1-b4b8-1e07495f2be2</tstamps>
     </comp>
     <comp ref="R7004">
@@ -9349,11 +9349,11 @@
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>bb5e2786-8b95-58bc-9dd7-bbfaedd7eeb3</tstamps>
     </comp>
     <comp ref="R7005">
@@ -9375,11 +9375,11 @@
       <property name="ki_fp_filters" value="R_*"/>
       <property name="MPN" value="0402WGF1002TCE"/>
       <property name="LCSC" value="C25744"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>67138650-c0fc-5b97-bc3c-ab06d26053a1</tstamps>
     </comp>
     <comp ref="R7006">
@@ -9401,11 +9401,11 @@
       <property name="ki_fp_filters" value="R_*"/>
       <property name="MPN" value="0402WGF1002TCE"/>
       <property name="LCSC" value="C25744"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>fa2a083b-0ebb-5307-a075-b5a8a7a8c41f</tstamps>
     </comp>
     <comp ref="R7007">
@@ -9427,11 +9427,11 @@
       <property name="ki_fp_filters" value="R_*"/>
       <property name="MPN" value="0402WGF1002TCE"/>
       <property name="LCSC" value="C25744"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>4f580b9f-8f79-5a39-9770-1d85f47d7a62</tstamps>
     </comp>
     <comp ref="R7008">
@@ -9453,11 +9453,11 @@
       <property name="ki_fp_filters" value="R_*"/>
       <property name="MPN" value="0402WGF4702TCE"/>
       <property name="LCSC" value="C25792"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>7ec2b72e-c592-5d8e-9c7e-6a2d9cc1405b</tstamps>
     </comp>
     <comp ref="U7001">
@@ -9477,9 +9477,9 @@
       <property name="MPN" value="TPS2553DBVR-1"/>
       <property name="Manufacturer" value="Texas Instruments"/>
       <property name="Library_Check" value="transcribed and checked: TPS2553 p5; SOT-23 active-high enable; -1 latch-off; pending dimensional audit"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>219b1ba6-e02b-5ff2-98ec-40bc37650f20</tstamps>
     </comp>
     <comp ref="U7002">
@@ -9499,9 +9499,9 @@
       <property name="MPN" value="TMUX1511PWR"/>
       <property name="Manufacturer" value="Texas Instruments"/>
       <property name="Library_Check" value="transcribed and checked: TMUX1511 p3 TSSOP14 column; not UQFN16; pending dimensional audit"/>
-      <property name="Sheetname" value="07-foinse-aux"/>
-      <property name="Sheetfile" value="07-foinse-aux.kicad_sch"/>
-      <sheetpath names="/07-foinse-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
+      <property name="Sheetname" value="07-churro-aux"/>
+      <property name="Sheetfile" value="07-churro-aux.kicad_sch"/>
+      <sheetpath names="/07-churro-aux/" tstamps="/12a12419-15be-5ff2-a25d-c0588244ed8e/"/>
       <tstamps>39fe5542-f2da-5c6a-b2e0-c27916d6783b</tstamps>
     </comp>
     <comp ref="C8001">
@@ -14641,7 +14641,7 @@
       <tstamps>8661bd09-b167-57cf-8f0f-d35728244f63</tstamps>
     </comp>
     <comp ref="TP40">
-      <value>FOINSE_AUX_3V3</value>
+      <value>CHURRO_AUX_3V3</value>
       <footprint>Ogma2:TestPoint_Keystone_5190TR_ColorKeyed</footprint>
       <datasheet>https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf</datasheet>
       <description>test point</description>
@@ -14651,7 +14651,7 @@
         <field name="MPN">5194TR</field>
         <field name="Manufacturer">Keystone Electronics</field>
         <field name="LCSC">C22388408</field>
-        <field name="Implementation_Note">Test point on FOINSE_AUX_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP40 only</field>
+        <field name="Implementation_Note">Test point on CHURRO_AUX_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP40 only</field>
         <field name="Library_Check">Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)</field>
         <field name="Footprint">Ogma2:TestPoint_Keystone_5190TR_ColorKeyed</field>
         <field name="Datasheet">https://www.mouser.com/pdfDocs/KeystoneSMTTestPoints.pdf</field>
@@ -14663,7 +14663,7 @@
       <property name="MPN" value="5194TR"/>
       <property name="Manufacturer" value="Keystone Electronics"/>
       <property name="LCSC" value="C22388408"/>
-      <property name="Implementation_Note" value="Test point on FOINSE_AUX_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP40 only"/>
+      <property name="Implementation_Note" value="Test point on CHURRO_AUX_3V3: yellow surface-mount loop, Keystone 5194TR (D-22Nov.24); silkscreen shows TP40 only"/>
       <property name="Library_Check" value="Keystone SMT Test Points catalogue page (5190TR-5199TR colour keyed): pad .118 x .059 in (3.0 x 1.5 mm), base 3.0 x 2.4 mm; footprint ours (capture step 18)"/>
       <property name="Sheetname" value="10-test-points"/>
       <property name="Sheetfile" value="10-test-points.kicad_sch"/>
@@ -17281,13 +17281,13 @@
       <node ref="D9002" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="Q9001" pin="3" pinfunction="D" pintype="passive"/>
     </net>
-    <net code="47" name="CAN2_H" class="Default">
+    <net code="47" name="CAN2+" class="Default">
       <node ref="D502" pin="1" pinfunction="IO1" pintype="passive"/>
       <node ref="J502" pin="1" pinfunction="Pin_1" pintype="passive"/>
       <node ref="R515" pin="1" pintype="passive"/>
       <node ref="U505" pin="7" pinfunction="CANH" pintype="bidirectional"/>
     </net>
-    <net code="48" name="CAN2_L" class="Default">
+    <net code="48" name="CAN2-" class="Default">
       <node ref="D502" pin="2" pinfunction="IO2" pintype="passive"/>
       <node ref="J502" pin="2" pinfunction="Pin_2" pintype="passive"/>
       <node ref="R515" pin="2" pintype="passive"/>
@@ -17339,7 +17339,7 @@
       <node ref="U505" pin="3" pinfunction="VCC" pintype="power_in"/>
       <node ref="U505" pin="5" pinfunction="VIO" pintype="power_in"/>
     </net>
-    <net code="55" name="CAN_H" class="Default">
+    <net code="55" name="CAN+" class="Default">
       <node ref="D501" pin="1" pinfunction="IO1" pintype="passive"/>
       <node ref="J501" pin="1" pinfunction="Pin_1" pintype="passive"/>
       <node ref="R510" pin="1" pintype="passive"/>
@@ -17349,7 +17349,7 @@
       <node ref="R502" pin="1" pintype="passive"/>
       <node ref="U501" pin="5" pinfunction="ILIM" pintype="passive"/>
     </net>
-    <net code="57" name="CAN_L" class="Default">
+    <net code="57" name="CAN-" class="Default">
       <node ref="D501" pin="2" pinfunction="IO2" pintype="passive"/>
       <node ref="J501" pin="2" pinfunction="Pin_2" pintype="passive"/>
       <node ref="R510" pin="2" pintype="passive"/>
@@ -17610,26 +17610,26 @@
       <node ref="C1402" pin="1" pintype="passive"/>
       <node ref="U1401" pin="7" pinfunction="DVDT" pintype="passive"/>
     </net>
-    <net code="100" name="CROI_IN_MINUS" class="Default">
+    <net code="100" name="BURRITO_IN_MINUS" class="Default">
       <node ref="C7101" pin="2" pintype="passive"/>
       <node ref="R7103" pin="2" pintype="passive"/>
       <node ref="U7101" pin="9" pinfunction="Vin-" pintype="input"/>
     </net>
-    <net code="101" name="CROI_IN_PLUS" class="Default">
+    <net code="101" name="BURRITO_IN_PLUS" class="Default">
       <node ref="C7101" pin="1" pintype="passive"/>
       <node ref="R7102" pin="2" pintype="passive"/>
       <node ref="U7101" pin="10" pinfunction="Vin+" pintype="input"/>
     </net>
-    <net code="102" name="CROI_MON_3V3" class="Default">
+    <net code="102" name="BURRITO_MON_3V3" class="Default">
       <node ref="C7103" pin="1" pintype="passive"/>
       <node ref="R7105" pin="2" pintype="passive"/>
       <node ref="U7101" pin="6" pinfunction="VS" pintype="power_in"/>
     </net>
-    <net code="103" name="CROI_POWER_HOLD" class="Default">
+    <net code="103" name="BURRITO_POWER_HOLD" class="Default">
       <node ref="D1004" pin="1" pinfunction="K" pintype="passive"/>
       <node ref="J102" pin="8" pinfunction="8" pintype="passive"/>
     </net>
-    <net code="104" name="CROI_VBUS_FILTER" class="Default">
+    <net code="104" name="BURRITO_VBUS_FILTER" class="Default">
       <node ref="C7102" pin="1" pintype="passive"/>
       <node ref="R7104" pin="2" pintype="passive"/>
       <node ref="U7101" pin="8" pinfunction="Vbus" pintype="input"/>
@@ -17878,7 +17878,7 @@
       <node ref="U201" pin="21" pinfunction="VREF+" pintype="input"/>
       <node ref="U201" pin="22" pinfunction="VDDA" pintype="power_in"/>
     </net>
-    <net code="132" name="FOINSE_AUX_3V3" class="Default">
+    <net code="132" name="CHURRO_AUX_3V3" class="Default">
       <node ref="C7002" pin="1" pintype="passive"/>
       <node ref="C7003" pin="1" pintype="passive"/>
       <node ref="J102" pin="3" pinfunction="3" pintype="passive"/>
@@ -17889,20 +17889,20 @@
       <node ref="TP40" pin="1" pinfunction="1" pintype="passive"/>
       <node ref="U7002" pin="14" pinfunction="VDD" pintype="power_in"/>
     </net>
-    <net code="133" name="FOINSE_AUX_3V3_ILIM" class="Default">
+    <net code="133" name="CHURRO_AUX_3V3_ILIM" class="Default">
       <node ref="R7004" pin="1" pintype="passive"/>
       <node ref="U7001" pin="5" pinfunction="ILIM" pintype="passive"/>
     </net>
-    <net code="134" name="FOINSE_AUX_3V3_PRELINK" class="Default">
+    <net code="134" name="CHURRO_AUX_3V3_PRELINK" class="Default">
       <node ref="R7001" pin="1" pintype="passive"/>
       <node ref="U7001" pin="6" pinfunction="OUT" pintype="power_out"/>
     </net>
-    <net code="135" name="FOINSE_FAULT_N_EXT" class="Default">
+    <net code="135" name="CHURRO_FAULT_N_EXT" class="Default">
       <node ref="J102" pin="7" pinfunction="7" pintype="passive"/>
       <node ref="R7008" pin="2" pintype="passive"/>
       <node ref="U7002" pin="8" pinfunction="D3" pintype="passive"/>
     </net>
-    <net code="136" name="FOINSE_RETURN_EN" class="Default">
+    <net code="136" name="CHURRO_RETURN_EN" class="Default">
       <node ref="R7002" pin="1" pintype="passive"/>
       <node ref="U201" pin="43" pinfunction="PE12" pintype="bidirectional"/>
       <node ref="U7001" pin="3" pinfunction="EN" pintype="input"/>
@@ -17910,22 +17910,22 @@
       <node ref="U7002" pin="10" pintype="input"/>
       <node ref="U7002" pin="4" pintype="input"/>
     </net>
-    <net code="137" name="FOINSE_SCL" class="Default">
+    <net code="137" name="CHURRO_SCL" class="Default">
       <node ref="R7005" pin="2" pintype="passive"/>
       <node ref="U201" pin="95" pinfunction="PB8" pintype="bidirectional"/>
       <node ref="U7002" pin="2" pinfunction="S1" pintype="passive"/>
     </net>
-    <net code="138" name="FOINSE_SCL_EXT" class="Default">
+    <net code="138" name="CHURRO_SCL_EXT" class="Default">
       <node ref="J102" pin="5" pinfunction="5" pintype="passive"/>
       <node ref="U7002" pin="3" pinfunction="D1" pintype="passive"/>
       <node ref="U7101" pin="5" pinfunction="SCL" pintype="input"/>
     </net>
-    <net code="139" name="FOINSE_SDA" class="Default">
+    <net code="139" name="CHURRO_SDA" class="Default">
       <node ref="R7006" pin="2" pintype="passive"/>
       <node ref="U201" pin="96" pinfunction="PB9" pintype="bidirectional"/>
       <node ref="U7002" pin="5" pinfunction="S2" pintype="passive"/>
     </net>
-    <net code="140" name="FOINSE_SDA_EXT" class="Default">
+    <net code="140" name="CHURRO_SDA_EXT" class="Default">
       <node ref="J102" pin="6" pinfunction="6" pintype="passive"/>
       <node ref="U7002" pin="6" pinfunction="D2" pintype="passive"/>
       <node ref="U7101" pin="4" pinfunction="SDA" pintype="bidirectional"/>
@@ -19265,22 +19265,22 @@
       <node ref="J4401" pin="B5" pinfunction="CC2" pintype="bidirectional"/>
       <node ref="R4402" pin="1" pintype="passive"/>
     </net>
-    <net code="318" name="USB_DM" class="Default">
+    <net code="318" name="USB_D-" class="Default">
       <node ref="R4406" pin="1" pintype="passive"/>
       <node ref="U401" pin="44" pinfunction="PA11" pintype="bidirectional"/>
     </net>
-    <net code="319" name="USB_DM_CONN" class="Default">
+    <net code="319" name="USB_CONN_D-" class="Default">
       <node ref="D4401" pin="3" pinfunction="I/O2" pintype="passive"/>
       <node ref="D4401" pin="4" pinfunction="I/O2" pintype="passive"/>
       <node ref="J4401" pin="A7" pinfunction="D-" pintype="bidirectional"/>
       <node ref="J4401" pin="B7" pinfunction="D-" pintype="bidirectional"/>
       <node ref="R4406" pin="2" pintype="passive"/>
     </net>
-    <net code="320" name="USB_DP" class="Default">
+    <net code="320" name="USB_D+" class="Default">
       <node ref="R4405" pin="1" pintype="passive"/>
       <node ref="U401" pin="45" pinfunction="PA12" pintype="bidirectional"/>
     </net>
-    <net code="321" name="USB_DP_CONN" class="Default">
+    <net code="321" name="USB_CONN_D+" class="Default">
       <node ref="D4401" pin="1" pinfunction="I/O1" pintype="passive"/>
       <node ref="D4401" pin="6" pinfunction="I/O1" pintype="passive"/>
       <node ref="J4401" pin="A6" pinfunction="D+" pintype="bidirectional"/>
@@ -19329,7 +19329,7 @@
       <node ref="U401" pin="15" pinfunction="PA1" pintype="bidirectional"/>
       <node ref="U4303" pin="12" pinfunction="B2Y" pintype="output"/>
     </net>
-    <net code="329" name="VBAT_CROI_INPUT" class="Default">
+    <net code="329" name="VBAT_BURRITO_INPUT" class="Default">
       <node ref="C1002" pin="1" pintype="passive"/>
       <node ref="D1002" pin="1" pinfunction="A" pintype="passive"/>
       <node ref="J101" pin="1" pinfunction="1" pintype="passive"/>

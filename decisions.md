@@ -188,6 +188,7 @@ umbilical the same limits apply, because U1001 sits after the ORing (D-2Nov.7).
 
 | ID | Date | Proposal | Why | Waiting for |
 | --- | --- | --- | --- | --- |
+| D-27Nov.1 | 27 Nov | **Name the CAN and USB pair nets with a + and - ending, and drop Croi and Foinse from net and sheet names.** `CAN_H/CAN_L` → `CAN+/CAN-`, `CAN2_H/CAN2_L` → `CAN2+/CAN2-`, `USB_DP/USB_DM` → `USB_D+/USB_D-`, `USB_DP_CONN/USB_DM_CONN` → `USB_CONN_D+/USB_CONN_D-`; `CROI` → `BURRITO` and `FOINSE` → `CHURRO` in net names (`CHURRO_AUX_3V3`, `VBAT_BURRITO_INPUT`, …) and in the sheets `07-churro-aux` and `f03-burrito-interface`. Done by `tools/rename_nets.py` on branch `diffpair-names`. Pair rules (width, gap, 1 mm skew) added to `Croi2.kicad_dru`. | KiCad pairs two nets only when their names end in + and -, so pair routing, the pair gap rule and length matching need it. The old board names are out of date since the Burrito and Churro names. | Seán: apply with KiCad closed, then run ERC and DRC. The CAN skew figure (1 mm) is Claude's choice, not the brief's. |
 | D-6.11 | 6 Oct | [Recovery logic specification](docs/architecture/10-recovery-logic.md) | Events, lockouts and after-reset behaviour, written against Rev 1's in-flight recalibration. D-2Nov.10 and D-2Nov.16 already decide its pad datum, ground-test mode and pad telemetry, and D-2Nov.13 its 100 m deployment gate | Anav's review, Tuesday 3 November |
 
 ## Open

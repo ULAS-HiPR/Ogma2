@@ -96,9 +96,9 @@ NETCLASSES = [
     nc('GND', 0.3, 0.2, priority=10),
 ]
 RAILS = ['FLIGHT_3V3', 'COMMS_3V3', '3V3_OPTIONAL', '3V3_OPTIONAL_PRELINK', 'BOOT_3V3', 'CAN_3V3', 'NOR_3V3', 'NOR_3V3_PRELINK',
-         'GNSS_3V3', 'LORA_3V3', 'FOINSE_AUX_3V3', 'FOINSE_AUX_3V3_PRELINK', 'BMP_3V3', 'HG_3V3', 'MAG_3V3', 'ST_3V3', 'TDK_3V3',
-         'TE_3V3', 'CROI_MON_3V3', 'COMMS_3V3_PRELINK', 'FLIGHT_3V3_PRELINK', 'USB_VBUS', 'USB_LIMITED']
-PATTERNS = ([('SRC_6A', n) for n in ('VBAT_CROI_INPUT', 'ENERGY_TAP')]
+         'GNSS_3V3', 'LORA_3V3', 'CHURRO_AUX_3V3', 'CHURRO_AUX_3V3_PRELINK', 'BMP_3V3', 'HG_3V3', 'MAG_3V3', 'ST_3V3', 'TDK_3V3',
+         'TE_3V3', 'BURRITO_MON_3V3', 'COMMS_3V3_PRELINK', 'FLIGHT_3V3_PRELINK', 'USB_VBUS', 'USB_LIMITED']
+PATTERNS = ([('SRC_6A', n) for n in ('VBAT_BURRITO_INPUT', 'ENERGY_TAP')]
             + [('PYRO_RAIL', n) for n in ('*RECOVERY_ARM_FEED', '*STAGING_ARM_FEED', 'RECOVERY_ARMED_VBAT', 'STAGING_ARMED_VBAT')]
             + [('FIRE', f'{k}{i}{s}') for i in (1, 2, 3) for k, s in (('PYRO', '_ENERGY'), ('OUTPUT', '_HIGH'), ('OUTPUT', '_LOW'))]
             + [('FIRE_LOGIC', f'PYRO{i}{s}') for i in (1, 2, 3) for s in ('_GATE', '_FIRE', '_LS_SELECT')]
@@ -106,8 +106,8 @@ PATTERNS = ([('SRC_6A', n) for n in ('VBAT_CROI_INPUT', 'ENERGY_TAP')]
             + [('LOGIC_FEED', n) for n in ('VBAT_SHUNT_IN', 'VBAT_PROTECTED', 'LOGIC_SELECTED', '4V_PRE', 'CORE_HELD_4V')]
             + [('RAIL_3V3', n) for n in RAILS]
             + [('RF50', n) for n in ('GNSS_RF', 'LORA_RF_SUBG')]
-            + [('USB_DIFF', n) for n in ('USB_DP', 'USB_DM', 'USB_DP_CONN', 'USB_DM_CONN')]
-            + [('CAN_DIFF', n) for n in ('CAN_H', 'CAN_L', 'CAN2_H', 'CAN2_L')]
+            + [('USB_DIFF', n) for n in ('USB_D+', 'USB_D-', 'USB_CONN_D+', 'USB_CONN_D-')]
+            + [('CAN_DIFF', n) for n in ('CAN+', 'CAN-', 'CAN2+', 'CAN2-')]
             + [('GND', 'GND')])
 
 RULES = {  # the board's minimums: JLC's table as it stands (D-23Nov.17)
@@ -227,7 +227,7 @@ REGIONS = {
     '09-indicators': (56, 126, 79, 150),
     'CAN2': (54, 98, 79, 128), 'CAN1': (54, 154, 79, 192),
     '01-power': (12, 186, 68, 220), '07a-battery-monitor': (12, 186, 68, 220),
-    '07-foinse-aux': (12, 192, 68, 220), '08-rail-diagnostics': (12, 180, 68, 220),
+    '07-churro-aux': (12, 192, 68, 220), '08-rail-diagnostics': (12, 180, 68, 220),
     **{s: (16, 150, 66, 196) for s in ('01a-source-mux', '01b-bootstrap', '01c-preregulator', '01d-held-core',
                                         '01flight-ldo', '01comms-ldo', '01optional-ldo', '01comms-limit', '01optional-limit')},
     '06a-arm-boundary': (1, 155, 22, 220),
@@ -308,7 +308,7 @@ BIG_MLCC = ('Capacitor_SMD:C_1206', 'Capacitor_SMD:C_1210', 'Capacitor_SMD:C_181
 
 # --- pulls [J]: net-name regex -> weight. RF and fire nets short; the armed rails run the corridor anyway.
 NET_WEIGHTS = [(r'LORA_RF_SUBG|GNSS_RF', 30.0), (r'OUTPUT\d_(HIGH|LOW)', 6.0), (r'PYRO\d_ENERGY', 3.0),
-               (r'(RECOVERY|STAGING)_ARMED_VBAT|.*ARM_FEED', 0.1), (r'VBAT_CROI_INPUT|ENERGY_TAP', 4.0),
+               (r'(RECOVERY|STAGING)_ARMED_VBAT|.*ARM_FEED', 0.1), (r'VBAT_BURRITO_INPUT|ENERGY_TAP', 4.0),
                (r'USB_D[PM](_CONN)?', 4.0), (r'CAN2?_[HL]', 3.0)]
 # distance rules (stage B2 step 6, the sweep's section 5): the build places these parts first and reports every miss
 # (build.json `metrics.near`). Distances are copper gaps, pad edge to pad edge.
@@ -364,9 +364,9 @@ NEAR = [
         ('D4401', 'J4401', 'ST USBLC6-2 2.3'))],
     *[dict(rule='on_line', part=p, net=net, **{'from': j, 'to': u}, mm=1.0, line='drawn',
            src=f'{why}; 1 mm [J]; D-24Nov.17') for p, net, j, u, why in (
-        ('D501', 'CAN_H', 'J501', 'U503', 'TI SLLSFS8A 8.5.1: the protection in the direction of the signal path'),
-        ('D502', 'CAN2_H', 'J502', 'U505', 'TI SLLSFS8A 8.5.1: the protection in the direction of the signal path'),
-        ('D4401', 'USB_DP_CONN', 'J4401', 'R4405', 'ST USBLC6-2 2.3: the pair runs straight through its pads'))],
+        ('D501', 'CAN+', 'J501', 'U503', 'TI SLLSFS8A 8.5.1: the protection in the direction of the signal path'),
+        ('D502', 'CAN2+', 'J502', 'U505', 'TI SLLSFS8A 8.5.1: the protection in the direction of the signal path'),
+        ('D4401', 'USB_CONN_D+', 'J4401', 'R4405', 'ST USBLC6-2 2.3: the pair runs straight through its pads'))],
     # the pyro output stage (D-22Nov.27's stamp, PYRO_STAMP below): each channel's supply capacitor, limit and sense
     # resistors at their high side's pins, Kelvin (sweep section 5); its low side's gate parts at the FET's gate [J]
     *[dict(rule='part_to_pins', part=p, ic=f'U6{c}04', mm=1.0, src=f'{_SWEEP}: at the pins, Kelvin; D-22Nov.27')
@@ -932,7 +932,7 @@ PYRO_COPPER = _pyro_copper() + _fire_logic_escapes() + _fire_logic_runs() + _tap
 # and the corridor with its taps and links, locked like the pyro band. Board mm; L1 F.Cu, L3 In2.Cu, L6 B.Cu.
 POWER_PARTS = {     # moved for this copper; placement.json holds them
     'TP16': (12.5, 64.4, 0),     # the flight GND loop onto the corridor's GND strip (was 2.45 mm west, on a rail's line)
-    'TP42': (9.0, 142.0, 0),     # VBAT_CROI_INPUT's test point onto J101's run (was in the recovery feed's way)
+    'TP42': (9.0, 142.0, 0),     # VBAT_BURRITO_INPUT's test point onto J101's run (was in the recovery feed's way)
     'R8007': (12.6, 105.6, 0),   # the pyro-rail divider's top beside the recovery rail: the 40 mm to R8008 is then
                                  # PYRO_RAIL_MID's, behind 22.1 kohm, not armed-rail copper's
     # the logic regulators' blocks (D-23Nov.29; the brief's block templates; TI's TPSM63603 layout guidelines: "Place
@@ -970,7 +970,7 @@ def _power_copper():
     t = lambda net, lay, w, *path: out.append(dict(net=net, layer=lay, w=w, path=[(round(x, 3), round(y, 3)) for x, y in path]))
     v = lambda net, d, dr, *xy: out.extend(dict(net=net, via=(round(x, 3), round(y, 3)), d=d, drill=dr) for x, y in xy)
     F, B, L3 = 'F.Cu', 'B.Cu', 'In2.Cu'
-    VB, ET = 'VBAT_CROI_INPUT', 'ENERGY_TAP'
+    VB, ET = 'VBAT_BURRITO_INPUT', 'ENERGY_TAP'
     # the 6 A path on L1 (SRC_6A, 4.0 mm: on L1 alone it meets 20 C at 6 A; L4, the brief's second layer, is GND
     # since D-22Nov.29). J101 and J102 to Q101's source pins; R1003 and C1002 sit on it
     t(VB, F, 4.0, (9.0, 147.8), (17.0, 147.8))
@@ -1281,14 +1281,14 @@ def _usb_pair():
     GNSS_TX's escape via (_scripted_nets). Routed by l1_route.py, checked by DRC"""
     w = 0.154
     return [
-        dict(net='USB_DP_CONN', layer='F.Cu', w=w, path=[(7.355, 80.519), (6.73, 80.344), (6.58, 80.194), (6.58, 79.844), (6.905, 79.519), (7.355, 79.519)]),
-        dict(net='USB_DM_CONN', layer='F.Cu', w=w, path=[(7.355, 79.019), (14.655, 78.075), (17.08, 75.65), (17.962, 75.65)]),
-        dict(net='USB_DM_CONN', layer='F.Cu', w=w, path=[(7.355, 80.019), (13.505, 79.225), (17.08, 75.65)]),
-        dict(net='USB_DM_CONN', layer='F.Cu', w=w, path=[(17.962, 75.65), (20.238, 75.65), (22.475, 76.25)]),
-        dict(net='USB_DP_CONN', layer='F.Cu', w=w, path=[(7.355, 80.519), (13.73, 79.7), (15.93, 77.55), (17.962, 77.55)]),
-        dict(net='USB_DP_CONN', layer='F.Cu', w=w, path=[(17.962, 77.55), (20.238, 77.55), (22.475, 77.9)]),
-        dict(net='USB_DM', layer='F.Cu', w=w, path=[(24.125, 76.25), (24.95, 78.05), (25.85, 81.225), (26.65, 81.95), (27.325, 81.955)]),
-        dict(net='USB_DP', layer='F.Cu', w=w, path=[(24.125, 77.9), (25.55, 81.45), (26.675, 82.45), (27.325, 82.455)]),
+        dict(net='USB_CONN_D+', layer='F.Cu', w=w, path=[(7.355, 80.519), (6.73, 80.344), (6.58, 80.194), (6.58, 79.844), (6.905, 79.519), (7.355, 79.519)]),
+        dict(net='USB_CONN_D-', layer='F.Cu', w=w, path=[(7.355, 79.019), (14.655, 78.075), (17.08, 75.65), (17.962, 75.65)]),
+        dict(net='USB_CONN_D-', layer='F.Cu', w=w, path=[(7.355, 80.019), (13.505, 79.225), (17.08, 75.65)]),
+        dict(net='USB_CONN_D-', layer='F.Cu', w=w, path=[(17.962, 75.65), (20.238, 75.65), (22.475, 76.25)]),
+        dict(net='USB_CONN_D+', layer='F.Cu', w=w, path=[(7.355, 80.519), (13.73, 79.7), (15.93, 77.55), (17.962, 77.55)]),
+        dict(net='USB_CONN_D+', layer='F.Cu', w=w, path=[(17.962, 77.55), (20.238, 77.55), (22.475, 77.9)]),
+        dict(net='USB_D-', layer='F.Cu', w=w, path=[(24.125, 76.25), (24.95, 78.05), (25.85, 81.225), (26.65, 81.95), (27.325, 81.955)]),
+        dict(net='USB_D+', layer='F.Cu', w=w, path=[(24.125, 77.9), (25.55, 81.45), (26.675, 82.45), (27.325, 82.455)]),
         dict(net='USB_VBUS', via=(16.85, 76.6), d=0.45, drill=0.2),            # D4401's VBUS pin, just east of the
         dict(net='USB_VBUS', layer='F.Cu', w=0.4, path=[(17.963, 76.6), (16.85, 76.6)]),   # corridor's via-free band
         dict(net='GND', via=(21.35, 76.6), d=0.45, drill=0.2),                 # D4401's GND pin
@@ -1428,7 +1428,7 @@ def _scripted_nets():
 # where H passes under L. Bus 1's H drops through a via in U503's pin 7 and comes up 1.9 mm south, beside R510;
 # bus 2's H crosses under L between U505 and R515 (2.2 mm on L3). 0.2 mm (the CAN class), 0.45 / 0.2 vias; board mm.
 CAN_RUNS = {
-    'CAN_H': dict(vias=[(66.45, 96.2), (66.45, 98.1)], runs=[
+    'CAN+': dict(vias=[(66.45, 96.2), (66.45, 98.1)], runs=[
         ('F.Cu', [
             (69.9, 103.5), (67.55, 103.5), (67.2, 103.15), (67.2, 102.4), (68.15, 101.45), (68.15, 100.05),
             (66.45, 98.35), (66.45, 98.1),
@@ -1436,7 +1436,7 @@ CAN_RUNS = {
         ('F.Cu', [(70.15, 103.75), (70.15, 106.9), (73.45, 110.2), (77.75, 110.2), (78.45, 109.5)]),
         ('In2.Cu', [(66.45, 98.1), (66.45, 96.2)]),
     ]),
-    'CAN_L': dict(vias=[], runs=[
+    'CAN-': dict(vias=[], runs=[
         ('F.Cu', [
             (77.7, 108.25), (76.45, 107.0), (76.45, 106.25), (74.55, 106.25), (69.95, 101.65), (69.95, 100.05),
         ]),
@@ -1445,13 +1445,13 @@ CAN_RUNS = {
             (66.6, 96.75),
         ]),
     ]),
-    'CAN2_H': dict(vias=[(67.6, 72.45), (69.8, 72.45)], runs=[
+    'CAN2+': dict(vias=[(67.6, 72.45), (69.8, 72.45)], runs=[
         ('F.Cu', [(70.15, 72.4), (69.85, 72.4)]),
         ('F.Cu', [(67.55, 72.4), (66.15, 72.4)]),
         ('F.Cu', [(78.45, 75.1), (77.7, 75.85), (72.75, 75.85), (70.15, 73.25), (70.15, 71.45)]),
         ('In2.Cu', [(69.8, 72.45), (67.6, 72.45)]),
     ]),
-    'CAN2_L': dict(vias=[], runs=[
+    'CAN2-': dict(vias=[], runs=[
         ('F.Cu', [
             (66.15, 73.0), (68.0, 73.0), (68.5, 73.5), (69.25, 72.75), (69.25, 70.8), (69.65, 70.4), (74.65, 70.4),
             (76.9, 72.65), (76.9, 73.1), (77.7, 73.9),
@@ -1556,7 +1556,7 @@ def _mcu_plane_vias():
 # (pin, net, pin x, the jog's y, the via's x): a track from the pad's centre (y 47.137) south to the jog, then across
 # to the via; 0.09 mm, vias 0.45 / 0.2 mm; board mm.
 U201_TOP_ESCAPES = [
-    ('U201.95', 'FOINSE_SCL', 36.5, 48.55, 35.75),
+    ('U201.95', 'CHURRO_SCL', 36.5, 48.55, 35.75),
     ('U201.94', 'FLIGHT_BOOT0', 37.0, 49.15, 35.75),
     ('U201.93', 'BMP_SDA', 37.5, 50.65, 38.75),
     ('U201.92', 'BMP_SCL', 38.0, 50.05, 38.75),

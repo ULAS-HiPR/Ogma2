@@ -17,7 +17,7 @@ def block(sheet, name):
     if name=='Foinse2':
         return {'f01-source':'2S source', 'f01a-source-passives':'2S source',
             'f02-source':'6S source','f02a-source-passives':'6S source',
-            'f03-croi-interface':'Croi interface','f04-monitor':'2S monitor',
+            'f03-burrito-interface':'Burrito interface','f04-monitor':'2S monitor',
             'f05-monitor':'6S monitor','f06-temperature-adc':'Temperature ADC',
             'f06a-adc-isolation':'Temperature ADC','f07-propulsion-service':'Propulsion output'}[sheet]
     if sheet=='04d-gnss': return 'GNSS'
@@ -32,7 +32,7 @@ def block(sheet, name):
     if sheet in ['01-power','01a-source-mux','01b-bootstrap','01c-preregulator']: return 'Power entry and buck'
     if sheet in ['01d-held-core','01flight-ldo']: return 'Held flight rail'
     if sheet.startswith('01'): return 'Branch supplies'
-    if sheet=='07-foinse-aux': return 'Foinse AUX'
+    if sheet=='07-churro-aux': return 'Churro AUX'
     if sheet=='08-rail-diagnostics': return 'Rail diagnostics'
     if sheet=='09-indicators': return 'Indicators'
     raise ValueError(sheet)
@@ -170,14 +170,14 @@ def floorplan(board,parts,missing,pin_nets,project,name):
         targets={'Comms MCU':(15,48),'USB service':(5,38),'Radio':(48,49),
             'Flight MCU':(14,74),'Sensors and storage':(43,76),'UART boundary':(28,63),
             'Power entry and buck':(12,103),'Held flight rail':(15,92),'Branch supplies':(27,98),
-            'Outputs':(47,103),'CAN':(55,62),'Foinse AUX':(26,108),'Rail diagnostics':(26,86),'Indicators':(3,57)}
+            'Outputs':(47,103),'CAN':(55,62),'Churro AUX':(26,108),'Rail diagnostics':(26,86),'Indicators':(3,57)}
         order=['Comms MCU','Radio','Flight MCU','Sensors and storage','Power entry and buck',
                'Held flight rail','Outputs','Branch supplies','USB service','CAN','UART boundary',
-               'Foinse AUX','Rail diagnostics','Indicators']
+               'Churro AUX','Rail diagnostics','Indicators']
     else:
-        targets={'Croi interface':(30,13),'2S source':(14,29),'2S monitor':(15,47),
+        targets={'Burrito interface':(30,13),'2S source':(14,29),'2S monitor':(15,47),
             '6S source':(45,29),'6S monitor':(44,47),'Temperature ADC':(24,63),'Propulsion output':(52,71)}
-        order=['2S source','6S source','Croi interface','2S monitor','6S monitor','Temperature ADC','Propulsion output']
+        order=['2S source','6S source','Burrito interface','2S monitor','6S monitor','Temperature ADC','Propulsion output']
     # Large connectors/ICs lead; small support parts are attracted to their block.
     refs=[r for r in parts if r not in placed]
     refs.sort(key=lambda r:(0 if r.startswith('J') else 1,0 if math.prod(courtyard(parts[r]['fp'])[2:])>100 else 1,

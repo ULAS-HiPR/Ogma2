@@ -3778,7 +3778,7 @@
 		)
 		(uuid "b356bc22-71b1-5ffd-8c03-32cc7c496868")
 	)
-	(text "What this does: Accepts one 2S battery source, blocks reverse connection, shuts down a faulty input and retries,\nand holds the battery enable on through a flight-computer reset aloft (FC_POWER_HOLD).\nConnects to: Standalone battery or Foinse mate -> battery monitor shunt -> logic and output branches. The external switch is on 44-master-enable.\nENERGY_TAP (Q101 drain, ahead of the eFuse) -> output arm feeds on 06*, battery-monitor VBUS on 07a."
+	(text "What this does: Accepts one 2S battery source, blocks reverse connection, shuts down a faulty input and retries,\nand holds the battery enable on through a flight-computer reset aloft (FC_POWER_HOLD).\nConnects to: Standalone battery or Churro mate -> battery monitor shunt -> logic and output branches. The external switch is on 44-master-enable.\nENERGY_TAP (Q101 drain, ahead of the eFuse) -> output arm feeds on 06*, battery-monitor VBUS on 07a."
 		(exclude_from_sim no)
 		(at 15.24 27.94 0)
 		(effects
@@ -3789,7 +3789,7 @@
 		)
 		(uuid "b714c4f9-1803-53d9-9417-2b49e6a54fd1")
 	)
-	(text "COPLANAR FOINSE MATE / STANDALONE SOURCE EXCLUSION"
+	(text "COPLANAR CHURRO MATE / STANDALONE SOURCE EXCLUSION"
 		(exclude_from_sim no)
 		(at 15.24 368.3 0)
 		(effects
@@ -4883,7 +4883,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_SCL_EXT"
+	(global_label "CHURRO_SCL_EXT"
 		(shape bidirectional)
 		(at 67.31 415.29 180)
 		(effects
@@ -4927,7 +4927,7 @@
 			)
 		)
 	)
-	(global_label "CROI_POWER_HOLD"
+	(global_label "BURRITO_POWER_HOLD"
 		(shape bidirectional)
 		(at 217.17 400.05 0)
 		(effects
@@ -4971,7 +4971,7 @@
 			)
 		)
 	)
-	(global_label "VBAT_CROI_INPUT"
+	(global_label "VBAT_BURRITO_INPUT"
 		(shape bidirectional)
 		(at 119.38 281.94 180)
 		(effects
@@ -5279,7 +5279,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_AUX_3V3"
+	(global_label "CHURRO_AUX_3V3"
 		(shape bidirectional)
 		(at 67.31 410.21 180)
 		(effects
@@ -5323,7 +5323,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_SDA_EXT"
+	(global_label "CHURRO_SDA_EXT"
 		(shape bidirectional)
 		(at 67.31 417.83 180)
 		(effects
@@ -5411,7 +5411,7 @@
 			)
 		)
 	)
-	(global_label "VBAT_CROI_INPUT"
+	(global_label "VBAT_BURRITO_INPUT"
 		(shape bidirectional)
 		(at 321.31 297.18 180)
 		(effects
@@ -5543,7 +5543,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_FAULT_N_EXT"
+	(global_label "CHURRO_FAULT_N_EXT"
 		(shape bidirectional)
 		(at 67.31 420.37 180)
 		(effects
@@ -5785,7 +5785,7 @@
 			)
 		)
 	)
-	(global_label "VBAT_CROI_INPUT"
+	(global_label "VBAT_BURRITO_INPUT"
 		(shape bidirectional)
 		(at 54.61 281.94 180)
 		(effects
@@ -5807,7 +5807,7 @@
 			)
 		)
 	)
-	(global_label "VBAT_CROI_INPUT"
+	(global_label "VBAT_BURRITO_INPUT"
 		(shape bidirectional)
 		(at 67.31 405.13 180)
 		(effects
@@ -5851,7 +5851,7 @@
 			)
 		)
 	)
-	(global_label "CROI_POWER_HOLD"
+	(global_label "BURRITO_POWER_HOLD"
 		(shape bidirectional)
 		(at 67.31 422.91 180)
 		(effects
@@ -5917,7 +5917,7 @@
 			)
 		)
 	)
-	(global_label "VBAT_CROI_INPUT"
+	(global_label "VBAT_BURRITO_INPUT"
 		(shape bidirectional)
 		(at 55.88 85.09 0)
 		(effects
@@ -5961,7 +5961,7 @@
 			)
 		)
 	)
-	(global_label "VBAT_CROI_INPUT"
+	(global_label "VBAT_BURRITO_INPUT"
 		(shape bidirectional)
 		(at 190.5 149.86 180)
 		(effects
@@ -6267,7 +6267,7 @@
 				)
 			)
 		)
-		(property "Implementation_Note" "Standalone and Foinse feeds MUST be mechanically exclusive (J101 or J102 fitted, never both)."
+		(property "Implementation_Note" "Standalone and Churro feeds MUST be mechanically exclusive (J101 or J102 fitted, never both)."
 			(at 35.56 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -7021,7 +7021,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "VBAT_CROI_INPUT"
+		(property "Value" "VBAT_BURRITO_INPUT"
 			(at 77.47 81.28 0)
 			(hide yes)
 			(show_name no)

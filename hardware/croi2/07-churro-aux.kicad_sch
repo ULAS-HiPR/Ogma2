@@ -5,7 +5,7 @@
 	(uuid "1cc590ee-3ba3-5924-bf9e-722c8ec58acc")
 	(paper "User" 395 395.32)
 	(title_block
-		(title "Foinse / limited auxiliary return")
+		(title "Churro / limited auxiliary return")
 		(date "2026-09-08")
 		(rev "A-DRAFT")
 		(company "HiPR")
@@ -1368,7 +1368,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "Foinse has no MCU. Its TCA4307 and downstream pull-ups remain on Foinse."
+	(text "Churro has no MCU. Its TCA4307 and downstream pull-ups remain on Churro."
 		(exclude_from_sim no)
 		(at 15.24 341.63 0)
 		(effects
@@ -1379,7 +1379,7 @@
 		)
 		(uuid "27f32fd5-06c3-55a3-a4d5-69b0bd7a7959")
 	)
-	(text "FOINSE / LIMITED AUXILIARY RETURN"
+	(text "CHURRO / LIMITED AUXILIARY RETURN"
 		(exclude_from_sim no)
 		(at 15.24 15.24 0)
 		(effects
@@ -1401,7 +1401,7 @@
 		)
 		(uuid "40bd67b9-c567-560b-8f37-cd950faf2cf1")
 	)
-	(text "What this does: Supplies limited 3.3 V power and a controlled monitoring bus to Foinse and the local current monitor.\nConnects to: Optional rail + flight I2C -> Samtec mate and INA228 on 07a. Foinse source protection starts independently of this auxiliary supply."
+	(text "What this does: Supplies limited 3.3 V power and a controlled monitoring bus to Churro and the local current monitor.\nConnects to: Optional rail + flight I2C -> Samtec mate and INA228 on 07a. Churro source protection starts independently of this auxiliary supply."
 		(exclude_from_sim no)
 		(at 15.24 27.94 0)
 		(effects
@@ -2071,7 +2071,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_FAULT_N_EXT"
+	(global_label "CHURRO_FAULT_N_EXT"
 		(shape bidirectional)
 		(at 306.07 245.11 180)
 		(effects
@@ -2093,7 +2093,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_RETURN_EN"
+	(global_label "CHURRO_RETURN_EN"
 		(shape bidirectional)
 		(at 149.86 289.56 180)
 		(effects
@@ -2115,7 +2115,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_AUX_3V3_PRELINK"
+	(global_label "CHURRO_AUX_3V3_PRELINK"
 		(shape bidirectional)
 		(at 120.65 85.09 0)
 		(effects
@@ -2159,7 +2159,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_AUX_3V3"
+	(global_label "CHURRO_AUX_3V3"
 		(shape bidirectional)
 		(at 190.5 193.04 180)
 		(effects
@@ -2181,7 +2181,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_SCL"
+	(global_label "CHURRO_SCL"
 		(shape bidirectional)
 		(at 64.77 219.71 180)
 		(effects
@@ -2203,7 +2203,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_AUX_3V3"
+	(global_label "CHURRO_AUX_3V3"
 		(shape bidirectional)
 		(at 306.07 232.41 180)
 		(effects
@@ -2247,7 +2247,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_RETURN_EN"
+	(global_label "CHURRO_RETURN_EN"
 		(shape bidirectional)
 		(at 54.61 95.25 180)
 		(effects
@@ -2291,7 +2291,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_AUX_3V3"
+	(global_label "CHURRO_AUX_3V3"
 		(shape bidirectional)
 		(at 232.41 85.09 0)
 		(effects
@@ -2313,7 +2313,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_AUX_3V3_ILIM"
+	(global_label "CHURRO_AUX_3V3_ILIM"
 		(shape bidirectional)
 		(at 110.49 105.41 180)
 		(effects
@@ -2335,7 +2335,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_SDA_EXT"
+	(global_label "CHURRO_SDA_EXT"
 		(shape bidirectional)
 		(at 231.14 264.16 0)
 		(effects
@@ -2357,7 +2357,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_SCL_EXT"
+	(global_label "CHURRO_SCL_EXT"
 		(shape bidirectional)
 		(at 231.14 254 0)
 		(effects
@@ -2379,7 +2379,7 @@
 			)
 		)
 	)
-	(global_label "FOINSE_SDA"
+	(global_label "CHURRO_SDA"
 		(shape bidirectional)
 		(at 96.52 219.71 180)
 		(effects

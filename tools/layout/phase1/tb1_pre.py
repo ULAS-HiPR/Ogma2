@@ -6,7 +6,7 @@ import route as R
 b = K.LoadBoard('/lab/tb1/tb1-k.kicad_pcb')
 obs = R.Obstacles(b)
 CRIT = {'FLIGHT_HSE_IN': .2, 'FLIGHT_HSE_OUT': .2, 'FLIGHT_LSE_IN': .2, 'FLIGHT_LSE_OUT': .2,
-        'CAN_H': .25, 'CAN_L': .25, 'CAN2_H': .25, 'CAN2_L': .25}
+        'CAN+': .25, 'CAN-': .25, 'CAN2+': .25, 'CAN2-': .25}
 res = {}
 for net, w in CRIT.items():
     pads = [(f.GetReference(), p.GetNumber()) for f in b.GetFootprints() for p in f.Pads() if p.GetNetname() == net]

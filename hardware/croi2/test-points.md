@@ -70,9 +70,9 @@ moved with their pins to PA9, PA11 and PA12 and took their names (D-22Nov.25).
 | TP37 | `LOGIC_SELECTED` | yellow loop (Keystone 5194TR, surface mount) | 33.8, 97.2 | 01c-preregulator |
 | TP38 | `FLIGHT_LDO_PG` | 1.0 mm pad | 20.6, 131.2 | 10-test-points |
 | TP39 | `4V_PRE` | yellow loop (Keystone 5194TR, surface mount) | 58.5, 113.3 | 01c-preregulator |
-| TP40 | `FOINSE_AUX_3V3` | yellow loop (Keystone 5194TR, surface mount) | 60.1, 145.7 | 10-test-points |
+| TP40 | `CHURRO_AUX_3V3` | yellow loop (Keystone 5194TR, surface mount) | 60.1, 145.7 | 10-test-points |
 | TP41 | `BAT_SOURCE_PG` | 1.0 mm pad | 30.8, 133.7 | 01-power |
-| TP42 | `VBAT_CROI_INPUT` | yellow loop (Keystone 5194TR, surface mount) | 14.0, 131.1 | 01-power |
+| TP42 | `VBAT_BURRITO_INPUT` | yellow loop (Keystone 5194TR, surface mount) | 14.0, 131.1 | 01-power |
 | TP43 | `BAT_BLOCK_GATE` | 1.0 mm pad | 25.9, 134.8 | 01-power |
 | TP44 | `BAT_SHDN_N` | 1.0 mm pad | 61.1, 136.3 | 10-test-points |
 | TP45 | `BAT_SOURCE_FAULT_N` | 1.0 mm pad | 26.8, 131.2 | 10-test-points |

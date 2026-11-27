@@ -716,7 +716,7 @@
       (place H2 176000 -56000 front 0 (PN M3))
     )
     (component Ogma2:TestPoint_Keystone_5190TR_ColorKeyed
-      (place TP42 109000 -192000 front 0 (PN VBAT_CROI_INPUT))
+      (place TP42 109000 -192000 front 0 (PN VBAT_BURRITO_INPUT))
       (place TP31 230073.2 -190246 front 0 (PN COMMS_3V3))
       (place TP37 133800 -147250 front 0 (PN LOGIC_SELECTED))
       (place TP20 42835 -43021.8 front 0 (PN USB_VBUS))
@@ -725,7 +725,7 @@
       (place TP30 35932.2 -45766.8 front 0 (PN BOOT_3V3))
       (place TP25 129449.999 -144650 front 0 (PN FLIGHT_3V3))
       (place TP15 43434 -17297.4 front 0 (PN GNSS_PPS))
-      (place TP40 36499.8 -28956 front 0 (PN FOINSE_AUX_3V3))
+      (place TP40 36499.8 -28956 front 0 (PN CHURRO_AUX_3V3))
       (place TP39 158550 -163300 front 0 (PN 4V_PRE))
       (place TP19 262077.2 -113030 front 0 (PN TP_STROBE))
       (place TP2 117856 -66344.8 front 0 (PN LORA_3V3))
@@ -4541,7 +4541,7 @@
         U4606-11 U4606-12 U4606-14 U4606-15 U4606-20 R1006-2 C509-2 Y201-2 Y201-4
         R6713-2)
     )
-    (net VBAT_CROI_INPUT
+    (net VBAT_BURRITO_INPUT
       (pins TP42-1 R1003-1 C1002-1 J101-1 R1001-1 U101-5 D1002-1 Q102-2 Q101-1 Q101-2
         Q101-3 J102-1 J102-1@1 J102-1@2 J102-1@3 J102-1@4 J102-1@5)
     )
@@ -4685,10 +4685,10 @@
     (net CAN2_RX_ISO
       (pins U505-4 U504-10)
     )
-    (net CAN2_L
+    (net CAN2-
       (pins U505-6 D502-2 J502-2 R515-2)
     )
-    (net CAN2_H
+    (net CAN2+
       (pins U505-7 D502-1 J502-1 R515-1)
     )
     (net CAN2_STB_ISO
@@ -4864,7 +4864,7 @@
     (net BAT_OV_DIV
       (pins R1003-2 U101-7 R1004-1)
     )
-    (net FOINSE_AUX_3V3
+    (net CHURRO_AUX_3V3
       (pins C7003-1 R7105-1 C7002-1 TP40-1 U7002-14 R7003-1 R7001-2 R7008-1 J102-3
         J102-3@1 J102-3@2 J102-3@3 J102-3@4 J102-3@5)
     )
@@ -4926,10 +4926,10 @@
     (net USB_CC1
       (pins J4401-A5 R4401-1)
     )
-    (net USB_DP_CONN
+    (net USB_CONN_D+
       (pins J4401-A6 J4401-B6 R4405-2 D4401-1 D4401-6)
     )
-    (net USB_DM_CONN
+    (net USB_CONN_D-
       (pins J4401-A7 J4401-B7 R4406-2 D4401-3 D4401-4)
     )
     (net "unconnected-(J4401-SBU1-PadA8)"
@@ -4980,7 +4980,7 @@
     (net FLIGHT_STATUS_LED1_A
       (pins R9001-2 D9001-2)
     )
-    (net FOINSE_SCL
+    (net CHURRO_SCL
       (pins R7005-2 U201-95 U7002-2)
     )
     (net WATCHDOG_CWD
@@ -5014,10 +5014,10 @@
     (net TDK_NCS
       (pins R3205-2 U201-65 U3204-12)
     )
-    (net CAN_H
+    (net CAN+
       (pins D501-1 U503-7 J501-1 R510-1)
     )
-    (net CAN_L
+    (net CAN-
       (pins D501-2 U503-6 J501-2 R510-2)
     )
     (net PYRO1_CL
@@ -5050,7 +5050,7 @@
     (net STAGING_ARM_SENSE
       (pins R6108-2 U201-87 TP21-1)
     )
-    (net FOINSE_RETURN_EN
+    (net CHURRO_RETURN_EN
       (pins R7002-1 U201-43 U7001-3 U7002-1 U7002-4 U7002-10)
     )
     (net PYRO1_CS_MID
@@ -5107,7 +5107,7 @@
     (net PYRO_RAIL_SCALED
       (pins R8008-2 U8001-9 R8009-1 C8003-1)
     )
-    (net CROI_MON_3V3
+    (net BURRITO_MON_3V3
       (pins R7105-2 C7103-1 U7101-6)
     )
     (net TDK_3V3
@@ -5345,7 +5345,7 @@
     (net BMP_SDA
       (pins U201-93 U3403-4 R3406-2)
     )
-    (net FOINSE_SDA
+    (net CHURRO_SDA
       (pins U201-96 U7002-5 R7006-2)
     )
     (net HG_3V3
@@ -5411,7 +5411,7 @@
     (net COMMS_VDDA
       (pins C414-1 R401-2 C412-1 C413-1 U401-13 C411-1)
     )
-    (net FOINSE_AUX_3V3_ILIM
+    (net CHURRO_AUX_3V3_ILIM
       (pins R7004-1 U7001-5)
     )
     (net COMMS_BOOT0
@@ -5435,7 +5435,7 @@
     (net COMMS_LDO_IN_ILIM
       (pins U1501-5 R1504-1)
     )
-    (net USB_DP
+    (net USB_D+
       (pins R4405-1 U401-45)
     )
     (net "unconnected-(U6304-NC-Pad1)"
@@ -5604,13 +5604,13 @@
     (net FLIGHT_LDO_NR
       (pins U1701-8 C1701-1)
     )
-    (net USB_DM
+    (net USB_D-
       (pins R4406-1 U401-44)
     )
     (net PYRO1_CONT_SCALED
       (pins R6917-2 U6901-2 R6916-1)
     )
-    (net CROI_IN_PLUS
+    (net BURRITO_IN_PLUS
       (pins R7102-2 U7101-10 C7101-1)
     )
     (net "unconnected-(U6701-D4-Pad11)"
@@ -5625,7 +5625,7 @@
     (net CC_FLIGHT_TO_COMMS
       (pins R4303-2 U401-52 U4301-8)
     )
-    (net CROI_POWER_HOLD
+    (net BURRITO_POWER_HOLD
       (pins D1004-1 J102-8 J102-8@1 J102-8@2 J102-8@3 J102-8@4 J102-8@5)
     )
     (net NOR_3V3_PRELINK
@@ -5682,19 +5682,19 @@
     (net LORA_MISO
       (pins U4603-12 U401-22)
     )
-    (net FOINSE_AUX_3V3_PRELINK
+    (net CHURRO_AUX_3V3_PRELINK
       (pins U7001-6 R7001-1)
     )
     (net OUTPUT2_LOW
       (pins C6604-1 Q6401-1 Q6401-2 Q6401-5 Q6401-6 Q6401-8 R6925-1 R6923-1 J6601-5)
     )
-    (net FOINSE_SCL_EXT
+    (net CHURRO_SCL_EXT
       (pins U7002-3 U7101-5 J102-5 J102-5@1 J102-5@2 J102-5@3 J102-5@4 J102-5@5)
     )
-    (net FOINSE_SDA_EXT
+    (net CHURRO_SDA_EXT
       (pins U7002-6 U7101-4 J102-6 J102-6@1 J102-6@2 J102-6@3 J102-6@4 J102-6@5)
     )
-    (net FOINSE_FAULT_N_EXT
+    (net CHURRO_FAULT_N_EXT
       (pins U7002-8 R7008-2 J102-7 J102-7@1 J102-7@2 J102-7@3 J102-7@4 J102-7@5)
     )
     (net "unconnected-(U7002-D4-Pad11)"
@@ -5706,7 +5706,7 @@
     (net TDK_SCK_DAMP
       (pins R3207-2 U3204-13)
     )
-    (net CROI_IN_MINUS
+    (net BURRITO_IN_MINUS
       (pins R7103-2 U7101-9 C7101-2)
     )
     (net PYRO2_GATE
@@ -5757,7 +5757,7 @@
     (net "unconnected-(J501-Pin_6-Pad6)"
       (pins J501-6)
     )
-    (net CROI_VBUS_FILTER
+    (net BURRITO_VBUS_FILTER
       (pins C7102-1 U7101-8 R7104-2)
     )
     (net CAN_ILIM
@@ -5955,14 +5955,14 @@
       COMMS_LDO_NR COMMS_LDO_PG COMMS_MR_N COMMS_NRST COMMS_RESET_REQUEST
       COMMS_STATUS_LED COMMS_STATUS_LED_A COMMS_SWCLK COMMS_SWDIO COMMS_SWO
       COMMS_TO_FLIGHT COMMS_VCAP COMMS_VDDA CORE_IMON CORE_INPUT_EN CORE_INPUT_PG
-      CORE_OV_DIV CORE_PG_DIV CORE_SLEW CROI_IN_MINUS CROI_IN_PLUS CROI_POWER_HOLD
-      CROI_VBUS_FILTER FC_POWER_HOLD FLIGHT_3V3_MID FLIGHT_3V3_SCALED FLIGHT_BOOT0
+      CORE_OV_DIV CORE_PG_DIV CORE_SLEW BURRITO_IN_MINUS BURRITO_IN_PLUS BURRITO_POWER_HOLD
+      BURRITO_VBUS_FILTER FC_POWER_HOLD FLIGHT_3V3_MID FLIGHT_3V3_SCALED FLIGHT_BOOT0
       FLIGHT_COMMS_EN FLIGHT_HSE_IN FLIGHT_HSE_OUT FLIGHT_LDO_FB FLIGHT_LDO_NR
       FLIGHT_LDO_PG FLIGHT_LSE_IN FLIGHT_LSE_OUT FLIGHT_MR_N FLIGHT_NOT_READY
       FLIGHT_NRST FLIGHT_STATUS_LED1 FLIGHT_STATUS_LED1_A FLIGHT_STATUS_LED2_A
       FLIGHT_SWCLK FLIGHT_SWDIO FLIGHT_TO_COMMS FLIGHT_VBAT FLIGHT_VCAP FLIGHT_VDDA
-      FOINSE_AUX_3V3_ILIM FOINSE_FAULT_N_EXT FOINSE_RETURN_EN FOINSE_SCL FOINSE_SCL_EXT
-      FOINSE_SDA FOINSE_SDA_EXT GNSS_DISCHARGE GNSS_EN GNSS_POWER_EN GNSS_PPS
+      CHURRO_AUX_3V3_ILIM CHURRO_FAULT_N_EXT CHURRO_RETURN_EN CHURRO_SCL CHURRO_SCL_EXT
+      CHURRO_SDA CHURRO_SDA_EXT GNSS_DISCHARGE GNSS_EN GNSS_POWER_EN GNSS_PPS
       GNSS_PPS_ISO GNSS_RESET_N GNSS_RESET_N_ISO GNSS_RX GNSS_RX_ISO GNSS_SLEW
       GNSS_TX GNSS_TX_ISO HG_INT1 HG_MISO HG_MOSI HG_MOSI_DAMP HG_NCS HG_SCK
       HG_SCK_DAMP LORA_BUSY LORA_BUSY_ISO LORA_BUSY_MOD LORA_DIO1 LORA_DIO1_ISO
@@ -6040,7 +6040,7 @@
         (clearance 100)
       )
     )
-    (class USB_DIFF USB_DM USB_DM_CONN USB_DP USB_DP_CONN
+    (class USB_DIFF USB_D- USB_CONN_D- USB_D+ USB_CONN_D+
       (circuit
         (use_via "Via[0-5]_600:300_um")
       )
@@ -6088,7 +6088,7 @@
         (clearance 203)
       )
     )
-    (class CAN_DIFF CAN2_H CAN2_L CAN_H CAN_L
+    (class CAN_DIFF CAN2+ CAN2- CAN+ CAN-
       (circuit
         (use_via "Via[0-5]_600:300_um")
       )
@@ -6097,7 +6097,7 @@
         (clearance 200)
       )
     )
-    (class SRC_6A ENERGY_TAP VBAT_CROI_INPUT
+    (class SRC_6A ENERGY_TAP VBAT_BURRITO_INPUT
       (circuit
         (use_via "Via[0-5]_600:300_um")
       )
@@ -6107,8 +6107,8 @@
       )
     )
     (class RAIL_3V3 3V3_OPTIONAL 3V3_OPTIONAL_PRELINK BMP_3V3 BOOT_3V3 CAN_3V3
-      COMMS_3V3 COMMS_3V3_PRELINK CROI_MON_3V3 FLIGHT_3V3 FLIGHT_3V3_PRELINK
-      FOINSE_AUX_3V3 FOINSE_AUX_3V3_PRELINK GNSS_3V3 HG_3V3 LORA_3V3 MAG_3V3
+      COMMS_3V3 COMMS_3V3_PRELINK BURRITO_MON_3V3 FLIGHT_3V3 FLIGHT_3V3_PRELINK
+      CHURRO_AUX_3V3 CHURRO_AUX_3V3_PRELINK GNSS_3V3 HG_3V3 LORA_3V3 MAG_3V3
       NOR_3V3 NOR_3V3_PRELINK ST_3V3 TDK_3V3 TE_3V3 USB_LIMITED USB_VBUS
       (circuit
         (use_via "Via[0-5]_450:200_um")
@@ -6291,21 +6291,21 @@
     (wire (path B.Cu 1000  113500 -85350  112500 -86350)(net GND)(type route))
     (wire (path B.Cu 1000  127838 -85350  139319 -85350)(net GND)(type route))
     (wire (path B.Cu 1000  118821 -85350  113500 -85350)(net GND)(type route))
-    (wire (path F.Cu 200  124390 -195200  123650 -195200)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 1600  104950 -183810  108000 -183810)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 200  304146 -184912  305126 -183932)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 1200  118390 -197200  120930 -197200)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 300  126450 -189570  126450 -190200)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 200  305126 -183932  305126 -181811)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 4000  109000 -197800  117000 -197800)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 300  122750 -187220  123900 -187200)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 4000  122500 -200000  122500 -206600)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 200  123650 -195200  123650 -197900)(net VBAT_CROI_INPUT)(type route))
-    (wire (path F.Cu 4000  109000 -182300  109000 -197800)(net VBAT_CROI_INPUT)(type route))
-    (wire (path B.Cu 300  123600 -187500  123600 -198400)(net VBAT_CROI_INPUT)(type route))
-    (wire (path B.Cu 300  126450 -190200  124000 -190200)(net VBAT_CROI_INPUT)(type route))
-    (wire (path B.Cu 300  123900 -187200  123600 -187500)(net VBAT_CROI_INPUT)(type route))
-    (wire (path B.Cu 300  124000 -190200  123600 -190600)(net VBAT_CROI_INPUT)(type route))
+    (wire (path F.Cu 200  124390 -195200  123650 -195200)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 1600  104950 -183810  108000 -183810)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 200  304146 -184912  305126 -183932)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 1200  118390 -197200  120930 -197200)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 300  126450 -189570  126450 -190200)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 200  305126 -183932  305126 -181811)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 4000  109000 -197800  117000 -197800)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 300  122750 -187220  123900 -187200)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 4000  122500 -200000  122500 -206600)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 200  123650 -195200  123650 -197900)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path F.Cu 4000  109000 -182300  109000 -197800)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path B.Cu 300  123600 -187500  123600 -198400)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path B.Cu 300  126450 -190200  124000 -190200)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path B.Cu 300  123900 -187200  123600 -187500)(net VBAT_BURRITO_INPUT)(type route))
+    (wire (path B.Cu 300  124000 -190200  123600 -190600)(net VBAT_BURRITO_INPUT)(type route))
     (wire (path F.Cu 400  161915 -73977.6  161801 -74091.8)(net COMMS_3V3)(type route))
     (wire (path F.Cu 400  241523 -128847  242330 -128847)(net COMMS_3V3)(type route))
     (wire (path F.Cu 400  251903 -138370  251903 -140067)(net COMMS_3V3)(type route))
@@ -6790,7 +6790,7 @@
     (wire (path F.Cu 125  270692 -107100  270692 -107150)(net FLIGHT_STATUS_LED1)(type route))
     (wire (path F.Cu 125  270692 -106482  270692 -107100)(net FLIGHT_STATUS_LED1)(type route))
     (wire (path F.Cu 125  270692 -107150  270693 -107151)(net FLIGHT_STATUS_LED1)(type route))
-    (wire (path F.Cu 125  259867 -91414.6  259517 -91765  259517 -92807.4)(net FOINSE_SCL)(type route))
+    (wire (path F.Cu 125  259867 -91414.6  259517 -91765  259517 -92807.4)(net CHURRO_SCL)(type route))
     (wire (path F.Cu 125  256642 -95199.2  256358 -95482.4)(net SUPERVISOR_WDI)(type route))
     (wire (path F.Cu 125  256819 -95199.2  256642 -95199.2)(net SUPERVISOR_WDI)(type route))
     (wire (path F.Cu 125  256358 -95482.4  255342 -95482.4)(net SUPERVISOR_WDI)(type route))
@@ -6831,8 +6831,8 @@
     (wire (path In2.Cu 150  129125 -185850  122750 -189675)(net BAT_UV_DIV)(type route))
     (wire (path F.Cu 125  114654 -68656.2  113214 -68656.2  113110 -68552.6)(net LORA_BUSY_MOD)(type route))
     (wire (path F.Cu 125  263517 -93954.6  263517 -92807.4)(net STAGING_ARM_SENSE)(type route))
-    (wire (path F.Cu 125  265517 -106872  265786 -106604)(net FOINSE_RETURN_EN)(type route))
-    (wire (path F.Cu 125  265517 -108157  265517 -106872)(net FOINSE_RETURN_EN)(type route))
+    (wire (path F.Cu 125  265517 -106872  265786 -106604)(net CHURRO_RETURN_EN)(type route))
+    (wire (path F.Cu 125  265517 -108157  265517 -106872)(net CHURRO_RETURN_EN)(type route))
     (wire (path F.Cu 950  138750 -82000  138750 -83850)(net RECOVERY_ARMED_VBAT)(type route))
     (wire (path F.Cu 950  138400 -81340  138750 -82000)(net RECOVERY_ARMED_VBAT)(type route))
     (wire (path F.Cu 300  110450 -155600  111770 -155600)(net RECOVERY_ARMED_VBAT)(type route))
@@ -7113,7 +7113,7 @@
     (wire (path F.Cu 125  197337 -96120.8  197337 -95107.8)(net BMP_SDA)(type fix))
     (wire (path F.Cu 125  260517 -92807.4  260517 -91323.8)(net BMP_SDA)(type route))
     (wire (path F.Cu 125  197337 -95107.8  197081 -94851.8)(net BMP_SDA)(type fix))
-    (wire (path F.Cu 125  259258 -91414.6  259017 -91655.4  259017 -92807.4)(net FOINSE_SDA)(type route))
+    (wire (path F.Cu 125  259258 -91414.6  259017 -91655.4  259017 -92807.4)(net CHURRO_SDA)(type route))
     (wire (path F.Cu 400  198290 -104176  197113 -104176  197030 -104093)(net HG_3V3)(type fix))
     (wire (path F.Cu 400  197458 -102576  198290 -102576)(net HG_3V3)(type fix))
     (wire (path F.Cu 400  198290 -107737  198708 -108155)(net HG_3V3)(type fix))
@@ -7568,9 +7568,9 @@
     (via "Via[0-5]_450:200_um"  137566 -81875 (net GND)(type route))
     (via "Via[0-5]_450:200_um"  251439 -97684.5 (net GND)(type route))
     (via "Via[0-5]_450:200_um"  126063 -59969.6 (net GND)(type fix))
-    (via "Via[0-5]_450:200_um"  126450 -190200 (net VBAT_CROI_INPUT)(type route))
-    (via "Via[0-5]_450:200_um"  123600 -198400 (net VBAT_CROI_INPUT)(type route))
-    (via "Via[0-5]_450:200_um"  123900 -187200 (net VBAT_CROI_INPUT)(type route))
+    (via "Via[0-5]_450:200_um"  126450 -190200 (net VBAT_BURRITO_INPUT)(type route))
+    (via "Via[0-5]_450:200_um"  123600 -198400 (net VBAT_BURRITO_INPUT)(type route))
+    (via "Via[0-5]_450:200_um"  123900 -187200 (net VBAT_BURRITO_INPUT)(type route))
     (via "Via[0-5]_450:200_um"  132712 -79070.2 (net FLIGHT_3V3)(type route))
     (via "Via[0-5]_450:200_um"  193397 -106038 (net FLIGHT_3V3)(type fix))
     (via "Via[0-5]_450:200_um"  270032 -108167 (net FLIGHT_3V3)(type route))
@@ -7645,7 +7645,7 @@
     (via "Via[0-5]_450:200_um"  272110 -104877 (net TDK_MOSI)(type route))
     (via "Via[0-5]_450:200_um"  272161 -103454 (net CAN_POWER_EN)(type route))
     (via "Via[0-5]_450:200_um"  270692 -107100 (net FLIGHT_STATUS_LED1)(type route))
-    (via "Via[0-5]_450:200_um"  259867 -91414.6 (net FOINSE_SCL)(type route))
+    (via "Via[0-5]_450:200_um"  259867 -91414.6 (net CHURRO_SCL)(type route))
     (via "Via[0-5]_450:200_um"  256819 -95199.2 (net SUPERVISOR_WDI)(type route))
     (via "Via[0-5]_600:300_um"  137400 -190900 (net VBAT_PROTECTED)(type route))
     (via "Via[0-5]_450:200_um"  134550 -192950 (net VBAT_PROTECTED)(type route))
@@ -7658,7 +7658,7 @@
     (via "Via[0-5]_450:200_um"  124388 -196200 (net BAT_UV_DIV)(type route))
     (via "Via[0-5]_450:200_um"  122750 -189675 (net BAT_UV_DIV)(type route))
     (via "Via[0-5]_450:200_um"  263517 -93954.6 (net STAGING_ARM_SENSE)(type route))
-    (via "Via[0-5]_450:200_um"  265786 -106604 (net FOINSE_RETURN_EN)(type route))
+    (via "Via[0-5]_450:200_um"  265786 -106604 (net CHURRO_RETURN_EN)(type route))
     (via "Via[0-5]_600:300_um"  138750 -83300 (net RECOVERY_ARMED_VBAT)(type route))
     (via "Via[0-5]_450:200_um"  110450 -153600 (net RECOVERY_ARMED_VBAT)(type route))
     (via "Via[0-5]_600:300_um"  129921 -81397.8 (net RECOVERY_ARMED_VBAT)(type route))
@@ -7728,7 +7728,7 @@
     (via "Via[0-5]_450:200_um"  261823 -91440 (net HG_INT1)(type route))
     (via "Via[0-5]_450:200_um"  261112 -91490.8 (net BMP_SCL)(type route))
     (via "Via[0-5]_450:200_um"  260517 -91323.8 (net BMP_SDA)(type route))
-    (via "Via[0-5]_450:200_um"  259258 -91414.6 (net FOINSE_SDA)(type route))
+    (via "Via[0-5]_450:200_um"  259258 -91414.6 (net CHURRO_SDA)(type route))
     (via "Via[0-5]_450:200_um"  158801 -70866 (net GNSS_POWER_EN)(type route))
     (via "Via[0-5]_450:200_um"  158191 -74218.8 (net GNSS_POWER_EN)(type route))
     (via "Via[0-5]_450:200_um"  164617 -74041 (net GNSS_POWER_EN)(type route))

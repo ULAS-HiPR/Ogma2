@@ -39,7 +39,7 @@ def group(role, row):
             return 'Servo control and diagnostics'
         if net.startswith('CAN_'):
             return 'CAN'
-        if net.startswith('FOINSE_'):
+        if net.startswith('CHURRO_'):
             return 'Auxiliary monitoring'
         if net in ('FLIGHT_TO_COMMS', 'COMMS_TO_FLIGHT', 'COMMS_EN', 'COMMS_RESET_REQUEST'):
             return 'Comms link and control'

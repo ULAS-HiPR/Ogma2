@@ -10,8 +10,8 @@ signal to another pin with the same signal. This step takes each new ADC channel
 The rules the search kept, and why:
 - The fault the brief asked to verify first holds. After reset PA15 is JTDI with an internal pull-up, as are PA13 and
   PB4 (DS14258 rev 6, table 14, note 7), of 30-50 kohm (table 58). Against R7002's 100 kohm that holds
-  FOINSE_RETURN_EN at 2.2-2.5 V from reset until firmware drives PA15: over the TPS2553's 1.1 V enable threshold
-  (SLVS841G) and the TMUX1511's 1.2 V select threshold (SCDS390B), so U7001 powered Foinse's aux rail and U7002
+  CHURRO_RETURN_EN at 2.2-2.5 V from reset until firmware drives PA15: over the TPS2553's 1.1 V enable threshold
+  (SLVS841G) and the TMUX1511's 1.2 V select threshold (SCDS390B), so U7001 powered Churro's aux rail and U7002
   joined its I2C and fault lines at every power-up. It moves off PA15.
 - The ROM bootloader drives some pins (AN2606 rev 70, table 137): USART1 TX on PA9 held PYRO1_LS_SELECT, USB on PA11
   and PA12 held NOR_EN and FLIGHT_COMMS_EN. They move; the three spare test pads take those pins, a pad and nothing
@@ -52,7 +52,7 @@ MOVES = {
         ('NOR_CLK', '37', '26'), ('RESET_MEMORY', '26', '29'), ('ADC_FLIGHT_3V3', '24', '33'),
         ('ADC_VEHICLE_VBAT', '23', '34'), ('FLIGHT_COMMS_EN', '71', '35'), ('PYRO2_LS_SELECT', '65', '36'),
         ('COMMS_RESET_REQUEST', '90', '37'), ('PYRO3_FIRE', '43', '40'), ('TP_STROBE', '35', '41'),
-        ('FOINSE_RETURN_EN', '77', '43'), ('FC_POWER_HOLD', '4', '45'), ('PYRO2_FIRE', '40', '46'),
+        ('CHURRO_RETURN_EN', '77', '43'), ('FC_POWER_HOLD', '4', '45'), ('PYRO2_FIRE', '40', '46'),
         ('FLIGHT_STATUS_LED1', '88', '51'), ('CAN_POWER_EN', '36', '57'), ('ST_NCS', '29', '61'),
         ('CAN_STB', '41', '62'), ('PYRO3_LS_SELECT', '61', '63'), ('ST_DRDY', '97', '64'), ('TDK_NCS', '51', '65'),
         ('TP_PC7', '64', '68'), ('TP_PD10', '57', '70'), ('TP_PC6', '63', '71'), ('TDK_DRDY', '2', '77'),
@@ -67,7 +67,7 @@ MOVES = {
 }
 # why a net left its pin, where the reason is not distance
 LEFT = {
-    'FOINSE_RETURN_EN': "PA15's reset pull-up held U7001 and U7002 on until firmware ran",
+    'CHURRO_RETURN_EN': "PA15's reset pull-up held U7001 and U7002 on until firmware ran",
     'PYRO1_LS_SELECT': 'the ROM bootloader drives PA9 as USART1 TX',
     'NOR_EN': 'the ROM bootloader drives PA11 as USB D-',
     'FLIGHT_COMMS_EN': 'the ROM bootloader drives PA12 as USB D+',

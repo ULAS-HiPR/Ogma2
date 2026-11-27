@@ -23,12 +23,12 @@ def check(project, netlist, erc):
     require(not any('STM32' in c.findtext('value', '') for c in parts.values()), 'No MCU populated')
     require(not any('CAN' in v for v in actual.values()), 'No CAN endpoint or conductor')
     require(not any('24V' in v for v in actual.values()), 'No invented regulated 24 V rail')
-    for index, tag, out in [(1, 'AV', 'VBAT_CROI'), (2, 'PROP', 'PROP_RAW')]:
+    for index, tag, out in [(1, 'AV', 'VBAT_BURRITO'), (2, 'PROP', 'PROP_RAW')]:
         pre = index*10
         efuse, mosfet = f'U{pre}01', f'Q{pre}01'
         for number, net in {1:tag+'_REV_BLOCKED', 2:tag+'_REV_BLOCKED', 3:tag+'_BLOCK_GATE',
             4:tag+'_BLOCK_DRV', 5:tag+'_PACK', 8:'GND', 12:tag+'_SHDN_N',
-            14:'FOINSE_FAULT_N', 17:out if index==1 else tag+'_PROTECTED', 18:out if index==1 else tag+'_PROTECTED', 25:'GND'}.items():
+            14:'CHURRO_FAULT_N', 17:out if index==1 else tag+'_PROTECTED', 18:out if index==1 else tag+'_PROTECTED', 25:'GND'}.items():
             pin(efuse, number, net)
         require(actual.get((efuse, '11'), 'unconnected-').startswith('unconnected-'), f'{efuse} MODE open: latch-off')
         for number in [1, 2, 3]: pin(mosfet, number, tag+'_PACK')
@@ -48,16 +48,16 @@ def check(project, netlist, erc):
         if index==2:
             pin(f'R{pre}11', 1, tag+'_PROTECTED'); pin(f'R{pre}11', 2, out)
         else:
-            require('R1011' not in parts and 'U4001' not in parts,'No duplicate AV shunt or current monitor on Foinse')
+            require('R1011' not in parts and 'U4001' not in parts,'No duplicate AV shunt or current monitor on Churro')
         pin(f'D{pre}01', 1, tag+'_PACK'); pin(f'D{pre}01', 2, 'GND')
         require(parts[f'D{pre}01'].find('libsource').get('part') == 'D_Zener', 'Unidirectional TVS symbol: cathode pin 1')
         if index==1:continue
         mon = f'U{30+index*10}01'
-        for number, net in {1:'GND', 2:'GND' if index==1 else 'FOINSE_AUX_3V3', 3:'FOINSE_FAULT_N',
+        for number, net in {1:'GND', 2:'GND' if index==1 else 'CHURRO_AUX_3V3', 3:'CHURRO_FAULT_N',
             4:'MON_SDA', 5:'MON_SCL', 6:tag+'_MON_3V3', 7:'GND', 8:tag+'_VBUS_FILTER',
             9:tag+'_IN_MINUS', 10:tag+'_IN_PLUS'}.items(): pin(mon, number, net)
-    for number, net in {1:'VBAT_CROI',2:'GND',3:'FOINSE_AUX_3V3',4:'GND',5:'FOINSE_SCL',
-                       6:'FOINSE_SDA',7:'FOINSE_FAULT_N'}.items(): pin('J301', number, net)
+    for number, net in {1:'VBAT_BURRITO',2:'GND',3:'CHURRO_AUX_3V3',4:'GND',5:'CHURRO_SCL',
+                       6:'CHURRO_SDA',7:'CHURRO_FAULT_N'}.items(): pin('J301', number, net)
     require(actual.get(('J301','8'),'unconnected-').startswith('unconnected-'), 'Spare mate contact not energised')
     for number, net in {1:'GND',2:'ADC_READY',3:'GND',4:'AV_NTC_ADC',5:'PROP_NTC_ADC',
                        6:'AV_V_ADC',7:'PROP_V_ADC',8:'ADC_3V3',9:'MON_SDA',10:'MON_SCL'}.items(): pin('U6001',number,net)
@@ -68,7 +68,7 @@ def check(project, netlist, erc):
         require(voltage*10/(top+10)<3.3, 'One shorted divider top resistor remains below 3.3 V at nominal OV boundary')
     bad = copy.deepcopy(root)
     for net in bad.findall('nets/net'):
-        if net.get('name') == 'PROP_RAW': net.set('name','VBAT_CROI')
+        if net.get('name') == 'PROP_RAW': net.set('name','VBAT_BURRITO')
     try: verify(bad, expected)
     except AssertionError: checks.append('Negative test rejects merged battery-positive branches')
     else: raise AssertionError('Checker accepted a merged 6S/2S positive rail')

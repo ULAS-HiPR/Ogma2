@@ -15,7 +15,7 @@ d = ds.m_NetSettings.GetDefaultNetclass()
 d.SetTrackWidth(MM(0.15)); d.SetClearance(MM(0.15)); d.SetViaDiameter(MM(0.6)); d.SetViaDrill(MM(0.3))
 obs = R.Obstacles(b)
 CRIT = {'FLIGHT_HSE_IN': .2, 'FLIGHT_HSE_OUT': .2, 'FLIGHT_LSE_IN': .2, 'FLIGHT_LSE_OUT': .2,
-        'CAN_H': .25, 'CAN_L': .25, 'CAN2_H': .25, 'CAN2_L': .25, 'USB_DP_CONN': .2, 'USB_DM_CONN': .2}
+        'CAN+': .25, 'CAN-': .25, 'CAN2+': .25, 'CAN2-': .25, 'USB_CONN_D+': .2, 'USB_CONN_D-': .2}
 res = {}
 for net, w in CRIT.items():
     pads = [(f.GetReference(), p.GetNumber()) for f in b.GetFootprints() for p in f.Pads() if p.GetNetname() == net]

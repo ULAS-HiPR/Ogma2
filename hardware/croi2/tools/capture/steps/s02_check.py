@@ -6,10 +6,10 @@ import capture as C
 
 RC = '/01-power/POWER_HOLD_RC'
 EXPECT = {('Q101', '5'): 'ENERGY_TAP', ('R7104', '1'): 'ENERGY_TAP', ('U101', '1'): 'ENERGY_TAP', ('U101', '2'): 'ENERGY_TAP',
-          ('U101', '11'): 'GND', ('J102', '8'): 'CROI_POWER_HOLD',
+          ('U101', '11'): 'GND', ('J102', '8'): 'BURRITO_POWER_HOLD',
           ('R1014', '1'): 'FC_POWER_HOLD', ('R1014', '2'): RC, ('R1015', '1'): 'FC_POWER_HOLD', ('R1015', '2'): 'GND',
           ('C1007', '1'): RC, ('C1007', '2'): 'GND',
-          ('D1003', '2'): RC, ('D1003', '1'): 'BAT_SHDN_N', ('D1004', '2'): RC, ('D1004', '1'): 'CROI_POWER_HOLD',
+          ('D1003', '2'): RC, ('D1003', '1'): 'BAT_SHDN_N', ('D1004', '2'): RC, ('D1004', '1'): 'BURRITO_POWER_HOLD',
           ('C1004', '1'): 'ENERGY_TAP', ('C1004', '2'): 'GND', ('C1005', '1'): 'ENERGY_TAP', ('C1005', '2'): 'GND'}
 ADDED = ['C1004', 'C1005', 'C1007', 'D1003', 'D1004', 'R1014', 'R1015']
 CLOSES = {"Global Label 'FC_POWER_HOLD'"}

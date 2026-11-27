@@ -32,7 +32,7 @@ to Burrito J102"]
 Fajita converts locally"]
   J -->|"AUX 3.3 V from Burrito"| M["INA228 0x41 · ADS1115 0x48"]
   M <-->|"I²C via TCA4307"| J
-  J -.->|"pin 8 CROI_POWER_HOLD"| AP
+  J -.->|"pin 8 BURRITO_POWER_HOLD"| AP
   EAV["J103 AV enable loop"] -.-> AP
   EPR["J104 PROP enable loop"] -.-> PP
 ```
@@ -70,7 +70,7 @@ Fajita converts locally"]
   no Churro change reaches Burrito (B-36).
 
 Samtec J301/J102: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault,
-8 `CROI_POWER_HOLD`. Each ground contact must carry the full fault return, and
+8 `BURRITO_POWER_HOLD`. Each ground contact must carry the full fault return, and
 the CAN reference must never become the propulsion power return: Burrito puts a
 series part in each reference (D-21Nov.11, B-39).
 

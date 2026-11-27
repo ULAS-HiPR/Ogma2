@@ -658,7 +658,7 @@
       (effects
         (font
           (size 0.95 0.95))))
-    (property "Value" "VBAT_CROI"
+    (property "Value" "VBAT_BURRITO"
       (at 228.6 146.4 0.0)
       (effects
         (font
@@ -713,7 +713,7 @@
       (effects
         (font
           (size 0.95 0.95))))
-    (property "Value" "VBAT_CROI"
+    (property "Value" "VBAT_BURRITO"
       (at 320.04 146.4 0.0)
       (effects
         (font
@@ -1025,14 +1025,14 @@
         (size 1.4 1.4))
       (justify left top))
     (uuid "94ac591e-12b6-41a3-ae83-af53d375a835"))
-  (text "AV shunt and INA228 are Croi R7101/U7101. Foinse adds no duplicate AV shunt.\nTVS/fuse coordination, effective capacitance and installed surge behavior remain unverified."
+  (text "AV shunt and INA228 are Burrito R7101/U7101. Churro adds no duplicate AV shunt.\nTVS/fuse coordination, effective capacitance and installed surge behavior remain unverified."
     (at 15.24 245.0 0.0)
     (effects
       (font
         (size 1.15 1.15))
       (justify left top))
     (uuid "501f0b47-a57b-4457-bf1d-49bebe23072a"))
-  (global_label "VBAT_CROI"
+  (global_label "VBAT_BURRITO"
     (shape bidirectional)
     (at 246.38 54.61 0.0)
     (effects
@@ -1088,7 +1088,7 @@
         (font
           (size 0.9 0.9))
         (hide yes))))
-  (global_label "VBAT_CROI"
+  (global_label "VBAT_BURRITO"
     (shape bidirectional)
     (at 228.6 160.02 0.0)
     (effects
@@ -1102,7 +1102,7 @@
         (font
           (size 0.9 0.9))
         (hide yes))))
-  (global_label "VBAT_CROI"
+  (global_label "VBAT_BURRITO"
     (shape bidirectional)
     (at 320.04 160.02 0.0)
     (effects
@@ -1321,7 +1321,7 @@
     (diameter 0.0)
     (color 0.0 0.0 0.0 0.0)
     (uuid "362d88cd-5d2e-442a-85df-2bc10283814a"))
-  (text "The TVS is intended to clamp input spikes; the capacitors supply short local current pulses.\nThese parts support the 2S protection circuit on f01. The protected output goes to Croi through f03.\nCroi measures its own current, so Foinse does not add another avionics-current shunt."
+  (text "The TVS is intended to clamp input spikes; the capacitors supply short local current pulses.\nThese parts support the 2S protection circuit on f01. The protected output goes to Burrito through f03.\nCroi measures its own current, so Churro does not add another avionics-current shunt."
     (at 15.24 22.86 0)
     (effects
       (font

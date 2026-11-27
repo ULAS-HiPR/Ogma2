@@ -28,7 +28,7 @@ tested hardware override it where they conflict.
   Croí owns the protected AV discharge shunt and INA228 0x40, standalone too;
   Foinse keeps propulsion INA228 0x41 and ADS1115 0x48, and adds ACT INA237 0x44,
   ADS1115 0x49 and charger-status TCA9535 0x20, all only read by Croí
-  (D-22Nov.4, D-22Nov.5). `FOINSE_RETURN_EN` must
+  (D-22Nov.4, D-22Nov.5). `CHURRO_RETURN_EN` must
   also enable Croí-local monitoring when Foinse isn't there. No duplicate Foinse
   AV shunt; Croí logic takeoffs come after its shunt. Pyro and servo energy leave
   before U101 through their own fuses and bypass it (D-6.1); per-channel current
@@ -128,7 +128,7 @@ production third node and doesn't bridge the vehicle bus to GSE.
   | 3 / 4 | Protected auxiliary 3.3 V / return |
   | 5 / 6 | Local monitor SCL / SDA |
   | 7 | nFAULT |
-  | 8 | `CROI_POWER_HOLD` (D-6.3) |
+  | 8 | `BURRITO_POWER_HOLD` (D-6.3) |
 
   Each ground path must carry the full alternate fault return on its own. No
   charger or propulsion current goes through Croí. The coplanar assembly needs a

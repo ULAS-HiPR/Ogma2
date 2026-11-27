@@ -37,7 +37,7 @@ circuit detail. No target firmware exists yet. Anav owns the firmware.
 
 ## Pin changes (D-22Nov.25)
 
-Pins moved on 22 November so each sits nearer what it connects to on the placed board, and to clear four reset-state faults: `FOINSE_RETURN_EN` on PA15, whose reset pull-up switched Foinse's aux rail on at every power-up until firmware ran, and three outputs on pins the ROM bootloader drives (PA9, PA11, PA12). Seán agreed the swaps; capture step 19 made them. The tables below are as captured; the pin maps in [libraries/inputs](../hardware/croi2/libraries/inputs) are the record.
+Pins moved on 22 November so each sits nearer what it connects to on the placed board, and to clear four reset-state faults: `CHURRO_RETURN_EN` on PA15, whose reset pull-up switched Foinse's aux rail on at every power-up until firmware ran, and three outputs on pins the ROM bootloader drives (PA9, PA11, PA12). Seán agreed the swaps; capture step 19 made them. The tables below are as captured; the pin maps in [libraries/inputs](../hardware/croi2/libraries/inputs) are the record.
 
 **Flight MCU (U201)**
 
@@ -55,7 +55,7 @@ Pins moved on 22 November so each sits nearer what it connects to on the placed 
 | `FC_POWER_HOLD` | PE5 (4) | PE14 (45) | GPIO | nearer what it connects to |
 | `FLIGHT_COMMS_EN` | PA12 (71) | PB0 (35) | GPIO | the ROM bootloader drives PA12 as USB D+ |
 | `FLIGHT_STATUS_LED1` | PD7 (88) | PB12 (51) | GPIO | nearer what it connects to |
-| `FOINSE_RETURN_EN` | PA15 (77) | PE12 (43) | GPIO | PA15's reset pull-up held U7001 and U7002 on until firmware ran |
+| `CHURRO_RETURN_EN` | PA15 (77) | PE12 (43) | GPIO | PA15's reset pull-up held U7001 and U7002 on until firmware ran |
 | `HG_INT1` | PE4 (3) | PB4 (90) | GPIO, EXTI4 | nearer what it connects to |
 | `MAG_INT` | PE6 (5) | PD3 (84) | GPIO, EXTI3 | nearer what it connects to |
 | `NEW_FLIGHT_CLEAR_REQUEST` | PD15 (62) | PD7 (88) | GPIO | nearer what it connects to |
@@ -171,7 +171,7 @@ listed are supplies, ground, VCAP or unused.
 | `SERVICE_POWER_EN` | PE8 (39) | Out | Services domain (NOR, CAN, AUX, sounder); one restart per session |
 | `NOR_EN` | PE3 (2) | Out | NOR local limiter |
 | `CAN_POWER_EN` | PD10 (57) | Out | CAN local limiter |
-| `FOINSE_RETURN_EN` | PE12 (43) | Out | Monitoring domain (Croí INA228 and Churro); enable standalone too |
+| `CHURRO_RETURN_EN` | PE12 (43) | Out | Monitoring domain (Croí INA228 and Churro); enable standalone too |
 | `TP_STROBE` | PE10 (41) | Out | Timing strobe: toggle at loop start, at reset recovery and at each firing step (D-19Nov.3) |
 | `FLIGHT_COMMS_EN` | PC6 (63) | Out | Comms branch, on battery |
 | `COMMS_RESET_REQUEST` | PB2 (37) | Out, open drain | Resets the comms MCU only |

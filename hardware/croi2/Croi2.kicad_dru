@@ -39,6 +39,26 @@
 (rule "RF lines take no via (D-21Nov.25)"
   (condition "A.Type == 'Via' && A.NetClass == 'RF50'")
   (constraint disallow via))
+# USB and CAN pairs. KiCad pairs two nets when their names end in + and - (CAN+ / CAN-, USB_D+ / USB_D-), so the pair rules need the 27 Nov rename (tools/rename_nets.py).
+# Width follows the net class, so a plain X route uses it. Values: docs/briefs/layout-brief.md section 2 (USB: JLC06161H-3313 calculator, 90 ohm; CAN: not impedance-controlled).
+(rule "USB pair: 0.154 mm wide (layout brief 2, 90 ohm on JLC06161H-3313)"
+  (condition "A.NetClass == 'USB_DIFF'")
+  (constraint track_width (min 0.15mm) (opt 0.154mm) (max 0.16mm)))
+(rule "USB pair: 0.203 mm gap"
+  (condition "A.NetClass == 'USB_DIFF' && A.inDiffPair('*')")
+  (constraint diff_pair_gap (min 0.2mm) (opt 0.203mm) (max 0.25mm)))
+(rule "USB pair: the two legs match to 1 mm (layout brief 2, a judgement there)"
+  (condition "A.NetClass == 'USB_DIFF' && A.inDiffPair('*')")
+  (constraint skew (max 1mm)))
+(rule "CAN pair: 0.2 mm wide (layout brief 2)"
+  (condition "A.NetClass == 'CAN_DIFF'")
+  (constraint track_width (min 0.2mm) (opt 0.2mm) (max 0.25mm)))
+(rule "CAN pair: 0.2 mm gap"
+  (condition "A.NetClass == 'CAN_DIFF' && A.inDiffPair('*')")
+  (constraint diff_pair_gap (min 0.2mm) (opt 0.2mm) (max 0.3mm)))
+(rule "CAN pair: the two legs match to 1 mm (my choice: the brief gives no figure)"
+  (condition "A.NetClass == 'CAN_DIFF' && A.inDiffPair('*')")
+  (constraint skew (max 1mm)))
 (rule "Pads of one part keep the maker's land-pattern spacing, down to JLC's 0.15 mm (last: it overrides the rules above)"
   (condition "A.Type == 'Pad' && B.Type == 'Pad' && A.Parent.Reference == B.Parent.Reference && A.Net != B.Net")
   (constraint clearance (min 0.15mm)))

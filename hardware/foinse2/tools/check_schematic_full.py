@@ -1,4 +1,4 @@
-"""Foinse native-netlist helpers and compatible full-check entrypoint.
+"""Churro native-netlist helpers and compatible full-check entrypoint.
 
 Boundary checks live in check_foinse_schematic; this board has no MCUs.
 Generated pin expectations are not analog or hardware qualification.

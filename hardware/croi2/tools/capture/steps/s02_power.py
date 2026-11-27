@@ -92,11 +92,11 @@ def build():
     g(t, K.global_label('GND', (182.88, 100.33), 0, S, 'tap'),
          *(K.junction(j, S, 'tap') for j in ((187.96, 85.09), (208.28, 85.09), (187.96, 100.33))))
 
-    # ---- J102.8 becomes CROI_POWER_HOLD (Churro's hold input).
+    # ---- J102.8 becomes BURRITO_POWER_HOLD (Churro's hold input).
     p8 = K.pin_positions(t, 'J102')['8'][:2]
     assert K.remove(t, lambda x: x[0] == 'no_connect' and K.xy(x) == p8) == 1
     K.path(t, [p8, (67.31, 422.91)], S, 'j102.8')
-    g(t, K.global_label('CROI_POWER_HOLD', (67.31, 422.91), 0, S, 'j102'))
+    g(t, K.global_label('BURRITO_POWER_HOLD', (67.31, 422.91), 0, S, 'j102'))
 
     # ---- Enable hold: FC_POWER_HOLD -> R1014 -> C1007 -> D1003 / D1004 (D-6.3, D-2Nov.4, D-2Nov.18).
     g(t, K.text('ENABLE HOLD / FC_POWER_HOLD', (139.7, 368.3), S, 'tH', 1.524))
@@ -112,7 +112,7 @@ def build():
                                                     'a polymer part (~300 uA) cuts the hold below the 0.6 s it must cover'})
     assert c['1'][:2] == (177.8, 393.7) and c['2'][:2] == (177.8, 401.32), c
     for ref, y, net, note in (('D1003', 389.89, 'BAT_SHDN_N', 'Enable hold into BAT_SHDN_N (D-6.3)'),
-                              ('D1004', 400.05, 'CROI_POWER_HOLD', 'Enable hold to Churro over J102.8 (D-6.3)')):
+                              ('D1004', 400.05, 'BURRITO_POWER_HOLD', 'Enable hold to Churro over J102.8 (D-6.3)')):
         d = K.make_symbol(t, 'Device:D_Schottky', ref, (205.74, y), 180, SCHOTTKY['value'], SOD123, S,
                           extra={'MPN': SCHOTTKY['mpn'], 'Manufacturer': SCHOTTKY['mfr'], 'Implementation_Note': note},
                           ref_at=(205.74, y - 3.81), val_at=(205.74, y + 3.81), justify=None)

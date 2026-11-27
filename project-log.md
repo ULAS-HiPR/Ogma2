@@ -5936,3 +5936,22 @@ What the sheets show, read from the step-16 netlist:
 - build.py refuses to write Burrito's board without `--overwrite-hand-edits` (HAND_EDITED). HANDOFF.md at the root;
   the layout Open rows are Seán's, by hand; standing-rules.md marks D-21Nov.21 ended for Burrito.
 
+
+## 27 November 2026: pair net names and board names out of the nets (proposed D-27Nov.1, branch diffpair-names)
+
+- Seán's Burrito to-do list (from his own message that evening): check USB and CAN trace thickness and spacing, give
+  both a custom rule so X routes with the right values, relabel the data lines to end in + and - so KiCad detects the
+  pairs, list the parts that need particular arrangement with their layout datasheets, update the netlists to drop
+  Croi and Foinse, renumber the test points after the island layout (not done: it waits for the layout).
+- Measured on the committed board (b4e9841, from the file, no KiCad): CAN_H/CAN_L and CAN2_H/CAN2_L are 0.2 mm wide with
+  a 0.2 mm gap; USB_DP_CONN/USB_DM_CONN 0.154 mm wide, 0.200 mm gap (class 0.203 mm); legs 10.84/10.68 mm (CAN),
+  10.76/10.76 mm (CAN2), 8.36/7.34 mm (USB, 1.02 mm apart against the brief's 1 mm). USB_DP and USB_DM (MCU side of
+  R4405 and R4406) have no tracks in the file.
+- `tools/rename_nets.py` (dry run by default, `--apply`): the renames in proposed D-27Nov.1 across the two boards'
+  schematics, PCBs, netlists, checks and the live docs. It leaves history/, archive/, libraries/ (the STM32 USB_DP
+  alternate function stays), this log, decisions.md and HANDOFF.md. Net sets before and after match on both boards.
+- Two sheet files renamed: `07-foinse-aux.kicad_sch` → `07-churro-aux.kicad_sch`, `f03-croi-interface.kicad_sch` →
+  `f03-burrito-interface.kicad_sch`. `Croi2` and `Foinse2` (project and file names) are unchanged.
+- `Croi2.kicad_dru`: USB_DIFF and CAN_DIFF track width, pair gap and 1 mm skew rules, before the last rule.
+- `docs/briefs/burrito-layout-checks.md`: the parts with datasheet layout rules, and the three LDOs measured.
+- Not run: KiCad ERC and DRC (no KiCad in the cloud session). Run both after applying.

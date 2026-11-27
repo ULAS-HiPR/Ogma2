@@ -38,7 +38,7 @@ GND_LOOP = {'Footprint': 'TestPoint:TestPoint_Keystone_5010-5014_Multipurpose', 
 KIND = {id(PAD): '1.0 mm pad', id(LOOP): 'orange loop, Keystone 5003', id(GND_LOOP): 'black loop at an edge, Keystone 5011'}
 
 GROUPS = [
-    ('ORANGE LOOPS: RAILS, PPS', LOOP, ['BOOT_3V3', 'NOR_3V3', 'GNSS_3V3', 'FOINSE_AUX_3V3', 'USB_VBUS', 'USB_LIMITED',
+    ('ORANGE LOOPS: RAILS, PPS', LOOP, ['BOOT_3V3', 'NOR_3V3', 'GNSS_3V3', 'CHURRO_AUX_3V3', 'USB_VBUS', 'USB_LIMITED',
                                         'GNSS_PPS']),
     ('BLACK LOOPS: GND (FWD, AFT)', GND_LOOP, ['GND', 'GND']),
     ('PADS: POWER STATUS', PAD, ['BAT_SOURCE_FAULT_N', 'BRANCH_FAULT_N', 'FC_POWER_HOLD', 'BAT_SHDN_N', 'FLIGHT_LDO_PG',

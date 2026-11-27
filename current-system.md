@@ -133,7 +133,7 @@ held off above 45 °C (D-22Nov.5).
 
 | Interface | Contract |
 | --- | --- |
-| Croí ↔ Foinse | Samtec MPT/MPS-08-01-01-L-RA-SD: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault, 8 `CROI_POWER_HOLD` |
+| Croí ↔ Foinse | Samtec MPT/MPS-08-01-01-L-RA-SD: 1 battery, 2 GND, 3 AUX 3.3 V, 4 GND, 5 SCL, 6 SDA, 7 fault, 8 `BURRITO_POWER_HOLD` |
 | Standalone 2S | Molex Nano-Fit 1053111102; footprint from Molex drawing SD-105311-100 (capture step 15) |
 | Pyro arms J6101 / J6102 | Recovery / staging (D-7.2), each with its own fuse. 2-contact each, to external arm switches. Must not mate each other, Churro J701 (Micro-Fit 430450200, raw PROP) or the Gecko enable loops (D-19Nov.5). Proposed: single-row Micro-Fit 3.0, recovery 2-way, staging 3-way with one cavity empty |
 | Outputs J6601 | Micro-Fit 430450600: 1/2/3 high sides, 4/5/6 returns through each channel's low side |

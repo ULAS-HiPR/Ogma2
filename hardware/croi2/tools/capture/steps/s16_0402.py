@@ -41,7 +41,7 @@ LINK_I = 0.020       # A: a series link between two rails of one voltage carries
 VBAT = 9.0           # 2S full is 8.4 V; U101's over-voltage trip is about 9.0 V (D-2Nov.17): the bound used
 RAILS = {'GND': 0.0, '4V_PRE': 4.0, 'CORE_HELD_4V': 4.0, 'USB_VBUS': 5.0, 'USB_LIMITED': 5.0,
          'FLIGHT_VDDA': 3.3, 'COMMS_VDDA': 3.3,
-         **{n: VBAT for n in ('VBAT_CROI_INPUT', 'VBAT_SHUNT_IN', 'VBAT_PROTECTED', 'ENERGY_TAP', 'LOGIC_SELECTED',
+         **{n: VBAT for n in ('VBAT_BURRITO_INPUT', 'VBAT_SHUNT_IN', 'VBAT_PROTECTED', 'ENERGY_TAP', 'LOGIC_SELECTED',
                               'RECOVERY_ARMED_VBAT', 'STAGING_ARMED_VBAT', '/06a-arm-boundary/RECOVERY_ARM_FEED',
                               '/06a-arm-boundary/STAGING_ARM_FEED', 'PYRO1_ENERGY', 'PYRO2_ENERGY', 'PYRO3_ENERGY')}}
 FIRE_NET = re.compile(r'PYRO\d_(ENERGY|GATE|FIRE|LS_SELECT|HS_ENABLE|CS|CL)|OUTPUT\d_(HIGH|LOW)|ARMED_VBAT|ARM_FEED|'

@@ -8,7 +8,7 @@
   "2": "GND"
  },
  "C1002": {
-  "1": "VBAT_CROI_INPUT",
+  "1": "VBAT_BURRITO_INPUT",
   "2": "GND"
  },
  "C1003": {
@@ -644,23 +644,23 @@
   "2": "GND"
  },
  "C7002": {
-  "1": "FOINSE_AUX_3V3",
+  "1": "CHURRO_AUX_3V3",
   "2": "GND"
  },
  "C7003": {
-  "1": "FOINSE_AUX_3V3",
+  "1": "CHURRO_AUX_3V3",
   "2": "GND"
  },
  "C7101": {
-  "1": "CROI_IN_PLUS",
-  "2": "CROI_IN_MINUS"
+  "1": "BURRITO_IN_PLUS",
+  "2": "BURRITO_IN_MINUS"
  },
  "C7102": {
-  "1": "CROI_VBUS_FILTER",
+  "1": "BURRITO_VBUS_FILTER",
   "2": "GND"
  },
  "C7103": {
-  "1": "CROI_MON_3V3",
+  "1": "BURRITO_MON_3V3",
   "2": "GND"
  },
  "C8001": {
@@ -684,7 +684,7 @@
   "2": "GND"
  },
  "D1002": {
-  "1": "VBAT_CROI_INPUT",
+  "1": "VBAT_BURRITO_INPUT",
   "2": null,
   "3": "BAT_SW_DIODE"
  },
@@ -693,7 +693,7 @@
   "2": "POWER_HOLD_RC"
  },
  "D1004": {
-  "1": "CROI_POWER_HOLD",
+  "1": "BURRITO_POWER_HOLD",
   "2": "POWER_HOLD_RC"
  },
  "D201": {
@@ -705,12 +705,12 @@
   "2": "RESET_MEMORY"
  },
  "D4401": {
-  "1": "USB_DP_CONN",
+  "1": "USB_CONN_D+",
   "2": "GND",
-  "3": "USB_DM_CONN",
-  "4": "USB_DM_CONN",
+  "3": "USB_CONN_D-",
+  "4": "USB_CONN_D-",
   "5": "USB_VBUS",
-  "6": "USB_DP_CONN"
+  "6": "USB_CONN_D+"
  },
  "D4501": {
   "1": "GNSS_RF",
@@ -721,13 +721,13 @@
   "2": "GND"
  },
  "D501": {
-  "1": "CAN_H",
-  "2": "CAN_L",
+  "1": "CAN+",
+  "2": "CAN-",
   "3": "GND"
  },
  "D502": {
-  "1": "CAN2_H",
-  "2": "CAN2_L",
+  "1": "CAN2+",
+  "2": "CAN2-",
   "3": "GND"
  },
  "D9001": {
@@ -767,18 +767,18 @@
   "2": "STAGING_ARM_FEED"
  },
  "J101": {
-  "1": "VBAT_CROI_INPUT",
+  "1": "VBAT_BURRITO_INPUT",
   "2": "GND"
  },
  "J102": {
-  "1": "VBAT_CROI_INPUT",
+  "1": "VBAT_BURRITO_INPUT",
   "2": "GND",
-  "3": "FOINSE_AUX_3V3",
+  "3": "CHURRO_AUX_3V3",
   "4": "GND",
-  "5": "FOINSE_SCL_EXT",
-  "6": "FOINSE_SDA_EXT",
-  "7": "FOINSE_FAULT_N_EXT",
-  "8": "CROI_POWER_HOLD"
+  "5": "CHURRO_SCL_EXT",
+  "6": "CHURRO_SDA_EXT",
+  "7": "CHURRO_FAULT_N_EXT",
+  "8": "BURRITO_POWER_HOLD"
  },
  "J103": {
   "1": "BAT_SWITCH_3V",
@@ -805,16 +805,16 @@
   "A12": "GND",
   "A4": "USB_VBUS",
   "A5": "USB_CC1",
-  "A6": "USB_DP_CONN",
-  "A7": "USB_DM_CONN",
+  "A6": "USB_CONN_D+",
+  "A7": "USB_CONN_D-",
   "A8": null,
   "A9": "USB_VBUS",
   "B1": "GND",
   "B12": "GND",
   "B4": "USB_VBUS",
   "B5": "USB_CC2",
-  "B6": "USB_DP_CONN",
-  "B7": "USB_DM_CONN",
+  "B6": "USB_CONN_D+",
+  "B7": "USB_CONN_D-",
   "B8": null,
   "B9": "USB_VBUS",
   "S1": "GND"
@@ -828,16 +828,16 @@
   "2": "GND"
  },
  "J501": {
-  "1": "CAN_H",
-  "2": "CAN_L",
+  "1": "CAN+",
+  "2": "CAN-",
   "3": "CAN_REF",
   "4": null,
   "5": null,
   "6": null
  },
  "J502": {
-  "1": "CAN2_H",
-  "2": "CAN2_L",
+  "1": "CAN2+",
+  "2": "CAN2-",
   "3": "CAN2_REF",
   "4": null,
   "5": null,
@@ -860,15 +860,15 @@
   "6": "OUTPUT3_LOW"
  },
  "Q101": {
-  "1": "VBAT_CROI_INPUT",
-  "2": "VBAT_CROI_INPUT",
-  "3": "VBAT_CROI_INPUT",
+  "1": "VBAT_BURRITO_INPUT",
+  "2": "VBAT_BURRITO_INPUT",
+  "3": "VBAT_BURRITO_INPUT",
   "4": "BAT_BLOCK_GATE",
   "5": "ENERGY_TAP"
  },
  "Q102": {
   "1": "BAT_BLOCK_DRV",
-  "2": "VBAT_CROI_INPUT",
+  "2": "VBAT_BURRITO_INPUT",
   "3": "BAT_BLOCK_GATE"
  },
  "Q6301": {
@@ -907,7 +907,7 @@
   "3": "BUZZER_LOW"
  },
  "R1001": {
-  "1": "VBAT_CROI_INPUT",
+  "1": "VBAT_BURRITO_INPUT",
   "2": "BAT_UV_DIV"
  },
  "R1002": {
@@ -915,7 +915,7 @@
   "2": "GND"
  },
  "R1003": {
-  "1": "VBAT_CROI_INPUT",
+  "1": "VBAT_BURRITO_INPUT",
   "2": "BAT_OV_DIV"
  },
  "R1004": {
@@ -1367,12 +1367,12 @@
   "2": "GND"
  },
  "R4405": {
-  "1": "USB_DP",
-  "2": "USB_DP_CONN"
+  "1": "USB_D+",
+  "2": "USB_CONN_D+"
  },
  "R4406": {
-  "1": "USB_DM",
-  "2": "USB_DM_CONN"
+  "1": "USB_D-",
+  "2": "USB_CONN_D-"
  },
  "R4407": {
   "1": "BOOT_3V3",
@@ -1483,8 +1483,8 @@
   "2": "GND"
  },
  "R510": {
-  "1": "CAN_H",
-  "2": "CAN_L"
+  "1": "CAN+",
+  "2": "CAN-"
  },
  "R511": {
   "1": "FLIGHT_3V3",
@@ -1503,8 +1503,8 @@
   "2": "CAN2_STB_ISO"
  },
  "R515": {
-  "1": "CAN2_H",
-  "2": "CAN2_L"
+  "1": "CAN2+",
+  "2": "CAN2-"
  },
  "R516": {
   "1": "CAN_REF",
@@ -1775,36 +1775,36 @@
   "2": "PYRO3_CONT_SCALED"
  },
  "R7001": {
-  "1": "FOINSE_AUX_3V3_PRELINK",
-  "2": "FOINSE_AUX_3V3"
+  "1": "CHURRO_AUX_3V3_PRELINK",
+  "2": "CHURRO_AUX_3V3"
  },
  "R7002": {
-  "1": "FOINSE_RETURN_EN",
+  "1": "CHURRO_RETURN_EN",
   "2": "GND"
  },
  "R7003": {
-  "1": "FOINSE_AUX_3V3",
+  "1": "CHURRO_AUX_3V3",
   "2": "GND"
  },
  "R7004": {
-  "1": "FOINSE_AUX_3V3_ILIM",
+  "1": "CHURRO_AUX_3V3_ILIM",
   "2": "GND"
  },
  "R7005": {
   "1": "FLIGHT_3V3",
-  "2": "FOINSE_SCL"
+  "2": "CHURRO_SCL"
  },
  "R7006": {
   "1": "FLIGHT_3V3",
-  "2": "FOINSE_SDA"
+  "2": "CHURRO_SDA"
  },
  "R7007": {
   "1": "FLIGHT_3V3",
   "2": "BRANCH_FAULT_N"
  },
  "R7008": {
-  "1": "FOINSE_AUX_3V3",
-  "2": "FOINSE_FAULT_N_EXT"
+  "1": "CHURRO_AUX_3V3",
+  "2": "CHURRO_FAULT_N_EXT"
  },
  "R7101": {
   "1": "VBAT_SHUNT_IN",
@@ -1812,19 +1812,19 @@
  },
  "R7102": {
   "1": "VBAT_SHUNT_IN",
-  "2": "CROI_IN_PLUS"
+  "2": "BURRITO_IN_PLUS"
  },
  "R7103": {
   "1": "VBAT_PROTECTED",
-  "2": "CROI_IN_MINUS"
+  "2": "BURRITO_IN_MINUS"
  },
  "R7104": {
   "1": "ENERGY_TAP",
-  "2": "CROI_VBUS_FILTER"
+  "2": "BURRITO_VBUS_FILTER"
  },
  "R7105": {
-  "1": "FOINSE_AUX_3V3",
-  "2": "CROI_MON_3V3"
+  "1": "CHURRO_AUX_3V3",
+  "2": "BURRITO_MON_3V3"
  },
  "R8001": {
   "1": "VBAT_PROTECTED",
@@ -1997,13 +1997,13 @@
   "1": "SUPERVISOR_WDI"
  },
  "TP40": {
-  "1": "FOINSE_AUX_3V3"
+  "1": "CHURRO_AUX_3V3"
  },
  "TP41": {
   "1": "BAT_SOURCE_PG"
  },
  "TP42": {
-  "1": "VBAT_CROI_INPUT"
+  "1": "VBAT_BURRITO_INPUT"
  },
  "TP43": {
   "1": "BAT_BLOCK_GATE"
@@ -2061,7 +2061,7 @@
   "25": "GND",
   "3": "BAT_BLOCK_GATE",
   "4": "BAT_BLOCK_DRV",
-  "5": "VBAT_CROI_INPUT",
+  "5": "VBAT_BURRITO_INPUT",
   "6": "BAT_UV_DIV",
   "7": "BAT_OV_DIV",
   "8": "GND",
@@ -2250,7 +2250,7 @@
   "40": "PYRO2_FIRE",
   "41": "TP_STROBE",
   "42": "NOR_NCS",
-  "43": "FOINSE_RETURN_EN",
+  "43": "CHURRO_RETURN_EN",
   "44": "RECOVERY_ARM_SENSE",
   "45": "FC_POWER_HOLD",
   "46": "PYRO3_FIRE",
@@ -2307,8 +2307,8 @@
   "92": "BMP_SCL",
   "93": "BMP_SDA",
   "94": "FLIGHT_BOOT0",
-  "95": "FOINSE_SCL",
-  "96": "FOINSE_SDA",
+  "95": "CHURRO_SCL",
+  "96": "CHURRO_SDA",
   "97": "STAGE_INHIBIT_LATCHED",
   "98": "FLIGHT_VCAP",
   "99": "GND"
@@ -2519,8 +2519,8 @@
   "41": null,
   "42": "GNSS_TX",
   "43": null,
-  "44": "USB_DM",
-  "45": "USB_DP",
+  "44": "USB_D-",
+  "45": "USB_D+",
   "46": "COMMS_SWDIO",
   "47": "GND",
   "48": "COMMS_3V3",
@@ -2750,8 +2750,8 @@
   "3": "CAN_3V3",
   "4": "CAN_RX_ISO",
   "5": "CAN_3V3",
-  "6": "CAN_L",
-  "7": "CAN_H",
+  "6": "CAN-",
+  "7": "CAN+",
   "8": "CAN_STB_ISO",
   "9": "GND"
  },
@@ -2777,8 +2777,8 @@
   "3": "CAN_3V3",
   "4": "CAN2_RX_ISO",
   "5": "CAN_3V3",
-  "6": "CAN2_L",
-  "7": "CAN2_H",
+  "6": "CAN2-",
+  "7": "CAN2+",
   "8": "CAN2_STB_ISO",
   "9": "GND"
  },
@@ -2893,38 +2893,38 @@
  "U7001": {
   "1": "3V3_OPTIONAL",
   "2": "GND",
-  "3": "FOINSE_RETURN_EN",
+  "3": "CHURRO_RETURN_EN",
   "4": "BRANCH_FAULT_N",
-  "5": "FOINSE_AUX_3V3_ILIM",
-  "6": "FOINSE_AUX_3V3_PRELINK"
+  "5": "CHURRO_AUX_3V3_ILIM",
+  "6": "CHURRO_AUX_3V3_PRELINK"
  },
  "U7002": {
-  "1": "FOINSE_RETURN_EN",
-  "10": "FOINSE_RETURN_EN",
+  "1": "CHURRO_RETURN_EN",
+  "10": "CHURRO_RETURN_EN",
   "11": null,
   "12": null,
   "13": "GND",
-  "14": "FOINSE_AUX_3V3",
-  "2": "FOINSE_SCL",
-  "3": "FOINSE_SCL_EXT",
-  "4": "FOINSE_RETURN_EN",
-  "5": "FOINSE_SDA",
-  "6": "FOINSE_SDA_EXT",
+  "14": "CHURRO_AUX_3V3",
+  "2": "CHURRO_SCL",
+  "3": "CHURRO_SCL_EXT",
+  "4": "CHURRO_RETURN_EN",
+  "5": "CHURRO_SDA",
+  "6": "CHURRO_SDA_EXT",
   "7": "GND",
-  "8": "FOINSE_FAULT_N_EXT",
+  "8": "CHURRO_FAULT_N_EXT",
   "9": "BRANCH_FAULT_N"
  },
  "U7101": {
   "1": "GND",
-  "10": "CROI_IN_PLUS",
+  "10": "BURRITO_IN_PLUS",
   "2": "GND",
   "3": null,
-  "4": "FOINSE_SDA_EXT",
-  "5": "FOINSE_SCL_EXT",
-  "6": "CROI_MON_3V3",
+  "4": "CHURRO_SDA_EXT",
+  "5": "CHURRO_SCL_EXT",
+  "6": "BURRITO_MON_3V3",
   "7": "GND",
-  "8": "CROI_VBUS_FILTER",
-  "9": "CROI_IN_MINUS"
+  "8": "BURRITO_VBUS_FILTER",
+  "9": "BURRITO_IN_MINUS"
  },
  "U8001": {
   "1": "FLIGHT_3V3",

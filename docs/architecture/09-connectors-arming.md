@@ -62,7 +62,7 @@ continuity values close.
 | Ref | Part | Job | Status |
 | --- | --- | --- | --- |
 | J101 | Molex Nano-Fit 1053111102 | Standalone 2S | Footprint to draw from the Molex drawing; never fitted with J102 |
-| J102 | Samtec MPT-08-01-01-L-RA-SD | To Churro | Pin 8 now `CROI_POWER_HOLD` ([08](08-foinse-can.md)) |
+| J102 | Samtec MPT-08-01-01-L-RA-SD | To Churro | Pin 8 now `BURRITO_POWER_HOLD` ([08](08-foinse-can.md)) |
 | J103 | Harwin Gecko 2-contact (was JST GH, D-19Nov.5) | FC battery enable | Series and lock at capture |
 | J6101 | 2-contact, keyed apart from J701 | Recovery arm switch | Function decided; connector and switch parts open |
 | J6102 | 2-contact, keyed apart from J6101 and J701 | Staging arm switch | Function decided (D-7.2); connector and switch parts open |

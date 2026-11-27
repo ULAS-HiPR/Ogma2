@@ -856,7 +856,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "Croi battery source / J103: 1 = 3 V bias, 2 = SHDN return"
+	(text "Burrito battery source / J103: 1 = 3 V bias, 2 = SHDN return"
 		(exclude_from_sim no)
 		(at 30.48 153.67 0)
 		(effects
@@ -878,7 +878,7 @@
 		)
 		(uuid "2cbe3a5b-a0e7-40d4-996e-fd61e146ecde")
 	)
-	(text "What this does: Lets an external maintained switch turn Croi's battery path on and off, without carrying load current through the switch.\nConnects to: J103 pin 1 is a limited 3 V bias; pin 2 returns to the eFuse SHDN input on 01-power. Open/unplugged means electronic OFF, not physical disconnection."
+	(text "What this does: Lets an external maintained switch turn Burrito's battery path on and off, without carrying load current through the switch.\nConnects to: J103 pin 1 is a limited 3 V bias; pin 2 returns to the eFuse SHDN input on 01-power. Open/unplugged means electronic OFF, not physical disconnection."
 		(exclude_from_sim no)
 		(at 15.24 27.94 0)
 		(effects
@@ -889,7 +889,7 @@
 		)
 		(uuid "d383a0df-4709-5bf5-8ea7-0b5c0dd8e7d6")
 	)
-	(text "R1006 on 01-power is the local 22.1k SHDN pull-down. Open contact = electronic OFF.\n100nF is an edge filter, not a guaranteed debounce circuit. SHDN cycling clears a latched fault.\nFoinse-fed use: retain a deliberate closed Croi enable plug, or add an independent third switch pole.\nUSB may still power service logic. Unplug the battery for storage. Not physical energetic isolation."
+	(text "R1006 on 01-power is the local 22.1k SHDN pull-down. Open contact = electronic OFF.\n100nF is an edge filter, not a guaranteed debounce circuit. SHDN cycling clears a latched fault.\nFoinse-fed use: retain a deliberate closed Burrito enable plug, or add an independent third switch pole.\nUSB may still power service logic. Unplug the battery for storage. Not physical energetic isolation."
 		(exclude_from_sim no)
 		(at 15.24 177.8 0)
 		(effects
@@ -1080,7 +1080,7 @@
 			)
 		)
 	)
-	(global_label "VBAT_CROI_INPUT"
+	(global_label "VBAT_BURRITO_INPUT"
 		(shape bidirectional)
 		(at 49.53 104.14 180)
 		(effects

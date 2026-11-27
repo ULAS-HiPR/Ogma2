@@ -502,7 +502,7 @@ Do not print a readiness claim beside a mere power LED.
    from high-current exit loops. No generic charge socket is invented here.
 3. Place the **2S protection block**, Q1001/Q1002/U1001, with TVS D1001 and
    local input capacitors at entry. Follow the same TPS26630 QFN loops as Croí.
-   It now feeds VBAT_CROI directly. There is **no AV shunt or AV INA** on Foinse.
+   It now feeds VBAT_BURRITO directly. There is **no AV shunt or AV INA** on Foinse.
 4. Place the **6S protection block**, Q2001/Q2002/U2001, D2001 and capacitors
    separately. Both boards share ground; 2S/6S positive copper must never join.
    Use actual clearances for 6S maximum voltage/transients, not a copied 3.3 V
