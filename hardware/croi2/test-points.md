@@ -1,6 +1,7 @@
 # Burrito test points
 
-**22 November 2026** (D-22Nov.9). Burrito has 47 test points, numbered fore to aft at the
+**22 November 2026** (D-22Nov.9). Burrito had 47 test points; D-27Nov.2 removed eight (TP2, TP3, TP5, TP8, TP9, TP10, TP32, TP35: the folded rails, the pyro current-sense nodes and the services LDO power-good), leaving 39. The remaining numbers are unchanged and renumber after layout.
+Burrito has 39 test points, numbered fore to aft at the
 80 × 180 mm placement (capture step 13). The silkscreen shows only the TP number, and the
 bottom silkscreen repeats this table.
 
@@ -19,7 +20,7 @@ the placement changes. The numbers don't change.
 
 Stage B re-placed the board on 22 November (the 0402s, J101, J103, the silk names and
 marks). The positions below are from the 80 × 160 mm build (D-22Nov.21), after capture
-step 19's pin swaps (D-22Nov.25). Seán kept the numbers, so most of the 47 no longer run fore to aft. No black loop's
+step 19's pin swaps (D-22Nov.25). Seán kept the numbers, so most of the numbers no longer run fore to aft. No black loop's
 pin sits under the back's fixed blocks, so the legend fits without the hand moves of
 22 November. The yellow loops have no pin on the back, so they can go anywhere.
 
@@ -32,15 +33,9 @@ moved with their pins to PA9, PA11 and PA12 and took their names (D-22Nov.25).
 | TP | Net | Size | x, y (mm) | Sheet |
 | --- | --- | --- | --- | --- |
 | TP1 | `GND` | black loop (Keystone 5011) | 24.5, 6.5 | 10-test-points |
-| TP2 | `LORA_3V3` | yellow loop (Keystone 5194TR, surface mount) | 21.1, 16.2 | 04f-radio-module |
-| TP3 | `GNSS_3V3` | yellow loop (Keystone 5194TR, surface mount) | 60.2, 20.6 | 10-test-points |
 | TP4 | `SUPERVISOR_WDI` | 1.0 mm pad | 29.2, 46.6 | 10-test-points |
-| TP5 | `ADC_PYRO3_CURRENT` | 1.0 mm pad | 29.2, 58.1 | 10-test-points |
 | TP6 | `ADC_PYRO1_CONTINUITY` | 1.0 mm pad | 27.7, 29.3 | 10-test-points |
 | TP7 | `ADC_PYRO3_CONTINUITY` | 1.0 mm pad | 35.9, 30.4 | 10-test-points |
-| TP8 | `NOR_3V3` | yellow loop (Keystone 5194TR, surface mount) | 10.7, 39.4 | 10-test-points |
-| TP9 | `ADC_PYRO1_CURRENT` | 1.0 mm pad | 48.2, 32.6 | 10-test-points |
-| TP10 | `ADC_PYRO2_CURRENT` | 1.0 mm pad | 44.3, 32.9 | 10-test-points |
 | TP11 | `ADC_PYRO2_CONTINUITY` | 1.0 mm pad | 31.9, 66.0 | 10-test-points |
 | TP12 | `TP_PA9` | 1.0 mm pad | 53.0, 57.5 | 02a-flight-support |
 | TP13 | `TP_PA12` | 1.0 mm pad | 50.8, 48.7 | 02a-flight-support |
@@ -62,10 +57,8 @@ moved with their pins to PA9, PA11 and PA12 and took their names (D-22Nov.25).
 | TP29 | `USB_LIMITED` | yellow loop (Keystone 5194TR, surface mount) | 25.6, 100.2 | 10-test-points |
 | TP30 | `BOOT_3V3` | yellow loop (Keystone 5194TR, surface mount) | 38.9, 100.5 | 10-test-points |
 | TP31 | `COMMS_3V3` | yellow loop (Keystone 5194TR, surface mount) | 37.9, 95.9 | 01comms-ldo |
-| TP32 | `OPTIONAL_LDO_PG` | 1.0 mm pad | 50.8, 106.7 | 10-test-points |
 | TP33 | `BRANCH_FAULT_N` | 1.0 mm pad | 54.6, 110.1 | 10-test-points |
 | TP34 | `CAN_3V3` | yellow loop (Keystone 5194TR, surface mount) | 62.9, 105.4 | 05-can |
-| TP35 | `3V3_OPTIONAL` | yellow loop (Keystone 5194TR, surface mount) | 58.9, 108.0 | 01optional-ldo |
 | TP36 | `BUCK_PG` | 1.0 mm pad | 23.9, 96.0 | 01c-preregulator |
 | TP37 | `LOGIC_SELECTED` | yellow loop (Keystone 5194TR, surface mount) | 33.8, 97.2 | 01c-preregulator |
 | TP38 | `FLIGHT_LDO_PG` | 1.0 mm pad | 20.6, 131.2 | 10-test-points |

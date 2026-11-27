@@ -4,6 +4,8 @@ Proposed capture baseline, 22 September 2026, updated for D-6.5, D-6.8, D-7.1,
 D-2Nov.3, D-2Nov.6 and D-2Nov.11. It replaces the earlier two-regulator idea.
 CAD is unchanged. See the [power chapter](../02-power.md).
 
+> **Superseded in part by D-27Nov.2 (proposed, 27 Nov 2026).** The services LDO (U1901), its limiter (U1601), `SERVICE_POWER_EN`, the NOR limiter (U3601) and the isolation and gates on NOR, GNSS and radio are removed; `3V3_OPTIONAL` and `NOR_3V3` are `FLIGHT_3V3`, GNSS and radio are on `COMMS_3V3`. The rows and the Service restart section below describe the three-domain capture and stay as history. Plan: [power-squash-plan](../../briefs/power-squash-plan.md).
+
 ## Decision
 
 **Keep three TPS7A91 regulators: flight, comms and services.** One TPSM63603

@@ -53,8 +53,8 @@ In normal running the link drops ≤66 mV (MS5607 converting). Firmware recovers
 hung I²C bus by clocking SCL and resets a sensor with its soft-reset command. A
 sensor it gives up on gets its bus pins parked (driven low or set as inputs), so
 the MCU doesn't feed it through the 22 Ω damping. The magnetometer's link is
-22 Ω because its minimum supply is 2.8 V. The NOR keeps its own limiter (U3601)
-and boundaries.
+22 Ω because its minimum supply is 2.8 V. The NOR no longer has its own limiter or isolation (U3601 and its isolators removed by D-27Nov.2, proposed);
+it sits on `FLIGHT_3V3`.
 
 **Pins** (since D-22Nov.25)**:** ST PA5/PA6/PA7, select PD14; TDK PB13/PB14/PB15, select PC8; ADXL
 PC10/PC11/PC12, select PD2; BMP PB6/PB7; TE PB10/PB3; magnetometer PA8 (SCL) / PC9 (SDA), INT on

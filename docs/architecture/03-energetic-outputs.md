@@ -34,6 +34,8 @@ Logic power never feeds these outputs. A fault on an output can blow its fuse
 or trip its switch; it can't pull down U101 or the flight rail. A staging short
 blows F6102, not the fuse recovery needs.
 
+> **D-27Nov.2 (proposed):** 06c output diagnostics (U6701, per-channel current sense to the ADC) is removed; the TPS1H100 sense pins (pin 14) are no-connect. The continuity test (06e / 06f) stays, fed from `FLIGHT_3V3`. Check TI's TPS1H100-Q1 datasheet for an unused sense pin before layout.
+
 ## One channel, with its continuity sense
 
 ```mermaid
@@ -43,8 +45,8 @@ DNP until values close"] --> HS["U6304 TPS1H100 high side
 ≈2.0 A · PE7"]
   HS --> HI(("OUTPUT1_HIGH
 J6601.1"))
-  SVC["3V3_OPTIONAL
-services rail"] -->|"R6911 + R6912
+  SVC["FLIGHT_3V3
+(was 3V3_OPTIONAL)"] -->|"R6911 + R6912
 test current"| HI
   HI --> IGN["igniter"] --> LO(("OUTPUT1_LOW
 J6601.4"))
@@ -77,7 +79,6 @@ have read 0 V, which is why the low side came back.
 | CSD17318 low side, gate from its own GPIO through 100 Ω, 100 kΩ pull-downs | Switches the return. Off at reset and power-off | One stuck GPIO or one shorted high side can't fire alone. Brings back continuity sensing |
 | U6001 latch + U6502 AND (SN74LVC1G08) | Channel 3's high side works only while the latch is set. Any flight reset or power-up clears it; only PD7 can set it again, and only while staging is disarmed | A reset mid-flight re-lighting a motor ([FF-03](../../interfaces/flight-fault-contract.md)) |
 | U6103 arm sense | Reports recovery (PE13) and staging (PD6) energy present | Firmware sees disarmed vs armed, not a guess |
-| 06c current sense | Per-channel current to ADC | Evidence that current flowed; not proof the charge fired |
 | 06e / 06f continuity | Small test current through the igniter, read at the return node | Open igniter or harness; a dead low side; a leaking high side |
 
 One fault, armed, and what happens:
@@ -152,7 +153,7 @@ reasons above. They were never deleted from the CAD.
    8.4 V armed and 1% parts, that's 0.88 mA through the igniter on the self-test
    (R69x1 / R69x2, low side closed) and 2.33 mA with a shorted high side
    (R69x3 / R69x4, low side open), a tenfold margin at 25 mA. R69x1 / R69x2 also
-   carry 1.3 mA back into the services rail whenever a high side is on; check
+   carry 1.3 mA back into the flight rail whenever a high side is on; check
    that against the rail's lightest load. "Present" reads about a quarter of a
    volt at the ADC. An igniter rated below 25 mA changes the values, not the
    layout.

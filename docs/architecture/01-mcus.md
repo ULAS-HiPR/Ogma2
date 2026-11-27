@@ -105,7 +105,7 @@ in the [firmware interface](../firmware-interface.md#flight-mcu-pins)):
 | 97 / 87 | PE0 / PD6 | Staging latch readback (through 1 kΩ) / staging arm sense | D-7.2, D-22Nov.25 |
 | 88 | PD7 | New-flight latch set | D-7.2, D-22Nov.25 |
 | 44 | PE13 | Recovery arm sense (moved from PC8) | D-7.2, D-5Nov.3 |
-| 39 | PE8 | `SERVICE_POWER_EN` (moved from PD10) | D-7.1 |
+| 39 | PE8 | no-connect (was `SERVICE_POWER_EN`, removed by D-27Nov.2) | D-7.1, D-27Nov.2 |
 | 68 / 70 / 71 | PA9 / PA11 / PA12 | Spare test pads `TP_PA9` / `TP_PA11` / `TP_PA12`, inputs with pull-downs; the bootloader drives these pins, so a pad and nothing else | D-19Nov.3, D-22Nov.25 |
 | 41 / 29 | PE10 / PA4 | `TP_STROBE` timing strobe / `RESET_MEMORY` read at boot | D-19Nov.3, D-22Nov.25 |
 | 62 | PD15 | `CAN_STB` for both transceivers | D-5Nov.3, D-22Nov.25 |

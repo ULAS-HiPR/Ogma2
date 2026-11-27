@@ -31,6 +31,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | 18 | The rail and strobe loops to surface mount (D-22Nov.24) | Done: 18 loops from Keystone 5003 through-hole (orange) to 5194TR surface-mount (yellow, C22388408); footprint `Ogma2:TestPoint_Keystone_5190TR_ColorKeyed` drawn by the step from Keystone's SMT catalogue page, model drawn (`models3d.py`); footprint and part fields only, 0 pin changes; ERC unchanged; checker TP3 follows, 364 checks pass |
 | 19 | MCU pin swaps for the placement (D-22Nov.25) | Done: 36 flight and 12 comms nets moved (labels traded on sheet 02; on sheet 04 five pins gain a no-connect and five lose one); the spare pads renamed `TP_PA9`, `TP_PA11`, `TP_PA12` with their labels and values; both pin maps with ADC channels and AF numbers from ST's pin data (51 rows match, `libraries/inputs/st-open-pin-data`); 56 pin changes; ERC unchanged; checker A8, A16 and the USART3 and CAN standby checks follow the pins, A24–A26 added (A24 and A25 fail on step 18's netlist), 369 checks pass |
 | 20 | Fire-logic pins re-dealt for take 2 (D-23Nov.25) | Done: 6 flight nets moved (labels traded on sheet 02): `PYRO2_FIRE` PE15→PE9, `PYRO3_FIRE` PE9→PE15, `PYRO3_LS_SELECT` PC6→PD4, `PYRO1_LS_SELECT` PD4→PC4, `ADC_FLIGHT_3V3` PC4→PB0 (ADC1_INP4→INP9), `FLIGHT_COMMS_EN` PB0→PC6; flight pin map from ST's pin data (40 AF and ADC rows match); 6 pin changes; ERC unchanged; checker A26 now holds D-22Nov.25's whole neighbour rule (a fire pin or low side beside an arm sense, the staging latch, the new-flight request or a supply pad fails; shown failing with channel 1's fire pin on PE0, beside VCAP), 370 checks pass |
+| 21 | Power squash (D-27Nov.2, proposed; not yet Decided) | Applied on branch `power-squash-applied` by `tools/apply_power_squash.py`: 67 parts out (services LDO and limiter, NOR / GNSS / radio gates and isolators, NOR limiter, pyro current sense; 01optional-ldo and 01optional-limit sheets gone), 3V3_OPTIONAL / NOR_3V3 folded into `FLIGHT_3V3`, GNSS_3V3 / LORA_3V3 into `COMMS_3V3`, eight test points out (TP1–TP47 → 39). First ERC found four squash faults (duplicate PWR_FLAG, C3603 pin, two dangling wires), fixed in bdbd1c3, plus J501's mirror from before. Checks follow: `full-expected-pins.json` patched by `tools/patch_expected_squash.py`, checker assertions and pinout CSVs updated, `full-checks.json` re-run on a netlist rebuilt from the differential (499 parts). Still to do on the Mac: KiCad ERC, fresh netlist export and `check_schematic_full.py --write-expected`, Update PCB from Schematic. |
 
 ## How each step is checked
 
@@ -48,7 +49,7 @@ until layout, so schematic/PCB parity is broken until the PCB is updated from th
 | --- | --- |
 | U201 VBAT undriven; `FLIGHT_VBAT`, `RESET_MEMORY`, `TP_STROBE`, `TP_PC6`, `TP_PC7`, `TP_PD10` dangling | 1: closed |
 | `FC_POWER_HOLD` dangling | 2: closed |
-| `SERVICE_POWER_EN` dangling | 3: closed |
+| `SERVICE_POWER_EN` dangling | 3: closed (net removed by the power squash, step 21) |
 | `MAG_INT`, `MAG_SCL`, `MAG_SDA` dangling | 4: closed |
 | Pin-to-pin warnings on 03st and 03bmp (baseline): the IMU's aux pins and the BMP390's SDO are strapped to GND, a net with a PWR_FLAG. Correct as drawn; record as ERC exclusions with that note | 8: excluded, reasons in Croi2.kicad_pro |
 | `CAN2_TX`, `CAN2_RX` dangling | 5: closed |

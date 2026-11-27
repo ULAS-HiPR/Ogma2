@@ -60,7 +60,6 @@ Pins moved on 22 November so each sits nearer what it connects to on the placed 
 | `MAG_INT` | PE6 (5) | PD3 (84) | GPIO, EXTI3 | nearer what it connects to |
 | `NEW_FLIGHT_CLEAR_REQUEST` | PD15 (62) | PD7 (88) | GPIO | nearer what it connects to |
 | `NOR_CLK` | PB2 (37) | PA3 (26) | OCTOSPI1_CLK (AF3) (was OCTOSPI1_CLK AF9) | nearer what it connects to |
-| `NOR_EN` | PA11 (70) | PE3 (2) | GPIO | the ROM bootloader drives PA11 as USB D- |
 | `NOR_RESET_REQUEST` | PD3 (84) | PE6 (5) | GPIO | nearer what it connects to |
 | `PYRO1_LS_SELECT` | PA9 (68) | PD4 (85) | GPIO | the ROM bootloader drives PA9 as USART1 TX |
 | `PYRO2_FIRE` | PE9 (40) | PE15 (46) | GPIO | nearer what it connects to |
@@ -88,7 +87,6 @@ Pins moved on 22 November so each sits nearer what it connects to on the placed 
 | `CC_BRANCH_FAULT_N` | PB5 (57) | PC1 (9) | GPIO, EXTI1 | nearer what it connects to |
 | `CC_COMMS_TO_FLIGHT` | PC10 (51) | PB10 (29) | USART3_TX (AF7) | nearer what it connects to |
 | `COMMS_STATUS_LED` | PB4 (56) | PC0 (8) | GPIO | nearer what it connects to |
-| `GNSS_EN` | PB0 (26) | PC5 (25) | GPIO | nearer what it connects to |
 | `GNSS_RESET_N` | PC5 (25) | PA3 (17) | GPIO | nearer what it connects to |
 | `GNSS_RX` | PA10 (43) | PB15 (36) | USART1_RX (AF4) (was USART1_RX AF7) | nearer what it connects to |
 | `LORA_BUSY` | PC1 (9) | PA4 (20) | GPIO | nearer what it connects to |
@@ -168,11 +166,11 @@ listed are supplies, ground, VCAP or unused.
 | Signal | Pin | Direction | Notes |
 | --- | --- | --- | --- |
 | `FC_POWER_HOLD` | PE14 (45) | Out | Holds Burrito's and Churro's battery enables on in flight |
-| `SERVICE_POWER_EN` | PE8 (39) | Out | Services domain (NOR, CAN, AUX, sounder); one restart per session |
-| `NOR_EN` | PE3 (2) | Out | NOR local limiter |
 | `CAN_POWER_EN` | PD10 (57) | Out | CAN local limiter |
 | `CHURRO_RETURN_EN` | PE12 (43) | Out | Monitoring domain (Croí INA228 and Churro); enable standalone too |
 | `TP_STROBE` | PE10 (41) | Out | Timing strobe: toggle at loop start, at reset recovery and at each firing step (D-19Nov.3) |
+
+**Removed by D-27Nov.2 (proposed):** `SERVICE_POWER_EN` (PE8), `NOR_EN` (PE3), `GNSS_EN` and `LORA_EN` (comms PC5, PB1) and the three `ADC_PYROn_CURRENT` inputs (PC0–PC2) no longer exist; the pins are no-connect. NOR, CAN and AUX sit on `FLIGHT_3V3` behind their own limiters, and GNSS and radio sit on `COMMS_3V3` with no gate, so a restart is a comms MCU reset.
 | `FLIGHT_COMMS_EN` | PC6 (63) | Out | Comms branch, on battery |
 | `COMMS_RESET_REQUEST` | PB2 (37) | Out, open drain | Resets the comms MCU only |
 | `NOR_RESET_REQUEST` | PE6 (5) | Out, open drain | NOR reset |
@@ -248,10 +246,9 @@ Set `UCPD_DBDIS` here too.
 3. High side off.
 4. Low side off.
 
-Wait about 1 ms between steps to start with; set the gaps on the bench. After
-step 3, that channel's current sense should fall to zero. If it doesn't, the
-high side is stuck on: step 4 still breaks the circuit, so do it, then report
-the channel and never use it again that session. One channel at a time. Every pulse is bounded by the per-flight configuration;
+Wait about 1 ms between steps to start with; set the gaps on the bench. Step 4 still breaks the circuit
+if the high side is stuck on. The per-channel current sense that used to show a stuck high side after step 3 was
+removed by D-27Nov.2 (proposed). OPEN, owner Seán: how firmware detects a stuck high side now. One channel at a time. Every pulse is bounded by the per-flight configuration;
 nothing in hardware shortens it now. Channel 3's high side also needs the latch
 set, and the latch is cleared by any flight reset.
 
@@ -293,7 +290,7 @@ to the armed rail), and send both the class and the raw value. Zero means an
 open igniter or harness when the low side is commanded open, and a working low
 side when it's commanded closed; zero with the low side open on a channel that
 read present before can also mean a shorted low side. The test current comes
-from the services rail, so services must be on.
+from `FLIGHT_3V3` (the services rail merged into it, D-27Nov.2), which is on whenever the flight MCU is.
 
 **Staging latch:** pulse PD7 only on the pad, with staging disarmed (PD6
 high). Then PE0 reads low (eligible). Any reset or power-up sets PE0 high

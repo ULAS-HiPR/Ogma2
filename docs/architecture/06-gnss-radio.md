@@ -29,7 +29,6 @@ installed link untested"]
 | Amphenol 132134 SMA, both ports | Inspectable external connection | Says nothing about antenna, cable loss or retention; both ports identical, so they can be swapped |
 | TPD1E0B04DPYR | Low-capacitance ESD shunt at the GNSS input | RF and ESD performance unmeasured |
 | Wio-LR2021, 868/915 MHz | Integrated RF front end | Needs an LR2021 driver and a compatible ground receiver |
-| TPS22918 ×2 | Restart GNSS or radio separately | Not current limiters; the comms limiter bounds a fault |
 
 GNSS keeps raw observations, validity, solution age and altitude datum. It
 never triggers a flight event and never blocks flight work. Keep MAX
@@ -37,6 +36,8 @@ TIMEPULSE free of a startup pull-down: it shares the SAFEBOOT function.
 
 The old net `LORA_DIO1` reaches module DIO5. The RXEN/TXEN nets are E22
 leftovers and unused. The LR2021 needs a new driver, not a renamed SX1262 one.
+
+> **D-27Nov.2 (proposed):** the two TPS22918 load gates, the SN74LVC1G97 logic and the TMUX1511 isolators on GNSS and radio are removed. GNSS and radio sit directly on `COMMS_3V3` (the 351–449 mA comms limiter still bounds a fault); a restart is a comms MCU reset. Diagram below is the pre-squash drawing.
 
 ## Who measures the link
 

@@ -18,7 +18,7 @@ Accepted 7 September ([batch acceptance](../docs/archive/architecture-acceptance
 amended 6 October:
 
 - 2S source → TPS2121 battery/USB selection for logic → TPSM63603RDHR buck at
-  4.0 V → three TPS7A9101DSKR regulators (flight, comms, services) at 3.352 V
+  4.0 V → two TPS7A9101DSKR regulators (flight, comms) at 3.352 V (services folded into flight by D-27Nov.2, proposed)
   proposed. A TPS70933 bootstrap supply. No logic boost and no VIOC loop.
 - The LM73100 sits in front of the held flight-core regulator input. A short
   from that regulator's input to output is not contained, and that's stated
@@ -184,7 +184,7 @@ J101"] --> Q["Q101 reverse blocking"]
   CH["Churro AV
 autonomous protection"] -->|"J102 Samtec"| Q
   Q --> TAP(("ENERGY_TAP"))
-  TAP --> U101["U101 eFuse"] --> LOGIC["Buck → three LDOs
+  TAP --> U101["U101 eFuse"] --> LOGIC["Buck → two LDOs
 Ogma logic"]
   TAP -->|"own fuses"| OUT["Pyro, via J6101 / J6102 arms"]
   USB["USB-C"] -->|"logic mux only"| LOGIC
