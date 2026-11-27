@@ -2438,78 +2438,6 @@
           (reference "U3604")
           (unit 1)))))
   (symbol
-    (lib_id "power:PWR_FLAG")
-    (at 483.87 172.72 0)
-    (unit 1)
-    (body_style 1)
-    (exclude_from_sim no)
-    (in_bom yes)
-    (on_board yes)
-    (in_pos_files yes)
-    (dnp no)
-    (uuid "0b889489-d8d8-5244-9816-ac967813eb52")
-    (property "Reference" "#FLG016"
-      (at 483.87 165.1 0)
-      (show_name no)
-      (do_not_autoplace no)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Value" "PWR_FLAG"
-      (at 483.87 167.64 0)
-      (show_name no)
-      (do_not_autoplace no)
-      (effects
-        (font
-          (size 1.016 1.016))))
-    (property "Footprint" ""
-      (at 483.87 172.72 0)
-      (hide yes)
-      (show_name no)
-      (do_not_autoplace no)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (property "Datasheet" ""
-      (at 483.87 172.72 0)
-      (hide yes)
-      (show_name no)
-      (do_not_autoplace no)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (property "Description" "Special symbol for telling ERC where power comes from"
-      (at 483.87 172.72 0)
-      (hide yes)
-      (show_name no)
-      (do_not_autoplace no)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (property "ki_keywords" "flag power"
-      (at 483.87 172.72 0)
-      (hide yes)
-      (show_name no)
-      (do_not_autoplace no)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (property "Implementation_Note" "ERC source path through external input/FET/0R; see source-path checks. Not a qualification claim."
-      (at 483.87 172.72 0)
-      (hide yes)
-      (show_name no)
-      (do_not_autoplace no)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (pin "1"
-      (uuid "c8455d67-e174-5bdb-b845-9756e10e563b"))
-    (instances
-      (project "Croi2"
-        (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/669f2e1c-94d4-5ca0-9fcc-021ef3481cf0"
-          (reference "#FLG016")
-          (unit 1)))))
-  (symbol
     (lib_id "Device:R")
     (at 275.59 208.28 0)
     (unit 1)
@@ -3412,4 +3340,25 @@
       (project "Croi2"
         (path "/a9e6a58d-37d4-4c26-836a-c708a8c9d69e/669f2e1c-94d4-5ca0-9fcc-021ef3481cf0"
           (reference "C3604")
-          (unit 1))))))
+          (unit 1)))))
+  (wire
+    (pts
+      (xy 590.55 172.72)
+      (xy 603.25 172.72))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid "4d497cea-2b83-5ddc-82a1-806b4b9e6068"))
+  (global_label "FLIGHT_3V3"
+    (shape bidirectional)
+    (at 603.25 172.72 90)
+    (effects
+      (font
+        (size 0.9 0.9)))
+    (uuid "7f658a22-2f67-5b41-b19d-f4497375461e")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 603.25 172.72 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (hide yes)))))

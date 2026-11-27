@@ -164,6 +164,20 @@ def main():
         t = tree(sh)
         for n in FREE:
             free_net(t, n, log, sh)
+    # ERC fix-ups (27 Nov, from Seán's first ERC run on this branch)
+    t3 = tree('03-sensors-storage')
+    # the NOR rail's PWR_FLAG now sits on FLIGHT_3V3, which already has one (#FLG004 on 01flight-ldo): two power
+    # outputs on one net is an ERC error. Remove it, then restore the rail wire C3602's removal took with it and name
+    # the rail (its NOR_3V3 label went with the limiter).
+    K.remove_part(t3, '#FLG016')
+    K.add(t3, K.wire((590.55, 172.72), (603.25, 172.72), '03-sensors-storage', 'squash-rail'))
+    K.add(t3, K.global_label('FLIGHT_3V3', (603.25, 172.72), 90, '03-sensors-storage', 'squash-rail'))
+    log.append('03-sensors-storage: PWR_FLAG #FLG016 removed; rail wire restored; FLIGHT_3V3 label at C3603')
+    # J501 (CAN bus 1 connector) is mirrored in y in the committed sheet, but its wires and no-connect flags were drawn
+    # for the unmirrored symbol: pins 1-3 float and the flags sit where pins 4-6 are not. Unmirror it.
+    j = K.symbols(tree('05-can'))['J501']
+    j[:] = [x for x in j if not (isinstance(x, list) and x and x[0] == 'mirror')]
+    log.append('05-can: J501 unmirrored')
     # relabel everywhere
     nl = 0
     for f in sorted(board.glob('*.kicad_sch')):
