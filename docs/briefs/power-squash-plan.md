@@ -4,6 +4,34 @@
 changed in the schematic. Status of each claim: **observed** = read from the sheets on branch `diffpair-names`
 (KiCad 10 files, parsed with `tools/capture/kicadsch.py`); **inferred** = my reading, confirm on the sheet.
 
+## Update, 27 Nov evening
+
+Opus's call, agreed by Seán: delete the GNSS and LoRa gates. "No RF on USB" is a power budget, not a safety rule:
+U4401 already limits USB at 387-491 mA, and firmware already switches CAN and the sounder off in USB mode. The
+reversal section below is kept for the record. Whole stack, candidates from the sheets (confirm each passive):
+
+- `04d-gnss`: U4502 (TPS22918), U4501 (SN74LVC1G97), U4503 (TMUX1511), R4501-R4504, C4502 (1 n, slew), the
+  `GNSS_*_ISO`, `GNSS_POWER_EN`, `GNSS_DISCHARGE`, `GNSS_SLEW` nets
+- `04e-radio`: U4602 (TPS22918), U4601 (SN74LVC1G97), U4603 and U4604 (TMUX1511), R4601-R4605, C4602 (1 n, slew),
+  the `LORA_*_ISO`, `LORA_POWER_EN`, `LORA_DISCHARGE`, `LORA_SLEW` nets
+- About 7 ICs and 15 passives. GNSS and radio sit on `COMMS_3V3`; the comms MCU drives their reset and enable pins.
+- Bench check before flight: comms MCU at reduced clock + radio standby + GNSS backup on USB, well under 387 mA.
+
+## Pyro sheets, read 27 Nov (observed from the sheets' own notes)
+
+- **06c (current sense): delete the sense, keep the continuity defaults.** What it does: three 750 ohm burdens, dividers
+  and 1 n filters into `ADC_PYRO1..3_CURRENT`. The only use is in firmware-interface.md "Fire one channel": after the
+  high side goes off, "current sense should fall to zero, if not the high side is stuck on". The response is the same
+  with or without it (open the low side, step 4), so it only adds a report. Candidates: R6711-R6713, R6715, C6711,
+  R6721-R6723, R6725, C6721, R6731-R6733, R6735, C6731. Keep R6714 / R6724 / R6734 (100 k continuity ADC defaults)
+  and C6701. U6701 (TMUX1511, "output ADC boundary"): read what it gates before deleting. Frees three flight ADC pins.
+  **Firmware step 3 and `firmware-interface.md` change with it.**
+- **06f (continuity isolation): keep.** Opus guessed it existed for the services rail. It does not: U6901 is on
+  `FLIGHT_3V3` and its note says it "disconnects [the dividers] from an unpowered flight ADC". The reason is the armed
+  rail being present while the flight rail is off, so it survives the services merge. Whether it is needed at all is a
+  separate question (the notes say "clamps ... remain open").
+- **06e:** the test-current source `3V3_OPTIONAL` (R6911/R6912 and siblings) moves to `FLIGHT_3V3`.
+
 ## Why it is not applied yet
 
 The sheets are KiCad 10 files (`version 20260306`). The cloud session only has KiCad 9.0.8: it refuses them, and
@@ -18,7 +46,7 @@ here. An unchecked edit across 45 hierarchical sheets is not worth the risk. App
 | Delete services limiter U1601 and services LDO U1901, merge `3V3_OPTIONAL` into `FLIGHT_3V3` | Go |
 | Delete NOR limiter U3601 and feed NOR from `FLIGHT_3V3` | Go, with the isolators below |
 | Keep CAN limiter U501 and AUX limiter U7001 | Go |
-| **Delete the two TPS22918 (GNSS, LoRa gates)** | **Reversed: keep** |
+| **Delete the two TPS22918 (GNSS, LoRa gates) and the stack that goes with them** | **Go again (Opus, 27 Nov): the reversal below is withdrawn** |
 | Keep comms limiter U1501 and comms LDO U1801 | Go |
 
 **Why the TPS22918 stay (observed):** the GNSS and LoRa gates are enabled through `CC_BAT_VALID`

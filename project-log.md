@@ -5955,3 +5955,10 @@ What the sheets show, read from the step-16 netlist:
 - `Croi2.kicad_dru`: USB_DIFF and CAN_DIFF track width, pair gap and 1 mm skew rules, before the last rule.
 - `docs/briefs/burrito-layout-checks.md`: the parts with datasheet layout rules, and the three LDOs measured.
 - Not run: KiCad ERC and DRC (no KiCad in the cloud session). Run both after applying.
+
+## 27 November 2026 (evening): the power architecture questioned, plan written, nothing applied (proposed D-27Nov.2)
+
+- Seán paused routing to question the architecture after the 4 V buck and the pyro chain; "i nearly fucked it by just routing and not questioning the architecture". Gut calls by Opus 5.5 and Sonnet 5.5, recorded as proposed D-27Nov.2 and in docs/briefs/power-squash-plan.md (branch power-squash-plan).
+- Sonnet's first reading kept the GNSS and LoRa gates (RF off on USB). Opus: that is a budget, not a safety rule (U4401 already limits USB), so the gates and their isolators go. Seán sided with Opus.
+- Pyro: kept whole except the 06c current sense. 06f is kept: its reason is an unpowered flight ADC, not the services rail.
+- Not applied: the sheets are KiCad 10; the cloud's KiCad is 9.0.8 and loads zero components from them. Apply on the Mac, then ERC.
