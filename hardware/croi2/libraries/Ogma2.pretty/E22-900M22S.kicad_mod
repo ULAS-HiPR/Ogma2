@@ -34,6 +34,15 @@
       (type default))
     (fill none)
     (layer "F.CrtYd"))
+  (fp_circle
+    (center 6.8 9.9)
+    (end 7.05 9.9)
+    (stroke
+      (width 0.12)
+      (type solid))
+    (fill yes)
+    (layer "F.SilkS")
+    (uuid "675bdfbb-05ac-45d2-a0b8-84cf802f02e9"))
   (pad "1" smd rect
     (at 6.8 9)
     (size 1.4 0.8)
@@ -129,10 +138,4 @@
       (font
         (size 0.7 0.7)
         (thickness 0.15))))
-  (fp_text user "1"
-    (at 8.3 9)
-    (layer "F.SilkS")
-    (effects
-      (font
-        (size 0.6 0.6)
-        (thickness 0.15)))))
+)

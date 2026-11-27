@@ -34,6 +34,15 @@
       (type default))
     (fill none)
     (layer "F.CrtYd"))
+  (fp_circle
+    (center -8.0 -3.8)
+    (end -7.75 -3.8)
+    (stroke
+      (width 0.12)
+      (type solid))
+    (fill yes)
+    (layer "F.SilkS")
+    (uuid "9672f5c4-0746-4c86-bde0-2697d23afd14"))
   (pad "1" smd rect
     (at -6.6 -3.8)
     (size 1.8 1.5)
@@ -454,13 +463,6 @@
     (at -3.37 -6.1)
     (size 0.58 0.72)
     (layers "F.Paste"))
-  (fp_text user "1"
-    (at -8.8 -3.8)
-    (layer "F.SilkS")
-    (effects
-      (font
-        (size 0.6 0.6)
-        (thickness 0.15))))
   (model "${KIPRJMOD}/libraries/3d/SAM-M10Q-extracted.step"
     (offset
       (xyz 0 0 -1.195))

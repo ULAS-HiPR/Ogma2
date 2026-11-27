@@ -34,6 +34,15 @@
       (type default))
     (fill none)
     (layer "F.CrtYd"))
+  (fp_circle
+    (center -19.76 -5.39)
+    (end -19.51 -5.39)
+    (stroke
+      (width 0.12)
+      (type solid))
+    (fill yes)
+    (layer "F.SilkS")
+    (uuid "5117aa6a-caad-47e2-af25-942c043c79c0"))
   (pad "1" thru_hole circle
     (at -18.44 -2.85)
     (size 1.64 1.64)
@@ -294,13 +303,6 @@
   (fp_text user "PCB EDGE DATUM"
     (at 0 0.8)
     (layer "Dwgs.User")
-    (effects
-      (font
-        (size 0.8 0.8)
-        (thickness 0.15))))
-  (fp_text user "1"
-    (at -17.5 -9.79)
-    (layer "F.SilkS")
     (effects
       (font
         (size 0.8 0.8)
