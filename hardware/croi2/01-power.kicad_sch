@@ -1306,7 +1306,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Ogma2:MPT-08-01-01-L-RA-SD"
+		(symbol "Ogma2:BM06B-GHS-TBT"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1323,7 +1323,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "MPT-08-01-01-L-RA-SD"
+			(property "Value" "BM06B-GHS-TBT"
 				(at -10.16 12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1334,7 +1334,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Ogma2:MPT-08-01-01-L-RA-SD"
+			(property "Footprint" "Connector_JST:JST_GH_BM06B-GHS-TBT_1x06-1MP_P1.25mm_Vertical"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1345,7 +1345,7 @@
 					)
 				)
 			)
-			(property "Datasheet" "https://www.samtec.com/products/mpt-08-01-01-l-ra-sd"
+			(property "Datasheet" "https://www.jst-mfg.com/product/pdf/eng/eGH.pdf"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1356,7 +1356,7 @@
 					)
 				)
 			)
-			(property "Description" "Board mate header"
+			(property "Description" "External port: I2C, 3.3 V, two IO (D-27Nov.3)"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1367,7 +1367,7 @@
 					)
 				)
 			)
-			(property "MPN" "MPT-08-01-01-L-RA-SD"
+			(property "MPN" "BM06B-GHS-TBT(LF)(SN)"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1378,7 +1378,7 @@
 					)
 				)
 			)
-			(property "Manufacturer" "Samtec"
+			(property "Manufacturer" "JST"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1389,7 +1389,7 @@
 					)
 				)
 			)
-			(property "Library_Check" "numbered physical contacts; see harness map; drawing-derived: tail count, drills, pin1 direction and board-edge datum checked; body projection/mated assembly review pending"
+			(property "Library_Check" "KiCad standard footprint JST_GH_BM06B-GHS-TBT_1x06-1MP; MP pads unconnected; not yet checked against the JST drawing"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1400,7 +1400,7 @@
 					)
 				)
 			)
-			(symbol "MPT-08-01-01-L-RA-SD_0_1"
+			(symbol "BM06B-GHS-TBT_0_1"
 				(rectangle
 					(start -10.16 -11.43)
 					(end 10.16 11.43)
@@ -1413,7 +1413,7 @@
 					)
 				)
 			)
-			(symbol "MPT-08-01-01-L-RA-SD_1_1"
+			(symbol "BM06B-GHS-TBT_1_1"
 				(pin passive line
 					(at -15.24 8.89 0)
 					(length 5.08)
@@ -1515,42 +1515,6 @@
 						)
 					)
 					(number "6"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -15.24 -6.35 0)
-					(length 5.08)
-					(name "7"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -15.24 -8.89 0)
-					(length 5.08)
-					(name "8"
-						(effects
-							(font
-								(size 1 1)
-							)
-						)
-					)
-					(number "8"
 						(effects
 							(font
 								(size 1 1)
@@ -3963,16 +3927,6 @@
 	)
 	(wire
 		(pts
-			(xy 67.31 420.37) (xy 72.39 420.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "09e4b86e-fbb8-52a7-b83e-4949d7d2e825")
-	)
-	(wire
-		(pts
 			(xy 52.07 120.65) (xy 52.07 138.43)
 		)
 		(stroke
@@ -4573,16 +4527,6 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 422.91) (xy 67.31 422.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a9fc1682-9168-5312-8ef7-fb1b92879379")
-	)
-	(wire
-		(pts
 			(xy 325.12 85.09) (xy 477.52 85.09)
 		)
 		(stroke
@@ -4883,7 +4827,7 @@
 			)
 		)
 	)
-	(global_label "CHURRO_SCL_EXT"
+	(global_label "EXT_IO1"
 		(shape bidirectional)
 		(at 67.31 415.29 180)
 		(effects
@@ -4927,7 +4871,7 @@
 			)
 		)
 	)
-	(global_label "BURRITO_POWER_HOLD"
+	(global_label "EXT_IO1"
 		(shape bidirectional)
 		(at 217.17 400.05 0)
 		(effects
@@ -5279,7 +5223,7 @@
 			)
 		)
 	)
-	(global_label "CHURRO_AUX_3V3"
+	(global_label "EXT_SDA"
 		(shape bidirectional)
 		(at 67.31 410.21 180)
 		(effects
@@ -5323,7 +5267,7 @@
 			)
 		)
 	)
-	(global_label "CHURRO_SDA_EXT"
+	(global_label "EXT_IO2"
 		(shape bidirectional)
 		(at 67.31 417.83 180)
 		(effects
@@ -5543,28 +5487,6 @@
 			)
 		)
 	)
-	(global_label "CHURRO_FAULT_N_EXT"
-		(shape bidirectional)
-		(at 67.31 420.37 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "b821d048-0307-5dfc-9328-255d9c809a98")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 67.31 420.37 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1 1)
-				)
-			)
-		)
-	)
 	(global_label "GND"
 		(shape bidirectional)
 		(at 330.2 181.61 0)
@@ -5587,7 +5509,7 @@
 			)
 		)
 	)
-	(global_label "GND"
+	(global_label "EXT_SCL"
 		(shape bidirectional)
 		(at 67.31 407.67 180)
 		(effects
@@ -5807,7 +5729,7 @@
 			)
 		)
 	)
-	(global_label "VBAT_BURRITO_INPUT"
+	(global_label "EXT_3V3"
 		(shape bidirectional)
 		(at 67.31 405.13 180)
 		(effects
@@ -5847,28 +5769,6 @@
 			(effects
 				(font
 					(size 1 1)
-				)
-			)
-		)
-	)
-	(global_label "BURRITO_POWER_HOLD"
-		(shape bidirectional)
-		(at 67.31 422.91 180)
-		(effects
-			(font
-				(size 0.9 0.9)
-			)
-			(justify right)
-		)
-		(uuid "dd0a16df-a8f9-5da8-a7ea-9e8053b43e75")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 67.31 422.91 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
 				)
 			)
 		)
@@ -8037,7 +7937,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Ogma2:MPT-08-01-01-L-RA-SD")
+		(lib_id "Ogma2:BM06B-GHS-TBT")
 		(at 87.63 414.02 0)
 		(unit 1)
 		(body_style 1)
@@ -8057,7 +7957,7 @@
 				)
 			)
 		)
-		(property "Value" "MPT-08-01-01-L-RA-SD"
+		(property "Value" "BM06B-GHS-TBT"
 			(at 87.63 400.05 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8067,7 +7967,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Ogma2:MPT-08-01-01-L-RA-SD"
+		(property "Footprint" "Connector_JST:JST_GH_BM06B-GHS-TBT_1x06-1MP_P1.25mm_Vertical"
 			(at 87.63 414.02 0)
 			(hide yes)
 			(show_name no)
@@ -8078,7 +7978,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.samtec.com/products/mpt-08-01-01-l-ra-sd"
+		(property "Datasheet" "https://www.jst-mfg.com/product/pdf/eng/eGH.pdf"
 			(at 87.63 414.02 0)
 			(hide yes)
 			(show_name no)
@@ -8089,7 +7989,7 @@
 				)
 			)
 		)
-		(property "Description" "Board mate header"
+		(property "Description" "External port: I2C, 3.3 V, two IO (D-27Nov.3)"
 			(at 87.63 414.02 0)
 			(hide yes)
 			(show_name no)
@@ -8100,7 +8000,7 @@
 				)
 			)
 		)
-		(property "MPN" "MPT-08-01-01-L-RA-SD"
+		(property "MPN" "BM06B-GHS-TBT(LF)(SN)"
 			(at 87.63 414.02 0)
 			(hide yes)
 			(show_name no)
@@ -8111,7 +8011,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Samtec"
+		(property "Manufacturer" "JST"
 			(at 87.63 414.02 0)
 			(hide yes)
 			(show_name no)
@@ -8122,7 +8022,7 @@
 				)
 			)
 		)
-		(property "Library_Check" "numbered physical contacts; see harness map; drawing-derived: tail count, drills, pin1 direction and board-edge datum checked; body projection/mated assembly review pending"
+		(property "Library_Check" "KiCad standard footprint JST_GH_BM06B-GHS-TBT_1x06-1MP; MP pads unconnected; not yet checked against the JST drawing"
 			(at 87.63 414.02 0)
 			(hide yes)
 			(show_name no)
@@ -8150,12 +8050,6 @@
 		)
 		(pin "6"
 			(uuid "2e5a0fc6-eec9-5215-b009-911d47373825")
-		)
-		(pin "7"
-			(uuid "4dd54693-b6a4-56e1-9fd8-0b4622478ef3")
-		)
-		(pin "8"
-			(uuid "08a0ee4a-5c2a-5b5f-b5f0-c8a0b33d5e42")
 		)
 		(instances
 			(project "Croi2"

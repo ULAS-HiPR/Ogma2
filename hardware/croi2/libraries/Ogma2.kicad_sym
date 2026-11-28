@@ -348,7 +348,7 @@
         (font
           (size 1.27 1.27))
         (hide yes))))
-  (symbol "MPT-08-01-01-L-RA-SD"
+  (symbol "BM06B-GHS-TBT"
     (pin_names
       (offset 0.508))
     (in_bom yes)
@@ -359,13 +359,13 @@
         (font
           (size 1.27 1.27))
         (justify left)))
-    (property "Value" "MPT-08-01-01-L-RA-SD"
+    (property "Value" "BM06B-GHS-TBT"
       (at -10.16 12.7 0)
       (effects
         (font
           (size 1.27 1.27))
         (justify left)))
-    (symbol "MPT-08-01-01-L-RA-SD_0_1"
+    (symbol "BM06B-GHS-TBT_0_1"
       (rectangle
         (start -10.16 -11.43)
         (end 10.16 11.43)
@@ -374,7 +374,7 @@
           (type default))
         (fill
           (type background))))
-    (symbol "MPT-08-01-01-L-RA-SD_1_1"
+    (symbol "BM06B-GHS-TBT_1_1"
       (pin passive line
         (at -15.24 8.89 0)
         (length 5.08)
@@ -441,59 +441,38 @@
           (effects
             (font
               (size 1.0 1.0)))))
-      (pin passive line
-        (at -15.24 -6.35 0)
-        (length 5.08)
-        (name "7"
-          (effects
-            (font
-              (size 1.0 1.0))))
-        (number "7"
-          (effects
-            (font
-              (size 1.0 1.0)))))
-      (pin passive line
-        (at -15.24 -8.89 0)
-        (length 5.08)
-        (name "8"
-          (effects
-            (font
-              (size 1.0 1.0))))
-        (number "8"
-          (effects
-            (font
-              (size 1.0 1.0))))))
-    (property "Footprint" "Ogma2:MPT-08-01-01-L-RA-SD"
+)
+    (property "Footprint" "Connector_JST:JST_GH_BM06B-GHS-TBT_1x06-1MP_P1.25mm_Vertical"
       (at 0 0 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Datasheet" "https://www.samtec.com/products/mpt-08-01-01-l-ra-sd"
+    (property "Datasheet" "https://www.jst-mfg.com/product/pdf/eng/eGH.pdf"
       (at 0 0 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "MPN" "MPT-08-01-01-L-RA-SD"
+    (property "MPN" "BM06B-GHS-TBT(LF)(SN)"
       (at 0 0 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Manufacturer" "Samtec"
+    (property "Manufacturer" "JST"
       (at 0 0 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Description" "Board mate header"
+    (property "Description" "External port: I2C, 3.3 V, two IO (D-27Nov.3)"
       (at 0 0 0)
       (effects
         (font
           (size 1.27 1.27))
         (hide yes)))
-    (property "Library_Check" "numbered physical contacts; see harness map; drawing-derived: tail count, drills, pin1 direction and board-edge datum checked; body projection/mated assembly review pending"
+    (property "Library_Check" "KiCad standard footprint JST_GH_BM06B-GHS-TBT_1x06-1MP; MP pads unconnected; not yet checked against the JST drawing"
       (at 0 0 0)
       (effects
         (font

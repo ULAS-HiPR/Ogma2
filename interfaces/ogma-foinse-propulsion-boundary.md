@@ -119,16 +119,18 @@ production third node and doesn't bridge the vehicle bus to GSE.
   that return and without Ogma software. If real devices can't manage that
   cleanly, local Foinse regulation needs a recorded review before dependent
   layout is frozen. It isn't chosen here.
-- Croí takes one protected 2S feed, provisional 6 A aggregate, through the
-  Samtec pair: MPS-08-01-01-L-RA-SD on Foinse, MPT-08-01-01-L-RA-SD on Croí.
+- Croí takes one protected 2S feed, provisional 6 A aggregate, through J101
+  (Molex Micro-Fit, VBAT / return), the same connector a bench battery uses.
+  Proposed D-27Nov.3; replaces the Samtec MPS/MPT-08 pair. Monitoring and
+  control cross on J102, a 6-pin JST GH (positive latch):
 
-  | Pins | Signal |
+  | Pin | Signal |
   | --- | --- |
-  | 1 / 2 | VBAT / return |
-  | 3 / 4 | Protected auxiliary 3.3 V / return |
-  | 5 / 6 | Local monitor SCL / SDA |
-  | 7 | nFAULT |
-  | 8 | `BURRITO_POWER_HOLD` (D-6.3) |
+  | 1 | `EXT_3V3` (protected auxiliary 3.3 V, U7001) |
+  | 2 / 3 | SCL / SDA |
+  | 4 | GND |
+  | 5 | `EXT_IO1`: power hold to Churro (D-6.3) |
+  | 6 | `EXT_IO2`: nFAULT from Churro |
 
   Each ground path must carry the full alternate fault return on its own. No
   charger or propulsion current goes through Croí. The coplanar assembly needs a

@@ -580,11 +580,11 @@
   "2": "GND"
  },
  "C7002": {
-  "1": "CHURRO_AUX_3V3",
+  "1": "EXT_3V3",
   "2": "GND"
  },
  "C7003": {
-  "1": "CHURRO_AUX_3V3",
+  "1": "EXT_3V3",
   "2": "GND"
  },
  "C7101": {
@@ -629,7 +629,7 @@
   "2": "POWER_HOLD_RC"
  },
  "D1004": {
-  "1": "BURRITO_POWER_HOLD",
+  "1": "EXT_IO1",
   "2": "POWER_HOLD_RC"
  },
  "D201": {
@@ -707,14 +707,12 @@
   "2": "GND"
  },
  "J102": {
-  "1": "VBAT_BURRITO_INPUT",
-  "2": "GND",
-  "3": "CHURRO_AUX_3V3",
+  "1": "EXT_3V3",
+  "2": "EXT_SCL",
+  "3": "EXT_SDA",
   "4": "GND",
-  "5": "CHURRO_SCL_EXT",
-  "6": "CHURRO_SDA_EXT",
-  "7": "CHURRO_FAULT_N_EXT",
-  "8": "BURRITO_POWER_HOLD"
+  "5": "EXT_IO1",
+  "6": "EXT_IO2"
  },
  "J103": {
   "1": "BAT_SWITCH_3V",
@@ -1591,19 +1589,19 @@
   "2": "PYRO3_CONT_SCALED"
  },
  "R7001": {
-  "1": "CHURRO_AUX_3V3_PRELINK",
-  "2": "CHURRO_AUX_3V3"
+  "1": "EXT_3V3_PRELINK",
+  "2": "EXT_3V3"
  },
  "R7002": {
   "1": "CHURRO_RETURN_EN",
   "2": "GND"
  },
  "R7003": {
-  "1": "CHURRO_AUX_3V3",
+  "1": "EXT_3V3",
   "2": "GND"
  },
  "R7004": {
-  "1": "CHURRO_AUX_3V3_ILIM",
+  "1": "EXT_3V3_ILIM",
   "2": "GND"
  },
  "R7005": {
@@ -1619,8 +1617,8 @@
   "2": "BRANCH_FAULT_N"
  },
  "R7008": {
-  "1": "CHURRO_AUX_3V3",
-  "2": "CHURRO_FAULT_N_EXT"
+  "1": "EXT_3V3",
+  "2": "EXT_IO2"
  },
  "R7101": {
   "1": "VBAT_SHUNT_IN",
@@ -1639,7 +1637,7 @@
   "2": "BURRITO_VBUS_FILTER"
  },
  "R7105": {
-  "1": "CHURRO_AUX_3V3",
+  "1": "EXT_3V3",
   "2": "BURRITO_MON_3V3"
  },
  "R8001": {
@@ -1798,7 +1796,7 @@
   "1": "SUPERVISOR_WDI"
  },
  "TP40": {
-  "1": "CHURRO_AUX_3V3"
+  "1": "EXT_3V3"
  },
  "TP41": {
   "1": "BAT_SOURCE_PG"
@@ -2530,8 +2528,8 @@
   "2": "GND",
   "3": "CHURRO_RETURN_EN",
   "4": "BRANCH_FAULT_N",
-  "5": "CHURRO_AUX_3V3_ILIM",
-  "6": "CHURRO_AUX_3V3_PRELINK"
+  "5": "EXT_3V3_ILIM",
+  "6": "EXT_3V3_PRELINK"
  },
  "U7002": {
   "1": "CHURRO_RETURN_EN",
@@ -2539,14 +2537,14 @@
   "11": null,
   "12": null,
   "13": "GND",
-  "14": "CHURRO_AUX_3V3",
+  "14": "EXT_3V3",
   "2": "CHURRO_SCL",
-  "3": "CHURRO_SCL_EXT",
+  "3": "EXT_SCL",
   "4": "CHURRO_RETURN_EN",
   "5": "CHURRO_SDA",
-  "6": "CHURRO_SDA_EXT",
+  "6": "EXT_SDA",
   "7": "GND",
-  "8": "CHURRO_FAULT_N_EXT",
+  "8": "EXT_IO2",
   "9": "BRANCH_FAULT_N"
  },
  "U7101": {
@@ -2554,8 +2552,8 @@
   "10": "BURRITO_IN_PLUS",
   "2": "GND",
   "3": null,
-  "4": "CHURRO_SDA_EXT",
-  "5": "CHURRO_SCL_EXT",
+  "4": "EXT_SDA",
+  "5": "EXT_SCL",
   "6": "BURRITO_MON_3V3",
   "7": "GND",
   "8": "BURRITO_VBUS_FILTER",

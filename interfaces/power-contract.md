@@ -52,7 +52,7 @@ Foinse (Churro):
   through its arm key), PROP and ACT from one 6S actuator pack (D-21Nov.1). The
   CATS Vega has its own cell, charged through its own lead (D-18Nov.2,
   D-21Nov.2). Nothing takes actuator power from Croí.
-- Each Samtec ground path must carry the full 6 A as an alternate fault return.
+- *(Dropped by D-27Nov.3, proposed: the Samtec pair is gone. J102's single GH GND pin is not rated for the 6 A return if J101's GND contact opens; accepted.)* Each Samtec ground path must carry the full 6 A as an alternate fault return.
 
 All branch limits, energy estimates and rail-sequencing requirements in the
 accepted power appendix stand. Separate power coupons before ordering are no
